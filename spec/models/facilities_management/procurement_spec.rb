@@ -11,6 +11,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
     it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
     it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).allowing('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
+    it { is_expected.to validate_content_type_of(:security_policy_document_file).rejecting('text/plain', 'text/xml', 'image/png') }
   end
 
   describe '#name' do
@@ -500,7 +502,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       before do
         allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
         # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_offer_email)
+        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
         # rubocop:enable RSpec/AnyInstance
         procurement.save_eligible_suppliers_and_set_state
       end

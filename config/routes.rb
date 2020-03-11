@@ -51,6 +51,9 @@ Rails.application.routes.draw do
         namespace :supplier do
           concerns :authenticatable
         end
+        namespace :admin do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -144,8 +147,9 @@ Rails.application.routes.draw do
         get 'results'
         get 'further_competition_spreadsheet'
         post 'da_spreadsheets'
-        resources :contracts, only: %i[show edit], controller: 'procurements/contracts' do
+        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -159,7 +163,15 @@ Rails.application.routes.draw do
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
         get 'supplier-account-dashboard', to: 'supplier_account#index'
-        resources :contracts, only: %i[show edit], controller: 'contracts'
+        resources :contracts, only: %i[show edit update], controller: 'contracts' do
+          resources :sent, only: %i[index], controller: 'sent'
+        end
+      end
+      namespace :admin, path: 'admin' do
+        get '/', to: 'admin_account#admin_account'
+        get '/start', to: 'dashboard#index'
+        get '/gateway', to: 'gateway#index'
+        get 'supplier-rates', to: 'supplier_rates#index'
       end
       namespace :admin do
         get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
@@ -194,6 +206,7 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     post '/buildings/delete_building' => 'buildings#delete_building'
 
+    get '/admin/start', to: 'dashboard#index'
     get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]

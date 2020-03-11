@@ -117,6 +117,8 @@ en:
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_start_date:
+              greater_than: Mobilisation start date must be today or in the future
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
@@ -142,6 +144,8 @@ en:
             security_policy_document_file:
               antivirus_virus_detected: The selected file contains a virus
               blank: The selected file is empty
+              content_type_invalid: The selected file must be a DOC, DOCX or PDF
+              file_size_out_of_range: The selected file must be smaller than 10MB
             security_policy_document_name:
               blank: Enter a security policy document name
             security_policy_document_required:
@@ -246,6 +250,7 @@ en:
               blank: Enter a pension fund name
               inclusion: Enter a pension fund name
               required: Enter a pension fund name
+              taken: Enter a unique pension fund name, duplication is not allowed
             percentage:
               blank: Enter a percentage of pensionable pay
               greater_than_or_equal_to: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
@@ -254,6 +259,14 @@ en:
               not_a_number: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               not_an_integer: Percentage of pensionable pay must be a whole number between 1 to 100 inclusive
               required: Enter a percentage of pensionable pay
+        facilities_management/procurement_supplier:
+          attributes:
+            contract_response:
+              inclusion: You must select one option to respond to the contract offer
+            reason_for_closing:
+              blank: Enter a reason for closing this procurement
+            reason_for_declining:
+              blank: Enter a reason for declining this contract offer
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -268,6 +281,9 @@ en:
               invalid: Enter a real start time
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real start time
+  dashboard:
+    index:
+      admin_link: Managing framework and supplier data
   facilities_management:
     basket:
       basket_header: selected
@@ -299,6 +315,17 @@ en:
             td_mobilisation: Mobilisation
             update_button: Save and return to dashboard
             rtrn_link: Return to admin dashboard
+        admin_account:
+          admin_account:
+            dashboard_assessed_value: Assessed value
+            dashboard_average_rate: Average framework rates
+            dashboard_calloff_rate: Call-off benchmark rates
+            dashboard_header: RM3830 administration dashboard
+            dashboard_manage_calloff_rate: Manage the call-off benchmark rates snd variances
+            dashboard_manage_rate: Manage the average framework rates and variances
+            dashboard_supplier_data: Supplier data
+            dashboard_supplier_framework_data: Supplier framework data
+            dashboard_supplier_prices: Manage supplier services, prices and regions
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
@@ -362,11 +389,6 @@ en:
           submit: Save and continue
           town_or_city: Town or city
           your_details: Your details
-      gateway:
-        index:
-          cmp_support_aria_label: Email us for support with this service
-          cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-          heading: CCS Marketplace private beta
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -381,27 +403,6 @@ en:
         procurements_dashboard_button: Procurements dashboard
         start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
         start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
-      passwords:
-        edit:
-          confirm_code: Confirm Code
-          confirm_new_password: Confirm new password
-          heading: Reset your password
-          lead: Reset password for
-          new_password: New password
-          password: Your password must have
-        forgot_password_confirmation:
-          heading: A reset email has been sent
-          lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-          text01: If you don't receive this, email
-          text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-        new:
-          email: Email address
-          email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-          heading: Reset password
-          lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-        password_reset_success:
-          heading: You have successfully changed your password
-          lead: You can now sign in to your Crown Commercial Service account
       procurement_buildings:
         building_standards:
           back_to_service_information: Back to service information
@@ -494,6 +495,49 @@ en:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         contracts:
+          awaiting_response:
+            else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+            if_accepted_header: If the supplier accepts the offer
+            if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
+            if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
+            if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
+            if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
+            if_declined_header: If the supplier declines the offer
+            if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
+            if_declined_list_2: "- switch to a further competition"
+            if_declined_list_3: "- change your requirements"
+            if_declined_list_4: "- stop the process"
+            if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
+            if_declined_list_header_2: 'you have the choice to:'
+            title: What happens next
+            two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
+          awaiting_signature:
+            confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date
+            confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
+            supplier_signs_1: the supplier will sign the contract and send it back to you
+            supplier_signs_2: this will happen offline (outside this portal)
+            supplier_signs_3: usually within 5 working days
+            title: What happens next
+            you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
+            you_sign_2: this will happen offline (outside this portal)
+            you_sign_3: usually within 2 working days
+          closed:
+            index:
+              info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+              return_text: Return procurements dashboard
+              title: Your procurement has been closed
+          closing_direct_award_offer:
+            are_you_sure_1: Are you sure you wish to close the
+            are_you_sure_2: procurement?
+            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
+            reason: Please provide a reason for closing this procurement
+          confirmation_of_signed_contract:
+            contract_end_date: Enter contract end date
+            contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
+            contract_start_date: Enter contract start date
+            contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
+            description: Please confirm if both parties have signed and exchanged the contract
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
@@ -516,6 +560,11 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          procurement_closed:
+            closed_1: The
+            closed_2: procurement has been closed.
+            description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            title: Your procurement has been closed
           procurement_requirements:
             buildings_services: Buildings and services
             call_off_extensions_1: Optional call-off extension period 1
@@ -526,10 +575,13 @@ en:
             contract_number: Contract number
             contract_value: Contract value
             date_of_first_indexation: Date of first indexation
+            direct_award: Direct award
             framework: Framework, sub-lot
             framework_details: RM3830, sub-lot 1a
             initial_call_off_period: Initial call-off period
             mobilisation_period: Mobilisation period
+            route_to_market: Route to market
+          procurement_requirements_head:
             supplier: Supplier
           sent:
             index:
@@ -540,12 +592,12 @@ en:
               accepts_list_4: you will confirm on this portal that the contract has been signed by both parties
               declines_header: 2. If the supplier declines the offer
               declines_list_1: you will be notified that they have declined your offer, and provided a reason why
-              declines_list_2: you have the choice to
+              declines_list_2: 'you have the choice to:'
               declines_list_2_sub_1: "- offer the contract to the next placed supplier (after reviewing their price)"
               declines_list_2_sub_2: "- switch to a further competition"
               declines_list_2_sub_3: "- change your requirements"
               declines_list_2_sub_4: "- stop the process"
-              futher_inforamtion: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+              further_information: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
               header: Your contract was sent
               what_happens_next: What happens next
               what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
@@ -553,34 +605,6 @@ en:
             call_off_contract_documents: Call-off contract documents
             requirements: Requirements
             supplier_contact_details: Supplier contact details
-          supplier_contact_details:
-            title: Supplier contact details
-          whn_awaiting_response:
-            else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
-            if_accepted_header: If the supplier accepts the offer
-            if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
-            if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
-            if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
-            if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
-            if_declined_header: If the supplier declines the offer
-            if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
-            if_declined_list_2: "- switch to a further competition"
-            if_declined_list_3: "- change your requirements"
-            if_declined_list_4: "- stop the process"
-            if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
-            if_declined_list_header_2: 'you have the choice to:'
-            title: What happens next
-            two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
-          whn_awaiting_signature:
-            confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date
-            confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
-            supplier_signs_1: the supplier will sign the contract and send it back to you
-            supplier_signs_2: this will happen offline (outside this portal)
-            supplier_signs_3: usually within 5 working days
-            title: What happens next
-            you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
-            you_sign_2: this will happen offline (outside this portal)
-            you_sign_3: usually within 2 working days
         contracts_helper:
           warning_message:
             accepted: Awaiting your confirmation of signed contract.
@@ -627,6 +651,22 @@ en:
             lowest_price_supplier: lowest priced supplier
             supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
             supplier_description_singular: that can offer your services under direct award, their contract price is shown below.
+          procurement_requirements:
+            buildings_services: Buildings and services
+            contract_name: Contract name
+            contract_value: Contract value
+            date_of_first_indexation: Date of first indexation
+            direct_award: Direct award
+            framework_sublot_title: Framework, sub-lot
+            framework_sublot_value: RM3830, sub-lot 1a
+            initial_call_off_period: Initial call-off period
+            mobilisation_period: Mobilisation period
+            optional_call_off_extensions_1: Optional call-off extension period 1
+            optional_call_off_extensions_2: Optional call-off extension period 2
+            optional_call_off_extensions_3: Optional call-off extension period 3
+            optional_call_off_extensions_4: Optional call-off extension period 4
+            route_to_market: Route to Market
+            supplier: Supplier
           review_contract:
             attachment_1:
               document_name: About the Direct Award.docx
@@ -917,6 +957,7 @@ en:
           subtitle: Choose one or more regions, based on building's location where you require facilities management services.
         results:
           any_changes: Any changes to the information provided may result in a different outcome.
+          available_routes_to_market: Available route to market
           building_services_summary: Buildings and services summary
           da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
           direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
@@ -925,7 +966,7 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
-          sub-lot: Sub-lot
+          sub-lot: Lot
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
@@ -938,14 +979,59 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-      sessions:
-        new:
-          email_address: Email address
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
-          forgotten_password_html: I've forgotten my password
-          password: Password
-          sign_in_header: Sign in to your account
       supplier:
+        contracts:
+          accepted_contract_offer:
+            list01_1: you will sign the contract first, in the order form, and share with the buyer
+            list01_2: this would usually take place within 5 working days
+            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
+            list02_2: this would usually take place within 2 working days
+            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
+            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
+            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
+            what_happens_next: What happens next
+          contract_offer_details:
+            buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
+          contract_summary_foot:
+            respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
+          edit:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            form_title: Do you accept the contract offer from
+            reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
+          procurement_requirements_head:
+            buyer: Buyer
+          received_contract_offer:
+            list01_1: you should review the offer to see if you wish to accept the contract
+            list01_2: please ensure you download and review all the contract documents
+            list02_1: you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
+            list02_2: the deadline for your response is shown at the top of this page
+            list03_1: if you do not respond within 48 hours it will be recorded as 'no response' and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
+            what_happens_next: What happens next
+          show:
+            buyer_contact_details: Buyer contact details
+            call_off_contract_documents: Call off contract documents
+            requirements: Requirements
+        sent:
+          accepted_offer:
+            list01_1: you will sign the contract first, in the order form, and share with the buyer
+            list01_2: this would usually take place within 5 working days
+            list01_title: 1. You sign the contract
+            list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
+            list02_title: 2. Buyer signs the contract
+            list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
+            list03_title: 3. Signature confirmation
+            list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
+            list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
+            list04_title: 4. Withdraw before signing
+            what_happens_next: What happens next
+          declined_offer:
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
+            description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
+            title: You have declined this contract offer
+          index:
+            link_text: Return to dashboard
         sessions:
           new:
             email_address: Email address
@@ -977,11 +1063,6 @@ en:
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
-    gateway:
-      index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services
@@ -1011,30 +1092,6 @@ en:
         services_selected: Services selected
         start_a_new_procurement_header: Start a new procurement
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-    passwords:
-      edit:
-        confirm_code: Confirm Code
-        confirm_new_password: Confirm new password
-        heading: Reset your password
-        heading1: A reset email has been sent
-        lead: Reset password for
-        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
-        new_password: New password
-        password: Your password must have
-        text01: If you don't receive this, contact CCS customer services team.
-      forgot_password_confirmation:
-        heading: A reset email has been sent
-        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-        text01: If you don't receive this, email
-        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-      new:
-        email: Email address
-        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
-        heading: Reset password
-        lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-      password_reset_success:
-        heading: You have successfully changed your password
-        lead: You can now sign in to your Crown Commercial Service account
     registrations:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
@@ -1084,3 +1141,40 @@ en:
         heading: Enter your access code
         lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+  shared:
+    gateway:
+      index:
+        cmp_support_aria_label: Email us for support with this service
+        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
+        heading: CCS Marketplace private beta
+    passwords:
+      edit:
+        confirm_code: Confirm Code
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        heading1: A reset email has been sent.
+        lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
+        new_password: New password
+        password: Your password must have
+        text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      forgot_password_confirmation:
+        heading: A reset email has been sent.
+        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        text01: If you don't receive this, email
+        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
+        heading: Reset password
+        lead: Enter your email address and we'll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
+    sessions:
+      new:
+        email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        forgotten_password_html: I've forgotten my password
+        password: Password
+        sign_in_header: Sign in to your account
