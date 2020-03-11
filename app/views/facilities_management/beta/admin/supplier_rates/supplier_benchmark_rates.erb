@@ -31,10 +31,10 @@
             <% end %>
           </th>
           <% if(service['standard_b'].length > 0) %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard B <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_b') %> </th>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_b') %> </th>
           <% end %>
           <% if(service['standard_c'].length > 0) %>
-            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">Rate (&#163;) <br/>  Standard C <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_c') %> </th>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"> <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate_c') %> </th>
           <% end %>
         </tr>
       </thead>
@@ -80,12 +80,14 @@
 
 
 
-  <h3 class="govuk-heading-xl govuk-!-font-weight-bold">Benchmark variances <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
+  <h3 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">Item <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.item') %></th>        
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
+            <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.item') %>
+          </th>
           <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
             <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate') %>
           </th>
