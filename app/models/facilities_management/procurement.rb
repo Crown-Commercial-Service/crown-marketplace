@@ -27,7 +27,7 @@ module FacilitiesManagement
     has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :notices_contact_detail, allow_destroy: true
 
-    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
+    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true, before_add: :before_each_procurement_pension_funds
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -43,6 +43,13 @@ module FacilitiesManagement
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
+
+    def before_each_procurement_pension_funds(new_pension_fund)
+      new_pension_fund.case_sensitive_error = false
+      procurement_pension_funds.each do |saved_pension_fund|
+        new_pension_fund.case_sensitive_error = true if (saved_pension_fund.name.downcase == new_pension_fund.name.downcase) && (saved_pension_fund.name != new_pension_fund.name)
+      end
+    end
 
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?

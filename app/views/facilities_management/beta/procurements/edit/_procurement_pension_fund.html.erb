@@ -4,6 +4,7 @@
     <div class="govuk-grid-column-one-half govuk-!-margin-right-2 govuk-!-padding-left-0">
         <p class="govuk-!-margin-bottom-2">
             <%= t('.name_text') %> <span class="pension-number"></span>
+            <%= ff.hidden_field :case_sensitive_error %>
         </p>
         <p class="govuk-!-margin-bottom-0">
             <%= ff.label :name, "pension name label", class: "pension-name-label govuk-visually-hidden" %>

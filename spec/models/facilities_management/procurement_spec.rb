@@ -449,7 +449,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '#save_eligible_suppliers_and_set_state' do
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
-    let(:da_value_test)  { 865.2478374540002 }
+    let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
     let(:da_value_test2) { 347.60116658878 }
     let(:da_value_test3) { 1292.48276446867 }
@@ -740,6 +740,27 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'is expected to be true' do
         99.times do
           procurement.procurement_pension_funds.build(attributes)
+        end
+      end
+    end
+
+    describe '#before_each_procurement_pension_funds verify' do
+      let(:pension_fund1) { build(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+      let(:pension_fund2) { build(:facilities_management_procurement_pension_fund, procurement: create(:facilities_management_procurement)) }
+
+      context 'when the name is not case sensitive' do
+        it 'can be saved if name is not case sensitive' do
+          pension_fund2.name = pension_fund1.name + 'abc'
+          procurement.procurement_pension_funds = [pension_fund1, pension_fund2]
+          expect(pension_fund1.case_sensitive_error).to eq false
+          expect(pension_fund2.case_sensitive_error).to eq false
+        end
+
+        it 'cannot be saved if name is case sensitive' do
+          pension_fund2.name = pension_fund1.name.upcase
+          expect { procurement.procurement_pension_funds = [pension_fund1, pension_fund2] }.to raise_exception(ActiveRecord::RecordNotSaved)
+          expect(pension_fund1.case_sensitive_error).to eq false
+          expect(pension_fund2.case_sensitive_error).to eq true
         end
       end
     end
