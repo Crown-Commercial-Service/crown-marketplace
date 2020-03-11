@@ -46,6 +46,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_storage_validations (0.8.7)
+      rails (>= 5.2.0)
     activejob (5.2.3)
       activesupport (= 5.2.3)
       globalid (>= 0.3.6)
@@ -300,7 +302,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.3)
-    puma (4.3.1)
+    puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
     rack-oauth2 (1.10.1)
@@ -499,6 +501,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.0)
+  active_storage_validations
   activerecord-import (~> 0.15.0)
   activerecord-postgis-adapter
   aws-sdk-cognitoidentityprovider (~> 1.23.0)
@@ -538,7 +541,7 @@ DEPENDENCIES
   phonejack
   poltergeist (>= 1.18.1)
   pry-rails
-  puma (~> 4.3)
+  puma (~> 4.3, >= 4.3.3)
   rails (~> 5.2.3)
   rails-controller-testing (>= 1.0.4)
   ratonvirus

@@ -1,22 +1,19 @@
-<h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-    <%= t('.title')%>
-</h1>
-<div class="govuk-!-width-full govuk-!-font-size-19">
+<div class="govuk-!-width-three-quarters govuk-!-font-size-19">
     <dl class="govuk-summary-list govuk-body">
         <table class="govuk-table govuk-!-margin-bottom-6">
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-one-third"></td>
-                    <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-width-two-thirds"></td>
+                <td class="govuk-table__cell" width="45%"></th>
+                <td class="govuk-table__cell" width="55%"></td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= @page_data[:procurement_data][:supplier] %></th>
+                    <th class="govuk-table__cell govuk-table__header"><%= @contract.supplier.data["supplier_name"] %></th>
                     <td class="govuk-table__cell">
                         <%= govuk_details('Contact details') do %>
-                            <%= "Name: #{@page_data[:supplier_details][:title]} #{@page_data[:supplier_details][:full_name]}"%> <br>
-                            <%= "Telephone: #{@page_data[:supplier_details][:telephone]}"%> <br>
-                            <%= mail_to @page_data[:supplier_details][:email], @page_data[:supplier_details][:email], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
-                            <%= "Address: #{full_address(:supplier_details)}"%> 
+                            <%= "Name: #{@contract.supplier.data["contact_name"]}"%> <br>
+                            <%= "Telephone: #{@contract.supplier.data["contact_phone"]}"%> <br>
+                            <%= mail_to @contract.supplier.data["contact_email"], @contract.supplier.data["contact_email"], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= "Address: #{FacilitiesManagement::SupplierDetail.find_by(contact_email: @contract.supplier.data["contact_email"])&.full_organisation_address}"%> 
                         <% end %>
                     </td>
                 </tr>

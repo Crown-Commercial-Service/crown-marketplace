@@ -31,10 +31,13 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
-    mount_uploader :security_policy_document_file, FacilitiesManagementSecurityPolicyDocumentUploader
+
+    has_one_attached :security_policy_document_file
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
     # extension or size was being uploaded. The error message for this rather than the carrierwave error messages were being displayed
-    validates :security_policy_document_file, presence: true, if: :security_policy_document_required?
+    validates :security_policy_document_file, attached: true, if: :security_policy_document_required?
+    validates :security_policy_document_file, content_type: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document]
+    validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
 
     # attribute to hold and validate the user's selection from the view
@@ -52,7 +55,7 @@ module FacilitiesManagement
       state :da_draft
       state :direct_award, before_enter: :offer_to_next_supplier
       state :further_competition
-      state :closed
+      state :closed, before_enter: :set_close_date
 
       event :set_state_to_results do
         transitions to: :results
@@ -239,7 +242,7 @@ module FacilitiesManagement
     end
 
     def sent_offers
-      procurement_suppliers.where.not(aasm_state: 'unsent').reject(&:closed?)
+      procurement_suppliers.where(aasm_state: %w[sent accepted declined expired not_signed]).reject(&:closed?)
     end
 
     def live_contracts
@@ -248,6 +251,10 @@ module FacilitiesManagement
 
     def closed_contracts
       procurement_suppliers.where.not(aasm_state: 'unsent').select(&:closed?)
+    end
+
+    def set_close_date
+      procurement_suppliers.where.not(aasm_state: 'unsent').last.update(contract_closed_date: DateTime.now.in_time_zone('London'))
     end
 
     def offer_to_next_supplier

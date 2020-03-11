@@ -120,7 +120,11 @@
           <% case @procurement.security_policy_document_required %>
           <% when true %>
             <!--<a href="<%#= asset_path() %>?format=doc" download> <%#= @procurement.security_policy_document_file.to_s.split('/').last %> </a> -->
-            <a href="#"> <%= @procurement.security_policy_document_file.to_s.split('/').last %> </a>
+            <% if @procurement.security_policy_document_file.attached? %>
+              <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=<%= @procurement.security_policy_document_file.filename.to_s.split('.').last[0..2] %>" download> <%= @procurement.security_policy_document_file.filename.to_s %> </a>
+            <% else %>
+              Please upload a security policy document
+            <% end %>
           <% when false %>
             Not applicable
           <% else %>
@@ -136,7 +140,7 @@
           <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :security_policy_document_required, false) %></td>
         </tr>
       <% end %>
-      
+
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:local_government_pension_scheme].any? %>">
         <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:local_government_pension_scheme].any? %>"><%= t('.local_government_pension_scheme') %></th>
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.local_government_pension_scheme %>">
@@ -168,4 +172,3 @@
     </tbody>
   </table>
 </div>
-
