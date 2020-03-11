@@ -27,10 +27,7 @@ module FacilitiesManagement
     has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :notices_contact_detail, allow_destroy: true
 
-    has_one :contract_details, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement
-    accepts_nested_attributes_for :contract_details, allow_destroy: true
-
-    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true
+    has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true, before_add: :before_each_procurement_pension_funds
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -47,6 +44,13 @@ module FacilitiesManagement
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
 
+    def before_each_procurement_pension_funds(new_pension_fund)
+      new_pension_fund.case_sensitive_error = false
+      procurement_pension_funds.each do |saved_pension_fund|
+        new_pension_fund.case_sensitive_error = true if (saved_pension_fund.name.downcase == new_pension_fund.name.downcase) && (saved_pension_fund.name != new_pension_fund.name)
+      end
+    end
+
     def unanswered_contract_date_questions?
       initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
     end
@@ -58,7 +62,7 @@ module FacilitiesManagement
       state :da_draft
       state :direct_award, before_enter: :offer_to_next_supplier
       state :further_competition
-      state :closed, before_enter: :set_close_date
+      state :closed
 
       event :set_state_to_results do
         transitions to: :results
@@ -245,7 +249,7 @@ module FacilitiesManagement
     end
 
     def sent_offers
-      procurement_suppliers.where(aasm_state: %w[sent accepted declined expired not_signed]).reject(&:closed?)
+      procurement_suppliers.where.not(aasm_state: 'unsent').reject(&:closed?)
     end
 
     def live_contracts
@@ -254,10 +258,6 @@ module FacilitiesManagement
 
     def closed_contracts
       procurement_suppliers.where.not(aasm_state: 'unsent').select(&:closed?)
-    end
-
-    def set_close_date
-      procurement_suppliers.where.not(aasm_state: 'unsent').last.update(contract_closed_date: DateTime.now.in_time_zone('London'))
     end
 
     def offer_to_next_supplier
@@ -278,14 +278,6 @@ module FacilitiesManagement
 
     def more_than_max_pensions?
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
-    end
-
-    def assign_contract_number_to_procurement
-      procurement_supplier = procurement_suppliers.first
-      return unless procurement_supplier.contract_number.nil?
-
-      procurement_supplier.assign_contract_number
-      procurement_supplier.save
     end
   end
 end
