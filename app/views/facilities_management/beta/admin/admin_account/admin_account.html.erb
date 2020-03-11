@@ -1,8 +1,8 @@
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t('.dashboard_header') %></span>
-      <span class="govuk-heading-xl"><%= @current_login_email %></span>
+      <span class="govuk-caption-l"><%= @current_login_email %></span>
+      <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
       <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
     </div>
   </div>
@@ -34,7 +34,7 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management"><%= t('.dashboard_supplier_framework_data') %></a>
+        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="?"><%= t('.dashboard_supplier_framework_data') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_supplier_prices') %>
         </p>
