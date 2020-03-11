@@ -118,7 +118,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
 
     describe '.closed?' do
       context 'when all contracts are unsent' do
@@ -136,6 +135,32 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           expect(closed_contracts[0]).to be true
           expect(closed_contracts[1]).to be true
           expect(closed_contracts[2]).to be false
+        end
+      end
+
+      describe '.declined' do
+        context 'when a contract is declined by the supplier' do
+          let(:contract) { procurement.procurement_suppliers[0] }
+
+          before do
+            contract.offer_to_supplier!
+            contract.decline!
+          end
+
+          context 'when the buyer closes the contract' do
+            before do
+              procurement.set_state_to_closed!
+              procurement.reload
+            end
+
+            it 'will remain in a declined state on the procurement supplier' do
+              expect(contract.aasm_state).to eq 'declined'
+            end
+
+            it 'will be closed' do
+              expect(contract.closed?).to be true
+            end
+          end
         end
       end
 
@@ -175,7 +200,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         end
       end
 
-      # rubocop:disable RSpec/NestedGroups
       describe '#reason_for_declining' do
         before { contract.contract_response = false }
 
