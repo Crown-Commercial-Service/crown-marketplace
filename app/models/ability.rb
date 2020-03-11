@@ -27,6 +27,7 @@ class Ability
   end
 
   def admin_tool_specific_auth(user)
+    can :read, :all
     if user.has_any_role? :mc_access, :ls_access, :at_access
       can :manage, ManagementConsultancy::Admin::Upload
       can :manage, LegalServices::Admin::Upload
