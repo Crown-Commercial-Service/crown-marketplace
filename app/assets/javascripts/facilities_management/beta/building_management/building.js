@@ -320,7 +320,7 @@ $(function () {
                 if (data && data.result && data.result.length === 1) {
                     var region_name = data.result[0].region ;
                     $('#fm-building-region').html(region_name);
-                    updateRegion(region_name);
+                    updateRegion(region_name, data.result[0].code);
                 }
 
             })
