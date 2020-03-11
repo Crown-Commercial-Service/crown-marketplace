@@ -7,6 +7,7 @@ module FacilitiesManagement
 
     attribute :contract_response
     attribute :contract_signed
+    attribute :reason_for_not_signing
     attribute :contract_start_date_dd
     attribute :contract_start_date_mm
     attribute :contract_start_date_yyyy
@@ -23,7 +24,7 @@ module FacilitiesManagement
 
     before_validation :convert_to_boolean, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
-    validates :reason_for_closing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
+    validates :reason_for_not_signing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
     validates :contract_end_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
     validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: :contract_signed_true?, on: :confirmation_of_signed_contract

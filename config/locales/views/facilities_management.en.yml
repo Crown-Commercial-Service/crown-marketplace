@@ -270,7 +270,7 @@ en:
               inclusion: Select one option
             contract_start_date:
               blank: Enter contract start date
-            reason_for_closing:
+            reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
             reason_for_declining:
               blank: Enter a reason for declining this contract offer

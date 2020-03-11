@@ -57,6 +57,7 @@ module FacilitiesManagement
                 .permit(
                   :reason_for_closing,
                   :contract_signed,
+                  :reason_for_not_signing,
                   :contract_start_date_dd,
                   :contract_start_date_mm,
                   :contract_start_date_yyyy,
@@ -69,12 +70,15 @@ module FacilitiesManagement
         def update_supplier_response
           @contract.assign_attributes(contract_params)
           if @contract.valid?(:confirmation_of_signed_contract)
-            # if @contract.contract_signed
-
-            # else
-
-            # end
-            # redirect_to facilities_management_beta_supplier_contract_sent_index_path(@contract.id)
+            if @contract.contract_signed
+              @contract.update(contract_start_date: @contract.contract_start_date, contract_end_date: @contract.contract_end_date)
+              @contract.sign! # TO DO - sort routing once view works
+              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+            else
+              @contract.update(reason_for_not_signing: @contract.reason_for_not_signing)
+              @contract.not_sign!
+              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+            end
           else
             set_page_detail
             render :edit
