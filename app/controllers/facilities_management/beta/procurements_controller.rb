@@ -697,7 +697,7 @@ module FacilitiesManagement
                                                    :postcode,
                                                    :active,
                                                    service_codes: []],
-                procurement_pension_funds_attributes: %i[id name percentage _destroy],
+                procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error],
                 invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode],
                 authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number],
                 notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
