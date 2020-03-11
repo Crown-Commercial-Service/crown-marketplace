@@ -136,9 +136,9 @@ RSpec.feature 'Authentication', type: :feature do
   context 'when user if fm admin' do
     let(:cognito_groups) do
       OpenStruct.new(groups: [
-        OpenStruct.new(group_name: 'fm_access'),
-        OpenStruct.new(group_name: 'ccs_employee')
-      ])
+                       OpenStruct.new(group_name: 'fm_access'),
+                       OpenStruct.new(group_name: 'ccs_employee')
+                     ])
     end
 
     scenario 'can sign into the admin tool using AWS Cognito' do
@@ -157,9 +157,9 @@ RSpec.feature 'Authentication', type: :feature do
   context 'when user if mc admin' do
     let(:cognito_groups) do
       OpenStruct.new(groups: [
-        OpenStruct.new(group_name: 'mc_access'),
-        OpenStruct.new(group_name: 'ccs_employee')
-      ])
+                       OpenStruct.new(group_name: 'mc_access'),
+                       OpenStruct.new(group_name: 'ccs_employee')
+                     ])
     end
 
     scenario 'cannot sign into the admin tool using AWS Cognito' do
