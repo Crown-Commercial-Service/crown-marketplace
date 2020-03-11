@@ -13,7 +13,7 @@
       <% @closed_contract.each do |closed_contract| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-            <%= link_to closed_contract.procurement.contract_name, '#' %>
+            <%= link_to closed_contract.procurement.contract_name, facilities_management_beta_procurement_contract_path(procurement_id: closed_contract.procurement.id, id: closed_contract.id) %>
           </th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= closed_contract.supplier.data['supplier_name'] %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(closed_contract.contract_closed_date) %></td>

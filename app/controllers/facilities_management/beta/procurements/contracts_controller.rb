@@ -29,7 +29,8 @@ module FacilitiesManagement
         def close_procurement
           @contract.assign_attributes(contract_params)
           if @contract.valid?(:reason_for_closing)
-            @contract.withdraw!
+            @contract.save!
+            @contract.withdraw! if @contract.may_withdraw?
             @procurement.set_state_to_closed!
             redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           else
