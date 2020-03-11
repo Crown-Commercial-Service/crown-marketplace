@@ -1,0 +1,44 @@
+
+<div class="govuk-heading-l">
+    <%= t('.description') %>
+</div>
+<div class="govuk-radios">
+    <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="contract-signed-yes" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'yes' %>/>
+        <label class="govuk-label govuk-radios__label" for="contract-signed-yes">
+            Yes
+        </label>
+    </div>
+    <div id="contract-signed-yes-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-margin-bottom-2 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:yes_is_used]%>">
+        <span class="govuk-body">
+            <%= t('.contract_start_date', class: 'govuk-body ccs-font-weight-semi-bold') %>
+        </span>
+        <span>
+            <%= t('.contract_start_date_caption', class: 'govuk-hint') %>
+        </span>
+        <%= f.gov_uk_date_field :contract_start_date, legend_options: { page_heading: false, visually_hidden: false } %>
+        
+        <span>
+            <%= t('.contract_end_date', class: 'govuk-body ccs-font-weight-semi-bold') %>
+        </span>
+        <span class="govuk-hint">
+            <%= t('.contract_end_date_caption', class: 'govuk-hint') %>
+        </span>
+        <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
+    </div>
+
+    <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="contract-signed-no" name="contract-signed-status" type="radio" value="no" <%= 'checked' if @page_data[:checked].to_s == 'no' %>/>
+        <label class="govuk-label govuk-radios__label" for="contract-signed-no">
+            No
+        </label>
+    </div>
+    <div id="contract-signed-no-container" class="govuk-details__text govuk-!-padding-top-0 govuk-!-margin-left-3 govuk-!-width-two-thirds  <%= 'govuk-visually-hidden' unless @page_data[:no_is_used]%>" data-module="character-count" data-maxlength="100">
+        <%#= govuk_label(f, f.object, :reason_for_closing, {reason_for_closing: t('.reason_for_closing')}) %>
+        <%= display_error_label(f.object, :reason_for_closing, '', "#{f.object_name}_reason_for_closing") %>
+        <%= govuk_text_area_input(f, :reason_for_closing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
+        <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
+            You have 100 characters remaining
+        </span>
+    </div>
+</div>

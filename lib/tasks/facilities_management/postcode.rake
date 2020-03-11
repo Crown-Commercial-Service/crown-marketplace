@@ -101,7 +101,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       puts "*** Loading file #{obj.key}"
       chunks = ''
       obj.get do |chunk|
-        # rc.put_copy_data chunk
         chunks << chunk
       end
       ActiveRecord::Base.connection_pool.with_connection do |conn|

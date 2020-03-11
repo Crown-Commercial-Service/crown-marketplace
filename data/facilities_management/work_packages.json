@@ -1331,5 +1331,14 @@
     "metric": "",
     "work_package_code": "N",
     "has_standards": false
+  },
+  {
+    "code": "O.1",
+    "name": "Management of billable works",
+    "description": "Chargeable services delivered outside the agreed overall contract price for example small/large projects",
+    "mandatory": true,
+    "metric": "",
+    "work_package_code": "O",
+    "has_standards": false
   }
 ]
