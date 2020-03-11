@@ -5,5 +5,10 @@ module FacilitiesManagement
     validates :name, length: { maximum: 150 }
     validates :percentage, presence: true
     validates :percentage, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }
+
+    attribute :case_sensitive_error, :boolean, default: false
+    validates_each :name do |record, attr|
+      record.errors.add(attr, :taken) if record.case_sensitive_error == true
+    end
   end
 end
