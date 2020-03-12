@@ -129,8 +129,8 @@ module FacilitiesManagement
       suppliers = CCS::FM::Supplier.all.select do |s|
         s.data['lots'].find do |l|
           (l['lot_number'] == for_lot) &&
-            (@posted_locations & l['regions']).any? &&
-            (@posted_services & l['services']).any?
+            (@posted_locations - l['regions']).empty? &&
+            (@posted_services - l['services']).empty?
         end
       end
 
