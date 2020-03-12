@@ -176,6 +176,10 @@ Rails.application.routes.draw do
         get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
         get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
       end
+      namespace :admin do
+        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+      end
     end
 
     get '/', to: 'home#index'
