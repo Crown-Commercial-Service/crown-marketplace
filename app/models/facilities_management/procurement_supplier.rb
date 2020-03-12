@@ -15,8 +15,6 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
-    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
-
     before_validation :supplier_convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
