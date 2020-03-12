@@ -1,9 +1,9 @@
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
+      <a class="govuk-breadcrumbs__link" href="#">Home</a>
     </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.leading_text') %></li>
   </ol>
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></h1>
@@ -80,11 +80,7 @@
 
 
 
-  <h3 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
-  <p class="govuk-body govuk-brand-light-grey-benchmark">
-    <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.benchmark_text') %>
-  </p>
-  
+  <h3 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
@@ -169,5 +165,5 @@
 
 
   <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.update_button') %>" class="govuk-button" data-disable-with="Continue">
-  <a href="<%= facilities_management_beta_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
+  <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
 </form>
