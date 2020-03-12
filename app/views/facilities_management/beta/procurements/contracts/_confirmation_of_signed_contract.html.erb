@@ -29,14 +29,16 @@
         <%= f.gov_uk_date_field :contract_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
       </div>
 
-      <div class="govuk-body ccs-font-weight-semi-bold">
-        <%= t('.contract_end_date') %> <br />
+      <div class="govuk-!-margin-top-4">
+        <div class="govuk-body ccs-font-weight-semi-bold">
+          <%= t('.contract_end_date') %> <br />
+        </div>
+        <div class="govuk-hint" name="contract_end_date">
+          <%= t('.contract_end_date_caption') %>
+        </div>
+        <%= display_error_label(@contract, :contract_end_date, '', "#{f.object_name}_contract_end_date") %>
+        <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
       </div>
-      <div class="govuk-hint" name="contract_end_date">
-        <%= t('.contract_end_date_caption') %>
-      </div>
-      <%= display_error_label(@contract, :contract_end_date, '', "#{f.object_name}_contract_end_date") %>
-      <%= f.gov_uk_date_field :contract_end_date, legend_options: { page_heading: false, visually_hidden: true } %>
     </div>
 
     <div class="govuk-radios__item">

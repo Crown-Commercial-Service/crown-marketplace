@@ -263,7 +263,7 @@ en:
           attributes:
             contract_end_date:
               after_or_equal_to: The contract end date must be after the contract start date
-              blank: Enter contract start date
+              blank: Enter contract end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
             contract_signed:
