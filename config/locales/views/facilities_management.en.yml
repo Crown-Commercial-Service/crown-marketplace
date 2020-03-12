@@ -307,6 +307,7 @@ en:
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
+            email_hint_html: Enter the email address you used to register
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
@@ -964,6 +965,7 @@ en:
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
       sessions:
         new:
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
           nonadmin_sign_in_header: Sign in to your account
       supplier:
         contracts:
@@ -1160,6 +1162,5 @@ en:
     sessions:
       new:
         email_address: Email address
-        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
