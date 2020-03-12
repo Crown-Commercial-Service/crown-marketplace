@@ -171,7 +171,6 @@ Rails.application.routes.draw do
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
-        get 'supplier-rates', to: 'supplier_rates#index'
       end
       namespace :admin do
         get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
