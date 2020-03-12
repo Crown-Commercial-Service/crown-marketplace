@@ -138,7 +138,7 @@ module FacilitiesManagement
     def buyer_convert_to_boolean
       self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
     end
-    
+
     def supplier_convert_to_boolean
       self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
     end
