@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::DashboardController do
     context 'when new login' do
       it 'returns http success' do
         get :index
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:found)
       end
     end
   end
