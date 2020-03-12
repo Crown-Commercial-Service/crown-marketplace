@@ -126,6 +126,7 @@ ignore_unused:
   - home.index.management_consultancy_link
   - home.index.legal_services_link
   - home.index.facilities_management_link
+  - facilities_management.beta.admin.supplier_rates.supplier_framework_rates.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

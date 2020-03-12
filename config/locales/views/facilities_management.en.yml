@@ -293,49 +293,6 @@ en:
       selectall_text: Select all
     beta:
       admin:
-        supplier_rates:
-          supplier_framework_rates:
-            heading_title: Average framework rates
-            heading_title_two: Average framework variances
-            leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate_a: Rate (£) *Standard A
-            rate_pound_a: Rate (£)
-            rate_percentage_a: Rate (%)
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate: Rate
-            item: Item
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_corporate: Corporate overhead (%)
-            td_profit: Profit (%)
-            td_london: London location percentage variance (%)
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
-            td_tupe: Direct award TUPE risk premium (%)
-            td_mobilisation: Direct award mobilisation (%)
-            update_button: Save and return to dashboard
-            rtrn_link: Return to admin dashboard
-          supplier_benchmark_rates:
-            heading_title: Call-off benchmark rates
-            heading_title_two: Benchmark variances
-            leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate_a: Rate (£) *Standard A
-            rate_pound_a: Rate (£)
-            rate_percentage_a: Rate (%)
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate: Rate
-            item: Item
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_corporate: Corporate overhead (%)
-            td_profit: Profit (%)
-            td_london: London location percentage variance (%)
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
-            td_tupe: TUPE risk premium (%)
-            td_mobilisation: Mobilisation
-            update_button: Save and return to dashboard
-            rtrn_link: Return to admin dashboard
         admin_account:
           admin_account:
             dashboard_assessed_value: Assessed value
@@ -351,6 +308,49 @@ en:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
+        supplier_rates:
+          supplier_benchmark_rates:
+            heading_title: Call-off benchmark rates
+            heading_title_two: Benchmark variances
+            item: Item
+            leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
+            note: "*Use this column for normal price if Standard A isn't applicable"
+            rate: Rate
+            rate_a: Rate (£) *Standard A
+            rate_b: Rate (£) Standard B
+            rate_c: Rate (£) Standard C
+            rate_percentage_a: Rate (%)
+            rate_pound_a: Rate (£)
+            rtrn_link: Return to admin dashboard
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead (%)
+            td_london: London location percentage variance (%)
+            td_mobilisation: Mobilisation
+            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+            td_profit: Profit (%)
+            td_tupe: TUPE risk premium (%)
+            update_button: Save and return to dashboard
+          supplier_framework_rates:
+            heading_title: Average framework rates
+            heading_title_two: Average framework variances
+            item: Item
+            leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
+            note: "*Use this column for normal price if Standard A isn't applicable"
+            rate: Rate
+            rate_a: Rate (£) *Standard A
+            rate_b: Rate (£) Standard B
+            rate_c: Rate (£) Standard C
+            rate_percentage_a: Rate (%)
+            rate_pound_a: Rate (£)
+            rtrn_link: Return to admin dashboard
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead (%)
+            td_london: London location percentage variance (%)
+            td_mobilisation: Direct award mobilisation (%)
+            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+            td_profit: Profit (%)
+            td_tupe: Direct award TUPE risk premium (%)
+            update_button: Save and return to dashboard
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
