@@ -306,11 +306,58 @@ en:
             dashboard_average_rate: Average framework rates
             dashboard_calloff_rate: Call-off benchmark rates
             dashboard_header: RM3830 administration dashboard
-            dashboard_manage_calloff_rate: Manage the call-off benchmark rates snd variances
+            dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
             dashboard_manage_rate: Manage the average framework rates and variances
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
+        sessions:
+          new:
+            admin_sign_in_header: Sign in to your administration dashboard
+            email_hint_html: Enter the email address you used to register
+        supplier_rates:
+          supplier_benchmark_rates:
+            heading_title: Call-off benchmark rates
+            heading_title_two: Benchmark variances
+            item: Item
+            leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
+            note: "*Use this column for normal price if Standard A isn't applicable"
+            rate: Rate
+            rate_a: Rate (£) *Standard A
+            rate_b: Rate (£) Standard B
+            rate_c: Rate (£) Standard C
+            rate_percentage_a: Rate (%)
+            rate_pound_a: Rate (£)
+            rtrn_link: Return to admin dashboard
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead (%)
+            td_london: London location percentage variance (%)
+            td_mobilisation: Mobilisation
+            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+            td_profit: Profit (%)
+            td_tupe: TUPE risk premium (%)
+            update_button: Save and return to dashboard
+          supplier_framework_rates:
+            heading_title: Average framework rates
+            heading_title_two: Average framework variances
+            item: Item
+            leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
+            note: "*Use this column for normal price if Standard A isn't applicable"
+            rate: Rate
+            rate_a: Rate (£) *Standard A
+            rate_b: Rate (£) Standard B
+            rate_c: Rate (£) Standard C
+            rate_percentage_a: Rate (%)
+            rate_pound_a: Rate (£)
+            rtrn_link: Return to admin dashboard
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+            td_corporate: Corporate overhead (%)
+            td_london: London location percentage variance (%)
+            td_mobilisation: Direct award mobilisation (%)
+            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+            td_profit: Profit (%)
+            td_tupe: Direct award TUPE risk premium (%)
+            update_button: Save and return to dashboard
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
@@ -462,6 +509,8 @@ en:
           save_and_return_to_service_information: Save and return to service information
           subheading: Answer additional questions about the services
       procurement_buildings_services:
+        day_section:
+          copy_details: Apply to Monday to Friday
         lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
@@ -976,6 +1025,10 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
+      sessions:
+        new:
+          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          nonadmin_sign_in_header: Sign in to your account
       supplier:
         contracts:
           accepted_contract_offer:
@@ -1171,7 +1224,5 @@ en:
     sessions:
       new:
         email_address: Email address
-        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
-        sign_in_header: Sign in to your account
