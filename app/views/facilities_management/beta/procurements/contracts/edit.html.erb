@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @contract, true) do |pd| %>
+  <%= govuk_page_content(@page_description, @contract, true) do |pd| %>
     <%= form_for @contract, url: facilities_management_beta_procurement_contract_path, method: :put do |f| %>
         <% if params[:name] == 'withdraw' %>
         <%= render partial: 'closing_direct_award_offer', :locals=>{:f=>f} %>
@@ -9,9 +9,9 @@
         <% else %>
         <%= render partial: 'confirmation_of_signed_contract', :locals=>{:f=>f} %>
         <div class= 'govuk-!-margin-top-5'>
-            <%= f.submit(value:"Save and Continue", class: 'govuk-!-margin-right-4 govuk-button govuk-button--warning', data: { disable_with: false }, name: :sign_procurement) %>
+            <%= f.submit(value:"Save and continue", class: 'govuk-!-margin-right-4 govuk-button govuk-button', data: { disable_with: false }, name: :sign_procurement) %>
             <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
-        </div>
+          </div>
         <% end %>
     <% end %>
 <% end %>

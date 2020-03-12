@@ -230,6 +230,91 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           end
         end
       end
+
+      describe '#confirmation_of_signed_contract' do
+        before do
+          contract.accept!
+        end
+
+        context 'when nothing is selected' do
+          it 'will not be valid' do
+            expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+          end
+        end
+
+        context 'when the supplier has not signed' do
+          context 'when no signing date is selected' do
+            it 'will not be valid' do
+              contract.contract_signed = false
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will not be valid with no reason for closing' do
+              contract.contract_signed = false
+              contract.reason_for_not_signing = nil
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will be valid with a reason for closing' do
+              contract.contract_signed = false
+              contract.reason_for_not_signing = 'reason'
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+            end
+
+            it 'will be not valid with a reason for closing above 100 characters' do
+              contract.contract_signed = false
+              contract.reason_for_not_signing = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will be valid with a reason for closing below 100 characters' do
+              contract.contract_signed = false
+              contract.reason_for_not_signing = 'In my younger and more vulnerable years my father gave me some advice'
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+            end
+          end
+        end
+
+        context 'when the supplier has signed' do
+          context 'when a contract start date has been added' do
+            context 'when a start date has been added without an end date' do
+              it 'will not be valid' do
+                contract.contract_signed = true
+                contract.contract_start_date = DateTime.zone.now
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+            end
+
+            context 'when both a start and end date have been added' do
+              it 'will be valid' do
+                contract.contract_signed = true
+                contract.contract_start_date = DateTime.zone.now
+                contract.contract_end_date = DateTime.zone.now + 1
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+              end
+            end
+          end
+
+          context 'when a contract end date has been added' do
+            context 'when an end date has been added without a start date' do
+              it 'will not be valid' do
+                contract.contract_signed = true
+                contract.contract_end_date = DateTime.zone.now + 1
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+            end
+
+            context 'when both a start and end date have been added' do
+              it 'will be valid' do
+                contract.contract_signed = true
+                contract.contract_start_date = DateTime.zone.now
+                contract.contract_end_date = DateTime.zone.now + 1
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+              end
+            end
+          end
+        end
+      end
       # rubocop:enable RSpec/NestedGroups
     end
   end

@@ -14,6 +14,7 @@ module FacilitiesManagement
 
         def update
           close_procurement && return if params['close_procurement'].present?
+          update_supplier_response && return if params['sign_procurement'].present?
         end
 
         private
@@ -29,8 +30,7 @@ module FacilitiesManagement
         def close_procurement
           @contract.assign_attributes(contract_params)
           if @contract.valid?(:reason_for_closing)
-            @contract.save!
-            @contract.withdraw! if @contract.may_withdraw?
+            @contract.withdraw!
             @procurement.set_state_to_closed!
             redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           else
@@ -56,7 +56,33 @@ module FacilitiesManagement
           params.require(:facilities_management_procurement_supplier)
                 .permit(
                   :reason_for_closing,
+                  :contract_signed,
+                  :reason_for_not_signing,
+                  :contract_start_date_dd,
+                  :contract_start_date_mm,
+                  :contract_start_date_yyyy,
+                  :contract_end_date_dd,
+                  :contract_end_date_mm,
+                  :contract_end_date_yyyy
                 )
+        end
+
+        def update_supplier_response
+          @contract.assign_attributes(contract_params)
+          if @contract.valid?(:confirmation_of_signed_contract)
+            if @contract.contract_signed
+              @contract.update(contract_start_date: @contract.contract_start_date, contract_end_date: @contract.contract_end_date)
+              @contract.sign!
+              redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+            else
+              @contract.update(reason_for_not_signing: @contract.reason_for_not_signing)
+              @contract.not_sign!
+              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+            end
+          else
+            set_page_detail
+            render :edit
+          end
         end
 
         # rubocop:disable Metrics/AbcSize

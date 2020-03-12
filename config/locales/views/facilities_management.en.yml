@@ -261,12 +261,19 @@ en:
               required: Enter a percentage of pensionable pay
         facilities_management/procurement_supplier:
           attributes:
+            contract_end_date:
+              after_or_equal_to: The contract end date must be after the contract start date
+              blank: Enter contract end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
-            reason_for_closing:
-              blank: Enter a reason for closing this procurement
+            contract_signed:
+              inclusion: Select one option
+            contract_start_date:
+              blank: Enter contract start date
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
+            reason_for_not_signing:
+              blank: Enter a reason why this contract will not be signed
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -293,64 +300,17 @@ en:
       selectall_text: Select all
     beta:
       admin:
-        supplier_rates:
-          supplier_framework_rates:
-            heading_title: Average framework rates
-            heading_title_two: Average framework variances
-            leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate_a: Rate (£) *Standard A
-            rate_pound_a: Rate (£)
-            rate_percentage_a: Rate (%)
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate: Rate
-            item: Item
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_corporate: Corporate overhead (%)
-            td_profit: Profit (%)
-            td_london: London location percentage variance (%)
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
-            td_tupe: Direct award TUPE risk premium (%)
-            td_mobilisation: Direct award mobilisation (%)
-            update_button: Save and return to dashboard
-            rtrn_link: Return to admin dashboard
-          supplier_benchmark_rates:
-            heading_title: Call-off benchmark rates
-            heading_title_two: Benchmark variances
-            leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-            note: "*Use this column for normal price if Standard A isn't applicable"
-            rate_a: Rate (£) *Standard A
-            rate_pound_a: Rate (£)
-            rate_percentage_a: Rate (%)
-            rate_b: Rate (£) Standard B
-            rate_c: Rate (£) Standard C
-            rate: Rate
-            item: Item
-            td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-            td_corporate: Corporate overhead (%)
-            td_profit: Profit (%)
-            td_london: London location percentage variance (%)
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
-            td_tupe: TUPE risk premium (%)
-            td_mobilisation: Mobilisation
-            update_button: Save and return to dashboard
-            rtrn_link: Return to admin dashboard
         admin_account:
           admin_account:
             dashboard_assessed_value: Assessed value
             dashboard_average_rate: Average framework rates
             dashboard_calloff_rate: Call-off benchmark rates
             dashboard_header: RM3830 administration dashboard
-            dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
+            dashboard_manage_calloff_rate: Manage the call-off benchmark rates snd variances
             dashboard_manage_rate: Manage the average framework rates and variances
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
-        sessions:
-          new:
-            admin_sign_in_header: Sign in to your administration dashboard
-            email_hint_html: Enter the email address you used to register
       building-details-summary:
         add_address_text: Add address
         add_desc_text: Add description
@@ -502,8 +462,6 @@ en:
           save_and_return_to_service_information: Save and return to service information
           subheading: Answer additional questions about the services
       procurement_buildings_services:
-        day_section:
-          copy_details: Apply to Monday to Friday
         lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
@@ -549,10 +507,18 @@ en:
             you_sign_2: this will happen offline (outside this portal)
             you_sign_3: usually within 2 working days
           closed:
-            index:
+            contract_closed:
               info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-              return_text: Return procurements dashboard
               title: Your procurement has been closed
+            contract_signed:
+              end_date: End date
+              info_1: You’ve confirmed that both parties have signed.
+              info_2: This is now a live contract.
+              live_period: Live contract period
+              start_date: Start date
+              title: Your contract has been signed
+            index:
+              return_text: Return to procurements dashboard
           closing_direct_award_offer:
             are_you_sure_1: Are you sure you wish to close the
             are_you_sure_2: procurement?
@@ -564,7 +530,11 @@ en:
             contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
             contract_start_date: Enter contract start date
             contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
+            contract_will_not_be_signed: This contract will not be signed.
+            contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
             description: Please confirm if both parties have signed and exchanged the contract
+            input_remaining: You have 100 characters remaining
+            title: Confirmation of signed contract
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
@@ -1006,10 +976,6 @@ en:
           service_specification_doc: Read the service specification document
           services_selected: Services selected
           subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
-      sessions:
-        new:
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
-          nonadmin_sign_in_header: Sign in to your account
       supplier:
         contracts:
           accepted_contract_offer:
@@ -1205,5 +1171,7 @@ en:
     sessions:
       new:
         email_address: Email address
+        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
+        sign_in_header: Sign in to your account
