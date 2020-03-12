@@ -15,14 +15,14 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
-    before_validation :convert_to_boolean, on: :contract_response
+    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
+
+    before_validation :supplier_convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
     validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
 
-    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
-
-    before_validation :convert_to_boolean, on: :confirmation_of_signed_contract
+    before_validation :buyer_convert_to_boolean, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
     validates :reason_for_not_signing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
@@ -135,9 +135,12 @@ module FacilitiesManagement
       contract_signed == true
     end
 
-    def convert_to_boolean
-      self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
+    def buyer_convert_to_boolean
       self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
+    end
+    
+    def supplier_convert_to_boolean
+      self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
     end
 
     def generate_contract_number

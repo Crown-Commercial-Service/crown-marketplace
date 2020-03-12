@@ -72,8 +72,8 @@ module FacilitiesManagement
           if @contract.valid?(:confirmation_of_signed_contract)
             if @contract.contract_signed
               @contract.update(contract_start_date: @contract.contract_start_date, contract_end_date: @contract.contract_end_date)
-              @contract.sign! # TO DO - sort routing once view works
-              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+              @contract.sign!
+              redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
             else
               @contract.update(reason_for_not_signing: @contract.reason_for_not_signing)
               @contract.not_sign!

@@ -263,7 +263,7 @@ en:
           attributes:
             contract_end_date:
               after_or_equal_to: The contract end date must be after the contract start date
-              blank: Enter contract end date
+              blank: Enter contract start date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
             contract_signed:
@@ -507,10 +507,18 @@ en:
             you_sign_2: this will happen offline (outside this portal)
             you_sign_3: usually within 2 working days
           closed:
-            index:
+            contract_closed:
               info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-              return_text: Return procurements dashboard
               title: Your procurement has been closed
+            contract_signed:
+              end_date: End date
+              info_1: You’ve confirmed that both parties have signed.
+              info_2: This is now a live contract.
+              live_period: Live contract period
+              start_date: Start date
+              title: Your contract has been signed
+            index:
+              return_text: Return to procurements dashboard
           closing_direct_award_offer:
             are_you_sure_1: Are you sure you wish to close the
             are_you_sure_2: procurement?
