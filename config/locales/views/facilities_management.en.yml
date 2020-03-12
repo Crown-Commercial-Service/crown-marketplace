@@ -314,7 +314,7 @@ en:
             td_tupe: Direct award TUPE risk premium (%)
             td_mobilisation: Direct award mobilisation (%)
             update_button: Save and return to dashboard
-            rtrn_link: Return to admin dashboard          
+            rtrn_link: Return to admin dashboard
           supplier_benchmark_rates:
             heading_title: Call-off benchmark rates
             heading_title_two: Benchmark variances
