@@ -103,6 +103,26 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
         end
       end
 
+      context 'when attributes are default' do
+        it 'check attributes present' do
+          expect(pension_fund.attributes).to include('case_sensitive_error')
+        end
+
+        it 'check attributes default' do
+          expect(pension_fund.case_sensitive_error).to eq false
+        end
+
+        it 'generates validation error' do
+          pension_fund.case_sensitive_error = true
+          expect(pension_fund.valid?).to eq false
+          expect(pension_fund.errors[:name]).to match_array('Enter a unique pension fund name, duplication is not allowed')
+        end
+
+        it 'generates no validation error' do
+          expect(pension_fund.valid?).to eq true
+        end
+      end
+
       context 'when the percentage is between 1 and 100 percent inclusive' do
         it 'is expected to be false' do
           pension_fund.percentage = 1

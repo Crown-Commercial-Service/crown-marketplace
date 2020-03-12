@@ -17,9 +17,8 @@ module FMCalculator
     @framework_rates = nil
 
     # rubocop:disable Metrics/ParameterLists (with a s)
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag,
-                   rates, rate_card = nil, supplier_name = nil, building_data = nil)
+    # rubocop:disable Metrics/AbcSize
+    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -27,12 +26,12 @@ module FMCalculator
       @uom_vol = uom_vol
       @occupants = occupants
       @tupe_flag = tupe_flag
-      @london_flag = london_flag.downcase == 'y'
-      @cafm_flag = cafm_flag.downcase == 'y'
-      @helpdesk_flag = helpdesk_flag.downcase == 'y'
+      @london_flag = london_flag
+      @cafm_flag = cafm_flag
+      @helpdesk_flag = helpdesk_flag
 
-      @benchmark_rates = rates[:benchmark_rates] || rates['benchmark_rates']
-      @framework_rates = rates[:framework_rates] || rates['framework_rates']
+      @benchmark_rates = rates[:benchmark_rates]
+      @framework_rates = rates[:framework_rates]
 
       if supplier_name
         @supplier_name = supplier_name.to_sym
@@ -45,7 +44,7 @@ module FMCalculator
       @building_type = @building_data[:'fm-building-type'] || @building_data['building-type'] if building_data
       @building_type = @building_type.to_sym if @building_type
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
@@ -65,7 +64,7 @@ module FMCalculator
         if @supplier_name
           @occupants * @rate_card_variances[:'Cleaning Consumables per Building User (£)']
         else
-          @occupants * @framework_rates['M146']
+          @occupants * framework_rate_for('M146')
         end
     end
 

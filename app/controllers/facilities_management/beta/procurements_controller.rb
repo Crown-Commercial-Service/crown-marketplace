@@ -182,7 +182,7 @@ module FacilitiesManagement
 
         cache__calculation_values_for_spreadsheet_flag = true
 
-        @report = SummaryReport.new(@start_date, user_email, TransientSessionInfo[session.id], @procurement)
+        @report = SummaryReport.new(@procurement)
 
         if @procurement
           @selected_buildings = @procurement.active_procurement_buildings
@@ -200,7 +200,7 @@ module FacilitiesManagement
         # get the services including help & cafm for the,contract rate card,worksheet
         @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
 
-        supplier_names = @rate_card.data[:Prices].keys
+        supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
         supplier_names.each do |supplier_name|
           # e.g. dummy_supplier_name = 'Hickle-Schinner'
           a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
@@ -697,7 +697,7 @@ module FacilitiesManagement
                                                    :postcode,
                                                    :active,
                                                    service_codes: []],
-                procurement_pension_funds_attributes: %i[id name percentage _destroy],
+                procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error],
                 invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode],
                 authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number],
                 notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]

@@ -3,12 +3,12 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
+    cannot :manage, :all
     if user.has_role? :ccs_admin
       can :manage, :all
     elsif user.has_role? :ccs_employee
       admin_tool_specific_auth(user)
     else
-      cannot :manage, :all
       service_specific_auth(user) if user.has_role? :buyer
       can :read, FacilitiesManagement::Supplier if user.has_role?(:fm_access) && user.has_role?(:supplier)
     end
@@ -28,10 +28,11 @@ class Ability
 
   def admin_tool_specific_auth(user)
     can :read, :all
-    if user.has_any_role? :fm_access, :mc_access, :ls_access, :at_access
+    if user.has_any_role? :mc_access, :ls_access, :at_access
       can :manage, ManagementConsultancy::Admin::Upload
       can :manage, LegalServices::Admin::Upload
     end
     can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
+    can :manage, FacilitiesManagement::Beta::Admin if user.has_role? :fm_access
   end
 end

@@ -721,4 +721,115 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
   end
+
+  describe '#uval' do
+    let(:code) { nil }
+    let(:lift_data) { nil }
+    let(:no_of_appliances_for_testing) { nil }
+    let(:no_of_building_occupants) { nil }
+    let(:size_of_external_area) { nil }
+    let(:no_of_consoles_to_be_serviced) { nil }
+    let(:tones_to_be_collected_and_removed) { nil }
+    let(:no_of_units_to_be_serviced) { nil }
+    let(:service_hours) { nil }
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             lift_data: lift_data,
+             no_of_appliances_for_testing: no_of_appliances_for_testing,
+             no_of_building_occupants: no_of_building_occupants,
+             size_of_external_area: size_of_external_area,
+             no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
+             tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
+             no_of_units_to_be_serviced: no_of_units_to_be_serviced,
+             service_hours: service_hours,
+             procurement_building: create(:facilities_management_procurement_building_no_services,
+                                          procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+    end
+
+    context 'when service is C.5' do
+      let(:code) { 'C.5' }
+      let(:lift_data) { %w[5 5 2 2] }
+
+      it 'returns lift_data' do
+        expect(procurement_building_service.uval).to eq lift_data.map(&:to_i).inject(&:+)
+      end
+
+      it 'does not return building GIA' do
+        expect(procurement_building_service.uval).not_to eq 1002
+      end
+    end
+
+    context 'when service is E.4' do
+      let(:code) { 'E.4' }
+      let(:no_of_appliances_for_testing) { 110 }
+
+      it 'returns no_of_appliances_for_testing' do
+        expect(procurement_building_service.uval).to eq no_of_appliances_for_testing
+      end
+    end
+
+    context 'when service is G.1' do
+      let(:code) { 'G.1' }
+      let(:no_of_building_occupants) { 192 }
+
+      it 'returns no_of_building_occupants' do
+        expect(procurement_building_service.uval).to eq no_of_building_occupants
+      end
+    end
+
+    context 'when service is G.5' do
+      let(:code) { 'G.5' }
+      let(:size_of_external_area) { 925 }
+
+      it 'returns size_of_external_area' do
+        expect(procurement_building_service.uval).to eq size_of_external_area
+      end
+    end
+
+    context 'when service is K.1' do
+      let(:code) { 'K.1' }
+      let(:no_of_consoles_to_be_serviced) { 22 }
+
+      it 'returns no_of_consoles_to_be_serviced' do
+        expect(procurement_building_service.uval).to eq no_of_consoles_to_be_serviced
+      end
+    end
+
+    context 'when service is K.2' do
+      let(:code) { 'K.2' }
+      let(:tones_to_be_collected_and_removed) { 22 }
+
+      it 'returns tones_to_be_collected_and_removed' do
+        expect(procurement_building_service.uval).to eq tones_to_be_collected_and_removed
+      end
+    end
+
+    context 'when K.7' do
+      let(:code) { 'K.7' }
+      let(:no_of_units_to_be_serviced) { 45 }
+
+      it 'returns no_of_units_to_be_serviced' do
+        expect(procurement_building_service.uval).to eq no_of_units_to_be_serviced
+      end
+    end
+
+    context 'when J.6' do
+      let(:code) { 'J.6' }
+
+      let(:service_hours) { { "monday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "tuesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "wednesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "thursday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "friday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "saturday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "sunday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "uom": 0 } }
+
+      it 'returns total_hours_annually' do
+        expect(procurement_building_service.uval).to eq 1820
+      end
+    end
+
+    context 'when C.1' do
+      let(:code) { 'C.1' }
+
+      it 'returns building GIA' do
+        expect(procurement_building_service.uval).to eq 1002
+      end
+    end
+  end
 end
