@@ -325,11 +325,12 @@ en:
             td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
             td_corporate: Corporate overhead (%)
             td_london: London location percentage variance (%)
-            td_mobilisation: Mobilisation
+            td_mobilisation: Mobilisation (%)
             td_overhead: Management overhead (%) <br /> Workpackage A - contract management
             td_profit: Profit (%)
             td_tupe: TUPE risk premium (%)
             update_button: Save and return to dashboard
+            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
           supplier_framework_rates:
             heading_title: Average framework rates
             heading_title_two: Average framework variances

@@ -10,7 +10,7 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
+        <a id="fm-start-new-procurement-link" href="<%= facilities_management_beta_admin_supplier_framework_rates_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_manage_rate') %>
         </p>
@@ -18,7 +18,7 @@
     </div>
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <span id="fm-manage-procurements-link" class="fm-buyer-account-panel__title__disabled" disabled="true"><%= t('.dashboard_calloff_rate') %></span>
+        <a id="fm-manage-procurements-link" href="<%= facilities_management_beta_admin_supplier_benchmark_rates_path %>" class="fm-buyer-account-panel__title" disabled="true"><%= t('.dashboard_calloff_rate') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_manage_calloff_rate') %>
         </p>
