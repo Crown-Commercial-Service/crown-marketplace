@@ -320,12 +320,12 @@ $(function () {
                             message = "Mobilisation period must be a minimum of 4 weeks when TUPE is selected";
                             break;
                         case "min":
-                            message = "Mobilisation start date must be today or in the future";
+                            message = "Mobilisation start date must be in the future";
                             break;
                     }
                     break;
                 case "Mobilisation start date":
-                    message = "Mobilisation start date must be today or in the future";
+                    message = "Mobilisation start date must be in the future";
                     break;
 
                 default:
