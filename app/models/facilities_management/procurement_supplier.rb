@@ -15,17 +15,19 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
-    before_validation :supplier_convert_to_boolean, on: :contract_response
+    before_validation proc { convert_to_boolean('contract_response') }, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
-    validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
+    validates :reason_for_declining, presence: true, length: { maximum: 500 }, if: proc { contract_response == false }, on: :contract_response
     validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
 
-    before_validation :buyer_convert_to_boolean, on: :confirmation_of_signed_contract
+    acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
+
+    before_validation proc { convert_to_boolean('contract_signed') }, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
-    validates :reason_for_not_signing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
-    validates :contract_start_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
-    validates :contract_end_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: :contract_signed_true?, on: :confirmation_of_signed_contract
+    validates :reason_for_not_signing, presence: true, length: 1..100, if: proc { contract_signed == false }, on: :confirmation_of_signed_contract
+    validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -50,16 +52,26 @@ module FacilitiesManagement
       event :accept do
         before do
           set_supplier_response_date
+          self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
         end
         transitions from: :sent, to: :accepted
       end
 
       event :sign do
+        before do
+          set_contract_signed_date
+          self.reason_for_not_signing = nil
+        end
         transitions from: :accepted, to: :signed
       end
 
       event :not_sign do
+        before do
+          set_contract_signed_date
+          self.contract_start_date = nil
+          self.contract_end_date = nil
+        end
         transitions from: :accepted, to: :not_signed
       end
 
@@ -121,24 +133,8 @@ module FacilitiesManagement
 
     private
 
-    def contract_response_false?
-      contract_response == false
-    end
-
-    def contract_signed_false?
-      contract_signed == false
-    end
-
-    def contract_signed_true?
-      contract_signed == true
-    end
-
-    def buyer_convert_to_boolean
-      self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
-    end
-
-    def supplier_convert_to_boolean
-      self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
+    def convert_to_boolean(contract_boolean)
+      send(contract_boolean + '=', ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))
     end
 
     def generate_contract_number
@@ -159,6 +155,10 @@ module FacilitiesManagement
 
     def set_supplier_response_date
       self.supplier_response_date = DateTime.now.in_time_zone('London')
+    end
+
+    def set_contract_signed_date
+      self.contract_signed_date = DateTime.now.in_time_zone('London')
     end
 
     def format_date_time_numeric(date)

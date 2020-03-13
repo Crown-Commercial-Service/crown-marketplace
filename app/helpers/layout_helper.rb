@@ -289,7 +289,7 @@ module LayoutHelper
     html = []
     html << content_tag(:li, class: 'govuk-header__navigation-item') do
       if current_user&.has_role?(:supplier)
-        link_to 'My dashboard', facilities_management_beta_supplier_supplier_account_dashboard_path, class: 'govuk-header__link' if user_signed_in?
+        link_to 'My dashboard', facilities_management_beta_supplier_dashboard_index_path, class: 'govuk-header__link' if user_signed_in?
       elsif current_user&.has_role?(:buyer)
         link_to 'My Account', facilities_management_beta_path, class: 'govuk-header__link' if user_signed_in?
       end
