@@ -6,6 +6,8 @@ module FacilitiesManagement
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
     attribute :contract_response
+    attribute :contract_signed
+    attribute :reason_for_not_signing
     attribute :contract_start_date_dd
     attribute :contract_start_date_mm
     attribute :contract_start_date_yyyy
@@ -13,10 +15,17 @@ module FacilitiesManagement
     attribute :contract_end_date_mm
     attribute :contract_end_date_yyyy
 
-    before_validation :convert_to_boolean, on: :contract_response
+    before_validation :supplier_convert_to_boolean, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
     validates :reason_for_declining, presence: true, length: 1..500, if: :contract_response_false?, on: :contract_response
-    validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: %i[reason_for_closing]
+    validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
+
+    before_validation :buyer_convert_to_boolean, on: :confirmation_of_signed_contract
+    validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
+    validates :reason_for_not_signing, presence: true, length: 1..100, if: :contract_signed_false?, on: :confirmation_of_signed_contract
+    validates :contract_start_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
+    validates :contract_end_date, presence: true, if: :contract_signed_true?, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: :contract_signed_true?, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -116,7 +125,19 @@ module FacilitiesManagement
       contract_response == false
     end
 
-    def convert_to_boolean
+    def contract_signed_false?
+      contract_signed == false
+    end
+
+    def contract_signed_true?
+      contract_signed == true
+    end
+
+    def buyer_convert_to_boolean
+      self.contract_signed = ActiveModel::Type::Boolean.new.cast(contract_signed)
+    end
+
+    def supplier_convert_to_boolean
       self.contract_response = ActiveModel::Type::Boolean.new.cast(contract_response)
     end
 
