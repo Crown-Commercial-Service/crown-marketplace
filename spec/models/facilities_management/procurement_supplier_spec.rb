@@ -280,7 +280,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             context 'when a start date has been added without an end date' do
               it 'will not be valid' do
                 contract.contract_signed = true
-                contract.contract_start_date = DateTime.zone.now
+                contract.contract_start_date = DateTime.now.in_time_zone('London')
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
               end
             end
@@ -288,8 +288,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             context 'when both a start and end date have been added' do
               it 'will be valid' do
                 contract.contract_signed = true
-                contract.contract_start_date = DateTime.zone.now
-                contract.contract_end_date = DateTime.zone.now + 1
+                contract.contract_start_date = DateTime.now.in_time_zone('London')
+                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
               end
             end
@@ -299,7 +299,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             context 'when an end date has been added without a start date' do
               it 'will not be valid' do
                 contract.contract_signed = true
-                contract.contract_end_date = DateTime.zone.now + 1
+                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
               end
             end
@@ -307,15 +307,14 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             context 'when both a start and end date have been added' do
               it 'will be valid' do
                 contract.contract_signed = true
-                contract.contract_start_date = DateTime.zone.now
-                contract.contract_end_date = DateTime.zone.now + 1
+                contract.contract_start_date = DateTime.now.in_time_zone('London')
+                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
               end
             end
           end
         end
       end
-
       # rubocop:enable RSpec/NestedGroups
     end
   end
