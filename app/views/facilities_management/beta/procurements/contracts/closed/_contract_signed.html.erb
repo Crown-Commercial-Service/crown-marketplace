@@ -1,0 +1,20 @@
+<div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7">
+    <h1 class="govuk-panel__title">
+        <%= t('.title') %>
+    </h1>
+    <div class="govuk-panel__body">
+        The ‘<%= @procurement.contract_name %>’ <br />
+        (<%= @contract.contract_number %>) contract is now a live contract.
+    </div>
+</div>
+<h1 class="govuk-heading-m govuk-!-margin-bottom-7">
+    <%= t('.info_1') %> <br />
+    <%= t('.info_2') %>
+</h1>
+<div class="govuk-body govuk-!-margin-bottom-7">
+    <label class="govuk-label ccs-font-weight-semi-bold govuk-!-margin-bottom-2">
+        <%= t('.live_period') %>
+    </label>
+    <%= "#{t('.start_date')}: #{format_date @contract.contract_start_date}"  %> <br />
+    <%= "#{t('.end_date')}: #{format_date @contract.contract_end_date}" %>
+</div>
