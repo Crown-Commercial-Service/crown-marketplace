@@ -319,6 +319,7 @@ en:
             email_hint_html: Enter the email address you used to register
         supplier_rates:
           supplier_benchmark_rates:
+            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
             heading_title: Call-off benchmark rates
             heading_title_two: Benchmark variances
             item: Item
