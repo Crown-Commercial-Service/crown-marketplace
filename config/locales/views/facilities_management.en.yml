@@ -310,6 +310,7 @@ en:
             email_hint_html: Enter the email address you used to register
         supplier_rates:
           supplier_benchmark_rates:
+            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
             heading_title: Call-off benchmark rates
             heading_title_two: Benchmark variances
             item: Item
@@ -330,7 +331,6 @@ en:
             td_profit: Profit (%)
             td_tupe: TUPE risk premium (%)
             update_button: Save and return to dashboard
-            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
           supplier_framework_rates:
             heading_title: Average framework rates
             heading_title_two: Average framework variances
