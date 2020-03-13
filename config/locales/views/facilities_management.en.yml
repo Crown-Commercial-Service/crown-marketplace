@@ -340,7 +340,6 @@ en:
             td_profit: Profit (%)
             td_tupe: TUPE risk premium (%)
             update_button: Save and return to dashboard
-            benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
           supplier_framework_rates:
             heading_title: Average framework rates
             heading_title_two: Average framework variances
