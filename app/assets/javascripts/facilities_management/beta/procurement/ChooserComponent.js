@@ -160,7 +160,7 @@ function ChooserSection($parentSection, sectionCode, sectionName, checkboxHandle
 ChooserSection.prototype.init = function (checkboxCallback) {
     this._allCheckboxes = (this._parentElementName).find("input[type='checkbox']").filter("input[name!='section-checkbox_select_all']");
     this._allHandlerCheckbox = $(this._parentElementName).find("input[name='section-checkbox_select_all']")
-
+    this.setAllHandlerCheckbox(this.GetSelectedCount(), this.GetTotalCount())
     this.connectCheckboxes(checkboxCallback);
 };
 ChooserSection.prototype.connectCheckboxes = function (callback) {
@@ -209,14 +209,17 @@ ChooserSection.prototype.checkboxHandler = function (e, callback) {
     sectionEvent.section_total_count = this.GetTotalCount();
     sectionEvent.section_selected_count = this.GetSelectedCount();
 
-    if (sectionEvent.section_selected_count == sectionEvent.section_total_count) {
+    this.setAllHandlerCheckbox(sectionEvent.section_selected_count, sectionEvent.section_total_count);
+
+    callback(sectionEvent);
+};
+ChooserSection.prototype.setAllHandlerCheckbox = function (selectedCount, totalCount) {
+    if (selectedCount == totalCount) {
         this._allHandlerCheckbox.prop("checked", true);
     } else {
         this._allHandlerCheckbox.prop("checked", false);
     }
-
-    callback(sectionEvent);
-};
+}
 
 function BasketComponent(baseClass, classification, jqueryObject, removeHandler) {
     this._baseClass = baseClass;
