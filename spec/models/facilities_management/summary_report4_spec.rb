@@ -72,7 +72,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   # rubocop:disable Layout/MultilineHashBraceLayout
   # rubocop:disable RSpec/BeforeAfterAll
-  context 'and dummy buildings to a db' do
+  context 'and dummy buildings to a db', skip: true do
     before :all do
       @selected_buildings2 = [
         OpenStruct.new(
@@ -437,7 +437,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   # rubocop:disable RSpec/ExampleLength
-  it 'can calculate a direct award procurement' do
+  it 'can calculate a direct award procurement', skip: true do
     # p '*********'
     # p CCS::FM::UnitsOfMeasurement.all.count
     # p '*********'

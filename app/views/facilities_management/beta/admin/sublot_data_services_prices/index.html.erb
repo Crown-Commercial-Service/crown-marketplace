@@ -1,0 +1,154 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Treutel LLC</span>
+  </div>
+</div>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="#">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_framework_data.heading') %></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.leading_text') %></li>
+  </ol>
+</div>
+<h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
+  <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.note') %>
+</p>
+
+<form  style="width: 3000px !important;">
+  <% @full_services.each do |service| %>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left"><%= service['name'] %></th>
+
+        <% @list_service_types.each do |service_type| %>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %> </th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% service['work_package'].each do |work_pckg| %>
+
+        <tr class="govuk-table__row">
+          <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag(
+                      "course[]",
+                      "VV",
+                      false,
+                      class: "govuk-checkboxes__input",
+                      id: "AAA"
+                  ) %>
+              <label class="govuk-label govuk-checkboxes__label" for="service_<%=work_pckg['code'] %>">
+
+                <%= work_pckg['code'] %> <%= work_pckg['name'] %>
+              </label>
+            </div>
+          </td>
+
+
+
+          <% @list_service_types.each do |service_type| %>
+            <td class="govuk-table__cell supplier-rates-td">
+              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="">
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+
+
+  <h3 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title_two') %></h3>
+
+  <table class="govuk-table" style="width: 1100px !important;">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.item') %>
+      </th>
+      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rate') %>
+      </th>
+    <tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+        <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_overhead') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.140" ).benchmark %>">
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_corporate') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.141" ).benchmark %>">
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_profit') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.142" ).benchmark %>">
+      </td>
+
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_london') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.144" ).benchmark %>">
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.146" ).benchmark %>">
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_tupe') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.148" ).benchmark %>">
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+        <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_mobilisation') %>
+      </td>
+
+      <td class="govuk-table__cell supplier-rates-td">
+        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "B.1" ).benchmark %>">
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+
+
+  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
+</form>

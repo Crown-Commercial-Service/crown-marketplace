@@ -284,7 +284,7 @@ en:
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real end time
             service_choice:
-              inclusion: Select not required if you don't need the service on this day
+              inclusion: Select "Not required" if you don't need the service on this day
             start_time:
               greater_than: The end time must be after the start time of your specified hours
               invalid: Enter a real start time
@@ -317,6 +317,14 @@ en:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
+        supplier_framework_data:
+          heading: Supplier framework data
+          sublot_data:
+            heading_title: Services and prices
+            heading_title_two: Variances
+            leading_text: Sub-lot 1a sevices, prices, and variances
+            note: The tick boxes in the first column indicate the services this suppler can provide
+            update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:
             benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
@@ -513,7 +521,7 @@ en:
           subheading: Answer additional questions about the services
       procurement_buildings_services:
         day_section:
-          copy_details: Apply to Monday to Friday
+          copy_details: Apply to Monday through Friday
         lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
@@ -564,7 +572,7 @@ en:
               title: Your procurement has been closed
             contract_signed:
               end_date: End date
-              info_1: You’ve confirmed that both parties have signed.
+              info_1: You have confirmed that both parties have signed.
               info_2: This is now a live contract.
               live_period: Live contract period
               start_date: Start date
@@ -594,7 +602,7 @@ en:
             not_signed_2: that the contract has not been signed.
             reason_for_not_signed: Your reason for not signing this contract offer was
             sent: You sent this contract offer to the supplier on
-            sent_accepted: The supplier has accepted the contract offer on
+            sent_accepted: The supplier accepted the contract offer on
             sent_no_response: The supplier has not yet responded.
             signed_confirmed_1: You confirmed on the
             signed_confirmed_2: that the contract has been signed by both parties.

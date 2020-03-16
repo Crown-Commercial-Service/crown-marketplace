@@ -1,6 +1,7 @@
 module FacilitiesManagement
   class ProcurementSupplier < ApplicationRecord
     include AASM
+    include WorkingDays
 
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
@@ -89,6 +90,9 @@ module FacilitiesManagement
       end
 
       event :expire do
+        before do
+          set_supplier_response_date
+        end
         transitions from: :sent, to: :expired
       end
     end
@@ -128,10 +132,17 @@ module FacilitiesManagement
     CLOSED_TO_SUPPLIER = %w[declined expired withdrawn not_signed].freeze
 
     def contract_expiry_date
-      offer_sent_date + 2.days # This needs to be change later so that it doesnt take in account weekend
+      WorkingDays.working_days(CONTRACT_EXPIRE_DAYS, offer_sent_date.to_datetime)
+    end
+
+    def contract_reminder_date
+      WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
     private
+
+    CONTRACT_REMINDER_DAYS = 1
+    CONTRACT_EXPIRE_DAYS = 2
 
     def convert_to_boolean(contract_boolean)
       send(contract_boolean + '=', ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))

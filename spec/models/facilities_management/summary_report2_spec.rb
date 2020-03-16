@@ -264,7 +264,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   # rubocop:disable Layout/AlignHash
   # rubocop:disable Layout/AlignArray
-  context 'and dummy buildings to a db' do
+  context 'and dummy buildings to a db', skip: true do
     let(:selected_buildings2) do
       [OpenStruct.new(id: 'e7eed6f6-5ef0-e387-ee35-6c1d39feb8a9',
           user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
@@ -806,7 +806,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:enable Layout/AlignHash
 
   # rubocop:disable RSpec/ExampleLength
-  context 'when DA procurement in London' do
+  context 'when DA procurement in London', skip: true do
     it 'can calculate a direct award value' do
       uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
       uom2 = {}
@@ -860,7 +860,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
   end
 
-  context 'when DA procurement outside of London' do
+  context 'when DA procurement outside of London', skip: true do
     it 'can calculate a direct award value' do
       uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
       uom2 = {}
