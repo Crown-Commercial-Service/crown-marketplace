@@ -351,7 +351,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           end
         end
       end
-      # rubocop:enable RSpec/NestedGroups
     end
 
     describe '#contract_expiry_date' do
@@ -538,6 +537,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         end
       end
     end
+    # rubocop:enable RSpec/NestedGroups
   end
-  # rubocop:enable RSpec/NestedGroups
 end
