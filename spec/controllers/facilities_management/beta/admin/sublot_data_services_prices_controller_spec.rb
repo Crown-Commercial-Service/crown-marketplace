@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
     context 'when index page is rendered' do
       it 'returns http success' do
         get :index
-        expect(response).to have_http_status(:found)
+        expect(response).to have_http_status(:ok)
       end
 
       it 'renders the index page' do
