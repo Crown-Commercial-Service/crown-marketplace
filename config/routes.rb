@@ -171,15 +171,9 @@ Rails.application.routes.draw do
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
+        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
         get 'sublot-data', to: 'sublot_data_services_prices#index'
-      end
-      namespace :admin do
-        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-      end
-      namespace :admin do
-        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
       end
     end
 
