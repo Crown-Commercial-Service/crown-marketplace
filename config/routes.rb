@@ -180,6 +180,9 @@ Rails.application.routes.draw do
         get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
         get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
       end
+      namespace :admin do
+        get 'sublot-data', to: 'sublot_data_services_prices#index'
+      end
     end
 
     get '/', to: 'home#index'
