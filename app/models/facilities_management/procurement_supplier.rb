@@ -90,6 +90,9 @@ module FacilitiesManagement
       end
 
       event :expire do
+        before do
+          set_supplier_response_date
+        end
         transitions from: :sent, to: :expired
       end
     end
