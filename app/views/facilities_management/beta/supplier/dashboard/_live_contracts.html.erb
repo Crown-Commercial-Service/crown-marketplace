@@ -11,7 +11,6 @@
         <tbody class="govuk-table__body">
             <% @live_contracts.each do |live_contract| %>
                 <tr class="govuk-table__row">
-                    <!-- TODO: Add the link in the future-->
                     <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to live_contract.procurement.contract_name, facilities_management_beta_supplier_contract_path(live_contract.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= live_contract.procurement.user.buyer_detail.organisation_name %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= format_date live_contract.contract_start_date %> </td>
