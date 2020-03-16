@@ -317,6 +317,14 @@ en:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
+        supplier_framework_data:
+          heading: Supplier framework data
+          sublot_data:
+            heading_title: Services and prices
+            heading_title_two: Variances
+            leading_text: Sub-lot 1a sevices, prices, and variances
+            note: The tick boxes in the first column indicate the services this suppler can provide
+            update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:
             benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
