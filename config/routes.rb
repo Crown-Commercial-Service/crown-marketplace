@@ -162,7 +162,7 @@ Rails.application.routes.draw do
         get 'offer-declined', to: 'offer#declined'
         get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
         get 'offer-accepted', to: 'offer#accepted'
-        get 'supplier-account-dashboard', to: 'supplier_account#index'
+        resources :dashboard, only: :index
         resources :contracts, only: %i[show edit update], controller: 'contracts' do
           resources :sent, only: %i[index], controller: 'sent'
         end

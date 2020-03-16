@@ -5,12 +5,11 @@ module FacilitiesManagement
         before_action :set_procurement
         before_action :set_contract
         before_action :set_page_detail, only: %i[show edit]
+        before_action :assign_contract_attributes, only: :update
 
         def show; end
 
-        def edit
-          @procurement.set_state_to_closed! && redirect_to(facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)) if params['close_contract'].present?
-        end
+        def edit; end
 
         def update
           close_procurement && return if params['close_procurement'].present?
@@ -27,8 +26,11 @@ module FacilitiesManagement
           @contract = ProcurementSupplier.find(params[:id])
         end
 
-        def close_procurement
+        def assign_contract_attributes
           @contract.assign_attributes(contract_params)
+        end
+
+        def close_procurement
           if @contract.valid?(:reason_for_closing)
             @contract.save!
             @contract.withdraw! if @contract.may_withdraw?
@@ -41,13 +43,16 @@ module FacilitiesManagement
           end
         end
 
-        def sign_procurement
-          @contract.assign_attributes(contract_params)
-          if @contract.valid?
-            @contract.set_to_signed!
-            redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+        def update_supplier_response
+          if @contract.valid?(:confirmation_of_signed_contract)
+            if @contract.contract_signed
+              @contract.sign!
+              redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+            else
+              @contract.not_sign!
+              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+            end
           else
-            params[:name] = 'withdraw'
             set_page_detail
             render :edit
           end
@@ -68,27 +73,8 @@ module FacilitiesManagement
                 )
         end
 
-        def update_supplier_response
-          @contract.assign_attributes(contract_params)
-          if @contract.valid?(:confirmation_of_signed_contract)
-            if @contract.contract_signed
-              @contract.update(contract_start_date: @contract.contract_start_date, contract_end_date: @contract.contract_end_date)
-              @contract.sign!
-              redirect_to facilities_management_beta_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
-            else
-              @contract.update(reason_for_not_signing: @contract.reason_for_not_signing)
-              @contract.not_sign!
-              redirect_to facilities_management_beta_procurement_contract_path(@procurement.id, contract_id: @contract.id)
-            end
-          else
-            set_page_detail
-            render :edit
-          end
-        end
-
         # rubocop:disable Metrics/AbcSize
         def set_page_detail
-          @page_data = {}
           @page_description = LayoutHelper::PageDescription.new(
             LayoutHelper::HeadingDetail.new(page_details(action_name)[:page_title],
                                             page_details(action_name)[:caption1],
@@ -144,7 +130,6 @@ module FacilitiesManagement
               continuation_text: set_continuation_text,
               return_text: 'Return to procurements dashboard',
               secondary_text: set_secondary_text,
-              secondary_name: 'close_contract'
             },
             edit: {
               back_url: facilities_management_beta_procurement_contract_path(@procurement),

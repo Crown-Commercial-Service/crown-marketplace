@@ -285,12 +285,48 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
               end
             end
 
+            context 'when the values entered are not numbers' do
+              it 'will not be valid' do
+                contract.contract_signed = true
+                string = (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join
+                contract.contract_start_date_dd = string.split('').shuffle.join
+                contract.contract_start_date_mm = string.split('').shuffle.join
+                contract.contract_start_date_yyyy = string.split('').shuffle.join
+                contract.contract_end_date_dd = string.split('').shuffle.join
+                contract.contract_end_date_mm = string.split('').shuffle.join
+                contract.contract_end_date_yyyy = string.split('').shuffle.join
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+            end
+
+            context 'when the values entered are numbers' do
+              it 'will be valid' do
+                contract.contract_signed = true
+                contract.contract_start_date_dd = '1'
+                contract.contract_start_date_mm = '11'
+                contract.contract_start_date_yyyy = '2012'
+                contract.contract_end_date_dd = '1'
+                contract.contract_end_date_mm = '11'
+                contract.contract_end_date_yyyy = '2025'
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+              end
+            end
+
             context 'when both a start and end date have been added' do
               it 'will be valid' do
                 contract.contract_signed = true
                 contract.contract_start_date = DateTime.now.in_time_zone('London')
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
+                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1.day
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+              end
+
+              context 'when the end date is before the start date' do
+                it 'will be valid' do
+                  contract.contract_signed = true
+                  contract.contract_start_date = DateTime.now.in_time_zone('London')
+                  contract.contract_end_date = DateTime.now.in_time_zone('London') - 1.day
+                  expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+                end
               end
             end
           end

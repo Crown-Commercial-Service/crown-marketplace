@@ -15,7 +15,7 @@
                     <td class="govuk-table__cell govuk-!-padding-right-4" scope="row"> <%= link_to closed_contract.procurement.contract_name, facilities_management_beta_supplier_contract_path(closed_contract.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= closed_contract.procurement.user.buyer_detail.organisation_name %> </td>
                     <td class="govuk-table__cell govuk-!-padding-right-4"> <%= format_date closed_contract.contract_closed_date %> </td>
-                    <td class="govuk-table__cell"> <%= FacilitiesManagement::Beta::Supplier::SupplierAccountHelper::SUPPLIER_STATUS[closed_contract.aasm_state.to_sym] %> </td>
+                    <td class="govuk-table__cell"> <%= FacilitiesManagement::Beta::Supplier::DashboardHelper::SUPPLIER_STATUS[closed_contract.aasm_state.to_sym] %> </td>
                 </tr>
             <% end %>
         </tbody>
