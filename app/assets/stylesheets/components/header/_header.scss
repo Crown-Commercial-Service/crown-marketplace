@@ -51,7 +51,7 @@ $ccs_header_fg: govuk-colour("white");
   margin-right: 0;
 }
 
-.ccs-header__signout, .govuk-header__navigation-item a {
+.ccs-header__signout, .ccs-header__dashboard, .govuk-header__navigation-item a {
   background: none;
   border: 0;
   box-shadow: none;
