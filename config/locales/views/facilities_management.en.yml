@@ -284,7 +284,7 @@ en:
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real end time
             service_choice:
-              inclusion: Select not required if you don't need the service on this day
+              inclusion: Select "Not required" if you don't need the service on this day
             start_time:
               greater_than: The end time must be after the start time of your specified hours
               invalid: Enter a real start time
@@ -521,7 +521,7 @@ en:
           subheading: Answer additional questions about the services
       procurement_buildings_services:
         day_section:
-          copy_details: Apply to Monday to Friday
+          copy_details: Apply to Monday through Friday
         lifts:
           back_to_service_information: Back to service information
           save_and_return_to_service_information: Save and return to service information
@@ -572,7 +572,7 @@ en:
               title: Your procurement has been closed
             contract_signed:
               end_date: End date
-              info_1: You’ve confirmed that both parties have signed.
+              info_1: You have confirmed that both parties have signed.
               info_2: This is now a live contract.
               live_period: Live contract period
               start_date: Start date
