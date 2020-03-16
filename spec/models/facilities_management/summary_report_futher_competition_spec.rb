@@ -74,7 +74,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
   # rubocop:enable Style/HashSyntax
 
-  context 'and dummy buildings to a db' do
+  context 'and dummy buildings to a db', skip: true do
     let(:selected_buildings2) do
       [OpenStruct.new(
         id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',

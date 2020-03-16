@@ -87,7 +87,7 @@ gem 'slim', '~> 4.0.1'
 gem 'capybara', '>= 3.20.2'
 gem 'show_me_the_cookies', '>= 5.0.0'
 
-gem 'faker'
+gem 'faker', '~> 2.10.2'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
