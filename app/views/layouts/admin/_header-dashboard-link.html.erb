@@ -1,0 +1,5 @@
+  <% if !current_page?(url_for(:controller => 'admin_account', :action => 'admin_account')) %>
+    <li class="govuk-header__navigation-item">
+      <%= link_to 'Admin dashboard', admin_dashboard_path, class: 'govuk-header__link ccs-header__dashboard' %>
+    </li>
+  <% end %>
