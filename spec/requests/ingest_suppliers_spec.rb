@@ -6,7 +6,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
     let(:suppliers) do
       [
         {
-          'supplier_name' => Faker::Company.unique.name,
+          'supplier_name' => Faker::Name.unique.name,
           'branches' => [
             {
               'postcode' => valid_fake_postcode,
@@ -35,7 +35,7 @@ RSpec.describe 'Ingest suppliers', type: :request do
           ]
         },
         {
-          'supplier_name' => Faker::Company.unique.name,
+          'supplier_name' => Faker::Name.unique.name,
           'branches' => [
             {
               'postcode' => valid_fake_postcode,

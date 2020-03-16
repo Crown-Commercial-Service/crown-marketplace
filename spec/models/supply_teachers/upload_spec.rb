@@ -4,7 +4,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
   describe 'create' do
     let(:branch_name) { 'Head Office' }
     let(:branch_town) { 'Guildford' }
-    let(:supplier_name) { Faker::Company.unique.name }
+    let(:supplier_name) { Faker::Name.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
     let(:postcode) { Faker::Address.unique.postcode }
     let(:region) { 'South East England' }
@@ -492,7 +492,7 @@ RSpec.describe SupplyTeachers::Upload, type: :model do
             'branches' => [{ 'postcode' => postcode }]
           },
           {
-            'supplier_name' => Faker::Company.unique.name,
+            'supplier_name' => Faker::Name.unique.name,
             'branches' => [{ 'postcode' => 'NOT A POSTCODE' }]
           }
         ]
