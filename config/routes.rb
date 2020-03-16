@@ -171,10 +171,18 @@ Rails.application.routes.draw do
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
-        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'        
       end
-
+      namespace :admin do
+        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+      end
+      namespace :admin do
+        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+      end
+      namespace :admin do
+        get 'sublot-data', to: 'sublot_data_services_prices#index'
+      end
     end
 
     get '/', to: 'home#index'
@@ -258,6 +266,7 @@ Rails.application.routes.draw do
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
     get '/prototypes/closed', to: 'prototype#closed'
+    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
     get '/prototypes/declined', to: 'prototype#declined'
     get '/prototypes/next-supplier', to: 'prototype#next_supplier'
     get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
