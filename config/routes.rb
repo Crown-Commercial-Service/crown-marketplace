@@ -168,12 +168,12 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin, path: 'admin' do
+        get 'sublot-data', to: 'sublot_data_services_prices#index'
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
         get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
         get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-        get 'sublot-data', to: 'sublot_data_services_prices#index'
       end
     end
 
