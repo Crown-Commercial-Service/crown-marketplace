@@ -3,7 +3,7 @@ module FacilitiesManagement
     class FrameworkController < ::ApplicationController
       before_action :authenticate_user!
       before_action :authorize_user
-      before_action :capture_buyer_detail
+      before_action :redirect_to_buyer_detail
 
       protected
 
@@ -11,7 +11,7 @@ module FacilitiesManagement
         authorize! :read, FacilitiesManagement
       end
 
-      def capture_buyer_detail
+      def redirect_to_buyer_detail
         if guarded_path? && current_user&.fm_buyer_details_incomplete? &&
            request.fullpath != edit_facilities_management_beta_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
           redirect_to(edit_facilities_management_beta_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user), params: { return_to: { url: request.path, params: request.query_parameters } }))
