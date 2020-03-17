@@ -90,6 +90,28 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       # rubocop:enable RSpec/AnyInstance
     end
 
+    describe '.real_date?' do
+      let(:contract) { procurement.procurement_suppliers[0] }
+
+      context 'when the date is not real' do
+        it 'returns false' do
+          contract.contract_start_date_dd = '29'
+          contract.contract_start_date_mm = '2'
+          contract.contract_start_date_yyyy = '2019'
+          expect(contract.send(:real_date?, :contract_start_date)).to be false
+        end
+      end
+
+      context 'when the date is real' do
+        it 'returns true' do
+          contract.contract_end_date_dd = '29'
+          contract.contract_end_date_mm = '2'
+          contract.contract_end_date_yyyy = '2020'
+          expect(contract.send(:real_date?, :contract_end_date)).to be true
+        end
+      end
+    end
+
     # rubocop:disable RSpec/NestedGroups
     describe 'state changes' do
       let(:contract) { procurement.procurement_suppliers[0] }
@@ -277,9 +299,12 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
         context 'when the supplier has signed' do
           context 'when a contract start date has been added' do
+            before do
+              contract.contract_signed = true
+            end
+
             context 'when a start date has been added without an end date' do
               it 'will not be valid' do
-                contract.contract_signed = true
                 contract.contract_start_date = DateTime.now.in_time_zone('London')
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
               end
@@ -287,7 +312,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
             context 'when the values entered are not numbers' do
               it 'will not be valid' do
-                contract.contract_signed = true
                 string = (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join
                 contract.contract_start_date_dd = string.split('').shuffle.join
                 contract.contract_start_date_mm = string.split('').shuffle.join
@@ -301,7 +325,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
             context 'when the values entered are numbers' do
               it 'will be valid' do
-                contract.contract_signed = true
                 contract.contract_start_date_dd = '1'
                 contract.contract_start_date_mm = '11'
                 contract.contract_start_date_yyyy = '2012'
@@ -309,6 +332,31 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
                 contract.contract_end_date_mm = '11'
                 contract.contract_end_date_yyyy = '2025'
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+              end
+            end
+
+            context 'when the values entered are not real dates' do
+              it 'will not be valid' do
+                contract.contract_start_date_dd = '29'
+                contract.contract_start_date_mm = '2'
+                contract.contract_start_date_yyyy = '2019'
+                contract.contract_end_date_dd = '15'
+                contract.contract_end_date_mm = '2'
+                contract.contract_end_date_yyyy = '2025'
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+            end
+
+            context 'when the values entered are not real dates' do
+              it 'will not be valid' do
+                contract.contract_start_date_dd = '01'
+                contract.contract_start_date_mm = '01'
+                contract.contract_start_date_yyyy = '2020'
+                contract.contract_end_date_dd = '30'
+                contract.contract_end_date_mm = '2'
+                contract.contract_end_date_yyyy = '2020'
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+                expect(contract.errors.messages[:contract_end_date]).to include('Enter a valid end date')
               end
             end
 
