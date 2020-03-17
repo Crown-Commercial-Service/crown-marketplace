@@ -216,7 +216,12 @@ module FacilitiesManagement
         'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -233,7 +238,12 @@ module FacilitiesManagement
         'da-offer-1-reference': contract_number
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
   end
 end
