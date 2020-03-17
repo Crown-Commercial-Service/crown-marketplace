@@ -264,12 +264,14 @@ en:
             contract_end_date:
               after_or_equal_to: The contract end date must be after the contract start date
               blank: Enter contract end date
+              not_a_date: Enter a valid end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
             contract_signed:
               inclusion: Select one option
             contract_start_date:
               blank: Enter contract start date
+              not_a_date: Enter a valid start date
             reason_for_closing:
               blank: Enter a reason for closing this procurement
             reason_for_declining:

@@ -26,9 +26,13 @@ module FacilitiesManagement
     before_validation proc { convert_to_boolean('contract_signed') }, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
     validates :reason_for_not_signing, presence: true, length: 1..100, if: proc { contract_signed == false }, on: :confirmation_of_signed_contract
+
+    validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+
+    validate proc { valid_date?(:contract_end_date) }, unless: proc { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -140,6 +144,18 @@ module FacilitiesManagement
     end
 
     private
+
+    # Custom Validation
+    def real_date?(date)
+      DateTime.new(send((date.to_s + '_yyyy').to_sym).to_i, send((date.to_s + '_mm').to_sym).to_i, send((date.to_s + '_dd').to_sym).to_i).in_time_zone('London')
+      true
+    rescue StandardError
+      false
+    end
+
+    def valid_date?(date)
+      errors.add(date, :not_a_date) unless real_date?(date)
+    end
 
     CONTRACT_REMINDER_DAYS = 1
     CONTRACT_EXPIRE_DAYS = 2
