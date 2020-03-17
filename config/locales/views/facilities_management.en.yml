@@ -600,6 +600,7 @@ en:
             expired: This contract offer expired on
             not_signed_1: You confirmed on
             not_signed_2: that the contract has not been signed.
+            reason_for_not_signed: Your reason for not signing this contract offer was
             sent: You sent this contract offer to the supplier on
             sent_accepted: The supplier accepted the contract offer on
             sent_no_response: The supplier has not yet responded.
