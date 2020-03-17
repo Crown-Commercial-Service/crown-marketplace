@@ -9,6 +9,8 @@
             </div>
         <% when 'next_supplier' %>
             <%= render partial: 'next_supplier', :locals=>{:f=>f} %>
+        <% when 'copy' %>
+            <%= render partial: 'create_a_copy' %>
         <% else %>
             <%= render partial: 'confirmation_of_signed_contract', :locals=>{:f=>f} %>
             <div class= 'govuk-!-margin-top-5'>
