@@ -30,9 +30,9 @@ module FacilitiesManagement
     validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
 
+    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
     validate proc { valid_date?(:contract_end_date) }, unless: proc { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -216,12 +216,7 @@ module FacilitiesManagement
         'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
-      # TODO: This prevents crashing on local when sidekiq isn't running
-      begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
-      rescue StandardError
-        false
-      end
+      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -238,12 +233,7 @@ module FacilitiesManagement
         'da-offer-1-reference': contract_number
       }.to_json
 
-      # TODO: This prevents crashing on local when sidekiq isn't running
-      begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
-      rescue StandardError
-        false
-      end
+      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
     end
   end
 end
