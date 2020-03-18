@@ -87,6 +87,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
+      allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
     end
 
@@ -95,6 +96,14 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       let(:contract) { procurement.procurement_suppliers[0] }
 
       before { contract.offer_to_supplier }
+
+      describe '.sent' do
+        context 'when the offer gets sent' do
+          it 'will call the ChangeStateWorker' do
+            expect(FacilitiesManagement::ChangeStateWorker).to have_received(:perform_at)
+          end
+        end
+      end
 
       describe '.accept' do
         context 'when the supplier accepts' do
@@ -160,6 +169,25 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             it 'will be closed' do
               expect(contract.closed?).to be true
             end
+          end
+        end
+      end
+
+      describe '.expires' do
+        let(:contract) { procurement.procurement_suppliers[0] }
+
+        before do
+          contract.offer_to_supplier!
+          contract.expire!
+        end
+
+        context 'when the supplier doesnt respond to the offer' do
+          it 'expect to move into expired state' do
+            expect(contract.aasm_state).to eq 'expired'
+          end
+
+          it 'supplier reponse date to be the current date and time' do
+            expect(contract.supplier_response_date.to_i).to be_within(2.seconds).of(DateTime.now.in_time_zone('London').to_i)
           end
         end
       end
