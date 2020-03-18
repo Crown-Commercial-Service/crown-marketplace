@@ -6,12 +6,12 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
   describe 'GET index' do
     context 'when index page is rendered' do
       it 'returns http success' do
-        get :index
+        get :index, params: { id: 123 }
         expect(response).to have_http_status(:ok)
       end
 
       it 'renders the index page' do
-        get :index
+        get :index, params: { id: 123 }
         expect(response).to render_template(:index)
       end
 

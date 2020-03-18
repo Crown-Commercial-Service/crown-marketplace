@@ -1,9 +1,3 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l"><%= @supplier_name %>></span>
-  </div>
-</div>
-
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -11,6 +5,11 @@
     </li>
     <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_framework_data.heading') %></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.leading_text') %></li>
   </ol>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @supplier_name %></span>
+  </div>
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
 <p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
@@ -54,7 +53,7 @@
 
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
-              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @supplier_data_ratecard.values[0][work_pckg['code']] == nil ? '' :  number_to_currency(@supplier_data_ratecard.values[0][work_pckg['code']][service_type.remove(' (%').remove(' (£)')] , :unit => "") %>">
+              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
             </td>
           <% end %>
         </tr>
