@@ -58,10 +58,10 @@ module ProcurementValidator
     validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than: -1 }, if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false }, on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 4 }, if: -> { tupe? && (initial_call_off_period.present? ? initial_call_off_period.positive? : false) }, on: :contract_dates
 
-    validates :optional_call_off_extensions_1, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_2, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_3, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_4, numericality: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_1, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_2, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_3, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_4, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
     validate :optional_call_off_extensions_too_long, on: :contract_dates
     #
     # End of validation rules for contract-dates
