@@ -50,8 +50,8 @@ module FacilitiesManagement
           assign_contract_number
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
-          offer_expire_time_in_day = time_delta_in_days(offer_sent_date, contract_expiry_date)
-          ChangeStateWorker.perform_at(offer_expire_time_in_day.from_now, id)
+          ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+          ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
         end
         transitions from: :unsent, to: :sent
       end
@@ -146,6 +146,10 @@ module FacilitiesManagement
       WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
+    def send_reminder_email
+      send_email_to_supplier('DA_offer_sent_reminder')
+    end
+
     private
 
     # Custom Validation
@@ -158,6 +162,10 @@ module FacilitiesManagement
 
     def valid_date?(date)
       errors.add(date, :not_a_date) unless real_date?(date)
+    end
+
+    def time_delta_in_days(start_date, end_date)
+      (end_date - start_date.to_datetime).to_f.days
     end
 
     CONTRACT_REMINDER_DAYS = 1
@@ -173,10 +181,6 @@ module FacilitiesManagement
       return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award?
 
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
-    end
-
-    def time_delta_in_days(start_date, end_date)
-      (end_date - start_date.to_datetime).to_f.days
     end
 
     def set_sent_date
