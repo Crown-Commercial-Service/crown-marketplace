@@ -306,9 +306,9 @@ module ApplicationHelper
 
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
     if service_type == 'Direct Award Discount (%)'
-      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '': number_to_currency(supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %'], unit: '')
+      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %'], unit: '')
     else
-      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '': number_to_currency(supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')], unit: '')
+      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')], unit: '')
     end
   end
 end
