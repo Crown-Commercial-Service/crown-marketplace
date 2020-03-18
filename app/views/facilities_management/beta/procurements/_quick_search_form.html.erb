@@ -26,11 +26,11 @@
         </div>
         <div class="govuk-grid-row">
           <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
-            <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:name].any? %>" data-propertyname="name">
-              <%= govuk_form_group_with_optional_error @procurement, :name do %>
-                <%= display_potential_errors @procurement, :name, f.object_name %>
-                <%= f.label :name, t('.new_name_label'), class: 'govuk-label' %>
-                <%= f.text_field :name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count', pattern: '^([a-zA-Z(0-9) _\'\-]*)$' %>
+            <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="name">
+              <%= govuk_form_group_with_optional_error @procurement, :contract_name do %>
+                <%= display_potential_errors @procurement, :contract_name, f.object_name %>
+                <%= f.label :contract_name, t('.new_name_label'), class: 'govuk-label' %>
+                <%= f.text_field :contract_name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
               <% end %>
             </div>
           </div>
