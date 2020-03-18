@@ -3,7 +3,13 @@ module FacilitiesManagement
     module Admin
       class SublotDataServicesPricesController < FacilitiesManagement::Beta::FrameworkController
         def index
-          @list_service_types = ['Discount award discount (%)', 'General office - customer facing (£)', 'General office non - customer facing (£)', 'Call centre operations (£)', 'Warehouses (£)', 'Restaurant and catering facilities (£)', 'Pre-school (£)', 'Primary (£)', 'Secondary schools (£)', 'Special schools (£)', 'Universities and colleges (£)', 'Community - doctors, dentists, health clinic (£)', 'Nursing and care homes (£)']
+          @list_service_types = ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call centre operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
+
+          id = params[:id]
+          @supplier_name = CCS::FM::Supplier.find(id)['data']['supplier_name']
+          @supplier_data_ratecard = CCS::FM::RateCard.latest[:data][:Prices].select { |key, _| @supplier_name.include? key.to_s }
+
+          @supplier_data_ratecard.values[0].deep_stringify_keys!
 
           @rates = FacilitiesManagement::Admin::Rates.all
           @services = FacilitiesManagement::Admin::StaticDataAdmin.services

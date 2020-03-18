@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">Treutel LLC</span>
+    <span class="govuk-caption-l"><%= @supplier_name %>></span>
   </div>
 </div>
 
@@ -52,9 +52,9 @@
 
 
 
-          <% @list_service_types.each do |service_type| %>
+          <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
-              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="">
+              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @supplier_data_ratecard.values[0][work_pckg['code']] == nil ? '' :  number_to_currency(@supplier_data_ratecard.values[0][work_pckg['code']][service_type.remove(' (%').remove(' (£)')] , :unit => "") %>">
             </td>
           <% end %>
         </tr>
