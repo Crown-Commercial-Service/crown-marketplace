@@ -36,11 +36,11 @@
 
             <div class="govuk-checkboxes__item">
               <%= check_box_tag(
-                      "course[]",
-                      "VV",
-                      false,
+                      "rates_data_prices[]",
+                      work_pckg,
+                      @supplier_rate_data_checkboxes[work_pckg['code']],
                       class: "govuk-checkboxes__input",
-                      id: "AAA"
+                      id: "rates_#{work_pckg}"
                   ) %>
               <label class="govuk-label govuk-checkboxes__label" for="service_<%=work_pckg['code'] %>">
 
