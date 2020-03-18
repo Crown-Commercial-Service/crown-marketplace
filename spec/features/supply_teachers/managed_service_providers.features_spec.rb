@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Managed service providers', type: :feature do
   before do
-    user = FactoryBot.create(:user, roles: %i[buyer st_access])
+    user = FactoryBot.create(:user, :without_detail, roles: %i[buyer st_access])
     login_as(user, scope: :user)
   end
 
