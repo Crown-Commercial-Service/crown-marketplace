@@ -26,9 +26,13 @@ module FacilitiesManagement
     before_validation proc { convert_to_boolean('contract_signed') }, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
     validates :reason_for_not_signing, presence: true, length: 1..100, if: proc { contract_signed == false }, on: :confirmation_of_signed_contract
+
+    validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+
+    validate proc { valid_date?(:contract_end_date) }, unless: proc { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { allow_nil: false, after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -46,6 +50,8 @@ module FacilitiesManagement
           assign_contract_number
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
+          ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+          ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
         end
         transitions from: :unsent, to: :sent
       end
@@ -92,6 +98,7 @@ module FacilitiesManagement
       event :expire do
         before do
           set_supplier_response_date
+          send_email_to_buyer('DA_offer_no_response')
         end
         transitions from: :sent, to: :expired
       end
@@ -139,7 +146,27 @@ module FacilitiesManagement
       WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
+    def send_reminder_email
+      send_email_to_supplier('DA_offer_sent_reminder')
+    end
+
     private
+
+    # Custom Validation
+    def real_date?(date)
+      DateTime.new(send((date.to_s + '_yyyy').to_sym).to_i, send((date.to_s + '_mm').to_sym).to_i, send((date.to_s + '_dd').to_sym).to_i).in_time_zone('London')
+      true
+    rescue StandardError
+      false
+    end
+
+    def valid_date?(date)
+      errors.add(date, :not_a_date) unless real_date?(date)
+    end
+
+    def time_delta_in_days(start_date, end_date)
+      (end_date - start_date.to_datetime).to_f.days
+    end
 
     CONTRACT_REMINDER_DAYS = 1
     CONTRACT_EXPIRE_DAYS = 2
@@ -200,7 +227,12 @@ module FacilitiesManagement
         'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -217,7 +249,12 @@ module FacilitiesManagement
         'da-offer-1-reference': contract_number
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
   end
 end

@@ -5,7 +5,7 @@ module FacilitiesManagement
         protected
 
         def challenge_path
-          facilities_management_beta_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
+          facilities_management_beta_admin_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
         end
 
         # rubocop:disable Lint/UnusedMethodArgument

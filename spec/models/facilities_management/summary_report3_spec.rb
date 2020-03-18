@@ -73,7 +73,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
   # rubocop:enable Style/HashSyntax
 
-  context 'and dummy buildings to a db' do
+  context 'and dummy buildings to a db', skip: true do
     let(:selected_buildings2) do
       [OpenStruct.new(
         id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
@@ -556,7 +556,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
   end
 
-  it 'can calculate a direct award procurement' do
+  it 'can calculate a direct award procurement', skip: true do
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }

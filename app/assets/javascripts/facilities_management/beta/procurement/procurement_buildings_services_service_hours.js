@@ -10,7 +10,7 @@ function SvcHoursDataUI(jqContainer) {
     }
 }
 
-SvcHoursDataUI.prototype.findMondaysToFridays = function () {
+SvcHoursDataUI.prototype.findMondaysToFridays = function() {
     let sections = {};
     let elements = this.dataContainer.find(".govuk-form-group");
     for (let idx = 0; idx < elements.length; idx++) {
@@ -23,7 +23,7 @@ SvcHoursDataUI.prototype.findMondaysToFridays = function () {
     return sections;
 };
 
-SvcHoursDataUI.prototype.validateForm = function (_formElements) {
+SvcHoursDataUI.prototype.validateForm = function(_formElements) {
     let isValid;
 
     this.clearBannerErrorList();
@@ -34,18 +34,24 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     let fnMaxValidator = this.validationFunctions["max"];
     let fnMinValidator = this.validationFunctions["min"];
 
-    this.fnCheckRadioButton = function (day, choices) {
+    this.fnCheckRadioButton = function(day, choices) {
         let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours][" + day + "][service_choice]"];
         if (fieldValueServiceChoice.value === "") {
-            choices[day] = {field: fieldValueServiceChoice, status: "none"};
+            choices[day] = {
+                field: fieldValueServiceChoice,
+                status: "none"
+            };
             return false;
         }
 
-        choices[day] = {field: fieldValueServiceChoice, status: "ok"};
+        choices[day] = {
+            field: fieldValueServiceChoice,
+            status: "ok"
+        };
         return true;
     };
 
-    this.fnCheckTime = function (day, part, choices) {
+    this.fnCheckTime = function(day, part, choices) {
         let isValid = true;
 
         let jqHour = $("#" + day + "_" + part + "_hour");
@@ -56,13 +62,18 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
             choices[part] = {};
         }
 
-        this.fnCheckTimeUnit = function (jqElem, section) {
+        this.fnCheckTimeUnit = function(jqElem, section) {
             let isValid = !fnRequiredValidator(jqElem);
             isValid = !fnNumberValidator(jqElem) && isValid;
             isValid = !fnMaxValidator(jqElem) && isValid;
             isValid = !fnMinValidator(jqElem) && isValid;
 
-            choices[part][section] = {status: isValid, errorType: 'invalid', elem: jqElem, value: jqElem.val()};
+            choices[part][section] = {
+                status: isValid,
+                errorType: 'invalid',
+                elem: jqElem,
+                value: jqElem.val()
+            };
 
             return isValid;
         };
@@ -75,7 +86,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         return isValid;
     };
 
-    this.checkRadioButtons = function (choices) {
+    this.checkRadioButtons = function(choices) {
         let isValid = true;
 
         isValid = this.fnCheckRadioButton("monday", choices) && isValid;
@@ -89,12 +100,12 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         return isValid;
     };
 
-    this.validateTimes = function (day, choices) {
+    this.validateTimes = function(day, choices) {
         let timeIsValid = this.fnCheckTime(day, "start", choices);
         return this.fnCheckTime(day, "end", choices) && timeIsValid;
     };
 
-    this.validateTwelveHourTime = function (time, digits) {
+    this.validateTwelveHourTime = function(time, digits) {
         if (digits === "12" || digits === "24") {
             return time = (parseInt(time) - 1200).toString();
         } else {
@@ -102,7 +113,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         }
     };
 
-    this.validateChronologicalSequence = function (day, choices) {
+    this.validateChronologicalSequence = function(day, choices) {
         let isValid = true;
 
         let afternoonStart = choices[day]["start"]["ampmElem"].val() === 'PM';
@@ -134,7 +145,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
         return isValid;
     };
 
-    this.displayTimeErrors = function (day, part, choices) {
+    this.displayTimeErrors = function(day, part, choices) {
         if (choices[day][part].status === false) {
             this.toggleError($("." + day + "_" + part + "_time"), true, choices[day][part].errorType ? choices[day][part].errorType : "invalid");
             this.addErrorClass(choices[day][part]["hour"].elem);
@@ -178,7 +189,7 @@ SvcHoursDataUI.prototype.validateForm = function (_formElements) {
     return isValid;
 };
 
-SvcHoursDataUI.prototype.initialise = function () {
+SvcHoursDataUI.prototype.initialise = function() {
     let inputs = this.dataContainer.find("input[type=text]");
     let i;
     for (i = 0; i < inputs.length; i++) {
@@ -188,7 +199,13 @@ SvcHoursDataUI.prototype.initialise = function () {
     $("#copy_details").on("click", this.applyDetails.bind(this));
 };
 
-SvcHoursDataUI.prototype.applyDetails = function () {
+SvcHoursDataUI.prototype.applyDetails = function() {
+    let JElem = $("#error_monday_not_required");
+    if (JElem) {
+        JElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        JElem.remove();
+    }
+
     let sourceDetails = null;
 
     for (let key in this.sections) {
@@ -198,14 +215,20 @@ SvcHoursDataUI.prototype.applyDetails = function () {
             this.pasteElementDetails(key, sourceDetails, this.sections[key]);
         }
         if (null !== sourceDetails && sourceDetails.choice === "") {
+            this.formHelper.toggleError($("#monday_not_required"), true, "required");
+            this.formHelper.toggleBannerError(true)
             break;
         }
     }
 };
 
-SvcHoursDataUI.prototype.pasteElementDetails = function (day, sourceDetails, htmlSection) {
+SvcHoursDataUI.prototype.pasteElementDetails = function(day, sourceDetails, htmlSection) {
     let jqSection = $(htmlSection);
-
+    let JElem = $("#error_" + day + "_not_required");
+    if (JElem) {
+        JElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        JElem.remove();
+    }
     if (sourceDetails.choice !== "") {
         jqSection.find("#" + day + "_" + sourceDetails.choice).prop("checked", true);
         jqSection.find("div.govuk-radios.govuk-radios--conditional").click();
@@ -220,7 +243,7 @@ SvcHoursDataUI.prototype.pasteElementDetails = function (day, sourceDetails, htm
     }
 };
 
-SvcHoursDataUI.prototype.copyElementDetails = function (day, htmlSection) {
+SvcHoursDataUI.prototype.copyElementDetails = function(day, htmlSection) {
     let jqSection = $(htmlSection);
     let sourceData = {
         choice: "",
@@ -248,8 +271,8 @@ SvcHoursDataUI.prototype.copyElementDetails = function (day, htmlSection) {
     return sourceData;
 };
 
-SvcHoursDataUI.prototype.restrictInput = function (jqElem) {
-    $(jqElem).keypress(function (e) {
+SvcHoursDataUI.prototype.restrictInput = function(jqElem) {
+    $(jqElem).keypress(function(e) {
         let verified = (e.which === 8 || e.which === undefined || e.which === 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
         if (verified) {
             e.preventDefault();
@@ -257,7 +280,7 @@ SvcHoursDataUI.prototype.restrictInput = function (jqElem) {
     });
 };
 
-$(function () {
+$(function() {
     let service_hours_container = $(".servicehourscontainer");
     if (service_hours_container.length > 0) {
         this.svchrsHelper = new SvcHoursDataUI(service_hours_container);
