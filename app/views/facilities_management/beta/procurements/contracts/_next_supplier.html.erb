@@ -1,6 +1,6 @@
-<h1 class="govuk-body-l govuk-!-width-one-half"> <% t('.next_lowest') %> <b>Next supplier LTD.</b></h1>
+<h1 class="govuk-body-l govuk-!-width-one-half"> <% t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.data['supplier_name'] %>.</b></h1>
   <div class="govuk-body-l">
-      <% t('.price')%> <b>£1,000,020.</b>
+      <% t('.price')%> <b><%= @procurement.procurement_supplier.unsent.first.direct_award_value %></b>
   </div>
   <div>
       <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
