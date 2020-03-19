@@ -1,9 +1,9 @@
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="#">Home</a>
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
     </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title') %></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.leading_text') %></li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_supplier_framework_data_path %>"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.breadcrumb_text_supplier_framework_data') %></a></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.leading_text') %></li>
   </ol>
 </div>
 <div class="govuk-grid-row">
@@ -12,6 +12,7 @@
   </div>
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
+<h1 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.heading_title_three') %></h1>
 <p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
   <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.note') %>
 </p>
