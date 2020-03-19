@@ -50,6 +50,8 @@ module FacilitiesManagement
           assign_contract_number
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
+          ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+          ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
         end
         transitions from: :unsent, to: :sent
       end
@@ -96,6 +98,7 @@ module FacilitiesManagement
       event :expire do
         before do
           set_supplier_response_date
+          send_email_to_buyer('DA_offer_no_response')
         end
         transitions from: :sent, to: :expired
       end
@@ -143,6 +146,10 @@ module FacilitiesManagement
       WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
+    def send_reminder_email
+      send_email_to_supplier('DA_offer_sent_reminder')
+    end
+
     private
 
     # Custom Validation
@@ -155,6 +162,10 @@ module FacilitiesManagement
 
     def valid_date?(date)
       errors.add(date, :not_a_date) unless real_date?(date)
+    end
+
+    def time_delta_in_days(start_date, end_date)
+      (end_date - start_date.to_datetime).to_f.days
     end
 
     CONTRACT_REMINDER_DAYS = 1
@@ -216,7 +227,12 @@ module FacilitiesManagement
         'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -233,7 +249,12 @@ module FacilitiesManagement
         'da-offer-1-reference': contract_number
       }.to_json
 
-      FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      # TODO: This prevents crashing on local when sidekiq isn't running
+      begin
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+      rescue StandardError
+        false
+      end
     end
   end
 end

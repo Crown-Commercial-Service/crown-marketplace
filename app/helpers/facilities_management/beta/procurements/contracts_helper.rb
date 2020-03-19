@@ -29,4 +29,50 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
                not_signed: 'Accepted, not signed',
                declined: 'Declined',
                expired: 'Not responded' }.freeze
+
+  def page_details(action)
+    action = 'edit' if action == 'update'
+    @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
+  end
+
+  def set_continuation_text
+    case @contract.aasm_state
+    when 'accepted'
+      'Confirm if contract signed or not'
+    when 'not_signed', 'declined', 'expired'
+      "View next supplier's price"
+    end
+  end
+
+  def set_secondary_text
+    if @contract.closed? || @contract.aasm_state == 'signed'
+      'Make a copy of your requirements'
+    else
+      'Close this procurement'
+    end
+  end
+
+  def page_definitions
+    @page_definitions ||= {
+      default: {
+        back_label: 'Back',
+        back_text: 'Back',
+        back_url: facilities_management_beta_procurements_path,
+        return_text: 'Return to procurements dashboard',
+        return_url: facilities_management_beta_procurements_path,
+      },
+      show: {
+        page_title: 'Contract summary',
+        caption1: @procurement.contract_name,
+        continuation_text: set_continuation_text,
+        return_text: 'Return to procurements dashboard',
+        secondary_text: set_secondary_text,
+      },
+      edit: {
+        back_url: facilities_management_beta_procurement_contract_path(@procurement),
+        continuation_text: 'Close this procurement',
+        secondary_text: 'Cancel',
+      },
+    }.freeze
+  end
 end

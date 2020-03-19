@@ -19,6 +19,7 @@ module FacilitiesManagement::Beta::Supplier::ContractsHelper
                expired: 'Not responded',
                not_signed: 'Not signed',
                withdrawn: 'Withdrawn' }.freeze
+
   def page_details(action)
     action = 'edit' if action == 'update'
     @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])

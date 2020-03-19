@@ -126,7 +126,14 @@ en:
               too_long: Search name must be 100 characters or less
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
-              too_long: Call-off period and extensions must be 10 years or less
+              not_an_integer: Extension period must be a whole number
+              too_long: Call-off contract period, including extensions must not be more than 10 years
+            optional_call_off_extensions_2:
+              not_an_integer: Extension period must be a whole number
+            optional_call_off_extensions_3:
+              not_an_integer: Extension period must be a whole number
+            optional_call_off_extensions_4:
+              not_an_integer: Extension period must be a whole number
             payment_method:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about 'Payment method'
@@ -1056,7 +1063,13 @@ en:
             list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
             what_happens_next: What happens next
           contract_offer_details:
+            accepted_contract_offer: You accepted this contract offer on
             buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
+            contract_closed_on: This contract offer was closed on
+            contract_received_on: This contract offer was received on
+            reason_for_declining: Your reason for declining was
+            reason_for_not_signing: The buyer’s reason for not signing this contract was
+            reason_for_withdrawing: The buyer's reason for withdrawing this contract offer was
           contract_summary_foot:
             respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
           edit:
