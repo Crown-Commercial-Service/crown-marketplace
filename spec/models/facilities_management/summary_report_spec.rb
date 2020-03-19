@@ -589,7 +589,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     report.calculate_services_for_buildings buildings, uvals
 
-    expect(report.assessed_value.round(2)).to be 8099770.37
+    expect(report.assessed_value.round(2)).to be 8110569.05
   end
 
   it 'price all services' do
@@ -778,8 +778,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       sum_benchmark += calc_fm.benchmarkedcostssum
     end
 
-    expect(sum_uom.round(2)).to be 844411.31
-    expect(sum_benchmark.round(2)).to be 949771.07
+    expect(sum_uom.round(2)).to be 866817.15
+    expect(sum_benchmark.round(2)).to be 925420.53
   end
   # rubocop:enable RSpec/ExampleLength
 end
