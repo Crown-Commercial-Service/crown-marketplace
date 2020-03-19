@@ -305,6 +305,7 @@ module ApplicationHelper
   end
 
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
+    # different fields for direct award package
     if service_type == 'Direct Award Discount (%)'
       supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %'], unit: '')
     else

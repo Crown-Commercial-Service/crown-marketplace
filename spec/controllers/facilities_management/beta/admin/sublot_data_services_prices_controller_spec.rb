@@ -15,10 +15,12 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
         expect(response).to render_template(:index)
       end
 
-      xit 'retrieves correct data' do
-        # get :index
-        # array_size = assigns(@list_service_types).size
-        # expect(array_size).to == 10
+      it 'retrieves correct data' do
+        get :index, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
+        expect(assigns(:list_service_types).size).to eq 13
+        expect(assigns(:supplier_name)).to eq 'Abernathy and Sons'
+        expect(assigns(:supplier_rate_data_checkboxes).size).to eq 116
+        expect(assigns(:supplier_data_ratecard_discounts).size).to eq 1
       end
     end
   end
