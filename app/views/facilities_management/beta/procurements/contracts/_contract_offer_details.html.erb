@@ -1,3 +1,25 @@
+<% unless @contract.reason_for_closing.nil? %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+        <%= govuk_details('Reason for closing', true) do %>
+            <%= "#{ t('.withdrawn_reason')} ‘#{@contract.reason_for_closing}’." %>
+        <% end %>
+    </div>
+<% end %>
+<% unless @contract.reason_for_not_signing.nil? %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+        <%= govuk_details('Reason for not signing', true) do %>
+            <%= "#{ t('.reason_for_not_signed')}: ‘#{@contract.reason_for_not_signing}’." %>
+        <% end %>
+    </div>
+<% end %>
+<% unless @contract.reason_for_declining.nil? || @contract.closed? %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+        <%= govuk_details('Reason for declining', true) do %>
+            <%= "#{t('.supplier_declined_reason')} ‘#{@contract.reason_for_declining}’." %>
+        <% end %>
+    </div>
+<% end %>
+
 <% if @contract.aasm_state == 'sent' %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6 govuk-body govuk-inset-text" >
         <%= t('.sent_no_response') %>
@@ -28,15 +50,10 @@
     </div>
 <% end %>
 
-<div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
-    <% case @contract.aasm_state %>
-    <% when 'declined' %>
+<% if @contract.closed? && @contract.aasm_state == 'declined' %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for declining', true) do %>
-            <%= "#{t('.supplier_declined_reason')} '#{@contract.reason_for_declining}'." %>
+            <%= "#{t('.supplier_declined_reason')} ‘#{@contract.reason_for_declining}’." %>
         <% end %>
-    <% when 'withdrawn' %>
-        <%= govuk_details('Reason for closing', true) do %>
-            <%= "#{ t('.withdrawn_reason')} '#{@contract.reason_for_closing}'." %>
-        <% end %>
-    <% end %>
-</div>
+    </div>
+<% end %>

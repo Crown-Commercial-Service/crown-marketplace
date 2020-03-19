@@ -29,7 +29,7 @@
       <h3 class="govuk-heading-l">File download</h3>
       <p class="govuk-body-l">Download the procurement summary in XLSX format.</p>
       <a href="<%= facilities_management_beta_procurement_further_competition_spreadsheet_path(@procurement.id) %>?format=xlsx" class="supplier-record__file-download" type="application/msword" download="">
-        <%= @page_data[:model_object].name %> procurement summary <span class="govuk-visually-hidden"><abbr title="Microsoft Word">DOC</abbr></span>
+        <%= @page_data[:model_object].contract_name %> procurement summary <span class="govuk-visually-hidden"><abbr title="Microsoft Word">DOC</abbr></span>
       </a>
     </div>    
   </div> 

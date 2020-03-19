@@ -15,59 +15,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     it { is_expected.to validate_content_type_of(:security_policy_document_file).rejecting('text/plain', 'text/xml', 'image/png') }
   end
 
-  describe '#name' do
-    context 'when the name is more than 100 characters' do
-      it 'is expected to not be valid' do
-        procurement.name = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
-
-        expect(procurement.valid?(:name)).to eq false
-      end
-    end
-
-    context 'when the name is not unique' do
-      let(:second_procurement) { create(:facilities_management_procurement, name: procurement.name, user: user) }
-
-      it 'expected to not be valid' do
-        expect(second_procurement.valid?(:name)).to eq false
-      end
-    end
-
-    context 'when the name has trailing and preceeding whitespace' do
-      let(:third_procurement) { create(:facilities_management_procurement, name: "  #{procurement.name}  ", user: user) }
-
-      it 'expected to remove trailing and preceeding whitespace' do
-        expect(third_procurement.send(:remove_excess_whitespace_from_name)).to eq procurement.name
-      end
-
-      it 'expected not to be valid if the same name is in database without additional whitespace' do
-        expect(third_procurement.valid?(:name)).to eq false
-      end
-    end
-
-    context 'when the name has multiple space in the middle' do
-      let(:forth_procurement) { create(:facilities_management_procurement, name: 'This   is a  test     name', user: user) }
-
-      it 'expected to remove excess spaces' do
-        expect(forth_procurement.send(:remove_excess_whitespace_from_name)).to eq 'This is a test name'
-      end
-    end
-
-    context 'when the name uses invalid characters' do
-      let(:fith_procurement) { create(:facilities_management_procurement, name: '!@£ $%^&* ()+=|<>,?', user: user) }
-
-      it 'expected to be invalid' do
-        expect(fith_procurement.valid?(:name)).to eq false
-      end
-    end
-
-    context 'when the name is not present' do
-      it 'expected to not be valid' do
-        procurement.name = nil
-        expect(procurement.valid?(:name)).to eq false
-      end
-    end
-  end
-
   describe '#contract_name' do
     context 'when the name is more than 100 characters' do
       it 'is expected to not be valid' do
@@ -501,6 +448,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     describe '#offer_to_next_supplier' do
       before do
         allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+        allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
         # rubocop:enable RSpec/AnyInstance

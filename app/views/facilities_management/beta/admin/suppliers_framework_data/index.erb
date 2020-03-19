@@ -1,0 +1,50 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_framework_data.heading_title') %></li>
+  </ol>
+</div>
+<h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.heading_title') %></h1>
+<div class="govuk-accordion" data-module="accordion" id="accordion-default">
+  <% @fm_suppliers.each do | suppliers | %>
+    <div class="govuk-accordion__section ">
+      <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading framework-data-accordion">
+          <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+            <%= suppliers.data['supplier_name'] %>
+          </span>
+        </h2>
+      </div>
+      <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1a</span>
+          <br />
+
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services, prices and variances</a> 
+          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+
+        </div>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1b</span>
+          <br />
+
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services</a> 
+          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+        </div>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1c</span>
+          <br />
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services</a> 
+          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+  
+</div>
+
+<a href="<%= facilities_management_beta_admin_path %>" class="govuk-button govuk-button--secondary govuk-!-margin-top-5" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_framework_data.rtrn_link') %></a>
