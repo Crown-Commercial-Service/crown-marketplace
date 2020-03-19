@@ -644,6 +644,7 @@ en:
             price: The contract price with this supplier is
             return_to_dashboard: You can return to your procurements dashboard
             return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
+            title: Offer to next supplier
           procurement_closed:
             closed_1: The
             closed_2: procurement has been closed.
