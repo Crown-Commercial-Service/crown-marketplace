@@ -18,7 +18,7 @@ module FacilitiesManagement
         def index
           @list_service_types = ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
 
-          supplier_data = CCS::FM::Supplier.find(params[:id])['data']
+          supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
           @supplier_name = supplier_data['supplier_name']
           supplier_services = supplier_data['lots'][0]['services']
 
