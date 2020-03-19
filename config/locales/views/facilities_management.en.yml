@@ -320,7 +320,8 @@ en:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
         supplier_framework_data:
-          heading: Supplier framework data
+          heading_title: Supplier framework data
+          rtrn_link: Return to admin dashboard
           sublot_data:
             heading_title: Services and prices
             heading_title_two: Variances
