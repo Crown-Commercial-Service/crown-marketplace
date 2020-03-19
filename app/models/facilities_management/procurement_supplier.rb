@@ -61,6 +61,7 @@ module FacilitiesManagement
           set_supplier_response_date
           self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
+          AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
         end
         transitions from: :sent, to: :accepted
       end
@@ -146,8 +147,12 @@ module FacilitiesManagement
       WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
-    def send_reminder_email
+    def send_reminder_email_to_suppiler
       send_email_to_supplier('DA_offer_sent_reminder')
+    end
+
+    def send_reminder_email_to_buyer
+      send_email_to_buyer('DA_offer_accepted_signature_confirmation_reminder')
     end
 
     private
@@ -170,6 +175,7 @@ module FacilitiesManagement
 
     CONTRACT_REMINDER_DAYS = 1
     CONTRACT_EXPIRE_DAYS = 2
+    AWAITING_SIGNATURE_REMINDER_DAYS = 14
 
     def convert_to_boolean(contract_boolean)
       send(contract_boolean + '=', ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))
