@@ -172,8 +172,9 @@ Rails.application.routes.draw do
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
-        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        get 'supplier-framework-data', to: 'suppliers_framework_data#index'
       end
     end
 
