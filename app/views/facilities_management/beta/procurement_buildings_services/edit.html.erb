@@ -3,7 +3,7 @@
       <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-m"><%= @procurement_building.procurement.name %>
+      <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
         - <%= @procurement_building.name %></span>
       <h1 class="govuk-heading-xl"><%= @building_service.name %></h1>
       <%= render partial: "#{@partial_prefix}"%>

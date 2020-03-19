@@ -16,7 +16,7 @@
     <% if params[:template] == 'review-contract' %>
       <%= render('review_contract') %>
     <% else %>
-      <span class="govuk-caption-m"><%= @procurement.name %></span>
+      <span class="govuk-caption-m"><%= @procurement.contract_name %></span>
       <h1 class="govuk-heading-xl"><%= t('.detailed_search_summary_title') %></h1>
       <p>
         <%=t('.detailed_search_description') %>
