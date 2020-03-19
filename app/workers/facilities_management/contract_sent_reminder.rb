@@ -5,7 +5,7 @@ module FacilitiesManagement
 
     def perform(id)
       contract = FacilitiesManagement::ProcurementSupplier.find(id)
-      contract.send_reminder_email if contract.aasm_state == 'sent'
+      contract.send_reminder_email_to_suppiler if contract.aasm_state == 'sent'
     end
   end
 end
