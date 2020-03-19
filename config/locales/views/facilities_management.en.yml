@@ -630,6 +630,20 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          next_supplier:
+            about_the_price: About the price
+            about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
+            close: You can close this procurement
+            close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
+            close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
+            next_lowest: The next lowest supplier who can deliver the services to your buildings is
+            next_steps: Available next steps
+            offer: You can offer your contract to this supplier
+            offer_list_1: we have generated your contract documents using this supplier's details and pricing
+            offer_list_2: the supplier will have 2 working days to respond to your offer
+            price: The contract price with this supplier is
+            return_to_dashboard: You can return to your procurements dashboard
+            return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
           procurement_closed:
             closed_1: The
             closed_2: procurement has been closed.
