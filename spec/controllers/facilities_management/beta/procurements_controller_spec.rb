@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :controller do
   login_fm_buyer
 
-  let(:procurement) { create(:facilities_management_procurement, name: 'New search') }
+  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search') }
 
   describe 'GET index' do
     it 'renders the correct template' do
@@ -52,7 +52,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
   describe 'POST create' do
     context 'with a valid record' do
       it 'redirects to edit path for the new record' do
-        post :create, params: { facilities_management_procurement: { name: 'New procurement' } }
+        post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
 
         new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
         expect(response).to redirect_to edit_facilities_management_beta_procurement_path(new_procurement.id)
@@ -72,7 +72,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
     context 'with a valid update' do
       before do
         procurement.update(aasm_state: 'detailed_search')
-        patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { name: 'Updated name' } }
+        patch :update, params: { id: procurement.id, step: 'contract_name', facilities_management_procurement: { contract_name: 'Updated name' } }
       end
 
       it 'redirects to the show page for the record' do
@@ -82,13 +82,13 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
       it 'correctly updates the provided params' do
         procurement.reload
 
-        expect(procurement.name).to eq('Updated name')
+        expect(procurement.contract_name).to eq('Updated name')
       end
     end
 
     context 'with an invalid update' do
       before do
-        patch :update, params: { id: procurement.id, facilities_management_procurement: { name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'name' } }
+        patch :update, params: { id: procurement.id, facilities_management_procurement: { contract_name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'contract_name' } }
       end
 
       it 'render the edit page for the record' do
@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
       it 'does not update the record' do
         procurement.reload
 
-        expect(procurement.name).to eq('New search')
+        expect(procurement.contract_name).to eq('New search')
       end
     end
   end
