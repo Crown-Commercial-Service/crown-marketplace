@@ -7956,3 +7956,8 @@ li code, td code, p code {
 .govuk-brand-light-grey-benchmark {
     color:#6F777B !important;
 }
+
+.govuk-accordion .govuk-accordion__section-button {
+    color: #007194;
+    font-weight: normal;
+}
