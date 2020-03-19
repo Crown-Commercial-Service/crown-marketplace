@@ -292,7 +292,7 @@ module ApplicationHelper
   end
 
   def format_money(cost)
-    "£#{number_with_delimiter(cost, delimiter: ',')}"
+    number_to_currency(cost, precision: 2, :unit => '£')
   end
 
   def link_to_add_row(name, form, association, **args)

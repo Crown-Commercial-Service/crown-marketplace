@@ -9,6 +9,13 @@
             </div>
         <% when 'next_supplier' %>
             <%= render partial: 'next_supplier', :locals=>{:f=>f} %>
+            <div class= 'govuk-!-margin-top-5'>
+                <%#= link_to("Confirm and send offer to supplier", facilities_management_beta_procurement_contract_sent_index_path(@procurement, contract_id: @procurement.procurement_suppliers.sent.first), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
+                <%= f.submit(value:"Confirm and send offer to supplier", class: 'govuk-!-margin-right-4 govuk-button', data: { disable_with: false }, name: :send_contract_to_next_supplier) %>
+                <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
+                <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+            </div>
+        <%  %>
         <% when 'copy' %>
             <%= render partial: 'create_a_copy' %>
         <% else %>

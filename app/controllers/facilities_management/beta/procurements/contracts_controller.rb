@@ -17,6 +17,7 @@ module FacilitiesManagement
         def update
           close_procurement && return if params['close_procurement'].present?
           update_supplier_response && return if params['sign_procurement'].present?
+          send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
         end
 
         private
@@ -30,6 +31,7 @@ module FacilitiesManagement
         end
 
         def assign_contract_attributes
+          return if params['send_contract_to_next_supplier'].present?
           @contract.assign_attributes(contract_params)
         end
 
@@ -59,6 +61,12 @@ module FacilitiesManagement
             set_page_detail
             render :edit
           end
+        end
+
+        def send_offer_to_next_supplier
+          @procurement.offer_to_next_supplier
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.sent.first)
         end
 
         def contract_params
