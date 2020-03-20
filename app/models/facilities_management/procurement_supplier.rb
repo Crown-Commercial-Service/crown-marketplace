@@ -70,6 +70,7 @@ module FacilitiesManagement
         before do
           set_contract_signed_date
           self.reason_for_not_signing = nil
+          send_email_to_supplier('DA_offer_signed_contract_live')
         end
         transitions from: :accepted, to: :signed
       end
@@ -79,11 +80,15 @@ module FacilitiesManagement
           set_contract_signed_date
           self.contract_start_date = nil
           self.contract_end_date = nil
+          send_email_to_supplier('DA_offer_accepted_not_signed')
         end
         transitions from: :accepted, to: :not_signed
       end
 
       event :withdraw do
+        before do
+          send_email_to_supplier('DA_offer_withdrawn')
+        end
         transitions from: %i[accepted sent], to: :withdrawn
       end
 
@@ -206,7 +211,11 @@ module FacilitiesManagement
     end
 
     def format_date_time_numeric(date)
-      date.strftime '%d/%m/%Y, %l:%M%P'
+      date&.strftime '%d/%m/%Y, %l:%M%P'
+    end
+
+    def format_date(date)
+      date&.strftime '%d/%m/%Y'
     end
 
     def host
@@ -240,7 +249,6 @@ module FacilitiesManagement
         false
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def send_email_to_supplier(email_type)
       template_name = email_type
@@ -252,7 +260,11 @@ module FacilitiesManagement
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
         'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
-        'da-offer-1-reference': contract_number
+        'da-offer-1-reference': contract_number,
+        'da-offer-1-not-signed-reason': reason_for_not_signing,
+        'da-offer-1-contract-start-date': format_date(contract_start_date),
+        'da-offer-1-contract-end-date': format_date(contract_end_date),
+        'da-offer-1-withdrawal-reason': reason_for_closing
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -262,5 +274,6 @@ module FacilitiesManagement
         false
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
