@@ -163,6 +163,10 @@ module FacilitiesManagement
       send_email_to_buyer('DA_offer_accepted_signature_confirmation_reminder')
     end
 
+    def set_contract_closed_date
+      self.contract_closed_date = DateTime.now.in_time_zone('London')
+    end
+
     private
 
     # Custom Validation
@@ -190,19 +194,15 @@ module FacilitiesManagement
     end
 
     def generate_contract_number
-      return unless procurement.further_competition? || procurement.direct_award?
+      return unless procurement.further_competition? || procurement.direct_award? || procurement.da_draft?
 
-      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award?
+      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
     def set_sent_date
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-    end
-
-    def set_contract_closed_date
-      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
     def set_supplier_response_date
