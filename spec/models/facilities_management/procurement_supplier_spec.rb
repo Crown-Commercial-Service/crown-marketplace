@@ -90,6 +90,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       # rubocop:enable RSpec/AnyInstance
       allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
       allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
     end
 
     describe '.real_date?' do
@@ -171,6 +172,12 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             expect(contract.accept!).to be true
             procurement.reload
             expect(contract.aasm_state).to eq 'accepted'
+          end
+
+          it 'will call the AwaitingSignatureReminder' do
+            contract.accept!
+            procurement.reload
+            expect(FacilitiesManagement::AwaitingSignatureReminder).to have_received(:perform_at)
           end
         end
       end

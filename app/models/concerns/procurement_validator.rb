@@ -4,14 +4,8 @@ module ProcurementValidator
 
   # rubocop:disable Metrics/BlockLength
   included do
-    # validations on :name step
-    before_validation :remove_excess_whitespace_from_name, on: :name
-    validates :name, presence: true, on: :name
-    validates :name, uniqueness: { scope: :user }, on: :name
-    validates :name, length: 1..100, on: :name
-    validates :name, format: { with: /\A([a-zA-Z(0-9) _\''\-]*)\z/ }, on: :name
-
     # validations on :contract_name step
+    before_validation :remove_excess_whitespace_from_name, on: :contract_name
     validates :contract_name, presence: true, on: %i[contract_name]
     validates :contract_name, uniqueness: { scope: :user }, on: :contract_name
     validates :contract_name, length: 1..100, on: :contract_name
@@ -89,7 +83,7 @@ module ProcurementValidator
     # Start of validation methods for contract-dates
 
     def remove_excess_whitespace_from_name
-      self.name = name&.split&.join(' ')
+      self.contract_name = contract_name&.split&.join(' ')
     end
 
     #############################################

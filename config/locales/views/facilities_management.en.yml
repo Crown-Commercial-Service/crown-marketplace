@@ -327,12 +327,15 @@ en:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
         supplier_framework_data:
-          heading: Supplier framework data
+          heading_title: Supplier framework data
+          rtrn_link: Return to admin dashboard
           sublot_data:
-            heading_title: Services and prices
+            breadcrumb_text_supplier_framework_data: Supplier framework data
+            heading_title: Sub-lot 1a services, prices, and variances
+            heading_title_three: Services and prices
             heading_title_two: Variances
-            leading_text: Sub-lot 1a sevices, prices, and variances
-            note: The tick boxes in the first column indicate the services this suppler can provide
+            leading_text: Sub-lot 1a services, prices, and variances
+            note: The tick boxes in the first column indicate the services this suppler can provide.
             update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:
@@ -1062,7 +1065,13 @@ en:
             list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
             what_happens_next: What happens next
           contract_offer_details:
+            accepted_contract_offer: You accepted this contract offer on
             buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
+            contract_closed_on: This contract offer was closed on
+            contract_received_on: This contract offer was received on
+            reason_for_declining: Your reason for declining was
+            reason_for_not_signing: The buyer’s reason for not signing this contract was
+            reason_for_withdrawing: The buyer's reason for withdrawing this contract offer was
           contract_summary_foot:
             respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
           edit:

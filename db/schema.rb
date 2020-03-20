@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_113711) do
+ActiveRecord::Schema.define(version: 2020_03_18_142425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -153,7 +153,6 @@ ActiveRecord::Schema.define(version: 2020_03_11_113711) do
 
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.string "name", limit: 100
     t.string "aasm_state", limit: 30
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
@@ -181,10 +180,6 @@ ActiveRecord::Schema.define(version: 2020_03_11_113711) do
     t.string "lot_number"
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
-    t.datetime "date_offer_sent"
-    t.date "contract_start_date"
-    t.date "closed_contract_date"
-    t.boolean "is_contract_closed", default: false
     t.string "da_journey_state"
     t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"

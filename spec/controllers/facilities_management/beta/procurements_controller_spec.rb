@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :controller do
-  let(:procurement) { create(:facilities_management_procurement, name: 'New search') }
+  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search') }
 
   context 'without buyer details' do
     login_fm_buyer
@@ -64,8 +64,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
     describe 'POST create' do
       context 'with a valid record' do
         it 'redirects to edit path for the new record' do
-          post :create, params: { facilities_management_procurement: { name: 'New procurement' } }
-
+          post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
           new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
           expect(response).to redirect_to edit_facilities_management_beta_procurement_path(new_procurement.id)
         end
@@ -110,7 +109,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
         it 'does not update the record' do
           procurement.reload
 
-          expect(procurement.name).to eq('New search')
+          expect(procurement.contract_name).to eq('New search')
         end
       end
     end

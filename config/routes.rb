@@ -150,6 +150,7 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+          get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -168,12 +169,13 @@ Rails.application.routes.draw do
         end
       end
       namespace :admin, path: 'admin' do
-        get 'sublot-data', to: 'sublot_data_services_prices#index'
         get '/', to: 'admin_account#admin_account'
         get '/start', to: 'dashboard#index'
         get '/gateway', to: 'gateway#index'
-        get 'supplier-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        get 'supplier-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        get 'supplier-framework-data', to: 'suppliers_framework_data#index'
+        get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
       end
     end
 

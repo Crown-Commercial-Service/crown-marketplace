@@ -37,7 +37,7 @@ module FacilitiesManagement
       def create
         @procurement = current_user.procurements.build(procurement_params)
 
-        if @procurement.save(context: :name)
+        if @procurement.save(context: :contract_name)
           redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id)
         else
           @errors = @procurement.errors
@@ -112,7 +112,7 @@ module FacilitiesManagement
         @procurement.destroy
 
         respond_to do |format|
-          format.html { redirect_to facilities_management_beta_procurements_url(deleted: @procurement.name) }
+          format.html { redirect_to facilities_management_beta_procurements_url(deleted: @procurement.contract_name) }
           format.json { head :no_content }
         end
       end
@@ -657,7 +657,6 @@ module FacilitiesManagement
       def procurement_params
         params.require(:facilities_management_procurement)
               .permit(
-                :name,
                 :tupe,
                 :contract_name,
                 :procurement_data,
