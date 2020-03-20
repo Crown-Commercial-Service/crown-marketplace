@@ -329,6 +329,8 @@ en:
         supplier_framework_data:
           heading_title: Supplier framework data
           rtrn_link: Return to admin dashboard
+          sublot_1b_data:
+            heading_title: Sub-lot 1b services
           sublot_data:
             breadcrumb_text_supplier_framework_data: Supplier framework data
             heading_title: Sub-lot 1a services, prices, and variances
@@ -336,6 +338,7 @@ en:
             heading_title_two: Variances
             leading_text: Sub-lot 1a services, prices, and variances
             note: The tick boxes in the first column indicate the services this suppler can provide.
+            return_button: Return to supplier framework data
             update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:
