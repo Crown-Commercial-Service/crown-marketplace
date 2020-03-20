@@ -59,7 +59,6 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
       'Cancel'
     end
   end
-    
 
   def page_definitions
     @page_definitions ||= {
