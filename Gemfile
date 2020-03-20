@@ -114,7 +114,7 @@ gem 'activerecord-import', '~> 0.15.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
-gem 'caracal-rails'
+gem 'caracal-rails', '>= 1.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
