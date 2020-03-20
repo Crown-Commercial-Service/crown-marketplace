@@ -113,6 +113,8 @@ gem 'active_storage_validations'
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
 gem 'notifications-ruby-client'
+# DOCX generation
+gem 'caracal-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
