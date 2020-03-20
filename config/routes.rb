@@ -150,6 +150,7 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+          get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]

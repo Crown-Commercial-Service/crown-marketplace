@@ -200,6 +200,10 @@ module FacilitiesManagement
       aasm_state.match?(/\Ada_/)
     end
 
+    def initial_call_off_end_date
+      initial_call_off_start_date + initial_call_off_period.years - 1.day
+    end
+
     def extension_period_1_start_date
       return nil if optional_call_off_extensions_1.nil?
 
@@ -264,6 +268,22 @@ module FacilitiesManagement
       return false if procurement_suppliers.unsent.empty?
 
       procurement_suppliers.unsent&.first&.offer_to_supplier!
+    end
+
+    def mobilisation_period_start_date
+      return nil if mobilisation_period.nil?
+
+      initial_call_off_start_date - mobilisation_period.weeks
+    end
+
+    def mobilisation_period_end_date
+      return nil if mobilisation_period.nil?
+
+      initial_call_off_start_date - 1.day
+    end
+
+    def first_unsent_contract
+      procurement_suppliers.find_by(aasm_state: 'unsent')
     end
 
     private
