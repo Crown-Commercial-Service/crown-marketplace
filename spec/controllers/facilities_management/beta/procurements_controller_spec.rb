@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
 
       context 'with an invalid update' do
         before do
-          patch :update, params: { id: procurement.id, facilities_management_procurement: { contract_name: (0...100).map { ('a'..'z').to_a[rand(26)] }.join, step: 'contract_name' } }
+          patch :update, params: { id: procurement.id, facilities_management_procurement: { contract_name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'contract_name' } }
         end
 
         it 'render the edit page for the record' do
