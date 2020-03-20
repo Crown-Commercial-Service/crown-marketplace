@@ -83,7 +83,7 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
       context 'with a valid update' do
         before do
           procurement.update(aasm_state: 'detailed_search')
-          patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { name: 'Updated name' } }
+          patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { contract_name: 'Updated name' } }
         end
 
         it 'redirects to the show page for the record' do
@@ -93,13 +93,13 @@ RSpec.describe FacilitiesManagement::Beta::ProcurementsController, type: :contro
         it 'correctly updates the provided params' do
           procurement.reload
 
-          expect(procurement.name).to eq('Updated name')
+          expect(procurement.contract_name).to eq('Updated name')
         end
       end
 
       context 'with an invalid update' do
         before do
-          patch :update, params: { id: procurement.id, facilities_management_procurement: { name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'name' } }
+          patch :update, params: { id: procurement.id, facilities_management_procurement: { contract_name: (0...100).map { ('a'..'z').to_a[rand(26)] }.join, step: 'name' } }
         end
 
         it 'render the edit page for the record' do
