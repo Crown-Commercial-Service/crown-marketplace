@@ -4,6 +4,35 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
   let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:supplier_names) do
+    [:"Wolf-Wiza",
+     :"Bogan-Koch",
+     :"O'Keefe LLC",
+     :"Treutel LLC",
+     :"Hirthe-Mills",
+     :"Kemmer Group",
+     :"Mayer-Russel",
+     :"Bode and Sons",
+     :"Collier Group",
+     :"Hickle-Schinner",
+     :"Leffler-Strosin",
+     :"Dickinson-Abbott",
+     :"O'Keefe-Mitchell",
+     :"Schmeler-Leuschke",
+     :"Abernathy and Sons",
+     :"Cartwright and Sons",
+     :"Dare, Heaney and Kozey",
+     :"Rowe, Hessel and Heller",
+     :"Kulas, Schultz and Moore",
+     :"Walsh, Murphy and Gaylord",
+     :"Shields, Ratke and Parisian",
+     :"Ullrich, Ratke and Botsford",
+     :"Lebsack, Vandervort and Veum",
+     :"Marvin, Kunde and Cartwright",
+     :"Kunze, Langworth and Parisian",
+     :"Halvorson, Corwin and O'Connell"]
+  end
+
   # rubocop:disable Style/HashSyntax
   let(:data) do
     {
@@ -73,7 +102,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
   # rubocop:enable Style/HashSyntax
 
-  context 'and dummy buildings to a db', skip: true do
+  context 'and dummy buildings to a db' do
     let(:selected_buildings2) do
       [OpenStruct.new(
         id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
@@ -380,7 +409,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: DateTime.now.utc, user_email: user.email, data: data)
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -407,7 +435,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: DateTime.now.utc, user_email: user.email, data: data)
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -450,7 +477,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: start_date, user_email: user_email, data: data)
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -494,7 +520,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: start_date, user_email: user_email, data: data)
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
@@ -539,7 +564,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       results = {}
       report_results = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
@@ -556,7 +580,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
   end
 
-  it 'can calculate a direct award procurement', skip: true do
+  it 'can calculate a direct award procurement' do
     uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
     uom2 = {}
     uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
@@ -620,7 +644,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report = described_class.new(start_date: start_date, user_email: 'test@example.com', data: procurement)
 
     results = {}
-    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}

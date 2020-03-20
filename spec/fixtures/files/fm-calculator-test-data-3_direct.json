@@ -1,8 +1,8 @@
 [
   {
     "expectations": {
-      "sumunitofmeasure": "3,393.11",
-      "benchmarkedcostssum": "1,946.48"
+      "sumunitofmeasure": "3484.86",
+      "benchmarkedcostssum": "1893.46"
     },
     "contract_length_years": 6,
     "service_ref": "C.1",
@@ -16,8 +16,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,516.00",
-      "benchmarkedcostssum": "2,092.12"
+      "sumunitofmeasure": "1554.45",
+      "benchmarkedcostssum": "2035.82"
     },
     "contract_length_years": 6,
     "service_ref": "C.2",
@@ -31,8 +31,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "184.40",
-      "benchmarkedcostssum": "107.89"
+      "sumunitofmeasure": "187.98",
+      "benchmarkedcostssum": "106.77"
     },
     "contract_length_years": 6,
     "service_ref": "C.3",
@@ -46,8 +46,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "735.45",
-      "benchmarkedcostssum": "675.47"
+      "sumunitofmeasure": "751.92",
+      "benchmarkedcostssum": "654.88"
     },
     "contract_length_years": 6,
     "service_ref": "C.4",
@@ -61,8 +61,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "355.25",
-      "benchmarkedcostssum": "380.77"
+      "sumunitofmeasure": "361.5",
+      "benchmarkedcostssum": "370.15"
     },
     "contract_length_years": 6,
     "service_ref": "C.6",
@@ -76,8 +76,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1,040.55",
-      "benchmarkedcostssum": "2,038.30"
+      "sumunitofmeasure": "1070.04",
+      "benchmarkedcostssum": "1986.0"
     },
     "contract_length_years": 6,
     "service_ref": "C.7",
@@ -91,8 +91,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "394.20",
-      "benchmarkedcostssum": "293.92"
+      "sumunitofmeasure": "404.88",
+      "benchmarkedcostssum": "284.73"
     },
     "contract_length_years": 6,
     "service_ref": "C.11",
@@ -106,8 +106,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "401.96",
-      "benchmarkedcostssum": "408.45"
+      "sumunitofmeasure": "412.11",
+      "benchmarkedcostssum": "398.62"
     },
     "contract_length_years": 6,
     "service_ref": "C.12",
@@ -121,8 +121,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "206.74",
-      "benchmarkedcostssum": "203.67"
+      "sumunitofmeasure": "209.67",
+      "benchmarkedcostssum": "199.31"
     },
     "contract_length_years": 6,
     "service_ref": "C.13",
@@ -136,8 +136,8 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "4,446.17",
-      "benchmarkedcostssum": "4,611.75"
+      "sumunitofmeasure": "4564.01",
+      "benchmarkedcostssum": "4493.48"
     },
     "contract_length_years": 6,
     "service_ref": "C.5",

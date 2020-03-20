@@ -4,6 +4,36 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
   let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:supplier_names) do
+    [:"Wolf-Wiza",
+     :"Bogan-Koch",
+     :"O'Keefe LLC",
+     :"Treutel LLC",
+     :"Hirthe-Mills",
+     :"Kemmer Group",
+     :"Mayer-Russel",
+     :"Bode and Sons",
+     :"Collier Group",
+     :"Hickle-Schinner",
+     :"Leffler-Strosin",
+     :"Dickinson-Abbott",
+     :"O'Keefe-Mitchell",
+     :"Schmeler-Leuschke",
+     :"Abernathy and Sons",
+     :"Cartwright and Sons",
+     :"Dare, Heaney and Kozey",
+     :"Rowe, Hessel and Heller",
+     :"Kulas, Schultz and Moore",
+     :"Walsh, Murphy and Gaylord",
+     :"Shields, Ratke and Parisian",
+     :"Ullrich, Ratke and Botsford",
+     :"Lebsack, Vandervort and Veum",
+     :"Marvin, Kunde and Cartwright",
+     :"Kunze, Langworth and Parisian",
+     :"Halvorson, Corwin and O'Connell"]
+  end
+  let(:supplier_name) { supplier_names.last }
+
   # rubocop:disable Style/HashSyntax
   # rubocop:disable Layout/SpaceAroundOperators
   let(:data) do
@@ -673,7 +703,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -714,7 +743,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -746,7 +774,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -778,7 +805,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -806,7 +832,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:enable Layout/AlignHash
 
   # rubocop:disable RSpec/ExampleLength
-  context 'when DA procurement in London', skip: true do
+  context 'when DA procurement in London' do
     it 'can calculate a direct award value' do
       uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
       uom2 = {}
@@ -854,13 +880,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: start_date, user_email: user.email, data: procurement)
 
       results = {}
-      supplier_name = CCS::FM::RateCard.latest.data[:Prices].keys.last
       report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
       expect(report.direct_award_value).to eq 415.824288
     end
   end
 
-  context 'when DA procurement outside of London', skip: true do
+  context 'when DA procurement outside of London' do
     it 'can calculate a direct award value' do
       uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
       uom2 = {}
@@ -909,7 +934,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report = described_class.new(start_date: start_date, user_email: user.email, data: procurement)
 
       results = {}
-      supplier_name = CCS::FM::RateCard.latest.data[:Prices].keys.last
       report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
       expect(report.direct_award_value).to eq 498.9891456
     end
