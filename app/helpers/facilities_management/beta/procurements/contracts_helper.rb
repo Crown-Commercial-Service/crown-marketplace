@@ -35,7 +35,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
   end
 
-  def set_continuation_text
+  def show_continuation_text
     case @contract.aasm_state
     when 'accepted'
       'Confirm if contract signed or not'
@@ -44,11 +44,19 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     end
   end
 
-  def set_secondary_text
+  def show_secondary_text
     if @contract.closed? || @contract.aasm_state == 'signed'
       'Make a copy of your requirements'
     else
       'Close this procurement'
+    end
+  end
+
+  def edit_secondary_text
+    if params['name'] == 'next_supplier'
+      'Cancel and return to contract summary'
+    else
+      'Cancel'
     end
   end
 
@@ -64,14 +72,14 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
       show: {
         page_title: 'Contract summary',
         caption1: @procurement.contract_name,
-        continuation_text: set_continuation_text,
+        continuation_text: show_continuation_text,
         return_text: 'Return to procurements dashboard',
-        secondary_text: set_secondary_text,
+        secondary_text: show_secondary_text,
       },
       edit: {
         back_url: facilities_management_beta_procurement_contract_path(@procurement),
         continuation_text: 'Close this procurement',
-        secondary_text: 'Cancel',
+        secondary_text: edit_secondary_text,
       },
     }.freeze
   end

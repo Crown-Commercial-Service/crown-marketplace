@@ -50,8 +50,12 @@ module FacilitiesManagement
           assign_contract_number
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
-          ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
-          ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
+          begin
+            ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+            ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
+          rescue StandardError
+            false
+          end
         end
         transitions from: :unsent, to: :sent
       end
@@ -61,7 +65,11 @@ module FacilitiesManagement
           set_supplier_response_date
           self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
-          AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
+          begin
+            AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
+          rescue StandardError
+            false
+          end
         end
         transitions from: :sent, to: :accepted
       end
@@ -160,6 +168,10 @@ module FacilitiesManagement
       send_email_to_buyer('DA_offer_accepted_signature_confirmation_reminder')
     end
 
+    def set_contract_closed_date
+      self.contract_closed_date = DateTime.now.in_time_zone('London')
+    end
+
     private
 
     # Custom Validation
@@ -187,19 +199,15 @@ module FacilitiesManagement
     end
 
     def generate_contract_number
-      return unless procurement.further_competition? || procurement.direct_award?
+      return unless procurement.further_competition? || procurement.direct_award? || procurement.da_draft?
 
-      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award?
+      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
     def set_sent_date
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-    end
-
-    def set_contract_closed_date
-      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
     def set_supplier_response_date

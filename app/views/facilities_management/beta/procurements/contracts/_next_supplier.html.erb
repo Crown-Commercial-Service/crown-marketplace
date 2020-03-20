@@ -1,1 +1,45 @@
-This is the offer the next supplier page. copy context from ccs prototype 
+<h1 class="govuk-caption-xl">
+    <%= @procurement.contract_name %>
+</h1>
+<h2 class="govuk-heading-xl">
+    <%= t('.title') %>
+</h2>
+<h3 class="govuk-body-l govuk-!-width-one-half"> <%= t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.data['supplier_name'] %>.</b></h1>
+  <div class="govuk-body-l">
+      <%= t('.price')%> <b><%= format_money @procurement.procurement_suppliers.unsent.first.direct_award_value %>.</b>
+  </div>
+  
+  <div>
+      <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= t('.about_the_price') %>
+          </span>
+        </summary>
+        <div class="govuk-details__text govuk-!-width-three-quarters">
+          <%= t('.about_the_price_description') %>
+        </div>
+      </details>
+  </div>
+<div>
+  <div>
+    <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-font-size-24"><%= t('.next_steps') %></div>
+  </div>
+  <ol class="govuk-list govuk-list--number govuk-!-width-three-quarters">
+    <li class="govuk-!-font-weight-bold"><%= t('.offer') %></li>
+      <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
+      <li ><%= t('.offer_list_1') %></li>
+      <li><%= t('.offer_list_2') %></li></ul>
+    <li class="govuk-!-font-weight-bold"><%= t('.close')%></li>
+      <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
+        <li>
+          <%= t('.close_point_1') %>
+          <%= t('.close_point_2') %>
+        </li>
+      </ul>
+    <li class="govuk-!-font-weight-bold"><%= t('.return_to_dashboard') %></li>
+      <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
+        <li> <%= t('.return_to_dashboard_description') %> </li>
+      </ul>
+  </ol>
+    <%= render partial: 'call_off_contract_documents' %>

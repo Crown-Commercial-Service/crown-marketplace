@@ -196,10 +196,6 @@ module FacilitiesManagement
 
     MAX_NUMBER_OF_PENSIONS = 99
 
-    def direct_award?
-      aasm_state.match?(/\Ada_/)
-    end
-
     def initial_call_off_end_date
       initial_call_off_start_date + initial_call_off_period.years - 1.day
     end
@@ -271,6 +267,10 @@ module FacilitiesManagement
     def offer_to_next_supplier
       return false if procurement_suppliers.unsent.empty?
 
+      unless procurement_suppliers.where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where.not(aasm_state: 'unsent').last
+        last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
+      end
       procurement_suppliers.unsent&.first&.offer_to_supplier!
     end
 

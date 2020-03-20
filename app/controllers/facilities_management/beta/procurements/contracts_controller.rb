@@ -14,10 +14,13 @@ module FacilitiesManagement
 
         def edit; end
 
+        # rubocop:disable Metrics/CyclomaticComplexity
         def update
           close_procurement && return if params['close_procurement'].present?
           update_supplier_response && return if params['sign_procurement'].present?
+          send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
         end
+        # rubocop:enable Metrics/CyclomaticComplexity
 
         private
 
@@ -30,6 +33,8 @@ module FacilitiesManagement
         end
 
         def assign_contract_attributes
+          return if params['send_contract_to_next_supplier'].present?
+
           @contract.assign_attributes(contract_params)
         end
 
@@ -59,6 +64,13 @@ module FacilitiesManagement
             set_page_detail
             render :edit
           end
+        end
+
+        def send_offer_to_next_supplier
+          next_contract = @procurement.procurement_suppliers.unsent.first
+          @procurement.offer_to_next_supplier
+          @procurement.save
+          redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
         end
 
         def contract_params
