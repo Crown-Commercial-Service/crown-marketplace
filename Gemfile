@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -108,13 +108,13 @@ gem 'date_validator'
 gem 'ratonvirus'
 gem 'ratonvirus-clamby'
 # for active storage validation
-gem 'active_storage_validations'
+gem 'active_storage_validations', '>= 0.8.7'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
-gem 'caracal-rails'
+gem 'caracal-rails', '>= 1.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
