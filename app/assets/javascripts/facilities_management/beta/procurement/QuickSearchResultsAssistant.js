@@ -13,6 +13,17 @@ const QuickSearchResultsAssistant = {
         this.helper.init();
         this.helper.UpdateCounts();
         this.helper.ConnectCheckboxes(this.FilterSuppliers.bind(this));
+
+        // Filter the list of suppliers
+        let filterEvent = {
+            FilterTarget: this.helper.getFilterTarget()
+        };
+        this.helper._filterHelper.forEach(function (x) {
+            let propertyName = x._sectionName;
+            let selectedCheckboxes = x.GetSelectedCheckboxes();
+            filterEvent[propertyName + "_checkboxes"] = selectedCheckboxes;
+        });
+        this.FilterSuppliers(filterEvent);
     },
     FilterSuppliers : function(filterEvent) {
         let tableSource = filterEvent.FilterTarget.jqueryObject;
@@ -36,11 +47,11 @@ const QuickSearchResultsAssistant = {
                     operationalRegions = JSON.parse(operationalRegions);
                     let serviceOfferings = JSON.parse($(id).attr('servicecode'));
 
-                    let isServiceOfferingSelected = selectedServices.some(function (selectedService) {
+                    let isServiceOfferingSelected = selectedServices.every(function (selectedService) {
                         return serviceOfferings.includes(selectedService.code.replace('-', '.'));
                     });
 
-                    let isOperationalAreaSelected = selectedLocations.some(function (selectedLocation) {
+                    let isOperationalAreaSelected = selectedLocations.every(function (selectedLocation) {
                         return operationalRegions.includes(selectedLocation.code);
                     });
 
