@@ -57,12 +57,12 @@ module FacilitiesManagement
       procurement_building_services = procurement_building.procurement_building_services
 
       if spreadsheet_type == :da
-        uvals_not_da = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
+        uvals_not_da = procurement_building_services.reject { |u| u[:code].in? CCS::FM::Service.direct_award_services }
         @errors = 'The following services are not Direct Award: ' + uvals_not_da.collect { |s| s[:service_code] }.to_s if uvals_not_da.count
 
         procurement_building_services = procurement_building_services.select { |u| u[:code].in? CCS::FM::Service.direct_award_services }
       elsif spreadsheet_type == :fc
-        uvals_not_fc = building_uvals.reject { |u| u[:code].in? CCS::FM::Service.further_competition_services }
+        uvals_not_fc = procurement_building_services.reject { |u| u[:code].in? CCS::FM::Service.further_competition_services }
         @errors = 'The following services are not further Competition: ' + uvals_not_fc.collect { |s| s[:service_code] }.to_s if uvals_not_fc.count
 
         procurement_building_services = procurement_building_services.select { |u| u[:code].in? CCS::FM::Service.further_competition_services }
