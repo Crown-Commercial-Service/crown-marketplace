@@ -4,6 +4,7 @@ module FacilitiesManagement
       class SublotDataServicesPricesController < FacilitiesManagement::Beta::FrameworkController
         rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
         rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+        rescue_from NoMethodError, with: :render_no_method_error_response
 
         def render_unprocessable_entity_response(exception)
           logger.error exception.message
@@ -13,6 +14,11 @@ module FacilitiesManagement
         def render_not_found_response(exception)
           logger.error exception.message
           redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot 1a not found' }
+        end
+
+        def render_no_method_error_response(exception)
+          logger.error exception.message
+          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lota method not found' }
         end
 
         def index
