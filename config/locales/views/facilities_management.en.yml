@@ -866,6 +866,8 @@ en:
             no_closed: You do not have any closed contracts
           contracts:
             no_live: You do not have any live contracts
+          further_competition:
+            no_fc: You do not have any further competition contracts
           in_draft:
             no_drafts: You do not have any offers in the draft
           searches:
@@ -1059,6 +1061,7 @@ en:
           closed_title: Closed
           contracts_title: Contracts
           direct_award_title: Direct award
+          further_competition: Further competition
           in-draft-title: In draft
           manage_procurements: Procurements dashboard
           searches_title: Searches
