@@ -16,6 +16,7 @@ module FacilitiesManagement
 
         # rubocop:disable Metrics/CyclomaticComplexity
         def update
+          no_more_suppliers && return if @contract.last_offer?
           close_procurement && return if params['close_procurement'].present?
           update_supplier_response && return if params['sign_procurement'].present?
           send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
@@ -71,6 +72,11 @@ module FacilitiesManagement
           @procurement.offer_to_next_supplier
           @procurement.save
           redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
+        end
+
+        def no_more_suppliers
+          @procurement.set_state_to_closed!
+          redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: @contract.id)
         end
 
         def contract_params

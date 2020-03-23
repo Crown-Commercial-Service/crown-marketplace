@@ -172,6 +172,10 @@ module FacilitiesManagement
       self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
+    def last_offer?
+      procurement.procurement_suppliers.unsent.size == 0
+    end
+
     private
 
     # Custom Validation
