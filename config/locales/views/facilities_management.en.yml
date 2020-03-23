@@ -1011,6 +1011,47 @@ en:
           hide_filters: Hide filter
           region: Region
           service: Service
+        further_competition:
+          further_competition_partial:
+            awarding_the_contract: Awarding the contract
+            awarding_the_contract_1: awarding the contract to the successful supplier, and notifying unsuccessful suppliers
+            description_header: What will the summary contain?
+            description_list_1: building information
+            description_list_2: services required, and volume details
+            description_list_3: recommended sub-lot
+            description_list_4: supplier shortlist
+            description_list_5: contract requirements and key dates
+            description_text: 'The summary contains all the information that you have entered into this portal, all of which you can transfer into the relevant documents when running your further competition, including:'
+            esourcing: eSourcing tool
+            esourcing_description: Crown Commercial Service offer a free eSourcing tool, to help you run your further competition online, or you can use your own organisation’s sourcing tool if you have one.
+            help: Need help?
+            help_description: Please find our contact details below.
+            help_description_1: When speaking to us please reference your procurement summary reference number.
+            invitation_to_tender: Creating your invitation to tender (ITT)
+            invitation_to_tender_1: defining your specific requirements
+            invitation_to_tender_2: setting your evaluation criteria – price and quality
+            invitation_to_tender_3: creating your Terms and Conditions, and order form
+            invitation_to_tender_4: detailing your pricing model, key performance indicators, and other contract tools
+            make_a_copy: If you wish to make a copy of your requirements and re-run your results, click on the 'Make a copy of your requirements' button below.
+            more_information: Where to find more information
+            more_information_1: buyer guides
+            more_information_2: supplier brief template
+            more_information_3: call-off schedules and core terms
+            more_information_4: service specifications
+            more_information_5: bid pack guidance documents
+            publishing_invitation: Publishing your ITT
+            publishing_invitation_1: inviting your shortlisted suppliers to bid by issuing the ITT, requirements document and draft contract
+            summary_header: Download your procurement summary
+            supplier_brief: Supplier brief
+            supplier_brief_1: used to communicate to the supplier's high level details of your requirements, timescales etc, and receive feedback
+            supplier_brief_2: allows creation of further shortlisted suppliers (based on suppliers interest), who wish to progress to the next stage.
+            supplier_brief_3: dependent on the level of interest, also allows you to make an initial decision on whether to proceed to the next stage, or alter your requirements
+            tender_period: Tender period
+            tender_period_1: answer clarification questions
+            tender_period_2: receiving suppliers tenders (bids)
+            tender_period_3: evaluate suppliers' responses
+            what_happens_next_description: 'Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:'
+            what_happens_next_title: What happens next
         index:
           closed_title: Closed
           contracts_title: Contracts

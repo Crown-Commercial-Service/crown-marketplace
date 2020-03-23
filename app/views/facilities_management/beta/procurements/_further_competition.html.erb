@@ -1,6 +1,7 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>  
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>  
   <%= render :partial => 'facilities_management/beta/procurements/further_competition/further_competition_partial', locals: { post: pd } %>
   <%= form_for @page_data[:model_object], url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f, false) %>
   <% end %>
 <% end %>
+  </div>
