@@ -173,7 +173,7 @@ module FacilitiesManagement
     end
 
     def last_offer?
-      procurement.procurement_suppliers.unsent.size == 0
+      procurement.procurement_suppliers.unsent.empty?
     end
 
     private

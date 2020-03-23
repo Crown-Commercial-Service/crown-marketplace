@@ -9,6 +9,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def warning_message
     warning_messages = { sent: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent')} #{format_date_time(@contract.offer_sent_date)}.",
                          accepted: t('facilities_management.beta.procurements.contracts_helper.warning_message.accepted'),
@@ -17,11 +18,16 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
                          declined: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.declined')} #{format_date_time(@contract.supplier_response_date)}.",
                          expired: t('facilities_management.beta.procurements.contracts_helper.warning_message.expired') }
     if @contract.closed?
-      "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+      if @contract.last_offer?
+        "The contract offer was automatically closed on #{format_date_time(@contract.contract_closed_date)} when you tried to offer<br/> the procurement to the next supplier, but there were no more suppliers."
+      else
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+      end
     else
       warning_messages[@contract.aasm_state.to_sym]
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   WARNINGS = { sent: 'Sent',
                accepted: 'Accepted, awaiting contract signature',

@@ -503,6 +503,12 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.procurement_suppliers[0].contract_closed_date).not_to be_nil
           expect(procurement.procurement_suppliers[1].contract_closed_date).to be_nil
         end
+
+        it 'last sent offer returns false' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          expect(procurement.procurement_suppliers.sent.last.last_offer?).to be false
+        end
       end
 
       context 'when no contracts are unsent' do
@@ -535,6 +541,12 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           contract_closed_dates = procurement.procurement_suppliers.map(&:contract_closed_date)
           expect(contract_closed_dates[0..2].any?(nil)).to be false
           expect(contract_closed_dates.last).to be_nil
+        end
+
+        it 'last sent offer returns true' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          expect(procurement.procurement_suppliers.sent.last.last_offer?).to be true
         end
       end
     end
