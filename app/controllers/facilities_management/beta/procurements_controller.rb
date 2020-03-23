@@ -21,6 +21,7 @@ module FacilitiesManagement
         @sent_offers = sent_offers
         @contracts = live_contracts
         @closed_contracts = closed_contracts
+        @further_competition_contracts = current_user.procurements.further_competition
       end
 
       def show

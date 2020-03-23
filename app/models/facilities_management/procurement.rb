@@ -191,7 +191,7 @@ module FacilitiesManagement
       !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
 
-    SEARCH = %i[quick_search detailed_search results further_competition].freeze
+    SEARCH = %i[quick_search detailed_search results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
     MAX_NUMBER_OF_PENSIONS = 99
