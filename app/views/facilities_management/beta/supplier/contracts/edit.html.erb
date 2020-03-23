@@ -12,7 +12,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="govuk-form-group <%= 'govuk-form-group--error' if @contract.errors.any? %>">
+        <div id="facilities_management_contract" class="govuk-form-group <%= 'govuk-form-group--error' if @contract.errors.any? %>">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                 <h1 class="govuk-fieldset__heading"><%= "#{t('.form_title')} #{@procurement.user.buyer_detail.organisation_name}?" %></h1>
             </legend>

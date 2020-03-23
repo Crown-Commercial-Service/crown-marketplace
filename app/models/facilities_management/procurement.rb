@@ -44,6 +44,24 @@ module FacilitiesManagement
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
 
+    # For making a copy of a procurement
+    amoeba do
+      exclude_association :procurement_suppliers
+      exclude_association :active_procurement_buildings
+    end
+
+    def create_procurement_copy
+      procurement_copy = amoeba_dup
+      procurement_copy.contract_name = nil
+      procurement_copy.aasm_state = 'detailed_search'
+      procurement_copy.da_journey_state = 'pricing'
+      if security_policy_document_required
+        procurement_copy.security_policy_document_file = nil
+        procurement_copy.security_policy_document_file.attach(security_policy_document_file.blob)
+      end
+      procurement_copy
+    end
+
     def before_each_procurement_pension_funds(new_pension_fund)
       new_pension_fund.case_sensitive_error = false
       procurement_pension_funds.each do |saved_pension_fund|
