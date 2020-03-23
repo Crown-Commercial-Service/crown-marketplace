@@ -1,6 +1,6 @@
-<%= govuk_page_content(@page_description, @contract, true) do |pd| %>
+<%= govuk_page_content(@page_description, @contract, params[:name] == 'withdraw') do |pd| %>
     <%= form_for @contract, url: facilities_management_beta_procurement_contract_path, method: :put do |f| %>
-        <% case params[:name]%>
+        <% case params[:name] %>
         <% when 'withdraw' %>
             <%= render partial: 'closing_direct_award_offer', :locals=>{:f=>f} %>
             <div class= 'govuk-!-margin-top-5'>

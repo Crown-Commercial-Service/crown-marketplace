@@ -60,24 +60,33 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     end
   end
 
+  def edit_page_title
+    if params['name'] == 'next_supplier'
+      'Offer to next supplier'
+    else
+      'Confirmation of signed contract'
+    end
+  end
+
   def page_definitions
     @page_definitions ||= {
       default: {
         back_label: 'Back',
         back_text: 'Back',
         back_url: facilities_management_beta_procurements_path,
+        caption1: @procurement.contract_name,
         return_text: 'Return to procurements dashboard',
         return_url: facilities_management_beta_procurements_path,
       },
       show: {
         page_title: 'Contract summary',
-        caption1: @procurement.contract_name,
         continuation_text: show_continuation_text,
         return_text: 'Return to procurements dashboard',
         secondary_text: show_secondary_text,
       },
       edit: {
         back_url: facilities_management_beta_procurement_contract_path(@procurement),
+        page_title: edit_page_title,
         continuation_text: 'Close this procurement',
         secondary_text: edit_secondary_text,
       },

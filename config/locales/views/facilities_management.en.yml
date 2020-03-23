@@ -609,7 +609,6 @@ en:
             contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
             description: Please confirm if both parties have signed and exchanged the contract
             input_remaining: You have 100 characters remaining
-            title: Confirmation of signed contract
           contract_offer_details:
             declined: The supplier declined this contract offer on
             expired: This contract offer expired on
@@ -647,7 +646,6 @@ en:
             price: The contract price with this supplier is
             return_to_dashboard: You can return to your procurements dashboard
             return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
-            title: Offer to next supplier
           procurement_closed:
             closed_1: The
             closed_2: procurement has been closed.
