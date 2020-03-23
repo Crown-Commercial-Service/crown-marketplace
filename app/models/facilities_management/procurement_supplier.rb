@@ -51,8 +51,8 @@ module FacilitiesManagement
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
           begin
-            ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
-            ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
+            FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+            FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
           rescue StandardError
             false
           end
@@ -66,7 +66,7 @@ module FacilitiesManagement
           self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
           begin
-            AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
+            FacilitiesManagement::AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
           rescue StandardError
             false
           end
