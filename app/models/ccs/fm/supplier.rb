@@ -24,9 +24,9 @@ module CCS
       def self.selected_suppliers(for_lot, for_regions, for_services)
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
-            l['lot_number'] == for_lot && 
-              l['regions'].any? { |r| for_regions.include?(r) } &&
-              l['services'].any? { |s| for_services.include?(s) }
+            l['lot_number'] == for_lot &&
+              l['regions'].any? { |reg| for_regions.include?(reg) } &&
+              l['services'].any? { |ser| for_services.include?(ser) }
           end
         end
       end
