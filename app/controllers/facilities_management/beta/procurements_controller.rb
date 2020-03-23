@@ -244,7 +244,7 @@ module FacilitiesManagement
           create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
-          @precurement_reference = generate_contract_number_further_competition
+          @procurement_reference = generate_contract_number_further_competition
           @page_data[:model_object] = @procurement
         end
 
