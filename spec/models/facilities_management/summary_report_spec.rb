@@ -779,7 +779,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
 
     expect(sum_uom.round(2)).to be 866817.15
-    expect(sum_benchmark.round(2)).to be 925420.53
+    expect(sum_benchmark.round(2)).to be 925367.71
   end
   # rubocop:enable RSpec/ExampleLength
 end

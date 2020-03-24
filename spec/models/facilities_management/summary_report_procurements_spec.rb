@@ -573,7 +573,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:code) { 'H.7' }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 57.0
+          expect(report.assessed_value.round(2)).to eq 56.37
         end
       end
 
@@ -799,7 +799,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:code) { 'J.11' }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 482.29
+          expect(report.assessed_value.round(2)).to eq 488.55
         end
       end
 
@@ -898,7 +898,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:code) { 'L.5' }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 112.74
+          expect(report.assessed_value.round(2)).to eq 68.9
         end
       end
     end
