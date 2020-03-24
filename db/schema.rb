@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_18_142425) do
+ActiveRecord::Schema.define(version: 2020_03_19_113541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(version: 2020_03_18_142425) do
     t.datetime "updated_at"
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
+    t.text "building_ref"
+    t.text "name"
+    t.text "description"
+    t.decimal "gia"
+    t.text "region"
+    t.text "building_type"
+    t.text "security_type"
+    t.text "address_town"
+    t.text "address_county"
+    t.text "address_line_1"
+    t.text "address_line_2"
+    t.text "address_postcode"
+    t.text "address_region"
+    t.text "address_region_code"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
@@ -181,10 +195,10 @@ ActiveRecord::Schema.define(version: 2020_03_18_142425) do
     t.money "assessed_value", scale: 2
     t.boolean "eligible_for_da"
     t.string "da_journey_state"
+    t.string "payment_method"
     t.boolean "using_buyer_detail_for_invoice_details"
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
-    t.string "payment_method"
     t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
@@ -274,14 +288,14 @@ ActiveRecord::Schema.define(version: 2020_03_18_142425) do
     t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
   end
 
-  create_table "fm_rates", id: false, force: :cascade do |t|
+  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "standard", limit: 1
     t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.index ["code"], name: "index_fm_rates_on_code"
   end
 
