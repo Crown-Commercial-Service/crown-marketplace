@@ -1135,7 +1135,7 @@ en:
           contract_offer_details:
             accepted_contract_offer: You accepted this contract offer on
             buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
-            contract_closed_on: This contract offer was closed on
+            contract_expired_on: This contract offer expired on
             contract_received_on: This contract offer was received on
             reason_for_declining: Your reason for declining was
             reason_for_not_signing: The buyer’s reason for not signing this contract was
