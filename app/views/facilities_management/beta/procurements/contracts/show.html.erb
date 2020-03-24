@@ -51,7 +51,7 @@
                 </div>
             <% end %>
         <% else %>
-            <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'copy'), role: 'button', class: 'govuk-button govuk-button--secondary') %>
+            <%= link_to(pd.navigation_details.secondary_text, new_facilities_management_beta_procurement_contract_copy_procurement_path(id: @procurement.id, contract_id: @contract.id), role: 'button', class: 'govuk-button govuk-button--secondary') %>
             <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
         <% end %>
     <% end %>
