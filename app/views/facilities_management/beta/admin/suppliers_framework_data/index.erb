@@ -9,6 +9,7 @@
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.heading_title') %></h1>
 <div class="govuk-accordion" data-module="accordion" id="accordion-default">
   <% @fm_suppliers.each do | suppliers | %>
+    
     <div class="govuk-accordion__section ">
       <div class="govuk-accordion__section-header">
         <h2 class="govuk-accordion__section-heading framework-data-accordion">
@@ -21,23 +22,30 @@
         <div class="govuk-!-margin-bottom-5">
           <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1a</span>
           <br />
-
-          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_beta_admin_get_sublot_data_path(suppliers.data['supplier_id']) %>">Services, prices and variances</a>
-          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
-
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services, prices and variances</a> 
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1a' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="<%= facilities_management_beta_admin_get_sublot_regions_one_a_path(suppliers.supplier_id) %>">Regions</a>
+          <% end %>
         </div>
         <div class="govuk-!-margin-bottom-5">
           <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1b</span>
           <br />
-
-          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_beta_admin_get_sublot_services_path(suppliers.data['supplier_id']) %>">Services</a>
-          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services</a> 
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1b' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+          <% end %>
         </div>
         <div class="govuk-!-margin-bottom-5">
           <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1c</span>
           <br />
           <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services</a> 
-          <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+          
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1c' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="#">Regions</a>
+          <% end %>
         </div>
       </div>
     </div>

@@ -175,6 +175,7 @@ Rails.application.routes.draw do
         get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
         get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
         get 'supplier-framework-data', to: 'suppliers_framework_data#index'
+        get 'sublot-one-a-regions/:id', to: 'sublot_regions#sublot_region_one_a', as: 'get_sublot_regions_one_a'
         get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
         get 'sublot-services/:id', to: 'sublot_services#index', as: 'get_sublot_services'
       end

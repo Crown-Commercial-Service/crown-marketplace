@@ -7960,3 +7960,6 @@ li code, td code, p code {
     color: #007194;
     font-weight: normal;
 }
+.govuk-header_muted {
+    color: #6F777B;
+}
