@@ -142,6 +142,6 @@ end
 
 group :test do
   gem 'webmock'
-  gem 'simplecov', require: false
+  gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
 end
