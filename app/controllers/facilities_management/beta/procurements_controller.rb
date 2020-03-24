@@ -21,6 +21,7 @@ module FacilitiesManagement
         @sent_offers = sent_offers
         @contracts = live_contracts
         @closed_contracts = closed_contracts
+        @further_competition_contracts = current_user.procurements.further_competition.order(updated_at: :asc)
       end
 
       def show
@@ -244,7 +245,7 @@ module FacilitiesManagement
           create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
-          @precurement_reference = generate_contract_number_further_competition
+          @procurement_reference = generate_contract_number_further_competition
           @page_data[:model_object] = @procurement
         end
 
@@ -993,7 +994,7 @@ module FacilitiesManagement
       def page_definitions
         @page_definitions ||= {
           default: {
-            caption1: @procurement[:name],
+            caption1: @procurement[:contract_name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
@@ -1008,7 +1009,6 @@ module FacilitiesManagement
             primary_name: 'set_route_to_market'
           },
           direct_award: {
-            caption1: @procurement[:name],
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             continuation_text: 'Continue to direct award',
@@ -1021,8 +1021,7 @@ module FacilitiesManagement
             page_title: 'Further competition',
             secondary_name: 'change_requirements',
             secondary_text: 'Return to results',
-            continuation_text: 'Make a copy of your requirements',
-            back_url: facilities_management_beta_procurement_results_path(@procurement)
+            continuation_text: 'Make a copy of your requirements'
           },
           summary: {
             page_title: 'Summary',

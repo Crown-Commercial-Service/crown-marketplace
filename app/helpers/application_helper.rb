@@ -247,8 +247,6 @@ module ApplicationHelper
       render partial: "#{params[:service]}/header-banner"
     else
       service_name = controller.class.parent_name&.underscore
-
-      # TODO: check if we need to improve the 'admin' check??
       if service_name.include? 'admin'
         render partial: 'layouts/admin/header-banner'
       elsif service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
@@ -292,7 +290,7 @@ module ApplicationHelper
   end
 
   def format_money(cost)
-    "£#{number_with_delimiter(cost, delimiter: ',')}"
+    number_to_currency(cost, precision: 2, unit: '£')
   end
 
   def link_to_add_row(name, form, association, **args)
@@ -302,6 +300,14 @@ module ApplicationHelper
       render("facilities_management/beta/procurements/edit/#{association.to_s.singularize}", ff: builder)
     end
     link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
+  end
+
+  def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
+    if service_type == 'Direct Award Discount (%)'
+      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']
+    else
+      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')]
+    end
   end
 end
 # rubocop:enable Metrics/ModuleLength

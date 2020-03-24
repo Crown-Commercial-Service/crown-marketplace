@@ -191,13 +191,13 @@ module FacilitiesManagement
       !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
     end
 
-    SEARCH = %i[quick_search detailed_search results further_competition].freeze
+    SEARCH = %i[quick_search detailed_search results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
     MAX_NUMBER_OF_PENSIONS = 99
 
-    def direct_award?
-      aasm_state.match?(/\Ada_/)
+    def initial_call_off_end_date
+      initial_call_off_start_date + initial_call_off_period.years - 1.day
     end
 
     def extension_period_1_start_date
@@ -267,7 +267,27 @@ module FacilitiesManagement
     def offer_to_next_supplier
       return false if procurement_suppliers.unsent.empty?
 
+      unless procurement_suppliers.where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where.not(aasm_state: 'unsent').last
+        last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
+      end
       procurement_suppliers.unsent&.first&.offer_to_supplier!
+    end
+
+    def mobilisation_period_start_date
+      return nil if mobilisation_period.nil?
+
+      initial_call_off_start_date - mobilisation_period.weeks
+    end
+
+    def mobilisation_period_end_date
+      return nil if mobilisation_period.nil?
+
+      initial_call_off_start_date - 1.day
+    end
+
+    def first_unsent_contract
+      procurement_suppliers.find_by(aasm_state: 'unsent')
     end
 
     private
