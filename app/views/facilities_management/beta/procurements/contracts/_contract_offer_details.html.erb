@@ -40,7 +40,7 @@
             <% when 'declined' %>
                 <%= "#{t('.declined')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe if @contract.closed? %>
             <% when 'expired' %>
-                <%= "#{ t('.expired')} #{format_date_time (@contract.contract_expiry_date)}. <br/>".html_safe if @contract.closed? %>
+                <%= "#{ t('.expired')} #{format_date_time (@contract.contract_expiry_date)}. <br/>".html_safe %>
             <% when 'withdrawn' %>
                 <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
             <% end %>
