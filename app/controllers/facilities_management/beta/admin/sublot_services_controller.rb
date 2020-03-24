@@ -8,25 +8,26 @@ module FacilitiesManagement
 
         def render_unprocessable_entity_response(exception)
           logger.error exception.message
-          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot 1b processing' }
+          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot processing' }
         end
 
         def render_not_found_response(exception)
           logger.error exception.message
-          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot 1b not found' }
+          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot not found' }
         end
 
         def render_no_method_error_response(exception)
           logger.error exception.message
-          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lotb method not found' }
+          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot method not found' }
         end
 
         def index
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
           @supplier_name = supplier_data['supplier_name']
+          @lot_name = 'Sub-lot ' + params[:lot] + ' services'
 
-          lot1b_data = supplier_data['lots'].select { |data| data['lot_number'] == '1b' }
-          supplier_services = lot1b_data[0]['services']
+          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] }
+          supplier_services = lot_data[0]['services']
 
           rates = FacilitiesManagement::Admin::Rates.all
           services = FacilitiesManagement::Admin::StaticDataAdmin.services
