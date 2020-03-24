@@ -329,6 +329,12 @@ en:
         supplier_framework_data:
           heading_title: Supplier framework data
           rtrn_link: Return to admin dashboard
+          sublot_1a_regions:
+            breadcrumb_supllier_framework_data: Supplier framework data
+            heading_title: Sub-lot 1a regions
+            leading_text: The tick boxes indicate the regions to which this supplier can provide services.
+            rtrn_link: Return to supplier framework data
+            update_button: Save and return to supplier framework data
           sublot_data:
             heading_title: Services and prices
             heading_title_two: Variances
