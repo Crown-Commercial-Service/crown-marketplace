@@ -5,7 +5,7 @@
         <% end %>
     </div>
 <% end %>
-<% unless @contract.reason_for_not_signing.nil? %>
+<% unless @contract.reason_for_not_signing.nil? || @contract.closed? %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for not signing', true) do %>
             <%= "#{ t('.reason_for_not_signed')}: ‘#{@contract.reason_for_not_signing}’." %>
@@ -19,7 +19,6 @@
         <% end %>
     </div>
 <% end %>
-
 <% if @contract.aasm_state == 'sent' %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6 govuk-body govuk-inset-text" >
         <%= t('.sent_no_response') %>
@@ -29,7 +28,7 @@
         <%= govuk_details('Contract offer history', true) do %>
             <% case @contract.aasm_state%>
             <% when 'accepted' %>
-                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe unless @contract.supplier_response_date.nil? %>
             <% when 'signed' %>
                 <%= "#{ t('.signed_confirmed_1')} #{format_date_time @contract.contract_signed_date} #{t('.signed_confirmed_2')}<br/>".html_safe %>
                 <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
@@ -49,11 +48,15 @@
         <% end %>
     </div>
 <% end %>
-
 <% if @contract.closed? && @contract.aasm_state == 'declined' %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for declining', true) do %>
             <%= "#{t('.supplier_declined_reason')} ‘#{@contract.reason_for_declining}’." %>
+        <% end %>
+    </div>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+        <%= govuk_details('Reason for not signing', true) do %>
+            <%= "#{ t('.reason_for_not_signed')}: ‘#{@contract.reason_for_not_signing}’." %>
         <% end %>
     </div>
 <% end %>
