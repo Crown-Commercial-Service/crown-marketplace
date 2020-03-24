@@ -29,7 +29,7 @@
         <%= govuk_details('Contract offer history', true) do %>
             <% case @contract.aasm_state%>
             <% when 'accepted' %>
-                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe unless @contract.supplier_response_date.nil? %>
+                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
             <% when 'signed' %>
                 <%= "#{ t('.signed_confirmed_1')} #{format_date_time @contract.contract_signed_date} #{t('.signed_confirmed_2')}<br/>".html_safe %>
                 <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
@@ -43,7 +43,7 @@
             <% when 'expired' %>
                 <%= "#{ t('.expired')} #{format_date_time (@contract.supplier_response_date)}.<br/>".html_safe %>
             <% when 'withdrawn' %>
-                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe %>
+                <%= "#{ t('.sent_accepted')} #{format_date_time @contract.supplier_response_date}.<br/>".html_safe unless @contract.supplier_response_date.nil? %>
             <% end %>
             <%= "#{ t('.sent')} #{format_date_time @contract.offer_sent_date}." unless @contract.aasm_state == 'sent' %>
         <% end %>
