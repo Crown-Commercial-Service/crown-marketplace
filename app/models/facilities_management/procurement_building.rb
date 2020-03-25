@@ -14,6 +14,10 @@ module FacilitiesManagement
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
 
+    amoeba do
+      include_association :procurement_building_services
+    end
+
     def full_address
       "#{address_line_1 + ', ' if address_line_1.present?}
       #{address_line_2 + ', ' if address_line_2.present?}

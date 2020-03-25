@@ -11,6 +11,10 @@ module FacilitiesManagement
         @buyer_detail.assign_attributes(buyer_detail_params)
 
         if @buyer_detail.save(context: context_from_params)
+          redirect_to_return_url if params['facilities_management_buyer_detail']['return_details'].present?
+
+          return if params['facilities_management_buyer_detail']['return_details'].present?
+
           redirect_to params[:context] ? edit_facilities_management_beta_buyer_detail_path : facilities_management_beta_path
         else
           render params[:context] ? :edit_address : :edit
@@ -18,6 +22,16 @@ module FacilitiesManagement
       end
 
       private
+
+      def redirect_to_return_url
+        redirect_details = Rack::Utils.parse_nested_query(params['facilities_management_buyer_detail']['return_details'])
+        redirect_path = redirect_details['url']
+        redirect_params = redirect_details['params']
+
+        redirect_to("#{redirect_path}?#{redirect_params.to_query}") && return if redirect_path.present?
+
+        false
+      end
 
       def buyer_detail_params
         params.require(:facilities_management_buyer_detail)

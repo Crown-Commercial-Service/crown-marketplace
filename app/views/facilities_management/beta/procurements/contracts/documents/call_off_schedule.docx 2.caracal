@@ -1,0 +1,373 @@
+docx.font name: 'Calibri'
+
+docx.page_size do
+  width       11905
+  height      16837
+  orientation :portrait
+end
+
+docx.page_numbers true do
+  align :right
+  label 'Page'
+end
+
+docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :left
+
+docx.p
+
+docx.p 'Bid Pack', bold: true, size: 48, font: 'Calibri'
+
+docx.p
+docx.p
+
+docx.p 'Attachment 4 - Order Form and Call-Off Schedules', size: 40, font: 'Calibri'
+
+docx.p
+docx.p
+
+docx.p @buyer_detail.organisation_name, size: 40, font: 'Calibri'
+
+docx.p
+docx.p
+
+docx.p 'Direct Award under Lot 1a of Facilities Management Marketplace RM3830', size: 40, font: 'Calibri'
+
+docx.page
+
+docx.p 'ORDER FORM TEMPLATE AND CALL-OFF SCHEDULES', align: :center, bold: true
+docx.p 'Part A - Order Form', align: :center, bold: true
+
+docx.p
+
+docx.p "CONTRACT NUMBER:                   #{@contract.contract_number}"
+
+docx.p "FROM THE (\"BUYER \"):             #{@buyer_detail.organisation_name}"
+
+docx.p "BUYER ADDRESS:                    #{@buyer_detail.full_organisation_address}"
+
+docx.p 'TO THE ("SUPPLIER"):'
+
+docx.p "NAME:                                      #{@supplier.data['supplier_name']}"
+
+docx.p 'REGISTERED ADDRESS:     '
+
+docx.p 'REGISTERED NUMBER:      '
+
+docx.p 'DUNS NUMBER:            '
+
+docx.p 'This Order Form, when completed and executed by both Parties, forms a Call-Off Contract. Completion and execution of a Call-Off Contract may be achieved using an equivalent document or electronic purchase order system.  The text below should be copied into any electronic order forms.'
+
+docx.p
+docx.p
+
+docx.p 'APPLICABLE FRAMEWORK CONTRACT:', bold: true
+
+docx.p 'This Order Form is issued in accordance with and subject to the provisions of the Framework Contract with the reference number RM3830 and dated 10/07/2018 for the provision of facilities management services.'
+
+docx.p
+
+docx.p 'CALL-OFF LOT', bold: true
+
+docx.p 'This Call-Off Contract is in relation to the following Lot: '
+
+docx.table [['Lot', 'Supplier accreditations required for the Lot'], ['1a', 'ISO 9001']], border_size: 1 do
+  cell_style rows[0], bold: true
+end
+
+docx.p
+
+docx.p 'CALL-OFF INCORPORATED TERMS', bold: true
+
+docx.p 'The following documents shall be incorporated into this Call-Off Contract.  If they conflict, the following order of precedence shall apply:'
+
+docx.ol do
+  li 'This Order Form'
+  li 'Joint Schedule 1 (Definitions)'
+  li 'Joint Schedule 11 (Processing Data)'
+  li 'Call Off Schedule 4 (Facilities Management)'
+  li 'The following Schedules (each taking equal precedence):' do
+    ul do
+      li 'Joint Schedule 2 (Variation Form)'
+      li 'Joint Schedule 3 (Insurance Requirements)'
+      li 'Joint Schedule 4 NOT USED'
+      li 'Joint Schedule 6 (Key Subcontractors)'
+      li 'Joint Schedule 7 (Financial Distress)'
+      li 'Joint Schedule 10 (Rectification Plan)'
+      li 'Joint Schedule 8 NOT USED'
+      li 'Joint Schedule 9 NOT USED'
+      li 'Call-Off Schedule 1 (Transparency Reports)'
+      li 'Call-Off Schedule 2 (Staff Transfer)' do
+        ul do
+          li 'Call-Off Schedule 2: Part A (Staff Transfer At Start Date – Outsourcing From the Buyer)'
+          li 'Call-Off Schedule 2: Part B (Staff Transfer At Start Date – Transfer From Former Supplier)'
+          li 'Call-Off Schedule 2: Part C (No Staff Transfer On Start Date)'
+          li 'Call-Off Schedule 2: Part D (Pensions)' do
+            ul do
+              li 'Annex D1 (CSPS)'
+              li 'Annex D2 (NHSPS)'
+              li 'Annex D3 (LGPS)'
+            end
+          end
+          li 'Call-Off Schedule 2: Part E (Staff Transfer on Exit)'
+        end
+      end
+      li 'Call-Off Schedule 3 (Continuous Improvement)'
+      li 'Call-Off Schedule 4A (Billable Works and Projects)'
+      li 'Call-Off Schedule 5 (Call-Off Pricing)'
+      li 'Call-Off Schedule 6 (TUPE Surcharge)'
+      li 'Call-Off Schedule 23 NOT USED'
+      li 'Call-Off Schedule 7 (Key Staff)'
+      li 'Call-Off Schedule 8 (Business Continuity and Disaster Recovery)'
+      li 'Call-Off Schedule 9 (Security)'
+      li 'Call-Off Schedule 10 (Exit Management)'
+      li 'Call-Off Schedule 11 NOT USED'
+      li 'Call-Off Schedule 12 NOT USED'
+      li 'Call-Off Schedule 13 (Mobilisation Plan and Testing)'
+      li 'Call-Off Schedule 14 NOT USED'
+      li 'Call-Off Schedule 15 NOT USED'
+      li 'Call-Off Schedule 16 NOT USED'
+      li 'Call-Off Schedule 17 NOT USED'
+      li 'Call-Off Schedule 18 NOT USED'
+      li 'Call-Off Schedule 19 NOT USED'
+      li 'Call-Off Schedule 20 NOT USED'
+      li 'Call-Off Schedule 21 NOT USED'
+    end
+  end
+  li 'The CCS Core Terms (v3.0.2)'
+  li 'Joint Schedule 5 (Corporate Social Responsibility).'
+  li 'Call-off Schedule 22 NOT USED'
+end
+
+docx.p 'No other terms whether written on the back of, appended to this Order Form, or presented at the time of delivery shall form part of the Call-Off Contract.'
+
+docx.p
+
+docx.p 'CALL-OFF SPECIAL TERMS:', bold: true
+
+docx.p 'The following Special Term shall be incorporated into this Call-Off Contract:'
+
+docx.p
+
+docx.p 'TUPE OPTION:', bold: true
+
+docx.p "TUPE is #{'not ' unless @procurement.tupe?}considered applicable to this Call-off Contract."
+
+docx.p 'The TUPE Risk Premium calculation applied is therefore OPTION 1 – DIRECT AWARD – TUPE RISK PREMIUM (See Call-Off Schedule 6 – TUPE Surcharge)' if @procurement.tupe?
+
+docx.p
+
+docx.p 'KEY DATES:', bold: true
+
+docx.p 'EFFECTIVE DATE & DATE THE CONTRACT PERIOD / TERM COMMENCES:  [Day Month Year]'
+
+docx.p 'MOBILISATION PERIOD: None' if @procurement.mobilisation_period.nil?
+
+docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date} to #{@procurement.mobilisation_period_end_date}" unless @procurement.mobilisation_period.nil?
+
+docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date}"
+
+docx.p "DATE CALL-OFF INITIAL PERIOD ENDS: #{@procurement.initial_call_off_end_date}"
+
+docx.p "CALL-OFF INITIAL PERIOD: #{@procurement.initial_call_off_period} years"
+
+docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.optional_call_off_extensions_1? ? 'Yes' : 'None'}"
+
+(1..4).each do |call_off_period|
+  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: Not used" unless @procurement.send("optional_call_off_extensions_#{call_off_period}?")
+
+  next unless @procurement.send("optional_call_off_extensions_#{call_off_period}?")
+
+  start_date_method = "extension_period_#{call_off_period}_start_date"
+  end_date_method = "extension_period_#{call_off_period}_end_date"
+  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: #{@procurement.send(start_date_method)} to #{@procurement.send(end_date_method)}"
+end
+
+docx.p
+
+docx.p 'CALL-OFF DELIVERABLES:', bold: true
+
+docx.p 'The Deliverables per building, building locations, and Deliverables volume requirements are detailed within “Attachment 2 - Statement of Requirements - Deliverables Matrix (DA)” and shall be provided under this Call-Off Contract.'
+
+docx.p
+
+docx.p 'CALL-OFF CHARGES:', bold: true
+
+docx.p 'The Charges have been calculated in accordance with Call-Off Schedule 5 (Call-Off Prices) on the basis of Direct Award Price as set out in the attached Pricing Matrix spreadsheet called “Attachment 3 - Price Matrix (DA)”'
+
+docx.p
+
+docx.p 'The Charges shall not be impacted by any change to the Framework Prices and can only be changed by agreement in writing between the Buyer and the Supplier as a result of:'
+
+docx.ul do
+  li '(i) indexation;'
+  li '(ii) Specific Change in Law;'
+end
+
+docx.p
+
+docx.p 'MAXIMUM LIABILITY', bold: true
+
+docx.p 'The limitation of liability for this Call-Off Contract is stated in Clause 11.2 of the Core Terms.'
+
+docx.p 'ESTIMATED YEAR ONE CONTRACT CHARGES'
+
+docx.p 'The Estimated Year One Contract Charges shall be as detailed within the Pricing Matrix.'
+
+docx.p 'INDEXATION'
+
+docx.p "The Payment Index that shall be applied in relation to indexation shall be the Consumer Price Index.
+    Indexation shall only apply from #{@procurement.initial_call_off_start_date + 1.year} and shall be applied on every yearly anniversary of the Start Date.
+    Indexation shall be applied to the Baseline Monthly Payment."
+
+docx.p
+
+docx.p 'PASS THROUGH COSTS', bold: true
+
+docx.p 'Not Applicable'
+
+docx.p
+
+docx.p 'MORE FAVOURABLE COMMERCIAL TERMS', bold: true
+
+docx.p 'Not Applicable'
+
+docx.p
+
+docx.p 'VARIATION THRESHOLD', bold: true
+
+docx.p 'Not Applicable'
+
+docx.p
+docx.p
+docx.p
+
+docx.p 'BILLABLE WORKS', bold: true
+
+docx.p 'The estimated total value range for Billable Works shall be as set out below:'
+
+docx.p
+
+docx.table([
+  ['Tier', 'Estimated total value range '],
+  ['Tier One Billable Works', '£1001 - £5000'],
+  ['Tier Two Billable Works', '£5001 - £10,000'],
+  ['Tier Three Billable Works', '£10,001 - £25,000'],
+  ['Tier Four Billable Works', 'Above £25,000']
+], border_size: 1) do
+  cell_style rows[0], bold: true
+  cell_style rows[1..4]
+end
+
+docx.p 'The value of Billable Works not requiring approval is £0.'
+
+docx.p 'Business Critical Events are to be determined during the Mobilisation period.'
+
+docx.p
+
+docx.p 'METHOD OF PAYMENT', bold: true
+
+docx.p "#{@procurement.payment_method} (where selected then the Supplier shall pay any associated merchant fee levied for using the Government Procurement Card and shall not be entitled to recover this from CCS or the Buyer)]"
+
+docx.p
+
+docx.p 'BUYER INVOICING ADDRESS:', bold: true
+
+docx.p @invoice_contact_detail.full_name
+docx.p @invoice_contact_detail.job_title
+docx.p @invoice_contact_detail.user.email
+docx.p @invoice_contact_detail.full_organisation_address
+docx.p
+
+docx.p 'BUYER AUTHORISED REPRESENTATIVE:', bold: true
+
+docx.p @authorised_contact_detail.full_name
+docx.p @authorised_contact_detail.job_title
+docx.p @authorised_contact_detail.user.email
+docx.p @authorised_contact_detail.full_organisation_address
+docx.p
+
+docx.p 'BUYER NOTICES:', bold: true
+
+docx.p @notice_contact_detail.full_name
+docx.p @notice_contact_detail.job_title
+docx.p @notice_contact_detail.user.email
+docx.p @notice_contact_detail.full_organisation_address
+docx.p @notice_contact_detail.telephone_number
+docx.p
+
+docx.p 'PROGRESS REPORT FREQUENCY:', bold: true
+
+docx.p 'On the first Working Day of each calendar month'
+
+docx.p
+
+docx.p 'PROGRESS MEETING FREQUENCY:', bold: true
+
+docx.p 'Quarterly on the first Working Day of each quarter'
+docx.p
+
+docx.p 'KEY ROLES/STAFF:', bold: true
+
+docx.p 'To be provided by Supplier during the Mobilisation period.'
+docx.p
+
+docx.p 'KEY SUBCONTRACTORS:', bold: true
+
+docx.p 'To be provided by Supplier during the Mobilisation period.'
+docx.p
+
+docx.p 'COMMERCIALLY SENSITIVE INFORMATION:', bold: true
+
+docx.p 'Not Applicable'
+docx.p
+
+docx.p 'SERVICE PERIOD:', bold: true
+
+docx.p 'Not Applicable'
+docx.p
+
+docx.p 'RISK REGISTER:', bold: true
+
+docx.p 'Not Applicable'
+docx.p
+
+docx.p 'SMALL AND MEDIUM SIZED ENTERPRISES', bold: true
+
+docx.p do
+  text 'The percentage of small and medium enterprises which apply in relation to Call-Off Schedule (4) (Facilities Management) is to be determined during the Mobilisation period.'
+  text ' Insert percentage', bold: true
+  text '    %', bold: true, underline: true
+end
+
+docx.p
+
+docx.p 'RELEVANT CONVICTIONS:', bold: true
+
+docx.p 'Not Applicable'
+
+docx.p
+
+docx.p 'SOCIAL VALUE COMMITMENT', bold: true
+
+docx.p 'Not Applicable'
+
+docx.p
+
+docx.table([
+  ['For and on behalf of the Supplier:', '', 'For and on behalf of the Buyer:', ''],
+  ['Signature:', '', 'Signature:', ''],
+  ['Role:', '', 'Role:', ''],
+  ['Date:', '', 'Date:', '']
+], border_size: 1) do
+  cell_style rows[0], bold: true
+  cell_style rows[1..3]
+end
+
+docx.p
+
+docx.p 'Signed underhand', align: :right, bold: true
+
+docx.p
+
+docx.p 'Part B - Call-Off Schedules', align: :center, bold: true
+docx.p 'All Schedules listed within Part A are to be found within the zipped folder.'

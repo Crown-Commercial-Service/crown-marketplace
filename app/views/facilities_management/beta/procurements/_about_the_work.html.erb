@@ -3,13 +3,13 @@
   <tbody class="govuk-table__body">
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">About the work</th>
-    <td class="govuk-table__cell">
+    <td class="govuk-table__cell" width="45%">
     </td>
-    <td class="govuk-table__cell">
+    <td class="govuk-table__cell" width="25%">
     </td>
   </tr>
   <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:procurement_buildings].any? %>">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-18 <%= 'govuk-!-padding-left-2' if @procurement.errors[:procurement_buildings].any? %>" width="30%"> 1. Buildings</th>
+    <th scope="row" class="govuk-table__header govuk-!-font-size-18 <%= 'govuk-!-padding-left-2' if @procurement.errors[:procurement_buildings].any? %>"> 1. Buildings</th>
     <% if @active_procurement_buildings.any? %>
 
       <td class="govuk-table__cell">

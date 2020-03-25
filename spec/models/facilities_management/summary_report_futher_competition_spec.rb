@@ -18,7 +18,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     }
   end
 
-  let(:user) { create(:user, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
 
   let(:uvals) do
     [

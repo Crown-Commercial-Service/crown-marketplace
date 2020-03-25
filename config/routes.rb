@@ -151,6 +151,7 @@ Rails.application.routes.draw do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
           get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
+          resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -177,7 +178,7 @@ Rails.application.routes.draw do
         get 'supplier-framework-data', to: 'suppliers_framework_data#index'
         get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
         get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
-        get 'sublot-services/:id', to: 'sublot_services#index', as: 'get_sublot_services'
+        get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
       end
     end
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Cognito::ConfirmSignUp do
   let(:email) { 'user@test.com' }
-  let(:user) { create(:user, email: email, confirmed_at: nil) }
+  let(:user) { create(:user, :without_detail, email: email, confirmed_at: nil) }
   let(:confirmation_code) { '123456' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 

@@ -106,7 +106,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
         allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
-        create(:user, cognito_uuid: '0987', email: email, roles: %i[buyer fm_access])
+        create(:user, :without_detail, cognito_uuid: '0987', email: email, roles: %i[buyer fm_access])
       end
 
       it 'does not create a new user' do

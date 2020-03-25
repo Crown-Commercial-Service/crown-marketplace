@@ -4,7 +4,8 @@
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { specialvalidation: false, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
-
+      <%= f.hidden_field 'return_details', value: request['return_to'].to_query if request['return_to'].present?%>
+      <%= f.hidden_field 'return_details', value: request.params['facilities_management_buyer_detail']['return_details'] unless request.params.dig('facilities_management_buyer_detail','return_details').nil?%>
       <div class="govuk-caption-l govuk-!-margin-top-2">
         <%= current_user.email %>
       </div>

@@ -21,20 +21,24 @@
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
-  <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})" do %>
-    <ul>
-      <% @page_data[:buildings].each do |b| %>
-        <li><%= b %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})" do %>
-    <ul>
-      <% @page_data[:services].uniq.each do |s| %>
-        <li><%= s %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <div class="govuk-!-margin-bottom-4">
+    <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})", true do %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @page_data[:buildings].each do |b| %>
+          <li><%= b %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <div>
+    <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})", true do %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @page_data[:services].uniq.each do |s| %>
+          <li><%= s %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_grouped_field(f, t('.available_routes_to_market'), :route_to_market) do |ff, attr| %>
