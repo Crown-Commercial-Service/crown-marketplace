@@ -8,8 +8,9 @@
 
 
 <% if @results  %>
-<%   sorted_list = @results.sort_by { |k,v| @results[k]} %>
+
 <p>Shortlisted DA supplier</p>
+<% sorted_list = @results.sort_by { |k,v| @results[k]} %>
 <p><%= "#{sorted_list.first[0]}  #{number_to_currency(sorted_list.first[1], precision: 0)}" %></p>
 
 

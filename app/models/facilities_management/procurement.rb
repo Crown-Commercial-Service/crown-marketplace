@@ -62,7 +62,7 @@ module FacilitiesManagement
       state :da_draft
       state :direct_award, before_enter: :offer_to_next_supplier
       state :further_competition
-      state :closed
+      state :closed, before_enter: :set_close_date
 
       event :set_state_to_results do
         transitions to: :results
@@ -249,7 +249,7 @@ module FacilitiesManagement
     end
 
     def sent_offers
-      procurement_suppliers.where.not(aasm_state: 'unsent').reject(&:closed?)
+      procurement_suppliers.where(aasm_state: %w[sent accepted declined expired not_signed]).reject(&:closed?)
     end
 
     def live_contracts
@@ -258,6 +258,10 @@ module FacilitiesManagement
 
     def closed_contracts
       procurement_suppliers.where.not(aasm_state: 'unsent').select(&:closed?)
+    end
+
+    def set_close_date
+      procurement_suppliers.where.not(aasm_state: 'unsent').last.update(contract_closed_date: DateTime.now.in_time_zone('London'))
     end
 
     def offer_to_next_supplier

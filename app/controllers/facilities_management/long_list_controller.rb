@@ -37,6 +37,8 @@ class FacilitiesManagement::LongListController < ApplicationController
     TransientSessionInfo[session.id, 'posted_services'] = @posted_services
     TransientSessionInfo[session.id, 'locations'] = @locations
     TransientSessionInfo[session.id, 'services'] = @services
+
+    TransientSessionInfo[session.id, 'env'] = request.query_parameters['env']
   end
 
   protected

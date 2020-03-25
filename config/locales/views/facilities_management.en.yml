@@ -94,7 +94,7 @@ en:
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about 'Estimated cost'
+              not_present: You must answer the question about 'Estimated annual cost'
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -231,7 +231,7 @@ en:
             organisation_address_line_1:
               blank: Enter the building or street name of the address
             organisation_address_postcode:
-              address_not_complete: Placeholder
+              address_not_complete: Select an address from the list or add a missing address
               blank: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
