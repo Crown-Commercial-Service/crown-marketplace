@@ -5,10 +5,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement) { procurement_building_service.procurement_building.procurement }
 
-  let(:report) { described_class.new(procurement) }
+  let(:report) { described_class.new(procurement.id) }
 
   before do
-    report.calculate_services_for_buildings procurement.active_procurement_buildings
+    report.calculate_services_for_buildings
   end
 
   describe '#assessed_value' do
@@ -107,9 +107,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
         it 'returns the right assessed value' do
           procurement = procurement_building_service.procurement_building.procurement
-          report = FacilitiesManagement::SummaryReport.new(procurement)
-          selected_buildings = procurement.active_procurement_buildings
-          report.calculate_services_for_buildings selected_buildings
+          report = FacilitiesManagement::SummaryReport.new(procurement.id)
+          report.calculate_services_for_buildings
           expect(report.assessed_value.round(2)).to eq 350.45
         end
       end
@@ -1223,6 +1222,44 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       it 'does not show the suppliers that do not provide the specific service' do
         expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_service)).to eq false
+      end
+    end
+
+    context 'when lot 1b' do
+      let(:procurement_building_service) do
+        create(:facilities_management_procurement_building_service,
+               code: 'C.5',
+               lift_data: %w[1000 1000 1000 1000],
+               procurement_building: create(:facilities_management_procurement_building_no_services,
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period: 7)))
+      end
+      let(:supplier_name) do
+        CCS::FM::Supplier.all.select do |s|
+          s.data['lots'].find do |l|
+            (l['lot_number'] == '1b') &&
+              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service.code] - l['services']).empty?
+          end
+        end.first.data['supplier_name']
+      end
+
+      let(:supplier_name_lot1a) do
+        CCS::FM::Supplier.all.select do |s|
+          s.data['lots'].find do |l|
+            (l['lot_number'] == '1a') &&
+              !((l['lot_number'] == '1b') &&
+                ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+                ([procurement_building_service.code] - l['services']).empty?)
+          end
+        end.first.data['supplier_name']
+      end
+
+      it 'shows suppliers that do provide the service in lot1b' do
+        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+      end
+
+      it 'does not show the suppliers that provide the services in lot1a not lot1b' do
+        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_lot1a)).to eq false
       end
     end
   end

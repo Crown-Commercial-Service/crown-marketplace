@@ -47,7 +47,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
   end
 
   # rubocop:disable RSpec/BeforeAfterAll
-  context 'and add dummy buildings to a db' do
+  context 'and add dummy buildings to a db', skip: true do
     before :all do
       @selected_buildings2 = [
         OpenStruct.new(
