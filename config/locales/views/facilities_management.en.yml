@@ -334,8 +334,6 @@ en:
             leading_text: The tick boxes indicate the regions to which this supplier can provide services.
             rtrn_link: Return to supplier framework data
             update_button: Save and return to supplier framework data
-          sublot_1b_data:
-            heading_title: Sub-lot 1b services
           sublot_data:
             breadcrumb_text_supplier_framework_data: Supplier framework data
             heading_title: Sub-lot 1a services, prices, and variances
