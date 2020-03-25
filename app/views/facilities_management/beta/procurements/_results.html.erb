@@ -69,7 +69,7 @@
           </div>
         </div>
       <% end %>
-    <% end if eligible_for_direct_award?%>
+    <% end if @page_data[:model_object].eligible_for_da %>
     <%= contained_content(t('.available_routes_to_market')) do %>
       <%= f.hidden_field :route_to_market, value: 'further_competition' %>
       <%= govuk_details t('.what_is_fc') do %>
@@ -77,7 +77,7 @@
           <%= t('.fc_list_html') %>
         </ul>
       <% end %>
-    <% end unless eligible_for_direct_award?%>
+    <% end unless @page_data[:model_object].eligible_for_da %>
     <p><%= t('.any_changes') %></p>
     <%= govuk_continuation_buttons(pd, f) %>
     <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print

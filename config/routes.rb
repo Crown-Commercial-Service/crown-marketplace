@@ -215,9 +215,6 @@ Rails.application.routes.draw do
     get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
-
-    get '/summary', to: 'summary#index'
-    post '/summary', to: 'summary#index'
     get '/directaward', to: 'direct_award#calc_eligibility'
     post '/cache/set', to: 'cache#set'
     post '/cache/get', to: 'cache#retrieve'
@@ -344,11 +341,6 @@ Rails.application.routes.draw do
       get '/test-notification', to: 'api_test_notifications#send_notification'
       post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
-  end
-
-  namespace 'tests', path: 'test' do
-    is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
-    match '/', to: 'test#index', via: %i[get post] if is_dev_db.nil? || (is_dev_db.include? 'dev.')
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
