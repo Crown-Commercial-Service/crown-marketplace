@@ -1,7 +1,7 @@
 <% unless @contract.reason_for_closing.nil? %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for closing', true) do %>
-            <%= "#{ t('.withdrawn_reason')} ‘#{@contract.reason_for_closing}’." %>
+            <%= "#{ t('.closed_reason')}: ‘#{@contract.reason_for_closing}’." %>
         <% end %>
     </div>
 <% end %>
@@ -15,7 +15,7 @@
 <% unless @contract.reason_for_declining.nil? || @contract.closed? %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for declining', true) do %>
-            <%= "#{t('.supplier_declined_reason')} ‘#{@contract.reason_for_declining}’." %>
+            <%= "#{t('.supplier_declined_reason')}: ‘#{@contract.reason_for_declining}’." %>
         <% end %>
     </div>
 <% end %>
@@ -53,7 +53,7 @@
 <% if @contract.closed? && @contract.aasm_state == 'declined' %>
     <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
         <%= govuk_details('Reason for declining', true) do %>
-            <%= "#{t('.supplier_declined_reason')} ‘#{@contract.reason_for_declining}’." %>
+            <%= "#{t('.supplier_declined_reason')}: ‘#{@contract.reason_for_declining}’." %>
         <% end %>
     </div>
 <% end %>
