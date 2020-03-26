@@ -32,10 +32,22 @@ module FacilitiesManagement
           h = {}
           FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
           @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
-          @supplier_lot_a = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
+          @supplier_lot = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
           @sublot_region_name = 'Sub-lot ' + params['lot_type'] + ' regions'
-          @selected_supplier_regions = FacilitiesManagement::Beta::Supplier::SupplierRegionsHelper.supllier_selected_regions(@supplier_lot_a)
+          @selected_supplier_regions = FacilitiesManagement::Beta::Supplier::SupplierRegionsHelper.supllier_selected_regions(@supplier_lot)
           @subregions = h
+        end
+
+        def update_sublot_regions
+          @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
+          @supplier.data['lots'].each { |lot| 
+            if lot['lot_number'] == params['lot_type']
+              lot['regions'] = params[:regions]
+            end
+          }
+          @supplier_lot_updated = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
+          @supplier.save
+          redirect_to facilities_management_beta_admin_supplier_framework_data_path, flash: { success: 'Successfully updated '+ @supplier.data['supplier_name'] +' regions' }
         end
       end
     end

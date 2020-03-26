@@ -6,6 +6,23 @@
     <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.beta.admin.supplier_framework_data.heading_title') %></li>
   </ol>
 </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <% if flash[:error] %>
+        <div class="govuk-inset-text cmp-inset-text--success">
+          <p class="govuk-body govuk-body-s"><%= flash[:error] %></p>
+        </div>
+      <% end %>
+      <% if flash[:success] %>
+        <div class="govuk-inset-text cmp-inset-text--success">
+          <p class="govuk-body govuk-body-s"><%= flash[:success] %></p>
+        </div>
+      <% end %>      
+    </div>
+  </div>
+
+
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.supplier_framework_data.heading_title') %></h1>
 <div class="govuk-accordion" data-module="accordion" id="accordion-default">
   <% @fm_suppliers.each do | suppliers | %>
