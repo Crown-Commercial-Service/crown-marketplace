@@ -231,7 +231,6 @@ module FacilitiesManagement
 
       def save_security_type
         save_building_property('security-type', params['security-type'])
-        save_building_property('security-details', params['security-details'])
 
         j = { 'status': 200 }
         render json: j, status: 200
