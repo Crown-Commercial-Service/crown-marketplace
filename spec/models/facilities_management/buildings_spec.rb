@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::Buildings, type: :model do
     end
   end
 
-  describe 'with data in the object' do
+  describe 'with ActiveRecord data in the object' do
     subject(:building) { create(:facilities_management_building_ar, user_id: create(:user).id) }
 
     before do
@@ -47,7 +47,33 @@ RSpec.describe FacilitiesManagement::Buildings, type: :model do
       end
     end
   end
-  
+
+  describe 'with JSON data in the object' do
+    subject(:building) { create(:facilities_management_building, user_id: create(:user).id) }
+
+    before do
+      building.save
+      building.reload
+    end
+
+    context 'when saving a new record with name, address, the JSON should match' do
+      it 'will save successfully' do
+        expect(building.gia).to eq(1002)
+        expect(building.address_county).to eq(building.building_json['address']['fm-address-county'])
+      end
+    end
+
+    context 'when updating fields, they are reflected in the json' do
+      it 'change the gia, it will be in the json' do
+        building.building_json['gia'] = 2012
+        expect(building.gia).to eq(1002)
+        building.save
+        building.reload
+        expect(building.gia).to eq(2012)
+      end
+    end
+  end
+
   describe '#validations' do
     subject(:building) { create(:facilities_management_building_ar, user_id: create(:user).id) }
 

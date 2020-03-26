@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_03_20_150617) do
     t.jsonb "building_json", default: "{}", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "status", default: "Incomplete", null: false
+    t.string "status", null: false
     t.string "updated_by", null: false
     t.text "building_ref"
     t.text "building_name"
