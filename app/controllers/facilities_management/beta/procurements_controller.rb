@@ -32,6 +32,7 @@ module FacilitiesManagement
 
       def new
         @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
+        @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes])
       end
 
       def create
@@ -42,6 +43,7 @@ module FacilitiesManagement
         else
           @errors = @procurement.errors
           set_procurement_data
+          @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes)
           render :new
         end
       end
