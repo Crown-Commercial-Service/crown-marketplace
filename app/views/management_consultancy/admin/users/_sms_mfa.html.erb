@@ -58,11 +58,11 @@
 
       <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
 
-      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", name: 'Continue' %>
 
     <% end %>
 
-    <p class="govuk-body govuk-!-margin-bottom-7">
+    <p class="govuk-body govuk-!-margin-bottom-7" name="resend the confirmation code">
       <%= t('.resend_the_confirmation_code_html', link: management_consultancy_admin_user_session_path) %>
     </p>
 
