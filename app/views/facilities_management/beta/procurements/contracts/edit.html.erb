@@ -14,8 +14,6 @@
                 <%= link_to(pd.navigation_details.secondary_text, facilities_management_beta_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary') %> <br />
                 <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
             </div>
-        <% when 'copy' %>
-            <%= render partial: 'create_a_copy' %>
         <% else %>
             <%= render partial: 'confirmation_of_signed_contract', :locals=>{:f=>f} %>
             <div class= 'govuk-!-margin-top-5'>

@@ -173,7 +173,9 @@ module FacilitiesManagement
     end
 
     def last_offer?
-      procurement.procurement_suppliers.unsent.empty?
+      return false unless procurement.procurement_suppliers.where(aasm_state: %w[unsent sent]).empty?
+
+      procurement.procurement_suppliers.last == self
     end
 
     private

@@ -455,6 +455,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
+        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
         # rubocop:enable RSpec/AnyInstance
         procurement.save_eligible_suppliers_and_set_state
         procurement.aasm_state = 'direct_award'
@@ -507,7 +508,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'last sent offer returns false' do
           procurement.offer_to_next_supplier
           procurement.reload
-          expect(procurement.procurement_suppliers.sent.last.last_offer?).to be false
+          expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
+          expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
         end
       end
 
@@ -546,7 +548,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'last sent offer returns true' do
           procurement.offer_to_next_supplier
           procurement.reload
-          expect(procurement.procurement_suppliers.sent.last.last_offer?).to be true
+          procurement.procurement_suppliers.sent.each(&:decline!)
+          sent_offers = procurement.procurement_suppliers.map(&:last_offer?)
+          expect(sent_offers[0..2].any?(true)).to be false
+          expect(sent_offers.last).to be true
         end
       end
     end
