@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_20_150617) do
+ActiveRecord::Schema.define(version: 2020_03_26_155639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_03_20_150617) do
     t.jsonb "building_json", default: "{}", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "status", null: false
+    t.string "status"
     t.string "updated_by", null: false
     t.text "building_ref"
     t.text "building_name"

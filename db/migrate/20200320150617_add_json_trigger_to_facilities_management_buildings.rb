@@ -35,7 +35,6 @@ class AddJsonTriggerToFacilitiesManagementBuildings < ActiveRecord::Migration[5.
         new_status := COALESCE(NEW.building_name,'') <> '' and
                       COALESCE(NEW.gia,-1) <> -1 and
                       COALESCE(NEW.region,'') <> '' and
-                      COALESCE(NEW.region,'') <> '' and
                       COALESCE(NEW.building_type,'') <> '' and
                       COALESCE(NEW.security_type,'') <> '' and
                       COALESCE(NEW.building_ref,'') <> '';
