@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :facilities_management_building_ar_defaults, class: FacilitiesManagement::Building do
+  factory :facilities_management_building_ar_defaults, class: FacilitiesManagement::Buildings do
     id { SecureRandom.uuid }
     user_id { create(:user).id }
     updated_by { Faker::Internet.unique.email }
   end
-  
-  factory :facilities_management_building_ar, class: FacilitiesManagement::Building do
+
+  factory :facilities_management_building_ar, class: FacilitiesManagement::Buildings do
     id { SecureRandom.uuid }
     user_id { create(:user).id }
     updated_by { Faker::Internet.unique.email }
