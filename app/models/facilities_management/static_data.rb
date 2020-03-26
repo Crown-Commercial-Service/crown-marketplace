@@ -9,5 +9,9 @@ module FacilitiesManagement
     def self.services
       find_by(key: 'services').value
     end
+
+    def self.bank_holidays
+      find_by(key: 'bank_holidays').value
+    end
   end
 end

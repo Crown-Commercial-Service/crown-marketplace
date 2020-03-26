@@ -5,17 +5,15 @@
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   </form>
   <div class="govuk-table" data-module="table" id="buildings-list">
-    <table class="govuk-!-width-three-quarters" style="border-collapse: collapse;">
-      <thead>
+    <table class="govuk-!-width-two-thirds" style="border-collapse: collapse;">
       <tr>
-        <th style="min-width: 12em"><%= t('facilities_management.beta.building-details-summary.caption_reference') %></th>
-        <td><%= @building['building-ref'] %><br />
+        <th></th>
+        <td></td>
         <td></td>
       </tr>
-      </thead>
       <tbody>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_name') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_name') %></th>
         <td>
           <% if !@building['name'].blank? %>
             <%= @building['name'] %>
@@ -30,7 +28,7 @@
         </td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_desc') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_desc') %></th>
         <td>
           <% if !@building['description'].blank? %>
             <%= @building['description'] %>
@@ -45,7 +43,7 @@
         </td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_addr') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_addr') %></th>
         <td>
           <% if !@building['address'].blank? %>
             <% address = @building['address']['fm-address-line-1'].to_s + (@building['address']['fm-address-line-1'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-line-2'].to_s + (@building['address']['fm-address-line-2'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-town'].to_s + (@building['address']['fm-address-town'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-county'].to_s + (@building['address']['fm-address-county'].to_s.length > 0 ? ', ' : ' ') + @building['address']['fm-address-postcode'].to_s %>
@@ -59,10 +57,28 @@
             <%= link_to t('facilities_management.beta.building-details-summary.change_text'), "#{@base_path}building", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %></td>
       </tr>
+
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_region_nuts') %></th>
         <td>
-          <% if !@building['gia'].blank? %><%= @building['gia'] %>
+          <% if !@building['address'].blank? %>
+            <%= @building['address']['fm-address-region'].to_s %>
+          <% end %>
+        </td>
+        <td>
+        </td>
+      </tr>
+
+
+
+
+
+
+
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_gia') %></th>
+        <td>
+          <% if !@building['gia'].blank? %><%=number_with_delimiter(@building['gia'], :delimiter => ',') + " sqm"  %>
           <% else %>
             <%= link_to t('facilities_management.beta.building-details-summary.answer_question_text'), "#{@base_path}building-gross-internal-area", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %></td>
@@ -72,7 +88,7 @@
           <% end %></td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_type') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_type') %></th>
         <td>
           <% if !@building['building-type'].blank? %><%= @building['building-type'] %>
           <% else %>
@@ -84,10 +100,10 @@
           <% end %></td>
       </tr>
       <tr>
-        <th><%= t('facilities_management.beta.building-details-summary.caption_sec') %></th>
+        <th class="govuk-!-width-one-third"><%= t('facilities_management.beta.building-details-summary.caption_sec') %></th>
         <td>
           <% if !@building['security-type'].blank? %>
-            <%= @building['security-type'] %>
+            <%= @building['security-type'].capitalize %>
           <% else %>
             <%= link_to t('facilities_management.beta.building-details-summary.select_one_option_text'), "#{@base_path}building-security-type", { 'building-id': @building_id, role:'change', class: 'govuk-link' }%>
           <% end %>

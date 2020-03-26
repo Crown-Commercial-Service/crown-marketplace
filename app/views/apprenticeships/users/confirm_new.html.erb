@@ -62,7 +62,7 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
           <%= display_error(@result, :email) %>
-          <%= text_field_tag :email, nil, autofocus: true, autocomplete: "email", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
+          <%= text_field_tag :email, nil, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
         </div>
       <% end %>
 

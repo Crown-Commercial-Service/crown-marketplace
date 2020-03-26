@@ -32,32 +32,32 @@
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.managing") %></th>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.lot_#{params[:lot]}.managing") %></th>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['hourly']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['daily']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['managing']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.senior") %></th>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.lot_#{params[:lot]}.senior") %></th>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['hourly']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['daily']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['senior']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.solicitor") %></th>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.lot_#{params[:lot]}.solicitor") %></th>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['hourly']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['daily']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['solicitor']['monthly']/100, precision: 0) %></td>
           </tr>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.junior") %></th>
+            <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.lot_#{params[:lot]}.junior") %></th>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['hourly']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['daily']/100, precision: 0) %></td>
             <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['junior']['monthly']/100, precision: 0) %></td>
           </tr>
           <% unless params[:lot] == '1' %>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.#{params[:lot]}.trainee") %></th>
+              <th class="govuk-table__header govuk-!-width-one-half" scope="row"><%= t("legal_services.job_titles.lot_#{params[:lot]}.trainee") %></th>
               <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['hourly']/100, precision: 0) %></td>
               <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['daily']/100, precision: 0) %></td>
               <td class="govuk-table__cell govuk-!-width-one-sixth"><%= number_to_currency(@rate_card['trainee']['monthly']/100, precision: 0) %></td>

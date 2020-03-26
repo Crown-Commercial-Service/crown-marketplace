@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ManagementConsultancy::Upload, type: :model do
   describe 'create' do
-    let(:supplier_name) { Faker::Company.unique.name }
+    let(:supplier_name) { Faker::Name.unique.name }
     let(:supplier_id) { SecureRandom.uuid }
     let(:contact_email) { Faker::Internet.unique.email }
     let(:telephone_number) { Faker::PhoneNumber.unique.phone_number }

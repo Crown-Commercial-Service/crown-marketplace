@@ -51,6 +51,10 @@
     color: #0b0c0c
 }
 
+.back-button-wrapper {
+    display: inline-block;
+}
+
 @media print {
     .govuk-link[href^="/"]::after, .app-prose-scope a[href^="/"]::after, .govuk-link[href^="http://"]::after, .app-prose-scope a[href^="http://"]::after, .govuk-link[href^="https://"]::after, .app-prose-scope a[href^="https://"]::after {
         content: " (" attr(href) ")";
@@ -2348,6 +2352,10 @@
 
 .govuk-summary-list--no-border .govuk-summary-list__key, .govuk-summary-list--no-border .govuk-summary-list__value, .govuk-summary-list--no-border .govuk-summary-list__actions, .govuk-summary-list--no-border .govuk-summary-list__row {
     border: 0
+}
+
+.govuk-no-border th, .govuk-no-border td {
+    border: 0 !important;
 }
 
 .govuk-input {
@@ -7935,4 +7943,24 @@ li code, td code, p code {
 .hmcts-filter-layout__content {
     overflow: hidden;
     overflow-x: auto;
+}
+
+.govuk-align-center-table__td {
+    text-align: center !important;
+}
+.govuk-align-left-table__td {
+    text-align: left !important;
+}
+.supplier-rates-td {
+    border: none !important;
+}
+.govuk-brand-light-grey {
+    color: #cecece !important;
+}
+.govuk-brand-light-grey-benchmark {
+    color:#6F777B !important;
+}
+.govuk-accordion .govuk-accordion__section-button {
+    color: #007194;
+    font-weight: normal;
 }

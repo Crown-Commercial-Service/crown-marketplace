@@ -3,7 +3,7 @@ require 'facilities_management/fm_service_data'
 require 'json'
 module FacilitiesManagement
   module Beta
-    class BuildingsManagementController < FrameworkController
+    class BuildingsManagementController < FacilitiesManagement::Beta::FrameworkController
       before_action :authenticate_user!, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
       before_action :authorize_user, only: %i[buildings_not_selected buildings_management building_details_summary building_type save_new_building save_building_address save_building_type save_building_gia save_security_type update_building_details update_building_gia update_building_type update_security_type].freeze
 
@@ -104,7 +104,7 @@ module FacilitiesManagement
         @building_name = @building['name']
         @building_sec_type = @building['security-type']
         @other_is_used = false
-        @other_value = 'other'
+        @other_value = ''
         @building_id = local_building_id
         @security_types = fm_building_data.security_types
         @page_title = 'Change Security Type' if @editing
@@ -140,7 +140,7 @@ module FacilitiesManagement
 
         @type_list = fm_building_data.building_type_list
         @type_list_titles = fm_building_data.building_type_list_titles
-        @building_id = building_details['id'].blank? ? nil : building_details['id']
+        @building_id = building_details['id'].blank? ? local_building_id : building_details['id']
         @building = JSON.parse(building_details['building_json'])
         @building_name = @building['name']
         @page_title = @editing ? 'Change building type' : 'Building type'
@@ -372,14 +372,17 @@ module FacilitiesManagement
         (building[key_name].present? ? !building[key_name].empty? : false)
       end
 
+      # rubocop:disable Metrics/CyclomaticComplexity
       def get_building_ready_status(building)
         building_element_valid?(building, 'name') &&
           (building_element_valid?(building, 'region') ||
            building['address']&.dig('fm-address-postcode').present?) &&
+          building['address']&.dig('fm-address-region').present? &&
           building_element_valid?(building, 'building-type') &&
           building_element_valid?(building, 'security-type') &&
           building_element_valid?(building, 'gia')
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def validate_input_building
         # used to verify building-id parameter

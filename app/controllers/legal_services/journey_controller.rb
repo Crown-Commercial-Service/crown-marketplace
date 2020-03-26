@@ -1,5 +1,5 @@
 module LegalServices
-  class JourneyController < FrameworkController
+  class JourneyController < LegalServices::FrameworkController
     include JourneyControllerActions
 
     def journey_class

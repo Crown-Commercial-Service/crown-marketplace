@@ -5,6 +5,8 @@ module CcsPatterns
 
     def index; end
 
+    def new_layout; end
+
     def dynamic_accordian; end
 
     def supplier_results_v1; end

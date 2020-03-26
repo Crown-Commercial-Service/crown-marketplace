@@ -150,5 +150,43 @@ RSpec.describe Cognito::CreateUserFromCognito do
         expect(response.error).to eq 'Oops'
       end
     end
+
+    context 'when user is a supplier with fm access' do
+      let(:cognito_groups) do
+        OpenStruct.new(groups: [
+                         OpenStruct.new(group_name: 'supplier'),
+                         OpenStruct.new(group_name: 'fm_access')
+                       ])
+      end
+
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
+        allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+      end
+
+      context 'when supplier detail exists with the same contact_name' do
+        before do
+          FactoryBot.create(:facilities_management_supplier_detail, contact_email: email)
+          FactoryBot.create(:facilities_management_supplier_detail)
+        end
+
+        it 'matches the right supplier detail to the user record' do
+          response = described_class.call(email)
+          expect(response.user.supplier_detail.contact_email).to eq response.user.email
+        end
+      end
+
+      context 'when supplier detail does not exist with the same contact_name' do
+        before do
+          FactoryBot.create(:facilities_management_supplier_detail)
+        end
+
+        it 'leaves the supplier_detail blank' do
+          response = described_class.call(username)
+          expect(response.user.supplier_detail).to be_nil
+        end
+      end
+    end
   end
 end

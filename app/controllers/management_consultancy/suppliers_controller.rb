@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class SuppliersController < FrameworkController
+  class SuppliersController < ManagementConsultancy::FrameworkController
     helper :telephone_number
     before_action :fetch_suppliers, only: %i[index download]
     before_action :set_back_path

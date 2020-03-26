@@ -1,0 +1,63 @@
+<hr/>
+<%
+  page_description = LayoutHelper::PageDescription.new(
+      LayoutHelper::HeadingDetail.new('Main heading', 'Subtext 1', 'Subtext 2', 'This is the subtitle'),
+      LayoutHelper::BackButtonDetail.new('.', 'This is the back button', 'Go back'))
+
+  {'monday': {service_choice: :not_required},
+   'tuesday': {service_choice: :all_day},
+   'wednesday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am'},
+   'thursday': {service_choice: :all_day}, friday: {service_choice: :not_required},
+   'saturday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am'},
+   'sunday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm'}}
+
+  demo_model_object = FacilitiesManagement::ServiceHours.load({'monday': {service_choice: :not_required},
+                                                               'tuesday': {service_choice: :all_day},
+                                                               'wednesday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am'},
+                                                               'thursday': {service_choice: :all_day}, friday: {service_choice: :not_required},
+                                                               'saturday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am'},
+                                                               'sunday': {service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm'}})
+
+  demo_model_object = FacilitiesManagement::BuyerDetail.first
+  demo_model_object.job_title = nil
+  demo_model_object.valid?(:update)
+%>
+<%= govuk_page_content(page_description,
+                       demo_model_object) do %>
+  <%= form_for demo_model_object, url: edit_facilities_management_beta_buyer_detail_path(demo_model_object), method: :patch, html: {specialvalidation: false, multipart: true} do |f| %>
+    <dl>
+      <dt>Run validations</dt>
+      <dd><%= govuk_prevent_submission(f, true) %>
+        <%=govuk_button f %></dd>
+      <dt>Simple field for a valid object</dt>
+      <dd style="box-shadow: -3px -3px 6px 1px grey; margin: 1rem 0; padding: 1rem"><%= govuk_start_individual_field(f, :full_name) do |a| %>
+          <%= govuk_text_input f, :full_name, :large %>
+          <span style="background-color:yellow"><%= a.to_s %> = <%= f.object[a] %></span>
+        <% end %>
+      </dd>
+      <dt>Simple field for an invalid object</dt>
+      <dd style="box-shadow: -3px -3px 6px 1px grey; margin: 1rem 0; padding: 1rem"><%= govuk_start_individual_field(f, :job_title) do |a| %>
+          <%= govuk_text_input f, :job_title, :medium %>
+          <span style="background-color:yellow"><%= a.to_s %> = <%= f.object[a] %></span>
+        <% end %>
+      </dd>
+      <dt>A fieldset for an object</dt>
+      <dd style="box-shadow: -3px -3px 6px 1px grey; margin: 1rem 0; padding: 1rem">
+        <%= govuk_grouped_fields(f, 'Enter some details', f.object.attributes.keys) do |gb, attribute| %>
+          <%= govuk_start_individual_field(gb, attribute) do |a| %>
+            <%= govuk_text_input gb, a, :medium %>
+          <% end %>
+        <% end %>
+      </dd>
+      <dt>Some selected fields</dt>
+      <dd style="box-shadow: -3px -3px 6px 1px grey; margin: 1rem 0; padding: 1rem">
+        <%= govuk_grouped_fields(f, 'Enter some details', :full_name, :job_title, :organisation_name) do |gb, attribute| %>
+          <p>Some fields</p>
+          <%= govuk_start_individual_field(gb, attribute) do |a| %>
+            <%= govuk_text_input gb, a, :medium %>
+          <% end %>
+        <% end %>
+      </dd>
+    </dl>
+  <% end %>
+<% end %>

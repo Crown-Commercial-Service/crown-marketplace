@@ -56,22 +56,6 @@ $(function () {
         }
     });
 
-    const isPostCodeInLondon = (function (postcode) {
-
-        pageUtils.clearCashedData('fm-postcode-is-in-london');
-
-        $.get(encodeURI("/api/v1/postcodes/in_london?postcode=" + postcode))
-            .done(function (data) {
-                if (data.status === 200) {
-                    pageUtils.setCachedData('fm-postcode-is-in-london', data.result);
-                }
-
-            })
-            .fail(function (data) {
-                pageUtils.showPostCodeError(true, data.error);
-            });
-    });
-
     const getRegion = (function (post_code) {
 
         //if (post_code && pageUtils.isPostCodeValid(post_code)) {
@@ -109,47 +93,7 @@ $(function () {
 
     $('#fm-post-code-lookup-button').on('click', function (e) {
         e.preventDefault();
-        if (pageUtils.isPostCodeValid(postCode)) {
-            pageUtils.setCachedData('fm-postcode', postCode.toUpperCase());
-            pageUtils.clearCashedData('fm-new-address');
-            pageUtils.showPostCodeError(false);
-            isPostCodeInLondon(postCode);
-
-            $('#fm-postcode-label').text(postCode);
-            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
-            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
-            $('#fm-postcode-lookup-results').find('option').remove();
-            $('#fm-postcode-lookup-results').append('<option value="status-option" selected>0 addresses found</option>');
-
-            $.get(encodeURI("/api/v1/postcodes/" + postCode.toUpperCase()))
-                .done(function (data) {
-                    if (data && data.result && data.result.length > 0) {
-                        $('#fm-postcode-lookup-results').find('option').remove();
-                        $('#fm-postcode-lookup-results').append('<option value="status-option" selected>' + data.result.length + ' addresses found</option>');
-                        let addresses = data.result;
-
-                        for (let x = 0; x < addresses.length; x++) {
-                            let address = addresses[x];
-
-                            let add1 = address['add1'] ? address['add1'] + ', ' : '';
-                            let add2 = address['village'] ? address['village'] + ', ' : '';
-                            let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
-                            let county = address['county'] ? address['county'] + ', ' : '';
-                            let postCode = address['postcode'] ? address['postcode'] : '';
-                            let newOptionData = add1 + add2 + postTown + county + postCode;
-                            let newOption = '<option value="' + newOptionData + '">' + newOptionData + '</option>';
-                            $('#fm-postcode-lookup-results').append(newOption);
-                            $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
-                            $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
-                        }
-                    }
-                })
-                .fail(function (data) {
-                    pageUtils.showPostCodeError(true, data.error);
-                });
-        } else {
-            pageUtils.showPostCodeError(true);
-        }
+        pageUtils.addressLookUp(postCode, true);
     });
 
     $('#fm-change-postcode').on('click', function (e) {

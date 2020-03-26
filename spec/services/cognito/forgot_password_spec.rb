@@ -38,5 +38,22 @@ RSpec.describe Cognito::ForgotPassword do
         expect(response.error).to eq 'Oops'
       end
     end
+
+    context 'when cognito error is UserNotFoundException' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+        allow(aws_client).to receive(:forgot_password).and_raise(Aws::CognitoIdentityProvider::Errors::UserNotFoundException.new('oops', 'Oops'))
+      end
+
+      it 'does not return success' do
+        response = described_class.call(email)
+        expect(response.success?).to eq true
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(email)
+        expect(response.error).to eq nil
+      end
+    end
   end
 end

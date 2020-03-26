@@ -52,7 +52,7 @@ module Cognito
       if resp.success?
         resp.user
       else
-        errors.add(:base, resp.error)
+        errors.add(:base, I18n.t('activemodel.errors.models.cognito/confirm_password_reset.user_not_found'))
       end
     end
   end

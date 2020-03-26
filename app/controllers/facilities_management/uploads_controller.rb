@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class UploadsController < FrameworkController
+  class UploadsController < FacilitiesManagement::FrameworkController
     before_action :authenticate_user!, except: :create
     before_action :authorize_user, except: :create
 

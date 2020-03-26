@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class BranchesController < FrameworkController
+  class BranchesController < SupplyTeachers::FrameworkController
     before_action :set_end_of_journey
     SEARCH_RADIUSES = [50, 25, 10, 5, 1].freeze
 

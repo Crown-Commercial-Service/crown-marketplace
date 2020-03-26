@@ -42,6 +42,7 @@ module Cognito
           roles: roles
         )
       end
+      update_supplier_details if @user.has_roles?('supplier', 'fm_access')
     end
 
     def cognito_attribute(attr)
@@ -50,6 +51,11 @@ module Cognito
 
     def roles
       @cognito_user_groups.groups.map { |g| g.group_name.to_sym }
+    end
+
+    def update_supplier_details
+      @user.supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @user.email)
+      @user.save
     end
   end
 end

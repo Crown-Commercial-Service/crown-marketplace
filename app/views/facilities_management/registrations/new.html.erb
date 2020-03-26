@@ -47,7 +47,7 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
           <%= display_error(@result, :email) %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
         </div>
 
       </fieldset>
@@ -83,7 +83,7 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_upper') %>
                     </span>
           <%= display_error(@result, :password) %>
-          <%= f.password_field :password, autocomplete: "new-password", id: "password01", class: "govuk-input govuk-!-width-three-quarters"  %>
+          <%= f.password_field :password, autocomplete: "off", id: "password01", class: "govuk-input govuk-!-width-three-quarters"  %>
         </div>
 
         <div class="govuk-form-group  <%= 'govuk-form-group--error' if @result.errors[:password_confirmation].any? %>">
@@ -99,7 +99,7 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.passwords_dont_match') %>
                     </span>
           <%= display_error(@result, :password_confirmation) %>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password02", class: "govuk-input govuk-!-width-three-quarters"  %>
+          <%= f.password_field :password_confirmation, autocomplete: "off", id: "password02", class: "govuk-input govuk-!-width-three-quarters"  %>
         </div>
 
       </fieldset>

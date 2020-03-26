@@ -9,6 +9,8 @@ module Cognito
 
     def call
       forgot_password
+    rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
+      @error = nil
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
     end

@@ -15,6 +15,8 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
 require 'capybara'
+require 'show_me_the_cookies'
+require 'active_storage_validations/matchers'
 
 SimpleCov.start do
   add_filter '/bin/'
@@ -28,6 +30,9 @@ Capybara.register_driver :poltergeist_no_errors do |app|
 end
 
 RSpec.configure do |config|
+  config.include ActiveStorageValidations::Matchers
+  config.include ShowMeTheCookies, type: :feature
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -49,6 +54,7 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = false
+    mocks.allow_message_expectations_on_nil = true
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will

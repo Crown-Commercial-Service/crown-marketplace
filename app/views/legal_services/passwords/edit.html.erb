@@ -22,6 +22,18 @@
     </h1>
 
     <p class="govuk-body-l">
+      <%= t('.heading1') %>
+    </p>
+
+    <p class="govuk-body-l">
+      <%= t('.lead1') %>
+    </p>
+
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <%= t('.text01') %>
+    </p>
+
+    <p class="govuk-body-l">
       <%= t('.lead') %> <span class="ccs-email-example"><%= @response.email %></span>
     </p>
 
@@ -55,7 +67,7 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_reset.attributes.passwords_upper') %>
                     </span>
           <%= display_error(@response, :password) %>
-          <%= password_field_tag :password, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password01", autocomplete: "new-password" %>
+          <%= password_field_tag :password, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password01", autocomplete: "off" %>
         </div>
 
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:password_confirmation].any? %>">
@@ -72,7 +84,7 @@
                     </span>
 
           <%= display_error(@response, :password_confirmation) %>
-          <%= password_field_tag :password_confirmation, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password02", autocomplete: "new-password" %>
+          <%= password_field_tag :password_confirmation, nil, class: "govuk-input govuk-!-width-three-quarters", id: "password02", autocomplete: "off" %>
         </div>
 
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:confirmation_code].any? %>">

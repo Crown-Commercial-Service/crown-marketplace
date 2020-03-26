@@ -42,3 +42,9 @@
 @import "print-page/print-page";
 /* CCS override and bespoke styles; re-used globally across all modules */
 @import "ccs-global/ccs-global";
+@import "step-by-step-nav/focused";
+@import "step-by-step-nav/step-by-step-header";
+@import "step-by-step-nav/step-by-step-nav";
+@import "step-by-step-nav/step-by-step-related";
+@import "step-by-step-nav/task-list";
+@import "step-by-step-nav/related-items";

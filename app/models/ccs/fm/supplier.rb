@@ -8,11 +8,9 @@ module CCS
 
     class Supplier < ApplicationRecord
       # usage:
-      # CCS::FM::Supplier.where("data->'supplier_name' = 'Shields, Ratke and Parisian'")
       # CCS::FM::Supplier.supplier_name('Shields, Ratke and Parisian')
       def self.supplier_name(name)
-        # p "data->'supplier_name' = '#{name}'"
-        where("data->>'supplier_name' = '#{name}'")
+        select { |s| s['data']['supplier_name'] == name }.first
       end
 
       # usage:

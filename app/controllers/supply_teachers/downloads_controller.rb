@@ -1,7 +1,7 @@
 require 'csv'
 
 module SupplyTeachers
-  class DownloadsController < FrameworkController
+  class DownloadsController < SupplyTeachers::FrameworkController
     def index
       respond_to do |format|
         format.xlsx do

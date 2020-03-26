@@ -48,6 +48,12 @@ Rails.application.routes.draw do
       concerns %i[authenticatable registrable]
       namespace :beta do
         concerns :authenticatable
+        namespace :supplier do
+          concerns :authenticatable
+        end
+        namespace :admin do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -117,7 +123,7 @@ Rails.application.routes.draw do
       put '/building-type', to: 'buildings_management#update_building_type'
       get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
       post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put  '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
+      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
       get '/building-address', to: 'buildings_management#building_address'
       get '/building-security-type', to: 'buildings_management#building_security_type'
       post '/building-security-type', to: 'buildings_management#building_security_type'
@@ -130,14 +136,47 @@ Rails.application.routes.draw do
       match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
       match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
       match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
-      post '/summary', to: 'summary#index'
+      # post '/summary', to: 'summary#index'
+      match '/summary', to: 'summary#index', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
       post '/summary/suppliers', to: 'summary#sorted_suppliers'
       get '/start', to: 'journey#start', as: 'journey_start'
       get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
       get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-      resources :procurements
+      resources :procurements do
+        get 'results'
+        get 'further_competition_spreadsheet'
+        post 'da_spreadsheets'
+        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
+          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+          get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
+        end
+      end
       resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings_services, only: %i[show update]
+      resources :buyer_details, only: %i[edit update] do
+        get 'edit_address'
+      end
+      namespace :supplier do
+        get '/', to: 'home#index'
+        get 'offer-declined', to: 'offer#declined'
+        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
+        get 'offer-accepted', to: 'offer#accepted'
+        resources :dashboard, only: :index
+        resources :contracts, only: %i[show edit update], controller: 'contracts' do
+          resources :sent, only: %i[index], controller: 'sent'
+        end
+      end
+      namespace :admin, path: 'admin' do
+        get '/', to: 'admin_account#admin_account'
+        get '/start', to: 'dashboard#index'
+        get '/gateway', to: 'gateway#index'
+        get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+        get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        get 'supplier-framework-data', to: 'suppliers_framework_data#index'
+        get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
+      end
     end
 
     get '/', to: 'home#index'
@@ -167,6 +206,7 @@ Rails.application.routes.draw do
     get '/suppliers', to: 'suppliers#index'
     post '/buildings/delete_building' => 'buildings#delete_building'
 
+    get '/admin/start', to: 'dashboard#index'
     get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
@@ -216,6 +256,15 @@ Rails.application.routes.draw do
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
+    get '/new_layout', to: 'home#new_layout'
+    get '/prototypes', to: 'prototype#index'
+    get '/prototypes/no-response', to: 'prototype#no_response'
+    get '/prototypes/closed', to: 'prototype#closed'
+    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
+    get '/prototypes/declined', to: 'prototype#declined'
+    get '/prototypes/next-supplier', to: 'prototype#next_supplier'
+    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
+    get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
     get '/dynamic-accordian', to: 'home#dynamic_accordian'
     get '/supplier-results-v1', to: 'home#supplier_results_v1'
     get '/supplier-results-v2', to: 'home#supplier_results_v2'
@@ -279,13 +328,16 @@ Rails.application.routes.draw do
     get '/auth/dfe/callback' => 'auth#callback'
   end
 
-  # scope module: :postcode do
-  #  resources :postcodes, only: :show
-  # end
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :postcodes, only: :show
       post '/postcode/:slug', to: 'uploads#postcodes'
+      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
+      get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
+      get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
   end
 

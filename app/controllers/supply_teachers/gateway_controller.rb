@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class GatewayController < FrameworkController
+  class GatewayController < SupplyTeachers::FrameworkController
     before_action :authenticate_user!, except: :index
     before_action :authorize_user, except: :index
 

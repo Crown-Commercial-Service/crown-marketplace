@@ -65,5 +65,5 @@ def extract_duns(supplier_name)
 end
 
 def regional_offerings_workbook_filepath
-  file_path ManagementConsultancy::Admin::Upload::SUPPLIER_REGIONAL_OFFERINGS_PATH
+  'storage/management_consultancy/current_data/input/Regional offerings.xlsx'
 end

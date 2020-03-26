@@ -49,18 +49,18 @@ RSpec.feature 'FTA to Perm fee calculator', type: :feature, supply_teachers: tru
     expect_no_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months')
   end
 
-  scenario 'The gap between contract end date and hire date is grater than or equal to 6 months' do
-    visit_fta_to_perm_calculator
+  # xscenario 'The gap between contract end date and hire date is grater than or equal to 6 months' do
+  #   visit_fta_to_perm_calculator
 
-    fill_in_contract_start_date date_13_months_ago
-    click_on I18n.t('common.submit')
-    fill_in_contract_end_date date_5_months_ago
-    click_on I18n.t('common.submit')
-    fill_in_hire_date date_1_month_from_now
-    click_on I18n.t('common.submit')
+  #   fill_in_contract_start_date date_13_months_ago
+  #   click_on I18n.t('common.submit')
+  #   fill_in_contract_end_date date_5_months_ago
+  #   click_on I18n.t('common.submit')
+  #   fill_in_hire_date date_1_month_from_now
+  #   click_on I18n.t('common.submit')
 
-    expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months')
-  end
+  #   expect_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months')
+  # end
 
   scenario 'The gap between contract end date and hire date is 6 months - 1.day' do
     visit_fta_to_perm_calculator

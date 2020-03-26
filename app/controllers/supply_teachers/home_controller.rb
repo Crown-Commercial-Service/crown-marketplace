@@ -1,5 +1,5 @@
 module SupplyTeachers
-  class HomeController < FrameworkController
+  class HomeController < SupplyTeachers::FrameworkController
     before_action :authenticate_user!, except: :index
     before_action :authorize_user, except: :index
     before_action :set_end_of_journey, only: %i[temp_to_perm_fee fta_to_perm_fee]

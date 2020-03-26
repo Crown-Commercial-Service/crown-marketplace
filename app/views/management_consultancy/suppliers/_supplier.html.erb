@@ -1,14 +1,12 @@
-<div class="govuk-grid-row">
-  <li class="govuk-list">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-       <h2 class="govuk-heading-m">
-          <%= link_to supplier.name, management_consultancy_supplier_path(id: supplier.id, lot: params[:lot]), class: "govuk-!-font-size-20 ccs-no-underline" %>
-          <% if supplier.sme? %>
-            <span class="ccs-tag"><%= t('sme') %></span>
-          <% end %>
-        </h2>
-      </div>
+<li class="govuk-list">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+     <h2 class="govuk-heading-m">
+        <%= link_to supplier.name, management_consultancy_supplier_path(id: supplier.id, lot: params[:lot]), class: "govuk-!-font-size-20 ccs-no-underline" %>
+        <% if supplier.sme? %>
+          <span class="ccs-tag"><%= t('sme') %></span>
+        <% end %>
+      </h2>
     </div>
-  </li>
-</div>
+  </div>
+</li>

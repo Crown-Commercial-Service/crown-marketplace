@@ -1,7 +1,8 @@
 module OrdnanceSurvey
+  require 'csv'
   require 'aws-sdk-s3'
   require 'json'
-  require './lib/tasks/distributed_locks'
+  require Rails.root.join('lib', 'tasks', 'distributed_locks')
 
   def self.create_postcode_table
     str = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
@@ -91,7 +92,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
     object = Aws::S3::Resource.new(region: region)
     object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'AddressBasePlus/data/AddressBase'
+      next unless obj.key.starts_with? 'dataPostcode2files'
 
       next if postcode_file_already_loaded(obj.key)
 
@@ -100,7 +101,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       puts "*** Loading file #{obj.key}"
       chunks = ''
       obj.get do |chunk|
-        # rc.put_copy_data chunk
         chunks << chunk
       end
       ActiveRecord::Base.connection_pool.with_connection do |conn|

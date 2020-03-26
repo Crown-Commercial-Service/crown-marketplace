@@ -1,5 +1,5 @@
 module ManagementConsultancy
-  class JourneyController < FrameworkController
+  class JourneyController < ManagementConsultancy::FrameworkController
     include JourneyControllerActions
 
     def journey_class

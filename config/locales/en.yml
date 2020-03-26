@@ -46,8 +46,8 @@ en:
         ccs_patterns/home/cog_sign_in:
           attributes:
             cog_sign_in:
-              enter_your_password: Enter your password
-              please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
+              enter_your_password: You must provide your password
+              please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         ccs_patterns/home/cog_sign_in_password_prompt_change:
           attributes:
             enter_a_password: Enter a password
@@ -69,6 +69,7 @@ en:
             password_confirmation:
               blank: Enter your password
               confirmation: Passwords don't match
+          user_not_found: Please check the information you have entered
         cognito/confirm_sign_up:
           attributes:
             confirmation_code:
@@ -554,9 +555,12 @@ en:
       cog_forgot_password_reset:
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       cog_forgot_password_reset2:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
@@ -645,6 +649,7 @@ en:
     browse: Browse
     ccs_contact_url: https://www.crowncommercial.gov.uk/contact
     change_password_and_sign_in: Change password and sign in
+    complete: Complete
     confirm_and_continue: Confirm and continue
     continue: Continue
     create_account: Create account
@@ -653,10 +658,12 @@ en:
     error_summary_title: There is a problem
     feedback: feedback
     general_legal_advice_services_url: https://www.crowncommercial.gov.uk/agreements/RM3786
+    incomplete: Incomplete
     next: Next
     passcap: at least one capital letter
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
+    pdf_html: <abbr title="PDF">PDF</abbr>
     reset_password: Reset password
     search: Search
     send_reset_email: Send reset email
@@ -666,6 +673,7 @@ en:
     therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
+    type_pdf: application/pdf
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
     youmustselect: You must select at least one service before clicking the continue button
@@ -689,6 +697,9 @@ en:
     maintenance:
       explanation: You will be able to use the service later.
       title: Service unavailable
+    messages:
+      extension_whitelist_error: The selected file must be a DOC, DOCX or PDF
+      max_size_error: The selected file must be smaller than %{max_size}
   faker:
     company:
       name:
@@ -795,24 +806,24 @@ en:
         better_suited_framework_html: The <a href="https://www.crowncommercial.gov.uk/agreements/rm3786" target="_blank">General Legal Advice Services (RM3786)</a> agreement provides legal advice services for central government and arms-length bodies.
         heading: You need a different framework
     job_titles:
-      '1':
+      lot_1:
         junior: Legal Support Practitioner/Executive
         managing: Managing Practitioner
         senior: Senior Practitioner
         solicitor: Solicitor/Associate
-      '2':
+      lot_2:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
         solicitor: Solicitor/Associate
         trainee: Trainee/Paralegal
-      '3':
+      lot_3:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
         solicitor: Solicitor/Associate
         trainee: Trainee/Paralegal
-      '4':
+      lot_4:
         junior: Junior Solicitor
         managing: Partner including Managing Partner
         senior: Senior Solicitor/Senior Associate/Legal Director
@@ -864,9 +875,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -901,6 +915,7 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
+        sign_in_header: Sign in to your legal services buyer account
     suppliers:
       download:
         back_to_start: Back to start
@@ -968,9 +983,12 @@ en:
           confirm_code: Confirm Code
           confirm_new_password: Confirm new password
           heading: Reset your password
+          heading1: A reset email has been sent
           lead: Reset password for
+          lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
           new_password: New password
           password: Your password must have
+          text01: If you don't receive this, contact CCS customer services team.
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1203,9 +1221,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1240,6 +1261,7 @@ en:
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
         password: Password
+        sign_in_header: Sign in to your management consultancy buyer account
     suppliers:
       download:
         download_supplier_shortlist: Download supplier shortlist
@@ -1368,6 +1390,25 @@ en:
       supply_teachers:
         details_html: Contact <a href="mailto:%{link}">CCS Support</a> if you need to speak to someone about this.
         title: Sorry, you are not authorised to view this page
+    users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
+      new_password_required:
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   sme: SME
   suppliers:
     unit:
@@ -1380,9 +1421,12 @@ en:
           confirm_code: Confirm Code
           confirm_new_password: Confirm new password
           heading: Reset your password
+          heading1: A reset email has been sent
           lead: Reset password for
+          lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
           new_password: New password
           password: Your password must have
+          text01: If you don't receive this, contact CCS customer services team.
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1715,9 +1759,12 @@ en:
         confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
+        heading1: A reset email has been sent
         lead: Reset password for
+        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
         password: Your password must have
+        text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.

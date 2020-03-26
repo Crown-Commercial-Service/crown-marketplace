@@ -10,18 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_25_152610) do
+ActiveRecord::Schema.define(version: 2020_03_18_142425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
     t.text "user_id", null: false
     t.jsonb "building_json", null: false
     t.datetime "created_at"
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
@@ -31,7 +52,24 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
-  create_table "facilities_management_procurement_building_services", force: :cascade do |t|
+  create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "full_name", limit: 255
+    t.string "job_title", limit: 255
+    t.string "telephone_number", limit: 255
+    t.string "organisation_name", limit: 255
+    t.string "organisation_address_line_1", limit: 255
+    t.string "organisation_address_line_2", limit: 255
+    t.string "organisation_address_town", limit: 255
+    t.string "organisation_address_county", limit: 255
+    t.string "organisation_address_postcode", limit: 255
+    t.boolean "central_government"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
+  end
+
+  create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_building_id", null: false
     t.string "code", limit: 10
     t.string "name", limit: 255
@@ -43,6 +81,9 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.integer "no_of_consoles_to_be_serviced"
     t.integer "tones_to_be_collected_and_removed"
     t.integer "no_of_units_to_be_serviced"
+    t.string "service_standard", limit: 1
+    t.string "lift_data", default: [], array: true
+    t.jsonb "service_hours"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
   end
 
@@ -62,10 +103,57 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
+  create_table "facilities_management_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", limit: 100
+    t.string "name", limit: 50
+    t.string "job_title", limit: 150
+    t.text "email"
+    t.string "telephone_number", limit: 15
+    t.text "organisation_address_line_1"
+    t.text "organisation_address_line_2"
+    t.text "organisation_address_town"
+    t.text "organisation_address_county"
+    t.text "organisation_address_postcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "facilities_management_procurement_id"
+    t.index ["email"], name: "facilities_management_procurement_contact_detail_email_idx"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_contact_details_on_fm_procurement_id"
+    t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
+  end
+
+  create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.string "name", limit: 150
+    t.integer "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
+  end
+
+  create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.uuid "supplier_id"
+    t.money "direct_award_value", scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "contract_number"
+    t.string "aasm_state", limit: 30
+    t.datetime "offer_sent_date"
+    t.datetime "supplier_response_date"
+    t.datetime "contract_start_date"
+    t.datetime "contract_end_date"
+    t.datetime "contract_signed_date"
+    t.datetime "contract_closed_date"
+    t.text "reason_for_closing"
+    t.text "reason_for_declining"
+    t.text "reason_for_not_signing"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
+  end
+
   create_table "facilities_management_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.string "name", limit: 100
-    t.string "aasm_state", limit: 15
+    t.string "aasm_state", limit: 30
     t.string "updated_by", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -85,6 +173,19 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.boolean "estimated_cost_known"
     t.boolean "mobilisation_period_required"
     t.boolean "extensions_required"
+    t.boolean "security_policy_document_required"
+    t.string "security_policy_document_name"
+    t.string "security_policy_document_version_number"
+    t.date "security_policy_document_date"
+    t.string "lot_number"
+    t.money "assessed_value", scale: 2
+    t.boolean "eligible_for_da"
+    t.string "da_journey_state"
+    t.boolean "using_buyer_detail_for_invoice_details"
+    t.boolean "using_buyer_detail_for_notices_detail"
+    t.boolean "using_buyer_detail_for_authorised_detail"
+    t.string "payment_method"
+    t.boolean "local_government_pension_scheme"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -106,6 +207,29 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
+  end
+
+  create_table "facilities_management_supplier_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "name", limit: 255
+    t.boolean "lot1a"
+    t.boolean "lot1b"
+    t.boolean "lot1c"
+    t.boolean "direct_award"
+    t.boolean "sme"
+    t.string "contact_name", limit: 255
+    t.string "contact_email", limit: 255
+    t.string "contact_number", limit: 255
+    t.string "duns", limit: 255
+    t.string "registration_number", limit: 255
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "address_town", limit: 255
+    t.string "address_county", limit: 255
+    t.string "address_postcode", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 
   create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -151,12 +275,14 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
   end
 
   create_table "fm_rates", id: false, force: :cascade do |t|
-    t.text "code"
+    t.string "code", limit: 5
     t.decimal "framework"
     t.decimal "benchmark"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["code"], name: "fm_rates_code_key", unique: true
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|
@@ -198,6 +324,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.string "unit_text"
     t.string "data_type"
     t.string "spreadsheet_label"
+    t.string "unit_measure_label"
     t.text "service_usage", array: true
   end
 
@@ -428,6 +555,14 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
+  create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
+  end
+
   create_table "supply_teachers_admin_current_data", force: :cascade do |t|
     t.string "current_accredited_suppliers", limit: 255
     t.string "geographical_data_all_suppliers", limit: 255
@@ -519,11 +654,17 @@ ActiveRecord::Schema.define(version: 2019_10_25_152610) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
+  add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
   add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
   add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"

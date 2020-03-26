@@ -38,5 +38,5 @@ def add_suppliers
 end
 
 def suppliers_workbook_filepath
-  file_path ManagementConsultancy::Admin::Upload::SUPPLIERS_PATH
+  'storage/management_consultancy/current_data/input/Suppliers.xlsx'
 end

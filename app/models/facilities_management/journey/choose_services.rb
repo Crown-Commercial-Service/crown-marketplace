@@ -3,6 +3,7 @@ module FacilitiesManagement
     include Steppable
 
     attribute :service_codes, Array
+    attribute :region_codes, Array
     validates :service_codes, length: { minimum: 1 }
 
     def services

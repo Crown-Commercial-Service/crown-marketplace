@@ -25,15 +25,15 @@
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= radio_button_tag :jurisdiction, 'a', checked?(params[:jurisdiction], 'a'), class: 'govuk-radios__input'%>
-              <%= label_tag :jurisdiction, t('england_wales'), class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :jurisdiction_a, t('england_wales'), class: 'govuk-label govuk-radios__label' %>
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :jurisdiction, 'b', checked?(params[:jurisdiction], 'b'), class: 'govuk-radios__input' %>
-              <%= label_tag :jurisdiction, t('scotland'), class: 'govuk-label govuk-radios__label'%>
+              <%= label_tag :jurisdiction_b, t('scotland'), class: 'govuk-label govuk-radios__label'%>
             </div>
             <div class="govuk-radios__item">
               <%= radio_button_tag :jurisdiction, 'c', checked?(params[:jurisdiction], 'c'), class: 'govuk-radios__input' %>
-              <%= label_tag :jurisdiction, t('northern_ireland'), class: 'govuk-label govuk-radios__label' %>
+              <%= label_tag :jurisdiction_c, t('northern_ireland'), class: 'govuk-label govuk-radios__label' %>
             </div>
           </div>
 
