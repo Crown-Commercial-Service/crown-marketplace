@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SuppliersFrameworkDataControll
   describe 'GET #index' do
     it 'returns http success' do
       get :index
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:ok)
     end
   end
 
