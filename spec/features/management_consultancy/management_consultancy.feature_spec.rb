@@ -150,6 +150,6 @@ RSpec.feature 'Management consultancy', type: :feature, management_consultancy: 
 
     click_on I18n.t('layouts.application.back')
 
-    expect(page.find('input#service_MCF2-1-2')).not_to be_checked
+    expect(page.find('input#service_MCF2.1.2')).not_to be_checked
   end
 end
