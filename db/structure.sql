@@ -119,7 +119,7 @@ $$;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
+SET default_with_oids = false;
 
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
@@ -923,23 +923,6 @@ CREATE TABLE public.os_address_admin_uploads (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: os_address_view; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW public.os_address_view AS
- SELECT btrim((((((NULLIF((adds.rm_organisation_name)::text, ' '::text) || ' '::text) || adds.pao_start_number) || (adds.pao_start_suffix)::text) || ' '::text) || (adds.street_description)::text)) AS add1,
-    adds.town_name AS village,
-    adds.post_town,
-    adds.administrative_area AS county,
-    adds.postcode,
-    replace((adds.postcode)::text, ' '::text, ''::text) AS formated_postcode,
-    replace((adds.postcode)::text, ' '::text, (adds.delivery_point_suffix)::text) AS building_ref
-   FROM public.os_address adds
-  WHERE ((((adds.pao_start_number || (adds.pao_start_suffix)::text) || (adds.street_description)::text) IS NOT NULL) AND (adds.post_town IS NOT NULL))
-  ORDER BY adds.pao_start_number, adds.rm_organisation_name, adds.street_description;
 
 
 --
@@ -1815,35 +1798,35 @@ CREATE UNIQUE INDEX os_address_admin_uploads_filename_idx ON public.os_address_a
 -- Name: facilities_management_buildings create_building_json; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER create_building_json BEFORE INSERT ON public.facilities_management_buildings FOR EACH ROW WHEN (((new.building_json = '"{}"'::jsonb) OR (COALESCE(new.building_json, '{}'::jsonb) = '{}'::jsonb))) EXECUTE FUNCTION public.build_building_json();
+CREATE TRIGGER create_building_json BEFORE INSERT ON public.facilities_management_buildings FOR EACH ROW WHEN (((new.building_json = '"{}"'::jsonb) OR (COALESCE(new.building_json, '{}'::jsonb) = '{}'::jsonb))) EXECUTE PROCEDURE public.build_building_json();
 
 
 --
 -- Name: facilities_management_buildings create_building_json_on_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER create_building_json_on_update BEFORE UPDATE OF status, updated_by, building_ref, building_name, description, gia, region, building_type, security_type, address_town, address_county, address_line_1, address_line_2, address_postcode, address_region, address_region_code ON public.facilities_management_buildings FOR EACH ROW EXECUTE FUNCTION public.build_building_json();
+CREATE TRIGGER create_building_json_on_update BEFORE UPDATE OF status, updated_by, building_ref, building_name, description, gia, region, building_type, security_type, address_town, address_county, address_line_1, address_line_2, address_postcode, address_region, address_region_code ON public.facilities_management_buildings FOR EACH ROW EXECUTE PROCEDURE public.build_building_json();
 
 
 --
 -- Name: facilities_management_buildings insert_building_from_json; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER insert_building_from_json BEFORE INSERT ON public.facilities_management_buildings FOR EACH ROW WHEN (((new.building_json <> '"{}"'::jsonb) OR (COALESCE(new.building_json, '{}'::jsonb) <> '{}'::jsonb))) EXECUTE FUNCTION public.extract_building_row_from_json();
+CREATE TRIGGER insert_building_from_json BEFORE INSERT ON public.facilities_management_buildings FOR EACH ROW WHEN (((new.building_json <> '"{}"'::jsonb) OR (COALESCE(new.building_json, '{}'::jsonb) <> '{}'::jsonb))) EXECUTE PROCEDURE public.extract_building_row_from_json();
 
 
 --
 -- Name: facilities_management_buildings update_building_from_json; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER update_building_from_json BEFORE UPDATE OF building_json ON public.facilities_management_buildings FOR EACH ROW EXECUTE FUNCTION public.extract_building_row_from_json();
+CREATE TRIGGER update_building_from_json BEFORE UPDATE OF building_json ON public.facilities_management_buildings FOR EACH ROW EXECUTE PROCEDURE public.extract_building_row_from_json();
 
 
 --
 -- Name: facilities_management_buildings update_building_status; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER update_building_status BEFORE INSERT OR UPDATE ON public.facilities_management_buildings FOR EACH ROW EXECUTE FUNCTION public.update_building_status();
+CREATE TRIGGER update_building_status BEFORE INSERT OR UPDATE ON public.facilities_management_buildings FOR EACH ROW EXECUTE PROCEDURE public.update_building_status();
 
 
 --
