@@ -6,7 +6,7 @@
         <p class="govuk-heading-m govuk-!-margin-bottom-8"><%= t('.lead_text') %></p>
 
         <p class="govuk-body">
-            <a href="/downloads/example?format=csv" class="supplier-record__file-download" type="<%= t('common.type_csv') %>" download>
+            <a href="/downloads/example?format=csv" class="supplier-record__file-download" name="Download the supplier list" type="<%= t('common.type_csv') %>" download>
                 <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
             </a>
         </p>
@@ -18,14 +18,14 @@
         <ul class="govuk-list govuk-!-margin-top-6">
 
             <li class="govuk-!-margin-bottom-3">
-                <a href="/downloads/example?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <a href="/downloads/example?format=doc" class="supplier-record__file-download" name="expression of interest" type="<%= t('common.type_doc') %>" download>
                     <%= t('.expression_of_interest_template') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
                 </a>
             </li>
 
         </ul>
 
-       <%= link_to t('.button_start_new_search'), '/management_consultancy/', role: 'button', class: 'govuk-button govuk-!-margin-top-6' %>
+       <%= link_to t('.button_start_new_search'), '/management_consultancy/', role: 'button', class: 'govuk-button govuk-!-margin-top-6', name: 'Start new search' %>
 
     </div>
 </div>
