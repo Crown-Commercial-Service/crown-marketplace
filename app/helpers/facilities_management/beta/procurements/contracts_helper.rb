@@ -11,7 +11,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
 
   # rubocop:disable Metrics/AbcSize
   def warning_message
-    warning_messages = { sent: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent')} #{format_date_time(@contract.offer_sent_date)}.",
+    warning_messages = { sent: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent_1')} #{format_date_time(@contract.contract_expiry_date)}.<br/> #{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent_2')}",
                          accepted: t('facilities_management.beta.procurements.contracts_helper.warning_message.accepted'),
                          signed: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.signed')} #{format_date(@contract.contract_start_date)} and #{format_date(@contract.contract_end_date)}.",
                          not_signed: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.not_signed_1')} #{format_date_time @contract.contract_signed_date} #{t('facilities_management.beta.procurements.contracts_helper.warning_message.not_signed_2')}.",
@@ -19,7 +19,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
                          expired: t('facilities_management.beta.procurements.contracts_helper.warning_message.expired') }
     if @contract.closed?
       if @contract.last_offer?
-        "The contract offer was automatically closed on #{format_date_time(@contract.contract_closed_date)} when you tried to offer<br/> the procurement to the next supplier, but there were no more suppliers."
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_1')} #{format_date_time(@contract.contract_closed_date)} #{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_2')}"
       else
         "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
       end

@@ -329,6 +329,11 @@ en:
         supplier_framework_data:
           heading_title: Supplier framework data
           rtrn_link: Return to admin dashboard
+          sublot_1a_regions:
+            breadcrumb_supllier_framework_data: Supplier framework data
+            leading_text: The tick boxes indicate the regions to which this supplier can provide services.
+            rtrn_link: Return to supplier framework data
+            update_button: Save and return to supplier framework data
           sublot_data:
             breadcrumb_text_supplier_framework_data: Supplier framework data
             heading_title: Sub-lot 1a services, prices, and variances
@@ -700,12 +705,15 @@ en:
         contracts_helper:
           warning_message:
             accepted: Awaiting your confirmation of signed contract.
-            closed: This contract offer was closed on
-            declined: The supplier declined this offer
+            closed: You closed this contract offer on
+            declined: The supplier declined this offer on
             expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
+            last_closed_1: The contract offer was automatically closed on
+            last_closed_2: when you tried to offer the procurement to the next supplier, but there were no more suppliers.
             not_signed_1: You confirmed on the
             not_signed_2: that the contract has not been signed
-            sent: This offer was sent to the supplier on
+            sent_1: This contract offer expires on
+            sent_2: The supplier has not yet responded.
             signed: You confirmed that the contract period is between
         da_buyer:
           contract_details:
