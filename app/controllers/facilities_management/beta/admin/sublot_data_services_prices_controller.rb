@@ -41,7 +41,46 @@ module FacilitiesManagement
           setup_checkboxes(supplier_services)
         end
 
+        def update_sublot_data_services_prices
+          update_checkboxes
+          update_rates
+          redirect_to facilities_management_beta_admin_supplier_framework_data_path
+        end
+
         private
+
+        def update_checkboxes
+          # params["checked_services"].each do |service|
+          #  p service
+          # end
+        end
+
+        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+        def update_rates
+          rates = FacilitiesManagement::Admin::Rates.all
+
+          m140 = rates.find_by(code: 'M.140')
+          m140.update(benchmark: params['rate']['M.140'].to_f) if m140.benchmark != params['rate']['M.140'].to_f
+
+          m141 = rates.find_by(code: 'M.141')
+          m141.update(benchmark: params['rate']['M.141'].to_f) if m141.benchmark != params['rate']['M.141'].to_f
+
+          m142 = rates.find_by(code: 'M.142')
+          m142.update(benchmark: params['rate']['M.142'].to_f) if m142.benchmark != params['rate']['M.142'].to_f
+
+          m144 = rates.find_by(code: 'M.144')
+          m144.update(benchmark: params['rate']['M.144'].to_f) if m144.benchmark != params['rate']['M.144'].to_f
+
+          m146 = rates.find_by(code: 'M.146')
+          m146.update(benchmark: params['rate']['M.146'].to_f) if m146.benchmark != params['rate']['M.146'].to_f
+
+          m148 = rates.find_by(code: 'M.148')
+          m148.update(benchmark: params['rate']['M.148'].to_f) if m148.benchmark != params['rate']['M.148'].to_f
+
+          b1 = rates.find_by(code: 'B.1')
+          b1.update(benchmark: params['rate']['B.1'].to_f) if b1.benchmark != params['rate']['B.1'].to_f
+        end
+        # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
         def setup_supplier_data_ratecard
           @supplier_data_ratecard_prices = CCS::FM::RateCard.latest[:data][:Prices].select { |key, _| @supplier_name.include? key.to_s }

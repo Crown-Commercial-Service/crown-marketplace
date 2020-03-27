@@ -34,4 +34,17 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       end
     end
   end
+
+  describe 'PUT update_rates' do
+    it '#update_sublot_data_services_price' do
+      expect(FacilitiesManagement::Admin::Rates.all.find_by(code: 'M.141').benchmark).to eq 0.042
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.12345 }
+      expect(FacilitiesManagement::Admin::Rates.all.find_by(code: 'M.141').benchmark).to eq 1.12345
+    end
+
+    it 'redirects correctly' do
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123 }
+      expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
+    end
+  end
 end
