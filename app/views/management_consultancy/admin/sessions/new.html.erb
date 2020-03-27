@@ -47,13 +47,13 @@
 
     <% end %>
 
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2" name="problem signing in">
       <%= t('ccs_patterns.home.cog_sign_in.problems_signing_in') %>
     </h2>
 
     <ul class="govuk-list">
       <li>
-        <%= link_to t('.forgotten_password_html'), management_consultancy_admin_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), management_consultancy_admin_new_user_password_path, class: 'govuk-link', name: 'forgotten password' %>
       </li>
     </ul>
   </div>

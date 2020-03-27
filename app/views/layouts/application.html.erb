@@ -47,10 +47,12 @@
       </header>
 
 
-      <main id="main-content" class="govuk-width-container govuk-main-wrapper" role="main">
-        <% if @back_path.present? %>
-          <%= render partial: '/layouts/back-link' %>
-        <% end %>
+      <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main">
+        <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
+          <% if @back_path.present? %>
+            <%= render partial: '/layouts/back-link' %>
+          <% end %>
+        </div>
         
         <%= yield %>
       </main>

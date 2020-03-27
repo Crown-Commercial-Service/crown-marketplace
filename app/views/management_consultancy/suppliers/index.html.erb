@@ -4,6 +4,7 @@
       <%= framework_lot_and_description(@lot.number, @lot.description) %>
     </span>
     <% if @all_suppliers.count.zero? %>
+      <%= content_for :page_title, t('.no_suppliers_found.heading') %>
       <h1 class="govuk-heading-xl"><%= t('.no_suppliers_found.heading') %></h1>
       <p class="govuk-body govuk-!-font-size-24">
         <%=t('.no_suppliers_found.text') %>
@@ -13,6 +14,7 @@
         <%= t('.no_suppliers_found.contact_html', contact_link: link_to(t('.no_suppliers_found.contact_link_text'), 'https://www.crowncommercial.gov.uk/contact')) %>
       </p>
     <% else %>
+      <%= content_for :page_title, t('.heading') %>
       <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
       <p class="govuk-body">
         <%= t('.suppliers_found_html',
@@ -26,7 +28,8 @@
           services: params[:services],
           region_codes: params[:region_codes]
           ),
-          class: 'govuk-button'
+          class: 'govuk-button', 
+          name: 'Download suppliers list'
         ) %>
       <br>
       <section class="govuk-grid-column-two-thirds ccs-search-results">
