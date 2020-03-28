@@ -6,7 +6,7 @@ module FacilitiesManagement
       def show
         render :edit
       end
-      
+
       def edit; end
 
       def edit_address; end
