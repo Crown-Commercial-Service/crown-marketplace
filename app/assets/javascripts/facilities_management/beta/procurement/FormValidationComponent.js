@@ -1,7 +1,9 @@
 function FormValidationComponent(formDOMObject, validationCallback, thisisspecial = false) {
+    this.site_wide_turn_off = false;
+
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
-        if (null != formDOMObject && null == formDOMObject.formValidator) {
+        if (!this.site_wide_turn_off && null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
                 ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
                 canConnect = true;
@@ -31,6 +33,10 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         this.validationResult = true;
     };
 
+    this.isRadioOrCheckBox = function(jElem) {
+        return "radio checkbox".indexOf(jElem.prop("type")) > -1;
+    };
+
     this.validateForm = function (formElements) {
         let submitForm = this.validationResult = true;
         this.clearBannerErrorList();
@@ -39,6 +45,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
         if (formElements !== undefined && formElements.length > 0) {
             let elements = [];
+            let validated_radiocheckbox_elements = [];
             for (let i = 0; i < formElements.length; i++) {
                 let element = formElements[i];
                 if (element.hasAttribute("type") || element.hasAttribute("required") || element.hasAttribute("maxlength")) {
@@ -52,6 +59,18 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                     try {
                         let jElem = $(elements[index]);
                         if (jElem.length > 0) {
+                            if ( this.isRadioOrCheckBox(jElem) && jQuery.inArray(jElem.prop("name"), validated_radiocheckbox_elements) == -1) {
+                                validated_radiocheckbox_elements.push(jElem.prop("name"));
+                                if (jElem.prop("required")) {
+                                    if ( this.form.elements[jElem.prop("name")].value === "") {
+                                        submitForm = submitForm && false;
+                                        this.toggleError(jElem, true, "required");
+                                    } else {
+                                        submitForm = submitForm && true;
+                                        this.toggleError(jElem, false, "required");
+                                    }
+                                }
+                            }
                             if (jElem.prop("required")) {
                                 submitForm = submitForm && this.testError(
                                     this.validationFunctions["required"],

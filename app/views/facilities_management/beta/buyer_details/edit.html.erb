@@ -1,6 +1,6 @@
 <div class="govuk-body govuk-grid-row buyer-details">
   <div class="govuk-grid-column-two-thirds" id="buyer-details-form">
-    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { novalidate: true, multipart: true } do |f| %>
+    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { novalidate: true, specialvalidation: false, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
       <%= f.hidden_field 'return_details', value: request['return_to'].to_query if request['return_to'].present?%>
@@ -112,7 +112,7 @@
         <h2 class="govuk-heading-m">
           Sector
         </h2>
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>" data-propertyname="central_government">
 
           <div class="govuk-heading-s govuk-!-margin-bottom-0">
             <%= t('.which_type_of_public_sector_org') %>
@@ -125,11 +125,11 @@
           <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
             <div class="govuk-radios govuk-radios--inline">
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input' %>
+                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input', required: true %>
                 <%= f.label :central_government, t('.central_gov'), value: true, class: 'govuk-label govuk-radios__label' %>
               </div>
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input' %>
+                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input', required: true %>
                 <%= f.label :central_government, t('.wider_public_sector'), value: false, class: 'govuk-label govuk-radios__label' %>
               </div>
             </div>
@@ -137,7 +137,7 @@
         </div>
 
         <div>
-          <%= f.submit t('.submit'), class: "govuk-button" %>
+          <%= f.submit t('.submit'), class: "govuk-button", data: { disable_with:false }  %>
         </div>
 
       </fieldset>
