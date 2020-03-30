@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Buildings, type: :model do
   describe 'default values' do
-    subject(:building) { create(:facilities_management_building_ar_defaults, user_id: create(:user).id) }
+    subject(:building) { create(:facilities_management_buildings_ar_defaults, user_id: create(:user).id) }
 
     context 'when saving an empty record' do
       before do
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::Buildings, type: :model do
   end
 
   describe 'with ActiveRecord data in the object' do
-    subject(:building) { create(:facilities_management_building_ar, user_id: create(:user).id) }
+    subject(:building) { create(:facilities_management_buildings_ar, user_id: create(:user).id) }
 
     before do
       building.save
@@ -49,7 +49,7 @@ RSpec.describe FacilitiesManagement::Buildings, type: :model do
   end
 
   describe 'with JSON data in the object' do
-    subject(:building) { create(:facilities_management_building, user_id: create(:user).id) }
+    subject(:building) { create(:facilities_management_buildings, user_id: create(:user).id) }
 
     before do
       building.save
@@ -75,7 +75,7 @@ RSpec.describe FacilitiesManagement::Buildings, type: :model do
   end
 
   describe '#validations' do
-    subject(:building) { create(:facilities_management_building_ar, user_id: create(:user).id) }
+    subject(:building) { create(:facilities_management_buildings_ar, user_id: create(:user).id) }
 
     context 'when everything is present' do
       it 'is valid' do

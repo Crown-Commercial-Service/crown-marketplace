@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_155639) do
+ActiveRecord::Schema.define(version: 2020_03_19_113541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(version: 2020_03_26_155639) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.jsonb "building_json", default: "{}", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "status"
+    t.string "status", null: false
     t.string "updated_by", null: false
+    t.text "user_email"
+    t.jsonb "building_json"
     t.text "building_ref"
     t.text "building_name"
     t.text "description"
@@ -59,11 +59,8 @@ ActiveRecord::Schema.define(version: 2020_03_26_155639) do
     t.text "address_postcode"
     t.text "address_region"
     t.text "address_region_code"
-    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
-    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
-    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.uuid "user_id"
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
-    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

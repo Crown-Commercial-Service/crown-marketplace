@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :facilities_management_building_ar_defaults, class: FacilitiesManagement::Buildings do
+  factory :facilities_management_buildings_ar_defaults, class: FacilitiesManagement::Buildings do
     id { SecureRandom.uuid }
     user_id { create(:user).id }
     updated_by { Faker::Internet.unique.email }
   end
 
-  factory :facilities_management_building_ar, parent: :facilities_management_building_ar_defaults do
+  factory :facilities_management_buildings_ar, parent: :facilities_management_buildings_ar_defaults do
     gia { 1002 }
     building_name { 'non-json-building' }
     description { 'non-json description' }
@@ -22,7 +22,7 @@ FactoryBot.define do
     address_postcode { 'SS31 0DR' }
   end
 
-  factory :facilities_management_building, class: FacilitiesManagement::Buildings do
+  factory :facilities_management_buildings, class: FacilitiesManagement::Buildings do
     id { SecureRandom.uuid }
     user_id { create(:user).id }
     status { 'Ready' }
@@ -46,7 +46,7 @@ FactoryBot.define do
     end
   end
 
-  factory :facilities_management_building_london, parent: :facilities_management_building do
+  factory :facilities_management_buildings_london, parent: :facilities_management_buildings do
     building_json do
       { 'id' => id,
         'gia' => 1002,
