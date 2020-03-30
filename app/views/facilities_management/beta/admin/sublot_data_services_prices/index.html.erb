@@ -84,7 +84,7 @@
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_overhead') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.140]" name="rate[M.140]" type="number" value="<%= @rates.find_by(code: "M.140" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.140]" name="rate[M.140]" type="number" value="<%= @variance_supplier_data['Management Overhead %'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -92,7 +92,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_corporate') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.141]" name="rate[M.141]" type="number" value="<%= @rates.find_by(code: "M.141" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.141]" name="rate[M.141]" type="number" value="<%= @variance_supplier_data['Corporate Overhead %'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -100,7 +100,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_profit') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.142]" name="rate[M.142]" type="number" value="<%= @rates.find_by(code: "M.142" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.142]" name="rate[M.142]" type="number" value="<%= @variance_supplier_data['Profit %'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -108,7 +108,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_london') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.144]" name="rate[M.144]" type="number" value="<%= @rates.find_by(code: "M.144" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.144]" name="rate[M.144]" type="number" value="<%= @variance_supplier_data['London Location Variance Rate (%)'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -116,7 +116,7 @@
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= @rates.find_by(code: "M.146" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.146]" name="event-name" type="number" value="<%= @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -124,7 +124,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_tupe') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.148]" name="rate[M.148]" type="number" value="<%= @rates.find_by(code: "M.148" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.148]" name="rate[M.148]" type="number" value="<%= @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">
@@ -132,7 +132,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_mobilisation') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[B.1]" name="rate[B.1]" type="number" value="<%= @rates.find_by(code: "B.1" ).benchmark %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[B.1]" name="rate[B.1]" type="number" value="<%= @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] %>">
       </td>
     </tr>
     </tbody>
