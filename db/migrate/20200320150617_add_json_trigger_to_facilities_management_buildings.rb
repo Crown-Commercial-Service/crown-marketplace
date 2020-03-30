@@ -71,8 +71,6 @@ class AddJsonTriggerToFacilitiesManagementBuildings < ActiveRecord::Migration[5.
                return NEW;
         END;
       $BODY$;
-       ALTER FUNCTION public.build_building_json()
-          OWNER TO postgres;
        CREATE OR REPLACE FUNCTION public.extract_building_row_from_json()
        RETURNS trigger
        LANGUAGE plpgsql
