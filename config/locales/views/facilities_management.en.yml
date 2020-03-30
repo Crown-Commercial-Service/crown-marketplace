@@ -422,6 +422,7 @@ en:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
+          manage_buildings: "Manage buildings"
       buyer_details:
         edit:
           buyer_details: Buyer details
@@ -463,7 +464,7 @@ en:
         no_buildings_text: You have no saved buildings
         procurements_dashboard_button: Procurements dashboard
         start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
-        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
+        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
       procurement_buildings:
         building_standards:
           back_to_service_information: Back to service information
@@ -1217,6 +1218,56 @@ en:
           heading: Enter your access code
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
+      buildings:
+        manage_building_title: "Manage buildings"
+        index:
+          column_desc_header: Description
+          column_lstup_header: Last updated
+          column_name_header: Name
+          create_new_button: "Create Single Building"
+          procurements_dashboard_button: "Procurements dashboard"
+          start_paragraph: "You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements."
+          start_warning: "When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require."
+          no_buildings_text: "You have no saved buildings"
+          my_buildings_header: "My buildings"
+          column_status_header: "Status"
+          link_to_building_summary: "View details for building"
+        show:
+          section-header: "Building details summary"
+          incomplete_text: Building '%{name}' is incomplete. You need to answer all questions before a building can be used in procurements.
+          complete_text: Building '%{name}' is ready for use in procurements.
+          change_text: "Change"
+          add_name_text: "Add name"
+          add_desc_text: "Add description"
+          caption_desc: "Description"
+          caption_name: "Name"
+          caption_addr: "Address"
+          add_address_text: "Add address"
+          caption_region_nuts: "Location (NUTS region)"
+          caption_gia: "Gross internal area"
+          answer_question_text: "Answer question"
+          caption_type: "Building type"
+          select_one_option_text: "Please select one option"
+          caption_sec: "Security clearance"
+        return_to_manage_buildings: "Return to manage buildings"
+        create_new_building: "Create new building"
+        change_building_details: "Change building details"
+        create_single_building: "Create single building"
+        step_footer: "Next: %{description}"
+        step_title: "Step %{position} of 4"
+        new:
+          building_name_label: "This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor."
+          building_name_label_html: '<span class="govuk-heading-m govuk-!-margin-bottom-0">What''s the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>'
+          description_label_html: "<span class=\"govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5\">What's the description? - Optional</span> <span class=\"govuk-caption-m govuk-!-margin-top-0\"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>"
+          address_label_html: "<span class=\"govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5\">What's the address?</span><span class=\"govuk-caption-m govuk-!-margin-top-0\">We'll use this UK address to assess the region in which your building is located.</span>"
+          find_address: "Find address"
+          select_an_address: "Select an address"
+          zero_address_found: "0 addresses found"
+          cant_find_address: "I cant find my building's address in the list"
+          postcode: "Postcode"
+          address: "Address"
+          location_region: "Location (region)"
+          change: "Change"
     home:
       beforeyoustart: Before you start
       heading: Find Facilities Management services
@@ -1330,3 +1381,4 @@ en:
         email_address: Email address
         forgotten_password_html: I've forgotten my password
         password: Password
+

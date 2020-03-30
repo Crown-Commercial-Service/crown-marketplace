@@ -8,12 +8,13 @@ module LayoutHelper
 
   # Value Objects (Classes) to structure data for parameters to helper methods
   class NavigationDetail
-    attr_accessor(:primary_text, :primary_name, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
+    attr_accessor(:primary_text, :primary_name, :primary_url, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = '', secondary_name = '')
+    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = '', secondary_name = '', primary_url)
       @primary_text   = primary_text
       @primary_name   = primary_name
+      @primary_url = primary_url
       @return_url     = return_url
       @return_text    = return_text
       @secondary_url  = secondary_url
@@ -78,7 +79,7 @@ module LayoutHelper
 
     out = ''
     out = capture { govuk_back_button(page_details.back_button) } unless no_back_button
-    out << capture { govuk_page_error_summary(model_object) } unless model_object.nil? || no_error_block
+    out << capture { govuk_page_error_summary(model_object) } unless model_object.nil? || !model_object.respond_to?(:errors) || no_error_block
     out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do
@@ -118,10 +119,12 @@ module LayoutHelper
   # rubocop:enable Rails/OutputSafety
 
   # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false)
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false, primary_btn_as_link = false, secondary_btn_as_link = false)
     buttons = ActiveSupport::SafeBuffer.new
-    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button && !primary_btn_as_link
+    buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
+    buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
     buttons << capture { tag.br } if secondary_button || primary_button
     buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') if return_link
     content_tag :div, class: 'govuk-!-margin-top-5' do

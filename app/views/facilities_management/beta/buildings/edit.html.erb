@@ -1,0 +1,5 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+  <%= form_for @page_data[:model_object], url: '#', method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <%= govuk_continuation_buttons(pd, f, true, false, true, false, true, true) %>
+  <% end %>
+<% end %>
