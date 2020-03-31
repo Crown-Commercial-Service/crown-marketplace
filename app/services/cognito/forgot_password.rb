@@ -9,6 +9,8 @@ module Cognito
 
     def call
       forgot_password
+    rescue Aws::CognitoIdentityProvider::Errors::InvalidParameterException
+      @error = I18n.t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_request.attributes.please_enter_a_valid_email_address')
     rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
       @error = nil
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
