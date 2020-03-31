@@ -68,7 +68,7 @@ module FacilitiesManagement
         end
 
         def send_offer_to_next_supplier
-          next_contract = @procurement.procurement_suppliers.unsent.first
+          next_contract = @procurement.procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).first
           @procurement.offer_to_next_supplier
           @procurement.save
           redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)

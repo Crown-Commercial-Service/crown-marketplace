@@ -283,13 +283,13 @@ module FacilitiesManagement
     end
 
     def offer_to_next_supplier
-      return false if procurement_suppliers.unsent.empty?
+      return false if procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
 
-      unless procurement_suppliers.where.not(aasm_state: 'unsent').empty?
-        last_contract = procurement_suppliers.where.not(aasm_state: 'unsent').last
+      unless procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').last
         last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
       end
-      procurement_suppliers.unsent&.first&.offer_to_supplier!
+      procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7)&.first&.offer_to_supplier!
     end
 
     def mobilisation_period_start_date
