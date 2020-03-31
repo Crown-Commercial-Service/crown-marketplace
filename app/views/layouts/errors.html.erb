@@ -102,7 +102,9 @@
 
   <%= javascript_include_tag 'application' %>
   <script>
-    window.GOVUKFrontend.initAll()
+    $(document).ready(function(){
+      window.GOVUKFrontend.initAll();
+    });
 
   </script>
 </body>
