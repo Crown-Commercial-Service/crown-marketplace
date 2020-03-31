@@ -3,3 +3,7 @@
 .govuk-error-message {
 	font-weight: $govuk-font-weight-semi-bold;
 }
+
+form.ccs-form .ccs-errors .govuk-input--error {
+	border: 4px solid #b10e1e !important;
+}

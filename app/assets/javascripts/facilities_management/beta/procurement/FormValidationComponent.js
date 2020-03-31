@@ -4,7 +4,8 @@ function FormValidationComponent(formDOMObject, validationCallback) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
-                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) ||
+                (!requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") !== "true")) {
                 canConnect = true;
             }
         }
