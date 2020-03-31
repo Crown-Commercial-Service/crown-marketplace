@@ -96,6 +96,7 @@ en:
               cookies_disabled: Your browser must have cookies enabled
             email:
               blank: You must provide your email address in the correct format, like name@example.com
+              invalid: You must provide your email address in the correct format, like name@example.com
             password:
               blank: You must provide your password
         cognito/sign_up_user:
