@@ -32,7 +32,7 @@
       <%= f.hidden_field :step, value: params[:facilities_management_procurement][:step] if !params[:step] && params.dig(:facilities_management_procurement, :step) %>
       <% if @procurement.quick_search? %>
         <%= govuk_form_group_with_optional_error(@procurement, :name, :region_codes, :service_codes) do %>
-          <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
+          <div class="quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
             <%= render partial: 'quick_search_form', locals: { f: f, step: params[:step] } %>
           </div>
         <% end %>
