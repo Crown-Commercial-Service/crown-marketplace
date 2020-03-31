@@ -41,7 +41,7 @@
         <div class="govuk-!-margin-bottom-5">
           <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1a</span>
           <br />
-          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="#">Services, prices and variances</a> 
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_beta_admin_get_sublot_data_path(suppliers.data['supplier_id']) %>">Services, prices and variances</a> 
           <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1a' } %>
           <% if !lot_a.blank? %>
             <a class="govuk-link govuk-!-font-size-19" href="<%= facilities_management_beta_admin_get_sublot_regions_path(suppliers.supplier_id,'1a') %>">Regions</a>
