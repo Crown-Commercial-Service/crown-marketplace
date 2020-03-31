@@ -30,7 +30,7 @@
       <%= t('.use_this_service.para05_html') %>
     </p>
 
-    <%= link_to 'Start now', journey_start_path(journey: LegalServices::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-9' %>
+    <%= link_to 'Start now', journey_start_path(journey: LegalServices::Journey.journey_name), role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-9', name: 'Start now' %>
 
     <h3 class="govuk-heading-m govuk-!-margin-bottom-3">
       <%= t('.use_this_service.guidance_heading') %>
