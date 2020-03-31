@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Buildings, type: :model do
+RSpec.describe FacilitiesManagement::ExpiredBuildings, type: :model do
   describe 'default values' do
     subject(:building) { create(:facilities_management_buildings_ar_defaults, user_id: create(:user).id) }
 

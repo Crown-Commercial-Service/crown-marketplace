@@ -6,6 +6,6 @@ FactoryBot.define do
   end
   factory :facilities_management_procurement_building_no_services, parent: :facilities_management_procurement_building do
     procurement_building_services { [] }
-    building_id { create(:facilities_management_building).id }
+    building_id { create(:facilities_management_buildings).id }
   end
 end

@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2020_03_19_113541) do
     t.string "status", null: false
     t.string "updated_by", null: false
     t.text "user_email"
-    t.jsonb "building_json"
     t.text "building_ref"
     t.text "building_name"
     t.text "description"

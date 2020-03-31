@@ -18,10 +18,11 @@ class FMBuildingData
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
 
-    FacilitiesManagement::Buildings.create(id: building['id'],
-                                           user_email: Base64.encode64(email_address),
-                                           updated_by: Base64.encode64(email_address),
-                                           building_json: building)
+    FacilitiesManagement::Building.create(id: building['id'],
+                                          user_id: current_user.id,
+                                          user_email: Base64.encode64(email_address),
+                                          updated_by: Base64.encode64(email_address),
+                                          building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
@@ -36,7 +37,7 @@ class FMBuildingData
   end
 
   def save_building_property_activerecord(building_id, key, value)
-    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building = FacilitiesManagement::Building.find_by id: building_id
     unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
       current_building['building_json'][key] = value
       current_building['updated_at'] = DateTime.current
@@ -48,7 +49,7 @@ class FMBuildingData
   end
 
   def update_building_status(building_id, is_ready, email)
-    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building = FacilitiesManagement::Building.find_by id: building_id
     current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
     current_building['updated_at'] = DateTime.current
     current_building['updated_by'] = email
@@ -84,11 +85,11 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end
 
-  def save_new_building(email_address, building_id, building)
+  def save_new_building(user_id, email_address, building_id, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
-    query = "insert into facilities_management_buildings (user_email, building_json, updated_at, status, id, updated_by)
-            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+    query = "insert into facilities_management_buildings (user_id, user_email, building_json, updated_at, status, id, updated_by)
+            values ('#{user_id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
             ON CONFLICT (id)
             DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -149,11 +150,6 @@ class FMBuildingData
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
-  end
-
-  def get_building_id_by_ref(email_address, building_ref)
-    Rails.logger.info '==> FMBuildingData.get_building_data_by_ref()'
-    (FacilitiesManagement::Buildings.building_by_reference email_address, building_ref)
   end
 
   def get_count_of_buildings_by_id(user_email, building_id)

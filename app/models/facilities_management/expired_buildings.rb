@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class Buildings < ApplicationRecord
+  class ExpiredBuildings < ApplicationRecord
     self.table_name = 'facilities_management_buildings'
     self.primary_key = 'id'
 
