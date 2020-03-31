@@ -913,7 +913,7 @@ en:
           invoicing_contact_details:
             change: Change
             invoicing_contact_detail_description: Select an invoicing contact
-            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
+            invoicing_contact_detail_description_header: This is the relevant contact for invoicing.
             new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
