@@ -40,11 +40,7 @@ module FacilitiesManagement
 
         def update_sublot_regions
           @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
-          @supplier.data['lots'].each { |lot| 
-            if lot['lot_number'] == params['lot_type']
-              lot['regions'] = params[:regions]
-            end
-          }
+          @supplier.data['lots'].each { |lot| lot['lot_number'] == params['lot_type'] ? lot['regions'] = params[:regions] : '' }
           @supplier_lot_updated = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
           @supplier.save
           redirect_to facilities_management_beta_admin_supplier_framework_data_path, flash: { success: 'The updated supplier will provide services to the selected regions.' }
