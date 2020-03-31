@@ -6,11 +6,10 @@ class Ability
     cannot :manage, :all
     if user.has_role? :ccs_admin
       can :manage, :all
-    elsif user.has_role? :ccs_employee
-      admin_tool_specific_auth(user)
     else
+      admin_tool_specific_auth(user) if user.has_role? :ccs_employee
       service_specific_auth(user) if user.has_role? :buyer
-      can :read, FacilitiesManagement::Supplier if user.has_role?(:fm_access) && user.has_role?(:supplier)
+      fm_supplier_specific_auth(user) if user.has_role?(:fm_access) && user.has_role?(:supplier)
     end
   end
 
@@ -23,6 +22,7 @@ class Ability
       can :read, LegalServices
       can :read, Apprenticeships
     end
+    can :manage, FacilitiesManagement::Procurement, user_id: user.id if user.has_role? :fm_access
     can :read, SupplyTeachers if user.has_role? :st_access
   end
 
@@ -34,5 +34,10 @@ class Ability
     end
     can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
     can :manage, FacilitiesManagement::Beta::Admin if user.has_role? :fm_access
+  end
+
+  def fm_supplier_specific_auth(user)
+    can :read, FacilitiesManagement::Supplier
+    can :manage, FacilitiesManagement::ProcurementSupplier, supplier_email: user.email
   end
 end
