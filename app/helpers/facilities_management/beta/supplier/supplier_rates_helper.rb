@@ -1,9 +1,9 @@
 module FacilitiesManagement::Beta::Supplier::SupplierRatesHelper
   def self.add_rates_to_work_packages(work_packages, rates)
-    work_packages_with_rates = []
-    work_packages.each do |work_package|
+    work_packages.map do |work_package|
       work_package['rates'] = rates.select { |key| key['code'] == work_package['code'] }
-      work_packages_with_rates.push(work_package)
+      work_package['rate_standard_a_or_blank'] = work_package['rates'].select { |rate| rate['standard'] == 'A' || rate['standard'].blank? }.first
+      work_package
     end
   end
 
