@@ -1,4 +1,6 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<%= content_for :page_title, t('.question') %>
+
 <div id="ccs-dynamic-accordian" class="govuk-grid-row">
   <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
   <%= form_tag @form_path, method: :get do %>
