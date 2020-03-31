@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
 
   describe 'PUT update_rates' do
     it '#update_sublot_data_services_price' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': 1.04004133401643176 }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': 1.123456, 'checked_services': 'C.1'}
 
       rate_card = CCS::FM::RateCard.latest
       supplier_name = 'Abernathy and Sons'
@@ -45,11 +45,11 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
         v if k.to_s == supplier_name
       end
       variance_supplier_data = supplier_rate_card[supplier_name.to_sym]
-      expect(variance_supplier_data['Profit %'.to_sym]).to eq 1.04004133401643176
+      expect(variance_supplier_data['Profit %'.to_sym]).to eq 1.123456
     end
 
     it 'redirects correctly' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123 }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1' }
       expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
     end
   end
