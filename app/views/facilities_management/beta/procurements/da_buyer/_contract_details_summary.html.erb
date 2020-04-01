@@ -18,7 +18,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'payment_method') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'payment_method') unless @procurement.payment_method.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
@@ -46,7 +46,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'invoicing_contact_details') unless @procurement.using_buyer_detail_for_invoice_details.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
@@ -76,7 +76,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'authorised_representative') unless @procurement.using_buyer_detail_for_authorised_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
@@ -104,7 +104,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'notices_contact_details') unless @procurement.using_buyer_detail_for_notices_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
@@ -131,7 +131,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'security_policy_document') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'security_policy_document') unless @procurement.security_policy_document_required.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
@@ -160,7 +160,7 @@
             <%= link_to 'Answer question', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme') %>
           <% end %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell govuk-!-padding-left-2">
           <%= link_to 'Change', edit_facilities_management_beta_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme') unless @procurement.local_government_pension_scheme.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
