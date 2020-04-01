@@ -16,9 +16,9 @@ module FacilitiesManagement
 
         # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         def update
-          no_more_suppliers && return if @contract.last_offer?
           close_procurement && return if params['close_procurement'].present?
           update_supplier_response && return if params['sign_procurement'].present?
+          no_more_suppliers && return if @contract.last_offer?
           send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
         end
         # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
