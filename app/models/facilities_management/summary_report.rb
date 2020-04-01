@@ -188,8 +188,8 @@ module FacilitiesManagement
     # rubocop:enable Rails/FindEach
 
     def copy_params(building_data, _uvals)
-      @london_flag = building_in_london?(building_data['address']['fm-address-region-code'])
-      procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data['id'])
+      @london_flag = building_in_london?(building_data[:address]['fm_address_region_code'.to_sym])
+      procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
       @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
     end

@@ -689,7 +689,7 @@ module FacilitiesManagement
       end
 
       def ready_buildings
-        @building_count = FacilitiesManagement::Buildings.where(user_id: Base64.encode64(current_user.email.to_s), status: 'Ready').size
+        @building_count = FacilitiesManagement::Building.where(user_id: current_user.id, status: 'Ready').size
       end
 
       def set_deleted_action_occurred
