@@ -173,9 +173,9 @@ module FacilitiesManagement
     end
 
     def last_offer?
-      return false unless procurement.procurement_suppliers.where(aasm_state: %w[unsent sent]).empty?
+      return false unless procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7, aasm_state: %w[unsent sent]).empty?
 
-      procurement.procurement_suppliers.last == self
+      procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last == self
     end
 
     private

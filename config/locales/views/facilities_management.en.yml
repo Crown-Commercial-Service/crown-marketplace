@@ -49,6 +49,7 @@ en:
           attributes:
             central_government:
               blank: Select the type of public sector organisation you're buying for
+              inclusion: Select the type of public sector organisation you're buying for
             full_name:
               blank: Enter your full name
               invalid: Enter your full name
@@ -616,7 +617,7 @@ en:
           contract_offer_details:
             closed_reason: Your reason for closing this contract offer was
             declined: The supplier declined this contract offer on
-            expired: This contract offer expired on
+            expired: The supplier did not respond to this offer and it expired on
             not_signed_1: You confirmed on
             not_signed_2: that the contract has not been signed.
             reason_for_not_signed: Your reason for not signing this contract offer was
@@ -914,7 +915,7 @@ en:
           invoicing_contact_details:
             change: Change
             invoicing_contact_detail_description: Select an invoicing contact
-            invoicing_contact_detail_description_header: This is the relevent contact for invoicing.
+            invoicing_contact_detail_description_header: This is the relevant contact for invoicing.
             new: Enter a new invoicing contact
           local_government_pension_scheme:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?

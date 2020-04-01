@@ -15,7 +15,6 @@ $(function () {
         let address = pageUtils.getCachedData('fm-new-address');
 
         if (address && address.length !== 0) {
-
             let add1 = address['fm-address-line-1'] ? address['fm-address-line-1'] + ', ' : '';
             let add2 = address['fm-address-line-2'] ? address['fm-address-line-2'] + ', ' : '';
             let postTown = address['fm-address-town'] ? address['fm-address-town'] + ', ' : '';

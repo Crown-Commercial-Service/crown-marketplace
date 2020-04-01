@@ -5,6 +5,7 @@ module FacilitiesManagement
     include AASM
     include ProcurementValidator
 
+    # buyer
     belongs_to :user,
                foreign_key: :user_id,
                inverse_of: :procurements
@@ -178,10 +179,11 @@ module FacilitiesManagement
     end
 
     def save_eligible_suppliers_and_set_state
-      eligible_suppliers = FacilitiesManagement::DirectAwardEligibleSuppliers.new(id)
+      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
 
       self.assessed_value = eligible_suppliers.assessed_value
       self.lot_number = eligible_suppliers.lot_number
+      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
 
       # if any procurement_suppliers present, they need to be removed
       procurement_suppliers.destroy_all
@@ -189,7 +191,6 @@ module FacilitiesManagement
         procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
       end
 
-      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
       set_state_to_results
       start_da_journey
       save
@@ -283,13 +284,13 @@ module FacilitiesManagement
     end
 
     def offer_to_next_supplier
-      return false if procurement_suppliers.unsent.empty?
+      return false if procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
 
-      unless procurement_suppliers.where.not(aasm_state: 'unsent').empty?
-        last_contract = procurement_suppliers.where.not(aasm_state: 'unsent').last
+      unless procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').last
         last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
       end
-      procurement_suppliers.unsent&.first&.offer_to_supplier!
+      procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7)&.first&.offer_to_supplier!
     end
 
     def mobilisation_period_start_date

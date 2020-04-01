@@ -194,8 +194,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     before do
       selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-        new_building = FacilitiesManagement::Buildings.new(
+        FacilitiesManagement::Building.delete b.id
+        new_building = FacilitiesManagement::Building.new(
           id: b.id,
           user_id: Base64.encode64('test@example.com'),
           updated_by: Base64.encode64('test@example.com'),

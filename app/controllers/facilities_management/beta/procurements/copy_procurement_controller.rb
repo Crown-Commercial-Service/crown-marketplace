@@ -30,7 +30,11 @@ module FacilitiesManagement
         end
 
         def set_contract_data
-          @contract = @procurement.procurement_suppliers.find_by(id: params[:contract_id])
+          @contract = if find_contract_id.nil?
+                        nil
+                      else
+                        @procurement.procurement_suppliers.find_by(id: find_contract_id)
+                      end
         end
 
         def duplicate_procurement

@@ -135,7 +135,7 @@ module LayoutHelper
   # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
 
   def govuk_page_error_summary(model_object)
-    render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
+    render partial: 'shared/error_summary', locals: { errors: model_object.errors }
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists

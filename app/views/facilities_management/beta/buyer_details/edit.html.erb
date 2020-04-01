@@ -1,9 +1,9 @@
-<div class="govuk-body govuk-grid-row buyer-details">
-
+<div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
   <div class="govuk-grid-column-two-thirds" id="buyer-details-form">
-    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { specialvalidation: false, multipart: true } do |f| %>
+    <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
       <%= link_to 'Back', facilities_management_beta_path, class: "govuk-back-link govuk-!-margin-bottom-2" %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+
       <%= f.hidden_field 'return_details', value: request['return_to'].to_query if request['return_to'].present?%>
       <%= f.hidden_field 'return_details', value: request.params['facilities_management_buyer_detail']['return_details'] unless request.params.dig('facilities_management_buyer_detail','return_details').nil?%>
       <div class="govuk-caption-l govuk-!-margin-top-2">
@@ -17,32 +17,32 @@
         <h2 class="govuk-heading-m">
           <%= t('.your_details') %>
         </h2>
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:full_name].any? %>">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:full_name].any? %>" data-propertyname="full_name">
           <%= f.label :full_name, t('.name'), class: 'govuk-label' %>
-          <%= display_error(f.object, :full_name) %>
-          <%= f.text_field :full_name, class: 'govuk-input', maxlength: 255 %>
+          <%= display_potential_errors(f.object, :full_name, f.object_name) %>
+          <%= f.text_field :full_name, class: 'govuk-input', maxlength: 255, required: true %>
         </div>
 
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:job_title].any? %>" data-propertyname="job_title">
           <%= f.label :job_title, class: 'govuk-label' %>
-          <%= display_error(f.object, :job_title) %>
+          <%= display_potential_errors(f.object, :job_title, f.object_name) %>
           <%= f.text_field :job_title, class: 'govuk-input', maxlength: 255 %>
         </div>
 
-        <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:telephone_number].any? %>">
+        <div class="govuk-form-group govuk-!-margin-bottom-6 govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:telephone_number].any? %>" data-propertyname="telephone_number">
           <%= f.label :telephone_number, class: 'govuk-label' %>
-          <%= display_error(f.object, :telephone_number) %>
-          <%= f.number_field :telephone_number, class: 'govuk-input' %>
+          <%= display_potential_errors(f.object, :telephone_number, f.object_name) %>
+          <%= f.number_field :telephone_number, class: 'govuk-input', required:true %>
         </div>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-3">
           <%= t('.organisation_details') %>
         </h2>
 
-        <div class="govuk-form-group  <%= "govuk-form-group--error" if f.object.errors[:organisation_name].any? %>">
+        <div class="govuk-form-group  <%= "govuk-form-group--error" if f.object.errors[:organisation_name].any? %>" data-propertyname="organisation_name">
           <%= f.label :organisation_name, class: 'govuk-label' %>
-          <%= display_error(f.object, :organisation_name) %>
-          <%= f.text_field :organisation_name, class: 'govuk-input', maxlength: 255 %>
+          <%= display_potential_errors(f.object, :organisation_name, f.object_name) %>
+          <%= f.text_field :organisation_name, class: 'govuk-input', maxlength: 255, required: true %>
         </div>
 
         <div class="govuk-!-margin-top-7">
@@ -51,15 +51,15 @@
           </h2>
         </div>
 
-        <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
+        <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>" data-propertyname="organisation_address_postcode">
           <div class="">
             <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1' %>
                   <div class="govuk-error-message" id="fm-postcode-error"></div>
-                  <%= display_error(f.object, :organisation_address_postcode) %>
-                  <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10 %>
+                  <%= display_potential_errors(f.object, :organisation_address_postcode, f.object_name) %>
+                  <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
@@ -113,7 +113,7 @@
         <h2 class="govuk-heading-m">
           Sector
         </h2>
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>">
+        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:central_government].any? %>" data-propertyname="central_government">
 
           <div class="govuk-heading-s govuk-!-margin-bottom-0">
             <%= t('.which_type_of_public_sector_org') %>
@@ -122,15 +122,15 @@
           <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-3">
             <span class="govuk-caption-m"><%= t('.search_html', url: 'https://www.gov.uk/government/organisations') %></span>
           </div>
-          <%= display_error(f.object, :central_government) %>
+          <%= display_potential_errors(f.object, :central_government, f.object_name) %>
           <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
             <div class="govuk-radios govuk-radios--inline">
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input' %>
+                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input', required: true %>
                 <%= f.label :central_government, t('.central_gov'), value: true, class: 'govuk-label govuk-radios__label' %>
               </div>
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input' %>
+                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input', required: true %>
                 <%= f.label :central_government, t('.wider_public_sector'), value: false, class: 'govuk-label govuk-radios__label' %>
               </div>
             </div>
@@ -138,7 +138,7 @@
         </div>
 
         <div>
-          <%= f.submit t('.submit'), class: "govuk-button" %>
+          <%= f.submit t('.submit'), class: "govuk-button", data: { disable_with:false }  %>
         </div>
 
       </fieldset>

@@ -4,9 +4,13 @@ class AddFieldsToFacilitiesManagementBuildings < ActiveRecord::Migration[5.2]
       change_table :facilities_management_buildings do |table|
         dir.up do
           add_columns_to table
+          table.rename :user_id, :user_email
+          table.column :user_id, :uuid, index: true
         end
         dir.down do
           remove_columns_from table
+          table.remove :user_id
+          table.rename :user_email, :user_id
         end
       end
     end

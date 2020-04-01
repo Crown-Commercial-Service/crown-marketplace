@@ -158,12 +158,12 @@ Rails.application.routes.draw do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
           get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
-          resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
         end
+        resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
-      resources :buyer_details, only: %i[edit update] do
+      resources :buyer_details, only: %i[show edit update] do
         get 'edit_address'
       end
       namespace :supplier do
@@ -182,9 +182,12 @@ Rails.application.routes.draw do
         get '/gateway', to: 'gateway#index'
         get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
         get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+        put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
         get 'supplier-framework-data', to: 'suppliers_framework_data#index'
         get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
+        put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
         get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
+        put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
         get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
       end
     end
@@ -220,9 +223,6 @@ Rails.application.routes.draw do
     get '/start', to: 'home#index'
     # post '/contract-start', to: 'contract#start_of_contract'
     match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
-
-    get '/summary', to: 'summary#index'
-    post '/summary', to: 'summary#index'
     get '/directaward', to: 'direct_award#calc_eligibility'
     post '/cache/set', to: 'cache#set'
     post '/cache/get', to: 'cache#retrieve'
@@ -349,11 +349,6 @@ Rails.application.routes.draw do
       get '/test-notification', to: 'api_test_notifications#send_notification'
       post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
-  end
-
-  namespace 'tests', path: 'test' do
-    is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
-    match '/', to: 'test#index', via: %i[get post] if is_dev_db.nil? || (is_dev_db.include? 'dev.')
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'
