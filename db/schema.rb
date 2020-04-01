@@ -60,7 +60,11 @@ ActiveRecord::Schema.define(version: 2020_03_19_113541) do
     t.text "address_region"
     t.text "address_region_code"
     t.uuid "user_id"
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
+    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
+    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
