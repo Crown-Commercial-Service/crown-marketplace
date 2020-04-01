@@ -2,7 +2,7 @@ module FacilitiesManagement
   class SummaryReport
     include FacilitiesManagement::Beta::SummaryHelper
 
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :results
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :results, :buyer_input
 
     def initialize(procurement_id)
       @sum_uom = 0
@@ -59,18 +59,24 @@ module FacilitiesManagement
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
     end
 
-    # if services have no costings, just return the contract cost (do not divide the contract cost by 3 or 2)
     def assessed_value
-      buyer_input = @contract_cost * @contract_length_years.to_f
-      return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
-
-      return (@sum_uom + @sum_benchmark + buyer_input) / 3 unless buyer_input.zero?
-
-      (@sum_uom + @sum_benchmark) / 2
+      @assessed_value ||= if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
+                            buyer_input
+                          else
+                            unless buyer_input.zero?
+                              (@sum_uom + @sum_benchmark + buyer_input) / 3
+                            else
+                              (@sum_uom + @sum_benchmark) / 2
+                            end
+                          end
     end
 
     def direct_award_value
       @sum_uom
+    end
+
+    def buyer_input
+      @buyer_input ||= @contract_cost * @contract_length_years.to_f
     end
 
     def current_lot
