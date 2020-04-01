@@ -8,8 +8,8 @@
           <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
         </div>
       </div>
+      <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>
     </div>
-    <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full"
         <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button' %>
