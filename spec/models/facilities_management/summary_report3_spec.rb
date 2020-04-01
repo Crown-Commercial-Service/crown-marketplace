@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
      :"Kunze, Langworth and Parisian",
      :"Halvorson, Corwin and O'Connell"]
   end
-  
+
   context 'and dummy buildings to a db', skip: true do
     let(:services_data) do
       [
