@@ -26,8 +26,7 @@ module FacilitiesManagement
 
           supplier_services = setup_supplier_data
           setup_supplier_data_ratecard
-          rate_card = CCS::FM::RateCard.latest
-          setup_variance_supplier_data(rate_card)
+          setup_variance_supplier_data(CCS::FM::RateCard.latest)
           setup_instance_variables
           setup_checkboxes(supplier_services)
         end
@@ -51,7 +50,6 @@ module FacilitiesManagement
         def setup_instance_variables
           @services = FacilitiesManagement::Admin::StaticDataAdmin.services
           @work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
-
           @rates = FacilitiesManagement::Admin::Rates.all
           @work_packages_with_rates = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.add_rates_to_work_packages(@work_packages, @rates)
           @full_services = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(@services, @work_packages_with_rates)
@@ -62,6 +60,20 @@ module FacilitiesManagement
             v if k.to_s == @supplier_name
           end
           @variance_supplier_data = supplier_rate_card[@supplier_name.to_sym]
+        end
+
+        def setup_checkboxes(supplier_services)
+          @supplier_rate_data_checkboxes = {}
+          @full_services.each do |service|
+            service['work_package'].each do |work_pckg|
+              code = work_pckg['code']
+              @supplier_rate_data_checkboxes[code] = false
+            end
+          end
+
+          supplier_services.each do |supplier_service|
+            @supplier_rate_data_checkboxes[supplier_service] = true if @supplier_rate_data_checkboxes.key?(supplier_service)
+          end
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -120,20 +132,6 @@ module FacilitiesManagement
 
           @supplier_data_ratecard_discounts = CCS::FM::RateCard.latest[:data][:Discounts].select { |key, _| @supplier_name.include? key.to_s }
           @supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
-        end
-
-        def setup_checkboxes(supplier_services)
-          @supplier_rate_data_checkboxes = {}
-          @full_services.each do |service|
-            service['work_package'].each do |work_pckg|
-              code = work_pckg['code']
-              @supplier_rate_data_checkboxes[code] = false
-            end
-          end
-
-          supplier_services.each do |supplier_service|
-            @supplier_rate_data_checkboxes[supplier_service] = true if @supplier_rate_data_checkboxes.key?(supplier_service)
-          end
         end
       end
     end
