@@ -21,20 +21,24 @@
   <% end %>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
-  <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})" do %>
-    <ul>
-      <% @page_data[:buildings].each do |b| %>
-        <li><%= b %></li>
-      <% end %>
-    </ul>
-  <% end %>
-  <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})" do %>
-    <ul>
-      <% @page_data[:services].uniq.each do |s| %>
-        <li><%= s %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <div class="govuk-!-margin-bottom-4">
+    <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})", true do %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @page_data[:buildings].each do |b| %>
+          <li><%= b %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <div>
+    <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})", true do %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @page_data[:services].uniq.each do |s| %>
+          <li><%= s %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_grouped_field(f, t('.available_routes_to_market'), :route_to_market) do |ff, attr| %>
@@ -65,7 +69,7 @@
           </div>
         </div>
       <% end %>
-    <% end if eligible_for_direct_award?%>
+    <% end if @page_data[:model_object].eligible_for_da %>
     <%= contained_content(t('.available_routes_to_market')) do %>
       <%= f.hidden_field :route_to_market, value: 'further_competition' %>
       <%= govuk_details t('.what_is_fc') do %>
@@ -73,7 +77,7 @@
           <%= t('.fc_list_html') %>
         </ul>
       <% end %>
-    <% end unless eligible_for_direct_award?%>
+    <% end unless @page_data[:model_object].eligible_for_da %>
     <p><%= t('.any_changes') %></p>
     <%= govuk_continuation_buttons(pd, f) %>
     <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print

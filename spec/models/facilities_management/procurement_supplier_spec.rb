@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
     before do
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test1, da_value_test1], [:test2, da_value_test2], [:test3, da_value_test3], [:test4, da_value_test4]])
@@ -88,6 +88,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
+      allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
     end
 
     describe '.real_date?' do
@@ -112,11 +115,55 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       end
     end
 
+    describe 'time_delta_in_day' do
+      let(:contract) { procurement.procurement_suppliers[0] }
+
+      context 'when sent on a Monday in a normal working week' do
+        it 'is expected to return 1 day' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 9, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.day
+        end
+      end
+
+      context 'when sent on a Friday in a normal working week' do
+        it 'is expected to return 3 days' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 6, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 3.days
+        end
+      end
+
+      context 'when sent on a Thursday with a bank holiday on Friday' do
+        it 'is expected to return 4 days' do
+          contract.offer_sent_date = DateTime.new(2020, 5, 7, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 4.days
+        end
+      end
+
+      context 'when sent on the weekend at 12PM' do
+        it 'is expected to return 1.5 days' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 8, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.5.days
+        end
+      end
+    end
+
     # rubocop:disable RSpec/NestedGroups
     describe 'state changes' do
       let(:contract) { procurement.procurement_suppliers[0] }
 
       before { contract.offer_to_supplier }
+
+      describe '.sent' do
+        context 'when the offer gets sent' do
+          it 'will call the ChangeStateWorker' do
+            expect(FacilitiesManagement::ChangeStateWorker).to have_received(:perform_at)
+          end
+
+          it 'will call the ContractSentReminder' do
+            expect(FacilitiesManagement::ContractSentReminder).to have_received(:perform_at)
+          end
+        end
+      end
 
       describe '.accept' do
         context 'when the supplier accepts' do
@@ -125,6 +172,12 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             expect(contract.accept!).to be true
             procurement.reload
             expect(contract.aasm_state).to eq 'accepted'
+          end
+
+          it 'will call the AwaitingSignatureReminder' do
+            contract.accept!
+            procurement.reload
+            expect(FacilitiesManagement::AwaitingSignatureReminder).to have_received(:perform_at)
           end
         end
       end
@@ -182,6 +235,25 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             it 'will be closed' do
               expect(contract.closed?).to be true
             end
+          end
+        end
+      end
+
+      describe '.expires' do
+        let(:contract) { procurement.procurement_suppliers[0] }
+
+        before do
+          contract.offer_to_supplier!
+          contract.expire!
+        end
+
+        context 'when the supplier doesnt respond to the offer' do
+          it 'expect to move into expired state' do
+            expect(contract.aasm_state).to eq 'expired'
+          end
+
+          it 'supplier reponse date to be the current date and time' do
+            expect(contract.supplier_response_date.to_i).to be_within(2.seconds).of(DateTime.now.in_time_zone('London').to_i)
           end
         end
       end

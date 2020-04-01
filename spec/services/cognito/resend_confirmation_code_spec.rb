@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Cognito::ResendConfirmationCode do
-  let(:email) { create(:user, cognito_uuid: '12345').email }
+  let(:email) { create(:user, :without_detail, cognito_uuid: '12345').email }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
   describe '#call' do

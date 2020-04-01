@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Cognito::UpdateUser do
   describe '#call' do
-    let(:user) { create(:user, roles: %i[mc_access fm_acess ls_access]) }
+    let(:user) { create(:user, :without_detail, roles: %i[mc_access fm_acess ls_access]) }
     let(:cognito_groups) do
       OpenStruct.new(groups: [
                        OpenStruct.new(group_name: 'buyer'),

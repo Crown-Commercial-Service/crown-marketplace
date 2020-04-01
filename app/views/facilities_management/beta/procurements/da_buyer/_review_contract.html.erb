@@ -44,7 +44,7 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_4.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>">
+              <a href="<%= facilities_management_beta_procurement_contract_documents_call_off_schedule_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>">
                 <%= t('.attachment_4.order_form.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.order_form.guidance') %></p>
@@ -88,8 +88,8 @@
               </a>
             </li>
           </ul>
-        
-        
+
+
           <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h3>
           <ul class="govuk-list govuk-!-margin-top-6 documents">
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
@@ -102,7 +102,7 @@
 
           <%= link_to t('.download_documents.title'), '#', class: 'govuk-button govuk-button--secondary' %>
         </div>
-      
+
 
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -119,7 +119,7 @@
         <p class="govuk-body govuk-!-padding-bottom-4"><%= t('.sending_contract.guidance') %></p>
 
         <%= govuk_continuation_buttons(pd, f) %>
-    
+
       </div>
    <%end %>
 <% end %>

@@ -165,20 +165,6 @@ $(function () {
                 let val = Number (jq.val());
                 return val + count > MAX ;
             };
-
-            [{jqElem: ext1, choice: !$("#ext1-container").hasClass("govuk-visually-hidden")},
-                {jqElem: ext2, choice: !$("#ext2-container").hasClass("govuk-visually-hidden")},
-                {jqElem: ext3, choice: !$("#ext3-container").hasClass("govuk-visually-hidden")},
-                {jqElem: ext4, choice: !$("#ext4-container").hasClass("govuk-visually-hidden")}].forEach(
-                    function(curVal, index, arr){
-                        this.clearFieldErrors(curVal["jqElem"]);
-                        if ( curVal["choice"]) {
-                            isValid = isValid &&  this.testError(fnRequiredValidator, curVal["jqElem"], "required");
-                            isValid = isValid && this.testError(fnNumberValidator, curVal["jqElem"], "number");
-                            isValid = isValid && this.testError(fnIncrementingCountTest, curVal["jqElem"], "max");
-                            isValid = isValid && this.testError(fnMinValidator, curVal["jqElem"], "min");
-                        }
-            }, this) ;
         }
 
         if (!isValid) {

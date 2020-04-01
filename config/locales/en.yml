@@ -94,10 +94,15 @@ en:
           attributes:
             base:
               cookies_disabled: Your browser must have cookies enabled
+            email:
+              blank: You must provide your email address in the correct format, like name@example.com
+              invalid: You must provide your email address in the correct format, like name@example.com
+            password:
+              blank: You must provide your password
         cognito/sign_up_user:
           attributes:
             email:
-              blank: Enter your email
+              blank: Enter an email address in the correct format, like name@example.com
               not_on_whitelist: You must use a public sector email
             password:
               blank: Enter a password
@@ -700,6 +705,12 @@ en:
     messages:
       extension_whitelist_error: The selected file must be a DOC, DOCX or PDF
       max_size_error: The selected file must be smaller than %{max_size}
+  facilities_management:
+    beta:
+      admin:
+        supplier_rates:
+          supplier_framework_rates:
+            not_a_number: The rate must be a number, like 2.66
   faker:
     company:
       name:

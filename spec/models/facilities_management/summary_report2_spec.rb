@@ -3,7 +3,37 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
-  let(:user) { create(:user, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:supplier_names) do
+    [:"Wolf-Wiza",
+     :"Bogan-Koch",
+     :"O'Keefe LLC",
+     :"Treutel LLC",
+     :"Hirthe-Mills",
+     :"Kemmer Group",
+     :"Mayer-Russel",
+     :"Bode and Sons",
+     :"Collier Group",
+     :"Hickle-Schinner",
+     :"Leffler-Strosin",
+     :"Dickinson-Abbott",
+     :"O'Keefe-Mitchell",
+     :"Schmeler-Leuschke",
+     :"Abernathy and Sons",
+     :"Cartwright and Sons",
+     :"Dare, Heaney and Kozey",
+     :"Rowe, Hessel and Heller",
+     :"Kulas, Schultz and Moore",
+     :"Walsh, Murphy and Gaylord",
+     :"Shields, Ratke and Parisian",
+     :"Ullrich, Ratke and Botsford",
+     :"Lebsack, Vandervort and Veum",
+     :"Marvin, Kunde and Cartwright",
+     :"Kunze, Langworth and Parisian",
+     :"Halvorson, Corwin and O'Connell"]
+  end
+  let(:supplier_name) { supplier_names.last }
+
   # rubocop:disable Style/HashSyntax
   # rubocop:disable Layout/SpaceAroundOperators
   let(:data) do
@@ -666,18 +696,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     # rubocop:disable RSpec/ExampleLength
     it 'create a direct-award report' do
-      user_email = 'test@example.com'
-      start_date = DateTime.now.utc
+      report = described_class.new(procurement.id)
 
-      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
-
-      results = {}
-      report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings selected_buildings2, uvals, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings supplier_name
         results[supplier_name] = report.direct_award_value
       end
 
@@ -714,7 +738,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -746,7 +769,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -778,7 +800,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       report_results = {}
       report_results_no_cafmhelp_removed = {}
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
@@ -806,8 +827,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   # rubocop:enable Layout/AlignHash
 
   # rubocop:disable RSpec/ExampleLength
-  context 'when DA procurement in London', skip: true do
-    it 'can calculate a direct award value' do
+  context 'when DA procurement in London' do
+    it 'can calculate a direct award value', skip: true do
       uoms = CCS::FM::UnitsOfMeasurement.all.group_by(&:service_usage)
       uom2 = {}
       uoms.map { |u| u[0].each { |k| uom2[k] = u[1] } }
@@ -816,7 +837,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       vals['tupe'] = 'no' # 'yes' : 'no',
       vals['contract-length'] = 3
       vals['gia'] = 12345
-      id = SecureRandom.uuid
 
       start_date = DateTime.now.utc
       procurement =
@@ -826,36 +846,18 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           'fm-contract-length' => vals['contract-length']
         }
       procurement[:posted_locations] = ['UKC14', 'UKC21', 'UKC22', 'UKD11']
+      #
+      # b =
+      #   {
+      #     id: id,
+      #     gia: vals['gia'].to_f,
+      #     fm_building_type: 'General office - Customer Facing',
+      #     address: { 'fm-address-town' => 'London', 'fm-address-line-1' => '121 Buckingham Palace Road', 'fm-address-postcode' => 'M45FT' }
+      #   }
 
-      b =
-        {
-          id: id,
-          gia: vals['gia'].to_f,
-          fm_building_type: 'General office - Customer Facing',
-          address: { 'fm-address-town' => 'London', 'fm-address-line-1' => '121 Buckingham Palace Road', 'fm-address-postcode' => 'M45FT' }
-        }
+      report = described_class.new(procurement.id)
 
-      all_buildings =
-        [
-          OpenStruct.new(building_json: b)
-        ]
-      uom_vals = []
-      posted_services = uom2.keys
-      posted_services.each do |s|
-        uom_vals <<
-          {
-            user_id: 'test@example.com',
-            service_code: s,
-            uom_value: 10,
-            building_id: id,
-          }
-      end
-
-      report = described_class.new(start_date: start_date, user_email: user.email, data: procurement)
-
-      results = {}
-      supplier_name = CCS::FM::RateCard.latest.data[:Prices].keys.last
-      report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
+      report.calculate_services_for_buildings supplier_name
       expect(report.direct_award_value).to eq 415.824288
     end
   end
@@ -881,19 +883,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         }
       procurement[:posted_locations] = ['UKC14', 'UKC21', 'UKC22', 'UKD11']
 
-      b =
-        {
-          id: id,
-          gia: vals['gia'].to_f,
-          fm_building_type: 'General office - Customer Facing',
-          isLondon: true,
-          address: { 'fm-address-town' => 'London', 'fm-address-line-1' => '121 Buckingham Palace Road', 'fm-address-postcode' => 'M45FT' }
-        }
+      # b =
+      #   {
+      #     id: id,
+      #     gia: vals['gia'].to_f,
+      #     fm_building_type: 'General office - Customer Facing',
+      #     isLondon: true,
+      #     address: { 'fm-address-town' => 'London', 'fm-address-line-1' => '121 Buckingham Palace Road', 'fm-address-postcode' => 'M45FT' }
+      #   }
 
-      all_buildings =
-        [
-          OpenStruct.new(building_json: b)
-        ]
       uom_vals = []
       posted_services = uom2.keys
       posted_services.each do |s|
@@ -908,9 +906,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report = described_class.new(start_date: start_date, user_email: user.email, data: procurement)
 
-      results = {}
-      supplier_name = CCS::FM::RateCard.latest.data[:Prices].keys.last
-      report.calculate_services_for_buildings all_buildings, uom_vals, supplier_name, results[supplier_name]
+      report.calculate_services_for_buildings uom_vals, supplier_name
       expect(report.direct_award_value).to eq 498.9891456
     end
   end

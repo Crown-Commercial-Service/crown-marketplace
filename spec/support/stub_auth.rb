@@ -1,12 +1,12 @@
 module SpecSupport
   module StubAuth
     def stub_auth_st
-      user = FactoryBot.create(:user, roles: %i[buyer st_access])
+      user = FactoryBot.create(:user, :without_detail, roles: %i[buyer st_access])
       login_as(user, scope: :user)
     end
 
     def stub_auth_mc
-      user = FactoryBot.create(:user, roles: %i[buyer mc_access])
+      user = FactoryBot.create(:user, :without_detail, roles: %i[buyer mc_access])
       login_as(user, scope: :user)
     end
 

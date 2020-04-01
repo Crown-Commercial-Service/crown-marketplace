@@ -26,7 +26,7 @@ RSpec.feature 'Authentication', type: :feature do
 
   scenario 'Users can sign in using AWS Cognito' do
     OmniAuth.config.test_mode = false
-    user = create(:user, roles: %i[buyer mc_access])
+    user = create(:user, :without_detail, roles: %i[buyer mc_access])
     visit '/management-consultancy/start'
     click_on 'Sign in with Cognito'
     fill_in 'Email', with: user.email
@@ -37,7 +37,7 @@ RSpec.feature 'Authentication', type: :feature do
   end
 
   scenario 'Users can sign in using AWS Cognito with capitals in email' do
-    user = create(:user, roles: %i[buyer mc_access])
+    user = create(:user, :without_detail, roles: %i[buyer mc_access])
     visit '/management-consultancy/start'
     click_on 'Sign in with Cognito'
     fill_in 'Email', with: user.email.upcase
@@ -48,7 +48,7 @@ RSpec.feature 'Authentication', type: :feature do
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
-    user = create(:user, roles: %i[buyer mc_access])
+    user = create(:user, :without_detail, roles: %i[buyer mc_access])
     visit '/management-consultancy/start'
     click_on 'Sign in with Cognito'
     fill_in 'Email', with: user.email
@@ -143,7 +143,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     scenario 'can sign into the admin tool using AWS Cognito' do
       OmniAuth.config.test_mode = false
-      user = create(:user, roles: %i[ccs_employee fm_access])
+      user = create(:user, :without_detail, roles: %i[ccs_employee fm_access])
       visit '/facilities-management/beta/admin/gateway'
       click_on 'Sign in with Cognito'
       fill_in 'Email', with: user.email
@@ -164,7 +164,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     scenario 'cannot sign into the admin tool using AWS Cognito' do
       OmniAuth.config.test_mode = false
-      user = create(:user, roles: %i[ccs_employee mc_access])
+      user = create(:user, :without_detail, roles: %i[ccs_employee mc_access])
       visit '/facilities-management/beta/admin/gateway'
       click_on 'Sign in with Cognito'
       fill_in 'Email', with: user.email

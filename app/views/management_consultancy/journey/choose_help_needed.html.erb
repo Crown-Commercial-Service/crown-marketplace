@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.headline') %>
+
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -17,7 +19,7 @@
       <%= form_tag @form_path, method: :get do %>
         <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
         <%= govuk_form_group_with_optional_error(@journey, :help_needed) do %>
-          <%= submit_tag t('common.confirm_and_continue'), class: "govuk-button" %>
+          <%= submit_tag t('common.confirm_and_continue'), class: "govuk-button", name: "Confirm and continue" %>
         <% end %>
       <% end %>
     </div>

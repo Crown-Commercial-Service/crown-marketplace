@@ -51,6 +51,10 @@
     color: #0b0c0c
 }
 
+.back-button-wrapper {
+    display: inline-block;
+}
+
 @media print {
     .govuk-link[href^="/"]::after, .app-prose-scope a[href^="/"]::after, .govuk-link[href^="http://"]::after, .app-prose-scope a[href^="http://"]::after, .govuk-link[href^="https://"]::after, .app-prose-scope a[href^="https://"]::after {
         content: " (" attr(href) ")";
@@ -2136,10 +2140,8 @@
 }
 
 .govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
-    outline: 3px solid transparent;
-    outline-offset: 3px;
-    -webkit-box-shadow: 0 0 0 3px #ffbf47;
-    box-shadow: 0 0 0 3px #ffbf47
+    border-width: 4px;
+	box-shadow: 0 0 0 3px #ffbf47
 }
 
 .govuk-checkboxes__input:checked + .govuk-checkboxes__label::after {
@@ -4107,10 +4109,8 @@
 }
 
 .govuk-radios__input:focus + .govuk-radios__label::before {
-    outline: 3px solid transparent;
-    outline-offset: 3px;
-    -webkit-box-shadow: 0 0 0 4px #ffbf47;
-    box-shadow: 0 0 0 4px #ffbf47
+	border-width: 4px;
+	box-shadow: 0 0 0 4px #ffbf47
 }
 
 .govuk-radios__input:checked + .govuk-radios__label::after {
@@ -7955,4 +7955,11 @@ li code, td code, p code {
 }
 .govuk-brand-light-grey-benchmark {
     color:#6F777B !important;
+}
+.govuk-accordion .govuk-accordion__section-button {
+    color: #007194;
+    font-weight: normal;
+}
+.govuk-header_muted {
+    color: #6F777B;
 }

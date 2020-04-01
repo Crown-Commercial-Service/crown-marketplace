@@ -1,9 +1,11 @@
-function FormValidationComponent(formDOMObject, validationCallback, thisisspecial = false) {
+function FormValidationComponent(formDOMObject, validationCallback) {
+    var thisisspecial = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
         let canConnect = false;
         if (null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
-                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) ||
+                (!requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") !== "true")) {
                 canConnect = true;
             }
         }

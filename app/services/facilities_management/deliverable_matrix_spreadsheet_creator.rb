@@ -6,14 +6,35 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include FacilitiesManagement::Beta::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
-  def initialize(building_ids_with_service_codes, units_of_measure_values = nil, procurement_id = nil)
-    @building_ids_with_service_codes = building_ids_with_service_codes
-    building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
-    @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
-    @procurement = FacilitiesManagement::Procurement.find(procurement_id) unless procurement_id.nil?
-    buildings_with_service_codes
-    set_services
-    @units_of_measure_values = units_of_measure_values
+  def initialize(procurement_id)
+    @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+    @active_procurement_buildings = @procurement.active_procurement_buildings
+  end
+
+  def buildings_data
+    @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.id, service_codes: b.procurement_building_services.map(&:code) } }
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def services_data
+    uniq_buildings_service_codes ||= @active_procurement_buildings.map { |pb| pb.procurement_building_services.map(&:code) }.flatten.uniq
+    services ||= FacilitiesManagement::StaticData.work_packages.select { |wp| uniq_buildings_service_codes.include? wp['code'] }
+    @services_data ||= services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def units_of_measure_values
+    @units_of_measure_values ||= @active_procurement_buildings.map do |building|
+      @report.da_procurement_building_services(building).map do |procurement_building_service|
+        {
+          building_id: building.building_id,
+          service_code: procurement_building_service.code,
+          uom_value: procurement_building_service.uval,
+          service_standard: procurement_building_service.service_standard
+        }
+      end
+    end
   end
 
   def to_xlsx
@@ -57,7 +78,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def list_of_allowed_volume_services
     # FM-736 requirement
-    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.7]
+    @list_of_allowed_volume_services ||= FacilitiesManagement::ServicesAndQuestions.new.code.uniq
   end
 
   private
@@ -99,7 +120,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_header_row(sheet, initial_values)
     header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
     header_row = initial_values
-    (1..@buildings_with_service_codes.count).each { |x| header_row << "Building #{x}" }
+    (1..@active_procurement_buildings.count).each { |x| header_row << "Building #{x}" }
     sheet.add_row header_row, style: header_row_style, height: standard_row_height
   end
 
@@ -110,42 +131,16 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def style_service_matrix_sheet(sheet, style)
     column_widths = [15, 100]
-    @buildings.count.times { column_widths << 50 }
-    sheet["A2:B#{@services.count + 1}"].each { |c| c.style = style }
+    @active_procurement_buildings.count.times { column_widths << 50 }
+    sheet["A2:B#{services_data.count + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
   end
 
   def style_service_periods_matrix_sheet(sheet, style, rows_added)
     column_widths = [15, 100]
-    @buildings.count.times { column_widths << 50 }
+    @active_procurement_buildings.count.times { column_widths << 50 }
     sheet["A2:B#{rows_added + 1}"].each { |c| c.style = style }
     sheet.column_widths(*column_widths)
-  end
-
-  def buildings_with_service_codes
-    @buildings_with_service_codes = []
-
-    @building_ids_with_service_codes.each do |building_id_with_service_codes|
-      building = @buildings.find(building_id_with_service_codes[:building_id])
-
-      @buildings_with_service_codes << { building: building, service_codes: building_id_with_service_codes[:service_codes] }
-    end
-
-    # @buildings_with_service_codes.map!(&:deep_symbolize_keys!)
-    @buildings_with_service_codes.each do |b|
-      b[:building][:building_json].deep_symbolize_keys!
-    end
-  end
-
-  def set_services
-    service_codes = []
-
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      service_codes += building_with_service_codes[:service_codes]
-    end
-
-    services = FacilitiesManagement::StaticData.work_packages.select { |wp| service_codes.uniq.include? wp['code'] }
-    @services = services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
   end
 
   def add_buildings_information(sheet)
@@ -159,8 +154,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_name
     row = ['Building Name']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:name]
+    @active_procurement_buildings.each do |building|
+      row << building.name
     end
 
     row
@@ -169,8 +164,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_description
     row = ['Building Description']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:description]
+    @active_procurement_buildings.each do |building|
+      row << building.building.building_json[:description]
     end
 
     row
@@ -179,8 +174,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_address_street
     row = ['Building Address - Street']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-address-line-1']
+    @active_procurement_buildings.each do |building|
+      row << building.address_line_1
     end
 
     row
@@ -189,8 +184,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_address_town
     row = ['Building Address - Town']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-address-town']
+    @active_procurement_buildings.each do |building|
+      row << building.town
     end
 
     row
@@ -199,8 +194,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_address_postcode
     row = ['Building Address - Postcode']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-address-postcode']
+    @active_procurement_buildings.each do |building|
+      row << building.postcode
     end
 
     row
@@ -209,8 +204,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_nuts_region
     row = ['Building Location (NUTS Region)']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:address][:'fm-address-region']
+    @active_procurement_buildings.each do |building|
+      row << building.county
     end
 
     row
@@ -219,8 +214,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_gia
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:gia]
+    @active_procurement_buildings.each do |building|
+      row << building.building.building_json[:gia]
     end
 
     row
@@ -229,8 +224,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_type
     row = ['Building Type']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:'building-type']
+    @active_procurement_buildings.each do |building|
+      row << building.building.building_json[:'building-type']
     end
 
     row
@@ -239,8 +234,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def building_security_clearance
     row = ['Building Security Clearance']
 
-    @buildings_with_service_codes.each do |building_with_service_codes|
-      row << building_with_service_codes[:building].building_json[:'security-type']
+    @active_procurement_buildings.each do |building|
+      row << building.building.building_json[:'security-type']
     end
 
     row
@@ -249,11 +244,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_service_matrix(sheet)
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
 
-    @services.each do |service|
+    services_data.each do |service|
       row_values = [service['code'], service['name']]
 
-      @building_ids_with_service_codes.each do |building|
-        v = building[:service_codes].include?(service['code']) ? 'Yes' : ''
+      @active_procurement_buildings.each do |building|
+        v = building.service_codes.include?(service['code']) ? 'Yes' : ''
         row_values << v
       end
 
@@ -264,13 +259,12 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_volumes_information(sheet)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
-    allowed_volume_services = @services.dup
-    remove_not_allowed_volume_services(allowed_volume_services)
+    allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
 
     allowed_volume_services.each do |s|
       new_row = [s['code'], s['name'], s['metric']]
-      @buildings_with_service_codes.each do |b|
-        uvs = @units_of_measure_values.select { |u| b[:building][:id] == u[:building_id] }
+      @active_procurement_buildings.each do |b|
+        uvs = @units_of_measure_values.select { |u| b.building_id == u[:building_id] }
 
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
@@ -280,14 +274,15 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
       sheet.add_row new_row, style: number_column_style
     end
+
     allowed_volume_services.count
   end
 
   def style_volume_sheet(sheet, style, number_volume_services)
     column_widths = [15, 100, 50, 50]
-    @buildings.count.times { column_widths << 20 }
+    @active_procurement_buildings.count.times { column_widths << 20 }
 
-    last_column_name = ('A'..'ZZ').to_a[2 + @buildings.count]
+    last_column_name = ('A'..'ZZ').to_a[2 + buildings_data.count]
     sheet["A2:#{last_column_name}#{number_volume_services + 1}"].each { |c| c.style = style } if number_volume_services.positive?
     sheet.column_widths(*column_widths)
   end
@@ -299,8 +294,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     hours_required_services.each do |service|
       Date::DAYNAMES.rotate(1).each do |day|
         row_values = [service['code'], service['name'], day]
-        @building_ids_with_service_codes.each do |building|
-          service_measure = @units_of_measure_values.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+        buildings_data.each do |building|
+          service_measure = units_of_measure_values.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
           row_values << add_service_measure_row_value(service_measure, day)
         end
 
@@ -314,7 +309,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def hours_required_services
     allowed_services = []
     FacilitiesManagement::StaticData.work_packages.select { |work_package| allowed_services << work_package['code'] if work_package['metric'] == 'Number of hours required' }
-    @services.select { |service| allowed_services.include? service['code'] }
+    services_data.select { |service| allowed_services.include? service['code'] }
   end
 
   def add_service_measure_row_value(service_measure, day)
@@ -345,10 +340,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end_minute = format('%02d', service_measure[:uom_value][day_symbol]['end_minute'])
     end_ampm = service_measure[:uom_value][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm
-  end
-
-  def remove_not_allowed_volume_services(services)
-    services.keep_if { |x| list_of_allowed_volume_services.include? x['code'] }
   end
 
   def add_contract_number(sheet)

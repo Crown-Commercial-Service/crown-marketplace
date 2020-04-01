@@ -50,6 +50,12 @@ module FacilitiesManagement
           assign_contract_number
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
+          begin
+            FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+            FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
+          rescue StandardError
+            false
+          end
         end
         transitions from: :unsent, to: :sent
       end
@@ -59,6 +65,11 @@ module FacilitiesManagement
           set_supplier_response_date
           self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
+          begin
+            FacilitiesManagement::AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
+          rescue StandardError
+            false
+          end
         end
         transitions from: :sent, to: :accepted
       end
@@ -67,6 +78,7 @@ module FacilitiesManagement
         before do
           set_contract_signed_date
           self.reason_for_not_signing = nil
+          send_email_to_supplier('DA_offer_signed_contract_live')
         end
         transitions from: :accepted, to: :signed
       end
@@ -76,11 +88,15 @@ module FacilitiesManagement
           set_contract_signed_date
           self.contract_start_date = nil
           self.contract_end_date = nil
+          send_email_to_supplier('DA_offer_accepted_not_signed')
         end
         transitions from: :accepted, to: :not_signed
       end
 
       event :withdraw do
+        before do
+          send_email_to_supplier('DA_offer_withdrawn')
+        end
         transitions from: %i[accepted sent], to: :withdrawn
       end
 
@@ -96,6 +112,7 @@ module FacilitiesManagement
       event :expire do
         before do
           set_supplier_response_date
+          send_email_to_buyer('DA_offer_no_response')
         end
         transitions from: :sent, to: :expired
       end
@@ -143,6 +160,24 @@ module FacilitiesManagement
       WorkingDays.working_days(CONTRACT_REMINDER_DAYS, offer_sent_date.to_datetime)
     end
 
+    def send_reminder_email_to_suppiler
+      send_email_to_supplier('DA_offer_sent_reminder')
+    end
+
+    def send_reminder_email_to_buyer
+      send_email_to_buyer('DA_offer_accepted_signature_confirmation_reminder')
+    end
+
+    def set_contract_closed_date
+      self.contract_closed_date = DateTime.now.in_time_zone('London')
+    end
+
+    def last_offer?
+      return false unless procurement.procurement_suppliers.where(aasm_state: %w[unsent sent]).empty?
+
+      procurement.procurement_suppliers.last == self
+    end
+
     private
 
     # Custom Validation
@@ -157,27 +192,28 @@ module FacilitiesManagement
       errors.add(date, :not_a_date) unless real_date?(date)
     end
 
+    def time_delta_in_days(start_date, end_date)
+      (end_date - start_date.to_datetime).to_f.days
+    end
+
     CONTRACT_REMINDER_DAYS = 1
     CONTRACT_EXPIRE_DAYS = 2
+    AWAITING_SIGNATURE_REMINDER_DAYS = 14
 
     def convert_to_boolean(contract_boolean)
       send(contract_boolean + '=', ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))
     end
 
     def generate_contract_number
-      return unless procurement.further_competition? || procurement.direct_award?
+      return unless procurement.further_competition? || procurement.direct_award? || procurement.da_draft?
 
-      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award?
+      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
     def set_sent_date
       self.offer_sent_date = DateTime.now.in_time_zone('London')
-    end
-
-    def set_contract_closed_date
-      self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
     def set_supplier_response_date
@@ -189,7 +225,11 @@ module FacilitiesManagement
     end
 
     def format_date_time_numeric(date)
-      date.strftime '%d/%m/%Y, %l:%M%P'
+      date&.strftime '%d/%m/%Y, %l:%M%P'
+    end
+
+    def format_date(date)
+      date&.strftime '%d/%m/%Y'
     end
 
     def host
@@ -223,7 +263,6 @@ module FacilitiesManagement
         false
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def send_email_to_supplier(email_type)
       template_name = email_type
@@ -235,7 +274,11 @@ module FacilitiesManagement
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
         'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
-        'da-offer-1-reference': contract_number
+        'da-offer-1-reference': contract_number,
+        'da-offer-1-not-signed-reason': reason_for_not_signing,
+        'da-offer-1-contract-start-date': format_date(contract_start_date),
+        'da-offer-1-contract-end-date': format_date(contract_end_date),
+        'da-offer-1-withdrawal-reason': reason_for_closing
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -245,5 +288,6 @@ module FacilitiesManagement
         false
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

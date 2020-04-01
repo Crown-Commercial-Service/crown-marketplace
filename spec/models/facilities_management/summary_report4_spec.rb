@@ -69,10 +69,38 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 6, :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' }
     ]
   end
+  let(:supplier_names) do
+    [:"Wolf-Wiza",
+     :"Bogan-Koch",
+     :"O'Keefe LLC",
+     :"Treutel LLC",
+     :"Hirthe-Mills",
+     :"Kemmer Group",
+     :"Mayer-Russel",
+     :"Bode and Sons",
+     :"Collier Group",
+     :"Hickle-Schinner",
+     :"Leffler-Strosin",
+     :"Dickinson-Abbott",
+     :"O'Keefe-Mitchell",
+     :"Schmeler-Leuschke",
+     :"Abernathy and Sons",
+     :"Cartwright and Sons",
+     :"Dare, Heaney and Kozey",
+     :"Rowe, Hessel and Heller",
+     :"Kulas, Schultz and Moore",
+     :"Walsh, Murphy and Gaylord",
+     :"Shields, Ratke and Parisian",
+     :"Ullrich, Ratke and Botsford",
+     :"Lebsack, Vandervort and Veum",
+     :"Marvin, Kunde and Cartwright",
+     :"Kunze, Langworth and Parisian",
+     :"Halvorson, Corwin and O'Connell"]
+  end
 
   # rubocop:disable Layout/MultilineHashBraceLayout
   # rubocop:disable RSpec/BeforeAfterAll
-  context 'and dummy buildings to a db', skip: true do
+  context 'and dummy buildings to a db' do
     before :all do
       @selected_buildings2 = [
         OpenStruct.new(
@@ -388,22 +416,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # rubocop:enable RSpec/InstanceVariable
 
     # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/InstanceVariable
-    it 'create a direct-award report check prices' do
-      user_email = 'test@example.com'
-      start_date = DateTime.now.utc
-
-      uvals.map!(&:deep_symbolize_keys)
-
-      report = described_class.new(start_date: start_date, user_email: user_email, data: data)
+    it 'create a direct-award report check prices', skip: true do
+      report = described_class.new(procurement.id)
 
       results = {}
       report_results = {}
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
         # e.g. dummy supplier_name = 'Hickle-Schinner'
-        report.calculate_services_for_buildings @selected_buildings2, uvals, supplier_name, report_results[supplier_name]
+        report.calculate_services_for_buildings supplier_name
         results[supplier_name] = report.direct_award_value
       end
 
@@ -412,7 +433,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       expect(sorted_list.first[1].round(2)).to eq 1469124.32
     end
 
-    it 'price for one supplier' do
+    it 'price for one supplier', skip: true do
       user_email = 'test@example.com'
       start_date = DateTime.now.utc
 
@@ -421,18 +442,16 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       data[:'is-tupe'] = 'yes'
       report = described_class.new(start_date: start_date, user_email: user_email, data: data)
 
-      selected_buildings3 = [@selected_buildings2[1]]
-      uvals2 = uvals.select { |v| selected_buildings3.first.id == v[:building_id] && v[:service_code] == 'E.4' }
+      # selected_buildings3 = [@selected_buildings2[1]]
       supplier_name = 'Hickle-Schinner'
 
       report_results = {}
       report_results[supplier_name] = {}
-      report.calculate_services_for_buildings selected_buildings3, uvals2, supplier_name, report_results[supplier_name]
+      report.calculate_services_for_buildings supplier_name
 
       # p report.direct_award_value
       expect(report.direct_award_value.round(2)).to eq 7.29
     end
-    # rubocop:enable RSpec/InstanceVariable
     # rubocop:enable RSpec/ExampleLength
   end
 
@@ -505,7 +524,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     report = described_class.new(start_date: start_date, user_email: 'test@example.com', data: procurement)
 
     results = {}
-    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
     supplier_names.each do |supplier_name|
       # dummy_supplier_name = 'Hickle-Schinner'
       results[supplier_name] = {}

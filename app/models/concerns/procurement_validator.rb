@@ -4,14 +4,8 @@ module ProcurementValidator
 
   # rubocop:disable Metrics/BlockLength
   included do
-    # validations on :name step
-    before_validation :remove_excess_whitespace_from_name, on: :name
-    validates :name, presence: true, on: :name
-    validates :name, uniqueness: { scope: :user }, on: :name
-    validates :name, length: 1..100, on: :name
-    validates :name, format: { with: /\A([a-zA-Z(0-9) _\''\-]*)\z/ }, on: :name
-
     # validations on :contract_name step
+    before_validation :remove_excess_whitespace_from_name, on: :contract_name
     validates :contract_name, presence: true, on: %i[contract_name]
     validates :contract_name, uniqueness: { scope: :user }, on: :contract_name
     validates :contract_name, length: 1..100, on: :contract_name
@@ -59,10 +53,10 @@ module ProcurementValidator
     validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than: -1 }, if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false }, on: :contract_dates
     validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 4 }, if: -> { tupe? && (initial_call_off_period.present? ? initial_call_off_period.positive? : false) }, on: :contract_dates
 
-    validates :optional_call_off_extensions_1, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_2, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_3, numericality: { allow_nil: true }, on: :contract_dates
-    validates :optional_call_off_extensions_4, numericality: { allow_nil: true }, on: :contract_dates
+    validates :optional_call_off_extensions_1, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_2, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_3, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_4, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
     validate :optional_call_off_extensions_too_long, on: :contract_dates
     #
     # End of validation rules for contract-dates
@@ -89,7 +83,7 @@ module ProcurementValidator
     # Start of validation methods for contract-dates
 
     def remove_excess_whitespace_from_name
-      self.name = name&.split&.join(' ')
+      self.contract_name = contract_name&.split&.join(' ')
     end
 
     #############################################
