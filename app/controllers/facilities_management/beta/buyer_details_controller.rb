@@ -3,6 +3,10 @@ module FacilitiesManagement
     class BuyerDetailsController < FacilitiesManagement::Beta::FrameworkController
       before_action :set_buyer_detail
 
+      def show
+        render :edit
+      end
+
       def edit; end
 
       def edit_address; end

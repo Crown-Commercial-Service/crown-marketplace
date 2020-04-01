@@ -156,7 +156,7 @@ Rails.application.routes.draw do
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[show update]
-      resources :buyer_details, only: %i[edit update] do
+      resources :buyer_details, only: %i[show edit update] do
         get 'edit_address'
       end
       namespace :supplier do

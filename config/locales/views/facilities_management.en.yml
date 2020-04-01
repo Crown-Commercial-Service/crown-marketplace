@@ -49,6 +49,7 @@ en:
           attributes:
             central_government:
               blank: Select the type of public sector organisation you're buying for
+              inclusion: Select the type of public sector organisation you're buying for
             full_name:
               blank: Enter your full name
               invalid: Enter your full name
