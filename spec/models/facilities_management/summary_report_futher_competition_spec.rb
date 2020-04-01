@@ -255,4 +255,66 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     # rubocop:enable RSpec/ExampleLength
   end
+
+  context 'assessed_value for FC sub-lots' do
+    let(:code) { nil }
+    let(:code1) { nil }
+    let(:code2) { nil }
+    let(:lift_data) { nil }
+    let(:initial_call_off_period) { 7 }
+    let(:estimated_annual_cost) { 7000000 }
+    let(:procurement) do
+      build(:facilities_management_procurement,
+            estimated_cost_known: true,
+            estimated_annual_cost: estimated_annual_cost,
+            initial_call_off_period: initial_call_off_period,
+            procurement_buildings: [
+              build(:facilities_management_procurement_building_no_services,
+                    active: true,
+                    building: create(:facilities_management_building_london),
+                    procurement_building_services: [
+                      build(:facilities_management_procurement_building_service, code: code, lift_data: lift_data),
+                      build(:facilities_management_procurement_building_service, code: code1),
+                      build(:facilities_management_procurement_building_service, code: code2)
+                    ])
+            ])
+    end
+
+    before do
+      procurement.save!
+      @report = described_class.new(procurement.id)
+      @report.calculate_services_for_buildings
+    end
+
+    context 'when framework price for at least one service is missing' do
+      let(:code) { 'C.5' }
+      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:code1) { 'G.9' }
+      let(:code2) { 'C.7' }
+
+      context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
+        it 'uses BM and Customer prices only' do
+          expect (@report.assessed_value.to_f).to eq (@report.buyer_input + @report.sum_benchmark)/2.0
+        end
+      end
+
+      context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
+        it 'uses FW, BM and Customer prices' do
+          expect(@report.assessed_value.to_f).to eq (@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3
+        end
+      end
+    end
+    context 'when framework and benchmark price for at least one service is missing' do
+      context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
+        it 'uses Customer prices only' do
+          expect (@report.assessed_value.to_f).to eq @report.buyer_input
+        end
+      end
+      context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
+        it 'uses FW, BM and Customer prices' do
+          expect (@report.assessed_value.to_f).to eq (@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3
+        end
+      end
+    end
+  end
 end
