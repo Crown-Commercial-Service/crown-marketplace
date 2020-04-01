@@ -8,7 +8,7 @@ module FurtherCompetitionConcern
       @selected_buildings = @procurement.active_procurement_buildings
     else
       @report = FacilitiesManagement::SummaryReport.new(start_date: start_date, user_email: user_email, data: session_data)
-      @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+      @selected_buildings = FacilitiesManagement::Building.buildings_for_user(user_email)
       uvals = @report.uom_values(@selected_buildings)
     end
 

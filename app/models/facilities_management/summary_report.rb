@@ -46,7 +46,7 @@ module FacilitiesManagement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
       @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building['building_json']['address']['fm-address-region-code'] }
+      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.building_json[:address][:'fm-address-region-code'] }
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
@@ -91,7 +91,7 @@ module FacilitiesManagement
 
       selected_buildings.each do |building|
         if uvals
-          building_json = building['building_json'].deep_symbolize_keys
+          building_json = building.building_json.deep_symbolize_keys
           id = building_json[:id]
           building_uvals = (uvals.select { |u| u[:building_id] == id })
           building_data = building.building_json
@@ -213,8 +213,8 @@ module FacilitiesManagement
           s_dot = s['code'].gsub('-', '.')
           uvals << { user_id: b['user_id'],
                      service_code: s_dot,
-                     uom_value: b[:building_json]['gia'].to_f,
-                     building_id: b[:building_json]['id'],
+                     uom_value: b[:building_json][:gia].to_f,
+                     building_id: b[:building_json][:id],
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
                      spreadsheet_label: 'Square Metre (GIA) per annum' }
@@ -262,8 +262,8 @@ module FacilitiesManagement
 
         @helpdesk_flag ||= uvals.any? { |x| x[:service_code] == 'N.1' }
       else
-        @london_flag = building_in_london?(building_data['address']['fm-address-region-code'])
-        procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data['id'])
+        @london_flag = building_in_london?(building_data[:address][:'fm-address-region-code'])
+        procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
         @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
         @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
       end
@@ -290,7 +290,7 @@ module FacilitiesManagement
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
-          uom_value = (building_data[:gia] || building_data['gia']).to_f
+          uom_value = (building_data[:gia] || building_data[:gia]).to_f
         else
           occupants = 0
         end

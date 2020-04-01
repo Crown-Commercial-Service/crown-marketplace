@@ -82,7 +82,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
 
     @building = building_from_pb(@procurement_building) if @procurement_building.present?
 
-    @building_data = @building['building_json'] if @building.present?
+    @building_data = @building.building_json if @building.present?
 
     @building_service = bs_from_db if @building.present?
   end

@@ -9,7 +9,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def initialize(building_ids_with_service_codes, units_of_measure_values = nil, procurement_id = nil)
     @building_ids_with_service_codes = building_ids_with_service_codes
     building_ids = building_ids_with_service_codes.map { |h| h[:building_id] }
-    @buildings = FacilitiesManagement::Buildings.where(id: building_ids)
+    @buildings = FacilitiesManagement::Building.where(id: building_ids)
     @procurement = FacilitiesManagement::Procurement.find(procurement_id) unless procurement_id.nil?
     buildings_with_service_codes
     set_services

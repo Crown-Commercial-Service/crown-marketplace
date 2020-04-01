@@ -27,7 +27,7 @@ module FacilitiesManagement
     end
 
     def building
-      CCS::FM::Building.find_by(id: building_id)
+      FacilitiesManagement::Building.find_by(id: building_id)
     end
 
     private

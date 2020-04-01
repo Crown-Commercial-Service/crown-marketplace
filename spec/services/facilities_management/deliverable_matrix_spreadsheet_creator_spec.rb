@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
       @selected_buildings2 = [
         OpenStruct.new(
           id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
+          user_email: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
           building_json: {
             'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
             'gia' => 4200,
@@ -76,7 +76,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
         ),
         OpenStruct.new(
           id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
+          user_email: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
           building_json: {
             'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
             'gia' => 12000,
@@ -107,10 +107,11 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
       # populate db with dub buildings
       # rubocop:disable RSpec/InstanceVariable
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-        new_building = FacilitiesManagement::Buildings.new(
+        FacilitiesManagement::Building.delete b.id
+        new_building = FacilitiesManagement::Building.new(
           id: b.id,
-          user_id: Base64.encode64('test@example.com'),
+          user: create(:user),
+          user_email: b.user_email,
           updated_by: Base64.encode64('test@example.com'),
           building_json: b.building_json
         )
@@ -127,7 +128,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     after :all do
       # teardown
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
+        FacilitiesManagement::Building.delete b.id
       rescue StandardError => e
         Rails.logger.warn "Couldn't delete new building id: #{e}"
       end

@@ -71,7 +71,7 @@ module FacilitiesManagement
           @selected_buildings = @procurement.active_procurement_buildings
         else
           @report = SummaryReport.new(start_date: @start_date, user_email: user_email, data: TransientSessionInfo[session.id])
-          @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
+          @selected_buildings = FacilitiesManagement::Building.buildings_for_user(user_email)
           uvals = @report.uom_values(@selected_buildings)
         end
         @results = {}

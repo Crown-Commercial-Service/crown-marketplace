@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   end
 
   describe 'default values' do
-    subject(:building) { create(:facilities_management_building_ar_defaults) }
+    subject(:building) { create(:facilities_management_building_defaults) }
 
     context 'when saving an empty record' do
       before do
@@ -29,11 +29,26 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   end
 
   describe 'with ActiveRecord data in the object' do
-    subject(:building) { create(:facilities_management_building_ar) }
+    subject(:building) { create(:facilities_management_building) }
 
     before do
       building.save
       building.reload
+    end
+
+    context 'when saving data supplied at the record' do
+      it 'will load the building' do
+        new_building = FacilitiesManagement::Building.find_by(id: building.id)
+        expect(new_building.id).to eq(building.id)
+        expect(new_building.building_name).to eq(building.building_name)
+      end
+
+      it 'will load the building and populate JSON property' do
+        new_building = FacilitiesManagement::Building.find_by(id: building.id)
+        expect(new_building.id).to eq(building.id)
+        expect(new_building.building_json[:name]).to eq(building.building_name)
+        expect(new_building[:building_json]['name']).to eq(building.building_name)
+      end
     end
 
     context 'when saving a new record with name, address, the JSON should match' do
@@ -75,7 +90,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   end
 
   describe '#validations' do
-    subject(:building) { create(:facilities_management_building_ar) }
+    subject(:building) { create(:facilities_management_building) }
 
     context 'when everything is present' do
       it 'is valid' do

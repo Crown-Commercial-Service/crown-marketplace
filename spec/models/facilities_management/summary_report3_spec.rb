@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
-  let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:user) { create(:user, :without_detail, email: 'test@example.com', id: SecureRandom.uuid) }
   let(:supplier_names) do
     [:"Wolf-Wiza",
      :"Bogan-Koch",
@@ -106,7 +106,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:selected_buildings2) do
       [OpenStruct.new(
         id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-        user_id: user.id,
+        user: user,
+        user_email: user.email.to_s,
         building_json: {
           'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
           'gia' => 4200,
@@ -246,7 +247,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
        OpenStruct.new(
          id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
-         user_id: user.id,
+         user: user,
+         user_email: user.email.to_s,
          building_json: {
            'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
            'gia' => 12000,
@@ -387,10 +389,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     before do
       selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-        new_building = FacilitiesManagement::Buildings.new(
+        FacilitiesManagement::Building.delete b.id
+        new_building = FacilitiesManagement::Building.new(
           id: b.id,
-          user_id: Base64.encode64('test@example.com'),
+          user: user,
+          user_email: Base64.encode64('test@example.com'),
           updated_by: Base64.encode64('test@example.com'),
           building_json: b.building_json
         )

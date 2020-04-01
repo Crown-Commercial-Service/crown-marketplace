@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_19_113541) do
+ActiveRecord::Schema.define(version: 2020_03_19_112029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,11 +39,12 @@ ActiveRecord::Schema.define(version: 2020_03_19_113541) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "status", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
     t.text "user_email"
+    t.jsonb "building_json"
     t.text "building_ref"
     t.text "building_name"
     t.text "description"

@@ -155,11 +155,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def get_building_data(selected_building_names, selected_building_info)
-    selected_buildings_data = FacilitiesManagement::Buildings.where(id: @data.keys).select(:id, :building_json)
-    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_json['building-type'] }
+    selected_buildings_data = FacilitiesManagement::Building.where(id: @data.keys)
+    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
     selected_building_names.uniq!
 
-    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_json['building-type'] } }
+    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type } }
   end
 
   # rubocop:disable Metrics/AbcSize
