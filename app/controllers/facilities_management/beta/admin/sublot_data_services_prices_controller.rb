@@ -18,29 +18,16 @@ module FacilitiesManagement
 
         def render_no_method_error_response(exception)
           logger.error exception.message
-          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lota method not found' }
+          redirect_to facilities_management_beta_admin_path, flash: { error: 'Invalid supplier ID lot 1a method not found' }
         end
 
         def index
           @list_service_types = ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
 
-          supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
-          @supplier_name = supplier_data['supplier_name']
-
-          lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
-          supplier_services = lot1a_data[0]['services']
-
+          supplier_services = setup_supplier_data
           setup_supplier_data_ratecard
-
-          rate_card = CCS::FM::RateCard.latest
-          setup_variance_supplier_data(rate_card)
-
-          @services = FacilitiesManagement::Admin::StaticDataAdmin.services
-          @work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
-
-          @rates = FacilitiesManagement::Admin::Rates.all
-          @work_packages_with_rates = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.add_rates_to_work_packages(@work_packages, @rates)
-          @full_services = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(@services, @work_packages_with_rates)
+          setup_variance_supplier_data(CCS::FM::RateCard.latest)
+          setup_instance_variables
           setup_checkboxes(supplier_services)
         end
 
@@ -52,6 +39,22 @@ module FacilitiesManagement
 
         private
 
+        def setup_supplier_data
+          supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
+          @supplier_name = supplier_data['supplier_name']
+
+          lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
+          lot1a_data[0]['services']
+        end
+
+        def setup_instance_variables
+          @services = FacilitiesManagement::Admin::StaticDataAdmin.services
+          @work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
+          @rates = FacilitiesManagement::Admin::Rates.all
+          @work_packages_with_rates = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.add_rates_to_work_packages(@work_packages, @rates)
+          @full_services = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(@services, @work_packages_with_rates)
+        end
+
         def setup_variance_supplier_data(rate_card)
           supplier_rate_card = rate_card['data'][:Variances].select do |k, v|
             v if k.to_s == @supplier_name
@@ -59,10 +62,50 @@ module FacilitiesManagement
           @variance_supplier_data = supplier_rate_card[@supplier_name.to_sym]
         end
 
+        def setup_checkboxes(supplier_services)
+          @supplier_rate_data_checkboxes = {}
+          @full_services.each do |service|
+            service['work_package'].each do |work_pckg|
+              code = work_pckg['code']
+              @supplier_rate_data_checkboxes[code] = false
+            end
+          end
+
+          supplier_services.each do |supplier_service|
+            @supplier_rate_data_checkboxes[supplier_service] = true if @supplier_rate_data_checkboxes.key?(supplier_service)
+          end
+        end
+
+        # rubocop:disable Metrics/AbcSize
         def update_checkboxes
-          # params["checked_services"].each do |service|
-          #  p service
-          # end
+          supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
+          supplier_data = supplier['data']
+          @supplier_name = supplier_data['supplier_name']
+
+          lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
+          supplier_services = lot1a_data[0]['services']
+
+          setup_instance_variables
+
+          supplier_checkboxes = determine_used_services
+          supplier_checkboxes.each do |service|
+            supplier_services.append(service) if (params['checked_services'].include? service) && (!supplier_services.include? service)
+            supplier_services.delete(service) if (!params['checked_services'].include? service) && (supplier_services.include? service)
+          end
+
+          supplier.save
+        end
+        # rubocop:enable Metrics/AbcSize
+
+        def determine_used_services
+          supplier_checkboxes = []
+          @full_services.each do |service|
+            service['work_package'].each do |work_pckg|
+              code = work_pckg['code']
+              supplier_checkboxes.append(code)
+            end
+          end
+          supplier_checkboxes
         end
 
         # rubocop:disable Metrics/AbcSize
@@ -89,20 +132,6 @@ module FacilitiesManagement
 
           @supplier_data_ratecard_discounts = CCS::FM::RateCard.latest[:data][:Discounts].select { |key, _| @supplier_name.include? key.to_s }
           @supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
-        end
-
-        def setup_checkboxes(supplier_services)
-          @supplier_rate_data_checkboxes = {}
-          @full_services.each do |service|
-            service['work_package'].each do |work_pckg|
-              code = work_pckg['code']
-              @supplier_rate_data_checkboxes[code] = false
-            end
-          end
-
-          supplier_services.each do |supplier_service|
-            @supplier_rate_data_checkboxes[supplier_service] = true if @supplier_rate_data_checkboxes.key?(supplier_service)
-          end
         end
       end
     end
