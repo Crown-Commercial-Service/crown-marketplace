@@ -100,7 +100,12 @@ $(function () {
         }
 
         function fillInDetails(form) {
-            let [nameElem, jobTitleElem, telephoneNumberElem, orgNameElem] = makeElementName();
+            var buyerDetailsFormElements =  makeElementName();
+            var nameElem = buyerDetailsFormElements[0];
+            var jobTitleElem = buyerDetailsFormElements[1];
+            var telephoneNumberElem = buyerDetailsFormElements[2];
+            var orgNameElem = buyerDetailsFormElements[3];
+
             document.getElementById(nameElem).value = window.sessionStorage.buyerDetailsName;
             document.getElementById(jobTitleElem).value = window.sessionStorage.buyerDetailsJobTitle;
             document.getElementById(telephoneNumberElem).value = window.sessionStorage.buyerDetailsTelephoneNumber;
@@ -108,7 +113,11 @@ $(function () {
         }
 
         function getDetails(form) {
-            let [nameElem, jobTitleElem, telephoneNumberElem, orgNameElem] = makeElementName(form);
+            var buyerDetailsFormElements =  makeElementName();
+            var nameElem = buyerDetailsFormElements[0];
+            var jobTitleElem = buyerDetailsFormElements[1];
+            var telephoneNumberElem = buyerDetailsFormElements[2];
+            var orgNameElem = buyerDetailsFormElements[3];
 
             window.sessionStorage.buyerDetailsName = document.getElementById(nameElem).value;
             window.sessionStorage.buyerDetailsJobTitle = document.getElementById(jobTitleElem).value;

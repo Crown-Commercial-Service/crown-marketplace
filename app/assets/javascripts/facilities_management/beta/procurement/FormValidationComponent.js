@@ -1,8 +1,9 @@
-function FormValidationComponent(formDOMObject, validationCallback, thisisspecial = false) {
+function FormValidationComponent(formDOMObject, validationCallback, thisisspecial) {
+    if ( undefined === thisisspecial ) thisisspecial = false;
     this.site_wide_turn_off = false;
 
     this.verify_connection_to_form = function (formDOMObject, requestedSpecialTreatment) {
-        let canConnect = false;
+        var canConnect = false;
         if (!this.site_wide_turn_off && null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
                 ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
@@ -38,16 +39,16 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.validateForm = function (formElements) {
-        let submitForm = this.validationResult = true;
+        var submitForm = this.validationResult = true;
         this.clearBannerErrorList();
         this.toggleBannerError(false);
         this.clearAllFieldErrors();
 
         if (formElements !== undefined && formElements.length > 0) {
-            let elements = [];
-            let validated_radiocheckbox_elements = [];
-            for (let i = 0; i < formElements.length; i++) {
-                let element = formElements[i];
+            var elements = [];
+            var validated_radiocheckbox_elements = [];
+            for (var i = 0; i < formElements.length; i++) {
+                var element = formElements[i];
                 if (element.hasAttribute("type") || element.hasAttribute("required") || element.hasAttribute("maxlength")) {
                     if (element.getAttribute("type") !== "hidden") {
                         elements.push(element);
@@ -55,9 +56,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 }
             }
             if (elements.length > 0) {
-                for (let index = 0; index < elements.length; index++) {
+                for (var index = 0; index < elements.length; index++) {
                     try {
-                        let jElem = $(elements[index]);
+                        var jElem = $(elements[index]);
                         if (jElem.length > 0) {
                             if ( this.isRadioOrCheckBox(jElem) && jQuery.inArray(jElem.prop("name"), validated_radiocheckbox_elements) == -1) {
                                 validated_radiocheckbox_elements.push(jElem.prop("name"));
@@ -82,11 +83,11 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                                     jElem, "maxlength");
                             }
                             if (jElem.prop("type") && submitForm) {
-                                let htmlAttributeValue = jElem[0].getAttribute("type");
+                                var htmlAttributeValue = jElem[0].getAttribute("type");
                                 try {
-                                    for (let prop in this.validationFunctions.type) {
+                                    for (var prop in this.validationFunctions.type) {
                                         if (this.validationFunctions.type.hasOwnProperty(prop)) {
-                                            let fn = this.validationFunctions.type[prop];
+                                            var fn = this.validationFunctions.type[prop];
                                             if (null != fn && htmlAttributeValue == prop) {
                                                 submitForm = submitForm && this.testError(
                                                     fn, jElem, prop);
@@ -135,34 +136,34 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
     this.validationFunctions = {
         "required": function (jQueryinputElem) {
-            let inputType = jQueryinputElem[0].type;
+            var inputType = jQueryinputElem[0].type;
             jQueryinputElem[0].type = "text";
-            let result = ("" + jQueryinputElem.val() === "");
+            var result = ("" + jQueryinputElem.val() === "");
             jQueryinputElem[0].type = inputType;
             return result;
         },
         "maxlength": function (jQueryinputElem) {
-            let maxLength = parseInt(jQueryinputElem.prop("maxlength"));
+            var maxLength = parseInt(jQueryinputElem.prop("maxlength"));
             if (!isNaN(maxLength) && maxLength > 0) {
-                let inputType = jQueryinputElem[0].type;
+                var inputType = jQueryinputElem[0].type;
                 jQueryinputElem[0].type = "text";
-                let result = (("" + jQueryinputElem.val()).length > maxLength);
+                var result = (("" + jQueryinputElem.val()).length > maxLength);
                 jQueryinputElem[0].type = inputType;
                 return result;
             }
             return false;
         },
         "max": function (jQueryInputElem) {
-            let inputValue = Number(jQueryInputElem.val());
-            let maxVal = parseInt(jQueryInputElem.prop("max"));
+            var inputValue = Number(jQueryInputElem.val());
+            var maxVal = parseInt(jQueryInputElem.prop("max"));
             if (!isNaN(inputValue) && !isNaN(maxVal)) {
                 return inputValue > maxVal;
             }
             return false;
         },
         "min": function (jQueryInputElem) {
-            let inputValue = Number(jQueryInputElem.val());
-            let minVal = parseInt(jQueryInputElem.prop("min"));
+            var inputValue = Number(jQueryInputElem.val());
+            var minVal = parseInt(jQueryInputElem.prop("min"));
 
             if (!isNaN(inputValue) && !isNaN(minVal)) {
                 return inputValue < minVal;
@@ -171,9 +172,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             return false;
         },
         "range": function (jQueryInputElem) {
-            let inputValue = Number(jQueryInputElem.val());
-            let maxVal = parseInt(jQueryInputElem.prop("max"));
-            let minVal = parseInt(jQueryInputElem.prop("min"));
+            var inputValue = Number(jQueryInputElem.val());
+            var maxVal = parseInt(jQueryInputElem.prop("max"));
+            var minVal = parseInt(jQueryInputElem.prop("min"));
             if (!isNaN(inputValue) && !isNaN(maxVal)) {
                 return inputValue > maxVal;
             }
@@ -184,7 +185,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             return false;
         },
         "regex": function (jQueryinputElem) {
-            let reg = new RegExp(jQueryinputElem.prop("pattern"));
+            var reg = new RegExp(jQueryinputElem.prop("pattern"));
             return !reg.test(jQueryinputElem.val());
         },
         "type": {
@@ -192,10 +193,10 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 return false;
             },
             "number": function (jQueryinputElem) {
-                let inputType = jQueryinputElem[0].type;
+                var inputType = jQueryinputElem[0].type;
                 jQueryinputElem[0].type = "text";
 
-                let result = jQueryinputElem.val() === "" || isNaN(Number(jQueryinputElem.val()));
+                var result = jQueryinputElem.val() === "" || isNaN(Number(jQueryinputElem.val()));
                 if (!result && jQueryinputElem[0].getAttribute("step") === "1") {
                     result = ((jQueryinputElem.val() % 1) != 0);
                 }
@@ -203,11 +204,11 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 return result;
             },
             "email": function (jQueryinputElem) {
-                let regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                var regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return !regEx.test(jQueryinputElem.val());
             },
             "date": function (jQueryInputElem) {
-                let theDate = Date.parse(jQueryInputElem.val());
+                var theDate = Date.parse(jQueryInputElem.val());
                 return theDate === NaN;
             }
         }
@@ -221,14 +222,14 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.clearFieldErrors = function (jElem) {
-        let errorCollection = jElem.siblings("label[class=govuk-error-message]");
+        var errorCollection = jElem.siblings("label[class=govuk-error-message]");
         jElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
         jElem.removeClass("govuk-input--error");
         errorCollection.addClass("govuk-visually-hidden");
     };
 
     this.testError = function (errFn, jElem, errorType) {
-        let result = false;
+        var result = false;
 
         if (errFn(jElem)) {
             this.toggleError(jElem, true, errorType);
@@ -265,12 +266,12 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.insertElementToCreateFieldBlock = function (inputElement) {
-        let continueLooping = true;
-        let counter = 0;
-        let elementsToWrap = [];
+        var continueLooping = true;
+        var counter = 0;
+        var elementsToWrap = [];
         // look at the previous sibling of the input element - if it is a label - we need to include it
         // look at the previous siblings of the input element - if it is a div of class govuk-error-message, we need to include it
-        let prevElem = inputElement.prev();
+        var prevElem = inputElement.prev();
         if (inputElement.next().length > 0 && inputElement.next().prop("class").indexOf("character-count") >= 0) {
             elementsToWrap.push(inputElement.next()[0]);
         }
@@ -288,8 +289,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             prevElem = prevElem.prev();
             counter++;
         }
-        let newElem = $('<div class="govuk-form-group"></div>').insertBefore(inputElement);
-        for (let index = 0; index < elementsToWrap.length; index++) {
+        var newElem = $('<div class="govuk-form-group"></div>').insertBefore(inputElement);
+        for (var index = 0; index < elementsToWrap.length; index++) {
             newElem.prepend(elementsToWrap[index]);
         }
 
@@ -297,11 +298,11 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.insertElementForRequiredMessage = function (inputElement, parent, errorType) {
-        let propertyName = this.getPropertyName(parent);
-        let labelElem = '<label id="' + this.getErrorID(inputElement) + '" class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
+        var propertyName = this.getPropertyName(parent);
+        var labelElem = '<label id="' + this.getErrorID(inputElement) + '" class="govuk-error-message" data-validation="' + errorType + '" for="' + inputElement[0].id + '">' + this.errorMessage(propertyName, errorType) + '</label>';
         $(parent).prepend(labelElem);
-        let newElement = $(parent[0].childNodes[0]);
-        let parentElement = inputElement.prev();
+        var newElement = $(parent[0].childNodes[0]);
+        var parentElement = inputElement.prev();
         if (parentElement.length > 0 && parentElement[0].tagName === "LABEL") {
             newElement.detach().insertBefore(parentElement);
         } else {
@@ -312,24 +313,24 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
     this.clearBannerErrorList = function () {
         if (null != this.bannerErrorContainer) {
-            let ul = this.bannerErrorContainer.find("ul");
+            var ul = this.bannerErrorContainer.find("ul");
             ul.empty();
         }
     };
 
     this.insertListElementInBannerError = function (inputElement, error_type, message_text) {
-        let ul = this.bannerErrorContainer.find("ul");
-        let display_text = "";
+        var ul = this.bannerErrorContainer.find("ul");
+        var display_text = "";
         if (ul.length > 0) {
-            let href_value = "#" + this.getErrorID(inputElement);
-            let propertyName = this.getPropertyName(inputElement);
+            var href_value = "#" + this.getErrorID(inputElement);
+            var propertyName = this.getPropertyName(inputElement);
             if (typeof message_text === "undefined" || message_text + "" === "") {
                 display_text = this.errorMessage(propertyName, error_type)
             } else {
                 display_text = message_text;
             }
             // is there a message, of any other type, with the same text...
-            let link = ul.find("a").filter(function () {
+            var link = ul.find("a").filter(function () {
                 return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
             });
 
@@ -353,17 +354,17 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
             // ensure duplicates
             if (link.length <= 0) {
-                let link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
+                var link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                 ul.append("<li>" + link + "</li>");
             }
         }
     };
 
     this.removeListElementInBannerError = function (inputElement, error_type) {
-        let ul = this.bannerErrorContainer.find("ul");
+        var ul = this.bannerErrorContainer.find("ul");
         if (ul.length > 0) {
-            let propertyName = this.getPropertyName(inputElement);
-            let link = ul.find("a").filter(function () {
+            var propertyName = this.getPropertyName(inputElement);
+            var link = ul.find("a").filter(function () {
                 return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
             });
 
@@ -391,18 +392,18 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.findPreExistingErrorMessage = function (jQueryElement, errorType, jqueryElementForInputGroup) {
-        let property_name = this.getPropertyName(jQueryElement);
-        let jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
+        var property_name = this.getPropertyName(jQueryElement);
+        var jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
         if (jqueryElementForRequiredMessage.length === 0) {
-            let errorCollectionForPropertyAndType = this.findErrorCollection(jQueryElement, errorType, property_name);
+            var errorCollectionForPropertyAndType = this.findErrorCollection(jQueryElement, errorType, property_name);
             if (errorCollectionForPropertyAndType.length > 0) {
                 jqueryElementForRequiredMessage = errorCollectionForPropertyAndType.find("label[data-validation='" + errorType + "']");
             }
         }
 
         if ( jqueryElementForRequiredMessage.length === 0 ) {
-            let collection = [];
-            let parent = jQueryElement.parent() ;
+            var collection = [];
+            var parent = jQueryElement.parent() ;
             while ( parent.length > 0 && collection.length === 0) {
                 collection = parent.find(".error-collection[property_name='" + property_name + "']");
                 parent = parent.parent();
@@ -418,8 +419,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.toggleError = function (jQueryElement, show, errorType) {
-        let error_text = "";
-        let jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group-error-placeholder");
+        var error_text = "";
+        var jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group-error-placeholder");
 
         if (jqueryElementForInputGroup.length === 0 ) {
             jqueryElementForInputGroup = jQueryElement.closest(".govuk-form-group");
@@ -427,7 +428,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         if (jqueryElementForInputGroup.length === 0) {
             jqueryElementForInputGroup = this.insertElementToCreateFieldBlock(jQueryElement);
         }
-        let jqueryElementForRequiredMessage = this.findPreExistingErrorMessage(jQueryElement, errorType, jqueryElementForInputGroup);
+        var jqueryElementForRequiredMessage = this.findPreExistingErrorMessage(jQueryElement, errorType, jqueryElementForInputGroup);
 
         if ( jQueryElement.prop("class").indexOf('govuk-date-input') < 0 ) {
             if (!jQueryElement.siblings().is(jqueryElementForRequiredMessage)) {
@@ -484,9 +485,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         return "error_" + jqueryInputElement[0].id;
     };
     this.getPropertyName = function (jqueryInputElement) {
-        let propertyName = jqueryInputElement.attr("data-propertyname");
+        var propertyName = jqueryInputElement.attr("data-propertyname");
         if (typeof propertyName === "undefined" || propertyName === "") {
-            let newParent = null;
+            var newParent = null;
             if ((newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0) {
                 propertyName = newParent.attr("data-propertyname")
             } else {
@@ -511,9 +512,9 @@ const anyArbitraryName = {};
 
 $(function () {
     anyArbitraryName.global_formValidators = [];
-    let jqForms = $("form");
+    var jqForms = $("form");
     if (jqForms.length > 0) {
-        for (let index = 0; index < jqForms.length; index++) {
+        for (var index = 0; index < jqForms.length; index++) {
             anyArbitraryName.global_formValidators[jqForms[index].id] = new FormValidationComponent(
                 jqForms[index], void 0, false);
             anyArbitraryName.global_formValidators.push(anyArbitraryName.global_formValidators[jqForms[index].id]);
