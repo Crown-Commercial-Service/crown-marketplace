@@ -52,8 +52,8 @@
     </table>
     <% if @upload.in_review? %>
       <p class="govuk-body govuk-!-margin-top-8"><%= t('.confirm') %></p>
-      <%= link_to t('.approve'), legal_services_admin_upload_approve_path(@upload), class: 'govuk-button' %>
-      <%= link_to t('.reject'), legal_services_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning' %>
+      <%= link_to t('.approve'), legal_services_admin_upload_approve_path(@upload), class: 'govuk-button', name: 'approve' %>
+      <%= link_to t('.reject'), legal_services_admin_upload_reject_path(@upload), class: 'govuk-button govuk-button--warning', name: 'reject' %>
     <% end %>
   </div>
 </div>

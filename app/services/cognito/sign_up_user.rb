@@ -1,12 +1,13 @@
 module Cognito
   class SignUpUser < BaseService
     include ActiveModel::Validations
+    validates_presence_of :email, :password, :password_confirmation
+
     validates :password,
               presence: true,
               confirmation: { case_sensitive: true },
               length: { within: 8..200 }
 
-    validates_presence_of :password_confirmation, :email
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
     validate :domain_in_whitelist

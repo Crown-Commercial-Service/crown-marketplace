@@ -28,7 +28,8 @@
   display: inline-block;
   position: relative;
   min-height: 33px;
-  padding-left: 50px;
+  min-width: 50px;
+  padding-left: 70px;
 }
 
 .supplier-record__file-download:before {
@@ -36,8 +37,8 @@
     left: 0px;
     top: -6px;
     display: inline-block;
-    width: 40px;
-    height: 30px;
+    width: auto;
+    height: auto;
     background: #777777 image-url('corner-curl.png') 100% -1px no-repeat;
     color: #FFF;
     background-size: 9px;
@@ -47,6 +48,8 @@
     text-transform: uppercase;
     font-weight: $govuk-font-weight-semi-bold;
     content: "";
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .supplier-record__file-download[href*='format=xlsx']:before {

@@ -42,7 +42,11 @@ $(function () {
     }
 
     function fillInDetails(form){
-        let [nameElem, jobTitleElem, emailElem, telephoneNumberElem] = makeElementName(form);
+        var contactDetailsFormElements =  makeElementName(form);
+        var nameElem = contactDetailsFormElements[0];
+        var jobTitleElem = contactDetailsFormElements[1];
+        var emailElem = contactDetailsFormElements[2];
+        var telephoneNumberElem = contactDetailsFormElements[3];
 
         document.getElementById(nameElem).value     = window.sessionStorage.contactDetailsName;
         document.getElementById(jobTitleElem).value = window.sessionStorage.contactDetailsJobTitle;
@@ -53,7 +57,11 @@ $(function () {
     }
 
     function getDetails(form){
-        let [nameElem, jobTitleElem, emailElem, telephoneNumberElem] = makeElementName(form);
+        var contactDetailsFormElements =  makeElementName(form);
+        var nameElem = contactDetailsFormElements[0];
+        var jobTitleElem = contactDetailsFormElements[1];
+        var emailElem = contactDetailsFormElements[2];
+        var telephoneNumberElem = contactDetailsFormElements[3];
 
         window.sessionStorage.contactDetailsName        = document.getElementById(nameElem).value;
         window.sessionStorage.contactDetailsJobTitle    = document.getElementById(jobTitleElem).value;

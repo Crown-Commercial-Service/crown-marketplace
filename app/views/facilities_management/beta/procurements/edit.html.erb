@@ -14,7 +14,7 @@
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :put, html: { specialvalidation: does_form_for_current_step_require_special_client_validation?(params), novalidate: true, multipart: true } do |f| %>
     <% unless @page_description || @page_description&.no_error_block%>
       <div class="govuk-grid-row">
-        <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, multiple: false, render_empty: true } %>
+        <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
       </div>
     <%end %>
     <div class="govuk-clearfix">
@@ -32,7 +32,7 @@
       <%= f.hidden_field :step, value: params[:facilities_management_procurement][:step] if !params[:step] && params.dig(:facilities_management_procurement, :step) %>
       <% if @procurement.quick_search? %>
         <%= govuk_form_group_with_optional_error(@procurement, :name, :region_codes, :service_codes) do %>
-          <div class="govuk-grid-column-full quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
+          <div class="quicksearchassistant" classification="procurement" action="edit" module="facilities_management">
             <%= render partial: 'quick_search_form', locals: { f: f, step: params[:step] } %>
           </div>
         <% end %>
