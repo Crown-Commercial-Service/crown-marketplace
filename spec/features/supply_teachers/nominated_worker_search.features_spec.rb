@@ -79,7 +79,7 @@ RSpec.feature 'Nominated workers', type: :feature, supply_teachers: true do
     expect(page).not_to have_text('liverpool')
 
     click_on '1 mile'
-    expect(page.all('.supplier-record').length).to eq(2)
+    expect(page.all('.supplier-record').length).to eq(1)
   end
 
   scenario 'Buyer changes mind about postcode' do
