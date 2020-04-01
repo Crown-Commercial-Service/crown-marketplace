@@ -28,8 +28,8 @@ module FacilitiesManagement
         @building_id = building_id_from_inputs
         @base_path = request.method.to_s == 'GET' ? '../' : './'
 
-        building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
-        @building = building_record&.building_json
+        building_record = FacilitiesManagement::Building.find_by("user_id = '" + current_user.id.to_s + "' and id = '#{@building_id}'")
+        @building = building_record[:building_json]
         @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
@@ -47,7 +47,7 @@ module FacilitiesManagement
         @building_id = SecureRandom.uuid if @building_id.blank?
 
         if params['id'].present?
-          building_record = FacilitiesManagement::Buildings.find_by("user_id = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
+          building_record = FacilitiesManagement::Building.find_by("user_id = '" + current_user.id.to_s + "' and id = '#{@building_id}'")
           @building = building_record&.building_json
           @page_title = 'Change building details'
           @editing = true
@@ -167,11 +167,12 @@ module FacilitiesManagement
 
       # Entry points for data storage
       # New building Save Methods
+      # rubocop:disable Metrics/AbcSize
       def save_new_building
         new_building_json = request.raw_post
         add = JSON.parse(new_building_json)
         fm_building_data = FMBuildingData.new
-        building_id = fm_building_data.save_new_building current_user.email.to_s, add['id'], new_building_json
+        building_id = fm_building_data.save_new_building current_user.id.to_s, current_user.email.to_s, add['id'], new_building_json
         cache_new_building_id building_id
         raise 'Building IDs do not match' unless building_id == add['id']
 
@@ -184,6 +185,7 @@ module FacilitiesManagement
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController save_new_building(): #{e}"
       end
+      # rubocop:enable Metrics/AbcSize
 
       def save_building_gia
         key = 'gia'
@@ -231,7 +233,6 @@ module FacilitiesManagement
 
       def save_security_type
         save_building_property('security-type', params['security-type'])
-        save_building_property('security-details', params['security-details'])
 
         j = { 'status': 200 }
         render json: j, status: 200

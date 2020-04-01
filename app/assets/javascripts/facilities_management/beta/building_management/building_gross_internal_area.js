@@ -2,7 +2,7 @@ $(function () {
 
     /* namespace */
     window.FM = window.FM || {};
-    FM.building.GIA = {};
+    FM.building.gia = {};
     
     function putCharsLeft(messageLocation,  value) {
         let charsLeft = FM.calcCharsLeft(value, 10);

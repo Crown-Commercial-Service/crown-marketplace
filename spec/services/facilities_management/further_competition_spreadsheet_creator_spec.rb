@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:start_date) { DateTime.now.utc }
   let(:user_email) { 'test@example.com' }
-  let(:user) { FactoryBot.create(:user, :without_detail, email: user_email, id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
+  let(:user) { FactoryBot.create(:user, :without_detail, id: SecureRandom.uuid, email: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
 
   # rubocop:disable Style/HashSyntax
   let(:data) do
@@ -26,13 +26,13 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:uvals) do
     [
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'K.3', :uom_value => 8, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
-      { :user_id => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'I.1', :uom_value => service_hours, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'K.3', :uom_value => 8, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'e60f5b57-5f15-604c-b729-a689ede34a99', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'C.5', :uom_value => 5, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'The sum total of number of floors per lift' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'M.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'CAFM' },
+      { :user_email => 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n', :service_code => 'N.1', :uom_value => 1000, :service_standard => 'A', :building_id => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b', :title_text => nil, :example_text => nil, :spreadsheet_label => 'Help' }
     ]
   end
 
@@ -52,7 +52,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       @selected_buildings2 = [
         OpenStruct.new(
           id: 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
+          user_email: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
           building_json: {
             'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
             'gia' => 4200,
@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
         ),
         OpenStruct.new(
           id: 'e60f5b57-5f15-604c-b729-a689ede34a99',
-          user_id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
+          user_email: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n',
           building_json: {
             'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
             'gia' => 12000,
@@ -111,15 +111,17 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       # populate db with dub buildings
       # rubocop:disable RSpec/InstanceVariable
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-        new_building = FacilitiesManagement::Buildings.new(
+        FacilitiesManagement::Building.delete b.id
+        new_building = FacilitiesManagement::Building.new(
           id: b.id,
-          user_id: Base64.encode64('test@example.com'),
+          user: create(:user),
+          user_email: Base64.encode64('test@example.com'),
           updated_by: Base64.encode64('test@example.com'),
           building_json: b.building_json
         )
 
         new_building.save
+        new_building.reload
       rescue StandardError => e
         Rails.logger.warn "Couldn't update new building id: #{e}"
       end
@@ -129,7 +131,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     after :all do
       # teardown
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
+        FacilitiesManagement::Building.delete b.id
       rescue StandardError => e
         Rails.logger.warn "Couldn't delete new building id: #{e}"
       end

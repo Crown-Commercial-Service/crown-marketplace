@@ -19,6 +19,12 @@ class User < ApplicationRecord
           class_name: 'FacilitiesManagement::SupplierDetail',
           dependent: :destroy
 
+  has_many :buildings,
+           foreign_key: :users_id,
+           class_name: 'FacilitiesManagement::Building',
+           inverse_of: :user,
+           dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable

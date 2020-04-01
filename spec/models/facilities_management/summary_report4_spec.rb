@@ -386,8 +386,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # populate db with dub buildings
       # rubocop:disable RSpec/InstanceVariable
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
-        new_building = FacilitiesManagement::Buildings.new(
+        FacilitiesManagement::Building.delete b.id
+        new_building = FacilitiesManagement::Building.new(
           id: b.id,
           user_id: Base64.encode64('test@example.com'),
           updated_by: Base64.encode64('test@example.com'),
@@ -407,7 +407,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     after :all do
       # teardown
       @selected_buildings2.each do |b|
-        FacilitiesManagement::Buildings.delete b.id
+        FacilitiesManagement::Building.delete b.id
       rescue StandardError => e
         Rails.logger.warn "Couldn't delete new building id: #{e}"
       end

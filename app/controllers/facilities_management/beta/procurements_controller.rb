@@ -671,7 +671,7 @@ module FacilitiesManagement
       def set_buildings
         @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
-          building_data = JSON.parse(building['building_json'].to_s)
+          building_data = building.building_json
           @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
         end
       end
@@ -689,7 +689,7 @@ module FacilitiesManagement
       end
 
       def ready_buildings
-        @building_count = FacilitiesManagement::Buildings.where(user_id: Base64.encode64(current_user.email.to_s), status: 'Ready').size
+        @building_count = FacilitiesManagement::Building.where(user_id: current_user.id, status: 'Ready').size
       end
 
       def set_deleted_action_occurred

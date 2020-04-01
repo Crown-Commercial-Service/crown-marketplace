@@ -187,7 +187,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     selected_buildings_data.each { |building_data| selected_building_names << building_data.building_json['building-type'] }
     selected_building_names.uniq!
 
-    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_json['building-type'] } }
+    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type } }
   end
 
   # rubocop:disable Metrics/AbcSize

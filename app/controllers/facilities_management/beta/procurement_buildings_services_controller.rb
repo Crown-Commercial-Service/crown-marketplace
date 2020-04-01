@@ -82,7 +82,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
 
     @building = building_from_pb(@procurement_building) if @procurement_building.present?
 
-    @building_data = @building['building_json'] if @building.present?
+    @building_data = @building.building_json if @building.present?
 
     @building_service = bs_from_db if @building.present?
   end
@@ -95,7 +95,7 @@ class FacilitiesManagement::Beta::ProcurementBuildingsServicesController < Appli
 
   def building_from_pb(proc_building)
     building_id = proc_building.building_id if proc_building.present?
-    FacilitiesManagement::Buildings.find(building_id) if proc_building.present?
+    FacilitiesManagement::Building.find(building_id) if proc_building.present?
   end
 
   def set_back_path
