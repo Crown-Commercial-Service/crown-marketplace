@@ -68,7 +68,7 @@ RSpec.feature 'Nominated workers', type: :feature, supply_teachers: true do
     cheaper_branch = branches.first
     costlier_branch = branches.last
 
-    expect(cheaper_branch.find('h2').text).to eq('Westminster')
+    expect(cheaper_branch.find('h2').text).to eq('westminster')
     expect(cheaper_branch).to have_css('.supplier-record__distance', text: '1.1')
     expect(cheaper_branch).to have_css('.supplier-record__markup-rate', text: '30.0%')
 
