@@ -1,9 +1,11 @@
+<%= content_for :page_title, t('.heading') %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
     <p class="govuk-heading-m govuk-!-margin-bottom-8"><%= t('.lead_text') %></p>
     <p class="govuk-body">
-      <a href="<%=  management_consultancy_suppliers_download_path(lot: params[:lot], services: params[:services], region_codes: params[:region_codes])%>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+      <a href="<%=  management_consultancy_suppliers_download_path(lot: params[:lot], services: params[:services], region_codes: params[:region_codes])%>&format=xlsx" class="supplier-record__file-download" name="Download the supplier shortlist" type="<%= t('common.type_xlsx') %>" download>
         <%= t('.download_supplier_shortlist') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
       </a>
     </p>
@@ -12,7 +14,7 @@
 
     <ul class="govuk-list govuk-!-margin-top-6 govuk-section-break--visible">
       <li class="govuk-!-margin-bottom-3">
-        <a href="<%= t('.expression_of_interest_template_link') %>" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+        <a href="<%= t('.expression_of_interest_template_link') %>" class="supplier-record__file-download" name="Expression of interest" type="<%= t('common.type_doc') %>" download>
           <%= t('.expression_of_interest_template') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
         </a>
       </li>

@@ -124,6 +124,7 @@ namespace :db do
   task aws: :environment do
     p 'Loading FM Suppliers static'
     DistributedLocks.distributed_lock(152) do
+      CCS::FM::Supplier.destroy_all
       CCS.fm_suppliers
       CCS.fm_supplier_contact_details
     end

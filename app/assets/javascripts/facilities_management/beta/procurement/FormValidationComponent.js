@@ -6,7 +6,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         var canConnect = false;
         if (!this.site_wide_turn_off && null != formDOMObject && null == formDOMObject.formValidator) {
             if ((requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") === "true") ||
-                ((!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) || (!requestedSpecialTreatment && !(formDOMObject.getAttribute("specialvalidation") == "true")))) {
+                (!requestedSpecialTreatment && !formDOMObject.hasAttribute("specialvalidation")) ||
+                (!requestedSpecialTreatment && formDOMObject.getAttribute("specialvalidation") !== "true")) {
                 canConnect = true;
             }
         }

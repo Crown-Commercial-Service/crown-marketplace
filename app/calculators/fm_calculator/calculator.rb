@@ -12,6 +12,7 @@ require 'holidays'
 module FMCalculator
   class Calculator
     attr_writer :uom, :framework_rate
+    attr_accessor :results
 
     @benchmark_rates = nil
     @framework_rates = nil
@@ -43,6 +44,7 @@ module FMCalculator
       @building_data = building_data
       @building_type = @building_data[:'fm-building-type'] || @building_data['building-type'] if building_data
       @building_type = @building_type.to_sym if @building_type
+      @results = {}
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
@@ -244,7 +246,7 @@ module FMCalculator
 
     # entry point to calculate sum of the unit of measure
     # rubocop:disable Metrics/AbcSize
-    def sumunitofmeasure(results = nil)
+    def sumunitofmeasure
       subtotal1 = uomd + clean
       subtotal2 = subtotal1 + variance(subtotal1)
       subtotal3 = subtotal2 + cafm(subtotal2) + helpdesk(subtotal2)
@@ -254,22 +256,20 @@ module FMCalculator
       year1total = year1 + manage(year1) + corporate(year1)
       year1totalcharges = year1total + profit(year1)
 
-      if results
-        results[:subtotal1] = subtotal1
-        results[:year1totalcharges] = year1totalcharges
-        results[:cafm] = cafm(subtotal2)
-        results[:helpdesk] = helpdesk(subtotal2)
-        results[:variance] = variance(subtotal1)
-        results[:tupe] = tupe(subtotal3)
-        results[:manage] = manage(year1)
-        results[:corporate] = corporate(year1)
-        results[:profit] = profit(year1)
-        results[:mobilisation] = mobilisation
-        results[:subyearstotal] = 0 # in all cases
-        results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years) if @subsequent_length_years.positive?
-        results[:contract_length_years] = @contract_length_years
-        results[:subsequent_length_years] = @subsequent_length_years
-      end
+      results[:subtotal1] = subtotal1
+      results[:year1totalcharges] = year1totalcharges
+      results[:cafm] = cafm(subtotal2)
+      results[:helpdesk] = helpdesk(subtotal2)
+      results[:variance] = variance(subtotal1)
+      results[:tupe] = tupe(subtotal3)
+      results[:manage] = manage(year1)
+      results[:corporate] = corporate(year1)
+      results[:profit] = profit(year1)
+      results[:mobilisation] = mobilisation
+      results[:subyearstotal] = 0 # in all cases
+      results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years) if @subsequent_length_years.positive?
+      results[:contract_length_years] = @contract_length_years
+      results[:subsequent_length_years] = @subsequent_length_years
 
       year1totalcharges + subyearstotal(year1totalcharges, mobilisation)
     end

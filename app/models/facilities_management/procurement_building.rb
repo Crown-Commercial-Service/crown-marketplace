@@ -7,6 +7,7 @@ module FacilitiesManagement
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
+    belongs_to :building, class_name: 'FacilitiesManagement::Buildings', optional: true
 
     validate :service_codes_not_empty, on: :building_services
     validate :services_valid?, on: :procurement_building_services
@@ -14,16 +15,16 @@ module FacilitiesManagement
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
 
+    amoeba do
+      include_association :procurement_building_services
+    end
+
     def full_address
       "#{address_line_1 + ', ' if address_line_1.present?}
       #{address_line_2 + ', ' if address_line_2.present?}
       #{town + ', ' if town.present?}
       #{county + ', ' if county.present?}
       #{postcode}"
-    end
-
-    def building
-      CCS::FM::Building.find_by(id: building_id)
     end
 
     private

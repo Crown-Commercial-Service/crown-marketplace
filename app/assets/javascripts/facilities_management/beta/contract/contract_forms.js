@@ -7,7 +7,7 @@ $(function () {
     }
     
     // Check if on a procurement supplier page
-    if ($(".edit_facilities_management_procurement_supplier").length) {
+    if ($("#facilities_management_contract").length) {
         if ($(".edit_facilities_management_procurement_supplier").length) {
             let textArea = document.getElementsByTagName("textarea")[0].id;
             let maxLength = parseInt($("#" + textArea).attr("maxLength"), 10);

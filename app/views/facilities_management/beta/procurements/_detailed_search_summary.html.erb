@@ -11,7 +11,7 @@
   <%= render partial: 'no_buildings' %>
 <% else %>
   <div class="govuk-body">
-    <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
+    <%= link_to @page_definitions[:default][:back_text], facilities_management_beta_procurements_path, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6'%>
     <%= render('facilities_management/beta/procurements/errors_on_show', procurement: @procurement) %>
     <% if params[:template] == 'review-contract' %>
       <%= render('review_contract') %>

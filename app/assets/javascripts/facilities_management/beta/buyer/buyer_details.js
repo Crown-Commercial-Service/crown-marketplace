@@ -99,19 +99,6 @@ $(function () {
             }
         }
 
-        function fillInDetails(form) {
-            var buyerDetailsFormElements =  makeElementName();
-            var nameElem = buyerDetailsFormElements[0];
-            var jobTitleElem = buyerDetailsFormElements[1];
-            var telephoneNumberElem = buyerDetailsFormElements[2];
-            var orgNameElem = buyerDetailsFormElements[3];
-
-            document.getElementById(nameElem).value = window.sessionStorage.buyerDetailsName;
-            document.getElementById(jobTitleElem).value = window.sessionStorage.buyerDetailsJobTitle;
-            document.getElementById(telephoneNumberElem).value = window.sessionStorage.buyerDetailsTelephoneNumber;
-            document.getElementById(orgNameElem).value = window.sessionStorage.buyerDetailsOrgName;
-        }
-
         function getDetails(form) {
             var buyerDetailsFormElements =  makeElementName();
             var nameElem = buyerDetailsFormElements[0];

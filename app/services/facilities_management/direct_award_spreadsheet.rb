@@ -1,10 +1,11 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(supplier_name, data, data_no_cafmhelp_removed = {}, uvals = {})
-    @supplier_name = supplier_name
-    @data = data
+  def initialize(procurement_id)
+    @procurement = FacilitiesManagement::Procurement.find procurement_id
+    @active_procurement_buildings = @procurement.active_procurement_buildings
+    @supplier_name = @procurement.procurement_suppliers.first.supplier.data['supplier_name']
     @rate_card_data = CCS::FM::RateCard.latest.data
-    @data_no_cafmhelp_removed = data_no_cafmhelp_removed
-    @uvals_contract = uvals
+
+    set_data
     create_spreadsheet
   end
 
@@ -13,6 +14,33 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   private
+
+  def set_data
+    @results = {}
+    @report_results = {}
+
+    # get the services including help & cafm for the,contract rate card,worksheet
+    @report_results_no_cafmhelp_removed = {}
+    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+
+    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
+
+    supplier_names.each do |supplier_name|
+      # e.g. dummy_supplier_name = 'Hickle-Schinner'
+      @results[supplier_name] = {}
+      @report.calculate_services_for_buildings supplier_name, true, :da
+      @results[supplier_name] = @report.results
+
+      @report_results_no_cafmhelp_removed[supplier_name] = {}
+      @report.calculate_services_for_buildings supplier_name, false, :da
+      @report_results_no_cafmhelp_removed[supplier_name] = @report.results
+    end
+
+    @data = @results[@supplier_name]
+
+    @data_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[@supplier_name]
+    @uvals_contract = @active_procurement_buildings.map { |b| @report.uvals_for_building(b, :da)[0] }.flatten
+  end
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
     standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
@@ -155,7 +183,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def get_building_data(selected_building_names, selected_building_info)
-    selected_buildings_data = FacilitiesManagement::Buildings.where(id: @data.keys).select(:id, :building_json)
+    selected_buildings_data = @active_procurement_buildings.map(&:building).flatten
     selected_buildings_data.each { |building_data| selected_building_names << building_data.building_json['building-type'] }
     selected_building_names.uniq!
 
@@ -177,7 +205,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
       new_row = ['Service Reference', 'Service Name', 'Total']
-      @data.keys.sort.each.with_index do |_k, idx|
+      @active_procurement_buildings.each.with_index do |_k, idx|
         new_row << 'Building ' + (idx + 1).to_s
       end
       sheet.add_row new_row, style: header_row_style

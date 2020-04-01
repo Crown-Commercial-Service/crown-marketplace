@@ -247,8 +247,6 @@ module ApplicationHelper
       render partial: "#{params[:service]}/header-banner"
     else
       service_name = controller.class.parent_name&.underscore
-
-      # TODO: check if we need to improve the 'admin' check??
       if service_name.include? 'admin'
         render partial: 'layouts/admin/header-banner'
       elsif service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
@@ -280,19 +278,19 @@ module ApplicationHelper
   end
 
   def format_date(date_object)
-    date_object&.strftime '%e %B %Y'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y'
   end
 
   def format_date_time(date_object)
-    date_object&.strftime '%e %B %Y, %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y, %l:%M%P'
   end
 
   def format_date_time_day(date_object)
-    date_object&.strftime '%A %e %B %Y at %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%A %e %B %Y at %l:%M%P'
   end
 
   def format_money(cost)
-    "£#{number_with_delimiter(cost, delimiter: ',')}"
+    number_to_currency(cost, precision: 2, unit: '£')
   end
 
   def link_to_add_row(name, form, association, **args)
@@ -305,11 +303,10 @@ module ApplicationHelper
   end
 
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
-    # different fields for direct award package
     if service_type == 'Direct Award Discount (%)'
-      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %'], unit: '')
+      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']
     else
-      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')], unit: '')
+      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')]
     end
   end
 end

@@ -4,12 +4,10 @@ require 'rubygems'
 module FacilitiesManagement
   module Beta
     class ProcurementsController < FacilitiesManagement::Beta::FrameworkController
-      include FurtherCompetitionConcern
-
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
-      before_action :user_buildings_count, only: %i[show edit update]
+      before_action :ready_buildings, only: %i[show edit update]
       before_action :set_procurement_data, only: %i[show edit update results]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
@@ -21,6 +19,7 @@ module FacilitiesManagement
         @sent_offers = sent_offers
         @contracts = live_contracts
         @closed_contracts = closed_contracts
+        @further_competition_contracts = current_user.procurements.further_competition.order(updated_at: :asc)
       end
 
       def show
@@ -32,6 +31,7 @@ module FacilitiesManagement
 
       def new
         @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
+        @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes])
       end
 
       def create
@@ -42,6 +42,7 @@ module FacilitiesManagement
         else
           @errors = @procurement.errors
           set_procurement_data
+          @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes)
           render :new
         end
       end
@@ -118,14 +119,9 @@ module FacilitiesManagement
       end
 
       def further_competition_spreadsheet
-        init_further_competition
-        build_direct_award_report(true, @start_date, current_user, TransientSessionInfo[session.id])
-
-        uvals = []
-        building_ids_with_service_codes2 = get_building_ids_uvals(uvals, :fc)
-
-        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
-        spreadsheet_builder.build(@start_date, current_user)
+        init
+        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
         send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
       end
 
@@ -141,80 +137,23 @@ module FacilitiesManagement
         @procurement[:route_to_market] = @procurement.aasm_state
       end
 
-      # rubocop:disable Metrics/AbcSize
       def da_spreadsheets
         init
-        build_direct_award_report_da
-
-        uvals = []
-        buildings_ids = []
-        @selected_buildings.each do |building|
-          result = @report.uvals_for_public(building)
-          building_uvals = result[0]
-          uvals.concat building_uvals
-
-          buildings_ids << building.building_id
+        if params[:spreadsheet] == 'prices_spreadsheet'
+          spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.id
+          render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
+        else
+          spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.id
+          spreadsheet2 = spreadsheet_builder.build
+          render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         end
-
-        # create deliverable matrix spreadsheet
-        building_ids_with_service_codes2 = buildings_ids.collect do |b|
-          services_per_building = uvals.select { |u| u[:building_id] == b }.collect { |u| u[:service_code] }
-          { building_id: b.downcase, service_codes: services_per_building }
-        end
-
-        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals, @procurement.id)
-        spreadsheet2 = spreadsheet_builder.build
-
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @supplier_name, @report_results[@supplier_name], @rate_card, @report_results_no_cafmhelp_removed[@supplier_name], uvals
-        render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices' if params[:spreadsheet] == 'prices_spreadsheet'
-        render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix' if params[:spreadsheet] == 'matrix_spreadsheet'
       end
 
       private
 
       def init
-        @procurement = current_user.procurements.where(id: params[:procurement_id]).first
-        @start_date = @procurement.initial_call_off_start_date
+        @procurement = current_user.procurements.find_by(id: params[:procurement_id])
       end
-
-      def build_direct_award_report_da
-        user_email = current_user.email.to_s
-
-        cache__calculation_values_for_spreadsheet_flag = true
-
-        @report = SummaryReport.new(@procurement)
-
-        if @procurement
-          @selected_buildings = @procurement.active_procurement_buildings
-        else
-          @selected_buildings = CCS::FM::Building.buildings_for_user(user_email)
-          uvals = @report.uom_values(selected_buildings)
-        end
-
-        rates = CCS::FM::Rate.read_benchmark_rates
-        @rate_card = CCS::FM::RateCard.latest
-
-        @results = {}
-        @report_results = {} if cache__calculation_values_for_spreadsheet_flag
-
-        # get the services including help & cafm for the,contract rate card,worksheet
-        @report_results_no_cafmhelp_removed = {} if cache__calculation_values_for_spreadsheet_flag
-
-        supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
-        supplier_names.each do |supplier_name|
-          # e.g. dummy_supplier_name = 'Hickle-Schinner'
-          a_supplier_calculation_results = @report_results[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results, true
-          @results[supplier_name] = @report.direct_award_value
-
-          a_supplier_calculation_results_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[supplier_name] = {} if cache__calculation_values_for_spreadsheet_flag
-          @report.calculate_services_for_buildings @selected_buildings, uvals, rates, @rate_card, supplier_name, a_supplier_calculation_results_no_cafmhelp_removed, false
-        end
-
-        sorted_list = @results.sort_by { |_k, v| v }
-        @supplier_name = sorted_list.first[0]
-      end
-      # rubocop:enable Metrics/AbcSize
 
       def init_further_competition
         if params[:procurement_id]
@@ -244,7 +183,7 @@ module FacilitiesManagement
           create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
-          @precurement_reference = generate_contract_number_further_competition
+          @procurement_reference = generate_contract_number_further_competition
           @page_data[:model_object] = @procurement
         end
 
@@ -518,12 +457,6 @@ module FacilitiesManagement
         redirect_to facilities_management_beta_procurement_path(@procurement)
       end
 
-      def eligible_for_direct_award?
-        DirectAward.new(@procurement.buildings_standard, @procurement.services_standard, @procurement.priced_at_framework, @procurement.assessed_value).calculate
-      end
-
-      helper_method :eligible_for_direct_award?
-
       def set_results_page_data
         @page_data = {}
         @page_data[:model_object] = @procurement
@@ -541,7 +474,7 @@ module FacilitiesManagement
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }.select { |s| s[:price] <= 1500000 }.sort_by { |ii| ii[:price] }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
         contact_details_data_setup(params[:step])
         verify_completed_contact_details(params[:step])
       end
@@ -755,8 +688,8 @@ module FacilitiesManagement
         params[:step] = params[:facilities_management_procurement][:step] unless @procurement.quick_search?
       end
 
-      def user_buildings_count
-        @building_count = FMBuildingData.new.get_count_of_buildings(current_user.email.to_s)
+      def ready_buildings
+        @building_count = FacilitiesManagement::Buildings.where(user_id: Base64.encode64(current_user.email.to_s), status: 'Ready').size
       end
 
       def set_deleted_action_occurred
@@ -993,7 +926,7 @@ module FacilitiesManagement
       def page_definitions
         @page_definitions ||= {
           default: {
-            caption1: @procurement[:name],
+            caption1: @procurement[:contract_name],
             continuation_text: 'Continue',
             return_url: facilities_management_beta_procurements_path,
             return_text: 'Return to procurement dashboard',
@@ -1008,7 +941,6 @@ module FacilitiesManagement
             primary_name: 'set_route_to_market'
           },
           direct_award: {
-            caption1: @procurement[:name],
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),
             continuation_text: 'Continue to direct award',
@@ -1021,8 +953,7 @@ module FacilitiesManagement
             page_title: 'Further competition',
             secondary_name: 'change_requirements',
             secondary_text: 'Return to results',
-            continuation_text: 'Make a copy of your requirements',
-            back_url: facilities_management_beta_procurement_results_path(@procurement)
+            continuation_text: 'Make a copy of your requirements'
           },
           summary: {
             page_title: 'Summary',

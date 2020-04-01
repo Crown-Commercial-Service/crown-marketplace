@@ -398,14 +398,12 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
     let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
-    let(:da_value_test2) { 347.60116658878 }
-    let(:da_value_test3) { 1292.48276446867 }
     let(:obj) { double }
 
     before do
       # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
@@ -446,14 +444,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
 
     describe '#offer_to_next_supplier' do
+      let(:da_value_test) { 500 }
+      let(:da_value_test1) { 1500 }
+      let(:da_value_test2) { 1000 }
+      let(:da_value_test3) { 2000 }
+
       before do
         allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
         allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
+        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
         # rubocop:enable RSpec/AnyInstance
         procurement.save_eligible_suppliers_and_set_state
+        procurement.aasm_state = 'direct_award'
+        procurement.save
       end
 
       context 'when all contracts are unsent' do
@@ -462,24 +468,90 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.reload
           expect(procurement.procurement_suppliers.first.aasm_state).to eq 'sent'
         end
+
+        it 'will set the first contract number' do
+          expect(procurement.offer_to_next_supplier).to be true
+          procurement.reload
+          expect(procurement.procurement_suppliers.first.contract_number).not_to be_nil
+        end
+
+        it 'will not have a closed date' do
+          expect(procurement.offer_to_next_supplier).to be true
+          procurement.reload
+          expect(procurement.procurement_suppliers.first.contract_closed_date).to be_nil
+        end
       end
 
       context 'when some contracts are unsent' do
+        before { procurement.offer_to_next_supplier }
+
         it 'will return true and the next contract will be sent' do
-          procurement.offer_to_next_supplier
           expect(procurement.offer_to_next_supplier).to be true
           procurement.reload
           expect(procurement.procurement_suppliers[1].aasm_state).to eq 'sent'
         end
+
+        it 'will set their contract numbers' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          contract_numbers = procurement.procurement_suppliers[0..1].map(&:contract_number)
+          expect(contract_numbers.any?(nil)).to be false
+        end
+
+        it 'only the first will have a closed date' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          expect(procurement.procurement_suppliers[0].contract_closed_date).not_to be_nil
+          expect(procurement.procurement_suppliers[1].contract_closed_date).to be_nil
+        end
+
+        it 'last sent offer returns false' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
+          expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
+        end
       end
 
       context 'when no contracts are unsent' do
+        before { 4.times { procurement.offer_to_next_supplier } }
+
         it 'will return false and no contract states will be changed' do
-          4.times { procurement.offer_to_next_supplier }
           expect(procurement.offer_to_next_supplier).to be false
           procurement.reload
           closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
           expect(closed_contracts.all?('sent')).to eq true
+        end
+
+        it 'the contracts will be sent in order of lowest direct award value' do
+          procurement.reload
+
+          sorted_contracts = procurement.procurement_suppliers.order(:direct_award_value)
+          sorted_sent_contracts = procurement.procurement_suppliers.sent.order(:offer_sent_date)
+
+          expect(sorted_sent_contracts).to match_array(sorted_contracts)
+        end
+
+        it 'will set their contract numbers' do
+          procurement.reload
+          contract_numbers = procurement.procurement_suppliers.map(&:contract_number)
+          expect(contract_numbers.any?(nil)).to be false
+        end
+
+        it 'only the last will not have a closed date' do
+          procurement.reload
+          contract_closed_dates = procurement.procurement_suppliers.map(&:contract_closed_date)
+          expect(contract_closed_dates[0..2].any?(nil)).to be false
+          expect(contract_closed_dates.last).to be_nil
+        end
+
+        it 'last sent offer returns true' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          procurement.procurement_suppliers.sent.each(&:decline!)
+          sent_offers = procurement.procurement_suppliers.map(&:last_offer?)
+          expect(sent_offers[0..2].any?(true)).to be false
+          expect(sent_offers.last).to be true
         end
       end
     end
@@ -512,7 +584,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   describe '#direct_award?' do
     context 'when the procurement is set to direct award' do
       it 'is expected to be true' do
-        procurement.aasm_state = 'da_draft'
+        procurement.aasm_state = 'direct_award'
 
         expect(procurement.direct_award?).to eq(true)
       end

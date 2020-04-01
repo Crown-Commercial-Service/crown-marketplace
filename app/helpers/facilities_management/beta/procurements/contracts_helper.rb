@@ -9,19 +9,25 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def warning_message
-    warning_messages = { sent: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent')} #{format_date_time(@contract.offer_sent_date)}.",
+    warning_messages = { sent: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent_1')} #{format_date_time(@contract.contract_expiry_date)}.<br/> #{t('facilities_management.beta.procurements.contracts_helper.warning_message.sent_2')}",
                          accepted: t('facilities_management.beta.procurements.contracts_helper.warning_message.accepted'),
                          signed: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.signed')} #{format_date(@contract.contract_start_date)} and #{format_date(@contract.contract_end_date)}.",
                          not_signed: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.not_signed_1')} #{format_date_time @contract.contract_signed_date} #{t('facilities_management.beta.procurements.contracts_helper.warning_message.not_signed_2')}.",
                          declined: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.declined')} #{format_date_time(@contract.supplier_response_date)}.",
                          expired: t('facilities_management.beta.procurements.contracts_helper.warning_message.expired') }
     if @contract.closed?
-      "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+      if @contract.last_offer?
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_1')} #{format_date_time(@contract.contract_closed_date)} #{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_2')}"
+      else
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+      end
     else
       warning_messages[@contract.aasm_state.to_sym]
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   WARNINGS = { sent: 'Sent',
                accepted: 'Accepted, awaiting contract signature',
@@ -35,7 +41,7 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
   end
 
-  def set_continuation_text
+  def show_continuation_text
     case @contract.aasm_state
     when 'accepted'
       'Confirm if contract signed or not'
@@ -44,11 +50,27 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
     end
   end
 
-  def set_secondary_text
+  def show_secondary_text
     if @contract.closed? || @contract.aasm_state == 'signed'
       'Make a copy of your requirements'
     else
       'Close this procurement'
+    end
+  end
+
+  def edit_secondary_text
+    if params['name'] == 'next_supplier'
+      'Cancel and return to contract summary'
+    else
+      'Cancel'
+    end
+  end
+
+  def edit_page_title
+    if params['name'] == 'next_supplier'
+      'Offer to next supplier'
+    else
+      'Confirmation of signed contract'
     end
   end
 
@@ -58,20 +80,21 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
         back_label: 'Back',
         back_text: 'Back',
         back_url: facilities_management_beta_procurements_path,
+        caption1: @procurement.contract_name,
         return_text: 'Return to procurements dashboard',
         return_url: facilities_management_beta_procurements_path,
       },
       show: {
         page_title: 'Contract summary',
-        caption1: @procurement.contract_name,
-        continuation_text: set_continuation_text,
+        continuation_text: show_continuation_text,
         return_text: 'Return to procurements dashboard',
-        secondary_text: set_secondary_text,
+        secondary_text: show_secondary_text,
       },
       edit: {
         back_url: facilities_management_beta_procurement_contract_path(@procurement),
+        page_title: edit_page_title,
         continuation_text: 'Close this procurement',
-        secondary_text: 'Cancel',
+        secondary_text: edit_secondary_text,
       },
     }.freeze
   end
