@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
       supplier_services = lot1a_data[0]['services']
 
-      expect(supplier_services.include? 'C.1').to eq true
+      expect(supplier_services.include?('C.1')).to eq true
     end
   end
 end
