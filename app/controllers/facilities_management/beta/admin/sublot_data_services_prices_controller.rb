@@ -34,7 +34,6 @@ module FacilitiesManagement
         def update_sublot_data_services_prices
           setup_supplier_data
           setup_instance_variables
-
           update_data_table
           update_checkboxes
           update_rates
@@ -88,8 +87,6 @@ module FacilitiesManagement
 
           lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
           supplier_services = lot1a_data[0]['services']
-
-          # setup_instance_variables
 
           supplier_checkboxes = determine_used_services
           supplier_checkboxes.each do |service|
