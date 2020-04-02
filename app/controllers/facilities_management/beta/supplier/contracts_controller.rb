@@ -6,6 +6,7 @@ module FacilitiesManagement
         include FacilitiesManagement::Beta::Supplier::ContractsHelper
 
         before_action :set_contract
+        before_action :authorize_user
         before_action :set_procurement
         before_action :set_page_detail, only: %i[show edit]
 
@@ -43,6 +44,10 @@ module FacilitiesManagement
 
         def set_procurement
           @procurement = Procurement.find(@contract.procurement.id)
+        end
+
+        def authorize_user
+          authorize! :manage, @contract
         end
       end
     end

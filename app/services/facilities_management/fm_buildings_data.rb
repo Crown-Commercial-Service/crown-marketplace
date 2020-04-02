@@ -4,6 +4,12 @@ require 'net/http'
 require 'uri'
 
 class FMBuildingData
+  attr_accessor :user
+
+  def initialize(current_user)
+    @user = current_user
+  end
+
   def reset_buildings_tables(email_address)
     query = "delete from fm_uom_values where user_email = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -19,9 +25,9 @@ class FMBuildingData
     Rails.logger.info '==> FMBuildingData.save_building()'
 
     FacilitiesManagement::Building.create(id: building['id'],
-                                          user_id: current_user.id,
+                                          user: @user,
                                           user_email: Base64.encode64(email_address),
-                                          updated_by: Base64.encode64(email_address),
+                                          updated_by: email_address,
                                           building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
@@ -38,10 +44,14 @@ class FMBuildingData
 
   def save_building_property_activerecord(building_id, key, value)
     current_building = FacilitiesManagement::Building.find_by id: building_id
+    current_building.user = @user if current_building.user.nil?
+
     unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
-      current_building['building_json'][key] = value
+      json_value = current_building['building_json']
+      json_value[key] = value
+      current_building.building_json = json_value
       current_building['updated_at'] = DateTime.current
-      current_building.save id: building_id
+      current_building.save!
     end
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
@@ -50,21 +60,15 @@ class FMBuildingData
 
   def update_building_status(building_id, is_ready, email)
     current_building = FacilitiesManagement::Building.find_by id: building_id
+    current_building.user = @user if current_building.user.nil?
+
     current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
     current_building['updated_at'] = DateTime.current
     current_building['updated_by'] = email
-    current_building.save id: building_id
+    current_building.save!
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building status: #{e}"
     raise e
-  end
-
-  def update_building_id
-    # required for legacy private beta solution
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
-    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-  rescue StandardError => e
-    Rails.logger.warn "Couldn't update new building id: #{e}"
   end
 
   def new_building_id(email_address)
@@ -80,16 +84,16 @@ class FMBuildingData
     # returns building details for a given building_id
     query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    JSON.parse(result[0].to_json)
+    JSON.parse(result[0].json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end
 
-  def save_new_building(user_id, email_address, building_id, building)
+  def save_new_building(email_address, building_id, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
     query = "insert into facilities_management_buildings (user_id, user_email, building_json, updated_at, status, id, updated_by)
-            values ('#{user_id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+            values ('#{@user.id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
             ON CONFLICT (id)
             DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -137,7 +141,7 @@ class FMBuildingData
     query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
-    JSON.parse(result.to_json)
+    JSON.parse(result.json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end

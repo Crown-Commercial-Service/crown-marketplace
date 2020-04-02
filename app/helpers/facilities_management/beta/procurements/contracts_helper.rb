@@ -18,10 +18,12 @@ module FacilitiesManagement::Beta::Procurements::ContractsHelper
                          declined: "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.declined')} #{format_date_time(@contract.supplier_response_date)}.",
                          expired: t('facilities_management.beta.procurements.contracts_helper.warning_message.expired') }
     if @contract.closed?
-      if @contract.last_offer?
+      if !@contract.reason_for_closing.nil?
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+      elsif @contract.last_offer?
         "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_1')} #{format_date_time(@contract.contract_closed_date)} #{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_2')}"
       else
-        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
+        "#{t('facilities_management.beta.procurements.contracts_helper.warning_message.last_closed_3')} #{format_date_time(@contract.contract_closed_date)}."
       end
     else
       warning_messages[@contract.aasm_state.to_sym]

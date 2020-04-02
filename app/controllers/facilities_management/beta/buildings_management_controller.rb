@@ -12,14 +12,13 @@ module FacilitiesManagement
         @error_msg = ''
         current_login_email = current_user.email.to_s
         cookies.delete 'fm_building_id'
-        @fm_building_data = FMBuildingData.new
+        @fm_building_data = FMBuildingData.new(current_user)
         @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
         @building_data = @fm_building_data.get_building_data(current_login_email)
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
       end
 
-      # rubocop:disable Metrics/AbcSize
       def building_details_summary
         @error_msg = ''
         update_building_data if params['detail-type'].present? && request.method == 'POST'
@@ -28,14 +27,12 @@ module FacilitiesManagement
         @building_id = building_id_from_inputs
         @base_path = request.method.to_s == 'GET' ? '../' : './'
 
-        building_record = FacilitiesManagement::Building.find_by("user_id = '" + current_user.id.to_s + "' and id = '#{@building_id}'")
+        building_record = FacilitiesManagement::Building.find_by(id: @building_id)
         @building = building_record[:building_json]
         @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
       end
-
-      # rubocop:enable Metrics/AbcSize
 
       def building
         @back_link_href = 'buildings-management'
@@ -47,8 +44,8 @@ module FacilitiesManagement
         @building_id = SecureRandom.uuid if @building_id.blank?
 
         if params['id'].present?
-          building_record = FacilitiesManagement::Building.find_by("user_id = '" + current_user.id.to_s + "' and id = '#{@building_id}'")
-          @building = building_record&.building_json
+          building_record = FacilitiesManagement::Building.find(@building_id)
+          @building = building_record&.building_json&.deep_stringify_keys
           @page_title = 'Change building details'
           @editing = true
         else
@@ -84,7 +81,7 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/AbcSize
       def building_security_type
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         local_building_id = building_id_from_inputs
         building_details = get_new_or_specific_building_by_id local_building_id
         @building = JSON.parse(building_details['building_json'])
@@ -122,7 +119,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize
       def building_type
         local_building_id = building_id_from_inputs
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         building_details = get_new_or_specific_building_by_id local_building_id
         @skip_link_href = '#'
         @inline_error_summary_title = 'You must select the type of building'
@@ -152,7 +149,7 @@ module FacilitiesManagement
 
       def building_address
         @building_id = building_id_from_inputs
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         building_details = fm_building_data.new_building_details(@building_id)
         building = JSON.parse(building_details['building_json'])
         @back_link_href = 'building'
@@ -167,12 +164,11 @@ module FacilitiesManagement
 
       # Entry points for data storage
       # New building Save Methods
-      # rubocop:disable Metrics/AbcSize
       def save_new_building
         new_building_json = request.raw_post
         add = JSON.parse(new_building_json)
-        fm_building_data = FMBuildingData.new
-        building_id = fm_building_data.save_new_building current_user.id.to_s, current_user.email.to_s, add['id'], new_building_json
+        fm_building_data = FMBuildingData.new(current_user)
+        building_id = fm_building_data.save_new_building current_user.email.to_s, add['id'], new_building_json
         cache_new_building_id building_id
         raise 'Building IDs do not match' unless building_id == add['id']
 
@@ -185,7 +181,6 @@ module FacilitiesManagement
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController save_new_building(): #{e}"
       end
-      # rubocop:enable Metrics/AbcSize
 
       def save_building_gia
         key = 'gia'
@@ -318,7 +313,7 @@ module FacilitiesManagement
 
       # Data retrieval helpers - to be moved to the service layer?
       def get_new_or_specific_building_by_id(building_id)
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         building_details = fm_building_data.new_building_details(building_id)
         building_details
       end
@@ -338,7 +333,7 @@ module FacilitiesManagement
       end
 
       def update_and_validate_changes(building_id, property_name, new_value)
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
 
         return if new_value.present? ? new_value.empty? : true
 
@@ -348,14 +343,13 @@ module FacilitiesManagement
           true
         else
           fm_building_data.save_building_property_activerecord building_id, property_name, new_value
-          updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building_json'])
-          (updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value.to_s : false)
         end
+        true
       end
 
       def save_building_property(key, value)
         building_id = cookies['fm_building_id']
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         fm_building_data.save_building_property(building_id, key, value.gsub('"', ''))
         validate_and_update_building building_id
       rescue StandardError => e
@@ -363,7 +357,7 @@ module FacilitiesManagement
       end
 
       def validate_and_update_building(building_id)
-        db = FMBuildingData.new
+        db = FMBuildingData.new(current_user)
         building = db.get_building_data_by_id current_user.email.to_s, building_id if building_id.present?
         new_status = get_building_ready_status(JSON.parse(building[0]['building_json'])) if building.present?
         db.update_building_status(building_id, new_status, current_user.email.to_s) if building.present?
@@ -400,7 +394,7 @@ module FacilitiesManagement
       end
 
       def region(postcode)
-        fm_building_data = FMBuildingData.new
+        fm_building_data = FMBuildingData.new(current_user)
         region_json = JSON.parse(fm_building_data.region_info_for_post_town(postcode))
         region_json['result']['region']
       rescue StandardError => e

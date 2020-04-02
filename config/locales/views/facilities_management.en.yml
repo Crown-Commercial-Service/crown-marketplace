@@ -712,6 +712,7 @@ en:
             expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
             last_closed_1: The contract offer was automatically closed on
             last_closed_2: when you tried to offer the procurement to the next supplier, but there were no more suppliers.
+            last_closed_3: The contract offer was automatically closed when you offered the procurement to the next supplier on
             not_signed_1: You confirmed on the
             not_signed_2: that the contract has not been signed
             sent_1: This contract offer expires on

@@ -178,6 +178,10 @@ module FacilitiesManagement
       procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last == self
     end
 
+    def supplier_email
+      supplier.data['contact_email']
+    end
+
     private
 
     # Custom Validation
@@ -266,7 +270,7 @@ module FacilitiesManagement
 
     def send_email_to_supplier(email_type)
       template_name = email_type
-      email_to = supplier.data['contact_email']
+      email_to = supplier_email
 
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
