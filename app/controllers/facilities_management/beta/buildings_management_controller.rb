@@ -19,7 +19,6 @@ module FacilitiesManagement
         Rails.logger.warn "Error: BuildingsController buildings_management(): #{e}"
       end
 
-      # rubocop:disable Metrics/AbcSize
       def building_details_summary
         @error_msg = ''
         update_building_data if params['detail-type'].present? && request.method == 'POST'
@@ -28,14 +27,12 @@ module FacilitiesManagement
         @building_id = building_id_from_inputs
         @base_path = request.method.to_s == 'GET' ? '../' : './'
 
-        building_record = FacilitiesManagement::ExpiredBuildings.find_by("user_email = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
+        building_record = FacilitiesManagement::Building.find_by(id: @building_id)
         @building = building_record[:building_json]
         @display_warning = building_record.blank? ? false : building_record&.status == 'Incomplete'
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController building_details_summary(): #{e}"
       end
-
-      # rubocop:enable Metrics/AbcSize
 
       def building
         @back_link_href = 'buildings-management'
@@ -47,7 +44,7 @@ module FacilitiesManagement
         @building_id = SecureRandom.uuid if @building_id.blank?
 
         if params['id'].present?
-          building_record = FacilitiesManagement::ExpiredBuildings.find_by("user_email = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
+          building_record = FacilitiesManagement::Building.find(@building_id)
           @building = building_record&.building_json&.deep_stringify_keys
           @page_title = 'Change building details'
           @editing = true
@@ -346,9 +343,8 @@ module FacilitiesManagement
           true
         else
           fm_building_data.save_building_property_activerecord building_id, property_name, new_value
-          updated_building = JSON.parse(get_new_or_specific_building_by_id(building_id)['building_json'])
-          (updated_building.key?(property_name) ? updated_building[property_name].to_s == new_value.to_s : false)
         end
+        true
       end
 
       def save_building_property(key, value)
