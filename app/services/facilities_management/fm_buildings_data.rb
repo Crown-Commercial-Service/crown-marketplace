@@ -80,6 +80,7 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building id: #{e}"
   end
 
+  # problematic with git
   def new_building_details(building_id)
     # returns building details for a given building_id
     query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
@@ -135,6 +136,7 @@ class FMBuildingData
     Rails.logger.warn "Couldn't update building: #{e}"
   end
 
+  # problematic with git
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
     ActiveRecord::Base.include_root_in_json = true
@@ -146,6 +148,7 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
 
+  # problematic with git
   def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
