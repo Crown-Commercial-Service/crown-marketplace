@@ -66,4 +66,30 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       expect(supplier_services.include?('C.1')).to eq true
     end
   end
+
+  describe 'PUT update_rates for data table' do
+    it 'updates data table for prices' do
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Call Centre Operations (£)]': 5.19 }
+
+      supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')['data']
+      supplier_name = supplier_data['supplier_name']
+      latest_rate_card = CCS::FM::RateCard.latest
+      supplier_data_ratecard_prices = latest_rate_card[:data][:Prices].select { |key, _| supplier_name.include? key.to_s }
+      supplier_data = supplier_data_ratecard_prices.values[0].deep_stringify_keys!
+
+      expect(supplier_data['C.1']['Call Centre Operations']).to eq 5.19
+    end
+
+    it 'updates data table for discount' do
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00 }
+
+      supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')['data']
+      supplier_name = supplier_data['supplier_name']
+      latest_rate_card = CCS::FM::RateCard.latest
+      supplier_data_ratecard_discounts = latest_rate_card[:data][:Discounts].select { |key, _| supplier_name.include? key.to_s }
+      supplier_data = supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
+
+      expect(supplier_data['C.1']['Disc %']).to eq 1.00
+    end
+  end
 end
