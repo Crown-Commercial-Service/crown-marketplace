@@ -12,8 +12,8 @@
         <%= t('.heading') %>
       </h1>
 
-      <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
-        <%= govuk_fieldset_with_optional_error(@journey, :lot) do %>
+      <%= govuk_form_group_with_optional_error(@journey, :jurisdiction) do %>
+        <%= govuk_fieldset_with_optional_error(@journey, :jurisdiction) do %>
 
           <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
 
@@ -21,7 +21,7 @@
             <%= t('.question') %>
           </legend>
 
-          <%= display_error(@journey, :lot) %>
+          <%= display_error(@journey, :jurisdiction) %>
 
           <div class="govuk-radios">
             <div class="govuk-radios__item">
