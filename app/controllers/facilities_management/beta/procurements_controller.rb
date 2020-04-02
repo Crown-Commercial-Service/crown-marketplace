@@ -669,7 +669,7 @@ module FacilitiesManagement
       end
 
       def set_buildings
-        @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
+        @buildings_data = FMBuildingData.new(current_user).get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
           building_data = building.building_json
           @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
