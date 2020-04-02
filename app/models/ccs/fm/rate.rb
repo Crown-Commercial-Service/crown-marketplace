@@ -7,7 +7,6 @@ module CCS
     end
 
     class Rate < ApplicationRecord
-
       def self.framework_rate_for(service_code)
         service = find_by(code: service_code) || find_by(code: service_code, standard: 'A')
         service.framework

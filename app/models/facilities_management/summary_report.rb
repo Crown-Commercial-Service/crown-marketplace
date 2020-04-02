@@ -253,13 +253,12 @@ module FacilitiesManagement
 
       values << buyer_input unless buyer_input.zero?
 
-      (values.sum/values.size).to_f
+      (values.sum / values.size).to_f
     end
 
     def values_to_average
-      binding.pry
       if any_services_missing_framework_price?
-        if variance_over_30_percent?((buyer_input + sum_benchmark)/2, sum_uom)
+        if variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
           [sum_benchmark]
         else
           [sum_uom, sum_benchmark]
@@ -277,7 +276,7 @@ module FacilitiesManagement
     end
 
     def variance_over_30_percent?(sample_average, value)
-      (value - sample_average)/value > 30
+      (value - sample_average) / value > 0.03
     end
   end
 end
