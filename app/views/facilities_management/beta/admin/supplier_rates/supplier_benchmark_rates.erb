@@ -48,6 +48,9 @@
             <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
               <%- invalid_rate = work_pckg['rates'].select(&:invalid?).first %>
               <div class="<%= 'govuk-form-group--error' if invalid_rate %>">
+                <% if invalid_rate %>
+                  <a name="benchmark-error"></a>
+                <% end %>
                 <%= work_pckg['code'] %>
                 <%= work_pckg['name'] %>
                 <% if invalid_rate %>
@@ -95,6 +98,9 @@
         <tr class="govuk-table__row">
           <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
             <div class="<%= 'govuk-form-group--error' if rate.invalid? %>">
+              <% if rate.invalid? %>
+                <a name="benchmark-error"></a>
+              <% end %>
               <%= raw t("facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.#{rate_label}") %>
               <% if rate.invalid? %>
                 <span id="event-name-error" class="govuk-error-message">
