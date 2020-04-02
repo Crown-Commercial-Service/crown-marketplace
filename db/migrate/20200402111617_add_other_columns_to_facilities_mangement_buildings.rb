@@ -1,5 +1,5 @@
 class AddOtherColumnsToFacilitiesMangementBuildings < ActiveRecord::Migration[5.2]
-  class FacilitiesManagementBuilding < ActiveRecord::Base
+  class FacilitiesManagementBuilding < ApplicationRecord
   end
 
   def up
