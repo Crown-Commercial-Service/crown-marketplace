@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
 
   describe 'PUT update_rates for data table' do
     it 'updates data table for prices' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Call Centre Operations (£)]': 5.19 }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Call Centre Operations (£)]': 5.19, 'data[C.7][Special Schools (£)]': 1.40 }
 
       supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')['data']
       supplier_name = supplier_data['supplier_name']
@@ -78,10 +78,11 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       supplier_data = supplier_data_ratecard_prices.values[0].deep_stringify_keys!
 
       expect(supplier_data['C.1']['Call Centre Operations']).to eq 5.19
+      expect(supplier_data['C.7']['Special Schools']).to eq 1.40
     end
 
     it 'updates data table for discount' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00 }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00, 'data[C.4][Direct Award Discount (%)]': 1.00  }
 
       supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')['data']
       supplier_name = supplier_data['supplier_name']
@@ -90,6 +91,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       supplier_data = supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
 
       expect(supplier_data['C.1']['Disc %']).to eq 1.00
+      expect(supplier_data['C.4']['Disc %']).to eq 1.00
     end
   end
 end
