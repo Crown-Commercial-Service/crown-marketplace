@@ -34,10 +34,10 @@ if ['1.7.0'].include?(I18n::VERSION)
   end
 
 else
-  Rails.Logger.debug '\n--------------------------------------------------------------------------------'
-  Rails.Logger.debug "WARNING: you are using version #{I18n::VERSION} of the i18n gem."
-  Rails.Logger.debug '         Please double check that your monkey-patch still works!'
-  Rails.Logger.debug "         see: '#{__FILE__}'"
-  Rails.Logger.debug '         see: http://www.unixgods.org/~tilo/Rails/which_l10n_strings_is_rails_trying_to_lookup.html'
-  Rails.Logger.debug '--------------------------------------------------------------------------------\n'
+  Rails.logger.debug '\n--------------------------------------------------------------------------------'
+  Rails.logger.debug "WARNING: you are using version #{I18n::VERSION} of the i18n gem."
+  Rails.logger.debug '         Please double check that your monkey-patch still works!'
+  Rails.logger.debug "         see: '#{__FILE__}'"
+  Rails.logger.debug '         see: http://www.unixgods.org/~tilo/Rails/which_l10n_strings_is_rails_trying_to_lookup.html'
+  Rails.logger.debug '--------------------------------------------------------------------------------\n'
 end
