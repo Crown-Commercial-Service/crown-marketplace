@@ -263,26 +263,29 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:lift_data) { nil }
     let(:initial_call_off_period) { 7 }
     let(:estimated_annual_cost) { 7000000 }
-    let(:procurement) do
-      build(:facilities_management_procurement,
-            estimated_cost_known: true,
-            estimated_annual_cost: estimated_annual_cost,
-            initial_call_off_period: initial_call_off_period,
-            procurement_buildings: [
-              build(:facilities_management_procurement_building_no_services,
-                    active: true,
-                    building: create(:facilities_management_building_london),
-                    procurement_building_services: [
-                      build(:facilities_management_procurement_building_service, code: code, lift_data: lift_data),
-                      build(:facilities_management_procurement_building_service, code: code1),
-                      build(:facilities_management_procurement_building_service, code: code2)
-                    ])
-            ])
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             lift_data: lift_data,
+             procurement_building: create(:facilities_management_procurement_building_no_services,
+                                          building_id: create(:facilities_management_building_london).id,
+                                          procurement: create(:facilities_management_procurement_no_procurement_buildings,
+                                                              estimated_annual_cost: estimated_annual_cost,
+                                                              estimated_cost_known: true)))
+    end
+    let(:procurement_building_service_1) do
+      create(:facilities_management_procurement_building_service,
+             code: code1,
+             procurement_building: procurement_building_service.procurement_building)
+    end
+    let(:procurement_building_service_2) do
+      create(:facilities_management_procurement_building_service,
+             code: code1,
+             procurement_building: procurement_building_service_1.procurement_building)
     end
 
     before do
-      procurement.save!
-      @report = described_class.new(procurement.id)
+      @report = described_class.new(procurement_building_service_2.procurement_building.procurement.id)
       @report.calculate_services_for_buildings
     end
 
@@ -294,25 +297,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
         it 'uses BM and Customer prices only' do
-          expect (@report.assessed_value.to_f).to eq (@report.buyer_input + @report.sum_benchmark)/2.0
+          expect(@report.assessed_value.round(2)).to eq ((@report.buyer_input + @report.sum_benchmark)/2.0).round(2)
         end
       end
 
       context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
+        let(:estimated_annual_cost) { 37355000 }
         it 'uses FW, BM and Customer prices' do
-          expect(@report.assessed_value.to_f).to eq (@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3
-        end
-      end
-    end
-    context 'when framework and benchmark price for at least one service is missing' do
-      context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
-        it 'uses Customer prices only' do
-          expect (@report.assessed_value.to_f).to eq @report.buyer_input
-        end
-      end
-      context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
-        it 'uses FW, BM and Customer prices' do
-          expect (@report.assessed_value.to_f).to eq (@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3
+          expect(@report.assessed_value.round(2)).to eq ((@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3.0).round(2)
         end
       end
     end
