@@ -5,6 +5,26 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     it { is_expected.to belong_to(:user) }
   end
 
+  describe '#building_standard' do
+    subject(:building) { create(:facilities_management_building) }
+
+    context 'when testing for standard building' do
+      it 'will return STANDARD for general building' do
+        expect(building.building_standard).to eq('STANDARD')
+      end
+    end
+
+    context 'when testing for non-standard building' do
+      before do
+        building.building_type = 'Data Centre Operations'
+      end
+
+      it 'will return NON-STANDARD for Data Centre Operations' do
+        expect(building.building_standard).to eq('NON-STANDARD')
+      end
+    end
+  end
+
   describe 'default values' do
     subject(:building) { create(:facilities_management_building_defaults) }
 
