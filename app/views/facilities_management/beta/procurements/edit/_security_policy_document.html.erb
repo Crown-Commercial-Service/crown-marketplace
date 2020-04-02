@@ -1,3 +1,4 @@
+<%# <% binding.pry %> %>
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
   <div class="govuk-form-group">
     <div class="govuk-!-margin-top-3">
@@ -47,6 +48,9 @@
               <div class="govuk-!-margin-left-3" data-propertyname="Security policy document file">
                 <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label" %>
                 <%= display_errors @procurement, :security_policy_document_file %>
+                <% unless @procurement.security_policy_document_file.attachment.nil?%>
+                <%= "dada" %>
+                <% end %>
                 <%= f.file_field :security_policy_document_file %>
                 <div class="govuk-warning-text govuk-!-margin-top-3">
                   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
