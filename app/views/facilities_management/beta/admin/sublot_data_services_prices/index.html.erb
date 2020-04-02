@@ -51,12 +51,9 @@
               </label>
             </div>
           </td>
-
-
-
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
-              <input class="govuk-input govuk-input--width-3" id="event-name" name="event-name" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
+              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
             </td>
           <% end %>
         </tr>
@@ -116,7 +113,7 @@
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.146]" name="event-name" type="number" value="<%= @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] %>">
+        <input class="govuk-input govuk-input--width-3" id="rate[M.146]" name="rate[M.146]" type="number" value="<%= @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] %>">
       </td>
     </tr>
     <tr class="govuk-table__row">

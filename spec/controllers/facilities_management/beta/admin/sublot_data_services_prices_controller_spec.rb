@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
 
   describe 'PUT update_rates for variance' do
     it '#update_sublot_data_services_price' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': 1.123456, 'checked_services': 'C.1' }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': 1.123456, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
 
       rate_card = CCS::FM::RateCard.latest
       supplier_name = 'Abernathy and Sons'
@@ -49,14 +49,14 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
     end
 
     it 'redirects correctly' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1' }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
       expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
     end
   end
 
   describe 'PUT update_rates for checkbox' do
     it 'updates checkbox' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1' }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
 
       supplier = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')
       supplier_data = supplier['data']

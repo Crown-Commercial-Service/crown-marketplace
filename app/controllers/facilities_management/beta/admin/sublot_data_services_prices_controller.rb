@@ -32,6 +32,10 @@ module FacilitiesManagement
         end
 
         def update_sublot_data_services_prices
+          setup_supplier_data
+          setup_instance_variables
+
+          update_data_table
           update_checkboxes
           update_rates
           redirect_to facilities_management_beta_admin_supplier_framework_data_path
@@ -85,7 +89,7 @@ module FacilitiesManagement
           lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
           supplier_services = lot1a_data[0]['services']
 
-          setup_instance_variables
+          # setup_instance_variables
 
           supplier_checkboxes = determine_used_services
           supplier_checkboxes.each do |service|
@@ -127,12 +131,32 @@ module FacilitiesManagement
         # rubocop:enable Metrics/AbcSize
 
         def setup_supplier_data_ratecard
-          @supplier_data_ratecard_prices = CCS::FM::RateCard.latest[:data][:Prices].select { |key, _| @supplier_name.include? key.to_s }
+          latest_rate_card = CCS::FM::RateCard.latest
+          @supplier_data_ratecard_prices = latest_rate_card[:data][:Prices].select { |key, _| @supplier_name.include? key.to_s }
           @supplier_data_ratecard_prices.values[0].deep_stringify_keys!
 
-          @supplier_data_ratecard_discounts = CCS::FM::RateCard.latest[:data][:Discounts].select { |key, _| @supplier_name.include? key.to_s }
+          @supplier_data_ratecard_discounts = latest_rate_card[:data][:Discounts].select { |key, _| @supplier_name.include? key.to_s }
           @supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
+          latest_rate_card
         end
+
+        # rubocop:disable Metrics/AbcSize
+        def update_data_table
+          latest_rate_card = setup_supplier_data_ratecard
+
+          params['data'].each do |service_key, service|
+            service.each do |service_type_key, _|
+              key = service_type_key.remove(' (%)').remove(' (£)')
+              if key == 'Direct Award Discount'
+                @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
+              else
+                @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
+              end
+            end
+          end
+          latest_rate_card.save
+        end
+        # rubocop:enable Metrics/AbcSize
       end
     end
   end

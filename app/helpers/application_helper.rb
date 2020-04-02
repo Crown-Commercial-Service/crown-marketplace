@@ -306,7 +306,7 @@ module ApplicationHelper
     if service_type == 'Direct Award Discount (%)'
       supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']
     else
-      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')]
+      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%)').remove(' (£)')]
     end
   end
 end
