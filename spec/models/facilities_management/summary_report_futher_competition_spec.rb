@@ -284,27 +284,31 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
              procurement_building: procurement_building_service_1.procurement_building)
     end
 
+    let(:report) { described_class.new(procurement_building_service_2.procurement_building.procurement.id) }
+
     before do
-      @report = described_class.new(procurement_building_service_2.procurement_building.procurement.id)
-      @report.calculate_services_for_buildings
+      report.calculate_services_for_buildings
     end
 
     context 'when framework price for at least one service is missing' do
       let(:code) { 'C.5' }
       let(:lift_data) { %w[1000 1000 1000 1000] }
-      let(:code1) { 'G.9' }
-      let(:code2) { 'C.7' }
+      let(:code1) { 'G.9' } # no fw price
+      let(:code2) { 'C.7' } # no fw price
 
       context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
+        let(:estimated_annual_cost) { 843500 }
+
         it 'uses BM and Customer prices only' do
-          expect(@report.assessed_value.round(2)).to eq ((@report.buyer_input + @report.sum_benchmark)/2.0).round(2)
+          expect(report.assessed_value.round(2)).to eq ((report.buyer_input + report.sum_benchmark) / 2.0).round(2)
         end
       end
 
       context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
         let(:estimated_annual_cost) { 37355000 }
+
         it 'uses FW, BM and Customer prices' do
-          expect(@report.assessed_value.round(2)).to eq ((@report.sum_uom + @report.sum_benchmark + @report.buyer_input)/3.0).round(2)
+          expect(report.assessed_value.round(2)).to eq ((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2)
         end
       end
     end
