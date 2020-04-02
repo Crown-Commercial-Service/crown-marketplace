@@ -33,8 +33,23 @@ make
 ### MacOS
 
 #### Install PostGIS
+$ brew install postgres (this will install the latest (HEAD) version, currently 12.  The server runs 11!)
+$ brew install postgis (this is the latest (HEAD) and has postgres12 as a dependency - problematic)
 
-$ brew install postgis
+####Look at these pages for building postgis:
+* http://www.concept47.com/austin_web_developer_blog/rails/best-way-to-install-postgis-for-postgres-versions-lower-than-9-6-x-from-source/
+
+* https://github.com/petere/pex/issues/8
+
+* https://gist.github.com/skissane/0487c097872a7f6d0dcc9bcd120c2ccd
+
+They amount to: 
+* brew install pcre
+* download the tar from https://postgis.net/source/ (https://download.osgeo.org/postgis/source/postgis-2.5.4.tar.gz)
+* ln -s /usr/local/include/pcre*.h /usr/local/opt/postgresql@11/include
+* ./configure CFLAGS=-I/usr/local/include
+* PG_CPPFLAGS='-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H -I/usr/local/include' CFLAGS='-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H -I/usr/local/include' make
+* make install
 
 Install PhantomJS (for Javascript tests)
 

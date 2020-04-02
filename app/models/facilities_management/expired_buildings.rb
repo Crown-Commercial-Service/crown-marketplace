@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  class Buildings < ApplicationRecord
+  class ExpiredBuildings < ApplicationRecord
     self.table_name = 'facilities_management_buildings'
     self.primary_key = 'id'
 
@@ -10,11 +10,11 @@ module FacilitiesManagement
     # CCS::FM::Building.all
     #
     def self.buildings_for_user(user_id)
-      where("user_id = '" + Base64.encode64(user_id) + "'")
+      where("user_email = '" + Base64.encode64(user_id) + "'")
     end
 
     def self.building_by_reference(user_id, building_ref)
-      find_by("user_id = '" + Base64.encode64(user_id) + "' and building_json->>'building-ref' = '#{building_ref}'")
+      find_by("user_email = '" + Base64.encode64(user_id) + "' and building_json->>'building-ref' = '#{building_ref}'")
     end
 
     def building_standard

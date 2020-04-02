@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_18_142425) do
+ActiveRecord::Schema.define(version: 2020_03_19_113541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,12 +39,27 @@ ActiveRecord::Schema.define(version: 2020_03_18_142425) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.jsonb "building_json", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
     t.string "updated_by", null: false
+    t.text "user_email"
+    t.jsonb "building_json"
+    t.text "building_ref"
+    t.text "building_name"
+    t.text "description"
+    t.decimal "gia"
+    t.text "region"
+    t.text "building_type"
+    t.text "security_type"
+    t.text "address_town"
+    t.text "address_county"
+    t.text "address_line_1"
+    t.text "address_line_2"
+    t.text "address_postcode"
+    t.text "address_region"
+    t.text "address_region_code"
+    t.uuid "user_id"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin

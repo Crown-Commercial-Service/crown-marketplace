@@ -934,7 +934,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:code) { 'C.1' }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 5436.69
+          expect(report.assessed_value.round(2)).to eq 4575.95
         end
       end
     end
@@ -1060,7 +1060,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
               ([procurement_building_service.code] - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1070,7 +1070,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).any? &&
+              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).any? &&
               ([procurement_building_service.code] - l['services']).empty?
           end
         end.last.data['supplier_name']
@@ -1096,7 +1096,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
               ([procurement_building_service.code] - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1106,7 +1106,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
               ([procurement_building_service.code] - l['services']).any?
           end
         end.last.data['supplier_name']
@@ -1155,7 +1155,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service_c1.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service_c1.procurement_building.building.address_region_code] - l['regions']).empty? &&
               (procurement.procurement_building_services.map(&:code) - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1165,7 +1165,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              ([procurement_building_service_c1.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service_c1.procurement_building.building.address_region_code] - l['regions']).empty? &&
               (procurement.procurement_building_services.map(&:code) - l['services']).any?
           end
         end.last.data['supplier_name']
@@ -1200,7 +1200,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              (procurement.procurement_buildings.map { |pb| pb.building.building_json['address']['fm-address-region-code'] } - l['regions']).empty? &&
+              (procurement.procurement_buildings.map { |pb| pb.building.address_region_code } - l['regions']).empty? &&
               (procurement.procurement_building_services.map(&:code) - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1210,7 +1210,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
-              (procurement.procurement_building_services.map { |pb| pb.procurement_building.building.building_json['address']['fm-address-region-code'] } - l['regions']).any? &&
+              (procurement.procurement_building_services.map { |pb| pb.procurement_building.building.address_region_code } - l['regions']).any? &&
               (procurement.procurement_building_services.map(&:code) - l['services']).empty?
           end
         end.last.data['supplier_name']
@@ -1237,7 +1237,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1b') &&
-              ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
               ([procurement_building_service.code] - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1248,7 +1248,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
               !((l['lot_number'] == '1b') &&
-                ([procurement_building_service.procurement_building.building.building_json['address']['fm-address-region-code']] - l['regions']).empty? &&
+                ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
                 ([procurement_building_service.code] - l['services']).empty?)
           end
         end.first.data['supplier_name']

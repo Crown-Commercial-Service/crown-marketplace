@@ -4,12 +4,18 @@ require 'net/http'
 require 'uri'
 
 class FMBuildingData
+  attr_accessor :user
+
+  def initialize(current_user)
+    @user = current_user
+  end
+
   def reset_buildings_tables(email_address)
-    query = "delete from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "';"
+    query = "delete from fm_uom_values where user_email = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = "delete from fm_lifts where user_id = '" + Base64.encode64(email_address) + "';"
+    query = "delete from fm_lifts where user_email = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    query = "delete from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "';"
+    query = "delete from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't reset building tables: #{e}"
@@ -18,10 +24,11 @@ class FMBuildingData
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
 
-    FacilitiesManagement::Buildings.create(id: building['id'],
-                                           user_id: Base64.encode64(email_address),
-                                           updated_by: Base64.encode64(email_address),
-                                           building_json: building)
+    FacilitiesManagement::ExpiredBuildings.create(id: building['id'],
+                                                  user_id: @user.id,
+                                                  user_email: Base64.encode64(email_address),
+                                                  updated_by: Base64.encode64(email_address),
+                                                  building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
@@ -36,7 +43,9 @@ class FMBuildingData
   end
 
   def save_building_property_activerecord(building_id, key, value)
-    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building = FacilitiesManagement::ExpiredBuildings.find_by id: building_id
+    current_building[:user_id] = @user.id if current_building[:user_id].nil?
+
     unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
       current_building['building_json'][key] = value
       current_building['updated_at'] = DateTime.current
@@ -48,7 +57,9 @@ class FMBuildingData
   end
 
   def update_building_status(building_id, is_ready, email)
-    current_building = FacilitiesManagement::Buildings.find_by id: building_id
+    current_building = FacilitiesManagement::ExpiredBuildings.find_by id: building_id
+    current_building[:user_id] = @user.id if current_building.user_id.nil?
+
     current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
     current_building['updated_at'] = DateTime.current
     current_building['updated_by'] = email
@@ -56,14 +67,6 @@ class FMBuildingData
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building status: #{e}"
     raise e
-  end
-
-  def update_building_id
-    # required for legacy private beta solution
-    query = "update facilities_management_buildings set building_json = jsonb_set(building_json, '{id}', to_json(id::text)::jsonb) where building_json ->> 'id' is null;"
-    ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-  rescue StandardError => e
-    Rails.logger.warn "Couldn't update new building id: #{e}"
   end
 
   def new_building_id(email_address)
@@ -87,8 +90,8 @@ class FMBuildingData
   def save_new_building(email_address, building_id, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
-    query = "insert into facilities_management_buildings (user_id, building_json, updated_at, status, id, updated_by)
-            values ('#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+    query = "insert into facilities_management_buildings (user_id, user_email, building_json, updated_at, status, id, updated_by)
+            values ('#{@user.id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
             ON CONFLICT (id)
             DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
@@ -99,14 +102,14 @@ class FMBuildingData
   end
 
   def delete_uom_for_building(email_address, building_id)
-    query = "delete from fm_uom_values where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
+    query = "delete from fm_uom_values where user_email = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't delete uom's for building: #{e}"
   end
 
   def delete_lifts_for_building(email_address, building_id)
-    query = "delete from fm_lifts where user_id = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
+    query = "delete from fm_lifts where user_email = '" + Base64.encode64(email_address) + "' and building_id = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't delete lift info for building: #{e}"
@@ -116,7 +119,7 @@ class FMBuildingData
     Rails.logger.info '==> FMBuildingData.delete_building()'
     delete_uom_for_building(email_address, building_id)
     delete_lifts_for_building(email_address, building_id)
-    query = "delete from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + building_id + "';"
+    query = "delete from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + building_id + "';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't delete building: #{e}"
@@ -124,7 +127,7 @@ class FMBuildingData
 
   def update_building(email_address, id, building)
     Rails.logger.info '==> FMBuildingData.update_building()'
-    query = "update facilities_management_buildings set updated_at = now(), building_json = '" + building.gsub("'", "''") + "'  where user_id = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
+    query = "update facilities_management_buildings set updated_at = now(), building_json = '" + building.gsub("'", "''") + "'  where user_email = '" + Base64.encode64(email_address) + "' and building_json ->> 'id' = '" + id + "'"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building: #{e}"
@@ -133,7 +136,7 @@ class FMBuildingData
   def get_building_data(email_address)
     Rails.logger.info '==> FMBuildingData.get_building_data()'
     ActiveRecord::Base.include_root_in_json = true
-    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
+    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
     JSON.parse(result.to_json)
@@ -144,30 +147,25 @@ class FMBuildingData
   def get_building_data_by_id(email_address, id)
     Rails.logger.info '==> FMBuildingData.get_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
-    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
+    query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     JSON.parse(result.to_json)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
 
-  def get_building_id_by_ref(email_address, building_ref)
-    Rails.logger.info '==> FMBuildingData.get_building_data_by_ref()'
-    (FacilitiesManagement::Buildings.building_by_reference email_address, building_ref)
-  end
-
-  def get_count_of_buildings_by_id(user_id, building_id)
+  def get_count_of_buildings_by_id(user_email, building_id)
     Rails.logger.info '==> FMBuildingData.get_count_of_building_data_by_id()'
     ActiveRecord::Base.include_root_in_json = false
 
-    to_query = %|select count(*) as record_count from facilities_management_buildings where user_id= '#{Base64.encode64(user_id)}' and building_json @> '{"building-ref" : "#{building_id}"}'|
+    to_query = %|select count(*) as record_count from facilities_management_buildings where user_email= '#{Base64.encode64(user_email)}' and building_json @> '{"building-ref" : "#{building_id}"}'|
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(to_query) }
     result[0]['record_count']
   end
 
   def get_count_of_buildings(email_address)
     Rails.logger.info '==> FMBuildingData.get_count_of_buildings()'
-    query = "select count(*) as record_count from facilities_management_buildings where user_id = '" + Base64.encode64(email_address) + "'"
+    query = "select count(*) as record_count from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     result[0]['record_count']
   rescue StandardError => e

@@ -7,7 +7,7 @@ module FacilitiesManagement
       before_action :set_procurement, only: %i[show edit update destroy results]
       before_action :set_deleted_action_occurred, only: %i[index]
       before_action :set_edit_state, only: %i[index show edit update destroy]
-      before_action :user_buildings_count, only: %i[show edit update]
+      before_action :ready_buildings, only: %i[show edit update]
       before_action :set_procurement_data, only: %i[show edit update results]
       before_action :set_new_procurement_data, only: %i[new]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
@@ -669,9 +669,9 @@ module FacilitiesManagement
       end
 
       def set_buildings
-        @buildings_data = FMBuildingData.new.get_building_data(current_user.email.to_s)
+        @buildings_data = FMBuildingData.new(current_user).get_building_data(current_user.email.to_s)
         @buildings_data.each do |building|
-          building_data = JSON.parse(building['building_json'].to_s)
+          building_data = JSON.parse(building['building_json'])
           @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
         end
       end
@@ -688,8 +688,8 @@ module FacilitiesManagement
         params[:step] = params[:facilities_management_procurement][:step] unless @procurement.quick_search?
       end
 
-      def user_buildings_count
-        @building_count = FMBuildingData.new.get_count_of_buildings(current_user.email.to_s)
+      def ready_buildings
+        @building_count = FacilitiesManagement::Building.where(user_id: current_user.id, status: 'Ready').size
       end
 
       def set_deleted_action_occurred

@@ -105,7 +105,7 @@ module FacilitiesManagement
       elsif requires_service_hours?
         service_hours.total_hours_annually.to_i
       else
-        procurement_building.building.building_json['gia']
+        procurement_building.building.building_json[:gia]
       end
     end
 

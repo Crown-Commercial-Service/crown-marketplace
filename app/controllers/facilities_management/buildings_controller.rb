@@ -7,7 +7,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
 
   def reset_buildings_tables
     current_login_email = current_user.email.to_s
-    fmd = FMBuildingData.new
+    fmd = FMBuildingData.new(current_user)
     fmd.reset_buildings_tables(current_login_email)
     j = { 'status': 200 }
     render json: j, status: 200
@@ -19,13 +19,14 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @inline_summary_error_text = 'You must select at least one service before continuing'
   end
 
+  # rubocop:disable Metrics/AbcSize
   def buildings
     set_current_choices
 
     @uom_values = []
     current_login_email = current_user.email.to_s
     set_error_messages
-    @fm_building_data = FMBuildingData.new
+    @fm_building_data = FMBuildingData.new(current_user)
     @building_count = @fm_building_data.get_count_of_buildings(current_login_email)
     @building_data = @fm_building_data.get_building_data(current_login_email)
     fm_service_data = FMServiceData.new
@@ -42,6 +43,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @message = e.to_s
     render 'error'
   end
+  # rubocop:enable Metrics/AbcSize
 
   def new_building
     set_current_choices
@@ -60,7 +62,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
   end
 
   def save_building
-    @fm_building_data = FMBuildingData.new
+    @fm_building_data = FMBuildingData.new(current_user)
     @fm_building_data.save_building(current_user.email.to_s, JSON.parse(request.raw_post))
     j = { 'status': 200 }
     render json: j, status: 200
@@ -72,7 +74,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @new_building_json = request.raw_post
     obj = JSON.parse(@new_building_json)
     id = obj['id']
-    @fm_building_data = FMBuildingData.new
+    @fm_building_data = FMBuildingData.new(current_user)
     @fm_building_data.update_building(current_user.email.to_s, id, @new_building_json)
     j = { 'status': 200 }
     render json: j, status: 200
@@ -82,7 +84,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
 
   def region_info
     post_code = params['post_code']
-    fm_building_data = FMBuildingData.new
+    fm_building_data = FMBuildingData.new(current_user)
     result = fm_building_data.region_info_for_post_town(post_code)
     render json: result
   rescue StandardError
@@ -139,7 +141,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
   def building_type
     set_current_choices
 
-    fm_building_data = FMBuildingData.new
+    fm_building_data = FMBuildingData.new(current_user)
     @inline_error_summary_title = 'There was a problem'
     @inline_error_summary_body_href = '#'
     @inline_summary_error_text = 'Please select an option before continuing'
@@ -153,7 +155,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     raw_post = request.raw_post
     raw_post_json = JSON.parse(raw_post)
     building_id = raw_post_json['building_id']
-    fm_building_data = FMBuildingData.new
+    fm_building_data = FMBuildingData.new(current_user)
     fm_building_data.delete_building(current_user.email.to_s, building_id)
     j = { 'status': 200 }
     render json: j, status: 200
