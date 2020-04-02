@@ -3,6 +3,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
       <%= govuk_form_group_with_optional_error(@journey, :lot) do %>
@@ -13,7 +14,7 @@
             </h1>
           </legend>
 
-          <%= display_error(@journey, :select_lot) %>
+          <%= display_error(@journey, :lot) %>
 
           <div class="govuk-radios">
             <% LegalServices::Journey::SelectLot.lots.each do |lot| %>

@@ -7,6 +7,7 @@ module FacilitiesManagement
 
         before_action :set_procurement
         before_action :set_contract
+        before_action :authorize_user
         before_action :set_page_detail, only: %i[show edit]
         before_action :assign_contract_attributes, only: :update
 
@@ -92,6 +93,10 @@ module FacilitiesManagement
                   :contract_end_date_mm,
                   :contract_end_date_yyyy
                 )
+        end
+
+        def authorize_user
+          authorize! :manage, @procurement
         end
       end
     end
