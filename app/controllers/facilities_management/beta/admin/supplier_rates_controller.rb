@@ -2,27 +2,29 @@ module FacilitiesManagement
   module Beta
     module Admin
       class SupplierRatesController < FacilitiesManagement::Beta::FrameworkController
-        def supplier_benchmark_rates
-          @full_services = full_services
-        end
+        before_action :full_services, :variances, :init_errors
 
-        def supplier_framework_rates
-          @full_services = full_services
-          @variances = variances
-          @errors = []
+        def update_supplier_benchmark_rates
+          all_errors = apply_and_collect_errors(params[:rates], :benchmark)
+
+          if all_errors.any?
+            @errors = all_errors.first
+            render :supplier_benchmark_rates
+          else
+            save_updated_rates
+            flash[:success] = 'Rates successfully updated'
+            redirect_to facilities_management_beta_admin_path
+          end
         end
 
         def update_supplier_framework_rates
-          @full_services = full_services
-          @variances = variances
-
-          all_errors = apply_and_collect_errors(@full_services, @variances, params[:rates])
+          all_errors = apply_and_collect_errors(params[:rates], :framework)
 
           if all_errors.any?
             @errors = all_errors.first
             render :supplier_framework_rates
           else
-            save_updated_rates(@full_services, @variances)
+            save_updated_rates
             flash[:success] = 'Rates successfully updated'
             redirect_to facilities_management_beta_admin_path
           end
@@ -38,11 +40,11 @@ module FacilitiesManagement
           services = FacilitiesManagement::Admin::StaticDataAdmin.services
           work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
           work_packages_with_rates = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
-          FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
+          @full_services = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
         end
 
         def variances
-          {
+          @variances = {
             td_overhead: rates.find_by(code: 'M.140'),
             td_corporate: rates.find_by(code: 'M.141'),
             td_profit: rates.find_by(code: 'M.142'),
@@ -53,34 +55,38 @@ module FacilitiesManagement
           }
         end
 
-        def apply_and_collect_errors(full_services, variances, data)
+        def init_errors
+          @errors = []
+        end
+
+        def apply_and_collect_errors(data, attribute)
           all_errors = []
 
-          full_services.each do |service|
+          @full_services.each do |service|
             service['work_package'].each do |package|
               package['rates'].each do |rate|
-                rate.framework = data[rate.id]
+                rate.send("#{attribute}=", data[rate.id])
                 all_errors << rate.errors if rate.invalid?
               end
             end
           end
 
-          variances.each do |_label, rate|
-            rate.framework = data[rate.id]
+          @variances.each do |_label, rate|
+            rate.send("#{attribute}=", data[rate.id])
             all_errors << rate.errors if rate.invalid?
           end
 
           all_errors
         end
 
-        def save_updated_rates(full_services, variances)
-          full_services.each do |service|
+        def save_updated_rates
+          @full_services.each do |service|
             service['work_package'].each do |package|
               package['rates'].each(&:save)
             end
           end
 
-          variances.each { |_label, rate| rate.save }
+          @variances.each { |_label, rate| rate.save }
         end
       end
     end

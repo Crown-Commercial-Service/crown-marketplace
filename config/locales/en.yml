@@ -709,6 +709,8 @@ en:
     beta:
       admin:
         supplier_rates:
+          supplier_benchmark_rates:
+            not_a_number: The rate must be a number, like 2.66
           supplier_framework_rates:
             not_a_number: The rate must be a number, like 2.66
   faker:
