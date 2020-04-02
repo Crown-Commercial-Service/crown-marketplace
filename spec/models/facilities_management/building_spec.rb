@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   describe 'default values' do
     subject(:building) { create(:facilities_management_building_defaults) }
 
-    context 'when saving an empty record' do
+    context 'when saving an empty record', skip: true do
       before do
         building.save(validate: false)
         building.reload
