@@ -19,6 +19,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @inline_summary_error_text = 'You must select at least one service before continuing'
   end
 
+  # rubocop:disable Metrics/AbcSize
   def buildings
     set_current_choices
 
@@ -42,6 +43,7 @@ class FacilitiesManagement::BuildingsController < FacilitiesManagement::Framewor
     @message = e.to_s
     render 'error'
   end
+  # rubocop:enable Metrics/AbcSize
 
   def new_building
     set_current_choices

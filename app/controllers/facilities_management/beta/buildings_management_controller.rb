@@ -48,7 +48,7 @@ module FacilitiesManagement
 
         if params['id'].present?
           building_record = FacilitiesManagement::ExpiredBuildings.find_by("user_email = '" + Base64.encode64(current_user.email.to_s) + "' and id = '#{@building_id}'")
-          @building = building_record&.building_json.deep_stringify_keys
+          @building = building_record&.building_json&.deep_stringify_keys
           @page_title = 'Change building details'
           @editing = true
         else
@@ -167,7 +167,6 @@ module FacilitiesManagement
 
       # Entry points for data storage
       # New building Save Methods
-      # rubocop:disable Metrics/AbcSize
       def save_new_building
         new_building_json = request.raw_post
         add = JSON.parse(new_building_json)
@@ -185,7 +184,6 @@ module FacilitiesManagement
       rescue StandardError => e
         Rails.logger.warn "Error: BuildingsController save_new_building(): #{e}"
       end
-      # rubocop:enable Metrics/AbcSize
 
       def save_building_gia
         key = 'gia'

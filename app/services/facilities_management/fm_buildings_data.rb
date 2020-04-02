@@ -87,11 +87,11 @@ class FMBuildingData
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end
 
-  def save_new_building(user_id, email_address, building_id, building)
+  def save_new_building(email_address, building_id, building)
     # Beta code for step 1 saving a new building
     Rails.logger.info '==> FMBuildingData.save_new_building()'
     query = "insert into facilities_management_buildings (user_id, user_email, building_json, updated_at, status, id, updated_by)
-            values ('#{user_id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
+            values ('#{@user.id}', '#{Base64.encode64(email_address)}', '#{building.gsub("'", "''")}', now(), 'Incomplete', '#{building_id}', '#{email_address}')
             ON CONFLICT (id)
             DO update set building_json = '#{building.gsub("'", "''")}';"
     ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }

@@ -28,7 +28,7 @@ module FacilitiesManagement
     end
 
     def populate_json_attribute
-      self[:building_json] = json.deep_symbolize_keys unless building_name.blank?
+      self[:building_json] = json.deep_symbolize_keys if building_name.present?
       populate_row_from_json(self[:building_json].deep_symbolize_keys) if building_name.blank? && self[:building_json]['name'].present?
     end
 
