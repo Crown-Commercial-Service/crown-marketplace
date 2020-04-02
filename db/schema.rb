@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_19_113541) do
+ActiveRecord::Schema.define(version: 2020_04_02_111617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 2020_03_19_113541) do
     t.text "address_region"
     t.text "address_region_code"
     t.uuid "user_id"
+    t.string "other_building_type"
+    t.string "other_security_type"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin

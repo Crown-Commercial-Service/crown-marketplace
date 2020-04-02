@@ -24,11 +24,11 @@ class FMBuildingData
   def save_building(email_address, building)
     Rails.logger.info '==> FMBuildingData.save_building()'
 
-    FacilitiesManagement::ExpiredBuildings.create(id: building['id'],
-                                                  user_id: @user.id,
-                                                  user_email: Base64.encode64(email_address),
-                                                  updated_by: Base64.encode64(email_address),
-                                                  building_json: building)
+    FacilitiesManagement::Building.create(id: building['id'],
+                                          user: @user,
+                                          user_email: Base64.encode64(email_address),
+                                          updated_by: email_address,
+                                          building_json: building)
   rescue StandardError => e
     Rails.logger.warn "Couldn't update new building id: #{e}"
   end
@@ -43,13 +43,15 @@ class FMBuildingData
   end
 
   def save_building_property_activerecord(building_id, key, value)
-    current_building = FacilitiesManagement::ExpiredBuildings.find_by id: building_id
-    current_building[:user_id] = @user.id if current_building[:user_id].nil?
+    current_building = FacilitiesManagement::Building.find_by id: building_id
+    current_building.user = @user if current_building.user.nil?
 
     unless current_building['building_json'][key].present? && current_building['building_json'][key] == value
-      current_building['building_json'][key] = value
+      json_value = current_building['building_json']
+      json_value[key] = value
+      current_building.building_json = json_value
       current_building['updated_at'] = DateTime.current
-      current_building.save id: building_id
+      current_building.save!
     end
   rescue StandardError => e
     Rails.logger.warn "Couldn't save building property: #{e}"
@@ -57,13 +59,13 @@ class FMBuildingData
   end
 
   def update_building_status(building_id, is_ready, email)
-    current_building = FacilitiesManagement::ExpiredBuildings.find_by id: building_id
-    current_building[:user_id] = @user.id if current_building.user_id.nil?
+    current_building = FacilitiesManagement::Building.find_by id: building_id
+    current_building.user = @user if current_building.user.nil?
 
     current_building['status'] = (is_ready ? 'Ready' : 'Incomplete')
     current_building['updated_at'] = DateTime.current
     current_building['updated_by'] = email
-    current_building.save id: building_id
+    current_building.save!
   rescue StandardError => e
     Rails.logger.warn "Couldn't update building status: #{e}"
     raise e
@@ -82,7 +84,7 @@ class FMBuildingData
     # returns building details for a given building_id
     query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    JSON.parse(result[0].to_json)
+    JSON.parse(result[0].json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end
@@ -139,7 +141,7 @@ class FMBuildingData
     query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
-    JSON.parse(result.to_json)
+    JSON.parse(result.json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
@@ -149,7 +151,7 @@ class FMBuildingData
     ActiveRecord::Base.include_root_in_json = false
     query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' and id='" + id + "'"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    JSON.parse(result.to_json)
+    JSON.parse(result.json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end
