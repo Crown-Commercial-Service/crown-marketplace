@@ -82,7 +82,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
     end
 
     it 'updates data table for discount' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00, 'data[C.4][Direct Award Discount (%)]': 1.00  }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00, 'data[C.4][Direct Award Discount (%)]': 1.00 }
 
       supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')['data']
       supplier_name = supplier_data['supplier_name']
