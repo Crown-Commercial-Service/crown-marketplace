@@ -7,7 +7,16 @@ module CCS
     end
 
     class Rate < ApplicationRecord
-      # attr_reader :benchmark_rates, :framework_rates
+
+      def self.framework_rate_for(service_code)
+        service = find_by(code: service_code) || find_by(code: service_code, standard: 'A')
+        service.framework
+      end
+
+      def self.benchmark_rate_for(service_code)
+        service = find_by(code: service_code) || find_by(code: service_code, standard: 'A')
+        service.benchmark
+      end
 
       # usage:
       # CCS::FM::Rate.zero_rate
