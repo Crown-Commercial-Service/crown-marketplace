@@ -42,7 +42,7 @@ module FMCalculator
       end
 
       @building_data = building_data
-      @building_type = @building_data[:'fm-building-type'] || @building_data['building-type'] if building_data
+      @building_type = @building_data[:'fm-building-type'] || @building_data[:'building-type'] if building_data
       @building_type = @building_type.to_sym if @building_type
       @results = {}
     end

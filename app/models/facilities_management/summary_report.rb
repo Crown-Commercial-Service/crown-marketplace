@@ -188,7 +188,7 @@ module FacilitiesManagement
     # rubocop:enable Rails/FindEach
 
     def copy_params(building_data, _uvals)
-      @london_flag = building_in_london?(building_data[:address]['fm_address_region_code'.to_sym])
+      @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
       procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
       @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
@@ -208,7 +208,6 @@ module FacilitiesManagement
       uvals_remove_cafm_help = if remove_cafm_help == true
                                  uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
                                else
-
                                  uvals
                                end
       uvals_remove_cafm_help.each do |v|

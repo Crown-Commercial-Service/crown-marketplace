@@ -934,7 +934,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:code) { 'C.1' }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 4575.95
+          expect(report.assessed_value.round(2)).to eq 5436.69
         end
       end
     end
