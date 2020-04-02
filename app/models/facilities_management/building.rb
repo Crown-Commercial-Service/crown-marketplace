@@ -51,7 +51,7 @@ module FacilitiesManagement
                                'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes'].freeze
 
     def building_standard
-      STANDARD_BUILDING_TYPES.include?(building_json['building-type']) ? 'STANDARD' : 'NON-STANDARD'
+      STANDARD_BUILDING_TYPES.include?(building_json['building_type'.to_sym] || building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
 
     def building_type_list_titles
