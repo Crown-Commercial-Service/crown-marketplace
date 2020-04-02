@@ -37,6 +37,10 @@ module FacilitiesManagement
           setup_checkboxes(supplier_services)
         end
 
+        def update
+          redirect_to facilities_management_beta_admin_supplier_framework_data_path
+        end
+
         private
 
         def setup_checkboxes(supplier_services)
