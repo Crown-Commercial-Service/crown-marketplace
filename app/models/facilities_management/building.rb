@@ -16,15 +16,20 @@ module FacilitiesManagement
     validates :address_postcode, presence: true, on: %i[address all]
 
     def building_json=(json)
-      populate_row(json.deep_symbolize_keys)
+      populate_row_from_json(json.deep_symbolize_keys)
     end
 
     def building_json
-      json
+      if building_name.present?
+        json
+      else
+        attributes['building_json']
+      end
     end
 
     def populate_json_attribute
-      self[:building_json] = json.deep_symbolize_keys
+      self[:building_json] = json.deep_symbolize_keys unless building_name.blank?
+      populate_row_from_json(self[:building_json].deep_symbolize_keys) if building_name.blank? && self[:building_json]['name'].present?
     end
 
     def self.buildings_for_user(user_email)
@@ -35,10 +40,14 @@ module FacilitiesManagement
       find_by("user_email = '" + Base64.encode64(user_id) + "' and building_ref = '#{building_ref}'")
     end
 
+    def populate_row
+      populate_row_from_json(self[:building_json].deep_symbolize_keys)
+    end
+
     private
 
     def populate_other_data
-      self.user_email = Base64.encode64(user.email.to_s)
+      self.user_email = Base64.encode64(user.email.to_s) unless user.nil?
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -59,6 +68,9 @@ module FacilitiesManagement
         description: description,
         region: region,
         gia: gia,
+        'building-type': building_type,
+        'security-type': security_type,
+        'building-ref': building_ref,
         address: {
           'fm-address-town': address_town,
           'fm-address-line-1': address_line_1,
@@ -72,7 +84,7 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/AbcSize
-    def populate_row(building_json)
+    def populate_row_from_json(building_json)
       self.building_name = building_json[:building_name] || building_json[:name]
       self.description = building_json[:description]
       self.region = building_json[:region]
@@ -87,6 +99,7 @@ module FacilitiesManagement
       self.address_region = building_json[:address]['fm-address-region'.to_sym] || building_json[:address]['fm-nuts-region'.to_sym]
       self.address_postcode = building_json[:address]['fm-address-postcode'.to_sym]
       self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
+      determine_status
     end
     # rubocop:enable Metrics/AbcSize
   end
