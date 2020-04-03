@@ -1,0 +1,34 @@
+/* Added updated link assets can be found here: https://github.com/alphagov/govuk-frontend */
+
+.govuk-link:focus, a:focus, .app-step-nav-header__title:focus, .app-step-nav-related__link:focus {
+	outline: 3px solid rgba(0, 0, 0, 0);
+	color: #0b0c0c;
+	background-color: #fd0;
+	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none
+}
+
+.govuk-link:focus {
+	outline: 3px solid rgba(0, 0, 0, 0);
+	background-color: #fd0;
+	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+	text-decoration: none
+}
+
+.govuk-header__navigation-item a:focus {
+	outline: 3px solid rgba(0, 0, 0, 0);
+  outline-offset: 0;
+}
+
+.govuk-header__link:focus {
+	outline: 3px solid rgba(0, 0, 0, 0);
+	color: #0b0c0c;
+	background-color: #fd0;
+	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none
+}
+
+.govuk-skip-link:focus {
+	outline: 3px solid #fd0;
+	background-color: #fd0
+}

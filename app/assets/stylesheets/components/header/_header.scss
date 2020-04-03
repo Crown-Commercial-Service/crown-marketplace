@@ -66,6 +66,26 @@ $ccs_header_fg: govuk-colour("white");
   &:focus {
     outline: 3px solid govuk-colour("yellow");
     outline-offset: 0;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.govuk-header__link--homepage {
+  &:not(:focus) {
+    &:hover,
+    &:active {
+      margin-bottom: -1px;
+      border-bottom: 1px solid
+    }
+  }
+  &:focus {
+    &:hover,
+    &:active {
+      margin-bottom: 0px;
+      border-bottom: 0px;
+    }
   }
 }
 
