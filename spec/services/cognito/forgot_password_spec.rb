@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Cognito::ForgotPassword do
   let(:email) { 'test@email.com' }
+  let(:invalid_email_char) { '@!"£$£"' }
+  let(:invalid_email) { 'someRandomString' }
   let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
   describe '#call' do
@@ -53,6 +55,38 @@ RSpec.describe Cognito::ForgotPassword do
       it 'does returns cognito error' do
         response = described_class.call(email)
         expect(response.error).to eq nil
+      end
+    end
+
+    context 'when user enter invalid_email_char' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      end
+
+      it 'does not return success' do
+        response = described_class.call(invalid_email_char)
+        expect(response.success?).to eq false
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(invalid_email_char)
+        expect(response.error).to eq 'Enter your email address in the correct format, like name@example.com'
+      end
+    end
+
+    context 'when user enter invalid_email' do
+      before do
+        allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
+      end
+
+      it 'does not return success' do
+        response = described_class.call(invalid_email)
+        expect(response.success?).to eq false
+      end
+
+      it 'does returns cognito error' do
+        response = described_class.call(invalid_email)
+        expect(response.error).to eq 'Enter your email address in the correct format, like name@example.com'
       end
     end
   end

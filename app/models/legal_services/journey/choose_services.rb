@@ -4,7 +4,7 @@ module LegalServices
 
     attribute :lot
     attribute :services, Array
-    validates :services, length: { minimum: 1 }
+    validates :services, presence: true
 
     def services_for_lot(lot, jurisdiction, central_government = 'no')
       if lot == '2'

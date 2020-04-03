@@ -156,13 +156,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
     context 'when the procurement_building is present with a service code' do
       it 'expected to be valid' do
         procurement.save
-        procurement.procurement_buildings.create(service_codes: ['test'])
+        procurement.procurement_buildings.create
+        procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
         expect(procurement.valid?(:building_services)).to eq true
       end
     end
+    # rubocop:enable Rails/SkipsModelValidations
 
     context 'when the procurement_building is present but without any service codes' do
       it 'expected to not be valid' do
