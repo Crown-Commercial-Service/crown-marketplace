@@ -257,15 +257,9 @@ module FacilitiesManagement
     end
 
     def values_to_average
-      if any_services_missing_framework_price?
-        if variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
-          [sum_benchmark]
-        else
-          [sum_uom, sum_benchmark]
-        end
-      else
-        [sum_uom, sum_benchmark]
-      end
+      return [sum_benchmark] if any_services_missing_framework_price? && variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+
+      [sum_uom, sum_benchmark]
     end
 
     def any_services_missing_framework_price?

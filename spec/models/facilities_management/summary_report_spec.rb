@@ -780,4 +780,34 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
   end
   # rubocop:enable RSpec/ExampleLength
+
+  describe '#buyer_input' do
+    let(:initial_call_off_period) { 7 }
+    let(:estimated_annual_cost) { 70000 }
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: 'C.5',
+             procurement_building: create(:facilities_management_procurement_building_no_services,
+                                          building_id: create(:facilities_management_building_london).id,
+                                          procurement: create(:facilities_management_procurement_no_procurement_buildings,
+                                                              initial_call_off_period: initial_call_off_period,
+                                                              estimated_annual_cost: estimated_annual_cost,
+                                                              estimated_cost_known: true)))
+    end
+    let(:report) { described_class.new(procurement_building_service.procurement_building.procurement.id) }
+
+    context 'when contract length is 7 years' do
+      it 'returns contract_length * estimated cost' do
+        expect(report.buyer_input).to eq initial_call_off_period * estimated_annual_cost
+      end
+    end
+
+    context 'when contract length is 1 year' do
+      let(:initial_call_off_period) { 1 }
+
+      it 'returns contract_length * estimated cost' do
+        expect(report.buyer_input).to eq initial_call_off_period * estimated_annual_cost
+      end
+    end
+  end
 end
