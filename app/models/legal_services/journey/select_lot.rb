@@ -2,7 +2,7 @@ module LegalServices
   class Journey::SelectLot
     include Steppable
     attribute :lot
-    validates :lot, inclusion: ['1', '2', '3', '4']
+    validates :lot, presence: true
 
     def self.lots
       LegalServices::Lot.all.sort_by(&:number)
