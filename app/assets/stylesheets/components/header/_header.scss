@@ -83,3 +83,13 @@ $ccs_header_fg: govuk-colour("white");
     height: 61px;
   }
 }
+
+@media (max-width: 800px){     
+  .js-enabled .govuk-header__navigation {     
+    display: inline-block;
+  } 
+
+  .govuk-header__navigation-item {
+    margin-top: 0.5em;
+  }
+}
