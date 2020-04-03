@@ -256,7 +256,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     # rubocop:enable RSpec/ExampleLength
   end
 
-  context 'assessed_value for FC sub-lots' do
+  describe 'assessed_value for FC sub-lots' do
     let(:code) { nil }
     let(:code1) { nil }
     let(:code2) { nil }
@@ -300,7 +300,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:estimated_annual_cost) { 843500 }
 
         it 'uses BM and Customer prices only' do
-          expect(report.assessed_value.round(2)).to eq ((report.buyer_input + report.sum_benchmark) / 2.0).round(2)
+          expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))
         end
       end
 
@@ -308,7 +308,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:estimated_annual_cost) { 37355000 }
 
         it 'uses FW, BM and Customer prices' do
-          expect(report.assessed_value.round(2)).to eq ((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2)
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
         end
       end
     end
