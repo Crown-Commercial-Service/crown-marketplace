@@ -346,7 +346,7 @@ docx.p 'BUYER SECURITY POLICY:', bold: true, font: 'Calibri'
 docx.p @procurement.security_policy_document_name, font: 'Calibri' if @procurement.security_policy_document_required?
 docx.p @procurement.security_policy_document_version_number, font: 'Calibri' if @procurement.security_policy_document_required?
 docx.p @procurement.security_policy_document_date, font: 'Calibri' if @procurement.security_policy_document_required?
-docx.p @procurement.security_policy_document_file&.file_name, font: 'Calibri' if @procurement.security_policy_document_required?
+docx.p @procurement.security_policy_document_file.filename, font: 'Calibri' if @procurement.security_policy_document_required?
 docx.p
 
 docx.p 'PROGRESS REPORT FREQUENCY:', bold: true, font: 'Calibri'
