@@ -343,10 +343,10 @@ docx.p @notice_contact_detail.full_organisation_address, font: 'Calibri'
 docx.p
 
 docx.p 'BUYER SECURITY POLICY:', bold: true, font: 'Calibri'
-docx.p @procurement.security_policy_document_name, font: 'Calibri'
-docx.p @procurement.security_policy_document_version_number, font: 'Calibri'
-docx.p @procurement.security_policy_document_date, font: 'Calibri'
-docx.p @procurement.security_policy_document_file.file_name, font: 'Calibri' if @procurement.security_policy_document_file.attached?
+docx.p @procurement.security_policy_document_name, font: 'Calibri' if @procurement.security_policy_document_required?
+docx.p @procurement.security_policy_document_version_number, font: 'Calibri' if @procurement.security_policy_document_required?
+docx.p @procurement.security_policy_document_date, font: 'Calibri' if @procurement.security_policy_document_required?
+docx.p @procurement.security_policy_document_file&.file_name, font: 'Calibri' if @procurement.security_policy_document_required?
 docx.p
 
 docx.p 'PROGRESS REPORT FREQUENCY:', bold: true, font: 'Calibri'
@@ -405,14 +405,7 @@ docx.p 'SOCIAL VALUE COMMITMENT', bold: true, font: 'Calibri'
 
 docx.p 'Not Applicable', font: 'Calibri'
 
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
+docx.page
 
 docx.table([
   ['For and on behalf of the Supplier:', '', 'For and on behalf of the Buyer:', ''],
