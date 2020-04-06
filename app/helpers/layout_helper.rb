@@ -188,33 +188,34 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, attribute, &block)
-    attribute_has_errors  = form.object.errors[attribute].any?
-    attribute_is_an_array = form.object[attribute].is_a? Array
+  def govuk_grouped_field(form, caption, *attributes, &block)
+    attributes_have_errors = attributes.any? { |attr| form.object.errors[attr].any? }
 
     options                     = {}
-    options['aria-describedby'] = error_id(attribute) if attribute_has_errors
+    options['aria-describedby'] = attributes.each { |attr| error_id(attr) }.join(' ') if attributes_have_errors
     css_classes                 = ['govuk-fieldset']
     options['class']            = css_classes
 
-    if attribute_has_errors
-      content_tag :div, fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block),
+    if attributes_have_errors
+      content_tag :div, fieldset_structure(form, caption, options, attributes, &block),
                   class: 'govuk-form-group govuk-form-group--error'
     else
-      fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
+      fieldset_structure(form, caption, options, attributes, &block)
     end
   end
 
   # rubocop:disable Metrics/ParameterLists
-  def fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
+  def fieldset_structure(form, caption, options, *attributes, &block)
     content_tag :fieldset, options do
       capture do
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
-        concat(list_errors_for_attributes(attribute)) if attribute_is_an_array
-        concat(display_error(form.object, attribute)) unless attribute_is_an_array
-        block.call(form, attribute)
+        attributes.flatten.each do |attr|
+          concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array
+          concat(display_error(form.object, attr)) unless form.object[attr].is_a? Array
+        end
+        block.call(form, attributes)
       end
     end
   end
@@ -243,11 +244,12 @@ module LayoutHelper
   def govuk_text_area_input(builder, attribute, char_count = false, *option)
     css_classes = ['govuk-textarea']
     css_classes += ['govuk-textarea--error'] if builder.object.errors.key?(attribute)
-    css_classes << option.to_h[:class] if option.to_h.key? :class
     css_classes += ['js-character-count'] if char_count
 
-    options = option.to_h.merge(class: css_classes)
+    options = {}
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+    options.merge!(class: css_classes)
+    options.merge!(option[0].to_h) { |key, old, new| Array(old).push(new).join(' ') } if option
 
     builder.text_area attribute, options
   end

@@ -15,13 +15,13 @@
             </div>
           <% end %>
         </div>
-        <div class="govuk-body">
+        <div class="govuk-body" style="margin-left:1ex">
           Or
         </div>
-        <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
+        <details class="govuk-details govuk-!-margin-bottom-6" style="margin-left:1.5ex" data-module="govuk-details"  open="<%=open_state_of_building_details(ff.object) %>" >
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">
-              More
+              <%= t('.view_more') %>
             </span>
           </summary>
           <div class="govuk-details__text">
@@ -37,16 +37,17 @@
             <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4 govuk-!-margin-left-2">
               Or
             </div>
-            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, {}) do %>
+            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, { style: 'margin-left: 1em;' }) do %>
               <div class="govuk-radios__item">
                 <div class="other_container">
                   <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
                   <%= ff.label :building_type, 'other', class: 'govuk-label govuk-radios__label' do
                     t('.other')
                   end %>
-                  <div class="govuk-!-margin-top-2" style="margin-left:-1em">
+                  <div class="govuk-!-margin-top-2" style="margin-left:-2.2ex; border-left: 5px solid #bfc1c3">
                     <div class="other_input ccs-character-count-container" data-module="character-count" data-maxlength="150" style="margin-left: 1.5ex">
-                      <%= govuk_text_area_input(f, :other_building_type, true, ['rows', 3], ['maxlength', 150], [:class, '']) %>
+                      <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></label>
+                      <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150) %>
                     </div>
                   </div>
                 </div>

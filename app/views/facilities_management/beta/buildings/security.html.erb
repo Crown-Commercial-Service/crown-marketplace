@@ -1,8 +1,8 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
   <div class="govuk-!-width-two-thirds">
     <%= form_for @page_data[:model_object], url: facilities_management_beta_building_path(@page_data[:model_object].id), html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+      <input type="hidden" name="step" value="security"/>
       <%= govuk_grouped_field(f, t('.select_security'), :type) do |ff, attr| %>
-        <input type="hidden" name="step" value="security"/>
         <p class="govuk-caption-m"><%= t('security_description') %></p>
         <%= f.hidden_field :security_type %>
         <div class="govuk_radios">
@@ -16,19 +16,20 @@
             </div>
           <% end %>
         </div>
-        <div class="govuk-body">
+        <div class="govuk-body" style="margin-left:1ex">
           Or
         </div>
-        <%= govuk_start_individual_field(f, :other_security_type, {}, false, true, {}) do %>
+        <%= govuk_start_individual_field(f, :other_security_type, {}, false, true, other_margin_if_security_has_other_error(ff.object)) do %>
           <div class="govuk-radios__item">
             <div class="other_container">
               <%= ff.radio_button :security_type, 'other', class: 'govuk-radios__input' %>
               <%= ff.label :security_type, 'other', class: 'govuk-label govuk-radios__label' do
                 t('.other')
               end %>
-              <div class="govuk-!-margin-top-2" style="margin-left:-1em">
+              <div class="govuk-!-margin-top-2"  style="margin-left:-2.2ex; border-left: 5px solid #bfc1c3">
                 <div class="other_input ccs-character-count-container" data-module="character-count" data-maxlength="150" style="margin-left: 1.5ex">
-                  <%= govuk_text_area_input(f, :other_security_type, true, ['rows', 3], ['maxlength', 150], [:class, '']) %>
+                  <label class="govuk-label" for="<%= "#{f.object_name}[other_security_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_security') %></label>
+                  <%= govuk_text_area_input(f, :other_security_type, true, rows: 3, maxlength: 150) %>
                 </div>
               </div>
             </div>

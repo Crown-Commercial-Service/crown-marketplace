@@ -1307,9 +1307,12 @@ en:
         type:
           choose_building_type: "Choose the building type that best describes your building"
           other: Other
+          view_more: "View more building types"
+          describe_building: "Describe building type"
         security_clearance: "Security clearance"
         security:
           select_security: "Select the level of security clearance needed"
+          describe_security: "Describe security level"
         details_form:
           building_name_label: "This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor."
           building_name_label_html: '<span class="govuk-heading-m govuk-!-margin-bottom-0">What''s the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>'
