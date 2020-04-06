@@ -6,12 +6,12 @@
   </div>
   <form name="fm-building-security-type-form" id="fm-bm-security-type-form" action="building-details-summary" method="POST">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <input type="hidden" name="detail-type" value="fm-building-security-type"/>
-    <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>"/>
+    <input type="hidden" name="detail-type" aria-labelledby="detail-type" value="fm-building-security-type"/>
+    <input type="hidden" name="building-id" aria-labelledby="building-id" id="building-id" value="<%= @building_id %>"/>
     <div class="govuk-radios">
       <% @security_types.each do |record| %>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="FM-security-type-<%= record['id'] %>" <%= 'checked' if record['title'].to_s == @building_sec_type %>
+          <input class="govuk-radios__input" aria-labelledby="FM-security-type-<%= record['id'] %>" id="FM-security-type-<%= record['id'] %>" <%= 'checked' if record['title'].to_s == @building_sec_type %>
                  name="fm-building-security-type-radio" type="radio" value="<%= record['title'].to_s %>">
           <label class="govuk-label govuk-radios__label" for="FM-security-type-<%= record['id'] %>">
             <%= record['title'] %><br>
@@ -21,7 +21,7 @@
       <% end %>
       <div id="no-dexcription-error-details">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="fm-building-security-type-other"
+          <input class="govuk-radios__input" id="fm-building-security-type-other" aria-labelledby="fm-building-security-type-other"
                  name="fm-building-security-type-radio" type="radio" value="<%= @other_value%>" <%= 'checked' if @other_is_used %>>
           <label class="govuk-label govuk-radios__label" for="fm-building-security-type-other">
             Other<br>

@@ -11,7 +11,7 @@
                 <h1 class="govuk-heading govuk-heading-s">
                     Please provide a reason for closing this procurement
                 </h1>
-                <%= govuk_text_area_input(f, :contract_withdrawn_reason, true, ['rows', 10], ['maxlength', 500], [:class, 'govuk-!-margin-bottom-2']) %>
+                <%= govuk_text_area_input(f, :contract_withdrawn_reason, true, ['rows', 10], ['maxlength', 500], [:class, 'govuk-!-margin-bottom-2'], 'aria-labelledby': 'Reason for withdrawing') %>
             </div>
             <div class="govuk-body">
                 Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.    

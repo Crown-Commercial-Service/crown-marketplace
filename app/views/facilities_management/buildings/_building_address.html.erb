@@ -8,8 +8,8 @@
     <span id="fm-postcode-error" class="govuk-error-message govuk-visually-hidden">
       The postcode entered is invalid
     </span>
-      <input id="fm-postcode-input" type="text" class="govuk-input govuk-input--width-5 govuk-!-margin-right-3">
-      <a id="fm-post-code-lookup-button" href="#" role="button" class="govuk-button">Find address</a>
+      <input id="fm-postcode-input" type="text" class="govuk-input govuk-input--width-5 govuk-!-margin-right-3" name="postcode-input">
+      <a id="fm-post-code-lookup-button" href="#" role="button" class="govuk-button" name="Find address">Find address</a>
     </div>
     <a href="https://www.royalmail.com/find-a-postcode" class="govuk-link--no-visited-state" target="_blank" role="button">Find
       a postcode on Royal Mail's
@@ -22,7 +22,7 @@
         <label id="fm-postcode-label" class="govuk-heading-s"></label>
       </div>
       <div class="govuk-grid-column-one-quarter">
-        <a id="fm-change-postcode" href="#" class="govuk-link--no-visited-state" role="button">Change</a>
+        <a id="fm-change-postcode" href="#" class="govuk-link--no-visited-state" role="button" name="Change">Change</a>
       </div>
     </div>
     <label class="govuk-heading-s govuk-!-margin-bottom-0">Select an address</label>
@@ -35,7 +35,7 @@
       </select>
     </div>
     <div class="govuk-!-margin-top-3">
-      <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button">I
+      <a id="fm-building-not-found" href="new-building-address" class="govuk-link--no-visited-state" role="button" name="building not found">I
         can't find my building's
         address in the list</a>
     </div>

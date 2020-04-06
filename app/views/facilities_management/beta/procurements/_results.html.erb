@@ -46,7 +46,7 @@
       <%= govuk_start_individual_field(ff, attr, {}, false, false) do |a| %>
         <div class="govuk-radios">
           <div class="govuk-radios__item">
-            <%= f.radio_button :route_to_market, 'da_draft', class: 'govuk-radios__input' %>
+            <%= f.radio_button :route_to_market, 'da_draft', class: 'govuk-radios__input', name: 'Direct award' %>
             <%= f.label :route_to_market, value: 'da_draft', class: 'govuk-label govuk-radios__label' do %>
               <%= t('.direct_award_label_html', price: number_to_currency(@page_data[:supplier_prices].min, precision: 0)) %>
             <% end %>
@@ -57,7 +57,7 @@
             <% end %>
           </div>
           <div class="govuk-radios__item">
-            <%= f.radio_button :route_to_market, 'further_competition', class: 'govuk-radios__input' %>
+            <%= f.radio_button :route_to_market, 'further_competition', class: 'govuk-radios__input', name: 'Further competition' %>
             <%= f.label :route_to_market, value: 'further_competition', class: 'govuk-label govuk-radios__label' do %>
               <%= t('.further_competition_html') %>
             <% end %>

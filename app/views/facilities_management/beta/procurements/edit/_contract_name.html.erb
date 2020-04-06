@@ -14,6 +14,6 @@
 
     <%= display_errors(@procurement, :contract_name)%>
     <%= f.label :contract_name, class: "govuk-label" %>
-    <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count', required: true, maxlength: 100%>
+    <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count', required: true, maxlength: 100, 'aria-labelledby': 'contract name'%>
   </div>
 </div>

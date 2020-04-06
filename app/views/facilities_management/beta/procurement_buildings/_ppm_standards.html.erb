@@ -44,7 +44,7 @@
           <%= procurement_building_service.collection_radio_buttons :service_standard, FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS, :first, :first do |b| %>
             <div class="govuk-radios govuk-radios--small govuk-!-margin-top-2">
               <div class="govuk-radios__item">
-                <%= b.radio_button(class:'govuk-radios__input' ) %>
+                <%= b.radio_button(class:'govuk-radios__input', 'aria-labelledby': 'PPM service standard' ) %>
                 <%= b.label(class: "govuk-label govuk-radios__label") do %>
                   <%= "Standard " + b.text %>
                 <% end %>

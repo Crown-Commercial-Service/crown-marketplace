@@ -5,11 +5,11 @@
       <%= display_potential_errors service_choice, :service_choice, f.object_name, nil, nil, day %>
       <div class="govuk-radios govuk-radios--conditional" data-module="radios">
         <div class="govuk-radios__item">
-          <%= f.radio_button :service_choice, value = "not_required", class: 'govuk-radios__input', id: "#{day}_not_required", data: {propertyname: "#{day}_service_choice"} %>
+          <%= f.radio_button :service_choice, value = "not_required", class: 'govuk-radios__input', 'aria-labelledby': "#{day}_not_required", id: "#{day}_not_required", data: {propertyname: "#{day}_service_choice"} %>
           <%= f.label :service_choice, value: :not_required, for: "#{day}_not_required", class: "govuk-label govuk-radios__label" %>
         </div>
         <div class="govuk-radios__item">
-          <%= f.radio_button :service_choice, value = "all_day", class: 'govuk-radios__input', id: "#{day}_all_day", data: {propertyname: "#{day}_service_choice"} %>
+          <%= f.radio_button :service_choice, value = "all_day", class: 'govuk-radios__input', id: "#{day}_all_day", 'aria-labelledby': "#{day}_service_choice", data: {propertyname: "#{day}_service_choice"} %>
           <%= f.label :service_choice, value: 'All day (24 hours)', for: "#{day}_all_day", class: "govuk-label govuk-radios__label" %>
         </div>
         <div class="govuk-radios__item">

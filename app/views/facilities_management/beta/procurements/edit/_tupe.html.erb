@@ -27,11 +27,11 @@
     <%= display_errors(@procurement, :tupe)%>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
-        <%= f.radio_button :tupe, true, class: 'govuk-radios__input' %>
+        <%= f.radio_button :tupe, true, class: 'govuk-radios__input', 'aria-labelledby': 'Yes' %>
         <%= f.label :tupe, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
       </div>
       <div class="govuk-radios__item">
-        <%= f.radio_button :tupe, false, class: 'govuk-radios__input' %>
+        <%= f.radio_button :tupe, false, class: 'govuk-radios__input', 'aria-labelledby': 'No' %>
         <%= f.label :tupe, 'No', value: false , class: 'govuk-label govuk-radios__label' %>
       </div>
     </div>
