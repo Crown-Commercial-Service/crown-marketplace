@@ -7,7 +7,7 @@
       <%= f.submit @page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'continue_to_review_and_generate'%>
       <%= f.submit @page_description.navigation_details.secondary_text, class: ' govuk-button govuk-button--secondary', data: {disable_with: false }, name: 'continue_to_results' %>
       </br>
-      <%= link_to @page_description.navigation_details.return_text, facilities_management_beta_procurements_path, role: 'button', class: 'govuk-link govuk-caption-m' %>
+      <%= link_to @page_description.navigation_details.return_text, facilities_management_beta_procurements_path, role: 'button', class: 'govuk-link govuk-!-font-size-19' %>
   </div>
   <%end %>
 <%end %>
