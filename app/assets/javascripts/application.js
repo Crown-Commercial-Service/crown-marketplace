@@ -22,3 +22,4 @@
 //= require cp/cp-sign-in.js
 //= require global/global.js
 //= require_tree ./ccs_patterns
+//= require_tree ./ccs_character-count

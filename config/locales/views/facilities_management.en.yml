@@ -45,6 +45,29 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/building:
+          attributes:
+            building_name:
+              blank: Enter a name for your building
+            postcode:
+              blank: Enter a valid postcode, like AA1 1AA
+            address_postcode:
+              blank: You must select an address to save a building
+            address_line_1:
+              blank: You must select an address to save a building
+            address_region:
+              blank: You must select a region for your address
+            gia:
+              blank: Enter a whole number for the size of internal area of this building
+              pattern: Enter a whole number for the size of internal area of this building
+            building_type:
+              blank: You must select a buiding type or describe your own
+            other_building_type:
+              blank: You must enter your description of a building type
+            security_type:
+              blank: You must select a security clearance level
+            other_security_type:
+              blank: You must select a security clearance level
         facilities_management/buyer_detail:
           attributes:
             central_government:
@@ -1226,18 +1249,17 @@ en:
           column_desc_header: Description
           column_lstup_header: Last updated
           column_name_header: Name
-          create_new_button: "Create Single Building"
-          procurements_dashboard_button: "Procurements dashboard"
-          start_paragraph: "You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements."
-          start_warning: "When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require."
-          no_buildings_text: "You have no saved buildings"
-          my_buildings_header: "My buildings"
-          column_status_header: "Status"
-          link_to_building_summary: "View details for building"
+          create_new_button: Add a building
+          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
+          start_warning_html: "When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building. Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.<p class=\"govuk-caption-m\">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>"
+          no_buildings_text: You have no saved buildings
+          my_buildings_header: My buildings
+          column_status_header: Status
+          link_to_building_summary: View details for building
         show:
-          section-header: "Building details summary"
-          incomplete_text: Building '%{name}' is incomplete. You need to answer all questions before a building can be used in procurements.
-          complete_text: Building '%{name}' is ready for use in procurements.
+          section-header: Building details summary
+          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+          complete_text: This building is ready for use in procurements.
           change_text: "Change"
           add_name_text: "Add name"
           add_desc_text: "Add description"
@@ -1256,8 +1278,39 @@ en:
         change_building_details: "Change building details"
         create_single_building: "Create single building"
         step_footer: "Next: %{description}"
-        step_title: "Step %{position} of 4"
+        step_title: "Step %{position} of %{total}"
         new:
+          building_name_label: "This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor."
+          building_name_label_html: '<span class="govuk-heading-m govuk-!-margin-bottom-0">What''s the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>'
+          description_label_html: "<span class=\"govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5\">What's the description? - Optional</span> <span class=\"govuk-caption-m govuk-!-margin-top-0\"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>"
+          address_label_html: "<span class=\"govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5\">What's the address?</span><span class=\"govuk-caption-m govuk-!-margin-top-0\">We'll use this UK address to assess the region in which your building is located.</span>"
+          find_address: "Find address"
+          select_an_address: "Select an address"
+          zero_address_found: "0 addresses found"
+          cant_find_address: "I cant find my building's address in the list"
+          postcode: "Postcode"
+          address: "Address"
+          location_region: "Location (region)"
+          change: "Change"
+        building_size: "Building size"
+        building_type: Building type
+        gia:
+          gia_header: "What's the size of internal area of this building?"
+          description_html: "Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres."
+          further_info_html: "For further information on GIA <a aria-label=\"Read the Valuation Office Agency advice on the Code of measuring practice\" title=\"Code of measuring practice: definitions for rating purposes\" href=\"https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area\">follow this link</a>."
+        save_and_continue: "Save and continue"
+        skip_this_step: "Skip this step"
+        step_gia_description: "What's the internal area of the building?"
+        step_type_description: "Choose the building type that best describes your building"
+        step_security_description: "Select the level of security clearance needed"
+        save_and_return_to_detailed_summary: "Save and return to building details summary"
+        type:
+          choose_building_type: "Choose the building type that best describes your building"
+          other: Other
+        security_clearance: "Security clearance"
+        security:
+          select_security: "Select the level of security clearance needed"
+        details_form:
           building_name_label: "This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor."
           building_name_label_html: '<span class="govuk-heading-m govuk-!-margin-bottom-0">What''s the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>'
           description_label_html: "<span class=\"govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5\">What's the description? - Optional</span> <span class=\"govuk-caption-m govuk-!-margin-top-0\"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>"
@@ -1383,4 +1436,5 @@ en:
         email_address: Email address
         forgotten_password_html: I've forgotten my password
         password: Password
+  create_new_building: "Add building"
 

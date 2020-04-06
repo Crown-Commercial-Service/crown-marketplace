@@ -1,0 +1,37 @@
+# frozen_string_literal: true
+
+module Api
+  # return json
+  module V2
+    class PostcodesController < ApplicationController
+      protect_from_forgery with: :exception
+      before_action :authenticate_user!, except: :show
+
+      # GET /postcodes/SW1A 2AA
+      # GET /postcodes/SW1A 2AA.json
+      #
+      # usage:
+      #      http://localhost:3000/api/v1/postcodes/SW1A%202AA
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=SW1P%202AP
+      #      http://localhost:3000/api/v1/postcodes/in_london?postcode=G69%206HB
+      def show
+        result = query(params[:id])
+
+        render json: { status: 200, result: result }
+      rescue StandardError => e
+        render json: { status: 404, error: e.to_s }
+      end
+
+      private
+
+      def query(param)
+        case param
+        when 'in_london'
+          Postcode::PostcodeChecker_v2.in_london? params[:postcode]
+        else
+          Postcode::PostcodeChecker_v2.location_info(param)
+        end
+      end
+    end
+  end
+end

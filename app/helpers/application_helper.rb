@@ -48,12 +48,12 @@ module ApplicationHelper
   def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
-        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
         concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
+        concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
         concat yield
       end
     end

@@ -1,5 +1,10 @@
-@import "govuk-frontend/components/details/details";
+@import "../../settings";
 
 .govuk-details {
   margin-bottom: 0;
 }
+.govuk-details__text
+{
+  @include govuk-responsive-margin(1, "left");
+
+  }
