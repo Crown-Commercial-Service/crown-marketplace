@@ -2,7 +2,7 @@
 <div class="govuk-header__content">
   <%= render 'layouts/header-title', service: 'facilities_management', path: facilities_management_path %>
   <nav>
-    <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+    <ul id="navigation" class="govuk-header__navigation " role="navigation" aria-label="Top Level Navigation">
       <% unless landing_or_admin_page || fm_buyer_landing_page || fm_supplier_landing_page || not_permitted_page || fm_landing_page %>
         <li class="govuk-header__navigation-item">
           <% if controller.controller_name == 'buildings_management'%>

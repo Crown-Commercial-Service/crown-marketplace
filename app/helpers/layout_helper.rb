@@ -287,7 +287,7 @@ module LayoutHelper
 
   def navigation_link_supplier_and_buyer
     html = []
-    html << content_tag(:li, class: 'govuk-header__navigation-item') do
+    html << content_tag(:li, class: 'govuk-header__navigation-item', role: 'navigation') do
       if current_user&.has_role?(:supplier)
         link_to 'My dashboard', facilities_management_beta_supplier_dashboard_index_path, class: 'govuk-header__link' if user_signed_in?
       elsif current_user&.has_role?(:buyer)
