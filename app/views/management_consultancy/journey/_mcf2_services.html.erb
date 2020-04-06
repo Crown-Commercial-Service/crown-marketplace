@@ -3,7 +3,7 @@
     <div class="govuk-accordion__section">
       <div class="govuk-accordion__section-header">
         <h2 class="govuk-accordion__section-heading">
-          <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= service.code %>" name="MCF2 Services">
+          <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= service.code %>" name="MCF2 Services" aria-labelledby="MCF2 Services">
             <%= service.name %>
           </span>
         </h2>
@@ -43,7 +43,7 @@
               <% if service.subservices.count > 1 %>
                 <p class="govuk-body govuk-!-margin-top-4">Or</p>
                 <div class="govuk-checkboxes__item ccs-select-all">
-                  <input class="govuk-checkboxes__input" id="service_<%= service.code %>-all" name="service_<%= service.code %>-all" type="checkbox" value=""><!-- no value -->
+                  <input class="govuk-checkboxes__input" id="service_<%= service.code %>-all" aria-labelledby="service_<%= service.code %>-all" name="service_<%= service.code %>-all" type="checkbox" value=""><!-- no value -->
                   <label class="govuk-label govuk-checkboxes__label" for="service_<%= service.code %>-all">
                     Select all
                   </label>
