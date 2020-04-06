@@ -25,7 +25,7 @@ module FacilitiesManagement
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
           @supplier_name = supplier_data['supplier_name']
           @lot_name = 'Sub-lot ' + params[:lot] + ' services'
-          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] }.first
+          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] } .first
           supplier_services = lot_data['services']
           full_services
           setup_checkboxes(supplier_services)

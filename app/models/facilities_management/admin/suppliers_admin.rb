@@ -4,7 +4,7 @@ module FacilitiesManagement
       self.table_name = 'fm_suppliers'
 
       def replace_services_for_lot(new_services, target_lot)
-        self.data['lots'].each do |lot|
+        data['lots'].each do |lot|
           if lot['lot_number'] == target_lot
             lot['services'] = new_services
             break
