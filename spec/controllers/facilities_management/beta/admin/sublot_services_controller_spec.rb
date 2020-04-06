@@ -59,4 +59,17 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotServicesController, type
       expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
     end
   end
+
+  describe 'PUT update_sublot-services for checkbox' do
+    it 'updates 1c lot' do
+      put :update_sublot_services, params: { id: 'f644dfef-c534-4432-9bbc-f537e02652e6', lot: '1c', checked_services: 'C.1' }
+
+      supplier = FacilitiesManagement::Admin::SuppliersAdmin.find('f644dfef-c534-4432-9bbc-f537e02652e6')
+      supplier_data = supplier['data']
+      lot_data = supplier_data['lots'].select { |data| data['lot_number'] == '1c' }
+      supplier_services = lot_data[0]['services']
+
+      expect(supplier_services.include?('C.1')).to eq true
+    end
+  end
 end

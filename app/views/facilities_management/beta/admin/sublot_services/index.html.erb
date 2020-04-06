@@ -28,7 +28,7 @@
           <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
             <div class="govuk-checkboxes__item">
               <%= check_box_tag(
-                      "rates_data_prices[]",
+                      "checked_services[]",
                       work_pckg['code'],
                       @supplier_rate_data_checkboxes[work_pckg['code']],
                       class: "govuk-checkboxes__input",
