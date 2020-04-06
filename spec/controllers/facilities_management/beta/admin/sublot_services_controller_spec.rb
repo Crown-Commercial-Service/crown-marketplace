@@ -41,7 +41,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotServicesController, type
 
   describe 'PUT update' do
     before do
-      put :update, params: { id: id, lot: target_lot, rates_data_prices: new_services }
+      put :update, params: { id: id, lot: target_lot, checked_services: new_services }
     end
 
     let(:new_services) { %w[bish bosh bash] }
@@ -51,25 +51,27 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotServicesController, type
       record.data['lots'].select { |lot| lot['lot_number'] == target_lot } .first
     end
 
-    it 'updates the supplier' do
-      expect(updated_lot_data['services']).to eq(new_services)
+    context 'with lot 1b' do
+      it 'updates the supplier' do
+        expect(updated_lot_data['services']).to eq(new_services)
+      end
+
+      it 'redirects to admin dashboard' do
+        expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
+      end
     end
 
-    it 'redirects to admin dashboard' do
-      expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
-    end
-  end
+    context 'with lot 1c' do
+      let(:id) { 'f644dfef-c534-4432-9bbc-f537e02652e6' }
+      let(:target_lot) { '1c' }
 
-  describe 'PUT update_sublot-services for checkbox' do
-    it 'updates 1c lot' do
-      put :update_sublot_services, params: { id: 'f644dfef-c534-4432-9bbc-f537e02652e6', lot: '1c', checked_services: 'C.1' }
+      it 'updates the supplier' do
+        expect(updated_lot_data['services']).to eq(new_services)
+      end
 
-      supplier = FacilitiesManagement::Admin::SuppliersAdmin.find('f644dfef-c534-4432-9bbc-f537e02652e6')
-      supplier_data = supplier['data']
-      lot_data = supplier_data['lots'].select { |data| data['lot_number'] == '1c' }
-      supplier_services = lot_data[0]['services']
-
-      expect(supplier_services.include?('C.1')).to eq true
+      it 'redirects to admin dashboard' do
+        expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
+      end
     end
   end
 end

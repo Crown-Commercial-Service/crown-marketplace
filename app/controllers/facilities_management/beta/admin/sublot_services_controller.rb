@@ -29,47 +29,16 @@ module FacilitiesManagement
           supplier_services = lot_data['services']
           full_services
           setup_checkboxes(supplier_services)
-        def update_sublot_services
-          supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
-        # rubocop:disable Metrics/AbcSize
-
-          supplier_data = supplier['data']
-          @supplier_name = supplier_data['supplier_name']
-
-          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] }
-          supplier_services = lot_data[0]['services']
-
-          setup_data
-          supplier_checkboxes = determine_all_used_services
-          supplier_checkboxes.each do |service|
-            supplier_services.append(service) if (params['checked_services'].include? service) && (!supplier_services.include? service)
-            supplier_services.delete(service) if (!params['checked_services'].include? service) && (supplier_services.include? service)
-          end
-
-          supplier.save
-          redirect_to facilities_management_beta_admin_supplier_framework_data_path
-        end
-        # rubocop:enable Metrics/AbcSize
         end
 
         def update
           supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
-          supplier.replace_services_for_lot(params[:rates_data_prices], params[:lot])
+          supplier.replace_services_for_lot(params[:checked_services], params[:lot])
           supplier.save
           redirect_to facilities_management_beta_admin_supplier_framework_data_path
         end
 
         private
-        def determine_all_used_services
-          supplier_checkboxes = []
-          @full_services.each do |service|
-            service['work_package'].each do |work_pckg|
-              code = work_pckg['code']
-              supplier_checkboxes.append(code)
-            end
-          end
-          supplier_checkboxes
-        end
 
         def setup_checkboxes(supplier_services)
           @supplier_rate_data_checkboxes = {}
