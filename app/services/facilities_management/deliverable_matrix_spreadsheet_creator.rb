@@ -13,7 +13,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def buildings_data
-    @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.id, service_codes: b.procurement_building_services.map(&:code) } }
+    @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.building_id, service_codes: b.procurement_building_services.map(&:code) } }
   end
 
   # rubocop:disable Metrics/AbcSize
