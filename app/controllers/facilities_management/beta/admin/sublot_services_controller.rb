@@ -25,16 +25,17 @@ module FacilitiesManagement
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
           @supplier_name = supplier_data['supplier_name']
           @lot_name = 'Sub-lot ' + params[:lot] + ' services'
-
-          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] }
-          supplier_services = lot_data[0]['services']
-
-          rates = FacilitiesManagement::Admin::Rates.all
-          services = FacilitiesManagement::Admin::StaticDataAdmin.services
-          work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
-          work_packages_with_rates = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
-          @full_services = FacilitiesManagement::Beta::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
+          lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] } .first
+          supplier_services = lot_data['services']
+          full_services
           setup_checkboxes(supplier_services)
+        end
+
+        def update
+          supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
+          supplier.replace_services_for_lot(params[:checked_services], params[:lot])
+          supplier.save
+          redirect_to facilities_management_beta_admin_supplier_framework_data_path
         end
 
         private
@@ -44,12 +45,8 @@ module FacilitiesManagement
           @full_services.each do |service|
             service['work_package'].each do |work_pckg|
               code = work_pckg['code']
-              @supplier_rate_data_checkboxes[code] = false
+              @supplier_rate_data_checkboxes[code] = supplier_services.include?(code)
             end
-          end
-
-          supplier_services.each do |supplier_service|
-            @supplier_rate_data_checkboxes[supplier_service] = true if @supplier_rate_data_checkboxes.key?(supplier_service)
           end
         end
       end

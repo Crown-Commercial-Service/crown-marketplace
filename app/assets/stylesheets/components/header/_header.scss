@@ -66,6 +66,26 @@ $ccs_header_fg: govuk-colour("white");
   &:focus {
     outline: 3px solid govuk-colour("yellow");
     outline-offset: 0;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.govuk-header__link--homepage {
+  &:not(:focus) {
+    &:hover,
+    &:active {
+      margin-bottom: -1px;
+      border-bottom: 1px solid
+    }
+  }
+  &:focus {
+    &:hover,
+    &:active {
+      margin-bottom: 0px;
+      border-bottom: 0px;
+    }
   }
 }
 
@@ -81,5 +101,15 @@ $ccs_header_fg: govuk-colour("white");
   .govuk-header__logotype_dfe svg {
     width: 75px;
     height: 61px;
+  }
+}
+
+@media (max-width: 800px){     
+  .js-enabled .govuk-header__navigation {     
+    display: inline-block;
+  } 
+
+  .govuk-header__navigation-item {
+    margin-top: 0.5em;
   }
 }

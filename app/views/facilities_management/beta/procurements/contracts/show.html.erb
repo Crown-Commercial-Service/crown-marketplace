@@ -32,11 +32,11 @@
             <% when 'sent' %>
                 <div class= 'govuk-!-margin-top-5'>
                     <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %>
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
                 </div>
             <% when 'signed' %>
                 <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'copy'), role: 'button', class: 'govuk-button govuk-button--secondary') %>
-                <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+                <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
             <% when 'not_signed', 'declined' , 'expired' %>
                 <div class= 'govuk-!-margin-top-5'>
                 <% if @contract.last_offer? %>
@@ -47,18 +47,18 @@
                     <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'next_supplier'), role: 'button', class: 'govuk-button govuk-!-margin-right-4') %>
                 <% end %>
                     <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %> <br />
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
                 </div>
             <% else %>
                 <div class= 'govuk-!-margin-top-5'>
                     <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'signed'), role: 'button', class: 'govuk-button govuk-!-margin-right-4') %>
                     <%= link_to(pd.navigation_details.secondary_text, edit_facilities_management_beta_procurement_contract_path(id: @contract.id, name: 'withdraw'), role: 'button', class: 'govuk-button govuk-button--warning') %> <br />
-                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+                    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
                 </div>
             <% end %>
         <% else %>
             <%= link_to(pd.navigation_details.secondary_text, new_facilities_management_beta_procurement_copy_procurement_path(id: @procurement.id, contract_id: @contract.id), role: 'button', class: 'govuk-button govuk-button--secondary') %>
-            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
         <% end %>
     <% end %>
 <% end %>
