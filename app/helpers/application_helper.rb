@@ -247,7 +247,7 @@ module ApplicationHelper
       render partial: "#{params[:service]}/header-banner"
     else
       service_name = controller.class.parent_name&.underscore
-      if service_name.include? 'admin'
+      if service_name&.include? 'admin'
         render partial: 'layouts/admin/header-banner'
       elsif service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
         render partial: "#{service_name}/header-banner"
