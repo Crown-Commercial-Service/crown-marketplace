@@ -7,19 +7,19 @@
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:name].any? %>">
           <%= ff.label :name, t('.name'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'invoice_contact_detail.name-error' if ff.object.errors[:name].any?}" %>
           <%= display_error(ff.object, :name) %>
-          <%= ff.text_field :name, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:name].any? } ", maxlength: 50 %>
+          <%= ff.text_field :name, 'aria-labelledby': 'name', class: "govuk-input #{'govuk-input--error' if ff.object.errors[:name].any? } ", maxlength: 50 %>
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:job_title].any? %>">
-          <%= ff.label :job_title, t('.job_title'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'invoice_contact_detail.job_title-error' if ff.object.errors[:job_title].any?}" %>
+          <%= ff.label :job_title, t('.job_title'),class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'invoice_contact_detail.job_title-error' if ff.object.errors[:job_title].any?}" %>
           <%= display_error(ff.object, :job_title) %>
-          <%= ff.text_field :job_title, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:job_title].any? } ", maxlength: 50 %>
+          <%= ff.text_field :job_title, 'aria-labelledby': 'job title', class: "govuk-input #{'govuk-input--error' if ff.object.errors[:job_title].any? } ", maxlength: 50 %>
         </div>
 
         <div class="govuk-form-group <%= "govuk-form-group--error" if ff.object.errors[:email].any? %>">
           <%= ff.label :email, t('.email'), class: 'govuk-label govuk-!-margin-bottom-3', id: "#{'invoice_contact_detail.email-error' if ff.object.errors[:email].any?}" %>
           <%= display_error(ff.object, :email) %>
-          <%= ff.text_field :email, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:email].any? } ", maxlength: 50 %>
+          <%= ff.text_field :email, 'aria-labelledby': 'email', class: "govuk-input #{'govuk-input--error' if ff.object.errors[:email].any? } ", maxlength: 50 %>
         </div>
 
 
@@ -35,11 +35,11 @@
                   <% error_id = ff.object.errors[:organisation_address_postcode].any? ? "" : "fm-postcode-error" %>
                   <div class="govuk-error-message" id= <%=error_id%>></div>
                   <%= display_error(ff.object, :organisation_address_postcode) %>
-                  <%= ff.text_field :organisation_address_postcode, class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
+                  <%= ff.text_field :organisation_address_postcode, 'aria-labelledby': 'Postcode', class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= 'Find Address' %></a>
+                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn" name="Find Address"><%= 'Find Address' %></a>
               </div>
               <div class="govuk-!-margin-top-0">
                 <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_invoicing_address'), class: "govuk-link--no-visited-state govuk-caption-m", id: 'add_new_invoice_contact_details_address_1' %>

@@ -53,7 +53,7 @@
           </td>
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
-              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
+              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" aria-labelledby="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
             </td>
           <% end %>
         </tr>
@@ -135,7 +135,7 @@
     </tbody>
   </table>
 
-  <input type="submit" name="update_sublot_data_services_prices" value="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <input type="submit" name="update_sublot_data_services_prices" aria-labelledby="Save and return to supplier framework data" value="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
   <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
 
   <% end %>
