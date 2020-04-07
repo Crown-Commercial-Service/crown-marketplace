@@ -350,7 +350,7 @@ if @procurement.security_policy_document_required?
   docx.p @procurement.security_policy_document_date, font: 'Calibri' unless @procurement.security_policy_document_date.blank?
   docx.p @procurement.security_policy_document_file.filename, font: 'Calibri'
 else
-  docx.p 'Not applicable', font: Calibri
+  docx.p 'Not Applicable', font: 'Calibri'
 end
 
 docx.p
