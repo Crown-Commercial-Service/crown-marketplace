@@ -213,7 +213,7 @@ module FacilitiesManagement
 
       return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
-      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
+      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number_fc(procurement.id + procurement.contract_name)
     end
 
     def set_sent_date

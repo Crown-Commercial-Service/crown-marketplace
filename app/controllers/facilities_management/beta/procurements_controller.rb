@@ -193,7 +193,7 @@ module FacilitiesManagement
 
       def generate_contract_number_further_competition
         time = Time.now.getlocal
-        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
+        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(@procurement.id + @procurement.contract_name) + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
       end
 
       def update_procurement
