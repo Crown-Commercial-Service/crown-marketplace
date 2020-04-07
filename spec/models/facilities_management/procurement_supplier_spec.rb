@@ -61,7 +61,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
     context 'with a procurement in further competition' do
       it 'returns an available number for a further competition contract' do
-        expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+        string_to_hash = further_competition.procurement.id + further_competition.procurement.contract_name
+        expected_format = format('%04d', string_to_hash.hash % 10000)
+        expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_format}-#{current_year}")
       end
     end
   end
