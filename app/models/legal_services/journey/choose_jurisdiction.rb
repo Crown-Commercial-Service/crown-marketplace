@@ -3,7 +3,7 @@ module LegalServices
     include Steppable
 
     attribute :jurisdiction
-    validates :jurisdiction, inclusion: ['a', 'b', 'c']
+    validates :jurisdiction, presence: true
 
     def next_step_class
       Journey::ChooseServices

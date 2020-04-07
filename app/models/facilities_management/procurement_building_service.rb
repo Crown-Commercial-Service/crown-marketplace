@@ -103,9 +103,9 @@ module FacilitiesManagement
       elsif requires_lift_data?
         lift_data.map(&:to_i).inject(&:+)
       elsif requires_service_hours?
-        service_hours.total_hours_annually
+        service_hours.total_hours_annually.to_i
       else
-        procurement_building.building.building_json['gia']
+        procurement_building.building.building_json[:gia]
       end
     end
 

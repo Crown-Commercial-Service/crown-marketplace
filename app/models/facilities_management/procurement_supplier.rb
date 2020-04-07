@@ -51,8 +51,8 @@ module FacilitiesManagement
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
           begin
-            ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
-            ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
+            FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+            FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
           rescue StandardError
             false
           end
@@ -66,7 +66,7 @@ module FacilitiesManagement
           self.reason_for_declining = nil
           send_email_to_buyer('DA_offer_accepted')
           begin
-            AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
+            FacilitiesManagement::AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
           rescue StandardError
             false
           end
@@ -172,6 +172,16 @@ module FacilitiesManagement
       self.contract_closed_date = DateTime.now.in_time_zone('London')
     end
 
+    def last_offer?
+      return false unless procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7, aasm_state: %w[unsent sent]).empty?
+
+      procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last == self
+    end
+
+    def supplier_email
+      supplier.data['contact_email']
+    end
+
     private
 
     # Custom Validation
@@ -260,7 +270,7 @@ module FacilitiesManagement
 
     def send_email_to_supplier(email_type)
       template_name = email_type
-      email_to = supplier.data['contact_email']
+      email_to = supplier_email
 
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,

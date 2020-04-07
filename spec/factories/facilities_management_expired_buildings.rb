@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_building, class: FacilitiesManagement::Buildings do
+  factory :facilities_management_expired_buildings, class: FacilitiesManagement::ExpiredBuildings do
     id { SecureRandom.uuid }
     user_id { create(:user).id }
     status { 'Ready' }
@@ -23,7 +23,7 @@ FactoryBot.define do
     end
   end
 
-  factory :facilities_management_building_london, parent: :facilities_management_building do
+  factory :expired_facilities_management_building_london, parent: :facilities_management_expired_buildings do
     building_json do
       { 'id' => id,
         'gia' => 1002,

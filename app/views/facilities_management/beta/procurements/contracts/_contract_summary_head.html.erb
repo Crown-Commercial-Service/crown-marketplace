@@ -5,6 +5,6 @@
         <%= warning_title %>
     </strong>
 </div>
-<h2 class="govuk-heading-s <%= 'govuk-!-width-two-thirds' if @contract.aasm_state == 'expired' %>">
+<h2 class="govuk-heading-s <%= 'govuk-!-width-two-thirds' if @contract.aasm_state == 'expired' || (@contract.closed? && @contract.last_offer?) || (@contract.closed? && @contract.reason_for_closing.nil?) %>">
     <%= warning_message.html_safe %>
 </h2>

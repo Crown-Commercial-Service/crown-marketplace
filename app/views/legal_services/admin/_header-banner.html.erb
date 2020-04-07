@@ -4,8 +4,8 @@
 <div class="govuk-header__content">
   <%= render 'layouts/header-title', service: 'legal_services', path: legal_services_path %>
 
-  <nav>
-    <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+  <nav role="navigation" aria-label="Top Level Navigation">
+    <ul id="navigation" class="govuk-header__navigation ">
       <% unless landing_or_admin_page || not_permitted_page %>
         <li class="govuk-header__navigation-item">
           <%= link_to 'Back to start', legal_services_path, class: 'govuk-header__link' %>

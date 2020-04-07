@@ -15,8 +15,6 @@
 
 
 /* Override with my own components */
-@import "back-link/back-link";
-@import "button/button";
 @import "calculator-form/calculator-form";
 @import "details/details";
 @import "error-message/error-message";
@@ -48,3 +46,10 @@
 @import "step-by-step-nav/step-by-step-related";
 @import "step-by-step-nav/task-list";
 @import "step-by-step-nav/related-items";
+/* Componants updated with for GDS relsease 2019, added assets can be found here: https://github.com/alphagov/govuk-frontend */
+@import "back-link/back-link";
+@import "button/button";
+@import "checkboxes/checkboxes";
+@import "input/input";
+@import "link/link";
+@import "radios/radios";

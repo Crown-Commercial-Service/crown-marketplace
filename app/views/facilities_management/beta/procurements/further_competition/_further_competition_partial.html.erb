@@ -1,25 +1,23 @@
   <div class="">
-    <h2 class="govuk-heading-xl govuk-!-font-weight-bold">Download your procurement summary</h2>
-    <p class="govuk-body">Your procurement summary reference number is <%= @precurement_reference %>.</p>
+    <h2 class="govuk-heading-xl govuk-!-font-weight-bold"> <%= t('.summary_header') %></h2>
+    <p class="govuk-body"> <%= "Your procurement summary reference number is #{@procurement_reference}"%>.</p>
 
     <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-4">
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
-            What will the summary contain?
+            <%= t('.description_header') %>
           </span>
         </summary>
         <div class="govuk-details__text ">
-          <p class="govuk-body-m">The summary contains all the information that you have entered into this portal, all
-          of which you can transfer into the relevant documents when running your further
-          competition, including:</p>
+          <p class="govuk-body-m"><%= t('.description_text') %></p>
 
           <ul class="govuk-list govuk-list--bullet govuk-body-m">
-            <li>building information</li>
-            <li>services required, and volume details</li>
-            <li>recommended sub-lot</li>
-            <li>supplier shortlist</li>
-            <li>contract requirements and key dates</li>
+            <li><%= t('.description_list_1') %></li>
+            <li><%= t('.description_list_2') %></li>
+            <li><%= t('.description_list_3') %></li>
+            <li><%= t('.description_list_4') %></li>
+            <li><%= t('.description_list_5') %></li>
           </ul>        
         </div>
       </details>
@@ -35,11 +33,8 @@
   </div> 
 
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">What happens next</h2>
-    <p>Running a further competition allows you to ask your shortlisted framework
-      suppliers to bid for your business, based on your particular requirements.
-      This allows you to get a competitive price for a solution that meets your specific
-      needs. The key stages of the process are:</p>
+    <h2 class="govuk-heading-l"><%= t('.what_happens_next_title') %></h2>
+    <p><%= t('.what_happens_next_description') %></p>
   </div>
 
   <div class="govuk-grid-row">
@@ -58,7 +53,7 @@
               </span>
 
                 <span class="js-step-title"><button class="app-step-nav__button app-step-nav__button--title js-step-title-button" aria-expanded="true" aria-controls="step-panel-creating-your-contract-1"><span class="js-step-title-text">
-                Supplier brief
+                <%= t('.supplier_brief') %>
               </span><span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">Hide</span></button></span>
               </h2>
             </div>
@@ -66,20 +61,16 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-creating-your-contract-1">
               <ol class="app-step-nav__list " data-length="3">
                 <li class="app-step-nav__list-item js-list-item ">
-
-                  <span data-position="1.1">used to communicate to the supplier&rsquo;s high level details of your
-
-                  requirements, timescales etc, and receive feedback
+                  <%= t('.supplier_brief_1') %>
+                  <span data-position="1.1">
                   </span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="1.2">allows creation of further shortlisted suppliers (based on suppliers
-                    interest), who wish to progress to the next stage.
+                  <span data-position="1.2"> <%= t('.supplier_brief_2') %>
                   </span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="1.2"> dependent on the level of interest, also allows you to make an initial
-                      decision on whether to proceed to the next stage, or alter your requirements
+                  <span data-position="1.2"> <%= t('.supplier_brief_3') %> 
                   </span>
                 </li>
 
@@ -99,7 +90,7 @@
               </span>
 
                 <span class="js-step-title"><button class="app-step-nav__button app-step-nav__button--title js-step-title-button" aria-expanded="true" aria-controls="step-panel-review-contract-2"><span class="js-step-title-text">
-                Creating your invitation to tender (ITT)
+                <%= t('.invitation_to_tender') %>
               </span><span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">Hide</span></button></span>
               </h2>
             </div>
@@ -107,17 +98,16 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-review-contract-2">
               <ol class="app-step-nav__list " data-length="1">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.1">defining your specific requirements</span>
+                  <span data-position="2.1"><%= t('.invitation_to_tender_1') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.2">setting your evaluation criteria – price and quality</span>
+                  <span data-position="2.2"><%= t('.invitation_to_tender_2') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.3">creating your Terms and Conditions, and order form</span>
+                  <span data-position="2.3"><%= t('.invitation_to_tender_3') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.3">detailing your pricing model, key performance indicators, and other
-                    contract tools</span>
+                  <span data-position="2.3"><%= t('.invitation_to_tender_4') %></span>
                 </li>                
               </ol>
             </div>
@@ -134,7 +124,7 @@
               </span>
 
                 <span class="js-step-title"><button class="app-step-nav__button app-step-nav__button--title js-step-title-button" aria-expanded="true" aria-controls="step-panel-offer-accepted-3"><span class="js-step-title-text">
-                Publishing your ITT
+                <%= t('.publishing_invitation') %>
               </span><span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">Hide</span></button></span>
               </h2>
             </div>
@@ -142,8 +132,7 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-offer-accepted-3">
               <ol class="app-step-nav__list " data-length="4">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="3.1">inviting your shortlisted suppliers to bid by issuing the ITT, requirements
-                      document and draf contract
+                  <span data-position="3.1"><%= t('.publishing_invitation_1') %>
                   </span>
                 </li>
               </ol>
@@ -161,7 +150,7 @@
               </span>
 
                 <span class="js-step-title"><button class="app-step-nav__button app-step-nav__button--title js-step-title-button" aria-expanded="true" aria-controls="step-panel-offer-declined-4"><span class="js-step-title-text">
-                  Tender period
+                  <%= t('.tender_period')%>
               </span><span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">Hide</span></button></span>
               </h2>
             </div>
@@ -169,13 +158,13 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-offer-declined-4">
               <ol class="app-step-nav__list " data-length="3">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.1">answer clarification questions</span>
+                  <span data-position="4.1"><%= t('.tender_period_1')%></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.2">receiving suppliers tenders (bids)</span>
+                  <span data-position="4.2"><%= t('.tender_period_2')%></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.3"> evaluate suppliers&rsquo; responses</span>
+                  <span data-position="4.3"><%= t('.tender_period_3')%> </span>
                 </li>
               </ol>
             </div>
@@ -192,7 +181,7 @@
               </span>
 
                 <span class="js-step-title"><button class="app-step-nav__button app-step-nav__button--title js-step-title-button" aria-expanded="true" aria-controls="step-panel-offer-declined-4"><span class="js-step-title-text">
-                  Awarding the contract
+                  <%= t('.awarding_the_contract') %>
               </span><span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">Hide</span></button></span>
               </h2>
             </div>
@@ -200,8 +189,7 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-offer-declined-4">
               <ol class="app-step-nav__list " data-length="3">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.1">awarding the contract to the successful supplier, and notifying
-                      unsuccessful suppliers
+                  <span data-position="4.1"><%= t('.awarding_the_contract_1') %>
                   </span>
                 </li>
               </ol>
@@ -212,20 +200,19 @@
     </div>
 
   <div class="govuk-grid-column-two-thirds">
-    <h5 class="govuk-heading-l">eSourcing tool</h5>
-    <p>Crown Commercial Service offer a free eSourcing tool, to help you run your further competition online,
-      or you can use your own organisation’s sourcing tool if you have one. <a href="https://www.gov.uk/government/publications/esourcing-suite-guidance-for-customers" alt="">Click here</a> for further information.</p>
+    <h5 class="govuk-heading-l"><%= t('.esourcing') %></h5>
+    <p> <%= t('.esourcing_description') %> <a href="https://www.gov.uk/government/publications/esourcing-suite-guidance-for-customers" alt="">Click here</a> for further information.</p>
   </div>
 
   <div class="govuk-grid-column-two-thirds">
-    <h5 class="govuk-heading-l">Where to find more information</h5>
+    <h5 class="govuk-heading-l"><%= t('.more_information') %></h5>
     <p>On <a href="https://www.crowncommercial.gov.uk/agreements/rm3830" alt="">facilities management framework page,</a> you can view information including:</p>
           <ul class="govuk-list govuk-list--bullet">
-            <li>buyer guides</li>
-            <li>supplier brief template</li>
-            <li>call-off schedules and core terms</li>
-            <li>service specifications</li>
-            <li>bid pack guidance documents</li>
+            <li><%= t('.more_information_1') %></li>
+            <li><%= t('.more_information_2') %></li>
+            <li><%= t('.more_information_3') %></li>
+            <li><%= t('.more_information_4') %></li>
+            <li><%= t('.more_information_5') %></li>
           </ul> 
     </div>
 
@@ -233,23 +220,21 @@
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
-            Need help?
+            <%= t('.help') %>
           </span>
         </summary>
         <div class="govuk-details__text ">
-          <p class="govuk-body-m">Please find our contact details below.
+          <p class="govuk-body-m"><%= t('.help_description') %>
           <br/>
           <br/>
-          When speaking to us please reference your procurement summary reference
-          number.
+          <%= t('.help_description_1')%>
           </p>        
         </div>
       </details>
     </div>
     <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-4">
       <p class="govuk-!-font-weight-bold">
-          If you wish to make a copy of your requirements and re-run your results, click on the &lsquo;Make a copy of
-        your requirements&rsquo; button below. 
+          <%= t('.make_a_copy')%>
       </p>
     </div>
   </div>

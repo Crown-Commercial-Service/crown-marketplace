@@ -1,9 +1,31 @@
 class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  include FurtherCompetitionConcern
-
   attr_accessor :session_data
 
-  def build(start_date, current_user)
+  def units_of_measure_values
+    @units_of_measure_values ||= @active_procurement_buildings.map do |building|
+      @report.fc_procurement_building_services(building).map do |procurement_building_service|
+        {
+          building_id: building.building_id,
+          service_code: procurement_building_service.code,
+          uom_value: procurement_building_service.uval,
+          service_standard: procurement_building_service.service_standard
+        }
+      end
+    end.flatten
+  end
+
+  def assessed_value
+    return if @assessed_value
+
+    @report.calculate_services_for_buildings
+    @assessed_value = @report.assessed_value
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def build
+    start_date = @procurement.initial_call_off_start_date
+    current_user = @procurement.user
+
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
         first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -22,7 +44,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
         end
 
-        unless @units_of_measure_values.nil?
+        unless units_of_measure_values.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
             add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
             number_volume_services = add_volumes_information(sheet)
@@ -34,6 +56,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def add_other_competition_worksheets(package, standard_column_style, standard_bold_style, start_date, current_user)
     add_service_periods_worksheet(package, standard_column_style)
@@ -43,17 +66,18 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     add_customer_and_contract_details(package) if @procurement
   end
 
+  # rubocop:disable Metrics/AbcSize
   def add_service_matrix(sheet)
     rows_added = 0
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
 
-    @services.each do |service|
+    services_data.each do |service|
       list_standards = get_sorted_list_unique_standards_per_building service
       list_standards.each do |standard|
         first_loop = true
         row_values = []
-        @building_ids_with_service_codes.each do |building|
-          unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
+        buildings_data.each do |building|
+          unit_of_measure = units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
           service_name = determine_service_name(service['name'], unit_of_measure, standard)
           row_values << service['code'] << service_name if first_loop
           row_values << determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
@@ -65,6 +89,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     end
     rows_added
   end
+  # rubocop:enable Metrics/AbcSize
 
   def determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
     cell_text = ''
@@ -74,8 +99,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def get_sorted_list_unique_standards_per_building(service)
     list_standards = Set[]
-    @building_ids_with_service_codes.each do |building|
-      unit_of_measure = @units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
+    buildings_data.each do |building|
+      unit_of_measure = units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
       list_standards.add(unit_of_measure[:service_standard]) if unit_of_measure && unit_of_measure[:service_standard]
     end
     list_standards.add nil if list_standards.empty?
@@ -84,9 +109,9 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def style_service_matrix_sheet(sheet, style, number_rows_added)
     column_widths = [15, 100]
-    @buildings.count.times { column_widths << 50 }
+    buildings_data.count.times { column_widths << 50 }
 
-    last_column_name = ('A'..'ZZ').to_a[1 + @buildings.count]
+    last_column_name = ('A'..'ZZ').to_a[1 + buildings_data.count]
     sheet["A2:#{last_column_name}#{number_rows_added + 1}"].each { |c| c.style = style } if number_rows_added.positive?
 
     sheet.column_widths(*column_widths)
@@ -120,13 +145,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number
   end
 
-  def add_shortlist_cost_sublot_recommendation(sheet, start_date, current_user, standard_style, bold_style)
+  def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
 
-    build_direct_award_report(true,  start_date, current_user, session_data)
-
-    da_value = @report.assessed_value
-    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(da_value, unit: '£', precision: 2), '(Partial estimated cost) / (Estimated cost not calculated)'], style: standard_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2), '(Partial estimated cost) / (Estimated cost not calculated)'], style: standard_style, height: standard_row_height
     sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, '(Customer selected)'], style: standard_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: standard_style, height: standard_row_height
   end
@@ -180,7 +202,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
     label = 'Suppliers shortlist'
-    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
+    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
     supplier_names.each do |supplier_name|
       sheet.add_row [label, supplier_name], style: standard_style, height: standard_row_height
       label = nil

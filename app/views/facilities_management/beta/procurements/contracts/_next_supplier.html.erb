@@ -1,10 +1,4 @@
-<h1 class="govuk-caption-xl">
-    <%= @procurement.contract_name %>
-</h1>
-<h2 class="govuk-heading-xl">
-    <%= t('.title') %>
-</h2>
-<h3 class="govuk-body-l govuk-!-width-one-half"> <%= t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.data['supplier_name'] %>.</b></h1>
+<h1 class="govuk-body-l govuk-!-width-two-thirds"> <%= t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.data['supplier_name'] %>.</b></h1>
   <div class="govuk-body-l">
       <%= t('.price')%> <b><%= format_money @procurement.procurement_suppliers.unsent.first.direct_award_value %>.</b>
   </div>

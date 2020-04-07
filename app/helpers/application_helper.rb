@@ -15,11 +15,11 @@ module ApplicationHelper
   end
 
   def feedback_email_link
-    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'SupplyTeachers'
+    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'SupplyTeachers'
 
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'LegalServices'
+    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'LegalServices'
 
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener') if controller.class.try(:parent_name) == 'ManagementConsultancy'
+    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'ManagementConsultancy'
 
     govuk_email_link(Marketplace.feedback_email_address, t('layouts.application.feedback_aria_label'), css_class: 'govuk-link ga-feedback-mailto')
   end
@@ -247,9 +247,7 @@ module ApplicationHelper
       render partial: "#{params[:service]}/header-banner"
     else
       service_name = controller.class.parent_name&.underscore
-
-      # TODO: check if we need to improve the 'admin' check??
-      if service_name.include? 'admin'
+      if service_name&.include? 'admin'
         render partial: 'layouts/admin/header-banner'
       elsif service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
         render partial: "#{service_name}/header-banner"
@@ -280,15 +278,15 @@ module ApplicationHelper
   end
 
   def format_date(date_object)
-    date_object&.strftime '%e %B %Y'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y'
   end
 
   def format_date_time(date_object)
-    date_object&.strftime '%e %B %Y, %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y, %l:%M%P'
   end
 
   def format_date_time_day(date_object)
-    date_object&.strftime '%A %e %B %Y at %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%A %e %B %Y at %l:%M%P'
   end
 
   def format_money(cost)
@@ -305,11 +303,10 @@ module ApplicationHelper
   end
 
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
-    # different fields for direct award package
     if service_type == 'Direct Award Discount (%)'
-      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %'], unit: '')
+      supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']
     else
-      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : number_to_currency(supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%').remove(' (£)')], unit: '')
+      supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%)').remove(' (£)')]
     end
   end
 end

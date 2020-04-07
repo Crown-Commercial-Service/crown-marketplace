@@ -7,7 +7,13 @@ module CCS
     end
 
     class Rate < ApplicationRecord
-      # attr_reader :benchmark_rates, :framework_rates
+      def self.framework_rate_for(service_code)
+        service_for(service_code).framework
+      end
+
+      def self.benchmark_rate_for(service_code)
+        service_for(service_code).benchmark
+      end
 
       # usage:
       # CCS::FM::Rate.zero_rate
@@ -45,6 +51,12 @@ module CCS
         }
       end
       # rubocop:enable Rails/FindEach
+
+      def self.service_for(service_code)
+        find_by(code: service_code, standard: 'A') || find_by(code: service_code)
+      end
+
+      private_class_method :service_for
     end
   end
 end

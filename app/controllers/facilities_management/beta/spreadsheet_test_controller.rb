@@ -28,7 +28,7 @@ module FacilitiesManagement
       private
 
       def assign_building_ids_and_service_codes
-        @building_ids = Buildings.where(user_id: Base64.encode64(current_user.email)).pluck(:id)
+        @building_ids = Building.where(user_id: current_user.id).pluck(:id)
         service_codes = FacilitiesManagement::StaticData.work_packages.map { |wp| wp['code'] }
         @first_half_service_codes, @second_half_service_codes = service_codes.each_slice((service_codes.size / 2.0).round).to_a
       end

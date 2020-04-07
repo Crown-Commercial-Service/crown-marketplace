@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Beta::Procurements::Contracts::SentController, type: :controller do
-  login_fm_buyer
+  login_fm_buyer_with_details
 
   let(:procurement) { create(:facilities_management_procurement, user: User.first) }
   let(:supplier) { create(:ccs_fm_supplier) }

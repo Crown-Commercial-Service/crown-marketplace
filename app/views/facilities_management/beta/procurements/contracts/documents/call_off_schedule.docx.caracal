@@ -205,11 +205,11 @@ docx.p 'EFFECTIVE DATE & DATE THE CONTRACT PERIOD / TERM COMMENCES:  [Day Month 
 
 docx.p 'MOBILISATION PERIOD: None', font: 'Calibri' if @procurement.mobilisation_period.nil?
 
-docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d %m %Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d %m %Y')}", font: 'Calibri' unless @procurement.mobilisation_period.nil?
+docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d %m %Y')}", font: 'Calibri' unless @procurement.mobilisation_period.nil?
 
-docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date.strftime('%d %m %Y')}", font: 'Calibri'
+docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
-docx.p "DATE CALL-OFF INITIAL PERIOD ENDS: #{@procurement.initial_call_off_end_date.strftime('%d %m %Y')}", font: 'Calibri'
+docx.p "DATE CALL-OFF INITIAL PERIOD ENDS: #{@procurement.initial_call_off_end_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
 docx.p "CALL-OFF INITIAL PERIOD: #{@procurement.initial_call_off_period} years", font: 'Calibri'
 
@@ -261,7 +261,7 @@ docx.p
 docx.p 'INDEXATION', bold: true, font: 'Calibri'
 
 docx.p "The Payment Index that shall be applied in relation to indexation shall be the Consumer Price Index.
-    Indexation shall only apply from #{@procurement.initial_call_off_start_date + 1.year} and shall be applied on every yearly anniversary of the Start Date.
+    Indexation shall only apply from #{(@procurement.initial_call_off_start_date + 1.year).strftime('%d-%m-%Y')} and shall be applied on every yearly anniversary of the Start Date.
     Indexation shall be applied to the Baseline Monthly Payment.", font: 'Calibri'
 
 docx.p
@@ -311,8 +311,8 @@ docx.p
 
 docx.p 'METHOD OF PAYMENT', bold: true, font: 'Calibri'
 
-docx.p 'BACS (where selected then the Supplier shall pay any associated merchant fee levied for using the Government Procurement Card and shall not be entitled to recover this from CCS or the Buyer)]', font: 'Calibri' if @procurement.payment_method == 'bacs'
-docx.p 'Government procurement card (where selected then the Supplier shall pay any associated merchant fee levied for using the Government Procurement Card and shall not be entitled to recover this from CCS or the Buyer)]', font: 'Calibri' if @procurement.payment_method == 'card'
+docx.p 'BACS (where selected then the Supplier shall pay any associated merchant fee levied for using the Government Procurement Card and shall not be entitled to recover this from CCS or the Buyer)', font: 'Calibri' if @procurement.payment_method == 'bacs'
+docx.p 'Government procurement card (where selected then the Supplier shall pay any associated merchant fee levied for using the Government Procurement Card and shall not be entitled to recover this from CCS or the Buyer)', font: 'Calibri' if @procurement.payment_method == 'card'
 
 docx.p
 
@@ -343,10 +343,16 @@ docx.p @notice_contact_detail.full_organisation_address, font: 'Calibri'
 docx.p
 
 docx.p 'BUYER SECURITY POLICY:', bold: true, font: 'Calibri'
-docx.p @procurement.security_policy_document_name, font: 'Calibri'
-docx.p @procurement.security_policy_document_version_number, font: 'Calibri'
-docx.p @procurement.security_policy_document_date, font: 'Calibri'
-docx.p @procurement.security_policy_document_file.file_name, font: 'Calibri' if @procurement.security_policy_document_file.attached?
+
+if @procurement.security_policy_document_required?
+  docx.p @procurement.security_policy_document_name, font: 'Calibri'
+  docx.p @procurement.security_policy_document_version_number, font: 'Calibri'
+  docx.p @procurement.security_policy_document_date, font: 'Calibri' unless @procurement.security_policy_document_date.blank?
+  docx.p @procurement.security_policy_document_file.filename, font: 'Calibri'
+else
+  docx.p 'Not Applicable', font: 'Calibri'
+end
+
 docx.p
 
 docx.p 'PROGRESS REPORT FREQUENCY:', bold: true, font: 'Calibri'
@@ -405,14 +411,7 @@ docx.p 'SOCIAL VALUE COMMITMENT', bold: true, font: 'Calibri'
 
 docx.p 'Not Applicable', font: 'Calibri'
 
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
-docx.p
+docx.page
 
 docx.table([
   ['For and on behalf of the Supplier:', '', 'For and on behalf of the Buyer:', ''],

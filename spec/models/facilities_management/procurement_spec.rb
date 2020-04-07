@@ -156,13 +156,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
     context 'when the procurement_building is present with a service code' do
       it 'expected to be valid' do
         procurement.save
-        procurement.procurement_buildings.create(service_codes: ['test'])
+        procurement.procurement_buildings.create
+        procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
         expect(procurement.valid?(:building_services)).to eq true
       end
     end
+    # rubocop:enable Rails/SkipsModelValidations
 
     context 'when the procurement_building is present but without any service codes' do
       it 'expected to not be valid' do
@@ -403,7 +406,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     before do
       # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::DirectAwardEligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
@@ -455,6 +458,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
+        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
         # rubocop:enable RSpec/AnyInstance
         procurement.save_eligible_suppliers_and_set_state
         procurement.aasm_state = 'direct_award'
@@ -503,6 +507,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.procurement_suppliers[0].contract_closed_date).not_to be_nil
           expect(procurement.procurement_suppliers[1].contract_closed_date).to be_nil
         end
+
+        it 'last sent offer returns false' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
+          expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
+        end
       end
 
       context 'when no contracts are unsent' do
@@ -535,6 +546,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           contract_closed_dates = procurement.procurement_suppliers.map(&:contract_closed_date)
           expect(contract_closed_dates[0..2].any?(nil)).to be false
           expect(contract_closed_dates.last).to be_nil
+        end
+
+        it 'last sent offer returns true' do
+          procurement.offer_to_next_supplier
+          procurement.reload
+          procurement.procurement_suppliers.sent.each(&:decline!)
+          sent_offers = procurement.procurement_suppliers.map(&:last_offer?)
+          expect(sent_offers[0..2].any?(true)).to be false
+          expect(sent_offers.last).to be true
         end
       end
     end

@@ -7,6 +7,7 @@ module FacilitiesManagement
 
         before_action :set_procurement
         before_action :set_contract
+        before_action :authorize_user
         before_action :set_page_detail, only: %i[show edit]
         before_action :assign_contract_attributes, only: :update
 
@@ -14,13 +15,14 @@ module FacilitiesManagement
 
         def edit; end
 
-        # rubocop:disable Metrics/CyclomaticComplexity
+        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         def update
           close_procurement && return if params['close_procurement'].present?
           update_supplier_response && return if params['sign_procurement'].present?
+          no_more_suppliers && return if @contract.last_offer?
           send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
         end
-        # rubocop:enable Metrics/CyclomaticComplexity
+        # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
         private
 
@@ -67,10 +69,15 @@ module FacilitiesManagement
         end
 
         def send_offer_to_next_supplier
-          next_contract = @procurement.procurement_suppliers.unsent.first
+          next_contract = @procurement.procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).first
           @procurement.offer_to_next_supplier
           @procurement.save
           redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
+        end
+
+        def no_more_suppliers
+          @procurement.set_state_to_closed!
+          redirect_to facilities_management_beta_procurement_contract_sent_index_path(@procurement.id, contract_id: @contract.id)
         end
 
         def contract_params
@@ -86,6 +93,10 @@ module FacilitiesManagement
                   :contract_end_date_mm,
                   :contract_end_date_yyyy
                 )
+        end
+
+        def authorize_user
+          authorize! :manage, @procurement
         end
       end
     end

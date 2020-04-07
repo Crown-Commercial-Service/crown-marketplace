@@ -1,4 +1,5 @@
 <%= add_optional_error_prefix_to_page_title(@journey.errors) %>
+<%= content_for :page_title, t('.heading') %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -6,7 +7,9 @@
 
     <%= form_tag @form_path, method: :get do %>
       <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
-      <input type="hidden" name="lot" id="lot" value='1' >
+      <% if @journey.errors.empty? %> 
+        <input type='hidden' name='lot' id='lot' value='1' > 
+      <% end %>
       <%= govuk_form_group_with_optional_error(@journey, :under_threshold) do %>
         <%= govuk_fieldset_with_optional_error(@journey, :under_threshold) do %>
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-font-weight-bold">
@@ -31,7 +34,7 @@
           <p><%= t('.multiple_transaction_advice') %></p>
         <% end %>
       <% end %>
-      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", name: 'Continue' %>
     <% end %>
 
   </div>
