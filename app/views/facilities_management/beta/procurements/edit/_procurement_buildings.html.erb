@@ -2,6 +2,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds chooser-input">
       <h1 class="govuk-heading-xl govuk-!-padding-top-0 "><%= t('.heading')%></h1>
+        <% content_for :page_title,  t('.heading') %>
       <div class="chooser-section govuk-form-group <%= 'govuk-form-group--error' if f.object.errors.any? %>"  data-section="buildings" data-sectionname="buildings">
         <h2 class="govuk-heading-m">
           <%= t('.sub_heading') %>
