@@ -219,10 +219,10 @@ module FacilitiesManagement
         # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
         # for now, this is the best, albeit ugliest, workaround. User will lose their original security policy document
         # if trying to replace it with an invalid one.
-        if @procurement.errors[:security_policy_document_file].any?
-          @procurement.reload.security_policy_document_file.purge 
-          @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
-        end
+        return nil unless @procurement.errors[:security_policy_document_file].any?
+
+        @procurement.reload.security_policy_document_file.purge
+        @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
       end
 
       def set_da_journey_render
