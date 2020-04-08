@@ -13,8 +13,8 @@
     <%= display_errors @procurement, :estimated_cost_known %>
     <div class="radio-content-toggle govuk-radios govuk-radios">
       <div class="govuk-radios__item">
-        <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true, name: 'Yes' %>
-        <%= f.label :estimated_cost_known, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
+        <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true %>
+        <%= f.label :estimated_cost_known, 'Yes', value: true, name: 'Yes', class: 'govuk-label govuk-radios__label' %>
         <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
           <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
             <%= f.label :estimated_annual_cost, 'Enter the estimated annual cost, excluding VAT', class: "govuk-label" %>
@@ -24,8 +24,8 @@
         </div>
       </div>
       <div class="govuk-radios__item">
-        <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input', required: true, name: 'No' %>
-        <%= f.label :estimated_cost_known, 'No', value: false, class: "govuk-label govuk-radios__label" %>
+        <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input', required: true %>
+        <%= f.label :estimated_cost_known, 'No', name: 'No', value: false, class: "govuk-label govuk-radios__label" %>
       </div>
     </div>
   </div>
