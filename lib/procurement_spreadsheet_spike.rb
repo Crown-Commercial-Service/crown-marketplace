@@ -1,7 +1,5 @@
 # Run: bundle exec rails runner lib/procurement_spredsheet_spike.rb
 
-puts "Count: #{FacilitiesManagement::Procurement.count}"
-
 def format_period_start_end(procurement)
   return '' if procurement.unanswered_contract_date_questions?
 
@@ -58,8 +56,8 @@ FacilitiesManagement::ProcurementSupplier.joins(:procurement).where("facilities_
     'Shortlisted Suppliers' => contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
     'Unpriced services' => nil,
     'Route to market selected' => contract.procurement.route_to_market,
-    'DA Suppliers (ranked)' => contract.procurement.procurement_suppliers.sort_by { |s| s.direct_award_value } .map { |s| s.supplier.data['supplier_name'] },
-    'DA Suppliers costs (ranked)' => contract.procurement.procurement_suppliers.sort_by { |s| s.direct_award_value } .map { |s| s.direct_award_value },
+    'DA Suppliers (ranked)' => contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] },
+    'DA Suppliers costs (ranked)' => contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map(&:direct_award_value),
     'DA Awarded Supplier' => contract.supplier.data['supplier_name'],
     'DA Awarded Supplier cost' => contract.direct_award_value,
     'Contract number' => contract.contract_number,
@@ -69,5 +67,6 @@ FacilitiesManagement::ProcurementSupplier.joins(:procurement).where("facilities_
     'DA Buyer contract signed date' => contract.contract_signed_date,
     'DA Buyer confirmed contract dates' => "#{contract.contract_start_date} - #{contract.contract_end_date}"
   }
+
   pp row
 end
