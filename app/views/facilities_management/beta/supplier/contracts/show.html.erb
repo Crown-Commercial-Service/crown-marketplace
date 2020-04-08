@@ -28,12 +28,12 @@
     <% case @contract.aasm_state %>
     <% when 'sent' %>
         <div class='govuk-!-margin-top-5'>
-            <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button', name: pd.navigation_details.primary_text) %> <br/>
-            <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19', name: pd.navigation_details.return_text) %>
+            <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button') %> <br/>
+            <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
         </div>
     <% else %>
         <div class='govuk-!-margin-top-5'>
-            <%= link_to(pd.navigation_details.secondary_text, @page_description.navigation_details.secondary_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button govuk-button--secondary', name: pd.navigation_details.secondary_text) %>
+            <%= link_to(pd.navigation_details.secondary_text, @page_description.navigation_details.secondary_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button govuk-button--secondary') %>
         </div>
     <% end %>
 <% end %>

@@ -4,8 +4,8 @@
 </div>
 <form name="fm-building-details-form" id="fm-bm-building-details-form" action="building-details-summary" method="POST">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <input type="hidden" name="detail-type" aria-labelledby="detail-type" value="fm-building-details"/>
-  <input type="hidden" name="building-id" aria-labelledby="building-id" id="building-id" value="<%= @building_id %>"/>
+  <input type="hidden" name="detail-type" value="fm-building-details"/>
+  <input type="hidden" name="building-id" id="building-id" value="<%= @building_id %>"/>
   <div>
     <!-- Building name -->
     <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span>
@@ -14,7 +14,7 @@
     For example, Newbury office 3rd floor.
   </span>
 
-    <input id="fm-building-name-input" aria-labelledby="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;"
+    <input id="fm-building-name-input" class="govuk-input" type="text" maxlength="25" style="width:300px;"
            value="<%= @building['name'] %>" name="fm-building-name">
     <span class="govuk-caption-m" id="fm-building-name-chars-left"></span>
     <!-- building description -->
@@ -23,7 +23,7 @@
     Enter additional information about this building that will help you to recognise it.<br>
     For example, some users put their cost centre in this field.
   </span>
-    <input id="fm-building-desc-input" aria-labelledby="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;"
+    <input id="fm-building-desc-input" class="govuk-input" type="text" maxlength="50" style="width:300px;"
            value="<%= @building['description'] %>" name="fm-building-desc">
     <span class="govuk-caption-m" id="fm-building-desc-chars-left"></span>
     <!-- Address -->
@@ -35,8 +35,8 @@
 
     <div class="fm-bulding-postcode-wrapper <%= !@building['address'].blank? ?  'fm-bulding-postcode-hide':'' %>">
       <span id="fm-address-sub-title" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0">Postcode</span>
-      <input id="address-json" name="address-json" aria-labelledby="address-json" value="" type="hidden"/>
-      <input id="building-ref" name="building-ref" aria-labelledby="building-ref" value="" type="hidden"/>
+      <input id="address-json" name="address-json" value="" type="hidden"/>
+      <input id="building-ref" name="building-ref" value="" type="hidden"/>
       <input id="fm-bm-postcode" class="govuk-input govuk-!-margin-top-0 govuk-!-margin-bottom-0" type="text" maxlength="12" style="width:300px;"><br/><br/>
       <a id="fm-find-address-btn" href="#" class="govuk-button ">Find address</a><br/>
     </div>

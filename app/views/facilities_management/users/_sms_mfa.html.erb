@@ -48,7 +48,7 @@
           <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
         </span>
         <%= display_error(@challenge, :access_code) %>
-        <%= text_field_tag :access_code, nil, class: 'govuk-input govuk-!-width-one-third', id: 'confirmation', name: 'confirmation', type: 'number' %>
+        <%= text_field_tag :access_code, nil, class: 'govuk-input govuk-!-width-one-third', id: 'confirmation', type: 'number' %>
       </div>
 
 
@@ -58,7 +58,7 @@
 
       <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
 
-      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", name: "Continue" %>
+      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
     <% end %>
 

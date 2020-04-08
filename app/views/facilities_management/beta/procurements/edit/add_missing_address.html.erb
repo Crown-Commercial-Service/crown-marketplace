@@ -2,10 +2,10 @@
     <%=form_for @page_data[:model_object], url: facilities_management_beta_procurements_path do |f|%>
         <div class="govuk-form-group">
             <%= f.label 'Building and street', class: 'govuk-label govuk-!-margin-bottom-1' %>
-            <%= govuk_text_input(f, :building, :two_thirds, [:maxlength, 255], 'aria-labelledby': 'Building') %>
+            <%= govuk_text_input(f, :building, :two_thirds, [:maxlength, 255]) %>
         </div>
         <div class="govuk-form-group">
-            <%= govuk_text_input(f, :street, :two_thirds, [:maxlength, 255], 'aria-labelledby': 'Street') %>
+            <%= govuk_text_input(f, :street, :two_thirds, [:maxlength, 255]) %>
         </div>
         <%= govuk_grouped_fields(f, '', :town_or_city, :county) do |ff, attr| %>
             <%= govuk_start_individual_field(ff,attr,@page_data[:label_text]) do |a| %>
