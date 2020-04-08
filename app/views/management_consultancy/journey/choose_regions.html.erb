@@ -59,7 +59,7 @@
     </div>
     <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
       <div id="css-list-basket">
-        <%= submit_tag t('common.submit'), class: "govuk-button", name: "Continue" %>
+        <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-labelledby': "Continue" %>
         <div>
           <h3 class="govuk-heading-m" data-txt01="<%= t('.regions_selected') %>" data-txt02="<%= t('.no_regions_selected') %>"><span></span> <span></span></h3>
           <a role="button" href="#" class="ccs-remove govuk-link--no-visited-state ccs-no-print" id="removeAll" name="Remove all"><%= t('.remove_all') %></a>

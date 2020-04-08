@@ -34,7 +34,7 @@
           <p><%= t('.multiple_transaction_advice') %></p>
         <% end %>
       <% end %>
-      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", name: 'Continue' %>
+      <%= submit_tag t('common.submit'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-labelledby': 'Continue' %>
     <% end %>
 
   </div>

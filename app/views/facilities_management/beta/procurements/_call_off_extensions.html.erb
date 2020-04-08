@@ -6,7 +6,7 @@
     <div class="govuk-radios govuk-!-margin-top-3" data-propertyname="Extensions choice">
       <div class="govuk-radios__item">
         <%= f.radio_button :extensions_required, true, class: "govuk-radios__input" %>
-        <%= f.label :extensions_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label', name: 'Yes' %>
+        <%= f.label :extensions_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label', 'aria-labelledby': 'Yes' %>
         <!-- Content for when yes is selected hidden when no is selected -->
         <div id="radio-inner-content-for-call-off-extensions" class="radio-inner-content govuk-!-margin-top-3">
           <div id="ext1-container" class="ext-container govuk-form-group govuk-!-margin-left-3
@@ -55,7 +55,7 @@
       </div>
       <div class="govuk-radios__item">
         <%= f.radio_button :extensions_required, false, class: "govuk-radios__input"%>
-        <%= f.label :extensions_required, 'No', value: false, class: 'govuk-label govuk-radios__label', name: 'No' %>
+        <%= f.label :extensions_required, 'No', value: false, class: 'govuk-label govuk-radios__label', 'aria-labelledby': 'No' %>
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@
         <%= f.file_field :suppliers_data, class: css_classes_for_file_upload(@upload, :suppliers_data) %>
         <%= f.hidden_field :suppliers_data_cache %>
       <% end %>
-      <%= f.submit 'Upload data', class: 'govuk-button', name: 'Upload data' %>
+      <%= f.submit 'Upload data', class: 'govuk-button', 'aria-labelledby': 'Upload data' %>
     <% end %>
   </div>
 </div>

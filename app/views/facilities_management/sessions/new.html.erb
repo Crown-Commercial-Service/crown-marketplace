@@ -30,7 +30,7 @@
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
         </span>
         <%= display_error(@result, :email) %>
-        <%=  f.email_field :email, class:"govuk-input govuk-!-width-two-thirds", id:"email", name: "email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
+        <%=  f.email_field :email, class:"govuk-input govuk-!-width-two-thirds", id:"email", 'aria-labelledby': "email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
       </div>
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
@@ -42,11 +42,11 @@
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.enter_your_password') %>
                 </span>
         <%= display_error(@result, :password) %>
-        <%= f.password_field :password, class: "govuk-input govuk-!-width-two-thirds", id: "password", name: "password", autocomplete: "off" %>
+        <%= f.password_field :password, class: "govuk-input govuk-!-width-two-thirds", id: "password", 'aria-labelledby': "password", autocomplete: "off" %>
 
       </div>
 
-      <%= f.submit t('common.sign_in'), id: "submit", name: "Sign in", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= f.submit t('common.sign_in'), id: "submit", 'aria-labelledby': "Sign in", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
     <% end %>
 

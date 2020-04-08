@@ -28,11 +28,11 @@
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
         <%= f.radio_button :tupe, true, class: 'govuk-radios__input' %>
-        <%= f.label :tupe, 'Yes', value: true, name: 'Yes', class: 'govuk-label govuk-radios__label' %>
+        <%= f.label :tupe, 'Yes', value: true, 'aria-labelledby': 'Yes', class: 'govuk-label govuk-radios__label' %>
       </div>
       <div class="govuk-radios__item">
         <%= f.radio_button :tupe, false, class: 'govuk-radios__input' %>
-        <%= f.label :tupe, 'No', value: false, name: 'No', class: 'govuk-label govuk-radios__label' %>
+        <%= f.label :tupe, 'No', value: false, 'aria-labelledby': 'No', class: 'govuk-label govuk-radios__label' %>
       </div>
     </div>
   </div>

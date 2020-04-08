@@ -90,7 +90,7 @@
           <% params[:region_codes]&.split(" ") do |region_code| %>
             <%= hidden_field_tag "region_codes[]", region_code %>
           <% end %>
-          <%= submit_tag t('common.submit'), class: "govuk-button", name: "Continue"%>
+          <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-labelledby': "Continue"%>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
           <div class="basket">

@@ -44,7 +44,7 @@
             <%= t('activemodel.errors.models.ccs_patterns/home/cog_register_enter_confirmation_code.attributes.enter_confirmation_six') %>
         </span>
         <%= display_error(@result, :confirmation_code) %>
-        <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-one-third", id: 'confirmation', type: 'number', name: 'confirmation' %>
+        <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-one-third", id: 'confirmation', type: 'number', 'aria-labelledby': 'confirmation' %>
       </div>
 
       <% if params[:email] %>
@@ -59,11 +59,11 @@
                         <%= t('activemodel.errors.models.ccs_patterns/home/cog_register.attributes.email_format') %>
                     </span>
           <%= display_error(@result, :email) %>
-          <%= text_field_tag :email, nil, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", name: "email", spellcheck: false, aria: {describedby: "email-hint"} %>
+          <%= text_field_tag :email, nil, autofocus: true, autocomplete: "off", class:"govuk-input govuk-!-width-three-quarters", id: "email", 'aria-labelledby': "email", spellcheck: false, aria: {describedby: "email-hint"} %>
         </div>
       <% end %>
 
-      <%= submit_tag t('common.continue'), id: "submit", name: "Continue", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.continue'), id: "submit", 'aria-labelledby': "Continue", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
     <% end %>
 

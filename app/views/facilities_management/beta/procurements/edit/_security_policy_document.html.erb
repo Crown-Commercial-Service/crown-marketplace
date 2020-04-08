@@ -11,7 +11,7 @@
       <div class="radio-content-toggle govuk-radios govuk-radios">
         <div class="govuk-radios__item">
           <%= f.radio_button :security_policy_document_required, true, class: "govuk-radios__input", required: true %>
-          <%= f.label :security_policy_document_required, 'Yes', value: true, name: 'Yes', class: 'govuk-label govuk-radios__label' %>
+          <%= f.label :security_policy_document_required, 'Yes', value: true, 'aria-labelledby': 'Yes', class: 'govuk-label govuk-radios__label' %>
           <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
             <h2 class="govuk-heading-m govuk-!-margin-left-3"><%= t('.document_name.title') %></h2>
             <div class="<%= ' govuk-form-group govuk-form-group--error' if @procurement.errors[:security_policy_document_name].any? %>" data-propertyname="security policy document name"
@@ -60,7 +60,7 @@
         </div>
         <div class="govuk-radios__item">
           <%= f.radio_button :security_policy_document_required, false, class: 'govuk-radios__input', required: true %>
-          <%= f.label :security_policy_document_required, 'No', value: false, name: 'No', class: "govuk-label govuk-radios__label" %>
+          <%= f.label :security_policy_document_required, 'No', value: false, 'aria-labelledby': 'No', class: "govuk-label govuk-radios__label" %>
         </div>
       </div>
     </div>

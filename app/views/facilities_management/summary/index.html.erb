@@ -97,7 +97,7 @@
           </div>
         </fieldset>
       </div>
-      <%= submit_tag t('common.submit'), class: "govuk-button", name: "Continue" %>
+      <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-labelledby': "Continue" %>
 
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     </form>

@@ -126,12 +126,12 @@
           <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-6 govuk-!-margin-top-6">
             <div class="govuk-radios govuk-radios--inline">
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input', required: true %>
-                <%= f.label :central_government, t('.central_gov'), name: 'central government', value: true, class: 'govuk-label govuk-radios__label' %>
+                <%= f.radio_button :central_government, true, value: true, class: 'govuk-radios__input', required: true, 'aria-labelledby': 'central government' %>
+                <%= f.label :central_government, t('.central_gov'), value: true, class: 'govuk-label govuk-radios__label' %>
               </div>
               <div class="govuk-radios__item">
-                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input', required: true %>
-                <%= f.label :central_government, t('.wider_public_sector'), name: 'wider public sector', value: false, class: 'govuk-label govuk-radios__label' %>
+                <%= f.radio_button :central_government, false, value: false, class: 'govuk-radios__input', required: true, 'aria-labelledby': 'wider public sector' %>
+                <%= f.label :central_government, t('.wider_public_sector'), value: false, class: 'govuk-label govuk-radios__label' %>
               </div>
             </div>
           </div>

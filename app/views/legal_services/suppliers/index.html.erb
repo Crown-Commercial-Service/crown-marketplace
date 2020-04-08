@@ -27,7 +27,7 @@
             <%=t('.no_suppliers_found.text') %>
           </p>
         <% end %>
-        <%= link_to 'Back to start', legal_services_path, class: 'govuk-button govuk-!-margin-top-4 govuk-!-padding-left-4 govuk-!-padding-right-4', name: 'Back to start' %>
+        <%= link_to 'Back to start', legal_services_path, class: 'govuk-button govuk-!-margin-top-4 govuk-!-padding-left-4 govuk-!-padding-right-4', 'aria-labelledby': 'Back to start' %>
       </div>
     <% else %>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-0"><%= t('.heading') %></h1>
@@ -52,7 +52,7 @@
               central_government: params[:central_government]
               ),
               class: 'govuk-button',
-              name: 'Download the supplier list'
+              'aria-labelledby': 'Download the supplier list'
             ) %>
         </div>
       </div>
