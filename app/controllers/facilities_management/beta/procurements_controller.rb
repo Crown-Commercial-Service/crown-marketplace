@@ -193,7 +193,7 @@ module FacilitiesManagement
 
       def generate_contract_number_further_competition
         time = Time.now.getlocal
-        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
+        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(@procurement.id + @procurement.contract_name) + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
       end
 
       def update_procurement
@@ -219,7 +219,10 @@ module FacilitiesManagement
         # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
         # for now, this is the best, albeit ugliest, workaround. User will lose their original security policy document
         # if trying to replace it with an invalid one.
-        @procurement.reload.security_policy_document_file.purge if @procurement.errors[:security_policy_document_file].any?
+        return nil unless @procurement.errors[:security_policy_document_file].any?
+
+        @procurement.reload.security_policy_document_file.purge
+        @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
       end
 
       def set_da_journey_render
@@ -474,7 +477,7 @@ module FacilitiesManagement
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: 0..1.15e6).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
         contact_details_data_setup(params[:step])
         verify_completed_contact_details(params[:step])
       end

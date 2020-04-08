@@ -137,12 +137,13 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_contract_number(sheet, style)
     time = Time.now.getlocal
-    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
+    string_to_hash = @procurement.id + @procurement.contract_name
+    sheet.add_row ["#{calculate_contract_number_fc(string_to_hash)} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
-  def calculate_contract_number
-    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number
+  def calculate_contract_number_fc(string_to_hash)
+    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(string_to_hash)
   end
 
   def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
@@ -202,7 +203,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
     label = 'Suppliers shortlist'
-    supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
+    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
     supplier_names.each do |supplier_name|
       sheet.add_row [label, supplier_name], style: standard_style, height: standard_row_height
       label = nil
