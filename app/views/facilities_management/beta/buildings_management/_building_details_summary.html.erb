@@ -1,7 +1,7 @@
 <h2><%= t('facilities_management.beta.building-details-summary.section-header') %></h2>
 <div id="fm-buildings-container">
   <form id="change_submission_form" action="" method="post">
-    <input type="hidden" value="" name="id" id="target-building" aria-labelledby="id"/>
+    <input type="hidden" value="" name="id" id="target-building"/>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   </form>
   <div class="govuk-table" data-module="table" id="buildings-list">

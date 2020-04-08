@@ -25,7 +25,7 @@
                     <div class="govuk-accordion__section chooser-section" data-section="<%= nuts1_region.code %>" data-sectionname="<%= nuts1_region.name %>">
                       <div class="govuk-accordion__section-header">
                         <h2 class="govuk-accordion__section-heading ">
-                          <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= nuts1_region.code %>" name="accordion-default-heading-<%= nuts1_region.code %>">
+                          <span class="govuk-accordion__section-button" id="accordion-default-heading-<%= nuts1_region.code %>">
                             <%= nuts1_region.name %>
                           </span>
                         </h2>
@@ -67,14 +67,14 @@
               </div>
             <% end %>
           <% end %>
-          <%= submit_tag t('common.submit'), class: "govuk-button", name: "Continue" %>
+          <%= submit_tag t('common.submit'), class: "govuk-button" %>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
           <div class="basket" id="css-list-basket">
             <div>
               <h3 class="govuk-heading-m" data-txt01="<%= t('.locations_selected') %>" data-txt02="<%= t('.no_locations_selected') %>">
                 <span id="selected-locations-count">0</span> <span><%= t('.locations_selected') %></span></h3>
-              <a class="govuk-!-padding-left-2 remove-link" role="button" href="" name="Remove all"><%= t('.remove_all') %></a><br />
+              <a class="govuk-!-padding-left-2 remove-link" role="button" href=""><%= t('.remove_all') %></a><br />
               <ul style="margin-top:10px;" class="govuk-list"></ul>
             </div>
           </div>

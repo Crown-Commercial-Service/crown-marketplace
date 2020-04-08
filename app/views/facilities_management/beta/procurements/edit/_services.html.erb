@@ -23,7 +23,7 @@
                 <div class="govuk-accordion__section chooser-section" data-section="<%= service['code'] %>" data-sectionname="<%= service['name'] %>">
                   <div class="govuk-accordion__section-header">
                     <h2 class="govuk-accordion__section-heading">
-                      <span class="govuk-accordion__section-button" id="<%= service['code'] %>" name="<%= service['code'] %>"><%= service['name'] %></span>
+                      <span class="govuk-accordion__section-button" id="<%= service['code'] %>"><%= service['name'] %></span>
                     </h2>
                   </div>
                   <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
@@ -80,7 +80,7 @@
           <div>
             <h3 class="govuk-heading-m" data-txt01="services selected" data-txt02="no services selected">
               <span id="selected-services-count">0</span> <span>services selected</span></h3>
-            <a class="govuk-!-padding-left-2 remove-link" role="button" href="#" name="Remove all">Remove all</a><br/>
+            <a class="govuk-!-padding-left-2 remove-link" role="button" href="#">Remove all</a><br/>
             <ul style="margin-top:10px;" class="govuk-list"></ul>
           </div>
         </div>

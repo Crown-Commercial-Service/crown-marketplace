@@ -7,11 +7,11 @@
     <%= display_potential_errors(@procurement, :local_government_pension_scheme, f.object_name)%>
         <div class="govuk-radios__item">
           <%= f.radio_button :local_government_pension_scheme, true, value: true, class: 'govuk-radios__input' %>
-          <%= f.label :local_government_pension_scheme, "Yes", value: true, 'aria-labelledby': 'Yes', class: 'govuk-label govuk-radios__label' %>
+          <%= f.label :local_government_pension_scheme, "Yes", value: true, class: 'govuk-label govuk-radios__label' %>
         </div>
         <div class="govuk-radios__item">
           <%= f.radio_button :local_government_pension_scheme, false, value: false, class: 'govuk-radios__input' %>
-          <%= f.label :local_government_pension_scheme, "No", value: false, 'aria-labelledby': 'No', class: 'govuk-label govuk-radios__label' %>
+          <%= f.label :local_government_pension_scheme, "No", value: false, class: 'govuk-label govuk-radios__label' %>
         </div>
     </div>
   </div>
