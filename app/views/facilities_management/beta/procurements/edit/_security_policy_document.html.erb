@@ -1,4 +1,3 @@
-<%# <% binding.pry %> %>
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
   <div class="govuk-form-group">
     <div class="govuk-!-margin-top-3">
@@ -46,12 +45,15 @@
               <h2 class="govuk-heading-m govuk-!-margin-left-3 govuk-!-margin-top-8"><%= t('.document.title') %></h2>
               <p class="govuk-!-margin-left-3"><%= t('.document.guidance') %></p>
               <div class="govuk-!-margin-left-3" data-propertyname="Security policy document file">
-                <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label" %>
                 <%= display_errors @procurement, :security_policy_document_file %>
-                <% unless @procurement.security_policy_document_file.attachment.nil?%>
-                <%= "Placeholder" %>
-                <% end %>
+                <% if !@procurement.security_policy_document_file.attachment.nil?%>
+                <%= f.label :security_policy_document_file, 'Uploaded file', class: "govuk-label ccs-font-weight-semi-bold" %>
+                <%= ActiveStorage::Blob.where(id: @procurement.security_policy_document_file.attachment.blob_id).first.filename %> </br>
                 <%= f.file_field :security_policy_document_file %>
+                <% else %>
+                <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label ccs-font-weight-semi-bold" %>
+                <%= f.file_field :security_policy_document_file %>
+                <% end %>
                 <div class="govuk-warning-text govuk-!-margin-top-3">
                   <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                   <strong class="govuk-warning-text__text">
