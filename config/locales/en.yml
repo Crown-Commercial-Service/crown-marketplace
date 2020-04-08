@@ -714,9 +714,9 @@ en:
       admin:
         supplier_rates:
           supplier_benchmark_rates:
-            not_a_number: The rate must be a number, like 2.66
+            not_a_number: The rate must be a number, like 2.60 or 8
           supplier_framework_rates:
-            not_a_number: The rate must be a number, like 2.66
+            not_a_number: The rate must be a number, like 2.60 or 8
   faker:
     company:
       name:

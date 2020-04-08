@@ -13,9 +13,9 @@ RSpec.describe FacilitiesManagement::Admin::Rates, type: :model do
       end
 
       context 'with numeric input having no decimal places' do
-        it 'not valid' do
+        it 'valid' do
           rate.send(:"#{rate_field}=", 1)
-          expect(rate).not_to be_valid
+          expect(rate).to be_valid
         end
       end
 
