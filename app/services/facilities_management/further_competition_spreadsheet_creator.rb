@@ -137,13 +137,19 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_contract_number(sheet, style)
     time = Time.now.getlocal
-    string_to_hash = @procurement.id + @procurement.contract_name
-    sheet.add_row ["#{calculate_contract_number_fc(string_to_hash)} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
+    # string_to_hash = @procurement.id + @procurement.contract_name
+
+    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
+    # sheet.add_row ["#{calculate_contract_number_fc(string_to_hash)} - #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
-  def calculate_contract_number_fc(string_to_hash)
-    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(string_to_hash)
+  # def calculate_contract_number_fc(string_to_hash)
+  #  FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(string_to_hash)
+  # end
+
+  def calculate_contract_number
+    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number
   end
 
   def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
