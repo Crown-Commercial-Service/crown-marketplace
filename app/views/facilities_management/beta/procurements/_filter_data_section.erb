@@ -16,7 +16,7 @@
                 ) %>
             <label class="govuk-label govuk-checkboxes__label filter-component-govuk-checkboxes__label"
                    for='<%= "facilities_management_procurement_#{section_name}s_codes_#{section_name}_#{item.code}"%>'>
-              <%= item.name %>
+              <%= item.name.gsub(160.chr("UTF-8"), " ") %>
             </label>
           </div>
         <% end %>

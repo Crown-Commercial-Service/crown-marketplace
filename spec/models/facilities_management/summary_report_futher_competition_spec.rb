@@ -255,4 +255,84 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     # rubocop:enable RSpec/ExampleLength
   end
+
+  describe 'assessed_value for FC sub-lots' do
+    let(:code) { nil }
+    let(:code1) { nil }
+    let(:code2) { nil }
+    let(:lift_data) { nil }
+    let(:estimated_annual_cost) { 7000000 }
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             lift_data: lift_data,
+             procurement_building: create(:facilities_management_procurement_building_no_services,
+                                          building_id: create(:facilities_management_building_london).id,
+                                          procurement: create(:facilities_management_procurement_no_procurement_buildings,
+                                                              estimated_annual_cost: estimated_annual_cost,
+                                                              estimated_cost_known: true)))
+    end
+    let(:procurement_building_service_1) do
+      create(:facilities_management_procurement_building_service,
+             code: code1,
+             procurement_building: procurement_building_service.procurement_building)
+    end
+    let(:procurement_building_service_2) do
+      create(:facilities_management_procurement_building_service,
+             code: code2,
+             procurement_building: procurement_building_service_1.procurement_building)
+    end
+
+    let(:report) { described_class.new(procurement_building_service_2.procurement_building.procurement.id) }
+
+    before do
+      report.calculate_services_for_buildings
+    end
+
+    context 'when framework price for at least one service is missing' do
+      let(:code) { 'C.5' }
+      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:code1) { 'G.9' } # no fw price
+      let(:code2) { 'C.7' } # no fw price
+
+      context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
+        let(:estimated_annual_cost) { 843500 }
+
+        it 'uses BM and Customer prices only' do
+          expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))
+        end
+      end
+
+      context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
+        let(:estimated_annual_cost) { 37355000 }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
+        end
+      end
+    end
+
+    context 'when at least one service missing framework price and at least one service is missing benchmark price' do
+      let(:code) { 'C.5' }
+      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:code1) { 'G.9' } # no fw price
+      let(:code2) { 'G.8' } # no fw & no bm price
+
+      context 'when variance between FM & BM and Customer input is >|30%|' do
+        let(:estimated_annual_cost) { 7000000 }
+
+        it 'uses Customer price only' do
+          expect(report.assessed_value.round(2)).to eq(report.buyer_input.round(2))
+        end
+      end
+
+      context 'when variance between FM & BM and Customer input is <|30%|' do
+        let(:estimated_annual_cost) { 1 }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
+        end
+      end
+    end
+  end
 end

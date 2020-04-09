@@ -31,8 +31,13 @@ a.ccs-footer__links {
     text-decoration: underline;
   }
   &:focus {
-    outline: 3px solid govuk-colour("yellow");
-    outline-offset: 0;
+    outline: 3px solid rgba(0, 0, 0, 0);
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 

@@ -118,8 +118,8 @@ en:
               inclusion: Select yes if the fees will be under £20,000
         legal_services/journey/choose_jurisdiction:
           attributes:
-            legal_jurisdiction:
-              inclusion: Select the jurisdiction you need
+            jurisdiction:
+              blank: Select the jurisdiction you need
         legal_services/journey/choose_organisation_type:
           attributes:
             central_government:
@@ -129,10 +129,14 @@ en:
             region_codes:
               full_national_coverage: Select full national coverage or the region or regions you require the services in
               too_short: Select the region or regions you require the services in
+        legal_services/journey/choose_services:
+          attributes:
+            services:
+              blank: Select at least one legal service
         legal_services/journey/select_lot:
           attributes:
-            select_lot:
-              inclusion: Select the lot you need
+            lot:
+              blank: Select the lot you need
         management_consultancy/journey/choose_expenses:
           attributes:
             expenses:
@@ -710,9 +714,9 @@ en:
       admin:
         supplier_rates:
           supplier_benchmark_rates:
-            not_a_number: The rate must be a number, like 2.66
+            not_a_number: The rate must be a number, like 2.60 or 8
           supplier_framework_rates:
-            not_a_number: The rate must be a number, like 2.66
+            not_a_number: The rate must be a number, like 2.60 or 8
   faker:
     company:
       name:
@@ -935,7 +939,6 @@ en:
         download_statement: The spreadsheet includes the selections you made, for your records and audit trail
         download_supplier_shortlist_link: Download supplier shortlist
         heading: Download the supplier shortlist
-        page_title: Download supplier list
       index:
         download_suppliers_list: Download the supplier list
         heading: Supplier results

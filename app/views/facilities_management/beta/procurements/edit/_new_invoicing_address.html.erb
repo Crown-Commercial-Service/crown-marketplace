@@ -10,7 +10,7 @@
             <%= display_error(ff.object, :organisation_address_line_1) %>
             <%= ff.text_field :organisation_address_line_1, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:organisation_address_line_1].any? } ", maxlength: 50 %>
             <div class="govuk-form-group govuk-!-margin-top-3">
-              <%= ff.text_field :organisation_address_line_2, class: "govuk-input #{'govuk-input--error' if ff.object.errors[:organisation_address_line_1].any? } ", maxlength: 50 %>
+              <%= ff.text_field :organisation_address_line_2,'aria-label' =>'address_line_2', class: "govuk-input #{'govuk-input--error' if ff.object.errors[:organisation_address_line_1].any? } ", maxlength: 50 %>
             </div>
             </div>
             

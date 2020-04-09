@@ -106,16 +106,19 @@ form.ccs-form {
     .govuk-input,
     .govuk-textarea,
     .govuk-radios__input,
+    .govuk-input[type="number"],
     .js-enabled .govuk-tabs__list,
     .js-enabled .govuk-tabs__panel,
     .js-enabled .govuk-tabs__tab[aria-selected="true"] {
-        border-width: 1px !important;
+      &:not(:focus) {
+        border-width: 2px !important;
+      }
+      &:focus {
+        border-width: 4px !important;
+      }
     }
     .govuk-radios__input + .govuk-radios__label::before {
         border-width: 1.6px;
-    }
-    .govuk-input[type="number"] {
-        border-width: 1px !important;
     }
     .ccs-govuk-checkboxes--thin {
         .govuk-checkboxes__input + .govuk-checkboxes__label::before {
@@ -347,7 +350,7 @@ ul.ccs-checklist {
 
   @media (max-width: 641px) {//mobile
     & > .govuk-button {
-      display: none;
+      display: inline-block;
     }
   }
 }
@@ -501,7 +504,7 @@ body.js-enabled #ccs-dynamic-accordian {
 
         @media (max-width: 641px) {//mobile
             & > .govuk-button {
-                display: none;
+                display: inline-block;
             }
         }
 

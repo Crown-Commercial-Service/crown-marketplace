@@ -168,6 +168,7 @@ Rails.application.routes.draw do
         get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
         put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
         get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
+        put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
       end
     end
 

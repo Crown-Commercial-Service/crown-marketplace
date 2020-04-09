@@ -32,11 +32,9 @@ module FacilitiesManagement
 
       @procurement.active_procurement_buildings.each do |building|
         result = uvals_for_building(building, spreadsheet_type)
-        all_building_uvals = result[0]
         building_data = result[1]
-
         # TBC filter out nil values for now
-        building_uvals = all_building_uvals.reject { |v| v[:uom_value].nil? }
+        building_uvals = result[0].reject { |v| v[:uom_value].nil? }
 
         vals_per_building = services(building_data, building_uvals, supplier_name, remove_cafm_help)
         @sum_uom += vals_per_building[:sum_uom]
@@ -59,18 +57,16 @@ module FacilitiesManagement
       suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
     end
 
-    # if services have no costings, just return the contract cost (do not divide the contract cost by 3 or 2)
     def assessed_value
-      buyer_input = @contract_cost * @contract_length_years.to_f
-      return buyer_input if buyer_input != 0.0 && @sum_uom == 0.0 && @sum_benchmark == 0.0
-
-      return (@sum_uom + @sum_benchmark + buyer_input) / 3 unless buyer_input.zero?
-
-      (@sum_uom + @sum_benchmark) / 2
+      @assessed_value ||= calculate_assessed_value
     end
 
     def direct_award_value
       @sum_uom
+    end
+
+    def buyer_input
+      @buyer_input ||= @contract_cost * @contract_length_years.to_f
     end
 
     def current_lot
@@ -128,7 +124,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/AbcSize
     def uom_values(spreadsheet_type)
-      uvals = @procurement.active_procurement_buildings.map { |building| uvals(building, spreadsheet_type) }
+      uvals = @procurement.active_procurement_buildings.map { |building| uvals_for_building(building, spreadsheet_type) }
 
       # add labels for spreadsheet
       uvals.each do |u|
@@ -211,7 +207,7 @@ module FacilitiesManagement
                                  uvals
                                end
       uvals_remove_cafm_help.each do |v|
-        uom_value = calculate_uom_value(v)
+        uom_value = v[:uom_value]
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
@@ -248,6 +244,45 @@ module FacilitiesManagement
     # london nuts are defined in FM-703
     def building_in_london?(code)
       %w[UKI3 UKI4 UKI5 UKI6 UKI7].include? code
+    end
+
+    def calculate_assessed_value
+      return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
+
+      values = values_to_average
+
+      values << buyer_input unless buyer_input.zero?
+      (values.sum / values.size).to_f
+    end
+
+    def values_to_average
+      if any_services_missing_framework_price?
+        if any_services_missing_benchmark_price?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
+        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+          return [sum_benchmark]
+        end
+      end
+
+      [sum_uom, sum_benchmark]
+    end
+
+    def any_services_missing_framework_price?
+      @procurement.procurement_building_services.map(&:code).each do |code|
+        return true if CCS::FM::Rate.framework_rate_for(code).nil?
+      end
+      false
+    end
+
+    def any_services_missing_benchmark_price?
+      @procurement.procurement_building_services.map(&:code).each do |code|
+        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
+      end
+      false
+    end
+
+    def variance_over_30_percent?(sample_average, value)
+      (value - sample_average) / value > 0.03
     end
   end
 end

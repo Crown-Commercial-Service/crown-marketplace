@@ -52,6 +52,8 @@ ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav cla
 # Update and install base packages
 RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES nodejs-current-npm git
 
+RUN npm config set unsafe-perm true
+
 # Install yarn to manage Node.js dependencies
 RUN npm install yarn -g
 

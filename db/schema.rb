@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_06_113734) do
+ActiveRecord::Schema.define(version: 2020_04_09_111958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -201,6 +201,8 @@ ActiveRecord::Schema.define(version: 2020_04_06_113734) do
     t.boolean "using_buyer_detail_for_notices_detail"
     t.boolean "using_buyer_detail_for_authorised_detail"
     t.boolean "local_government_pension_scheme"
+    t.string "contract_number"
+    t.string "contract_datetime"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 

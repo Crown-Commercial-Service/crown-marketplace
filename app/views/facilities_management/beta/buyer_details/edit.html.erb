@@ -1,3 +1,5 @@
+<% content_for :page_title, t('.buyer_details') %>
+
 <div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
   <div class="govuk-grid-column-two-thirds" id="buyer-details-form">
     <%= form_for @buyer_detail, url: facilities_management_beta_buyer_detail_path, method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>

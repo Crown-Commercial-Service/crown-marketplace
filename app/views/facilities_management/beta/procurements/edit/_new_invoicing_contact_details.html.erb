@@ -34,8 +34,8 @@
                   <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{'invoice_contact_detail.organisation_address_postcode-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
                   <% error_id = ff.object.errors[:organisation_address_postcode].any? ? "" : "fm-postcode-error" %>
                   <div class="govuk-error-message" id= <%=error_id%>></div>
-                  <%= display_error(ff.object, :organisation_address_postcode) %>
-                  <%= ff.text_field :organisation_address_postcode, class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
+                  <%= display_error(ff.object, :organisation_address_postcode) if ff.object.organisation_address_postcode.blank? %>
+                  <%= ff.text_field :organisation_address_postcode, 'aria-label' =>'postcode', class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10 %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
@@ -58,9 +58,9 @@
               </div>
               <div class= <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>>
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.choose_address') %></label>
-                <%= display_error(ff.object, :organisation_address_postcode) %>
+                <%= display_error(ff.object, :organisation_address_postcode) unless ff.object.organisation_address_postcode.blank? %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
-                  <select class="govuk-select govuk-!-width-full" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
+                  <select class="govuk-select govuk-!-width-full" aria-label="postcode-lookup-results" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
                   </select>
                 </div>
                 <div class="govuk-!-margin-top-2">

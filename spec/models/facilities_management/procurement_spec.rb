@@ -5,7 +5,56 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   let(:user) { create(:user) }
 
+  let(:current_year) { Date.current.year.to_s }
+  let(:time) { Time.now.getlocal }
+  let(:contract_datetime_value) { "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}" }
+  let(:da_current_year_1) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0001-#{current_year}") }
+  let(:da_current_year_2) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0002-#{current_year}") }
+  let(:da_previous_year_1) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0003-2019') }
+  let(:da_previous_year_2) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0004-2019') }
+  let(:fc_current_year_1) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
+  let(:fc_current_year_2) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
+  let(:fc_previous_year_1) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0007-2019', contract_datetime: contract_datetime_value) }
+  let(:fc_previous_year_2) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0008-2019', contract_datetime: contract_datetime_value) }
+
+  before do
+    da_current_year_1
+    da_current_year_2
+    da_previous_year_1
+    da_previous_year_2
+    fc_current_year_1
+    fc_current_year_2
+    fc_previous_year_1
+    fc_previous_year_2
+  end
+
   it { is_expected.to be_valid }
+
+  describe '.used_further_competition_contract_numbers_for_current_year' do
+    it 'presents all of the further competition contract numbers used for the current year' do
+      expect(described_class.used_further_competition_contract_numbers_for_current_year).to match(['0005', '0006'])
+    end
+
+    it 'does not present any of the further competition contract numbers used for the previous years' do
+      expect(described_class.used_further_competition_contract_numbers_for_current_year).not_to match(['0007', '0008'])
+    end
+  end
+
+  describe '.generate_contract_number' do
+    let(:further_competition) { create(:facilities_management_procurement_further_competition) }
+    let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
+    let(:expected_number) { number_array.sample }
+
+    before do
+      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+    end
+
+    context 'with a procurement in further_competition' do
+      it 'returns an available number for a further_competition contract' do
+        expect(further_competition.send(:generate_contract_number_fc)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+      end
+    end
+  end
 
   describe 'associations' do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
@@ -156,13 +205,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
     context 'when the procurement_building is present with a service code' do
       it 'expected to be valid' do
         procurement.save
-        procurement.procurement_buildings.create(service_codes: ['test'])
+        procurement.procurement_buildings.create
+        procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
         expect(procurement.valid?(:building_services)).to eq true
       end
     end
+    # rubocop:enable Rails/SkipsModelValidations
 
     context 'when the procurement_building is present but without any service codes' do
       it 'expected to not be valid' do
@@ -782,6 +834,25 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect { procurement.procurement_pension_funds = [pension_fund1, pension_fund2] }.to raise_exception(ActiveRecord::RecordNotSaved)
           expect(pension_fund1.case_sensitive_error).to eq false
           expect(pension_fund2.case_sensitive_error).to eq true
+        end
+      end
+    end
+
+    describe 'further competition verify' do
+      context 'when further competition is valid' do
+        it 'is expected to be true' do
+          procurement.aasm_state = 'further_competition'
+          expect(procurement.further_competition?).to eq(true)
+        end
+
+        it 'is expected to be false' do
+          expect(procurement.further_competition?).to eq(false)
+        end
+      end
+
+      context 'when contract_datetime format is created' do
+        it 'returns value' do
+          expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
         end
       end
     end

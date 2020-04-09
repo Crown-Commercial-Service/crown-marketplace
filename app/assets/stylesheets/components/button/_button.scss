@@ -37,9 +37,25 @@ $offset: 4;
     }
   }
 
-  &:hover,
   &:focus {
+    border-color: #fd0;
+    outline: 3px solid rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0 0 1px #fd0
+  }
+
+  &:hover {
     background-color: $govuk-button-hover-colour;
+  }
+
+  &:active:focus:not(:hover) {
+    background-color: $govuk-button-colour;
+  }
+
+  &:focus:not(:active):not(:hover) {
+    border-color: #fd0;
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 2px 0 #0b0c0c
   }
 }
 
@@ -79,34 +95,53 @@ $offset: 4;
 .govuk-button--warning {
   background-color: #b10e1e;
   box-shadow: 0 2px 0 #47060c;
-}
-
-.govuk-button--warning, .govuk-button--warning:link, .govuk-button--warning:visited, .govuk-button--warning:active, .govuk-button--warning:hover {
   color: #ffffff;
-}
 
-.govuk-button--warning:hover, .govuk-button--warning:focus {
-  background-color: #8e0b18;
-}
+  &:link,
+  &:visited,
+  &:active,
+  &:hover {
+    color: #ffffff;
+  }
 
-.govuk-button--warning:hover[disabled], .govuk-button--warning:focus[disabled] {
-  background-color: #b10e1e;
+  &:hover,
+  &:focus {
+    background-color: #8e0b18;
+  }
+
+  &:active:focus:not(:hover) {
+    background-color: #b10e1e;
+  }
+
+  &:hover[disabled],
+  &:focus[disabled] {
+    background-color: #b10e1e;
+  }
 }
 
 .govuk-button--secondary {
   background-color: #f3f2f1;
   -webkit-box-shadow: 0 2px 0 #929191;
-  box-shadow: 0 2px 0 #929191
-}
+  box-shadow: 0 2px 0 #929191;
+  color: #0b0c0c;
 
-.govuk-button--secondary, .govuk-button--secondary:link, .govuk-button--secondary:visited, .govuk-button--secondary:active, .govuk-button--secondary:hover {
-  color: #0b0c0c
-}
+  &:link,
+  &:visited,
+  &:active,
+  &:hover {
+    color: #0b0c0c;
+  }
 
-.govuk-button--secondary:hover, .govuk-button--secondary:focus{
-  background-color: #dbdad9
-}
+  &:hover,
+  &:focus{
+    background-color: #dbdad9;
+  }
 
-.govuk-button--secondary:hover[disabled] {
-  background-color: #f3f2f1
+  &:active:focus:not(:hover) {
+    background-color: #f3f2f1;
+  }
+  
+  &:hover[disabled] {
+    background-color: #f3f2f1
+  }
 }
