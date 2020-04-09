@@ -261,7 +261,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:code1) { nil }
     let(:code2) { nil }
     let(:lift_data) { nil }
-    let(:initial_call_off_period) { 7 }
     let(:estimated_annual_cost) { 7000000 }
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
@@ -280,7 +279,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     end
     let(:procurement_building_service_2) do
       create(:facilities_management_procurement_building_service,
-             code: code1,
+             code: code2,
              procurement_building: procurement_building_service_1.procurement_building)
     end
 
@@ -306,6 +305,29 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
         let(:estimated_annual_cost) { 37355000 }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
+        end
+      end
+    end
+
+    context 'when at least one service missing framework price and at least one service is missing benchmark price' do
+      let(:code) { 'C.5' }
+      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:code1) { 'G.9' } # no fw price
+      let(:code2) { 'G.8' } # no fw & no bm price
+
+      context 'when variance between FM & BM and Customer input is >|30%|' do
+        let(:estimated_annual_cost) { 7000000 }
+
+        it 'uses Customer price only' do
+          expect(report.assessed_value.round(2)).to eq(report.buyer_input.round(2))
+        end
+      end
+
+      context 'when variance between FM & BM and Customer input is <|30%|' do
+        let(:estimated_annual_cost) { 1 }
 
         it 'uses FW, BM and Customer prices' do
           expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
