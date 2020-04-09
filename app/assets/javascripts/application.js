@@ -23,3 +23,4 @@
 //= require global/global.js
 //= require_tree ./ccs_patterns
 //= require_tree ./ccs_character-count
+//= require_tree ./address-lookup

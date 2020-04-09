@@ -204,7 +204,6 @@ module LayoutHelper
     end
   end
 
-  # rubocop:disable Metrics/ParameterLists
   def fieldset_structure(form, caption, options, *attributes, &block)
     content_tag :fieldset, options do
       capture do
@@ -219,8 +218,6 @@ module LayoutHelper
       end
     end
   end
-
-  # rubocop:enable Metrics/ParameterLists
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
@@ -249,7 +246,7 @@ module LayoutHelper
     options = {}
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
     options.merge!(class: css_classes)
-    options.merge!(option[0].to_h) { |key, old, new| Array(old).push(new).join(' ') } if option
+    options.merge!(option[0].to_h) { |_key, old, new| Array(old).push(new).join(' ') } if option
 
     builder.text_area attribute, options
   end

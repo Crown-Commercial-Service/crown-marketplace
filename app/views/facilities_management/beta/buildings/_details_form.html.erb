@@ -1,46 +1,67 @@
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="25">
   <%= govuk_form_field(@page_data[:model_object], :building_name, f.object_name, t('.building_name_label_html'), "", {}) do |gf| %>
     <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25 %>
-  <%end %>
+  <% end %>
 </div>
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="50">
   <%= govuk_form_field(@page_data[:model_object], :description, f.object_name, t('.description_label_html'), "", {}) do |gf| %>
-      <%= f.text_field :description, class: "govuk-input govuk-input--width-20 js-character-count", maxlength: 50 %>
-  <%end %>
+    <%= f.text_field :description, class: "govuk-input govuk-input--width-20 js-character-count", maxlength: 50 %>
+  <% end %>
 </div>
-<div class="govuk-!-width-two-thirds">
-  <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.address_label_html'), "", {}) do |gf| %>
-    <input id="building-ref" name="building-ref" value="" type="hidden"/>
-    <%= f.label :address_postcode, "Postcode", class: "govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0 govuk-!-margin-top-0" %>
-    <%= f.text_field :address_postcode, class: "govuk-input govuk-input--width-10", id: 'fm-bm-postcode', maxlength: 9 %>
-  <%end %>
-  <a id="fm-find-address-btn" href="#" class="govuk-button "><%= t('.find_address') %></a><br/>
+<div class="govuk-!-width-two-thirds" data-module="find-address">
+  <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.address_label_html'), "", {}, style: 'margin-bottom: 0;') do |gf| %>
+    <div data-module-part="postcode-source-wrapper" class="<%= ' govuk-visually-hidden' if @page_data[:model_object].address_line_1.present? %>">
+      <%= f.label :address_postcode, "Postcode", for:'postcode_entry', class: "govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0" %>
+      <%= text_field_tag :postcode_entry, @page_data[:model_object].address_postcode, class: "govuk-input govuk-input--width-10", id: "postcode_entry", "data-module-element": "postcode-source", maxlength: 9 %>
+      <%= f.hidden_field :address_postcode, id:"address-postcode" %>
+      <%= f.hidden_field :address_line_1, id: 'address-line-1' %>
+      <%= f.hidden_field :address_line_2, id: 'address-line-2' %>
+      <%= f.hidden_field :address_town, id: 'address-town' %>
+      <%= f.hidden_field :address_region, id: 'address-region' %>
+      <%= f.hidden_field :address_region_code, id: 'address-region-code' %>
+      <br/>
+      <button type="button" class="govuk-button govuk-!-margin-top-3" style="clear:both" data-module-element="find-address"><%= t('.find_address') %></button>
+      <% if Rails.env.development? || Rails.env.test? %>
+      <p>Sample Postcodes <small>(only in dev and test)</small>:
+        <%
+          ['X12 1XX', 'N12 9RF', 'AB11 5PN', 'AB11 5PL', 'AB12 4SB', 'AB12 3LF', 'AB10 6PP', 'AB10 1QS', 'NE6 1LA', 'SW1X 9AE', 'MK41 0RU', 'NN8 4PW'].each do |pcode|%>
+            <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode%></span>
+        <% end %>
+      </p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-0" data-module-part="lookup-container">
+    <div data-module-part="lookup-results" class="govuk-visually-hidden">
+      <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.postcode') %></span>
+      <span class="govuk-body govuk-!-margin-right-4" data-module-element="postcode-entry-text"></span>
+      <a href="" class="govuk-body" data-module-element="change-button"><%= t('.change') %></a>
+      <label for="results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_an_address') %></label>
+      <select class="govuk-select govuk-!-margin-top-2 govuk-!-width-two-thirds" data-module-element="results-container" data-nodata-text="<%= t('.zero_address_found') %>" data-withdata-text-single="<%= t('.option_with_data_single') %>" data-withdata-text-plural="<%= t('.option_with_data_plural') %>" id="results-container">
+        <optgroup label="<%= t('.zero_address_found') %>">
+
+        </optgroup>
+      </select>
+      <a data-module-element="cant-find" href="" style="display:block" class="govuk-link govuk-!-margin-top-2 govuk-visually-hidden"><%= t('.cant_find_address') %></a>
+    </div>
+    <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>" data-module-part="address-display">
+      &nbsp;
+      <div class="govuk-!-margin-bottom-3">
+        <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
+        <div class="govuk-body govuk-!-margin-bottom-2" data-module-part="address_text">
+          <% unless @page_data[:model_object].address_line_1.blank? %>
+            <%= address_in_a_line @page_data[:model_object] %>
+          <% end %>
+        </div>
+        <a href="" class="govuk-body" data-module-element="change-button"><%= t('.change') %></a>
+      </div>
+      <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+        <br />
+        <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.region') %></span>
+        <p class="govuk-caption-m"><%=t('.region_desc') %></p>
+        <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
+        <a href="" class="govuk-body" data-module-element="change-button"><%= t('.change') %></a>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="fm-bulding-postcode-wrapper <%= 'fm-bulding-postcode-hide' if @page_data[:model_object].address_line_1.blank? %>">
-</div>
-<div id="fm-bm-postcode-lookup-container" class="govuk-visually-hidden govuk-!-margin-bottom-3 govuk-!-margin-top-6">
-  <span class="govuk-heading-s govuk-!-margin-bottom-0"><%= t('.select_an_address') %></span>
-  <select class="govuk-select govuk-!-width-two-thirds govuk-!-margin-top-0" id="fm-find-address-results" name="fm-find-address-results">
-    <option value="status-option" selected><%=t('.zero_address_found') %></option>
-  </select><br>
-  <a id="fm-cant-find-address-link" href="#" class="govuk-!-margin-top-6"><%=t('.cant_find_address') %></a>
-</div>
-<div class="fm-bulding-address-wrapper <%= @page_data[:model_object].address_line_1.blank? ? 'fm-bulding-address-hide':'' %>" >
-  <span class="govuk-heading-s govuk-!-margin-bottom-0"><%=t('.postcode') %></span>
-  <span id="fm-building-postcode" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <%= defined?(@page_data[:model_object].address_postcode) ? @page_data[:model_object].address_postcode : '' %>
-      </span>
-  <span class="govuk-heading-s govuk-!-margin-bottom-0"><%=t('.address') %></span>
-  <span id="fm-building-address" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <% unless @page_data[:model_object].address_line_1.blank? %>
-          <%=address_in_a_line @page_data[:model_object]%>
-        <%  end %>
-      </span>
-  <span class="govuk-heading-s govuk-!-margin-bottom-0"><%=t('.location_region') %></span>
-  <span id="fm-building-region" class="govuk-caption-m govuk-!-margin-bottom-0 govuk-!-font-weight-regular govuk-body govuk-!-font-size-19">
-        <%= @page_data[:model_object].address_region.present? ? @page_data[:model_object].address_region : '' %>
-      </span>
-</div>
-<% unless @page_data[:model_object].address_line_1.blank? %>
-  <a id="fm-show-address-postode" href="#"><%= t('.change')  %></a>
-<%  end %>

@@ -4,24 +4,21 @@ module Postcode
   # post code retrieval
   # rubocop:disable Naming/ClassAndModuleCamelCase
   class PostcodeChecker_V2
-    def self.in_london?(postcode)
-      LONDON_BOROUGHS.include? location_info(postcode)[0]['county'].upcase
-    end
-
-    # SELECT * FROM os_address_view where postcode='G32 0RP';
     def self.location_info(postcode)
       query = <<~HEREDOC
-        select  distinct  initcap(add1)  as  add1,  initcap(village) as village,
-        initcap(post_town)  as  post_town,
-        initcap(county)  as  county,
-        upper(public.os_address_view.postcode) as postcode, building_ref,
-        public.nuts_regions.name as region,
-        public.postcodes_nuts_regions.code as regioncode
-        from public.os_address_view
-        left join public.postcodes_nuts_regions ON public.postcodes_nuts_regions.postcode = '#{postcode.delete(' ')}'
-        left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
-        where public.os_address_view.postcode = '#{postcode}'
+         SELECT summary_line,
+           address_line_1,
+           address_line_2,
+           address_postcode,
+           address_town,
+           address_region,
+           address_region_code
+        FROM public.postcode_lookup
+         WHERE  address_postcode = '#{postcode}'
+         ORDER BY summary_line;
       HEREDOC
+      # in ('N12 9RF', 'AB11 5PN', 'AB11 5PL', 'AB12 4SB', 'AB12 3LF', 'AB10 6PP', 'AB10 1QS', 'NE6 1LA', 'SW1X 9AE', 'MK41 0RU', 'NN8 4PW');
+      # where postcode = '#{postcode}'
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     rescue StandardError => e
       raise e
@@ -70,12 +67,12 @@ module Postcode
     end
 
     LONDON_BOROUGHS = ['CITY OF LONDON', 'BARKING AND DAGENHAM', 'BARNET', 'BEXLEY', 'BRENT',
-                         'BROMLEY', 'CAMDEN', 'CROYDON', 'EALING', 'ENFIELD', 'GREENWICH',
-                         'HACKNEY', 'HAMMERSMITH AND FULHAM', 'HARINGEY', 'HARROW', 'HAVERING',
-                         'HILLINGDON', 'HOUNSLOW', 'ISLINGTON', 'KENSINGTON AND CHELSEA',
-                         'KINGSTON UPON THAMES', 'LAMBETH', 'LEWISHAM', 'MERTON',
-                         'NEWHAM', 'REDBRIDGE', 'RICHMOND UPON THAMES', 'SOUTHWARK', 'SUTTON',
-                         'TOWER HAMLETS', 'WALTHAM FOREST', 'WANDSWORTH', 'CITY OF WESTMINSTER']
+                       'BROMLEY', 'CAMDEN', 'CROYDON', 'EALING', 'ENFIELD', 'GREENWICH',
+                       'HACKNEY', 'HAMMERSMITH AND FULHAM', 'HARINGEY', 'HARROW', 'HAVERING',
+                       'HILLINGDON', 'HOUNSLOW', 'ISLINGTON', 'KENSINGTON AND CHELSEA',
+                       'KINGSTON UPON THAMES', 'LAMBETH', 'LEWISHAM', 'MERTON',
+                       'NEWHAM', 'REDBRIDGE', 'RICHMOND UPON THAMES', 'SOUTHWARK', 'SUTTON',
+                       'TOWER HAMLETS', 'WALTHAM FOREST', 'WANDSWORTH', 'CITY OF WESTMINSTER'].freeze
 
     def self.upload(access_key, secret_access_key, bucket, region)
       uploader(access_key, secret_access_key, bucket, region)

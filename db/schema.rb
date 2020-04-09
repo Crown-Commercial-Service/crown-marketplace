@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 2020_04_06_113734) do
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
-    t.text "address_county"
     t.text "address_line_1"
     t.text "address_line_2"
     t.text "address_postcode"
@@ -61,7 +60,11 @@ ActiveRecord::Schema.define(version: 2020_04_06_113734) do
     t.uuid "user_id"
     t.string "other_building_type"
     t.string "other_security_type"
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
+    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
+    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -555,6 +558,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_113734) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
+    t.index ["postcode_locator"], name: "index_os_address_on_postcode_locator"
   end
 
   create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

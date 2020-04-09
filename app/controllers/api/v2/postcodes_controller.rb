@@ -16,8 +16,7 @@ module Api
       #      http://localhost:3000/api/v1/postcodes/in_london?postcode=G69%206HB
       def show
         result = query(params[:id])
-
-        render json: { status: 200, result: result }
+        render json: { status: 200, result: result.to_hash }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
       end
@@ -25,12 +24,7 @@ module Api
       private
 
       def query(param)
-        case param
-        when 'in_london'
-          Postcode::PostcodeChecker_v2.in_london? params[:postcode]
-        else
-          Postcode::PostcodeChecker_v2.location_info(param)
-        end
+        Postcode::PostcodeChecker_V2.location_info(param)
       end
     end
   end

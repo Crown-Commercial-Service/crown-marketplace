@@ -328,6 +328,15 @@ Rails.application.routes.draw do
       get '/test-notification', to: 'api_test_notifications#send_notification'
       post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
+    namespace :v2 do
+      resources :postcodes, only: :show
+      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
+      get '/search-nuts-code/:code', to: 'nuts#show_nuts_code'
+      get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
+    end
   end
 
   get '/:journey/start', to: 'journey#start', as: 'journey_start'

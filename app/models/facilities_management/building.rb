@@ -1,3 +1,4 @@
+require 'uk_postcode'
 module FacilitiesManagement
   class Building < ApplicationRecord
     belongs_to :user,
@@ -15,9 +16,10 @@ module FacilitiesManagement
     validates :building_type, presence: true, on: %i[type all]
     validates :region, presence: true, on: %i[edit all]
     validates :address_region_code, presence: true, on: %i[edit all]
-    validates :address_postcode, presence: true, on: %i[new edit all]
-    validates :other_building_type, presence: true, on: %i[type all], if: -> { self.building_type == 'other' }
-    validates :other_security_type, presence: true, on: %i[security all], if: -> { self.security_type == 'other' }
+    validates :address_postcode, presence: true, on: %i[new edit all find_address]
+    validate :postcode_format, on: %i[new edit all find_address], if: -> { address_postcode.present? }
+    validates :other_building_type, presence: true, on: %i[type all], if: -> { building_type == 'other' }
+    validates :other_security_type, presence: true, on: %i[security all], if: -> { security_type == 'other' }
 
     def building_json=(json)
       populate_row_from_json(json.deep_symbolize_keys)
@@ -40,7 +42,7 @@ module FacilitiesManagement
     def populate_row
       populate_row_from_json(self[:building_json].deep_symbolize_keys)
     end
-    
+
     def building_standard
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
@@ -76,7 +78,6 @@ module FacilitiesManagement
           'fm-address-town': address_town,
           'fm-address-line-1': address_line_1,
           'fm-address-line-2': address_line_2,
-          'fm-address-county': address_county,
           'fm-address-region': address_region,
           'fm-address-region-code': address_region_code,
           'fm-address-postcode': address_postcode
@@ -95,13 +96,17 @@ module FacilitiesManagement
       self.address_town        = building_json[:address]['fm-address-town'.to_sym]
       self.address_line_1      = building_json[:address]['fm-address-line-1'.to_sym]
       self.address_line_2      = building_json[:address]['fm-address-line-2'.to_sym]
-      self.address_county      = building_json[:address]['fm-address-county'.to_sym]
       self.address_region      = building_json[:address]['fm-address-region'.to_sym] || building_json[:address]['fm-nuts-region'.to_sym]
       self.address_postcode    = building_json[:address]['fm-address-postcode'.to_sym]
       self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
       determine_status
     end
     # rubocop:enable Metrics/AbcSize
+
+    def postcode_format
+      pc = UKPostcode.parse(address_postcode)
+      pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid_format)
+    end
 
     STANDARD_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations',
                                'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools',

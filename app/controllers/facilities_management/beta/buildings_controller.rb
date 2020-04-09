@@ -3,7 +3,10 @@ require 'rubygems'
 module FacilitiesManagement
   module Beta
     class BuildingsController < FacilitiesManagement::Beta::FrameworkController
-      before_action :build_page_data, only: %i[index show new create edit update destroy gia type security]
+      before_action :build_page_data, only: %i[index show new create edit update gia type security]
+      # rubocop:disable Metrics/AbcSize
+
+      FIND_ADDRESS = 'find_address'.freeze
 
       def index; end
 
@@ -30,17 +33,20 @@ module FacilitiesManagement
         end
       end
 
+      # rubocop:disable Style/AndOr
       def update
         @page_data[:model_object].assign_attributes(building_params)
+
         if !@page_data[:model_object].save(context: params[:step].try(:to_sym))
           rebuild_page_description params[:step]
           render action: params[:step]
         else
-          redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.has_key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
+          redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
 
           redirect_to facilities_management_beta_building_path(@page_data[:model_object].id)
         end
       end
+      # rubocop:enable Style/AndOr
 
       def destroy; end
 
@@ -61,7 +67,6 @@ module FacilitiesManagement
                 :security_type,
                 :other_security_type,
                 :address_town,
-                :address_county,
                 :address_line_1,
                 :address_line_2,
                 :address_postcode,
@@ -133,7 +138,6 @@ module FacilitiesManagement
         page_description action
       end
 
-      # rubocop:disable Metrics/AbcSize
       def page_description(action = action_name)
         @page_description ||= LayoutHelper::PageDescription.new(
           LayoutHelper::HeadingDetail.new(building_page_details(action)[:page_title],
