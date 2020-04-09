@@ -32,7 +32,9 @@
                   <%= image_tag('zip_image.png', :alt => 'download zip file', width: '60px') %>
               </td>
               <td class="govuk-table__cell">
-                  <%= link_to 'Download procurements data CSV', '#', class: 'govuk-!-font-size-20 govuk-link govuk-link--no-visited-state' %><br/>
+                  <a href="<%= rails_blob_path(current_user.csv_export, disposition: "attachment") %>" type="<%= t('common.type_doc') %>" download>
+                    Download procurements data CSV
+                  </a>
                   <p class="govuk-hint govuk-!-margin-bottom-0">Created <%#= format_date_time_day(@contract.offer_sent_date) %></p>
               </td>
           </tr>

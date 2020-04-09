@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include RoleModel
 
+  has_one_attached :csv_export
+
   has_many  :procurements,
             foreign_key: :user_id,
             inverse_of: :user,
