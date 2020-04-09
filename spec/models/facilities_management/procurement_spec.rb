@@ -30,16 +30,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   it { is_expected.to be_valid }
 
-  describe '.used_direct_award_contract_numbers_for_current_year' do
-    it 'presents all of the direct award contract numbers used for the current year' do
-      expect(described_class.used_direct_award_contract_numbers_for_current_year).to match(['0001', '0002'])
-    end
-
-    it 'does not present any of the direct award contract numbers used for the previous years' do
-      expect(described_class.used_direct_award_contract_numbers_for_current_year).not_to match(['0003', '0004'])
-    end
-  end
-
   describe '.used_further_competition_contract_numbers_for_current_year' do
     it 'presents all of the further competition contract numbers used for the current year' do
       expect(described_class.used_further_competition_contract_numbers_for_current_year).to match(['0005', '0006'])
@@ -59,12 +49,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     before do
       allow(described_class).to receive(:used_direct_award_contract_numbers_for_current_year) { number_array - [expected_number] }
       allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
-    end
-
-    context 'with a procurement in direct award' do
-      it 'returns an available number for a direct award contract' do
-        expect(direct_award.send(:generate_contract_number)).to eq("RM3830-DA#{expected_number}-#{current_year}")
-      end
     end
   end
 

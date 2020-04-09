@@ -63,8 +63,8 @@ module FacilitiesManagement
       procurement_copy
     end
 
-    def assign_contract_number
-      self.contract_number = generate_contract_number
+    def assign_contract_number_fc
+      self.contract_number = generate_contract_number_fc
     end
 
     def assign_contract_datetime
@@ -72,19 +72,8 @@ module FacilitiesManagement
       self.contract_datetime = "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
     end
 
-    def generate_contract_number
-      return unless further_competition? || direct_award? || da_draft?
-
-      return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if direct_award? || da_draft?
-
+    def generate_contract_number_fc
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
-    end
-
-    def self.used_direct_award_contract_numbers_for_current_year
-      where('contract_number like ?', 'RM3860-DA%')
-        .where('contract_number like ?', "%-#{Date.current.year}")
-        .pluck(:contract_number)
-        .map { |contract_number| contract_number.split('-')[1].split('DA')[1] }
     end
 
     def self.used_further_competition_contract_numbers_for_current_year
@@ -141,7 +130,7 @@ module FacilitiesManagement
       event :start_further_competition do
         transitions to: :further_competition
         after do
-          assign_contract_number
+          assign_contract_number_fc
           assign_contract_datetime
         end
       end
