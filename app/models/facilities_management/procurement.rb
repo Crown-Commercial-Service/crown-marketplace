@@ -67,6 +67,11 @@ module FacilitiesManagement
       self.contract_number = generate_contract_number
     end
 
+    def assign_contract_datetime
+      time = Time.now.getlocal
+      self.contract_datetime = "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
+    end
+
     def generate_contract_number
       return unless further_competition? || direct_award? || da_draft?
 
@@ -134,10 +139,11 @@ module FacilitiesManagement
       end
 
       event :start_further_competition do
-        before do
-          assign_contract_number
-        end
         transitions to: :further_competition
+        after do
+          assign_contract_number
+          assign_contract_datetime
+        end
       end
     end
 

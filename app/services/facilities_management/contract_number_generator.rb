@@ -11,10 +11,6 @@ class FacilitiesManagement::ContractNumberGenerator
     return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
   end
 
-  # def new_number_fc(string_to_hash)
-  #  return "RM3830-#{ACRONYMS[@procurement_state]}#{unique_number_fc(string_to_hash)}-#{current_year}" if ACRONYMS[@procurement_state] == 'FC'
-  # end
-
   private
 
   def unique_number
@@ -22,10 +18,6 @@ class FacilitiesManagement::ContractNumberGenerator
 
     (potential_numbers - @used_numbers).sample
   end
-
-  # def unique_number_fc(string_to_hash)
-  #  format('%04d', string_to_hash.hash % 10000)
-  # end
 
   def current_year
     Date.current.year.to_s

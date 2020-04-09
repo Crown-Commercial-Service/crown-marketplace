@@ -6,14 +6,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   let(:user) { create(:user) }
 
   let(:current_year) { Date.current.year.to_s }
+  let(:time) { Time.now.getlocal }
+  let(:contract_datetime_value) { "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}" }
   let(:da_current_year_1) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0001-#{current_year}") }
   let(:da_current_year_2) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0002-#{current_year}") }
   let(:da_previous_year_1) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0003-2019') }
   let(:da_previous_year_2) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0004-2019') }
-  let(:fc_current_year_1) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}") }
-  let(:fc_current_year_2) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}") }
-  let(:fc_previous_year_1) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0007-2019') }
-  let(:fc_previous_year_2) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0008-2019') }
+  let(:fc_current_year_1) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
+  let(:fc_current_year_2) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
+  let(:fc_previous_year_1) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0007-2019', contract_datetime: contract_datetime_value) }
+  let(:fc_previous_year_2) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0008-2019', contract_datetime: contract_datetime_value) }
 
   before do
     da_current_year_1
@@ -844,6 +846,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect { procurement.procurement_pension_funds = [pension_fund1, pension_fund2] }.to raise_exception(ActiveRecord::RecordNotSaved)
           expect(pension_fund1.case_sensitive_error).to eq false
           expect(pension_fund2.case_sensitive_error).to eq true
+        end
+      end
+    end
+
+    describe 'further competition verify contract_datetime' do
+      context 'when contract_datetime format is created' do
+        it 'returns value' do
+          expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
         end
       end
     end
