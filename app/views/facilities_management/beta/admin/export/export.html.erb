@@ -1,0 +1,41 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      Export procurements data
+    </li>
+  </ol>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @supplier_name %></span>
+  </div>
+</div>
+<h1 class="govuk-heading-xl">
+  Export procurements data to CSV
+</h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
+  A helpfull note here
+</p>
+
+<div style="width: 3000px !important;">
+  <table class="govuk-table govuk-!-margin-bottom-0 govuk-!-width-three-quarters">
+      <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-padding-bottom-0" width="70px"></td>
+              <td class="govuk-table__cell govuk-!-padding-top-0 govuk-!-padding-bottom-0"></td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                  <%= image_tag('zip_image.png', :alt => 'download zip file', width: '60px') %>
+              </td>
+              <td class="govuk-table__cell">
+                  <%= link_to 'Download procurements data CSV', '#', class: 'govuk-!-font-size-20 govuk-link govuk-link--no-visited-state' %><br/>
+                  <p class="govuk-hint govuk-!-margin-bottom-0">Created <%#= format_date_time_day(@contract.offer_sent_date) %></p>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

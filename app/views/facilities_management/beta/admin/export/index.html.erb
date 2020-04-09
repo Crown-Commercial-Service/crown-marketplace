@@ -1,0 +1,46 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      Export procurements data
+    </li>
+  </ol>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @supplier_name %></span>
+  </div>
+</div>
+<h1 class="govuk-heading-xl">
+  Export procurements data to CSV
+</h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
+  A helpfull note here
+</p>
+
+<div style="width: 3000px !important;">
+  <%= form_with(url: facilities_management_beta_admin_download_export_path, method: "put", local: "false") do %>
+
+    <table class="govuk-table" style="width: 1100px !important;">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left">
+        </th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+        </th>
+      <tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      </tbody>
+    </table>
+
+    <input type="submit" name="update_sublot_data_services_prices" value="Export to CSV" class="govuk-button" data-disable-with="Continue">
+
+    <a href="<%= facilities_management_beta_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard">
+      <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %>
+    </a>
+
+  <% end %>
+</div>
