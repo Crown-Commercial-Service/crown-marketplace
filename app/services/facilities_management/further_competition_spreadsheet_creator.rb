@@ -140,10 +140,6 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row [], style: style, height: standard_row_height
   end
 
-  def calculate_contract_number
-    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number
-  end
-
   def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
 

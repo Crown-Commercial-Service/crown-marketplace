@@ -850,7 +850,18 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    describe 'further competition verify contract_datetime' do
+    describe 'further competition verify' do
+      context 'when further competition is valid' do
+        it 'is expected to be true' do
+          procurement.aasm_state = 'further_competition'
+          expect(procurement.further_competition?).to eq(true)
+        end
+
+        it 'is expected to be false' do
+          expect(procurement.further_competition?).to eq(false)
+        end
+      end
+
       context 'when contract_datetime format is created' do
         it 'returns value' do
           expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
