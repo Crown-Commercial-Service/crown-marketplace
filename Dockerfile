@@ -47,6 +47,8 @@ ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
 
 ##_PARAMETER_STORE_MARKER_##
 
+RUN npm config set unsafe-perm true
+
 ENV BUILD_PACKAGES curl-dev ruby-dev postgresql-dev build-base tzdata clamav clamav-daemon
 
 # Update and install base packages
