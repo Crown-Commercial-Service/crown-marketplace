@@ -1,4 +1,7 @@
 <a class="govuk-back-link" href="<%= @back_link_href %>">Back</a>
+
+<% content_for :page_title, @page_title %>
+
 <%= render('errors/inline_error_summary') %>
 <div id="inline-no-description-error-message" name="inline-no-description-error-message" class="govuk-error-summary govuk-visually-hidden"
      aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">

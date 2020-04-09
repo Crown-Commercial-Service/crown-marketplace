@@ -252,12 +252,17 @@ module FacilitiesManagement
       values = values_to_average
 
       values << buyer_input unless buyer_input.zero?
-
       (values.sum / values.size).to_f
     end
 
     def values_to_average
-      return [sum_benchmark] if any_services_missing_framework_price? && variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+      if any_services_missing_framework_price?
+        if any_services_missing_benchmark_price?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
+        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+          return [sum_benchmark]
+        end
+      end
 
       [sum_uom, sum_benchmark]
     end
@@ -265,6 +270,13 @@ module FacilitiesManagement
     def any_services_missing_framework_price?
       @procurement.procurement_building_services.map(&:code).each do |code|
         return true if CCS::FM::Rate.framework_rate_for(code).nil?
+      end
+      false
+    end
+
+    def any_services_missing_benchmark_price?
+      @procurement.procurement_building_services.map(&:code).each do |code|
+        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
       end
       false
     end

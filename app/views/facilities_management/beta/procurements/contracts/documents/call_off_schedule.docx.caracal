@@ -205,7 +205,7 @@ docx.p 'EFFECTIVE DATE & DATE THE CONTRACT PERIOD / TERM COMMENCES:  [Day Month 
 
 docx.p 'MOBILISATION PERIOD: None', font: 'Calibri' if @procurement.mobilisation_period.nil?
 
-docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d %m %Y')}", font: 'Calibri' unless @procurement.mobilisation_period.nil?
+docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d-%m-%Y')}", font: 'Calibri' unless @procurement.mobilisation_period.nil?
 
 docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
@@ -222,7 +222,7 @@ docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.optional_call_off_extension
 
   start_date_method = "extension_period_#{call_off_period}_start_date"
   end_date_method = "extension_period_#{call_off_period}_end_date"
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: #{@procurement.send(start_date_method).strftime('%d %m %Y')} to #{@procurement.send(end_date_method).strftime('%d %m %Y')}", font: 'Calibri'
+  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: #{@procurement.send(start_date_method).strftime('%d-%m-%Y')} to #{@procurement.send(end_date_method).strftime('%d-%m-%Y')}", font: 'Calibri'
 end
 
 docx.p
@@ -347,7 +347,7 @@ docx.p 'BUYER SECURITY POLICY:', bold: true, font: 'Calibri'
 if @procurement.security_policy_document_required?
   docx.p @procurement.security_policy_document_name, font: 'Calibri'
   docx.p @procurement.security_policy_document_version_number, font: 'Calibri'
-  docx.p @procurement.security_policy_document_date, font: 'Calibri' unless @procurement.security_policy_document_date.blank?
+  docx.p @procurement.security_policy_document_date.strftime('%d-%m-%Y'), font: 'Calibri' unless @procurement.security_policy_document_date.blank?
   docx.p @procurement.security_policy_document_file.filename, font: 'Calibri'
 else
   docx.p 'Not Applicable', font: 'Calibri'
