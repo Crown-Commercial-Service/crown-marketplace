@@ -22,13 +22,13 @@ RSpec.describe FacilitiesManagement::ContractNumberGenerator do
       let(:procurement_state) { :further_competition }
 
       it 'has the correct format' do
-        expect(contract_number_generator.new_number_fc('abcd1234')).to match(/\ARM3830-FC\d{4}-\d{4}\z/)
+        expect(contract_number_generator.new_number).to match(/\ARM3830-FC\d{4}-\d{4}\z/)
       end
 
       it 'has the current year as the final 4 digits' do
         current_year = Date.current.year.to_s
 
-        expect(contract_number_generator.new_number_fc('abcd1234').split('-')[2]).to eq(current_year)
+        expect(contract_number_generator.new_number.split('-')[2]).to eq(current_year)
       end
     end
   end
