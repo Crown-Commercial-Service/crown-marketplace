@@ -40,6 +40,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '.generate_contract_number' do
+    let(:further_competition) { create(:facilities_management_procurement_further_competition) }
+    let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
+    let(:expected_number) { number_array.sample }
+
+    before do
+      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+    end
+
+    context 'with a procurement in further_competition' do
+      it 'returns an available number for a further_competition contract' do
+        expect(further_competition.send(:generate_contract_number_fc)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+      end
+    end
+  end
+
   describe 'associations' do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
     it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
