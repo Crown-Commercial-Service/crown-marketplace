@@ -18,13 +18,13 @@
         <div class="govuk-body" style="margin-left:1ex">
           Or
         </div>
-        <details class="govuk-details govuk-!-margin-bottom-6" style="margin-left:1.5ex" data-module="govuk-details"  open="<%=open_state_of_building_details(ff.object) %>" >
+        <details class="govuk-details govuk-!-margin-bottom-6" style="margin-left:1.5ex" data-module="govuk-details"  <%= 'open="true"' if open_state_of_building_details(ff.object) %> >
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">
               <%= t('.view_more') %>
             </span>
           </summary>
-          <div class="govuk-details__text">
+          <div class="govuk-details__text" style="margin-left:0.5ex">
             <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
               <div class="govuk-radios__item">
                 <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>

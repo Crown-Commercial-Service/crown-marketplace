@@ -131,7 +131,7 @@ LookupHandler.prototype.cantFindAddress = function (bShow) {
 LookupHandler.prototype.showResults = function (postcode, addresses) {
     this.cantFindAddress(true);
     this.postcodeDisplay.innerHTML = postcode;
-    //$(this.addressDisplay).addClass('govuk-visually-hidden');
+    $(this.addressDisplay).addClass('govuk-visually-hidden');
     this.populateDropDown(addresses);
     this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
     this.changeContainerVisibility(true);
@@ -145,7 +145,7 @@ LookupHandler.prototype.hideResults = function (postcode, addresses) {
 
 LookupHandler.prototype.showDecision = function (){
     var classname = 'govuk-visually-hidden';
-    //$(this.addressDisplay).removeClass(classname);
+    $(this.addressDisplay).removeClass(classname);
     $(this.lookupResultsContainer).addClass(classname);
 };
 

@@ -14,10 +14,10 @@ module FacilitiesManagement::Beta::BuildingsHelper
   end
 
   def open_state_of_building_details(building)
-    if FacilitiesManagement::Building::BUILDING_TYPES.drop(2).include?(building[:building_type]) || building.errors.key?(:other_building_type)
-      'true'
+    if building[:building_type] == 'other' || building.errors.key?(:other_building_type)
+      true
     else
-      'false'
+      false
     end
   end
 end

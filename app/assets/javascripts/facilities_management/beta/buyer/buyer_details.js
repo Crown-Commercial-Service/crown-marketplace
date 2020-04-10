@@ -1,5 +1,5 @@
 $(function () {
-
+    if ($('#buyer_details').length > 0) {
         history.pushState(null, document.title, location.href);
         window.addEventListener('popstate', function (event) {
             window.status = "Stopped back";
@@ -137,4 +137,5 @@ $(function () {
         } else {
             $('#facilities_management_buyer_detail_central_government_false').get(0).setAttribute('checked', 'checked')
         }
+    }
 });

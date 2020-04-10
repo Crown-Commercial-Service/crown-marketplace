@@ -26,7 +26,7 @@ module FacilitiesManagement
         new_building = current_user.buildings.build(building_params)
 
         if new_building.save(context: :new)
-          redirect_to action: :edit, id: new_building.id
+          redirect_to action: next_step[0], id: new_building.id
         else
           rebuild_page_data(new_building)
           render :new
@@ -86,11 +86,11 @@ module FacilitiesManagement
       }.freeze
 
       def step_title
-        t('.step_title', position: STEPS.dig(action_name.to_sym, :position), total: maximum_step_number)
+        t('facilities_management.beta.buildings.step_title.step_title', position: STEPS.dig(action_name.to_sym, :position), total: maximum_step_number)
       end
 
       def step_footer
-        t('.step_footer', description: next_step[1][:desc]) if STEPS.dig(action_name.to_sym, :position).to_i < maximum_step_number
+        t('facilities_management.beta.buildings.step_footer.step_footer', description: next_step[1][:desc]) if STEPS.dig(action_name.to_sym, :position).to_i < maximum_step_number
       end
 
       def maximum_step_number
@@ -175,73 +175,73 @@ module FacilitiesManagement
       def page_definitions
         @page_definitions ||= {
           default: {
-            continuation_text: t('.create_new_building'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.create_new_building'),
             continuation_url: new_facilities_management_beta_building_url,
             secondary_name: 'return_to_buildings',
-            secondary_text: t('.return_to_manage_buildings'),
+            secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.return_to_manage_buildings'),
             secondary_url: facilities_management_beta_buildings_path,
             back_text: 'Back',
             back_url: facilities_management_beta_buildings_path
           },
           index: {
-            page_title: t('.manage_building_title'),
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             back_url: facilities_management_beta_path
           },
           new: {
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             caption3: step_title,
-            page_title: t('.create_single_building')
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building')
           },
           edit: {
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             caption3: step_title,
-            page_title: t('.change_building_details'),
-            continuation_text: t('.save_and_continue'),
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.change_building_details'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
             secondary_name: 'save_and_return',
-            secondary_text: t('.save_and_return_to_detailed_summary'),
+            secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
             back_url: (facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
           },
           show: {
-            continuation_text: t('.return_to_manage_buildings'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.return_to_manage_buildings'),
             continuation_url: facilities_management_beta_buildings_url,
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             page_title: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
           },
           gia: {
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
             caption3: step_title,
-            page_title: t('.building_size'),
-            continuation_text: t('.save_and_continue'),
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.building_size'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
             secondary_name: 'save_and_return',
-            secondary_text: t('.save_and_return_to_detailed_summary'),
+            secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
             return_url: (type_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
-            return_text: t('.skip_this_step'),
+            return_text: I18n.t('facilities_management.beta.buildings.page_definitions.skip_this_step'),
             back_url: (edit_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
           },
           type: {
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
             caption3: step_title,
-            page_title: t('.building_type'),
-            continuation_text: t('.save_and_continue'),
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.building_type'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
             secondary_name: 'save_and_return',
-            secondary_text: t('.save_and_return_to_detailed_summary'),
+            secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
             return_url: (security_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
-            return_text: t('.skip_this_step'),
+            return_text: I18n.t('facilities_management.beta.buildings.page_definitions.skip_this_step'),
             back_url: (gia_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
           },
           security: {
-            caption1: t('.manage_building_title'),
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
             caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
             caption3: step_title,
-            page_title: t('.security_clearance'),
-            continuation_text: t('.save_and_return_to_detailed_summary'),
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.security_clearance'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
             continuation_name: 'save_and_return',
             secondary_name: 'save_and_return',
-            secondary_text: t('.save_and_return_to_detailed_summary'),
+            secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
             return_url: facilities_management_beta_buildings_url,
-            return_text: t('.skip_this_step'),
+            return_text: I18n.t('facilities_management.beta.buildings.page_definitions.skip_this_step'),
             back_url: (type_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?)
           }
         }.freeze
