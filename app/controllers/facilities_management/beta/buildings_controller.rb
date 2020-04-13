@@ -37,12 +37,12 @@ module FacilitiesManagement
       # rubocop:disable Style/AndOr
       def update
         @page_data[:model_object].assign_attributes(building_params)
-
-        if !@page_data[:model_object].save(context: context_from_params)
+        # resolve_region is params[:step] == :add_address
+        if !@page_data[:model_object].save(context: params[:step])
           rebuild_page_description params[:step]
           render action: params[:step]
         else
-          redirect_to action: :edit and return if context_from_params == :update_address
+          redirect_to action: :edit and return if params[:step] == :add_address
 
           redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
 

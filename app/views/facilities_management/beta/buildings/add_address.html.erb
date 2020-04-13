@@ -1,6 +1,6 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
   <%= form_for @page_data[:model_object], url: add_address_url, method: add_address_method, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <input type="hidden" name="step" value="edit_address"/>
+    <input type="hidden" name="step" value="add_address"/>
     <div class="govuk-!-width-three-quarters">
       <h2 class="govuk-heading-m"><%= t('.add_address_header') %></h2>
       <p class="govuk-caption-m"><%= t('.description') %></p>

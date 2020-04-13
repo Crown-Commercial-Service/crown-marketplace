@@ -147,6 +147,7 @@ LookupHandler.prototype.init = function () {
     this.addressDisplay = this.parent.querySelector('[data-module-part="address-display"]');
     this.regionDisplay = this.parent.querySelector('[data-module-part="region-display"]');
     this.addressDisplayText = this.addressDisplay.querySelector('[data-module-part="address_text"]');
+    this.regionResults = this.resultsContainer.querySelector('[data-module-part="region-results"]');
     this.regionDisplayText = this.resultsContainer.querySelector('[data-module-part="region-text"]');
     if (!this.resultsDropDown || !this.addressDisplay) return;
     this.regionDropDown = this.resultsContainer?.querySelector('[data-module-element="region-results-container"]');
@@ -215,7 +216,7 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
 LookupHandler.prototype.showRegionResults = function (regions) {
     //$(this.regionDisplay).addClass('govuk-visually-hidden');
     this.regionDropDown.addEventListener('change', this.selectRegionResult.bind(this));
-    $(this.regionDisplayText).addClass('govuk-visually-hidden');
+    this.showRegionText(false);
     this.populateRegionDropDown(regions);
     this.changeRegionContainerVisibility(true);
 };
@@ -235,6 +236,17 @@ LookupHandler.prototype.showRegionSection = function(bShow) {
     }
 };
 
+LookupHandler.prototype.showRegionText = function(bShow){
+    var classname = "govuk-visually-hidden";
+    if (!bShow) {
+        $(this.regionResults).addClass(classname);
+        $(this.regionDisplayText).addClass(classname);
+    } else {
+        $(this.regionResults).removeClass(classname);
+        $(this.regionDisplayText).removeClass(classname);
+    }
+};
+
 LookupHandler.prototype.hideRegionResults = function (postcode, addresses) {
     this.changeRegionContainerVisibility(false);
 };
@@ -248,8 +260,8 @@ LookupHandler.prototype.showDecision = function () {
 
 LookupHandler.prototype.showRegionDecision = function () {
     var classname = 'govuk-visually-hidden';
+    this.showRegionText(true);
     $(this.regionDisplay).removeClass(classname);
-    $(this.regionDisplayText).removeClass('govuk-visually-hidden');
     $(this.lookupRegionResultsContainer).addClass(classname);
 };
 
