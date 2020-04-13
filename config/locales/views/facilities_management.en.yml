@@ -48,12 +48,14 @@ en:
         facilities_management/building:
           attributes:
             address_line_1:
-              blank: You must select an address to save a building
+              blank: Building and street name must be 100 characters or less
             address_postcode:
               blank: You must select an address to save a building
               invalid_format: Enter a valid postcode, like AA1 1AA
             address_region:
               blank: You must select a region for your address
+            address_town:
+              blank: Town or city name for this building must be 30 characters or less
             building_name:
               blank: Enter a name for your building
             building_type:
@@ -418,17 +420,21 @@ en:
           address: Address
           address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
           building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
-          cant_find_address: I cant find my building's address in the list
+          cant_find_address: I can't find my building's address in the list
           change: Change
           description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span> <span class="govuk-caption-m govuk-!-margin-top-0"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>
           find_address: Find address
           option_with_data_plural: "{%} addresses found"
+          region_option_with_data_plural: "{%} regions found"
           option_with_data_single: 1 address found
+          region_option_with_data_single: 1 region found
           postcode: Postcode
           region: Region
           region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
           select_an_address: Select an address
+          select_a_region: Select a region
           zero_address_found: 0 addresses found
+          zero_regions_found: 0 regions found
         gia:
           description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
           further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
@@ -445,6 +451,7 @@ en:
           start_paragraph: Set up the buildings in which you want FM services to be delivered to.
           start_warning_html: When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building. Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.<p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
         page_definitions:
+          add_building_address: Add building address
           building_size: Building size
           building_type: Building type
           change_building_details: Change building details
@@ -487,6 +494,13 @@ en:
           describe_building: Describe building type
           other: Other
           view_more: View more building types
+        edit_address:
+          add_address_header: "Address"
+          description: "We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services."
+          line_1_of_2: "Building and street line 1 or 2"
+          line_2_of_2: "Building and street line 2 of 2 (optional)"
+          town_or_city: "Town or city"
+          postcode: "Postcode"
       buyer_account:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name

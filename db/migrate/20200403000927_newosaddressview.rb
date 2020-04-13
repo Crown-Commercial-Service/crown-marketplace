@@ -95,7 +95,8 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
                  CASE
                      WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
                      ELSE initcap(addresses.street_description::text) || ', '::text
-                 END) || initcap(addresses.postal_town)) || ''::text) || ', '::text || regions.region AS summary_line,
+                 END) || initcap(addresses.postal_town)) || ''::text) || case when regions.region is null then ''::text else ', '::text end ||
+                      case when regions.region is null then '' else regions.region end AS summary_line,
                  CASE
                      WHEN addresses.organisation IS NOT NULL THEN initcap(addresses.organisation::text) || ''::text
                      ELSE

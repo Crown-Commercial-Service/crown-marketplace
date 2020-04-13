@@ -31,7 +31,7 @@ module Postcode
         initcap(public.nuts_regions.name) as region
         from public.postcodes_nuts_regions
         left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
-        where public.postcodes_nuts_regions.postcode like '#{postcode.upcase}%'
+        where public.postcodes_nuts_regions.postcode like '#{postcode.replace(' ', '').upcase}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     rescue StandardError => e

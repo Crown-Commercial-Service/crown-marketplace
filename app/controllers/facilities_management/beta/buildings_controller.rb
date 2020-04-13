@@ -2,15 +2,16 @@ require 'rubygems'
 
 module FacilitiesManagement
   module Beta
+    # rubocop:disable Metrics/MethodLength
     class BuildingsController < FacilitiesManagement::Beta::FrameworkController
-      before_action :build_page_data, only: %i[index show new create edit update gia type security]
+      before_action :build_page_data, only: %i[index show new create edit update gia type security add_address]
       # rubocop:disable Metrics/AbcSize
-
-      FIND_ADDRESS = 'find_address'.freeze
 
       def index; end
 
       def new; end
+
+      def add_address; end
 
       def show; end
 
@@ -37,10 +38,12 @@ module FacilitiesManagement
       def update
         @page_data[:model_object].assign_attributes(building_params)
 
-        if !@page_data[:model_object].save(context: params[:step].try(:to_sym))
+        if !@page_data[:model_object].save(context: context_from_params)
           rebuild_page_description params[:step]
           render action: params[:step]
         else
+          redirect_to action: :edit and return if context_from_params == :update_address
+
           redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
 
           redirect_to facilities_management_beta_building_path(@page_data[:model_object].id)
@@ -51,6 +54,10 @@ module FacilitiesManagement
       def destroy; end
 
       private
+
+      def context_from_params
+        params[:context].try(:to_sym) || params[:step].try(:to_sym)
+      end
 
       def building_params
         params.require(:facilities_management_building)
@@ -75,9 +82,20 @@ module FacilitiesManagement
               )
       end
 
+      def redirect_to_return_url
+        redirect_details = Rack::Utils.parse_nested_query(params['facilities_management_building']['return_details'])
+        redirect_path = redirect_details['url']
+        redirect_params = redirect_details['params']
+
+        redirect_to("#{redirect_path}?#{redirect_params.to_query}") && return if redirect_path.present?
+
+        false
+      end
+
       STEPS = {
         create: { position: 1, desc: '' },
         new: { position: 1, desc: '' },
+        add_address: { position: 1, desc: '' },
         edit: { position: 1, desc: '' },
         update: { position: 1, desc: '' },
         gia: { position: 2, desc: 'What\'s the internal area of the building?' },
@@ -103,7 +121,25 @@ module FacilitiesManagement
         STEPS[:edit]
       end
 
-      helper_method :step_title, :step_footer
+      def add_address_url
+        return facilities_management_beta_building_url(@page_data[:model_object].id, context: :update_address) if id_present?
+
+        facilities_management_beta_building_path(context: :update_address)
+      end
+
+      def add_address_method
+        return :patch if id_present?
+
+        :post
+      end
+
+      def link_to_add_address
+        return add_address_facilities_management_beta_building_path(@page_data[:model_object].id, update_address: true) if id_present?
+
+        facilities_management_beta_buildings_new_add_address_path(update_address: true)
+      end
+
+      helper_method :step_title, :step_footer, :add_address_url, :link_to_add_address, :add_address_method
 
       def rebuild_page_data(building)
         @building_page_details    = @page_description = nil
@@ -192,8 +228,21 @@ module FacilitiesManagement
             caption3: step_title,
             page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building')
           },
+          add_address: {
+            caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
+            caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
+            caption3: step_title,
+            page_title: I18n.t('facilities_management.beta.buildings.page_definitions.add_building_address'),
+            continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
+            back_url: if id_present?
+                        edit_facilities_management_beta_building_path(@page_data[:model_object])
+                      else
+                        (new_facilities_management_beta_building_path)
+                      end
+          },
           edit: {
             caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
+            caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
             caption3: step_title,
             page_title: I18n.t('facilities_management.beta.buildings.page_definitions.change_building_details'),
             continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
@@ -248,5 +297,6 @@ module FacilitiesManagement
       end
       # rubocop:enable Metrics/MethodLength, CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

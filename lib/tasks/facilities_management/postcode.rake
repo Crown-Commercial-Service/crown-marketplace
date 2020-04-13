@@ -4,7 +4,7 @@ module OrdnanceSurvey
   require 'aws-sdk-s3'
   require 'json'
   require Rails.root.join('lib', 'tasks', 'distributed_locks')
-
+  
   def self.create_postcode_table
     str   = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
     query = str.slice str.index('CREATE TABLE')..str.length
@@ -14,7 +14,7 @@ module OrdnanceSurvey
     query = 'CREATE INDEX IF NOT EXISTS idx_postcode ON os_address USING btree (postcode);'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   end
-
+  
   def self.create_address_lookup_view
     query = "create or replace view public.os_address_view as select trim(((nullif(adds.rm_organisation_name, ' ') || ' ' || adds.pao_start_number || adds.pao_start_suffix::text) || ' '::text) || adds.street_description::text) as add1,
                 adds.town_name as village, adds.post_town, adds.administrative_area as county, adds.postcode, replace(adds.postcode::text, ' '::text, ''::text) as formated_postcode,
@@ -26,7 +26,7 @@ module OrdnanceSurvey
   rescue PG::Error => e
     puts e.message
   end
-
+  
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
     query = <<~SQL
@@ -109,60 +109,86 @@ module OrdnanceSurvey
     puts 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-      CREATE OR REPLACE VIEW public.postcode_lookup
-                AS
-                SELECT ((((
-                       CASE
-                           WHEN addresses.organisation IS NOT NULL THEN initcap(addresses.organisation::text) || ', '::text
-                           ELSE ''::text
-                       END ||
-                       CASE
-                           WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
-                           ELSE ''::text
-                       END) ||
-                       CASE
-                           WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
-                           ELSE initcap(addresses.street_description::text) || ', '::text
-                       END) || initcap(addresses.postal_town)) || ''::text) || ', '::text || regions.region AS summary_line,
-                       CASE
-                           WHEN addresses.organisation IS NOT NULL THEN initcap(addresses.organisation::text) || ''::text
-                           ELSE
-                             CASE
-                                 WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
-                                 ELSE ''::text
-                             END ||
-                             CASE
-                                 WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
-                                 ELSE initcap(addresses.street_description::text) || ''::text
-                             END
-                       END AS address_line_1,
-                       CASE
-                           WHEN addresses.organisation IS NOT NULL THEN
-                           CASE
-                               WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ''::text
-                               ELSE ''::text
-                           END ||
-                           CASE
-                               WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
-                               ELSE initcap(addresses.street_description::text) || ''::text
-                           END
-                           ELSE ''::text
-                       END AS address_line_2,
-                   addresses.postcode AS address_postcode,
-                   initcap(addresses.postal_town) AS address_town,
-                   initcap(regions.region::text) AS address_region,
-                   regions.region_code AS address_region_code
-                  FROM os_address_view_2 addresses
-                    LEFT JOIN postcode_region_view regions ON regions.postcode::text = replace(addresses.postcode::text, ' '::text, ''::text);
+            CREATE OR replace VIEW PUBLIC.postcode_lookup ASSELECT    (((((
+                CASE
+                          WHEN addresses.organisation IS NOT NULL THEN Initcap(addresses.organisation::text)
+                                              || ', '::text
+                          ELSE ''::text
+                END
+                          ||
+                CASE
+                          WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
+                                              || ', '::text
+                          ELSE ''::text
+                END)
+                          ||
+                CASE
+                          WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
+                                              || ', '::text
+                          ELSE initcap(addresses.street_description::text)
+                                              || ', '::text
+                END)
+                          || initcap(addresses.postal_town))
+                          || ''::text)
+                          ||
+                CASE
+                          WHEN regions.region IS NULL THEN ''::text
+                          ELSE ', '::text
+                END)
+                          ||
+                CASE
+                          WHEN regions.region IS NULL THEN ''::character VARYING
+                          ELSE regions.region
+                END::text AS summary_line,
+                CASE
+                          WHEN addresses.organisation IS NOT NULL THEN initcap(addresses.organisation::text)
+                                              || ''::text
+                          ELSE
+                                    CASE
+                                              WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
+                                                                  || ', '::text
+                                              ELSE ''::text
+                                    END
+                                              ||
+                                    CASE
+                                              WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
+                                                                  || ''::text
+                                              ELSE initcap(addresses.street_description::text)
+                                                                  || ''::text
+                                    END
+                END AS address_line_1,
+                CASE
+                          WHEN addresses.organisation IS NOT NULL THEN
+                                    CASE
+                                              WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
+                                                                  || ''::text
+                                              ELSE ''::text
+                                    END
+                                              ||
+                                    CASE
+                                              WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
+                                                                  || ''::text
+                                              ELSE initcap(addresses.street_description::text)
+                                                                  || ''::text
+                                    END
+                          ELSE ''::text
+                END                            AS address_line_2,
+                addresses.postcode             AS address_postcode,
+                initcap(addresses.postal_town) AS address_town,
+                initcap(regions.region::text)  AS address_region,
+                regions.region_code            AS address_region_code
+      FROM      os_address_view_2 addresses
+      LEFT JOIN postcode_region_view regions
+      ON        regions.postcode::text = replace(addresses.postcode::text, ' '::text, ''::text);
     SQL
     puts 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
   rescue PG::Error => e
     puts e.message
   end
-
+  
   # rubocop:enable Metrics/MethodLength
-
+  
   def self.create_upload_log
     query = "
 CREATE TABLE IF NOT EXISTS os_address_admin_uploads (
@@ -174,7 +200,7 @@ CREATE TABLE IF NOT EXISTS os_address_admin_uploads (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL);"
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
-
+    
     # -- Indices -------------------------------------------------------
     query = "
 CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_address_admin_uploads USING btree (filename);"
@@ -182,12 +208,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   rescue PG::Error => e
     puts e.message
   end
-
+  
   def self.postcode_file_already_loaded(key)
     p "Checking file #{key}"
-
+    
     query = "select count(*) from os_address_admin_uploads where filename = '#{key}'"
-
+    
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
       count  = result[0]['count']
@@ -197,7 +223,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     puts e.message
     false
   end
-
+  
   def self.log_postcode_file_loaded(key, size, etag, created_at, updated_at)
     query = "
     INSERT INTO os_address_admin_uploads (filename, size, etag, created_at, updated_at) VALUES('#{key}', #{size}, '#{etag}', '#{created_at}', '#{updated_at}');"
@@ -209,30 +235,30 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     puts e.message
     false
   end
-
+  
   def self.awd_credentials(access_key, secret_key, bucket, region)
     Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
     p "Importing from AWS bucket: #{bucket}, region: #{region}"
-
+    
     extend_timeout
   end
-
+  
   def self.extend_timeout
     Aws.config[:http_open_timeout] = 6000
     Aws.config[:http_read_timeout] = 6000
     Aws.config[:http_idle_timeout] = 6000
   end
-
+  
   # rubocop:disable Metrics/AbcSize
   def self.import_postcodes(access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
-
+    
     object = Aws::S3::Resource.new(region: region)
     object.bucket(bucket).objects.each do |obj|
       next unless obj.key.starts_with? 'dataPostcode2files'
-
+      
       next if postcode_file_already_loaded(obj.key)
-
+      
       # rc.put_copy_data(obj.get.body)
       # obj.get.body.each_line { |line| rc.put_copy_data(line) }
       puts "*** Loading file #{obj.key}"
@@ -246,7 +272,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         rc.put_copy_data chunks
         rc.put_copy_end
       end
-
+      
       log_postcode_file_loaded(obj.data.key, obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc)
     end
   rescue PG::Error => e
@@ -265,32 +291,32 @@ namespace :db do
     OrdnanceSurvey.create_new_postcode_views
     OrdnanceSurvey.import_postcodes args[:access_key], args[:secret_access_key], args[:bucket], args[:region]
   end
-
+  
   task postcode: :environment do
     p 'Creating postcode database and import'
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
     OrdnanceSurvey.create_new_postcode_views
     OrdnanceSurvey.create_upload_log
-
+    
     ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
     creds                     = ActiveSupport::EncryptedConfiguration.new(
-      config_path: Rails.root.join('config', 'credentials.yml.enc'),
-      key_path: 'config/master.key',
-      env_key: 'RAILS_MASTER_KEY_2',
+      config_path:          Rails.root.join('config', 'credentials.yml.enc'),
+      key_path:             'config/master.key',
+      env_key:              'RAILS_MASTER_KEY_2',
       raise_if_missing_key: false
     )
-
+    
     access_key = creds.aws_postcodes[:access_key_id]
     secret_key = creds.aws_postcodes[:secret_access_key]
     bucket     = creds.aws_postcodes[:bucket]
     region     = creds.aws_postcodes[:region]
-
+    
     DistributedLocks.distributed_lock(151) do
       OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
     end
   end
-
+  
   desc 'create OS postcode table'
   task pctable: :environment do
     p 'Creating postcode database and import'

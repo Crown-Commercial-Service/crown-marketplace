@@ -116,6 +116,7 @@ Rails.application.routes.draw do
           get 'gia'
           get 'type'
           get 'security'
+          match 'add_address', via: [:get, :post, :patch]
         end
       end
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]

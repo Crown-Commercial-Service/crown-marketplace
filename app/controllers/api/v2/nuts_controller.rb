@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  module V1
+  module V2
     # return json
     class NutsController < ApplicationController
       protect_from_forgery with: :exception
@@ -37,6 +37,9 @@ module Api
         if result.length.positive?
         else
           result = get_region_by_prefix params['postcode']
+        end
+        if result.length.zero?
+          result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } }
         end
         render json: { status: 200, result: result }
       rescue StandardError => e
