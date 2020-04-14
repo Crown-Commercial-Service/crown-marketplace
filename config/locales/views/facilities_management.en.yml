@@ -222,7 +222,6 @@ en:
                 less_than: The start time must be before the end time of your specified hours
               service_choice:
                 inclusion: Select not required if you don't need the service on this day
-                required: You must provide hours required for at least one of the days
               start_time:
                 greater_than: The end time must be after the start time of your specified hours
                 invalid: Enter a real start time
