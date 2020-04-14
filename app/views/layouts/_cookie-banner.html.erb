@@ -1,7 +1,7 @@
 <div id="cookie_banner" class="ccs-phase-banner-wrapper" style="background-color: #ffffff">
   <div class="govuk-phase-banner govuk-width-container ccs-no-print">
       <p class="govuk-phase-banner__content">
-        Crown Marketplace uses cookies to make the site simpler. Read <%= link_to 'more about cookies', cookies_path(service: request&.controller_class&.parent_name&.underscore) %>
+        Crown Marketplace uses cookies to make the site simpler. Read <%= link_to 'more about cookies', cookies_path(service: params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]) %>
       </p>
   </div>
 </div>
