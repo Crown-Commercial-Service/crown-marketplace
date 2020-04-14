@@ -1,147 +1,148 @@
 @import "govuk-frontend/components/button/button";
 
-$govuk-button-colour: govuk-colour("secondary");
-$govuk-button-hover-colour: darken($govuk-button-colour, 5%);
-$govuk-button-shadow-colour: darken($govuk-button-colour, 15%);
-$govuk-button-text-colour: govuk-colour("white");
-$govuk-button-radius: 3px !default;
-$govuk-button-colour-secondary: govuk-colour("grey-2");
+$govuk-button-colour           : govuk-colour("secondary");
+$govuk-button-hover-colour     : darken($govuk-button-colour, 5%);
+$govuk-button-shadow-colour    : darken($govuk-button-colour, 15%);
+$govuk-button-text-colour      : govuk-colour("white");
+$govuk-button-radius           : 3px !default;
+$govuk-button-colour-secondary : govuk-colour("grey-2");
 
-$button-shadow-size: 3px;
+$button-shadow-size            : 3px;
 
-$offset: 4;
+$offset                        : 4;
 
 .govuk-button {
-  border-radius: $govuk-button-radius;
-  color: $govuk-button-text-colour;
-  background-color: $govuk-button-colour;
-  font-weight: $govuk-font-weight-semi-bold;
-  -webkit-box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour;
-  box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
-  min-width: 115px;
+  border-radius      : $govuk-button-radius;
+  color              : $govuk-button-text-colour;
+  background-color   : $govuk-button-colour;
+  font-weight        : $govuk-font-weight-semi-bold;
+  -webkit-box-shadow : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
+  box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
+  min-width          : 115px;
 
-  padding-top: (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
-  padding-bottom: (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
+  padding-top        : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
+  padding-bottom     : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
 
   // Ensure that any global link styles are overridden
   &:link,
   &:visited,
   &:active,
   &:hover {
-    color: $govuk-button-text-colour;
-  }
+    color : $govuk-button-text-colour;
+    }
 
   @include govuk-compatibility(govuk_template) {
     &:link:focus {
-      color: $govuk-button-text-colour;
+      color : $govuk-button-text-colour;
+      }
     }
-  }
 
   &:focus {
-    border-color: #fd0;
-    outline: 3px solid rgba(0, 0, 0, 0);
-    box-shadow: inset 0 0 0 1px #fd0
-  }
+    border-color : #ffdd00;
+    outline      : 3px solid rgba(0, 0, 0, 0);
+    box-shadow   : inset 0 0 0 1px #ffdd00
+    }
 
   &:hover {
-    background-color: $govuk-button-hover-colour;
-  }
+    background-color : $govuk-button-hover-colour;
+    }
 
   &:active:focus:not(:hover) {
-    background-color: $govuk-button-colour;
-  }
+    background-color : $govuk-button-colour;
+    }
 
   &:focus:not(:active):not(:hover) {
-    border-color: #fd0;
-    color: #0b0c0c;
-    background-color: #fd0;
-    box-shadow: 0 2px 0 #0b0c0c
+    border-color     : #ffdd00;
+    color            : #0b0c0c;
+    background-color : #ffdd00;
+    box-shadow       : 0 2px 0 #0b0c0c
+    }
   }
-}
 
 .govuk-button--disabled,
 .govuk-button[disabled="disabled"],
 .govuk-button[disabled] {
-  background: $govuk-button-colour;
+  background : $govuk-button-colour;
 
   &:hover {
-    background-color: $govuk-button-colour;
-  }
+    background-color : $govuk-button-colour;
+    }
 
   &:active {
-    top: 0;
-    -webkit-box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour;
-            box-shadow: 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
+    top                : 0;
+    -webkit-box-shadow : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
+    box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
     @include govuk-if-ie8 {
-      border-bottom: $button-shadow-size solid $govuk-button-shadow-colour; // s0
+      border-bottom : $button-shadow-size solid $govuk-button-shadow-colour; // s0
+      }
     }
   }
-}
 
 .govuk-button--start {
-  background-image: image-url("icon-pointer.png");
-  background-repeat: no-repeat;
-  background-size: 30px 19px;
-  background-position: 100% 56%;
-  padding-top: (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
-  padding-bottom: (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
+  background-image    : image-url("icon-pointer.png");
+  background-repeat   : no-repeat;
+  background-size     : 30px 19px;
+  background-position : 100% 56%;
+  padding-top         : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
+  padding-bottom      : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
 
   @include govuk-device-pixel-ratio {
-    background-image: image-url("icon-pointer-2x.png");
-    background-size: 29px 18px;
+    background-image : image-url("icon-pointer-2x.png");
+    background-size  : 29px 18px;
+    }
   }
-}
 
 .govuk-button--warning {
-  background-color: #b10e1e;
-  box-shadow: 0 2px 0 #47060c;
-  color: #ffffff;
+  background-color : #b10e1e;
+  box-shadow       : 0 2px 0 #47060c;
+  color            : #ffffff;
 
   &:link,
   &:visited,
   &:active,
   &:hover {
-    color: #ffffff;
-  }
+    color : #ffffff;
+    }
 
   &:hover,
   &:focus {
-    background-color: #8e0b18;
-  }
+    background-color : #8e0b18;
+    }
 
   &:active:focus:not(:hover) {
-    background-color: #b10e1e;
-  }
+    background-color : #b10e1e;
+    }
 
   &:hover[disabled],
   &:focus[disabled] {
-    background-color: #b10e1e;
+    background-color : #b10e1e;
+    }
   }
-}
 
 .govuk-button--secondary {
-  background-color: #f3f2f1;
-  -webkit-box-shadow: 0 2px 0 #929191;
-  box-shadow: 0 2px 0 #929191;
-  color: #0b0c0c;
+  background-color   : #f3f2f1;
+  -webkit-box-shadow : 0 2px 0 #929191;
+  box-shadow         : 0 2px 0 #929191;
+  color              : #0b0c0c;
 
   &:link,
   &:visited,
   &:active,
   &:hover {
-    color: #0b0c0c;
-  }
+    color : #0b0c0c;
+    }
 
   &:hover,
-  &:focus{
-    background-color: #dbdad9;
-  }
+  &:focus {
+    background-color : #dbdad9;
+    }
 
   &:active:focus:not(:hover) {
-    background-color: #f3f2f1;
-  }
-  
+    background-color : #f3f2f1;
+    }
+
   &:hover[disabled] {
-    background-color: #f3f2f1
+    background-color : #f3f2f1
+    }
   }
-}
+

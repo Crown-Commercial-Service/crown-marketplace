@@ -5,6 +5,7 @@ module FacilitiesManagement
     class BuildingsController < FacilitiesManagement::Beta::FrameworkController
       include BuildingsControllerDefinitions
       include BuildingsControllerNavigation
+      include BuildingsControllerRegions
 
       before_action :build_page_data, only: %i[index show new create edit update gia type security add_address]
 
@@ -37,6 +38,8 @@ module FacilitiesManagement
 
       def update
         @page_data[:model_object].assign_attributes(building_params)
+
+        render action: :add_address and return if params[:add_address].present?
 
         resolve_region if params[:step] == 'add_address'
 
@@ -128,27 +131,6 @@ module FacilitiesManagement
         @page_data[:model_object].address_region_code = valid_regions[0]['code']
       end
 
-      def find_region_query_by_postcode(postcode)
-        result = get_region_postcode postcode
-        if result.length.positive?
-        else
-          result = get_region_by_prefix postcode
-        end
-        if result.length.zero?
-          result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } }
-        end
-
-        result
-      end
-
-      def get_region_by_prefix(postcode)
-        Postcode::PostcodeChecker.find_region postcode[0,3].delete(' ')
-      end
-
-      def get_region_postcode(postcode)
-        Postcode::PostcodeChecker.find_region postcode.delete(' ')
-      end
-
       def rebuild_page_data(building)
         @building_page_details    = @page_description = nil
         @page_data[:model_object] = building
@@ -169,6 +151,5 @@ module FacilitiesManagement
         @page_data[:model_object].respond_to?(:id) && @page_data[:model_object][:id].present?
       end
     end
-    # rubocop:enable Metrics/MethodLength, CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
   end
 end

@@ -75,7 +75,8 @@
       <select class="govuk-select govuk-!-margin-top-2 govuk-!-width-two-thirds" data-module-element="results-container" data-nodata-text="<%= t('.zero_address_found') %>" data-withdata-text-single="<%= t('.option_with_data_single') %>" data-withdata-text-plural="<%= t('.option_with_data_plural') %>" id="results-container">
         <optgroup label="<%= t('.zero_address_found') %>"></optgroup>
       </select>
-      <%= link_to t('.cant_find_address'), link_to_add_address, class: 'govuk-link govuk-!-margin-top-2 govuk-visually-hidden', style: 'display:block', 'data-module-element': 'cant-find' %>
+      <%= f.submit(t('.cant_find_address'), class: 'govuk-link govuk-!-margin-right-4 button_as_link',
+                   data: { disable_with: false }, name: 'add_address') %>
     </div>
     <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-3 <%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>" data-module-part="address-display">&nbsp;
       <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
