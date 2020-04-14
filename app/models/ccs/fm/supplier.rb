@@ -39,7 +39,7 @@ module CCS
         result =
           vals.map do |s|
             selected_lot = s.data['lots'].select do |x|
-              x['lot_number'] = for_lot
+              x['lot_number'] == for_lot
             end
             first_selected_lot = selected_lot&.first
             { 'name' => s.data['supplier_name'],
