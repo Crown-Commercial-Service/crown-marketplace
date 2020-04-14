@@ -576,6 +576,12 @@ en:
         call_off_extensions:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+        choose_contract_value:
+          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          heading: Looking at the options below are you able to select the correct value range based on your budget, and expected cost of the contract?
+          lot_number_1a_description: Total contract value up to £7 million
+          lot_number_1b_description: Total contract value between £7 million and £50 million
+          lot_number_1c_description: Total contract value over £50 million
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.

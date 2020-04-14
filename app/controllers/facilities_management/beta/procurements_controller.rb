@@ -259,7 +259,7 @@ module FacilitiesManagement
 
       def continue_to_results
         if procurement_valid?
-          @procurement.save_eligible_suppliers_and_set_state
+          @procurement.set_state_to_results_if_possible!
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
@@ -632,6 +632,8 @@ module FacilitiesManagement
                 :using_buyer_detail_for_authorised_detail,
                 :using_buyer_detail_for_notices_detail,
                 :local_government_pension_scheme,
+                :lot_number,
+                :lot_number_selected_by_customer,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -953,6 +955,10 @@ module FacilitiesManagement
           results: {
             page_title: 'Results',
             primary_name: 'set_route_to_market'
+          },
+          choose_contract_value: {
+            page_title: 'Contract Value',
+            primary_name: 'commit'
           },
           direct_award: {
             page_title: 'Direct Award Pricing',
