@@ -154,12 +154,12 @@ LookupHandler.prototype.init = function () {
     this.btnCantFindAddress = this.resultsContainer.querySelector('[data-module-element="cant-find"]');
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
-    $(this.btnChangeRegion).addClass('govuk-visually-hidden');
     var lookupRegion = this.showRegionChoices.bind(this);
     $(this.btnChangeRegion).on('click', function (e) {
         e.preventDefault();
         lookupRegion(e);
     });
+    this.regionDropDown.addEventListener('change', this.selectRegionResult.bind(this));
 };
 
 LookupHandler.prototype.showRegionChoices = function() {
@@ -192,7 +192,6 @@ LookupHandler.prototype.reset = function () {
     this.adjustIndicatorOption(this.resultsDropDown, 0);
     this.adjustIndicatorOption(this.regionDropDown, 0);
     this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
-    this.regionDropDown.removeEventListener('change', this.selectRegionResult.bind(this));
 };
 
 LookupHandler.prototype.cantFindAddress = function (bShow) {
@@ -215,7 +214,6 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
 
 LookupHandler.prototype.showRegionResults = function (regions) {
     //$(this.regionDisplay).addClass('govuk-visually-hidden');
-    this.regionDropDown.addEventListener('change', this.selectRegionResult.bind(this));
     this.showRegionText(false);
     this.populateRegionDropDown(regions);
     this.changeRegionContainerVisibility(true);

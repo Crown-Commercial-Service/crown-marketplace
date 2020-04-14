@@ -37,18 +37,21 @@ module FacilitiesManagement
       # rubocop:disable Style/AndOr
       def update
         @page_data[:model_object].assign_attributes(building_params)
-        # resolve_region is params[:step] == :add_address
+
+        resolve_region if params[:step] == 'add_address'
+
         if !@page_data[:model_object].save(context: params[:step])
           rebuild_page_description params[:step]
           render action: params[:step]
         else
-          redirect_to action: :edit and return if params[:step] == :add_address
+          redirect_to action: :edit and return if params[:step] == 'add_address'
 
           redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
 
           redirect_to facilities_management_beta_building_path(@page_data[:model_object].id)
         end
       end
+
       # rubocop:enable Style/AndOr
 
       def destroy; end
@@ -84,8 +87,8 @@ module FacilitiesManagement
 
       def redirect_to_return_url
         redirect_details = Rack::Utils.parse_nested_query(params['facilities_management_building']['return_details'])
-        redirect_path = redirect_details['url']
-        redirect_params = redirect_details['params']
+        redirect_path    = redirect_details['url']
+        redirect_params  = redirect_details['params']
 
         redirect_to("#{redirect_path}?#{redirect_params.to_query}") && return if redirect_path.present?
 
@@ -139,7 +142,53 @@ module FacilitiesManagement
         facilities_management_beta_buildings_new_add_address_path(update_address: true)
       end
 
-      helper_method :step_title, :step_footer, :add_address_url, :link_to_add_address, :add_address_method
+      def region_needs_resolution?
+        return false if @page_data[:model_object].blank?
+
+        return true if @page_data[:model_object].address_region_code.blank?
+
+        false
+      end
+
+      def multiple_regions?
+        valid_regions.length > 1
+      end
+
+      def valid_regions
+        @valid_regions ||= find_region_query_by_postcode(@page_data[:model_object].address_postcode)
+      end
+
+      helper_method :step_title, :step_footer, :add_address_url, :link_to_add_address, :add_address_method, :valid_regions, :region_needs_resolution?, :multiple_regions?
+
+      def resolve_region
+        return if @page_data[:model_object].blank?
+
+        return if valid_regions.length > 1
+
+        @page_data[:model_object].address_region = valid_regions[0]['region']
+        @page_data[:model_object].address_region_code = valid_regions[0]['code']
+      end
+
+      def find_region_query_by_postcode(postcode)
+        result = get_region_postcode postcode
+        if result.length.positive?
+        else
+          result = get_region_by_prefix postcode
+        end
+        if result.length.zero?
+          result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } }
+        end
+
+        result
+      end
+
+      def get_region_by_prefix(postcode)
+        Postcode::PostcodeChecker.find_region postcode[0,3].delete(' ')
+      end
+
+      def get_region_postcode(postcode)
+        Postcode::PostcodeChecker.find_region postcode.delete(' ')
+      end
 
       def rebuild_page_data(building)
         @building_page_details    = @page_description = nil
@@ -235,10 +284,10 @@ module FacilitiesManagement
             page_title: I18n.t('facilities_management.beta.buildings.page_definitions.add_building_address'),
             continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
             back_url: if id_present?
-                        edit_facilities_management_beta_building_path(@page_data[:model_object])
-                      else
-                        (new_facilities_management_beta_building_path)
-                      end
+                                 edit_facilities_management_beta_building_path(@page_data[:model_object])
+                               else
+                                 (new_facilities_management_beta_building_path)
+                               end
           },
           edit: {
             caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),

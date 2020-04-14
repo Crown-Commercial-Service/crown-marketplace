@@ -80,21 +80,29 @@
       </div>
       <a href="#postcode-header" class="govuk-link" data-module-element="change-button"><%= t('.change') %></a>
     </div>
-    <div data-module-part="region-display" class="<%='govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
+    <div data-module-part="region-display">
       <div class="govuk-!-margin-bottom-3">
         <br/>
         <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.region') %></span>
         <span class="govuk-caption-m"><%= t('.region_desc') %></span>
       </div>
-      <div data-module-part="lookup-region-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_region_code.blank? %>" class="govuk-visually-hidden">
+      <div data-module-part="lookup-region-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_region_code.blank? %>" class="<%= 'govuk-visually-hidden' unless region_needs_resolution? %>">
         <label for="region-results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_a_region') %></label>
         <select class="govuk-select govuk-!-margin-top-2 govuk-!-width-two-thirds" data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>" data-withdata-text-single="<%= t('.region_option_with_data_single') %>" data-withdata-text-plural="<%= t('.region_option_with_data_plural') %>" id="region-results-container">
-          <optgroup label="<%= t('.zero_regions_found') %>"></optgroup>
+          <optgroup label="<%= multiple_regions? ? t('.region_option_with_data_plural').sub('{%}', valid_regions.length.to_s) : t('.region_option_with_data_single')%>"></optgroup>
+          <% if valid_regions.length > 0 then%>
+            <option value="">Please select a region</option>
+          <%end%>
+          <% valid_regions.each do |region|%>
+            <option value="<%= region['code'] %>" <%= 'selected' if @page_data[:model_object].address_region_code == region['code'] %>
+                    data-address_region="<%= region['region'] %>" data-address_region_code="<%= region['code'] %>"><%= region['region'] %></option>
+          <% end%>
         </select>
       </div>
       <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
         <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
-        <a href="#region-header" class="govuk-link" style="display:block;" data-module-element="change-region-button"><%= t('.change') %></a>
+        <a href="#region-header" class="govuk-link <%='govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
+           data-module-element="change-region-button"><%= t('.change') %></a>
       </div>
     </div>
   </div>
