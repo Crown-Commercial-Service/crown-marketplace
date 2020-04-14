@@ -157,7 +157,7 @@ en:
             security_policy_document_name:
               blank: Enter a security policy document name
             security_policy_document_required:
-              inclusion: Select yes if a security policy document is required for your contract
+              inclusion: Select one option
               not_present_contract_details: You must answer the question about 'Security policy'
             security_policy_document_version_number:
               blank: Enter a security policy document version number
