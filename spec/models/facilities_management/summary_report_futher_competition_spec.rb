@@ -265,6 +265,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
              code: code,
+             service_standard: 'A',
              lift_data: lift_data,
              procurement_building: create(:facilities_management_procurement_building_no_services,
                                           building_id: create(:facilities_management_building_london).id,
@@ -296,7 +297,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:code2) { 'C.7' } # no fw price
 
       context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
-        let(:estimated_annual_cost) { 843500 }
+        let(:estimated_annual_cost) { 403500 }
 
         it 'uses BM and Customer prices only' do
           expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))

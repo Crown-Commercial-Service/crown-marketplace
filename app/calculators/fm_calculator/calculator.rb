@@ -19,10 +19,11 @@ module FMCalculator
 
     # rubocop:disable Metrics/ParameterLists (with a s)
     # rubocop:disable Metrics/AbcSize
-    def initialize(contract_length_years, service_ref, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building_data = nil)
+    def initialize(contract_length_years, service_ref, service_standard, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building_data = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
+      @service_standard = service_standard
       @service_ref_sym = service_ref.to_sym
       @uom_vol = uom_vol
       @occupants = occupants
@@ -291,11 +292,11 @@ module FMCalculator
     protected
 
     def framework_rate_for(service_ref)
-      @framework_rates[service_ref] || @framework_rates["#{service_ref}-A"]
+      @framework_rates[service_ref] || @framework_rates["#{service_ref}-#{@service_standard}"]
     end
 
     def benchmark_rate_for(service_ref)
-      @benchmark_rates[service_ref] || @benchmark_rates["#{service_ref}-A"]
+      @benchmark_rates[service_ref] || @benchmark_rates["#{service_ref}-#{@service_standard}"]
     end
   end
 end
