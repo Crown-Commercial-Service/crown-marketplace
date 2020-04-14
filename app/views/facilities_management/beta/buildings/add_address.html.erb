@@ -16,10 +16,10 @@
       <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.postcode'), "", {}) do %>
         <%= f.text_field :address_postcode, class: "govuk-input govuk-input--width-10", maxlength: 9 %>
       <% end %>
-      <%= f.hidden_field :address_region, value:'' %>
-      <%= f.hidden_field :address_region_code, value:'' %>
-      <%= f.hidden_field :building_name%>
-      <%= f.hidden_field :description%>
+      <%= f.text_field :address_region, value:'' %>
+      <%= f.text_field :address_region_code, value:'' %>
+      <%= f.text_field :building_name%>
+      <%= f.text_field :description%>
 
     </div>
     <%= govuk_continuation_buttons(pd, f, false, false, true) %>

@@ -26,12 +26,23 @@ module FacilitiesManagement
       def security; end
 
       def create
-        new_building = current_user.buildings.build(building_params)
+        @page_data[:model_object] = current_user.buildings.build(building_params)
 
-        if new_building.save(context: :new)
-          redirect_to action: next_step[0], id: new_building.id
+        rebuild_page_data(@page_data[:model_object]) if params[:add_address].present?
+
+        if params[:add_address].present?
+          rebuild_page_description('add_address')
+          render action: :add_address and return
+        end
+
+        resolve_region if params[:step] == 'add_address'
+
+        if @page_data[:model_object].save(context: :new)
+          redirect_to( action: :edit, id: @page_data[:model_object].id) and return if params[:step] == 'add_address'
+
+          redirect_to action: next_step[0], id: @page_data[:model_object].id
         else
-          rebuild_page_data(new_building)
+          rebuild_page_data(@page_data[:model_object])
           render :new
         end
       end
@@ -43,7 +54,7 @@ module FacilitiesManagement
 
         resolve_region if params[:step] == 'add_address'
 
-        if !@page_data[:model_object].save(context: params[:step])
+        if !@page_data[:model_object].save(context: params[:step].to_sym)
           rebuild_page_description params[:step]
           render action: params[:step]
         else
@@ -87,9 +98,9 @@ module FacilitiesManagement
       end
 
       def add_address_url
-        return facilities_management_beta_building_url(@page_data[:model_object].id, context: :update_address) if id_present?
+        return facilities_management_beta_building_url(@page_data[:model_object].id) if id_present?
 
-        facilities_management_beta_building_path(context: :update_address)
+        facilities_management_beta_buildings_path
       end
 
       def add_address_method
@@ -98,14 +109,8 @@ module FacilitiesManagement
         :post
       end
 
-      def link_to_add_address
-        return add_address_facilities_management_beta_building_path(@page_data[:model_object].id, update_address: true) if id_present?
-
-        facilities_management_beta_buildings_new_add_address_path(update_address: true)
-      end
-
       def region_needs_resolution?
-        return false if @page_data[:model_object].blank?
+        return false if @page_data[:model_object].blank? || @page_data[:model_object].respond_to?(:address_postcode)
 
         return true if @page_data[:model_object].address_region_code.blank?
 
@@ -117,7 +122,9 @@ module FacilitiesManagement
       end
 
       def valid_regions
-        @valid_regions ||= find_region_query_by_postcode(@page_data[:model_object].address_postcode)
+        return @valid_regions ||= find_region_query_by_postcode(@page_data[:model_object].address_postcode) if @page_data[:model_object].address_postcode.present?
+
+        []
       end
 
       helper_method :step_title, :step_footer, :add_address_url, :link_to_add_address, :add_address_method, :valid_regions, :region_needs_resolution?, :multiple_regions?

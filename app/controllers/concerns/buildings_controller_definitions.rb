@@ -135,7 +135,7 @@ module BuildingsControllerDefinitions
              end
     page_description action
   end
-  
+
   # rubocop:enable Metrics/AbcSize
 end
 # rubocop:enable Metrics/ModuleLength
