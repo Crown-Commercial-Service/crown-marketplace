@@ -1,5 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <div class="govuk-form-group">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if  @procurement.errors[:security_policy_document_required].any? %>">
     <div class="govuk-!-margin-top-3">
     <span class="govuk-heading-s govuk-!-margin-bottom-0">
       <%= t('.question') %>
@@ -7,7 +7,7 @@
     </div>
 
     <div class="govuk-!-margin-top-3">
-      <%= display_errors(@procurement, :security_policy_document, f.object_name) %>
+      <%= display_errors(@procurement, :security_policy_document_required, f.object_name) %>
       <div class="radio-content-toggle govuk-radios govuk-radios">
         <div class="govuk-radios__item">
           <%= f.radio_button :security_policy_document_required, true, class: "govuk-radios__input", required: true %>
