@@ -118,6 +118,13 @@ module FacilitiesManagement
         transitions from: :detailed_search, to: :results, after: :start_da_journey
       end
 
+      event :set_state_to_choose_contract_value do
+        before do
+          self.lot_number_selected_by_customer = nil
+        end
+        transitions from: :results, to: :choose_contract_value
+      end
+
       event :set_state_to_results do
         transitions from: :choose_contract_value, to: :results, after: :start_da_journey
       end
