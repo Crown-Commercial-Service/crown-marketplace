@@ -23,7 +23,6 @@ module FacilitiesManagement
 
         def index
           @list_service_types = ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
-
           supplier_services = setup_supplier_data
           setup_supplier_data_ratecard
           setup_variance_supplier_data(CCS::FM::RateCard.latest)
@@ -34,10 +33,18 @@ module FacilitiesManagement
         def update_sublot_data_services_prices
           setup_supplier_data
           setup_instance_variables
-          update_data_table
-          update_checkboxes
-          update_rates
-          redirect_to facilities_management_beta_admin_supplier_framework_data_path
+
+          error_services = update_data_table(true)
+          error_services += update_rates(true)
+
+          if !error_services.empty?
+            redirect_to facilities_management_beta_admin_get_sublot_data_path(params[:id]), flash: { error: error_services }
+          else
+            update_data_table(false)
+            update_checkboxes
+            update_rates(false)
+            redirect_to facilities_management_beta_admin_supplier_framework_data_path
+          end
         end
 
         private
@@ -110,22 +117,54 @@ module FacilitiesManagement
         end
 
         # rubocop:disable Metrics/AbcSize
-        def update_rates
+        def update_rates(only_validate)
+          invalid_services = []
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
           @supplier_name = supplier_data['supplier_name']
           rate_card = CCS::FM::RateCard.latest
           setup_variance_supplier_data(rate_card)
 
-          @variance_supplier_data['Management Overhead %'.to_sym] = params['rate']['M.140'].to_f
-          @variance_supplier_data['Corporate Overhead %'.to_sym] = params['rate']['M.141'].to_f
-          @variance_supplier_data['Profit %'.to_sym] = params['rate']['M.142'].to_f
-          @variance_supplier_data['London Location Variance Rate (%)'.to_sym] = params['rate']['M.144'].to_f
-          @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] = params['rate']['M.146'].to_f
-          @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] = params['rate']['M.148'].to_f
-          @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] = params['rate']['B.1'].to_f
-          rate_card.save
+          if only_validate
+            update_rates_invalid_services(invalid_services)
+          else
+            @variance_supplier_data['Management Overhead %'.to_sym] = params['rate']['M.140'].to_f
+            @variance_supplier_data['Corporate Overhead %'.to_sym] = params['rate']['M.141'].to_f
+            @variance_supplier_data['Profit %'.to_sym] = params['rate']['M.142'].to_f
+            @variance_supplier_data['London Location Variance Rate (%)'.to_sym] = params['rate']['M.144'].to_f
+            @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] = params['rate']['M.146'].to_f
+            @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] = params['rate']['M.148'].to_f
+            @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] = params['rate']['B.1'].to_f
+            rate_card.save
+          end
+          invalid_services
         end
         # rubocop:enable Metrics/AbcSize
+
+        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+        def update_rates_invalid_services(invalid_services)
+          # note: I add the service name to the flash error ,and the value the user entered in the next array index
+          invalid_services << 'M.140' unless numeric?(params['rate']['M.140'])
+          invalid_services << params['rate']['M.140'] unless numeric?(params['rate']['M.140'])
+
+          invalid_services << 'M.141' unless numeric?(params['rate']['M.141'])
+          invalid_services << params['rate']['M.141'] unless numeric?(params['rate']['M.141'])
+
+          invalid_services << 'M.142' unless numeric?(params['rate']['M.142'])
+          invalid_services << params['rate']['M.142'] unless numeric?(params['rate']['M.142'])
+
+          invalid_services << 'M.144' unless numeric?(params['rate']['M.144'])
+          invalid_services << params['rate']['M.144'] unless numeric?(params['rate']['M.144'])
+
+          invalid_services << 'M.146' unless numeric?(params['rate']['M.146'])
+          invalid_services << params['rate']['M.146'] unless numeric?(params['rate']['M.146'])
+
+          invalid_services << 'M.148' unless numeric?(params['rate']['M.148'])
+          invalid_services << params['rate']['M.148'] unless numeric?(params['rate']['M.148'])
+
+          invalid_services << 'B.1' unless numeric?(params['rate']['B.1'])
+          invalid_services << params['rate']['B.1'] unless numeric?(params['rate']['B.1'])
+        end
+        # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity, Metrics/AbcSize
 
         def setup_supplier_data_ratecard
           latest_rate_card = CCS::FM::RateCard.latest
@@ -137,23 +176,53 @@ module FacilitiesManagement
           latest_rate_card
         end
 
-        # rubocop:disable Metrics/AbcSize
-        def update_data_table
+        # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/IfInsideElse
+        #
+        def update_data_table(only_validate)
+          invalid_services = []
           latest_rate_card = setup_supplier_data_ratecard
+
+          # note for an error to make it easier to display in the front end:
+          # I add the service name to the flash error ,
+          # then the service+service_type onthe next position
+          # and the value the user entered in the next array index
 
           params['data'].each do |service_key, service|
             service.each do |service_type_key, _|
               key = service_type_key.remove(' (%)').remove(' (£)')
               if key == 'Direct Award Discount'
-                @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
+                if only_validate
+                  numeric_result = numeric?(params['data'][service_key][service_type_key])
+                  invalid_services << service_key unless numeric_result
+                  invalid_services << service_key + service_type_key unless numeric_result
+                  invalid_services << params['data'][service_key][service_type_key] unless numeric_result
+                else
+                  @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
+                end
               else
-                @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
+                if only_validate
+                  numeric_result = numeric?(params['data'][service_key][service_type_key])
+                  invalid_services << service_key unless numeric_result
+                  invalid_services << service_key + service_type_key unless numeric_result
+                  invalid_services << params['data'][service_key][service_type_key] unless numeric_result
+                else
+                  @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
+                end
               end
             end
           end
-          latest_rate_card.save
+          latest_rate_card.save unless only_validate
+          invalid_services
         end
-        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/IfInsideElse
+
+        # rubocop:disable Style/MultipleComparison
+        def numeric?(user_entered_value)
+          return true if user_entered_value.nil? || user_entered_value.blank?
+
+          user_entered_value.to_i.to_s == user_entered_value || user_entered_value.to_f.to_s == user_entered_value
+        end
+        # rubocop:enable Style/MultipleComparison
       end
     end
   end
