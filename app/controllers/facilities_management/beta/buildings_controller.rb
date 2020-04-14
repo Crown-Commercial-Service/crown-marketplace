@@ -27,7 +27,7 @@ module FacilitiesManagement
 
       def create
         @page_data[:model_object] = current_user.buildings.build(building_params)
-
+        @page_data[:model_object].address_postcode = params['postcode_entry'] if @page_data[:model_object].address_postcode.blank?
         rebuild_page_data(@page_data[:model_object]) if params[:add_address].present?
 
         if params[:add_address].present?
@@ -36,9 +36,9 @@ module FacilitiesManagement
         end
 
         resolve_region if params[:step] == 'add_address'
+        render :new and return if params[:step] == 'add_address'
 
         if @page_data[:model_object].save(context: :new)
-          redirect_to( action: :edit, id: @page_data[:model_object].id) and return if params[:step] == 'add_address'
 
           redirect_to action: next_step[0], id: @page_data[:model_object].id
         else
@@ -139,7 +139,7 @@ module FacilitiesManagement
       end
 
       def rebuild_page_data(building)
-        @building_page_details    = @page_description = nil
+        @building_page_details    = @page_description = @page_definitions = nil
         @page_data[:model_object] = building
 
         build_page_description
