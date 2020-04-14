@@ -22,24 +22,31 @@ en:
             friday:
               invalid: Select not required if you don't need the service on Friday
               not_a_date: Enter a real start time or end time for Friday
+              required: You must provide hours required for at least one of the days
             monday:
               invalid: Select not required if you don't need the service on Monday
               not_a_date: Enter a real start time or end time for Monday
+              required: You must provide hours required for at least one of the days
             saturday:
               invalid: Select not required if you don't need the service on Saturday
               not_a_date: Enter a real start time or end time for Saturday
+              required: You must provide hours required for at least one of the days
             sunday:
               invalid: Select not required if you don't need the service on Sunday
               not_a_date: Enter a real start time or end time for Sunday
+              required: You must provide hours required for at least one of the days
             thursday:
               invalid: Select not required if you don't need the service on Thursday
               not_a_date: Enter a real start time or end time for Thursday
+              required: You must provide hours required for at least one of the days
             tuesday:
               invalid: Select not required if you don't need the service on Tuesday
               not_a_date: Enter a real start time or end time for Tuesday
+              required: You must provide hours required for at least one of the days
             wednesday:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
+              required: You must provide hours required for at least one of the days
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
