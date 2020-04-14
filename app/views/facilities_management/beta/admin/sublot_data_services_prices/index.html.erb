@@ -12,7 +12,7 @@
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-input--error">
         <h2 class="govuk-error-summary__title" id="error-summary-title">
-          There is a problem
+          <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.there_is_a_problem') %>
        </h2>
        <div class="govuk-error-summary__body">
          <p class="govuk-body govuk-body-s govuk-error-message"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %></p>
@@ -35,26 +35,21 @@
 
 <div style="width: 3000px !important;">
   <%= form_with(url: "", method: "put", local: "false") do %>
-
   <% @full_services.each do |service| %>
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left"><%= service['name'] %></th>
-
         <% @list_service_types.each do |service_type| %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %> </th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
         <% end %>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
       <% service['work_package'].each do |work_pckg| %>
-
         <tr class="govuk-table__row">
           <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
-
             <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? work_pckg['code'] %>">
-
               <div class="govuk-checkboxes__item">
               <%= check_box_tag(
                       "checked_services[]",
@@ -64,7 +59,6 @@
                       id: "rates_#{work_pckg['code']}"
                   ) %>
               <label class="govuk-label govuk-checkboxes__label" for="service_<%=work_pckg['code'] %>">
-
                 <%= work_pckg['code'] %> <%= work_pckg['name'] %>
               </label>
             </div>
@@ -78,9 +72,9 @@
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
             <% if flash[:error]  and flash[:error].include? work_pckg['code'] and flash[:error].include? work_pckg['code']+service_type
-                 prev_display_value =  flash[:error].index(work_pckg['code']+service_type ) + 1
+                 prev_display_value_index = flash[:error].index(work_pckg['code']+service_type ) + 1
             %>
-                <input class="govuk-input govuk-input--width-3 govuk-input--error" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= flash[:error][prev_display_value] %>">
+                <input class="govuk-input govuk-input--width-3 govuk-input--error" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= flash[:error][prev_display_value_index] %>">
             <% else %>
               <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
               <% end %>
@@ -112,7 +106,7 @@
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_overhead') %>
         <% if flash[:error]  and flash[:error].include? 'M.140' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -130,7 +124,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_corporate') %>
         <% if flash[:error]  and flash[:error].include? 'M.141' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -147,7 +141,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_profit') %>
         <% if flash[:error]  and flash[:error].include? 'M.142' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -164,7 +158,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_london') %>
         <% if flash[:error]  and flash[:error].include? 'M.144' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -181,7 +175,7 @@
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
         <% if flash[:error]  and flash[:error].include? 'M.146' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -198,7 +192,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_tupe') %>
         <% if flash[:error]  and flash[:error].include? 'M.148' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>
@@ -215,7 +209,7 @@
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_mobilisation') %>
         <% if flash[:error]  and flash[:error].include? 'B.1' %>
           <span id="event-name-error" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> The rate must be a number, like 2.60 or 8
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
       </td>

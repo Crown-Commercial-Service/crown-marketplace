@@ -142,7 +142,7 @@ module FacilitiesManagement
 
         # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
         def update_rates_invalid_services(invalid_services)
-          # note: I add the service name to the flash error ,and the value the user entered in the next array index
+          # Note: I add the service name to the flash error ,and the value the user entered in the next array index
           invalid_services << 'M.140' unless numeric?(params['rate']['M.140'])
           invalid_services << params['rate']['M.140'] unless numeric?(params['rate']['M.140'])
 
@@ -176,45 +176,36 @@ module FacilitiesManagement
           latest_rate_card
         end
 
-        # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/IfInsideElse
-        #
+        # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         def update_data_table(only_validate)
           invalid_services = []
           latest_rate_card = setup_supplier_data_ratecard
 
-          # note for an error to make it easier to display in the front end:
+          # Note for an error to make it easier to display in the front end:
           # I add the service name to the flash error ,
-          # then the service+service_type onthe next position
+          # then the service+service_type on the next position
           # and the value the user entered in the next array index
 
           params['data'].each do |service_key, service|
             service.each do |service_type_key, _|
               key = service_type_key.remove(' (%)').remove(' (£)')
-              if key == 'Direct Award Discount'
-                if only_validate
-                  numeric_result = numeric?(params['data'][service_key][service_type_key])
-                  invalid_services << service_key unless numeric_result
-                  invalid_services << service_key + service_type_key unless numeric_result
-                  invalid_services << params['data'][service_key][service_type_key] unless numeric_result
-                else
-                  @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
-                end
+
+              if only_validate
+                numeric_result = numeric?(params['data'][service_key][service_type_key])
+                invalid_services << service_key unless numeric_result
+                invalid_services << service_key + service_type_key unless numeric_result
+                invalid_services << params['data'][service_key][service_type_key] unless numeric_result
+              elsif key == 'Direct Award Discount'
+                @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
               else
-                if only_validate
-                  numeric_result = numeric?(params['data'][service_key][service_type_key])
-                  invalid_services << service_key unless numeric_result
-                  invalid_services << service_key + service_type_key unless numeric_result
-                  invalid_services << params['data'][service_key][service_type_key] unless numeric_result
-                else
-                  @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
-                end
+                @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
               end
             end
           end
           latest_rate_card.save unless only_validate
           invalid_services
         end
-        # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Style/IfInsideElse
+        # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
         # rubocop:disable Style/MultipleComparison
         def numeric?(user_entered_value)
