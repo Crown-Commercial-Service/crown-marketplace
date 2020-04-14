@@ -76,7 +76,9 @@ module FacilitiesManagement
         value.valid?
         errors.add(key, :invalid) if value.errors.include? :service_choice
         errors.add(key, :not_a_date) if value.errors.include?(:start_time) || value.errors.include?(:end_time)
+        errors.add(key, :required) if uom == 0
       end
+
     end
 
     def any_values?
