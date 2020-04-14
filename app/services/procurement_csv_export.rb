@@ -1,52 +1,187 @@
 class ProcurementCsvExport
+  TIME_FORMAT = '%e %B %Y, %l:%M%P'.freeze
+  DATE_FORMAT = '%e %B %Y'.freeze
+
+  # TODO: These should probably be under I18n in en.yml
+  STATE_DESCRIPTIONS = {
+    # Procurement
+    'quick_search' => 'Quick search',
+    'detailed_search' => 'Detailed search',
+    'results' => 'Results',
+    'da_draft' => 'DA draft',
+    'further_competition' => 'FC',
+    'closed' => 'DA closed',
+
+    # Procurement supplier (DA contract)
+    'sent' => 'DA sent',
+    'declined' => 'DA declined',
+    'expired' => 'DA expired', # In the example spreadsheet this was 'DA not responded'
+    'accepted' => 'DA accepted, awaiting contract signature', # In the example spreadsheet there was an extra state 'DA awaiting contract signature'
+    'signed' => 'DA signed (contract)',
+    'not_signed' => 'DA not signed'
+  }.freeze
+
+  # TODO: These should probably be under I18n in en.yml
+  COLUMN_LABELS = [
+    'Contract name',
+    'Date created',
+    'Date updated',
+    'Status',
+    'Buyer organisation',
+    'Buyer organisation_address',
+    'Buyer sector',
+    'Buyer contact name',
+    'Buyer contact job title',
+    'Buyer contact email address',
+    'Buyer contact telephone number',
+    'Quick search services',
+    'Quick search regions',
+    'Customer Estimated Contract Value',
+    'Tupe involved',
+    'Initial call-off - period length, start date, end date',
+    'Mobilisation - period length, start date, end date',
+    'Optional call-off extensions',
+    'Number of Buildings',
+    'Services',
+    'Building regions',
+    'Assessed Value',
+    'Recommended Sub-lot',
+    'Eligible for DA',
+    'Shortlisted Suppliers',
+    'Unpriced services',
+    'Route to market selected',
+    'DA Suppliers (ranked)',
+    'DA Suppliers costs (ranked)',
+    'DA Awarded Supplier',
+    'DA Awarded Supplier cost',
+    'Contract number',
+    'DA Supplier decline reason',
+    'DA Buyer withdraw reason',
+    'DA Buyer not-sign reason',
+    'DA Buyer contract signed date',
+    'DA Buyer confirmed contract dates'
+  ].freeze
+
+  # rubocop:disable Metrics/AbcSize
   def self.call
+    # rubocop:disable Metrics/BlockLength
     CSV.generate do |csv|
       first = true
-      FacilitiesManagement::ProcurementSupplier.joins(:procurement).where("facilities_management_procurement_suppliers.aasm_state != 'unsent'").all.each do |contract|
-        row = {
-          'Contract name' => contract.procurement.contract_name,
-          'Date created' => contract.procurement.created_at.to_date,
-          'Date updated' => contract.procurement.updated_at.to_date,
-          'Status' => contract.procurement.aasm_state,
-          'Buyer organisation' => contract.procurement.user.buyer_detail.organisation_name,
-          'Buyer organisation_address' => [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
-          'Buyer sector' => contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
-          'Buyer contact name' => contract.procurement.user.buyer_detail.full_name,
-          'Buyer contact job title' => contract.procurement.user.buyer_detail.job_title,
-          'Buyer contact email address' => contract.procurement.user.email,
-          'Buyer contact telephone number' => contract.procurement.user.buyer_detail.telephone_number,
-          'Quick search services' => contract.procurement.service_codes.join(",\n"),
-          'Quick search regions' => contract.procurement.region_codes.join(",\n"),
-          'Customer Estimated Contract Value' => contract.procurement.estimated_annual_cost,
-          'Tupe involved' => contract.procurement.tupe,
-          'Initial call-off - period length, start date, end date' => format_period_start_end(contract.procurement),
-          'Mobilisation - period length, start date, end date' => format_mobilisation_start_end(contract.procurement),
-          'Optional call-off extensions' => call_off_extensions(contract.procurement),
-          'Number of Buildings' => contract.procurement.procurement_buildings.size,
-          'Services' => contract.procurement.service_codes.join(",\n"),
-          'Building regions' => contract.procurement.region_codes.join(",\n"),
-          'Assessed Value' => contract.procurement.assessed_value,
-          'Recommended Sub-lot' => contract.procurement.lot_number,
-          'Eligible for DA' => contract.procurement.eligible_for_da,
-          'Shortlisted Suppliers' => contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
-          'Unpriced services' => nil,
-          'Route to market selected' => contract.procurement.route_to_market,
-          'DA Suppliers (ranked)' => contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] },
-          'DA Suppliers costs (ranked)' => contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map(&:direct_award_value),
-          'DA Awarded Supplier' => contract.supplier.data['supplier_name'],
-          'DA Awarded Supplier cost' => contract.direct_award_value,
-          'Contract number' => contract.contract_number,
-          'DA Supplier decline reason' => contract.reason_for_declining,
-          'DA Buyer withdraw reason' => contract.reason_for_closing,
-          'DA Buyer not-sign reason' => contract.reason_for_not_signing,
-          'DA Buyer contract signed date' => contract.contract_signed_date,
-          'DA Buyer confirmed contract dates' => "#{contract.contract_start_date} - #{contract.contract_end_date}"
-        }
 
-        csv << row.keys if first
-        csv << row.values
+      find_contracts.each do |contract|
+        csv << COLUMN_LABELS if first
+
+        csv << [
+          contract.procurement.contract_name,
+          contract.procurement.created_at.strftime(TIME_FORMAT),
+          contract.unsent? ? contract.procurement.updated_at.strftime(TIME_FORMAT) : contract.updated_at.strftime(TIME_FORMAT),
+          procurement_status(contract.procurement, contract),
+          contract.procurement.user.buyer_detail.organisation_name,
+          [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
+          contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+          contract.procurement.user.buyer_detail.full_name,
+          contract.procurement.user.buyer_detail.job_title,
+          contract.procurement.user.email,
+          contract.procurement.user.buyer_detail.telephone_number,
+          contract.procurement.service_codes.join(",\n"),
+          contract.procurement.region_codes.join(",\n"),
+          contract.procurement.estimated_annual_cost,
+          contract.procurement.tupe,
+          format_period_start_end(contract.procurement),
+          format_mobilisation_start_end(contract.procurement),
+          call_off_extensions(contract.procurement),
+          contract.procurement.procurement_buildings.size,
+          contract.procurement.service_codes.join(",\n"),
+          contract.procurement.region_codes.join(",\n"),
+          contract.procurement.assessed_value,
+          contract.procurement.lot_number,
+          contract.procurement.eligible_for_da,
+          contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
+          nil,
+          contract.procurement.route_to_market,
+          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
+          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map(&:direct_award_value) .join("\n"),
+          contract.supplier.data['supplier_name'],
+          contract.direct_award_value,
+          contract.contract_number,
+          contract.reason_for_declining,
+          contract.reason_for_closing,
+          contract.reason_for_not_signing,
+          contract.contract_signed_date.strftime(DATE_FORMAT),
+          "#{contract.contract_start_date.strftime(DATE_FORMAT)} - #{contract.contract_end_date.strftime(DATE_FORMAT)}"
+        ]
+
         first = false
       end
+
+      find_procurements.each do |procurement|
+        csv << COLUMN_LABELS if first
+
+        csv << [
+          procurement.contract_name,
+          procurement.created_at.strftime(TIME_FORMAT),
+          procurement.updated_at.strftime(TIME_FORMAT),
+          procurement_status(procurement, nil),
+          procurement.user.buyer_detail.organisation_name,
+          [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
+          procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+          procurement.user.buyer_detail.full_name,
+          procurement.user.buyer_detail.job_title,
+          procurement.user.email,
+          procurement.user.buyer_detail.telephone_number,
+          procurement.service_codes.join(",\n"),
+          procurement.region_codes.join(",\n"),
+          procurement.estimated_annual_cost,
+          procurement.tupe,
+          format_period_start_end(procurement),
+          format_mobilisation_start_end(procurement),
+          call_off_extensions(procurement),
+          procurement.procurement_buildings.size,
+          procurement.service_codes.join(",\n"),
+          procurement.region_codes.join(",\n"),
+          procurement.assessed_value,
+          procurement.lot_number,
+          procurement.eligible_for_da,
+          nil,
+          nil,
+          procurement.route_to_market,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil
+        ]
+
+        first = false
+      end
+    end
+    # rubocop:enable Metrics/BlockLength
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def self.find_contracts
+    FacilitiesManagement::ProcurementSupplier
+      .joins(:procurement)
+      .where("facilities_management_procurements.aasm_state = 'direct_award'")
+      .where("facilities_management_procurement_suppliers.aasm_state != 'unsent'")
+  end
+
+  def self.find_procurements
+    FacilitiesManagement::Procurement
+      .includes(:procurement_suppliers)
+      .where("facilities_management_procurements.aasm_state != 'direct_award'")
+  end
+
+  def self.procurement_status(procurement, contract = nil)
+    if procurement.direct_award?
+      STATE_DESCRIPTIONS[contract.aasm_state]
+    else
+      STATE_DESCRIPTIONS[procurement.aasm_state]
     end
   end
 
@@ -54,14 +189,16 @@ class ProcurementCsvExport
     return '' if procurement.unanswered_contract_date_questions?
 
     "#{procurement.initial_call_off_period} years, " +
-      [procurement.initial_call_off_start_date, procurement.initial_call_off_end_date].join(' - ')
+      [procurement.initial_call_off_start_date.strftime(DATE_FORMAT),
+       procurement.initial_call_off_end_date.strftime(DATE_FORMAT)].join(' - ')
   end
 
   def self.format_mobilisation_start_end(procurement)
     return '' if procurement.mobilisation_period.nil?
 
     "#{procurement.mobilisation_period} weeks, " +
-      [procurement.mobilisation_period_start_date, procurement.mobilisation_period_end_date].join(' - ')
+      [procurement.mobilisation_period_start_date.strftime(DATE_FORMAT),
+       procurement.mobilisation_period_end_date.strftime(DATE_FORMAT)].join(' - ')
   end
 
   def self.call_off_extensions(procurement)
