@@ -30,70 +30,77 @@ module OrdnanceSurvey
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
     query = <<~SQL
-      CREATE OR replace VIEW public.os_address_view_2 AS
-      SELECT
-             CASE
-                    WHEN Nullif(adds.rm_organisation_name::text, ''::text) IS NULL THEN NULL::CHARACTER varying
-                    ELSE adds.rm_organisation_name
-             END AS organisation,
-             CASE
-                when (btrim((adds.pao_start_number::text
-                            || ''::text)
-                            || adds.pao_start_suffix::text)) = coalesce(adds.building_name, adds.sub_building_name) then
-                            null
-                    WHEN nullif((
-                           CASE
-                                  WHEN nullif(adds.sub_building_name::text, ''::text) IS NULL THEN adds.building_name
-                                  ELSE
-                                         CASE
-                                                WHEN nullif(adds.building_name, ''::text) IS NULL THEN adds.sub_building_name
-                                                ELSE adds.sub_building_name
-                                                              || ', '
-                                         END
-                                                || coalesce(adds.building_name,''::text)
-                           END), ''::text) IS NULL THEN NULL
-                    ELSE (
-                           CASE
-                                  WHEN nullif(adds.sub_building_name::text, ''::text) IS NULL THEN adds.building_name
-                                  ELSE
-                                         CASE
-                                                WHEN nullif(adds.building_name, ''::text) IS NULL THEN adds.sub_building_name
-                                                ELSE adds.sub_building_name
-                                                              || ', '
-                                         END
-                                                || coalesce(adds.building_name,''::text)
-                           END)
-             END AS building,
-             CASE
-                    WHEN nullif((btrim((adds.pao_start_number::text
-                                  || ''::text)
-                                  || adds.pao_start_suffix::text)
-                                  || ' '::text), ''::text) IS NULL THEN ''
-                    ELSE (btrim((adds.pao_start_number::text
-                                  || ''::text)
-                                  || adds.pao_start_suffix::text)
-                                  || ' '::text)
-             END
-                    || adds.street_description::text AS street_address,
-             CASE
-                    WHEN nullif(adds.dependent_locality::text, ''::text) IS NULL THEN ''::text
-                    ELSE adds.dependent_locality::text
-                                  || ', '::text
-             END
-                    || adds.post_town::text AS postal_town,
-             adds.postcode,
-             adds.postcode_locator,
-             nullif(adds.sub_building_name::text, ''::text) AS sub_building_name,
-             nullif(adds.building_name::text, ''::text)     AS building_name,
-             btrim((adds.pao_start_number::text
-                    || ''::text)
-                    || adds.pao_start_suffix::text) AS house_number,
-             adds.street_description,
-             nullif(adds.dependent_locality::text, ''::text) AS village,
-             adds.post_town,
-             replace(adds.postcode::text, ' '::text, ''::text)                         AS formatted_postcode,
-             replace(adds.postcode::text, ' '::text, adds.delivery_point_suffix::text) AS building_ref
-      FROM   os_address adds;
+      CREATE OR REPLACE VIEW public.os_address_view_2
+       AS
+       SELECT
+              CASE
+                  WHEN NULLIF(adds.rm_organisation_name::text, ''::text) IS NULL THEN NULL::character varying
+                  ELSE adds.rm_organisation_name
+              END AS organisation,
+              CASE
+                  WHEN btrim((adds.pao_start_number::text || ''::text) || adds.pao_start_suffix::text) = COALESCE(adds.building_name, adds.sub_building_name)::text THEN NULL::text
+                  WHEN NULLIF(
+                  CASE
+                      WHEN NULLIF(adds.sub_building_name::text, ''::text) IS NULL THEN adds.building_name::text
+                      ELSE
+                      CASE
+                          WHEN NULLIF(adds.building_name::text, ''::text) IS NULL THEN adds.sub_building_name::text
+                          ELSE adds.sub_building_name::text || ', '::text
+                      END || COALESCE(adds.building_name, ''::text::character varying)::text
+                  END, ''::text) IS NULL THEN NULL::text
+                  ELSE
+                  CASE
+                      WHEN NULLIF(adds.sub_building_name::text, ''::text) IS NULL THEN adds.building_name::text
+                      ELSE
+                      CASE
+                          WHEN NULLIF(adds.building_name::text, ''::text) IS NULL THEN adds.sub_building_name::text
+                          ELSE adds.sub_building_name::text || ', '::text
+                      END || COALESCE(adds.building_name, ''::text::character varying)::text
+                  END
+              END AS building,
+              CASE
+                  WHEN NULLIF(adds.sao_text::text, ''::text) IS NULL THEN
+                  CASE
+                      WHEN NULLIF(adds.pao_text::text, ''::text) IS NULL THEN NULL::character varying
+                      ELSE adds.pao_text
+                  END::text
+                  ELSE adds.sao_text::text ||
+                  CASE
+                      WHEN NULLIF(adds.pao_text::text, ''::text) IS NULL THEN ''::text
+                      ELSE ', '::text || adds.pao_text::text
+                  END
+              END AS addressable_object,
+              CASE
+                  WHEN NULLIF(btrim((adds.pao_start_number::text || ''::text) || adds.pao_start_suffix::text) || ' '::text, ''::text) IS NULL THEN ''::text
+                  ELSE btrim((adds.pao_start_number::text || ''::text) || adds.pao_start_suffix::text) || ' '::text
+              END || adds.street_description::text AS street_address,
+              CASE
+                  WHEN NULLIF(adds.dependent_locality::text, ''::text) IS NULL THEN ''::text
+                  ELSE adds.dependent_locality::text || ', '::text
+              END ||
+              CASE
+                  WHEN NULLIF(adds.post_town::text, ''::text) IS NULL THEN adds.town_name
+                  ELSE adds.post_town
+              END::text AS postal_town,
+              CASE
+                  WHEN NULLIF(adds.postcode::text, ''::text) IS NULL THEN NULL::character varying
+                  ELSE adds.postcode
+              END AS postcode,
+          adds.postcode_locator,
+          NULLIF(adds.sub_building_name::text, ''::text) AS sub_building_name,
+          NULLIF(adds.building_name::text, ''::text) AS building_name,
+          NULLIF(adds.pao_text::text, ''::text) AS pao_name,
+          NULLIF(adds.sao_text::text, ''::text) AS sao_name,
+          btrim((adds.pao_start_number::text || ''::text) || adds.pao_start_suffix::text) AS house_number,
+          adds.street_description,
+          NULLIF(adds.dependent_locality::text, ''::text) AS village,
+              CASE
+                  WHEN NULLIF(adds.post_town::text, ''::text) IS NULL THEN adds.town_name
+                  ELSE adds.post_town
+              END AS post_town,
+          replace(adds.postcode_locator::text, ' '::text, ''::text) AS formatted_postcode,
+          replace(adds.postcode_locator::text, ' '::text, adds.delivery_point_suffix::text) AS building_ref
+         FROM os_address adds;
     SQL
     puts 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
@@ -109,77 +116,63 @@ module OrdnanceSurvey
     puts 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-            CREATE OR replace VIEW PUBLIC.postcode_lookup ASSELECT    (((((
-                CASE
-                          WHEN addresses.organisation IS NOT NULL THEN Initcap(addresses.organisation::text)
-                                              || ', '::text
-                          ELSE ''::text
-                END
-                          ||
-                CASE
-                          WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
-                                              || ', '::text
-                          ELSE ''::text
-                END)
-                          ||
-                CASE
-                          WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
-                                              || ', '::text
-                          ELSE initcap(addresses.street_description::text)
-                                              || ', '::text
-                END)
-                          || initcap(addresses.postal_town))
-                          || ''::text)
-                          ||
-                CASE
-                          WHEN regions.region IS NULL THEN ''::text
-                          ELSE ', '::text
-                END)
-                          ||
-                CASE
-                          WHEN regions.region IS NULL THEN ''::character VARYING
-                          ELSE regions.region
-                END::text AS summary_line,
-                CASE
-                          WHEN addresses.organisation IS NOT NULL THEN initcap(addresses.organisation::text)
-                                              || ''::text
-                          ELSE
-                                    CASE
-                                              WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
-                                                                  || ', '::text
-                                              ELSE ''::text
-                                    END
-                                              ||
-                                    CASE
-                                              WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
-                                                                  || ''::text
-                                              ELSE initcap(addresses.street_description::text)
-                                                                  || ''::text
-                                    END
-                END AS address_line_1,
-                CASE
-                          WHEN addresses.organisation IS NOT NULL THEN
-                                    CASE
-                                              WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
-                                                                  || ''::text
-                                              ELSE ''::text
-                                    END
-                                              ||
-                                    CASE
-                                              WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address)
-                                                                  || ''::text
-                                              ELSE initcap(addresses.street_description::text)
-                                                                  || ''::text
-                                    END
-                          ELSE ''::text
-                END                            AS address_line_2,
-                addresses.postcode             AS address_postcode,
-                initcap(addresses.postal_town) AS address_town,
-                initcap(regions.region::text)  AS address_region,
-                regions.region_code            AS address_region_code
-      FROM      os_address_view_2 addresses
-      LEFT JOIN postcode_region_view regions
-      ON        regions.postcode::text = replace(addresses.postcode::text, ' '::text, ''::text);
+      CREATE OR REPLACE VIEW public.postcode_lookup
+       AS
+       SELECT (((((
+              CASE
+                  WHEN addresses.organisation IS NOT NULL and nullif(position(addresses.organisation in addresses.addressable_object),0) is null THEN initcap(addresses.organisation::text) || ', '::text
+                  ELSE ''::text
+              END ||
+              CASE
+      	        WHEN addresses.addressable_object is not null then initcap(addresses.addressable_object) || ', '::text
+                  WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
+                  ELSE ''::text
+              END) ||
+              CASE
+                  WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
+                  ELSE initcap(addresses.street_description::text) || ', '::text
+              END) || initcap(addresses.postal_town)) || ''::text) ||
+              CASE
+                  WHEN regions.region IS NULL THEN ''::text
+                  ELSE ', '::text
+              END) ||
+              CASE
+                  WHEN regions.region IS NULL THEN ''::character varying
+                  ELSE regions.region
+              END::text AS summary_line,
+              CASE
+      			WHEN addresses.organisation IS NOT NULL THEN
+      				case when addresses.addressable_object is not null then
+      					initcap(addresses.organisation::text) || ', '::text || initcap(addresses.addressable_object)
+      				else
+      					initcap(addresses.organisation::text) || ''::text
+      				end
+         	        WHEN addresses.addressable_object is not null then initcap(addresses.addressable_object) || ''::text
+                  ELSE
+      				CASE
+      					WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
+      					ELSE ''::text
+      				END ||
+      				CASE
+      					WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
+      					ELSE initcap(addresses.street_description::text) || ''::text
+      				END
+              END AS address_line_1,
+              CASE
+      			WHEN addresses.addressable_object is not null or addresses.organisation IS NOT NULL then
+      				CASE
+      					WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
+      					ELSE initcap(addresses.street_description::text) || ''::text
+      				END
+      			ELSE
+      				''::text
+              END AS address_line_2,
+          initcap(addresses.postal_town) AS address_town,
+          addresses.postcode_locator AS address_postcode,
+          initcap(regions.region::text) AS address_region,
+          regions.region_code AS address_region_code
+         FROM os_address_view_2 addresses
+           LEFT outer JOIN postcode_region_view regions ON regions.postcode::text = replace(addresses.postcode_locator::text, ' '::text, ''::text);
     SQL
     puts 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
