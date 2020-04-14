@@ -218,6 +218,7 @@ module FacilitiesManagement
 
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
                                                v[:service_code],
+                                               v[:service_standard],
                                                uom_value,
                                                occupants,
                                                @tupe_flag,
@@ -282,7 +283,7 @@ module FacilitiesManagement
     end
 
     def variance_over_30_percent?(sample_average, value)
-      (value - sample_average) / value > 0.03
+      (value - sample_average) / value > 0.3
     end
   end
 end
