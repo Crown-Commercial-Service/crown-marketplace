@@ -9,13 +9,12 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-thirds">
-      <span class="govuk-caption-l"><%= @current_login_email %></span>
-      <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
-      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
-    </div>
+  <div class="govuk-grid-row govuk-!-padding-left-3">
+    <span class="govuk-caption-l"><%= @current_login_email %></span>
+    <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
+    <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
   </div>
+
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
@@ -52,23 +51,21 @@
     </div>
   </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1">Exports</span>
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_management_report_header') %></span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" href="<%= facilities_management_beta_admin_start_export_path %>" class="fm-buyer-account-panel__title" href="?">
-          Export procurements data
-        </a>
+        <a id="fm-start-new-procurement-link" href="<%= facilities_management_beta_admin_management_report_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_management_report_header') %></a>
         <p class="fm-buyer-account-panel__body">
-          Export procurements data to CSV
+          <%= t('.dashboard_management_report_detail') %>
         </p>
       </div>
     </div>
-  </div>
+  
 </div>
 

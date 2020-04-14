@@ -374,10 +374,19 @@ en:
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
+            dashboard_management_report_header: Management report
+            dashboard_management_report_detail: Download the management data in CSV format
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
+        management_report:
+          breadcrumb_text_management_report: Management report
+          heading_title: Management report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          download_btn_text: Generate and download report
+          return_link: Return to admin dashboard
         supplier_framework_data:
           heading_title: Supplier framework data
           rtrn_link: Return to admin dashboard
