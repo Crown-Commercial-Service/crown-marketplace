@@ -1,5 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
-  <div id="fm-buildings-container">
+  <div id="buildings-container">
     <%= link_to t('.create_new_button'), new_facilities_management_beta_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button" %>
     <div class="govuk-!-width-two-thirds">
       <p class="govuk-body-m ccs-font-weight-semi-bold">
@@ -20,12 +20,12 @@
       </table>
     <% else %>
       <div class="govuk-table govuk-!-width-three-quarters" data-module="table">
-        <table style="border-collapse: collapse;" class="ccs-at-govuk-table--5050">
+        <table style="" class="ccs-at-govuk-table--3070">
           <thead>
           <tr>
-            <th style="max-width:20%;"><%= t('.column_name_header') %></th>
-            <th style="min-width:30%;"><%= t('.column_desc_header') %></th>
-            <th style="min-width:12ex"><%= t('.column_lstup_header') %></th>
+            <th><%= t('.column_name_header') %></th>
+            <th><%= t('.column_desc_header') %></th>
+            <th><%= t('.column_lstup_header') %></th>
             <th><%= t('.column_status_header') %></th>
           </tr>
           </thead>
