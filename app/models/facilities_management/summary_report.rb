@@ -269,17 +269,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.each do |pbs|
-        return true if CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil?
-      end
-      false
+      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.each do |pbs|
-        return true if CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil?
-      end
-      false
+      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def variance_over_30_percent?(new, baseline)

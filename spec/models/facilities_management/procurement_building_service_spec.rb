@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
-  subject(:procurement_building_service) { build(:facilities_management_procurement_building_service, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement))) }
+  subject(:procurement_building_service) { build(:facilities_management_procurement_building_service, service_standard: nil, code: nil, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement))) }
 
   describe '#validations' do
     context 'when code = C.1' do

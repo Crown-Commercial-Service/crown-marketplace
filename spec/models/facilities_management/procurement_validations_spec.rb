@@ -72,4 +72,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe 'choose_contract_value validation' do
+    context 'when lot_number is nil' do
+      it 'is not valid' do
+        procurement.aasm_state = 'choose_contract_value'
+        procurement.lot_number = nil
+        expect(procurement.valid?(:choose_contract_value)).to eq false
+      end
+    end
+
+    context 'when lot_number is present' do
+      it 'is not valid' do
+        procurement.aasm_state = 'choose_contract_value'
+        procurement.lot_number = '1a'
+        expect(procurement.valid?(:choose_contract_value)).to eq true
+      end
+    end
+  end
 end
