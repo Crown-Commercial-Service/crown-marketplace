@@ -70,10 +70,6 @@ module FacilitiesManagement
 
       private
 
-      def context_from_params
-        params[:context].try(:to_sym) || params[:step].try(:to_sym)
-      end
-
       def building_params
         params.require(:facilities_management_building)
               .permit(
@@ -97,16 +93,12 @@ module FacilitiesManagement
               )
       end
 
-      def add_address_url
-        return facilities_management_beta_building_url(@page_data[:model_object].id) if id_present?
-
-        facilities_management_beta_buildings_path
-      end
-
-      def add_address_method
-        return :patch if id_present?
-
-        :post
+      def add_address_form_details
+        @add_address_form_details ||= if id_present?
+                                        { url: facilities_management_beta_building_url(@page_data[:model_object].id), method: :patch }
+                                      else
+                                        { url: facilities_management_beta_buildings_path, method: :post }
+                                      end
       end
 
       def region_needs_resolution?
@@ -127,7 +119,7 @@ module FacilitiesManagement
         []
       end
 
-      helper_method :step_title, :step_footer, :add_address_url, :link_to_add_address, :add_address_method, :valid_regions, :region_needs_resolution?, :multiple_regions?
+      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :region_needs_resolution?, :multiple_regions?
 
       def resolve_region
         return if @page_data[:model_object].blank?
