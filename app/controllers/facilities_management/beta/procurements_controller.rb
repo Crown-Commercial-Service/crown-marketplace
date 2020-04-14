@@ -574,8 +574,10 @@ module FacilitiesManagement
         current_user.procurements.direct_award.map { |procurement| procurement.public_send(state) }&.flatten
       end
 
+      ORDER = %w[sent declined expired accepted not_signed].freeze
+
       def sent_offers
-        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by { |sent_offer| [sent_offer.offer_sent_date, FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(sent_offer.aasm_state)] }
+        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by(&:offer_sent_date)&.sort_by { |each| ORDER.index(each.aasm_state) }
       end
 
       def live_contracts
