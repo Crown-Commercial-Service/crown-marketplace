@@ -4,7 +4,7 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
     reversible do |dir|
       dir.up do
         execute <<~SQL
-                 CREATE OR replace VIEW public.os_address_view_2 AS
+            CREATE OR replace VIEW public.os_address_view_2 AS
                  SELECT
                CASE
                    WHEN NULLIF(adds.rm_organisation_name::text, ''::text) IS NULL THEN NULL::character varying
@@ -89,28 +89,20 @@ class Newosaddressview < ActiveRecord::Migration[5.2]
         execute <<~SQL
                CREATE OR REPLACE VIEW public.postcode_lookup
                AS
-               SELECT (((((
-                 CASE
-                     WHEN addresses.organisation IS NOT NULL and nullif(position(addresses.organisation in addresses.addressable_object),0) is null THEN initcap(addresses.organisation::text) || ', '::text
-                     ELSE ''::text
-                 END ||
-                 CASE
-                   WHEN addresses.addressable_object is not null then initcap(addresses.addressable_object) || ', '::text
-                     WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
-                     ELSE ''::text
-                 END) ||
-                 CASE
-                     WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
-                     ELSE initcap(addresses.street_description::text) || ', '::text
-                 END) || initcap(addresses.postal_town)) || ''::text) ||
-                 CASE
-                     WHEN regions.region IS NULL THEN ''::text
-                     ELSE ', '::text
-                 END) ||
-                 CASE
-                     WHEN regions.region IS NULL THEN ''::character varying
-                     ELSE regions.region
-                 END::text AS summary_line,
+               SELECT ((((
+                  CASE
+                      WHEN addresses.organisation IS NOT NULL AND NULLIF("position"(addresses.addressable_object, addresses.organisation::text), 0) IS NULL THEN initcap(addresses.organisation::text) || ', '::text
+                      ELSE ''::text
+                  END ||
+                  CASE
+                      WHEN addresses.addressable_object IS NOT NULL THEN initcap(addresses.addressable_object) || ', '::text
+                      WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
+                      ELSE ''::text
+                  END) ||
+                  CASE
+                      WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
+                      ELSE initcap(addresses.street_description::text) || ', '::text
+                  END) || initcap(addresses.postal_town)) || ''::text) AS summary_line,
                  CASE
                WHEN addresses.organisation IS NOT NULL THEN
                  case when addresses.addressable_object is not null then

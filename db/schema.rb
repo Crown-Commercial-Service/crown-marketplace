@@ -68,7 +68,11 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
     t.uuid "user_id"
     t.string "other_building_type"
     t.string "other_security_type"
+    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
+    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
+    t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
   create_table "facilities_management_buyer_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -586,8 +590,8 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "postcode", limit: 20
     t.string "code", limit: 20
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
