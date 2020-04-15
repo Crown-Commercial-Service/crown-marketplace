@@ -260,7 +260,7 @@ module FacilitiesManagement
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
           return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
-        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
       end
@@ -282,8 +282,10 @@ module FacilitiesManagement
       false
     end
 
-    def variance_over_30_percent?(sample_average, value)
-      (value - sample_average) / value > 0.3
+    def variance_over_30_percent?(new, baseline)
+      variance = (new - baseline) / baseline
+
+      variance > 0.3 || variance < -0.3
     end
   end
 end
