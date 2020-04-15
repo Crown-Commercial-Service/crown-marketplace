@@ -55,6 +55,47 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         service_hours[:monday][:service_choice] = :not_required
         expect(service_hours.valid?).to eq true
       end
+
+      it 'will be invalid when no_required was selected for everyday' do
+        service_hours[:monday][:service_choice] = :not_required
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'will be valid if there are other option (all day)' do
+        service_hours[:monday][:service_choice] = :all_day
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        expect(service_hours.valid?).to eq true
+      end
+
+      # rubocop:disable RSpec/ExampleLength:
+      it 'will be valid if there are other option (hourly)' do
+        service_hours[:monday][:service_choice] = :hourly
+        service_hours[:monday][:start_hour] = '10'
+        service_hours[:monday][:start_minute] = '00'
+        service_hours[:monday][:start_ampm] = 'pm'
+        service_hours[:monday][:end_hour] = '6'
+        service_hours[:monday][:end_minute] = '30'
+        service_hours[:monday][:end_ampm] = 'pm'
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        expect(service_hours.valid?).to eq true
+      end
+      # rubocop:enable RSpec/ExampleLength:
     end
   end
 

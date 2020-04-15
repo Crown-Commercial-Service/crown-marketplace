@@ -4,7 +4,7 @@ module FacilitiesManagement::Beta::ProcurementsHelper
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_dates estimated_annual_cost pension_funds].include? params[:step].try(:to_sym)
+    %i[contract_dates estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
   end
 
   def initial_call_off_period_start_date

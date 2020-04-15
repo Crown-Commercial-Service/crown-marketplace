@@ -24,6 +24,7 @@ module FacilitiesManagement
     attribute :uom, Integer, default: 0
 
     validate :all_present?
+    validate :all_not_required?
 
     def self.dump(service_hours)
       return {} if service_hours.blank?
@@ -77,6 +78,25 @@ module FacilitiesManagement
         errors.add(key, :invalid) if value.errors.include? :service_choice
         errors.add(key, :not_a_date) if value.errors.include?(:start_time) || value.errors.include?(:end_time)
       end
+    end
+
+    def all_not_required?
+      count_of_not_required = 0
+      attributes.each do |key, value|
+        next if key == :uom
+
+        count_of_not_required += 1 if value.service_choice == 'not_required'
+      end
+      add_not_required_error if count_of_not_required == 7
+    end
+
+    def add_not_required_error
+      attributes.each do |key, value|
+        next if key == :uom
+
+        value.errors.add(key, I18n.t("activemodel.errors.models.facilities_management/service_hours.attributes.#{key}.required"))
+      end
+      errors.add(:monday, :required)
     end
 
     def any_values?

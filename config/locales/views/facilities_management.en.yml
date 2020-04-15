@@ -22,24 +22,31 @@ en:
             friday:
               invalid: Select not required if you don't need the service on Friday
               not_a_date: Enter a real start time or end time for Friday
+              required: You must provide hours required for at least one of the days
             monday:
               invalid: Select not required if you don't need the service on Monday
               not_a_date: Enter a real start time or end time for Monday
+              required: You must provide hours required for at least one of the days
             saturday:
               invalid: Select not required if you don't need the service on Saturday
               not_a_date: Enter a real start time or end time for Saturday
+              required: You must provide hours required for at least one of the days
             sunday:
               invalid: Select not required if you don't need the service on Sunday
               not_a_date: Enter a real start time or end time for Sunday
+              required: You must provide hours required for at least one of the days
             thursday:
               invalid: Select not required if you don't need the service on Thursday
               not_a_date: Enter a real start time or end time for Thursday
+              required: You must provide hours required for at least one of the days
             tuesday:
               invalid: Select not required if you don't need the service on Tuesday
               not_a_date: Enter a real start time or end time for Tuesday
+              required: You must provide hours required for at least one of the days
             wednesday:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
+              required: You must provide hours required for at least one of the days
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
@@ -184,7 +191,7 @@ en:
             security_policy_document_name:
               blank: Enter a security policy document name
             security_policy_document_required:
-              inclusion: Select yes if a security policy document is required for your contract
+              inclusion: Select one option
               not_present_contract_details: You must answer the question about 'Security policy'
             security_policy_document_version_number:
               blank: Enter a security policy document version number
@@ -369,7 +376,9 @@ en:
             heading_title_two: Variances
             leading_text: Sub-lot 1a services, prices, and variances
             note: The tick boxes in the first column indicate the services this suppler can provide.
+            rate_error: The rate must be a number, like 2.60 or 8
             return_button: Return to supplier framework data
+            there_is_a_problem: There is a problem
             update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:

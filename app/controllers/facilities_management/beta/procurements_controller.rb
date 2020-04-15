@@ -27,6 +27,7 @@ module FacilitiesManagement
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
 
         @view_name = set_view_data unless @procurement.quick_search?
+        reset_security_policy_document_page
       end
 
       def new
@@ -218,6 +219,10 @@ module FacilitiesManagement
 
         @procurement.reload.security_policy_document_file.purge
         @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
+      end
+
+      def reset_security_policy_document_page
+        @procurement.security_policy_document_required = nil if @procurement.security_policy_document_required == true && @procurement.security_policy_document_file.attachment.nil?
       end
 
       def set_da_journey_render
