@@ -62,8 +62,8 @@ en:
             address_postcode:
               blank: Enter a valid postcode, like AA1 1AA
               invalid: Enter a valid postcode, like AA1 1AA
-              too_short: Enter a valid postcode, like AA1 1AA
               not_selected: You must select an address to save a building
+              too_short: Enter a valid postcode, like AA1 1AA
             address_region:
               blank: You must select a region for your address
             address_town:

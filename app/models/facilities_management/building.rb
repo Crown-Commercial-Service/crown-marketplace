@@ -118,11 +118,7 @@ module FacilitiesManagement
       pc = UKPostcode.parse(postcode_entry)
       pc.full_valid? ? errors.delete(:postcode_entry) : errors.add(:postcode_entry, :invalid)
 
-      if pc.full_valid?
-        if address_line_1.blank?
-          errors.add(:address, :not_selected)
-        end
-      end
+      errors.add(:address, :not_selected) if address_line_1.blank? && pc.full_valid?
     end
 
     def postcode_format

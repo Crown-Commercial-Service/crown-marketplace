@@ -122,7 +122,7 @@ module FacilitiesManagement
       end
 
       def valid_addresses
-        return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry)  if @page_data[:model_object].postcode_entry.present?
+        return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry) if @page_data[:model_object].postcode_entry.present?
 
         []
       end
