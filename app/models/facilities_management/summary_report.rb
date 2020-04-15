@@ -269,15 +269,15 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.framework_rate_for(code).nil?
+      @procurement.procurement_building_services.each do |pbs|
+        return true if CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil?
       end
       false
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
+      @procurement.procurement_building_services.each do |pbs|
+        return true if CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil?
       end
       false
     end
