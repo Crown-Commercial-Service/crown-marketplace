@@ -9,6 +9,12 @@ en:
         time_to: to
     errors:
       models:
+        facilities_management/admin/management_report:
+          attributes:
+            start_date:
+              blank: You must enter a date
+            end_date:
+              blank: You must enter a date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
