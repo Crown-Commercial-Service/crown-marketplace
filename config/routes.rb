@@ -166,6 +166,7 @@ Rails.application.routes.draw do
         put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
         get 'supplier-framework-data', to: 'suppliers_framework_data#index'
         get 'management-report', to: 'management_report#index'
+        put 'update-management-report', to: 'management_report#update'
         get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
         put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
         get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'

@@ -1,3 +1,4 @@
+<%= form_for @management_report, url: facilities_management_beta_admin_update_management_report_path, method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -6,6 +7,7 @@
     <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_management_report_path %>"><%= t('facilities_management.beta.admin.management_report.breadcrumb_text_management_report') %></a></li>
   </ol>
 </div>
+<%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
 
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.management_report.heading_title') %></h1>
@@ -19,10 +21,17 @@
 
 </div>
 
-<%= form_for @management_report, url: "", method: :post, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
-    <%= f.gov_uk_date_field :start_date, legend_options: { page_heading: false, visually_hidden: true } %>
+    <%= display_errors @management_report, :start_date %>
+    <%= f.gov_uk_date_field :start_date, required: true, legend_options: { page_heading: false, visually_hidden: true } %>
+
+    <div class="govuk-table__row govuk-!-padding-top-3 govuk-!-padding-bottom-3">
+      <p class="govuk-heading-l govuk-!-margin-bottom-1">To</p>
+      <p class="govuk-!-font-weight-regular govuk-brand-light-grey">For example, 30 06 2020</p>
+    <%= display_errors @management_report, :end_date %>
+    <%= f.gov_uk_date_field :end_date, required: true, legend_options: { page_heading: false, visually_hidden: true } %>
+    </div>
+    <%= f.submit "Generate and download report", class: 'govuk-button', data: { disable_with: false } %>
+
 <% end %>
-
-
 
 <a href="<%= facilities_management_beta_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.management_report.return_link') %></a>
