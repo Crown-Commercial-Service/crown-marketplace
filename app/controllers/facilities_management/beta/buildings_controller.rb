@@ -124,7 +124,7 @@ module FacilitiesManagement
       def resolve_region
         return if @page_data[:model_object].blank?
 
-        return if valid_regions.length > 1 || valid_regions.length == 0
+        return if valid_regions.length > 1 || valid_regions.empty?
 
         @page_data[:model_object].address_region = valid_regions[0]['region']
         @page_data[:model_object].address_region_code = valid_regions[0]['code']
