@@ -5,21 +5,28 @@ module FacilitiesManagement
                foreign_key: :user_id,
                inverse_of: :buildings
 
+    attr_accessor :postcode_entry, :address
+
     before_save :populate_other_data, :determine_status
     before_validation :determine_status
     after_find :populate_json_attribute
     after_save :populate_json_attribute
+
+    after_initialize do |building|
+      building.postcode_entry = building.address_postcode if building.postcode_entry.blank?
+    end
 
     validates :building_name, presence: true, on: %i[new edit all]
     validates :gia, presence: true, on: %i[gia all]
     validates :gia, numericality: { only_integer: true }, allow_blank: true
     validates :security_type, presence: true, on: %i[security all]
     validates :building_type, presence: true, on: %i[type all]
-    validates :address_region_code, presence: true, on: %i[new edit all]
+    validates :address_region, presence: true, if: -> { address_postcode.present? && address_line_1.present? }
     validates :address_postcode, presence: true, on: %i[new edit all add_address]
-    validates :address_town, presence: true, on: %i[new edit all add_address]
-    validates :address_line_1, presence: true, on: %i[new edit all add_address]
-    validate :postcode_format, on: %i[new edit all find_address], if: -> { address_postcode.present? }
+    validates :address_town, presence: true, on: %i[all add_address]
+    validates :address_line_1, presence: true, on: %i[all add_address], if: -> { address_postcode.present? }
+    validate :address_selection
+    validate :postcode_format, on: %i[new edit all add_address], if: -> { address_postcode.present? }
     validates :other_building_type, presence: true, on: %i[type all], if: -> { building_type == 'other' }
     validates :other_security_type, presence: true, on: %i[security all], if: -> { security_type == 'other' }
 
@@ -103,11 +110,24 @@ module FacilitiesManagement
       self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
       determine_status
     end
+
     # rubocop:enable Metrics/AbcSize
+    def address_selection
+      return if postcode_entry.blank?
+
+      pc = UKPostcode.parse(postcode_entry)
+      pc.full_valid? ? errors.delete(:postcode_entry) : errors.add(:postcode_entry, :invalid)
+
+      if pc.full_valid?
+        if address_line_1.blank?
+          errors.add(:address, :not_selected)
+        end
+      end
+    end
 
     def postcode_format
       pc = UKPostcode.parse(address_postcode)
-      pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid_format)
+      pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
     end
 
     STANDARD_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations',

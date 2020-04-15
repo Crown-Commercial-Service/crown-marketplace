@@ -224,9 +224,13 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
     this.clearFieldErrors = function (jElem) {
         var errorCollection = jElem.siblings("label[class=govuk-error-message]");
-        jElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        errorCollection = errorCollection.add(jElem.closest(".govuk-form-group.govuk-form-group--error").find("label.govuk-error-message").not(".govuk-visually-hidden"));
+        var groupCollection = jElem.closest(".govuk-form-group .govuk-form-group--error");
+        groupCollection = groupCollection.add(jElem.closest(".govuk-form-group.govuk-form-group--error"));
         jElem.removeClass("govuk-input--error");
+        jElem.removeClass("govuk-select--error");
         errorCollection.addClass("govuk-visually-hidden");
+        groupCollection.removeClass("govuk-form-group--error");
     };
 
     this.testError = function (errFn, jElem, errorType) {
@@ -387,7 +391,10 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                     scrollTop: this.bannerErrorContainer.offset().top
                 }, 500);
             } else {
-                this.bannerErrorContainer.addClass("govuk-visually-hidden");
+	            var ul = this.bannerErrorContainer.find("ul");
+	            if (ul.length > 0) {
+		            this.bannerErrorContainer.addClass("govuk-visually-hidden");
+	            }
             }
         }
     };

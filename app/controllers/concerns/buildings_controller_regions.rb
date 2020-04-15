@@ -1,5 +1,10 @@
 module BuildingsControllerRegions
   extend ActiveSupport::Concern
+  
+  def find_addresses_by_postcode(postcode)
+    Postcode::PostcodeChecker_V2.location_info(postcode)
+  end
+  
   def find_region_query_by_postcode(postcode)
     result = get_region_postcode postcode
     if result.length.positive?

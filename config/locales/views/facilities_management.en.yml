@@ -54,12 +54,16 @@ en:
       models:
         facilities_management/building:
           attributes:
+            address:
+              not_selected: You must select an address to save a building
             address_line_1:
               blank: Building and street name must be 100 characters or less
+              too_short: Building and street name must be 100 characters or less
             address_postcode:
               blank: Enter a valid postcode, like AA1 1AA
-              invalid: You must select an address to save a building
-              invalid_format: Enter a valid postcode, like AA1 1AA
+              invalid: Enter a valid postcode, like AA1 1AA
+              too_short: Enter a valid postcode, like AA1 1AA
+              not_selected: You must select an address to save a building
             address_region:
               blank: You must select a region for your address
             address_town:
@@ -75,9 +79,9 @@ en:
               blank: You must enter your description of a building type
             other_security_type:
               blank: You must describe the security clearance level
-            postcode:
-              blank: Enter a valid postcode, like AA1 1AA
-              invalid_format: Enter a valid postcode, like AA1 1AA
+            postcode_entry:
+              blank: You must select an address to save a building
+              invalid: Enter a valid postcode, like AA1 1AA
             security_type:
               blank: You must select a security clearance level
         facilities_management/buyer_detail:

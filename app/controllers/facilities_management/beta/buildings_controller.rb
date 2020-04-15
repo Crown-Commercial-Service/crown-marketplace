@@ -40,7 +40,6 @@ module FacilitiesManagement
         render :new and return if params[:step] == 'add_address'
 
         if @page_data[:model_object].save(context: :new)
-
           redirect_to action: next_step[0], id: @page_data[:model_object].id
         else
           rebuild_page_data(@page_data[:model_object])
@@ -91,7 +90,8 @@ module FacilitiesManagement
                 :address_line_2,
                 :address_postcode,
                 :address_region,
-                :address_region_code
+                :address_region_code,
+                :postcode_entry
               )
       end
 
@@ -104,13 +104,15 @@ module FacilitiesManagement
       end
 
       def region_needs_resolution?
-        return true if @page_data[:model_object].address_region_code.blank?
-
-        false
+        @page_data[:model_object].address_region_code.blank?
       end
 
       def multiple_regions?
         valid_regions.length > 1
+      end
+
+      def multiple_addresses?
+        valid_addresses.length > 1
       end
 
       def valid_regions
@@ -119,7 +121,13 @@ module FacilitiesManagement
         []
       end
 
-      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :region_needs_resolution?, :multiple_regions?
+      def valid_addresses
+        return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry)  if @page_data[:model_object].postcode_entry.present?
+
+        []
+      end
+
+      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :multiple_addresses?
 
       def resolve_region
         return if @page_data[:model_object].blank?
