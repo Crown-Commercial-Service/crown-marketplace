@@ -426,6 +426,13 @@ en:
             td_tupe: Direct award TUPE risk premium (%)
             update_button: Save and return to dashboard
       buildings:
+        add_address:
+          add_address_header: Address
+          description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+          line_1_of_2: Building and street line 1 or 2
+          line_2_of_2: Building and street line 2 of 2 (optional)
+          postcode: Postcode
+          town_or_city: Town or city
         details_form:
           address: Address
           address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
@@ -435,14 +442,14 @@ en:
           description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span> <span class="govuk-caption-m govuk-!-margin-top-0"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>
           find_address: Find address
           option_with_data_plural: "{%} addresses found"
-          region_option_with_data_plural: "{%} regions found"
           option_with_data_single: 1 address found
-          region_option_with_data_single: 1 region found
           postcode: Postcode
           region: Region
           region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
-          select_an_address: Select an address
+          region_option_with_data_plural: "{%} regions found"
+          region_option_with_data_single: 1 region found
           select_a_region: Select a region
+          select_an_address: Select an address
           zero_address_found: 0 addresses found
           zero_regions_found: 0 regions found
         gia:
@@ -504,13 +511,6 @@ en:
           describe_building: Describe building type
           other: Other
           view_more: View more building types
-        add_address:
-          add_address_header: "Address"
-          description: "We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services."
-          line_1_of_2: "Building and street line 1 or 2"
-          line_2_of_2: "Building and street line 2 of 2 (optional)"
-          town_or_city: "Town or city"
-          postcode: "Postcode"
       buyer_account:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
