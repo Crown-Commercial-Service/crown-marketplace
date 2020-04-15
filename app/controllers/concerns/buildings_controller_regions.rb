@@ -12,7 +12,7 @@ module BuildingsControllerRegions
   end
 
   def get_region_by_prefix(postcode)
-    Postcode::PostcodeChecker.find_region postcode[0,3].delete(' ')
+    Postcode::PostcodeChecker.find_region postcode[0, 3].delete(' ')
   end
 
   def get_region_postcode(postcode)

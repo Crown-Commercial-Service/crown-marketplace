@@ -38,9 +38,8 @@ module Api
         else
           result = get_region_by_prefix params['postcode']
         end
-        if result.length.zero?
-          result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } }
-        end
+        result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
+
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }

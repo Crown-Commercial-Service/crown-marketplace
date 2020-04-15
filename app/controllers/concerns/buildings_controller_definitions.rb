@@ -31,6 +31,7 @@ module BuildingsControllerDefinitions
                                end
   end
 
+  # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def page_definitions
     @page_definitions ||= {
       default: {
@@ -59,9 +60,9 @@ module BuildingsControllerDefinitions
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
         back_url: if id_present?
                     edit_facilities_management_beta_building_path(@page_data[:model_object])
-                           else
-                             (new_facilities_management_beta_building_path)
-                           end
+                  else
+                    new_facilities_management_beta_building_path
+                  end
       },
       edit: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
@@ -118,6 +119,7 @@ module BuildingsControllerDefinitions
       }
     }.freeze
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def rebuild_page_description(step)
     @building_page_details = @page_description = nil

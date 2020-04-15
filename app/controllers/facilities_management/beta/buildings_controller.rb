@@ -25,6 +25,7 @@ module FacilitiesManagement
 
       def security; end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
       def create
         @page_data[:model_object] = current_user.buildings.build(building_params)
         @page_data[:model_object].address_postcode = params['postcode_entry'] if @page_data[:model_object].address_postcode.blank?
@@ -65,6 +66,7 @@ module FacilitiesManagement
           redirect_to facilities_management_beta_building_path(@page_data[:model_object].id)
         end
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
 
       def destroy; end
 
