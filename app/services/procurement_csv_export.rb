@@ -25,10 +25,11 @@ class ProcurementCsvExport
   COLUMN_LABELS = [
     'Contract name',
     'Date created',
-    'Date updated',
-    'Status',
+    'Date last updated',
+    'Stage/Status',
+    '', # Separator column
     'Buyer organisation',
-    'Buyer organisation_address',
+    'Buyer organisation address',
     'Buyer sector',
     'Buyer contact name',
     'Buyer contact job title',
@@ -62,6 +63,7 @@ class ProcurementCsvExport
     'DA Buyer confirmed contract dates'
   ].freeze
 
+  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def self.call
     # rubocop:disable Metrics/BlockLength
@@ -76,6 +78,7 @@ class ProcurementCsvExport
           contract.procurement.created_at.strftime(TIME_FORMAT),
           contract.unsent? ? contract.procurement.updated_at.strftime(TIME_FORMAT) : contract.updated_at.strftime(TIME_FORMAT),
           procurement_status(contract.procurement, contract),
+          nil, # Separator column
           contract.procurement.user.buyer_detail.organisation_name,
           [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
@@ -83,26 +86,26 @@ class ProcurementCsvExport
           contract.procurement.user.buyer_detail.job_title,
           contract.procurement.user.email,
           contract.procurement.user.buyer_detail.telephone_number,
-          contract.procurement.service_codes.join(",\n"),
-          contract.procurement.region_codes.join(",\n"),
-          contract.procurement.estimated_annual_cost,
-          contract.procurement.tupe,
+          expand_services(contract.procurement.service_codes),
+          expand_regions(contract.procurement.region_codes),
+          helpers.number_to_currency(contract.procurement.estimated_annual_cost),
+          yes_no(contract.procurement.tupe),
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
           call_off_extensions(contract.procurement),
           contract.procurement.procurement_buildings.size,
-          contract.procurement.service_codes.join(",\n"),
-          contract.procurement.region_codes.join(",\n"),
-          contract.procurement.assessed_value,
-          contract.procurement.lot_number,
-          contract.procurement.eligible_for_da,
+          expand_services(contract.procurement.service_codes),
+          expand_regions(contract.procurement.region_codes),
+          helpers.number_to_currency(contract.procurement.assessed_value),
+          'Sub-lot ' + contract.procurement.lot_number,
+          yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
-          nil,
+          expand_services(unpriced_services(contract.procurement.service_codes)),
           contract.procurement.route_to_market,
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
-          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map(&:direct_award_value) .join("\n"),
+          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.number_to_currency(s.direct_award_value) } .join("\n"),
           contract.supplier.data['supplier_name'],
-          contract.direct_award_value,
+          helpers.number_to_currency(contract.direct_award_value),
           contract.contract_number,
           contract.reason_for_declining,
           contract.reason_for_closing,
@@ -122,6 +125,7 @@ class ProcurementCsvExport
           procurement.created_at.strftime(TIME_FORMAT),
           procurement.updated_at.strftime(TIME_FORMAT),
           procurement_status(procurement, nil),
+          nil, # Separator column
           procurement.user.buyer_detail.organisation_name,
           [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
@@ -129,21 +133,21 @@ class ProcurementCsvExport
           procurement.user.buyer_detail.job_title,
           procurement.user.email,
           procurement.user.buyer_detail.telephone_number,
-          procurement.service_codes.join(",\n"),
-          procurement.region_codes.join(",\n"),
-          procurement.estimated_annual_cost,
-          procurement.tupe,
+          expand_services(procurement.service_codes),
+          expand_regions(procurement.region_codes),
+          helpers.number_to_currency(procurement.estimated_annual_cost),
+          yes_no(procurement.tupe),
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
           call_off_extensions(procurement),
           procurement.procurement_buildings.size,
-          procurement.service_codes.join(",\n"),
-          procurement.region_codes.join(",\n"),
-          procurement.assessed_value,
-          procurement.lot_number,
-          procurement.eligible_for_da,
+          expand_services(procurement.service_codes),
+          expand_regions(procurement.region_codes),
+          helpers.number_to_currency(procurement.assessed_value),
+          'Sub-lot ' + procurement.lot_number,
+          yes_no(procurement.eligible_for_da),
           nil,
-          nil,
+          expand_services(unpriced_services(procurement.service_codes)),
           procurement.route_to_market,
           nil,
           nil,
@@ -163,6 +167,7 @@ class ProcurementCsvExport
     # rubocop:enable Metrics/BlockLength
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def self.find_contracts
     FacilitiesManagement::ProcurementSupplier
@@ -182,6 +187,28 @@ class ProcurementCsvExport
       STATE_DESCRIPTIONS[contract.aasm_state]
     else
       STATE_DESCRIPTIONS[procurement.aasm_state]
+    end
+  end
+
+  def self.yes_no(flag)
+    flag ? 'Yes' : 'No'
+  end
+
+  def self.helpers
+    ActionController::Base.helpers
+  end
+
+  def self.expand_services(service_codes)
+    service_codes.map { |code| "#{code} #{FacilitiesManagement::Service.find_by(code: code).name};\n" } .join
+  end
+
+  def self.expand_regions(region_codes)
+    region_codes.map { |code| "#{code} #{FacilitiesManagement::Region.find_by(code: code).name};\n" } .join
+  end
+
+  def self.unpriced_services(list)
+    list.select do |service_code|
+      CCS::FM::Rate.framework_rate_for(service_code).nil? || CCS::FM::Rate.benchmark_rate_for(service_code).nil?
     end
   end
 
