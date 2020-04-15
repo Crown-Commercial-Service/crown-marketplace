@@ -7,12 +7,12 @@ module CCS
     end
 
     class Rate < ApplicationRecord
-      def self.framework_rate_for(service_code)
-        service_for(service_code).framework
+      def self.framework_rate_for(service_code, standard = 'A')
+        service_for(service_code, standard).framework
       end
 
-      def self.benchmark_rate_for(service_code)
-        service_for(service_code).benchmark
+      def self.benchmark_rate_for(service_code, standard = 'A')
+        service_for(service_code, standard).benchmark
       end
 
       # usage:
@@ -52,8 +52,8 @@ module CCS
       end
       # rubocop:enable Rails/FindEach
 
-      def self.service_for(service_code)
-        find_by(code: service_code, standard: 'A') || find_by(code: service_code)
+      def self.service_for(service_code, standard)
+        find_by(code: service_code, standard: standard) || find_by(code: service_code)
       end
 
       private_class_method :service_for

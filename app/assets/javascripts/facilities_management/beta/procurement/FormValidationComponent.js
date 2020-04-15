@@ -219,6 +219,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         $(this.form).find(".govuk-input--error").removeClass("govuk-input--error");
         $(this.form).find(".govuk-select--error").removeClass("govuk-select--error");
         $(this.form).find(".govuk-form-group--error").removeClass("govuk-form-group--error");
+        $(this.form).find(".govuk-error-message").addClass("govuk-visually-hidden");
         $(this.form).find("label[class=govuk-error-message]").addClass("govuk-visually-hidden");
     };
 

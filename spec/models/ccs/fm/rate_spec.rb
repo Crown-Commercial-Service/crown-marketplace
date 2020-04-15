@@ -22,15 +22,42 @@ RSpec.describe CCS::FM::Rate, type: :model do
   end
 
   describe 'framework and benchmark rates' do
-    context 'when rate has standards' do
+    context 'when rate has standard A' do
       let(:code) { 'C.1' }
+      let(:standard) { 'A' }
 
       it 'returns standard A framework rate' do
-        expect(described_class.framework_rate_for(code)).to eq(CCS::FM::Rate.find_by(code: code, standard: 'A').framework)
+        expect(described_class.framework_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).framework)
       end
 
       it 'returns standard A benchmark rate' do
-        expect(described_class.benchmark_rate_for(code)).to eq(CCS::FM::Rate.find_by(code: code, standard: 'A').benchmark)
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).benchmark)
+      end
+    end
+
+    context 'when rate has standard B' do
+      let(:code) { 'C.1' }
+      let(:standard) { 'B' }
+
+      it 'returns standard B framework rate' do
+        expect(described_class.framework_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).framework)
+      end
+
+      it 'returns standard B benchmark rate' do
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).benchmark)
+      end
+    end
+
+    context 'when rate has standard C' do
+      let(:code) { 'C.1' }
+      let(:standard) { 'C' }
+
+      it 'returns standard C framework rate' do
+        expect(described_class.framework_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).framework)
+      end
+
+      it 'returns standard C benchmark rate' do
+        expect(described_class.benchmark_rate_for(code, standard)).to eq(CCS::FM::Rate.find_by(code: code, standard: standard).benchmark)
       end
     end
 
