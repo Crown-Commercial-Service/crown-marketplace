@@ -148,7 +148,7 @@ module FacilitiesManagement
       procurement.procurement_suppliers.where.not(aasm_state: 'unsent')&.last&.id != id
     end
 
-    SENT_OFFER_ORDER = %i[sent declined expired accepted not_signed].freeze
+    SENT_OFFER_ORDER = %w[sent declined expired accepted not_signed].freeze
 
     CLOSED_TO_SUPPLIER = %w[declined expired withdrawn not_signed].freeze
 
