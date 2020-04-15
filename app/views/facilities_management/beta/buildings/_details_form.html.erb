@@ -106,7 +106,7 @@
           <% end %>
         </select>
       </div>
-      <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
+      <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless !region_needs_resolution? || @page_data[:model_object].address_region_code.present? %>">
         <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
         <a href="#region-header" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
            data-module-element="change-region-button"><%= t('.change') %></a>

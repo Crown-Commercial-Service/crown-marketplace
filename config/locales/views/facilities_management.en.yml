@@ -57,7 +57,8 @@ en:
             address_line_1:
               blank: Building and street name must be 100 characters or less
             address_postcode:
-              blank: You must select an address to save a building
+              blank: Enter a valid postcode, like AA1 1AA
+              invalid: You must select an address to save a building
               invalid_format: Enter a valid postcode, like AA1 1AA
             address_region:
               blank: You must select a region for your address
@@ -69,11 +70,11 @@ en:
               blank: You must select a buiding type or describe your own
             gia:
               blank: Enter a whole number for the size of internal area of this building
-              pattern: Enter a whole number for the size of internal area of this building
+              not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
             other_security_type:
-              blank: You must select a security clearance level
+              blank: You must describe the security clearance level
             postcode:
               blank: Enter a valid postcode, like AA1 1AA
               invalid_format: Enter a valid postcode, like AA1 1AA
@@ -503,7 +504,7 @@ en:
           describe_building: Describe building type
           other: Other
           view_more: View more building types
-        edit_address:
+        add_address:
           add_address_header: "Address"
           description: "We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services."
           line_1_of_2: "Building and street line 1 or 2"

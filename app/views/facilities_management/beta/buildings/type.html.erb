@@ -2,7 +2,7 @@
   <div class="govuk-!-width-two-thirds">
     <%= form_for @page_data[:model_object], url: facilities_management_beta_building_path(@page_data[:model_object].id), html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
       <input type="hidden" name="step" value="type"/>
-      <%= govuk_grouped_field(f, t('.choose_building_type'), :type) do |ff, attr| %>
+      <%= govuk_grouped_field(f, t('.choose_building_type'), :building_type) do |ff, attr| %>
         <%= f.hidden_field :building_type %>
         <div class="govuk_radios">
           <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
@@ -24,7 +24,7 @@
               <%= t('.view_more') %>
             </span>
           </summary>
-          <div class="govuk-details__text" style="margin-left:0.5ex">
+          <div class="govuk-details__text" style="padding-bottom:0; margin-left:0.5ex">
             <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
               <div class="govuk-radios__item">
                 <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>

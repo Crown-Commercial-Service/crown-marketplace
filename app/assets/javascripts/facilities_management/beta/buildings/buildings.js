@@ -163,6 +163,7 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
+    this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
 
     $(this.btnChangeRegion).on('click', function (e) {
         e.preventDefault();
@@ -199,6 +200,7 @@ LookupHandler.prototype.showRegionChoices = function () {
     var classname = 'govuk-visually-hidden';
     $(this.regionDisplayText).addClass(classname);
     $(this.lookupRegionResultsContainer).removeClass(classname);
+    this.regionDropDown.selectedIndex = 0;
     $(this.btnChangeRegion).addClass(classname);
 
 };
@@ -216,7 +218,6 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
     this.cantFindAddress(true);
     this.postcodeDisplay.innerHTML = postcode;
     $(this.addressDisplay).addClass('govuk-visually-hidden');
-    this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
     this.populateDropDown(addresses);
     this.changeAddressContainerVisibility(true);
 };
@@ -264,7 +265,9 @@ LookupHandler.prototype.showDecision = function () {
 
 LookupHandler.prototype.showRegionDecision = function () {
     var classname = 'govuk-visually-hidden';
+    this.showRegionResults(true);
     this.showRegionText(true);
+    $(this.regionResults).removeClass(classname);
     $(this.regionDisplay).removeClass(classname);
     $(this.lookupRegionResultsContainer).addClass(classname);
 };
@@ -283,6 +286,7 @@ LookupHandler.prototype.selectResult = function (e) {
         $("#address-region").val(selectedOption.dataset.address_region);
         $("#address-region-code").val(selectedOption.dataset.address_region_code);
         $(this.regionDisplayText).text(selectedOption.dataset.address_region);
+        $(this.btnChangeRegion).addClass('govuk-visually-hidden');
     }
 
     $(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
@@ -296,7 +300,8 @@ LookupHandler.prototype.selectRegionResult = function (e) {
     $("#address-region").val(selectedOption.dataset.address_region);
     $("#address-region-code").val(selectedOption.dataset.address_region_code);
     $(this.regionDisplayText).text(selectedOption.dataset.address_region);
-    if (this.regionDropDown.options.length > 0) {
+    this.showRegionText(true);
+    if (this.regionDropDown.options.length > 2) {
         $(this.btnChangeRegion).removeClass('govuk-visually-hidden');
     } else {
         $(this.btnChangeRegion).addClass('govuk-visually-hidden');

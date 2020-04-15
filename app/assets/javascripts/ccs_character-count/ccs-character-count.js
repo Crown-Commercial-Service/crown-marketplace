@@ -93,10 +93,10 @@ CCSCharacterCount.prototype.createCountMessage = function () {
   if (elementId && !countMessage) {
       // If there is no existing info count message we add one right after the field
       if (!this.$countContainer) {
-          countElement.insertAdjacentHTML('afterend', '<span id="' + elementId + '-info" class="govuk-hint govuk-character-count__message ccs-character-count-message" style="order:99" aria-live="polite"></span>');
+          countElement.insertAdjacentHTML('afterend', '<span id="' + elementId + '-info" class="ccs-character-count-message govuk-hint" style="order:99" aria-live="polite"></span>');
 
       } else {
-          this.$countContainer.insertAdjacentHTML('beforeend', '<span id="' + elementId + '-info" class="govuk-hint govuk-character-count__message ccs-character-count-message" style="order:99" aria-live="polite"></span>');
+          this.$countContainer.insertAdjacentHTML('beforeend', '<span id="' + elementId + '-info" class="ccs-character-count-message govuk-hint" style="order:99" aria-live="polite"></span>');
       }
   } else {
       countMessage.style.order = '99';

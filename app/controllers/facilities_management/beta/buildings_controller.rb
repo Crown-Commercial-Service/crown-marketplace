@@ -104,8 +104,6 @@ module FacilitiesManagement
       end
 
       def region_needs_resolution?
-        return false if @page_data[:model_object].blank? || @page_data[:model_object].respond_to?(:address_postcode)
-
         return true if @page_data[:model_object].address_region_code.blank?
 
         false
@@ -126,7 +124,7 @@ module FacilitiesManagement
       def resolve_region
         return if @page_data[:model_object].blank?
 
-        return if valid_regions.length > 1
+        return if valid_regions.length > 1 || valid_regions.length == 0
 
         @page_data[:model_object].address_region = valid_regions[0]['region']
         @page_data[:model_object].address_region_code = valid_regions[0]['code']

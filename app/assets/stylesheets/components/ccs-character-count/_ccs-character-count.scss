@@ -8,6 +8,7 @@
     .ccs-character-count__message {
       @include govuk-responsive-margin(1, "top");
       @include govuk-responsive-margin(3, "bottom");
+      margin-bottom:0 !important;
       }
 
     .ccs-character-count__message--disabled {
