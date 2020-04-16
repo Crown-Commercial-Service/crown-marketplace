@@ -313,6 +313,8 @@ LookupHandler.prototype.selectResult = function (e) {
         this.showRegionDecision();
         $(this.btnChangeRegion).addClass('govuk-visually-hidden');
     } else {
+		$("#address-region").val("");
+		$("#address-region-code").val("");
 		if ( this.regionDropDown.options.length < 2 ) {
 			this.findAddressComponent.lookupRegion();
 		}

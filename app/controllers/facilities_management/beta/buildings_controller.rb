@@ -107,6 +107,18 @@ module FacilitiesManagement
         @page_data[:model_object].address_region_code.blank?
       end
 
+      def hide_region_section?
+        return false if @page_data[:model_object].address_region.present?
+
+        true if @page_data[:model_object].address_region.blank? && @page_data[:model_object].address_postcode.blank?
+      end
+
+      def hide_region_dropdown?
+        return true if @page_data[:model_object].address_region.present?
+
+        false
+      end
+
       def multiple_regions?
         valid_regions.length > 1
       end
@@ -127,7 +139,8 @@ module FacilitiesManagement
         []
       end
 
-      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :multiple_addresses?
+      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?,
+                    :multiple_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?
 
       def resolve_region
         return if @page_data[:model_object].blank?
@@ -148,7 +161,7 @@ module FacilitiesManagement
       def build_page_data
         @page_data                = {}
         @page_data[:model_object] = Building.find(params[:id]) if params[:id]
-        @page_data[:model_object] = current_user.buildings if action_name == 'index'
+        @page_data[:model_object] = current_user.buildings.order('lower(building_name)') if action_name == 'index'
         @page_data[:model_object] = Building.new if @page_data[:model_object].blank?
 
         build_page_description
