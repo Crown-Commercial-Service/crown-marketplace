@@ -84,21 +84,21 @@ class ProcurementCsvExport
           contract.procurement.user.buyer_detail.job_title,
           contract.procurement.user.email,
           contract.procurement.user.buyer_detail.telephone_number,
-          expand_services(contract.procurement.procurement_building_services.map(&:code).uniq),
-          expand_regions(contract.procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
+          expand_services(contract.procurement.procurement_building_service_codes),
+          expand_regions(contract.procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(contract.procurement.estimated_annual_cost),
           yes_no(contract.procurement.tupe),
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
           call_off_extensions(contract.procurement),
           contract.procurement.active_procurement_buildings.size,
-          expand_services(contract.procurement.procurement_building_services.map(&:code).uniq),
-          expand_regions(contract.procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
+          expand_services(contract.procurement.procurement_building_service_codes),
+          expand_regions(contract.procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(contract.procurement.assessed_value),
           'Sub-lot ' + contract.procurement.lot_number,
           yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
-          expand_services(unpriced_services(contract.procurement.service_codes)),
+          expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
           contract.procurement.route_to_market,
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.number_to_currency(s.direct_award_value) } .join("\n"),
@@ -127,21 +127,21 @@ class ProcurementCsvExport
           procurement.user.buyer_detail.job_title,
           procurement.user.email,
           procurement.user.buyer_detail.telephone_number,
-          expand_services(procurement.procurement_building_services.map(&:code).uniq),
-          expand_regions(procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
+          expand_services(procurement.procurement_building_service_codes),
+          expand_regions(procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(procurement.estimated_annual_cost),
           yes_no(procurement.tupe),
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
           call_off_extensions(procurement),
           procurement.active_procurement_buildings.size,
-          expand_services(procurement.procurement_building_services.map(&:code).uniq),
-          expand_regions(procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
+          expand_services(procurement.procurement_building_service_codes),
+          expand_regions(procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(procurement.assessed_value),
           'Sub-lot ' + procurement.lot_number,
           yes_no(procurement.eligible_for_da),
           nil,
-          expand_services(unpriced_services(procurement.service_codes)),
+          expand_services(unpriced_services(procurement.procurement_building_service_codes)),
           procurement.route_to_market,
           nil,
           nil,
@@ -198,8 +198,8 @@ class ProcurementCsvExport
     region_codes.map { |code| "#{code} #{FacilitiesManagement::Region.find_by(code: code).name};\n" } .join
   end
 
-  def self.unpriced_services(list)
-    list.select do |service_code|
+  def self.unpriced_services(service_codes)
+    service_codes.select do |service_code|
       CCS::FM::Rate.framework_rate_for(service_code).nil? || CCS::FM::Rate.benchmark_rate_for(service_code).nil?
     end
   end
