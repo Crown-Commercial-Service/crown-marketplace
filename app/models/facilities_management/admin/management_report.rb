@@ -25,26 +25,30 @@ module FacilitiesManagement
       def set_start_date
         self.start_date = Date.new(start_date_yyyy.to_i, start_date_mm.to_i, start_date_dd.to_i)
       rescue StandardError
-        errors.add(:start_date, 'Enter a valid date')
+        errors.add(:start_date, :invalid)
         self.start_date = nil
       end
 
       def set_end_date
         self.end_date = Date.new(end_date_yyyy.to_i, end_date_mm.to_i, end_date_dd.to_i)
       rescue StandardError
-        errors.add(:end_date, 'Enter a valid date')
+        errors.add(:end_date, :invalid)
         self.end_date = nil
       end
 
       def dates_present?
         dates_present = true
         if [start_date_dd, start_date_mm, start_date_yyyy].any?(&:blank?)
-          errors.add(:start_date, 'You must enter a date')
+          errors.add(:start_date, :blank)
           dates_present = false
+        else
+          set_start_date
         end
         if [end_date_dd, end_date_mm, end_date_yyyy].any?(&:blank?)
-          errors.add(:end_date, 'You must enter a date')
+          errors.add(:end_date, :blank)
           dates_present = false
+        else
+          set_end_date
         end
         dates_present
       end
@@ -52,13 +56,10 @@ module FacilitiesManagement
       def dates_valid?
         return false unless dates_present?
 
-        set_start_date
-        set_end_date
-
         return false if start_date.nil? || end_date.nil?
 
         if end_date < start_date
-          errors.add(:end_date, "The 'To' date must be the same or after the 'From' date")
+          errors.add(:end_date, :less_than_or_equal_to)
           return false
         end
 

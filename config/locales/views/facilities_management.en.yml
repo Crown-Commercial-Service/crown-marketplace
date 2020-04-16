@@ -13,8 +13,11 @@ en:
           attributes:
             end_date:
               blank: You must enter a date
+              invalid: Enter a valid date
+              less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
             start_date:
               blank: You must enter a date
+              invalid: Enter a valid date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
