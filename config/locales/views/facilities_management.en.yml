@@ -1254,7 +1254,7 @@ en:
       heading: Find Facilities Management supplier
       startlist: |
         <li>what services you are looking for</li>
-        <li>building locations and information</li>
+        <li>your building locations and information</li>
         <li>your basic contract requirements</li>
       startnow: Start now
       subheading: 'Use this service to:'
