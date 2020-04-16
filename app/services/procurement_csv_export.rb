@@ -65,7 +65,7 @@ class ProcurementCsvExport
 
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
-  def self.call
+  def self.call(start_date, end_date)
     # rubocop:disable Metrics/BlockLength
     CSV.generate do |csv|
       csv << COLUMN_LABELS

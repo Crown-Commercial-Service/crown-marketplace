@@ -4,16 +4,19 @@
     <li class="govuk-breadcrumbs__list-item">
       <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_path %>">Home</a>
     </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_management_report_path %>"><%= t('facilities_management.beta.admin.management_report.breadcrumb_text_management_report') %></a></li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_management_report_path %>">
+        <%= t('facilities_management.beta.admin.management_report.breadcrumb_text_management_report') %>
+      </a>
+    </li>
   </ol>
 </div>
-<%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
+<%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.management_report.heading_title') %></h1>
 <h2 class="govuk-heading-l"><%= t('facilities_management.beta.admin.management_report.heading_sub') %></h2>
 <h3 class="govuk-body-l"><%= t('facilities_management.beta.admin.management_report.heading_sub_detail') %></h3>
-
 
 <div class="govuk-table__row <%= ' govuk-form-group govuk-form-group--error' if @management_report.errors[:start_date].any? %>">
 <p class="govuk-heading-l govuk-!-margin-bottom-1">From</p>
