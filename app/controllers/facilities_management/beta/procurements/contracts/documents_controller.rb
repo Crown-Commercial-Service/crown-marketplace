@@ -17,6 +17,16 @@ module FacilitiesManagement
               format.docx { headers['Content-Disposition'] = 'attachment; filename="Attachment 4 - Order Form and Call-off Schedule (DA).docx"' }
             end
           end
+
+          def call_off_schedule_2
+            @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+            @procurement = @contract.procurement
+            @pension_funds = @procurement.procurement_pension_funds
+
+            respond_to do |format|
+              format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA).docx"' }
+            end
+          end
         end
       end
     end
