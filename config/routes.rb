@@ -137,6 +137,7 @@ Rails.application.routes.draw do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
           get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
+          get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
         end
         resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       end
