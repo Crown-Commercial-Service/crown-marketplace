@@ -26,11 +26,19 @@ FindAddressComponent.prototype.init = function () {
 
 FindAddressComponent.prototype.bindEvents = function () {
     var restartFn = this.restart.bind(this);
+    var lookupInputFn = this.lookupInput.bind(this);
+	var resultsDropDown = this.lookupHandler.resultsDropDown;
 
     this.btnTrigger.addEventListener('click', this.lookupInput.bind(this));
     $(this.btnChangeInput).on('click', function (e) {
         e.preventDefault();
         restartFn();
+    });
+    this.sourceInput.addEventListener('keypress', function (e) {
+	    if ( e.keyCode === 13 ) {
+	    	lookupInputFn(e);
+	    	resultsDropDown.focus();
+	    }
     });
     $(this.shortcutHelpers).on('click', this.fireInputAutomatically.bind(this));
 };
@@ -118,6 +126,7 @@ FindAddressComponent.prototype.displayRegionResults = function (data) {
 FindAddressComponent.prototype.restart = function () {
     $(this.sourceContainer).removeClass("govuk-visually-hidden");
     this.lookupHandler.hideResults();
+    this.sourceInput.focus();
 };
 
 FindAddressComponent.prototype.noResults = function (postcode, data) {
