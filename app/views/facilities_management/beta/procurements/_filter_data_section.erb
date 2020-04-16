@@ -4,10 +4,14 @@
       <strong class="govuk-heading-m govuk-!-margin-0 govuk-!-padding-1"><%= section_title %>
         <br /> <span class="govuk-!-font-size-19" id="sproc-<%= section_name %>-count"><%= "#{collection.length} selected" %> </span></strong>
     </div>
+    <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey">
+      <%= link_to change_title, change_link, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
+      <%= link_to change_title, edit_facilities_management_beta_procurement_path(@procurement.id, step: section_name + 's'), class: 'govuk-link govuk-!-font-size-19'  if @procurement.persisted? %>
+    </div>
     <div class="govuk-grid-row filter-component-container-grey">
       <div class="govuk-checkboxes govuk-checkboxes--small">
         <% collection.each do |item| %>
-          <div class="govuk-checkboxes__item filter-component-govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item filter-component-govuk-checkboxes__item govuk-visually-hidden">
             <%= check_box_tag("facilities_management_procurement[#{section_name}_codes][]",
                               item.code,
                               superset.include?(item.code),
@@ -19,12 +23,11 @@
               <%= item.name.gsub(160.chr("UTF-8"), " ") %>
             </label>
           </div>
+          <label class="govuk-label govuk-checkboxes__label filter-component-govuk-checkboxes__label">
+            <%= item.name.gsub(160.chr("UTF-8"), " ") %>
+          </label>
         <% end %>
       </div>
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey">
-      <%= link_to change_title, change_link, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
-      <%= link_to change_title, edit_facilities_management_beta_procurement_path(@procurement.id, step: section_name + 's'), class: 'govuk-link govuk-!-font-size-19'  if @procurement.persisted? %>
     </div>
   </div>
 </div>
