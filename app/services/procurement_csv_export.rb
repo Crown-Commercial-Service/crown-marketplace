@@ -68,11 +68,9 @@ class ProcurementCsvExport
   def self.call
     # rubocop:disable Metrics/BlockLength
     CSV.generate do |csv|
-      first = true
+      csv << COLUMN_LABELS
 
       find_contracts.each do |contract|
-        csv << COLUMN_LABELS if first
-
         csv << [
           contract.procurement.contract_name,
           contract.procurement.created_at.strftime(TIME_FORMAT),
@@ -94,8 +92,8 @@ class ProcurementCsvExport
           format_mobilisation_start_end(contract.procurement),
           call_off_extensions(contract.procurement),
           contract.procurement.active_procurement_buildings.size,
-          expand_services(contract.procurement.service_codes),
-          expand_regions(contract.procurement.region_codes),
+          expand_services(contract.procurement.procurement_building_services.map(&:code).uniq),
+          expand_regions(contract.procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
           helpers.number_to_currency(contract.procurement.assessed_value),
           'Sub-lot ' + contract.procurement.lot_number,
           yes_no(contract.procurement.eligible_for_da),
@@ -113,13 +111,9 @@ class ProcurementCsvExport
           contract.contract_signed_date.strftime(DATE_FORMAT),
           "#{contract.contract_start_date.strftime(DATE_FORMAT)} - #{contract.contract_end_date.strftime(DATE_FORMAT)}"
         ]
-
-        first = false
       end
 
       find_procurements.each do |procurement|
-        csv << COLUMN_LABELS if first
-
         csv << [
           procurement.contract_name,
           procurement.created_at.strftime(TIME_FORMAT),
@@ -141,8 +135,8 @@ class ProcurementCsvExport
           format_mobilisation_start_end(procurement),
           call_off_extensions(procurement),
           procurement.active_procurement_buildings.size,
-          expand_services(procurement.service_codes),
-          expand_regions(procurement.region_codes),
+          expand_services(procurement.procurement_building_services.map(&:code).uniq),
+          expand_regions(procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }),
           helpers.number_to_currency(procurement.assessed_value),
           'Sub-lot ' + procurement.lot_number,
           yes_no(procurement.eligible_for_da),
@@ -160,8 +154,6 @@ class ProcurementCsvExport
           nil,
           nil
         ]
-
-        first = false
       end
     end
     # rubocop:enable Metrics/BlockLength
