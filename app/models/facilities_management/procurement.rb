@@ -86,7 +86,7 @@ module FacilitiesManagement
     def before_each_procurement_pension_funds(new_pension_fund)
       new_pension_fund.case_sensitive_error = false
       procurement_pension_funds.each do |saved_pension_fund|
-        new_pension_fund.case_sensitive_error = true if (saved_pension_fund.name.downcase == new_pension_fund.name.downcase) && (saved_pension_fund.name != new_pension_fund.name)
+        new_pension_fund.case_sensitive_error = true if (saved_pension_fund.name.downcase == new_pension_fund.name.downcase) && (saved_pension_fund.object_id != new_pension_fund.object_id)
       end
     end
 
