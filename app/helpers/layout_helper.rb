@@ -127,8 +127,9 @@ module LayoutHelper
     buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
     buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
-    buttons << capture { tag.br } if secondary_button || primary_button
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') if return_link
+    if secondary_button || primary_button
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') if return_link
+    end
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
@@ -145,9 +146,9 @@ module LayoutHelper
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
 
-    options.merge!(class: css_classes)
+    options.merge!(class: css_classes.join(' '))
     options['aria-describedby'] = error_id(attribute) if attribute_errors
-    options.merge!(property_name: attribute)
+    options.merge!(property_name: attribute).symbolize_keys!
 
     content_tag :div, options do
       capture do

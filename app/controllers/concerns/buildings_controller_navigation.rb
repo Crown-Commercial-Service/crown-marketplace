@@ -6,9 +6,9 @@ module BuildingsControllerNavigation
     add_address: { position: 1, desc: '' },
     edit: { position: 1, desc: '' },
     update: { position: 1, desc: '' },
-    gia: { position: 2, desc: 'What\'s the internal area of the building?' },
-    type: { position: 3, desc: 'Choose the building type that best describes your building' },
-    security: { position: 4, desc: 'Select the level of security clearance needed' }
+    gia: { position: 2, desc: 'Building size' },
+    type: { position: 3, desc: 'Building type' },
+    security: { position: 4, desc: 'Security clearance' }
   }.freeze
 
   def step_title

@@ -439,11 +439,11 @@ en:
           town_or_city: Town or city
         details_form:
           address: Address
-          address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
-          building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What's the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
+          address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+          building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
           cant_find_address: I can't find my building's address in the list
           change: Change
-          description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What's the description? - Optional</span> <span class="govuk-caption-m govuk-!-margin-top-0"> Enter additional information about this building that will help you to recognise it.<br> For example, some users put their cost centre in this field. </span>
+          description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</span> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
           find_address: Find address
           option_with_data_plural: "{%} addresses found"
           option_with_data_single: 1 address found
@@ -458,7 +458,7 @@ en:
           zero_regions_found: 0 regions found
         gia:
           description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
-          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
           gia_header: What's the size of internal area of this building?
         index:
           column_desc_header: Description
@@ -470,14 +470,14 @@ en:
           my_buildings_header: My buildings
           no_buildings_text: You have no saved buildings
           start_paragraph: Set up the buildings in which you want FM services to be delivered to.
-          start_warning_html: When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building. Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.<p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
         page_definitions:
           add_building_address: Add building address
           building_size: Building size
           building_type: Building type
           change_building_details: Change building details
-          create_new_building: Create new building
-          create_single_building: Create single building
+          create_new_building: Save and continue
+          create_single_building: Add a building
           manage_building_title: Manage buildings
           return_to_manage_buildings: Return to manage buildings
           save_and_continue: Save and continue
@@ -485,6 +485,7 @@ en:
           security_clearance: Security clearance
           skip_this_step: Skip this step
         security:
+          building_details_summary: Building details summary
           describe_security: Describe security level
           other: Other
           security_description: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff

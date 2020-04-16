@@ -10,7 +10,7 @@
               <%= ff.radio_button :building_type, building_type[:title], class: 'govuk-radios__input' %>
               <%= ff.label :building_type, value: building_type[:title], class: 'govuk-label govuk-radios__label' do %>
                 <%= building_type[:title] %>
-                <span class="govuk-caption-m"><%= building_type[:caption] %></span>
+                <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
               <% end %>
             </div>
           <% end %>
@@ -30,24 +30,24 @@
                 <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
                 <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label' do %>
                   <%= building_type[:title] %>
-                  <span class="govuk-caption-m"><%= building_type[:caption] %></span>
+                  <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
                 <% end %>
               </div>
             <% end %>
             <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4 govuk-!-margin-left-2">
               Or
             </div>
-            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, { style: 'margin-left: 1em;' }) do %>
+            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object)) do %>
               <div class="govuk-radios__item">
                 <div class="other_container">
                   <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
                   <%= ff.label :building_type, 'other', class: 'govuk-label govuk-radios__label' do
                     t('.other')
                   end %>
-                  <div class="govuk-!-margin-top-2" style="margin-left:-2.2ex; border-left: 5px solid #bfc1c3">
+                  <div class="govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
                     <div class="other_input ccs-character-count-container" data-module="character-count" data-maxlength="150" style="margin-left: 1.5ex">
                       <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></label>
-                      <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150) %>
+                      <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex') %>
                     </div>
                   </div>
                 </div>

@@ -2,7 +2,7 @@
   <%= form_for @page_data[:model_object], url: add_address_form_details[:url], method: add_address_form_details[:method], html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <input type="hidden" name="step" value="add_address"/>
     <div class="govuk-!-width-three-quarters">
-      <h2 class="govuk-heading-m"><%= t('.add_address_header') %></h2>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.add_address_header') %></h2>
       <p class="govuk-caption-m"><%= t('.description') %></p>
       <%= govuk_form_field(@page_data[:model_object], :address_line_1, f.object_name, t('.line_1_of_2'), "", {}) do %>
         <%= f.text_field :address_line_1, class: "govuk-input govuk-input--width-20", maxlength: 100 %>

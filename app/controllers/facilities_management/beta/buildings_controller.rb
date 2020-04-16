@@ -122,8 +122,7 @@ module FacilitiesManagement
       def hide_postcode_source?
         @page_data[:model_object].address_line_1.present? || @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected
       end
-      
-      
+
       def multiple_regions?
         valid_regions.length > 1
       end

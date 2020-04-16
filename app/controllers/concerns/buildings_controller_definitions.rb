@@ -38,7 +38,7 @@ module BuildingsControllerDefinitions
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.create_new_building'),
         continuation_url: new_facilities_management_beta_building_url,
         secondary_name: 'return_to_buildings',
-        secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.return_to_manage_buildings'),
+        secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
         secondary_url: facilities_management_beta_buildings_path,
         back_text: 'Back',
         back_url: facilities_management_beta_buildings_path
@@ -113,7 +113,7 @@ module BuildingsControllerDefinitions
         continuation_name: 'save_and_return',
         secondary_name: 'save_and_return',
         secondary_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
-        return_url: facilities_management_beta_buildings_url,
+        return_url: (facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?),
         return_text: I18n.t('facilities_management.beta.buildings.page_definitions.skip_this_step'),
         back_url: (type_facilities_management_beta_building_path(@page_data[:model_object].id) if id_present?)
       }
