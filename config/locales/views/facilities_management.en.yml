@@ -11,9 +11,9 @@ en:
       models:
         facilities_management/admin/management_report:
           attributes:
-            start_date:
-              blank: You must enter a date
             end_date:
+              blank: You must enter a date
+            start_date:
               blank: You must enter a date
         facilities_management/journey/choose_locations:
           attributes:
@@ -377,22 +377,22 @@ en:
             dashboard_header: RM3830 administration dashboard
             dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
             dashboard_manage_rate: Manage the average framework rates and variances
+            dashboard_management_report_detail: Download the management data in CSV format
+            dashboard_management_report_header: Management report
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
-            dashboard_management_report_header: Management report
-            dashboard_management_report_detail: Download the management data in CSV format
+        management_report:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate and download report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          heading_title: Management report
+          return_link: Return to admin dashboard
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
             email_hint_html: Enter the email address you used to register
-        management_report:
-          breadcrumb_text_management_report: Management report
-          heading_title: Management report
-          heading_sub: Download management data
-          heading_sub_detail: To generate a download file, please input your date range.
-          download_btn_text: Generate and download report
-          return_link: Return to admin dashboard
         supplier_framework_data:
           heading_title: Supplier framework data
           rtrn_link: Return to admin dashboard
