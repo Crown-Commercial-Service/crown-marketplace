@@ -70,7 +70,7 @@ class ProcurementCsvExport
     CSV.generate do |csv|
       csv << COLUMN_LABELS
 
-      find_contracts.each do |contract|
+      find_contracts(start_date, end_date).each do |contract|
         csv << [
           contract.procurement.contract_name,
           contract.procurement.created_at.strftime(TIME_FORMAT),
@@ -113,7 +113,7 @@ class ProcurementCsvExport
         ]
       end
 
-      find_procurements.each do |procurement|
+      find_procurements(start_date, end_date).each do |procurement|
         csv << [
           procurement.contract_name,
           procurement.created_at.strftime(TIME_FORMAT),
@@ -161,16 +161,18 @@ class ProcurementCsvExport
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
-  def self.find_contracts
+  def self.find_contracts(start_date, end_date)
     FacilitiesManagement::ProcurementSupplier
       .joins(:procurement)
+      .where('facilities_management_procurement_suppliers.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
       .where("facilities_management_procurements.aasm_state = 'direct_award'")
       .where("facilities_management_procurement_suppliers.aasm_state != 'unsent'")
   end
 
-  def self.find_procurements
+  def self.find_procurements(start_date, end_date)
     FacilitiesManagement::Procurement
       .includes(:procurement_suppliers)
+      .where('facilities_management_procurements.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
       .where("facilities_management_procurements.aasm_state != 'direct_award'")
   end
 
