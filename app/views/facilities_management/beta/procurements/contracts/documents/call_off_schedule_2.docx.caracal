@@ -8,10 +8,13 @@ end
 
 docx.page_numbers true do
   align :left
-  label 'Page'
+  label ''
 end
 
 docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :left
+
+docx.p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v1.0', bold: true, size: 24, font: 'Calibri'
+docx.p 'Crown Copyright 2018', size: 24, font: 'Calibri'
 
 ['BUYER', 'AND', 'SUPPLIER', 'FACILITIES MANAGEMENT MARKETPLACE CONTRACT', 'REF: RM3830'].each do |sentence|
   docx.p sentence, bold: true, size: 24, font: 'Calibri', align: :center
@@ -21,10 +24,28 @@ docx.page
 
 docx.font name: 'Calibri'
 
-docx.p 'The following definition shall apply to this Call-Off Schedule 2 (Staff Transfer):'
+docx.p "[Guidance note: Buyers will need to ensure that appropriate provisions are included to deal with staff transfer on both entry and exit, and, irrespective of whether TUPE does apply on entry if there are employees eligible for New Fair Deal pension protection then the appropriate pensions provisions will also need to be selected.", italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If there is a staff transfer from the Buyer on entry (1st generation) then Part A shall apply.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If there is a staff transfer from former/incumbent supplier on entry (2nd generation), Part B shall apply.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If there is both a 1st and 2nd generation staff transfer on entry, then both Part A and Part B shall apply.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If either Part A and/or Part B apply, then consider whether Part D (Pensions) shall apply and the Buyer shall indicate on the Order which Annex shall apply (either D1 (CSPS), D2 (NHSPS), or D3 (LGPS)). Part D pensions may also apply where there is not a TUPE transfer for example where the incumbent provider is successful.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If there is no staff transfer (either 1st generation or 2nd generation) at the Start Date then Part C shall apply and Part D pensions may also apply where there is not a TUPE transfer for example where the incumbent provider is successful.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'If the position on staff transfers is not known at the bid stage, include Parts A, B, C and D at the bid stage and then update the Buyer Contract Details before signing to specify whether Parts A and/or B, or C and D apply to the Contract.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'Part E (dealing with staff transfer on exit) shall apply to every Contract.]', italic: true, bold: true, font: 'Calibri'
+docx.p
+
+docx.p 'The following definition shall apply to this Call-Off Schedule 2 (Staff Transfer):', font: 'Calibri'
+docx.p
 
 docx.table [['"Term"', 'means the period commencing on the Start Date and ending on the expiry of the Initial Period or any Extension Period or on earlier termination of the relevant Contract;']], border_size: 1, font: 'Calibri' do
-  cell_style rows[0], bold: true
+  cell_style rows[0], bold: true, font: 'Calibri'
 end
 
 docx.page
@@ -1863,13 +1884,23 @@ docx.table(
 
 docx.page
 
-if @pension_funds.any?
-  docx.p 'Annex D3: LGPS', align: :center, bold: true, font: 'Calibri'
+docx.p 'Annex D3: LGPS', align: :center, bold: true, font: 'Calibri'
+
+docx.p  '[LGPS Guidance Notes', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p '[DN: Note the LGPS unlike the CSPS & NHSPS is a funded scheme which has associated cost implications as follows:', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'There is not 1 LGPS but approx. 90 different Funds, each with their own separate Scheme Employer and Administering Authority, it is important to identify the correct one(s) and amend the definition of "Fund" accordingly.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'It is important to check whether CCS and or the Buyer can actually participate in the LGPS. Where a Gov Dept is taking on services which were formerly the responsibility of a Local Authority  it may be necessary to obtain secretary of state approval for participation in the LGPS, this is because the services are being provided to Gov. Dept. and not to a Local Authority.', italic: true, bold: true, font: 'Calibri'
+docx.p
+docx.p 'Unlike New Fair Deal the 2007 Best Value pension direction does not provide a right to bulk transfer past service.  Whilst typically before the 2007 direction LA did provide such a right, it is a significant additional cost and therefore bulk transfer wording has been excluded.  If required take legal advice due to the exceptionally high costs which can result from a requirement to provide bulk transfers.]', italic: true, bold: true, font: 'Calibri'
+docx.p
 
   docx.table(
     [
       [
-        '2.',
+        '1.',
         'DEFINITIONS'
       ]
     ]
@@ -1910,6 +1941,7 @@ if @pension_funds.any?
       cell_style cols[1], font: 'Calibri'
     end
 
+if @pension_funds.any?
   docx.table(
     [
       [
@@ -1935,6 +1967,19 @@ if @pension_funds.any?
         cell_style cols[1], bold: true, font: 'Calibri'
       end
   end
+else
+  docx.table(
+    [
+      [
+        '"Fund"',
+        ''
+      ]
+    ]
+  ) do
+      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[1], bold: true, font: 'Calibri'
+    end
+end
 
   docx.table(
     [
@@ -2403,7 +2448,6 @@ if @pension_funds.any?
     end
 
   docx.page
-end
 
 docx.p 'PART E: STAFF TRANSFER ON EXIT (MANDATORY)', align: :center, bold: true, font: 'Calibri'
 
