@@ -101,13 +101,13 @@ RSpec.describe WorkingDays do
 
         context 'when the start date is a Saturday with a bank holiday on Monday' do
           it 'is expeted to return the next Thursday' do
-            expect(described_class.working_days(2, DateTime.new(2020, 7, 11, 17, 3, 7).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 7, 16, 0, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(2, DateTime.new(2020, 7, 11, 17, 3, 7).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 7, 15, 23, 0, 0, '+1').in_time_zone('London')
           end
         end
 
         context 'when the start date is a Sunday with a bank holiday on Monday' do
           it 'is expeted to return the next Thursday' do
-            expect(described_class.working_days(2, DateTime.new(2021, 4, 4, 18, 4, 32).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 8, 0, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(2, DateTime.new(2021, 4, 4, 18, 4, 32).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 7, 23, 0, 0, '+1').in_time_zone('London')
           end
         end
 
@@ -115,7 +115,7 @@ RSpec.describe WorkingDays do
           it 'is expected to return in two working days' do
             expect(described_class.working_days(2, DateTime.new(2020, 3, 17, 16, 1, 23).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 3, 20, 0, 0, 0).in_time_zone('London')
             expect(described_class.working_days(2, DateTime.new(2020, 12, 25, 15, 46, 12).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 12, 31, 0, 0, 0).in_time_zone('London')
-            expect(described_class.working_days(2, DateTime.new(2021, 4, 5, 11, 3, 27).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 8, 0, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(2, DateTime.new(2021, 4, 5, 11, 3, 27).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 7, 23, 0, 0, '+1').in_time_zone('London')
           end
         end
       end
@@ -126,7 +126,7 @@ RSpec.describe WorkingDays do
         it 'is expected to return in one working day' do
           expect(described_class.working_days(1, DateTime.new(2020, 9, 7, 11, 12, 12).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 9, 8, 12, 12, 12, '+1').in_time_zone('London')
           expect(described_class.working_days(1, DateTime.new(2020, 9, 9, 13, 41, 11).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 9, 10, 14, 41, 11, '+1').in_time_zone('London')
-          expect(described_class.working_days(1, DateTime.new(2020, 9, 12, 18, 56, 32).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 9, 15, 0, 0, 0, '+1').in_time_zone('London')
+          expect(described_class.working_days(1, DateTime.new(2020, 9, 12, 18, 56, 32).in_time_zone('London').to_datetime)).to eq DateTime.new(2020, 9, 14, 23, 0, 0, '+1').in_time_zone('London')
         end
       end
 
@@ -134,14 +134,14 @@ RSpec.describe WorkingDays do
         it 'is expected to return in one working day' do
           expect(described_class.working_days(1, DateTime.new(2021, 3, 31, 17, 12, 1).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 1, 18, 12, 1, '+1').in_time_zone('London')
           expect(described_class.working_days(1, DateTime.new(2021, 4, 1, 14, 3, 21).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 6, 15, 3, 21, '+1').in_time_zone('London')
-          expect(described_class.working_days(1, DateTime.new(2021, 4, 3, 15, 6, 38).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 7, 0, 0, 0, '+1').in_time_zone('London')
+          expect(described_class.working_days(1, DateTime.new(2021, 4, 3, 15, 6, 38).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 6, 23, 0, 0, '+1').in_time_zone('London')
         end
 
         context 'when the start date is a bank holiday' do
           it 'is expected to return in one working day' do
-            expect(described_class.working_days(1, DateTime.new(2021, 4, 2, 21, 4, 52).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 7, 0, 0, 0, '+1').in_time_zone('London')
-            expect(described_class.working_days(1, DateTime.new(2021, 8, 2, 6, 54, 2).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 8, 4, 0, 0, 0, '+1').in_time_zone('London')
-            expect(described_class.working_days(1, DateTime.new(2021, 8, 29, 23, 4, 3).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 9, 1, 0, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(1, DateTime.new(2021, 4, 2, 21, 4, 52).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 4, 6, 23, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(1, DateTime.new(2021, 8, 2, 6, 54, 2).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 8, 3, 23, 0, 0, '+1').in_time_zone('London')
+            expect(described_class.working_days(1, DateTime.new(2021, 8, 29, 23, 4, 3).in_time_zone('London').to_datetime)).to eq DateTime.new(2021, 8, 31, 23, 0, 0, '+1').in_time_zone('London')
           end
         end
       end
