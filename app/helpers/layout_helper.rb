@@ -129,7 +129,7 @@ module LayoutHelper
     buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
     buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
     if secondary_button || primary_button
-      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') if return_link
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19', style: 'display: block') if return_link
     end
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
@@ -191,8 +191,8 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, attribute, &block)
-    attribute_has_errors = form.object.errors[attributes].any?
+  def govuk_grouped_field(form, caption, attribute, header_text = '', &block)
+    attribute_has_errors = form.object.errors[attribute].any?
 
     options                     = {}
     options['aria-describedby'] = error_id(attribute)
@@ -200,27 +200,30 @@ module LayoutHelper
     options['class']            = css_classes
 
     if attribute_has_errors
-      content_tag :div, fieldset_structure(form, caption, options, attribute, &block),
+      content_tag :div, fieldset_structure(form, caption, options, header_text, attribute, &block),
                   class: 'govuk-form-group govuk-form-group--error'
     else
-      fieldset_structure(form, caption, options, attribute, &block)
+      fieldset_structure(form, caption, options, header_text, attribute, &block)
     end
   end
 
-  def fieldset_structure(form, caption, options, *attributes, &block)
+  # rubocop:disable Metrics/ParameterLists
+  def fieldset_structure(form, caption, options, header_text, *attributes, &block)
     content_tag :fieldset, options do
       capture do
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
+        concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
         attributes.flatten.each do |attr|
           concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array
-          concat(display_error(form.object, attr)) unless form.object[attr].is_a? Array
+          concat(display_error(form.object, attr, false)) unless form.object[attr].is_a? Array
         end
         block.call(form, attributes.flatten)
       end
     end
   end
+  # rubocop:enable Metrics/ParameterLists
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',

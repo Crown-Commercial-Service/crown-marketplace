@@ -18,6 +18,8 @@ module FacilitiesManagement::Beta::BuildingsHelper
   end
 
   def open_state_of_building_details(building)
+    return false if building[:building_type].blank?
+
     if building.building_type == 'other' || building.errors.key?(:other_building_type) ||
        FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:title] }.exclude?(building[:building_type])
       true

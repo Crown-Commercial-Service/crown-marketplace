@@ -22,10 +22,12 @@ module FacilitiesManagement
     validates :security_type, presence: true, on: %i[security all]
     validates :building_type, presence: true, on: %i[type all]
     validates :address_region, presence: true, if: -> { address_postcode.present? && address_line_1.present? }
-    validates :address_postcode, presence: true, on: %i[new edit all add_address], if: -> { postcode_entry.blank? }
+    validates :address_postcode, presence: true, on: %i[new edit all], if: -> { postcode_entry.blank? }
+    validates :address_postcode, presence: true, on: %i[add_address]
     validates :address_town, presence: true, on: %i[all add_address]
     validates :address_line_1, presence: true, on: %i[all add_address], if: -> { address_postcode.present? }
-    validate :address_selection
+    validates :address_line_1, presence: true, on: %i[add_address]
+    validate :address_selection, on: %i[new edit all]
     validate :postcode_format, on: %i[new edit all add_address], if: -> { address_postcode.present? }
     validates :other_building_type, presence: true, on: %i[type all], if: -> { building_type == 'other' }
     validates :other_security_type, presence: true, on: %i[security all], if: -> { security_type == 'other' }

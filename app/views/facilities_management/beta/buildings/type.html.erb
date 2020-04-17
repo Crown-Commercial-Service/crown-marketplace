@@ -18,7 +18,7 @@
         <div class="govuk-body" style="margin-left:1ex">
           Or
         </div>
-        <details class="govuk-details govuk-!-margin-bottom-6" style="margin-left:1.5ex" data-module="govuk-details"  <%= 'open="true"' if open_state_of_building_details(ff.object) %> >
+        <details class="govuk-details" style="margin-left:1.5ex" data-module="govuk-details"  <%= 'open="true"' if open_state_of_building_details(ff.object) %> >
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">
               <%= t('.view_more') %>
@@ -38,13 +38,13 @@
               Or
             </div>
             <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object)) do %>
-              <div class="govuk-radios__item">
+              <div class="govuk-radios__item" data-module="other-expando">
                 <div class="other_container">
                   <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
                   <%= ff.label :building_type, 'other', class: 'govuk-label govuk-radios__label' do
                     t('.other')
                   end %>
-                  <div class="govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
+                  <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].building_type != 'other'%>govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
                     <div class="other_input ccs-character-count-container" data-module="character-count" data-maxlength="150" style="margin-left: 1.5ex">
                       <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></label>
                       <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex') %>

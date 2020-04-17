@@ -62,6 +62,7 @@ FindAddressComponent.prototype.clearFieldErrors = function() {
 
 FindAddressComponent.prototype.lookupInput = function (e) {
     e.preventDefault();
+    this.clearFieldErrors();
     var input = pageUtils.destructurePostCode(this.sourceInput.value);
     if (input.valid) {
     	this.clearFieldErrors();
@@ -86,6 +87,10 @@ FindAddressComponent.prototype.lookupInput = function (e) {
                 noResultsFn(sourceInput, data.result);
             }
         }.bind(this)).fail(noResultsFn);
+    } else {
+        anyArbitraryName.global_formValidators[0].testError(
+	        anyArbitraryName.global_formValidators[0].validationFunctions["regex"],
+	        $(this.sourceInput), "invalid");
     }
 };
 
@@ -456,6 +461,22 @@ function nodeListForEach(nodes, callback) {
         callback.call(window, nodes[i], i, nodes);
     }
 }
+
+$other_expandos = document.querySelectorAll('[data-module="other-expando"]') ;
+nodeListForEach($other_expandos, function (expandoItem) {
+	var innerRadio = expandoItem.querySelector('input[type="radio"]');
+	var innerContent = expandoItem.querySelector('[data-element="other-expando--content"');
+	if (null !== innerRadio && null !== innerContent) {
+		var radioName = innerRadio.name;
+		$("input[name=\"" + radioName + "\"]").change ( function (e) {
+		    if ( $(innerRadio).is(":checked")) {
+		        $(innerContent).removeClass('govuk-visually-hidden');
+			} else {
+				$(innerContent).addClass('govuk-visually-hidden');
+			}
+		});
+	}
+});
 
 $changeAddress = document.querySelectorAll('[data-module="find-address"');
 nodeListForEach($changeAddress, function ($changeAddressModule) {
