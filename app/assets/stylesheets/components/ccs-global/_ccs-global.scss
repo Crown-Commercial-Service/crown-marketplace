@@ -1043,3 +1043,7 @@ table.ccs-at-govuk-table--5050 {
 /* password strength ends */
 
 .break-before:before { content: '\A'; white-space:pre; }
+
+#main-content {
+  word-break: break-word;
+}

@@ -229,11 +229,11 @@ module FacilitiesManagement
     end
 
     def format_date_time_numeric(date)
-      date&.strftime '%d/%m/%Y, %l:%M%P'
+      date&.in_time_zone('London')&.strftime '%d/%m/%Y, %l:%M%P'
     end
 
     def format_date(date)
-      date&.strftime '%d/%m/%Y'
+      date&.in_time_zone('London')&.strftime '%d/%m/%Y'
     end
 
     def host
