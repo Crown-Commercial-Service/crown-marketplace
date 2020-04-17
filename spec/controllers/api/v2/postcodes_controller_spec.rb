@@ -14,14 +14,15 @@ RSpec.describe Api::V2::PostcodesController, type: :controller do
     it 'will get 8 results' do
       postcode = 'EH15 2BA'
       get :show, params: { id: postcode }
+      puts response
       json_response = JSON.parse(response.body)
-      expect(json_response['status']).to eq(200)
       expect(json_response['result'].length).to eq(8)
     end
 
     it 'will see a summary line in the results' do
       postcode = 'EH15 2BA'
       get :show, params: { id: postcode }
+      puts response
       json_response = JSON.parse(response.body)
       expect(json_response['result'][0]['summary_line'].present?).to eq(true)
     end
