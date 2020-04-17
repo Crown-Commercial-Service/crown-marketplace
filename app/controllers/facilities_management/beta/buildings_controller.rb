@@ -37,9 +37,8 @@ module FacilitiesManagement
         end
 
         unless params[:step] != 'add_address'
-          unless @page_data[:model_object].valid?(:add_address)
-            render :add_address and return
-          end
+          render :add_address and return if @page_data[:model_object].invalid?(:add_address)
+
           resolve_region if params[:step] == 'add_address'
           rebuild_page_data(@page_data[:model_object])
           render :new and return
