@@ -57,7 +57,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.initial_call_off_period = 1
         procurement.mobilisation_period = 0
         procurement.save context: :contract_dates
-        expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
+        expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :not_a_date
         expect(procurement.valid?(:contract_dates)).to eq false
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_period = 1
           procurement.mobilisation_period = 1
           procurement.save context: :contract_dates
-          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
+          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :not_a_date
           expect(procurement.valid?(:contract_dates)).to eq false
         end
       end
@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = nil
           procurement.save context: :contract_dates
-          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
+          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :not_a_date
           expect(procurement.valid?(:contract_dates)).to eq false
         end
         it 'will be invalid if the date is the wrong format or empty' do
@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = ''
           procurement.save context: :contract_dates
-          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :blank
+          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :not_a_date
           expect(procurement.valid?(:contract_dates)).to eq false
         end
         it 'will be invalid if the date is before now' do
@@ -105,9 +105,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'will be valid if the date is after now' do
           procurement.initial_call_off_period = 1
           procurement.tupe = false
+          procurement.mobilisation_period_required = true
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
           procurement.save context: :contract_dates
           expect(procurement.valid?(:contract_dates)).to eq true
         end
@@ -117,9 +119,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'will be valid when mob period is 1 and TUPE is false' do
           procurement.initial_call_off_period = 1
           procurement.tupe = false
+          procurement.mobilisation_period_required = true
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
           procurement.save context: :contract_dates
           expect(procurement.valid?(:contract_dates)).to eq true
         end
@@ -136,9 +140,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'will be valid when mob period is 4 and TUPE is true' do
           procurement.initial_call_off_period = 1
           procurement.tupe = true
+          procurement.mobilisation_period_required = true
           procurement.mobilisation_period = 4
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
           procurement.save context: :contract_dates
           expect(procurement.valid?(:contract_dates)).to eq true
         end
