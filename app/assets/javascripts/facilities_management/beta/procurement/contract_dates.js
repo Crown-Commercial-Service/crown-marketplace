@@ -274,7 +274,7 @@ $(function () {
 
             switch ( prop_name) {
                 case "Mobilisation period choice":
-                    message = "Select yes if you need mobilisation period";
+                    message = "Select yes if you need a mobilisation period";
                     break;
                 case "Extensions choice":
                     message = "Select yes if you want to extend your call-off contract";

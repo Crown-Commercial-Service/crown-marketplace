@@ -1,9 +1,10 @@
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any? %>" data-propertyname="Extensions choice">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any? || @procurement.errors[:extensions_required].any?%>" data-propertyname="Extensions choice">
     <%= f.label :optional_call_off_extensions_1, 'Do you want the option to extend your call-off contract?', class: "govuk-heading-m govuk-!-margin-bottom-0" %>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
     <span id="extensions-required-warning"/>
     <div class="govuk-radios govuk-!-margin-top-3" data-propertyname="Extensions choice">
+      <%= display_errors(f.object, :extensions_required)%>
       <div class="govuk-radios__item">
         <%= f.radio_button :extensions_required, true, class: "govuk-radios__input" %>
         <%= f.label :extensions_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>

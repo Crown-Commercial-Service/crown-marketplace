@@ -103,6 +103,8 @@ en:
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
               not_present: You must answer the question about 'Estimated annual cost'
+            extensions_required:
+              inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -114,7 +116,9 @@ en:
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
+              after_or_equal_to: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
+              not_a_date: dada
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
@@ -125,6 +129,8 @@ en:
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_period_required:
+              inclusion: Select yes if you need a mobilisation period
             mobilisation_start_date:
               greater_than: Mobilisation start date must be in the future
             name:
