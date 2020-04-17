@@ -152,7 +152,7 @@ function LookupHandler(parent, findAddressModule) {
 	
     this.resultsContainer = null;
     this.resultsDropDown = null;
-    this.regionDropDown = null;
+    this.regionDropDownregionDropDown = null;
     this.addressDisplay = null;
     this.addressDisplayText = null;
     this.btnCantFindAddress = null;
@@ -176,7 +176,6 @@ LookupHandler.prototype.init = function () {
     this.regionArea = this.resultsContainer.querySelector('[data-module-part="region-area"]');
     this.resultsDropDown = this.resultsContainer.querySelector('[data-module-element="results-container"]');
     this.addressDisplay = this.parent.querySelector('[data-module-part="address-display"]');
-    this.regionDisplay = this.parent.querySelector('[data-module-part="region-results"]');
     this.addressDisplayText = this.addressDisplay.querySelector('[data-module-part="address_text"]');
     this.regionResults = this.resultsContainer.querySelector('[data-module-part="region-results"]');
     this.regionResultsText = this.resultsContainer.querySelector('[data-module-part="region-text"]');
@@ -222,14 +221,14 @@ LookupHandler.prototype.clearRegionResultsList = function () {
 
 LookupHandler.prototype.showRegionChoices = function () {
     var classname = 'govuk-visually-hidden';
-    $(this.regionResultsText).addClass(classname);
-    $(this.lookupRegionResultsContainer).removeClass(classname);
-    this.regionDropDown.selectedIndex = 0;
-    $("#address-region").val("");
-    $("#address-region-code").val("");
+	$("#address-region").val("");
+	$("#address-region-code").val("");
+	this.regionDropDown.selectedIndex = 0;
+
+    this.showRegionText(false);
+	this.changeRegionLookupResultsVisibility(true);
 
     $(this.btnChangeRegion).addClass(classname);
-
 };
 
 LookupHandler.prototype.cantFindAddress = function (bShow) {
@@ -294,16 +293,13 @@ LookupHandler.prototype.showDecision = function () {
 
 LookupHandler.prototype.showRegionDecision = function () {
     var classname = 'govuk-visually-hidden';
-    this.showRegionResults(true);
     this.showRegionText(true);
 	
 	anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.regionDropDown));
 	anyArbitraryName.global_formValidators[0].removeListElementInBannerError($(this.regionDropDown));
 	anyArbitraryName.global_formValidators[0].toggleBannerError();
 	
-	$(this.regionResults).removeClass(classname);
-    $(this.regionDisplay).removeClass(classname);
-    $(this.lookupRegionResultsContainer).addClass(classname);
+	this.changeRegionLookupResultsVisibility(false);
 };
 
 LookupHandler.prototype.selectResult = function (e) {
