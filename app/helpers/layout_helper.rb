@@ -189,19 +189,19 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, *attributes, &block)
-    attributes_have_errors = attributes.any? { |attr| form.object.errors[attr].any? }
+  def govuk_grouped_field(form, caption, attribute, &block)
+    attribute_has_errors = form.object.errors[attributes].any?
 
     options                     = {}
-    options['aria-describedby'] = attributes.each { |attr| error_id(attr) }.join(' ') if attributes_have_errors
+    options['aria-describedby'] = error_id(attribute)
     css_classes                 = ['govuk-fieldset']
     options['class']            = css_classes
 
-    if attributes_have_errors
-      content_tag :div, fieldset_structure(form, caption, options, attributes, &block),
+    if attribute_has_errors
+      content_tag :div, fieldset_structure(form, caption, options, attribute, &block),
                   class: 'govuk-form-group govuk-form-group--error'
     else
-      fieldset_structure(form, caption, options, attributes, &block)
+      fieldset_structure(form, caption, options, attribute, &block)
     end
   end
 
@@ -215,7 +215,7 @@ module LayoutHelper
           concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array
           concat(display_error(form.object, attr)) unless form.object[attr].is_a? Array
         end
-        block.call(form, attributes)
+        block.call(form, attributes.flatten)
       end
     end
   end
