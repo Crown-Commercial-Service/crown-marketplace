@@ -8,7 +8,7 @@
           <% if controller.controller_name == 'buildings' || controller.class.parent == FacilitiesManagement::Beta::Procurements%>
             <%= link_to 'My account', facilities_management_beta_path, class: 'govuk-header__link' %>
           <% else %>
-            <%= link_to 'Back to start', facilities_management_beta_path, class: 'govuk-header__link back_to_start_link' %>
+            <%= link_to 'Back to start', facilities_management_beta_path, class: 'govuk-header__link' %>
           <% end %>
         </li>
       <% end %>

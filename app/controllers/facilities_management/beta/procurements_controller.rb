@@ -332,7 +332,18 @@ module FacilitiesManagement
       end
 
       def update_pension_funds
-        if @procurement.update(procurement_params)
+        pension_funds = procurement_params[:procurement_pension_funds_attributes]
+        updated_pension_funds = {}
+        pension_funds.each do |pf|
+          if pf[1]['_destroy'] == 'true' && !pf[1]['id'].nil?
+            @procurement.update(procurement_pension_funds_attributes: pf[1])
+          else
+            updated_pension_funds[pf[0]] = pf[1]
+          end
+        end
+
+        @procurement.reload
+        if @procurement.update(procurement_pension_funds_attributes: updated_pension_funds)
           redirect_to facilities_management_beta_procurement_path(id: @procurement.id)
         else
           set_step_param
