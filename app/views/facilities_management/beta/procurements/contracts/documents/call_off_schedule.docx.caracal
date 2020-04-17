@@ -320,7 +320,7 @@ docx.p 'BUYER INVOICING ADDRESS:', bold: true, font: 'Calibri'
 
 docx.p @invoice_contact_detail.full_name, font: 'Calibri'
 docx.p @invoice_contact_detail.job_title, font: 'Calibri'
-docx.p @invoice_contact_detail.user.email, font: 'Calibri'
+docx.p @invoice_contact_detail.email, font: 'Calibri'
 docx.p @invoice_contact_detail.full_organisation_address, font: 'Calibri'
 docx.p
 
@@ -328,7 +328,7 @@ docx.p 'BUYER AUTHORISED REPRESENTATIVE:', bold: true, font: 'Calibri'
 
 docx.p @authorised_contact_detail.full_name, font: 'Calibri'
 docx.p @authorised_contact_detail.job_title, font: 'Calibri'
-docx.p @authorised_contact_detail.user.email, font: 'Calibri'
+docx.p @authorised_contact_detail.email, font: 'Calibri'
 docx.p @authorised_contact_detail.full_organisation_address, font: 'Calibri'
 docx.p @authorised_contact_detail.telephone_number, font: 'Calibri'
 
@@ -338,7 +338,7 @@ docx.p 'BUYER NOTICES:', bold: true, font: 'Calibri'
 
 docx.p @notice_contact_detail.full_name, font: 'Calibri'
 docx.p @notice_contact_detail.job_title, font: 'Calibri'
-docx.p @notice_contact_detail.user.email, font: 'Calibri'
+docx.p @notice_contact_detail.email, font: 'Calibri'
 docx.p @notice_contact_detail.full_organisation_address, font: 'Calibri'
 docx.p
 
