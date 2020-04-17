@@ -64,7 +64,7 @@
               </a>
             </li>
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <a href="<%= facilities_management_beta_procurement_contract_documents_call_off_schedule_2_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
                 <%= t(".contract_documents.call_off_schedule_2.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
               </a>
             </li>

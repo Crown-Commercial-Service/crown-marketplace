@@ -262,9 +262,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:code2) { nil }
     let(:lift_data) { nil }
     let(:estimated_annual_cost) { 7000000 }
+    let(:service_standard) { 'A' }
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
              code: code,
+             service_standard: service_standard,
              lift_data: lift_data,
              procurement_building: create(:facilities_management_procurement_building_no_services,
                                           building_id: create(:facilities_management_building_london).id,
@@ -296,18 +298,27 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:code2) { 'C.7' } # no fw price
 
       context 'when variance between the Customer & BM prices and the available FW prices is >|30%|' do
-        let(:estimated_annual_cost) { 843500 }
+        let(:estimated_annual_cost) { 1 }
+        let(:service_standard) { 'B' } # C.5 no fw price (standard B)
 
         it 'uses BM and Customer prices only' do
           expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))
         end
       end
 
-      context 'when variance between the Customer & BM prices and the available FW prices is <|30%|' do
-        let(:estimated_annual_cost) { 37355000 }
+      context 'when variance between the Customer & BM prices and the available FW prices is >|-30%| and <|30%|' do
+        let(:estimated_annual_cost) { 1850843 }
 
         it 'uses FW, BM and Customer prices' do
           expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
+        end
+      end
+
+      context 'when variance between the Customer & BM prices and the available FW prices is and <|-30%|' do
+        let(:estimated_annual_cost) { 125084300 }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))
         end
       end
     end
@@ -319,18 +330,27 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:code2) { 'G.8' } # no fw & no bm price
 
       context 'when variance between FM & BM and Customer input is >|30%|' do
-        let(:estimated_annual_cost) { 7000000 }
+        let(:lift_data) { %w[10] }
+        let(:estimated_annual_cost) { 1 }
 
         it 'uses Customer price only' do
           expect(report.assessed_value.round(2)).to eq(report.buyer_input.round(2))
         end
       end
 
-      context 'when variance between FM & BM and Customer input is <|30%|' do
-        let(:estimated_annual_cost) { 1 }
+      context 'when variance between FM & BM and Customer input is >|-30%| and <|30%|' do
+        let(:estimated_annual_cost) { 1227921 }
 
         it 'uses FW, BM and Customer prices' do
           expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))
+        end
+      end
+
+      context 'when variance between FM & BM and Customer input is <|-30%|' do
+        let(:estimated_annual_cost) { 2000 }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(report.buyer_input.round(2))
         end
       end
     end

@@ -148,7 +148,7 @@ module FacilitiesManagement
       procurement.procurement_suppliers.where.not(aasm_state: 'unsent')&.last&.id != id
     end
 
-    SENT_OFFER_ORDER = %i[sent declined expired accepted not_signed].freeze
+    SENT_OFFER_ORDER = %w[sent declined expired accepted not_signed].freeze
 
     CLOSED_TO_SUPPLIER = %w[declined expired withdrawn not_signed].freeze
 
@@ -213,7 +213,7 @@ module FacilitiesManagement
 
       return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
-      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number_fc(procurement.id + procurement.contract_name)
+      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
     def set_sent_date

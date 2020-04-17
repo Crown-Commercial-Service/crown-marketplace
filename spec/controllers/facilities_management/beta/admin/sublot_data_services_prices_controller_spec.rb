@@ -52,6 +52,12 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
       put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
       expect(response).to redirect_to(facilities_management_beta_admin_supplier_framework_data_path)
     end
+
+    it 'updates data table for rates with invalid rate value' do
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 'abcd', 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00, 'data[C.4][Direct Award Discount (%)]': 1.00 }
+
+      expect(flash[:error]).to match ['M.141', 'abcd']
+    end
   end
 
   describe 'PUT update_rates for checkbox' do
@@ -92,6 +98,12 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
 
       expect(supplier_data['C.1']['Disc %']).to eq 1.00
       expect(supplier_data['C.4']['Disc %']).to eq 1.00
+    end
+
+    it 'updates data table with invalid data value' do
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][Call Centre Operations (£)]': 'XYZ', 'data[C.7][Special Schools (£)]': 1.40 }
+
+      expect(flash[:error]).to match ['C.1', 'C.1Call Centre Operations (£)', 'XYZ']
     end
   end
 end

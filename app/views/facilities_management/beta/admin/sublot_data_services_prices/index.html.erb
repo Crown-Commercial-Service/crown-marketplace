@@ -6,6 +6,22 @@
     <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_beta_admin_supplier_framework_data_path %>"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.breadcrumb_text_supplier_framework_data') %></a></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.leading_text') %></li>
   </ol>
 </div>
+
+<% if flash[:error] %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-input--error">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.there_is_a_problem') %>
+       </h2>
+       <div class="govuk-error-summary__body">
+         <p class="govuk-body govuk-body-s govuk-error-message"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %></p>
+       </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-l"><%= @supplier_name %></span>
@@ -19,25 +35,22 @@
 
 <div style="width: 3000px !important;">
   <%= form_with(url: "", method: "put", local: "false") do %>
-
   <% @full_services.each do |service| %>
     <table class="govuk-table">
       <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left"><%= service['name'] %></th>
-
         <% @list_service_types.each do |service_type| %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %> </th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
         <% end %>
       </tr>
       </thead>
       <tbody class="govuk-table__body">
       <% service['work_package'].each do |work_pckg| %>
-
         <tr class="govuk-table__row">
           <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
-
-            <div class="govuk-checkboxes__item">
+            <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? work_pckg['code'] %>">
+              <div class="govuk-checkboxes__item">
               <%= check_box_tag(
                       "checked_services[]",
                       work_pckg['code'],
@@ -46,16 +59,27 @@
                       id: "rates_#{work_pckg['code']}"
                   ) %>
               <label class="govuk-label govuk-checkboxes__label" for="service_<%=work_pckg['code'] %>">
-
                 <%= work_pckg['code'] %> <%= work_pckg['name'] %>
               </label>
+            </div>
+              <% if flash[:error]  and flash[:error].include? work_pckg['code'] %>
+                  <span id="event-name-error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+                  </span>
+              <% end %>
             </div>
           </td>
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
-              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="number" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
+            <% if flash[:error]  and flash[:error].include? work_pckg['code'] and flash[:error].include? work_pckg['code']+service_type
+                 prev_display_value_index = flash[:error].index(work_pckg['code']+service_type ) + 1
+            %>
+                <input class="govuk-input govuk-input--width-3 govuk-input--error" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= flash[:error][prev_display_value_index] %>">
+            <% else %>
+              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
+              <% end %>
             </td>
-          <% end %>
+      <% end %>
         </tr>
       <% end %>
       </tbody>
@@ -77,59 +101,124 @@
     </thead>
     <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
+      <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? 'M.140' %>">
       <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_overhead') %>
+        <% if flash[:error]  and flash[:error].include? 'M.140' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
+      </div>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.140]" name="rate[M.140]" type="number" value="<%= @variance_supplier_data['Management Overhead %'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.140' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.140]" name="rate[M.140]" type="text" value="<%= flash[:error][flash[:error].index('M.140') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.140]" name="rate[M.140]" type="text" value="<%= @variance_supplier_data['Management Overhead %'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_corporate') %>
+        <% if flash[:error]  and flash[:error].include? 'M.141' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.141]" name="rate[M.141]" type="number" value="<%= @variance_supplier_data['Corporate Overhead %'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.141' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.141]" name="rate[M.141]" type="text" value="<%= flash[:error][flash[:error].index('M.141') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.141]" name="rate[M.141]" type="text" value="<%= @variance_supplier_data['Corporate Overhead %'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_profit') %>
+        <% if flash[:error]  and flash[:error].include? 'M.142' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.142]" name="rate[M.142]" type="number" value="<%= @variance_supplier_data['Profit %'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.142' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.142]" name="rate[M.142]" type="text" value="<%= flash[:error][flash[:error].index('M.142') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.142]" name="rate[M.142]" type="text" value="<%= @variance_supplier_data['Profit %'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_london') %>
+        <% if flash[:error]  and flash[:error].include? 'M.144' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.144]" name="rate[M.144]" type="number" value="<%= @variance_supplier_data['London Location Variance Rate (%)'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.144' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.144]" name="rate[M.144]" type="text" value="<%= flash[:error][flash[:error].index('M.144') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.144]" name="rate[M.144]" type="text" value="<%= @variance_supplier_data['London Location Variance Rate (%)'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= raw t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_cleaning') %>
+        <% if flash[:error]  and flash[:error].include? 'M.146' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.146]" name="rate[M.146]" type="number" value="<%= @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.146' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.146]" name="rate[M.146]" type="text" value="<%= flash[:error][flash[:error].index('M.146') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.144]" name="rate[M.146]" type="text" value="<%= @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_tupe') %>
+        <% if flash[:error]  and flash[:error].include? 'M.148' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[M.148]" name="rate[M.148]" type="number" value="<%= @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'M.148' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[M.148]" name="rate[M.148]" type="text" value="<%= flash[:error][flash[:error].index('M.148') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[M.148]" name="rate[M.148]" type="text" value="<%= @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     <tr class="govuk-table__row">
       <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
         <%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.td_mobilisation') %>
+        <% if flash[:error]  and flash[:error].include? 'B.1' %>
+          <span id="event-name-error" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.rate_error') %>
+          </span>
+        <% end %>
       </td>
       <td class="govuk-table__cell supplier-rates-td">
-        <input class="govuk-input govuk-input--width-3" id="rate[B.1]" name="rate[B.1]" type="number" value="<%= @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] %>">
+        <% if flash[:error]  and flash[:error].include? 'B.1' %>
+          <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[B.1]" name="rate[B.1]" type="text" value="<%= flash[:error][flash[:error].index('B.1') + 1] %>">
+        <% else %>
+          <input class="govuk-input govuk-input--width-3" id="rate[B.1]" name="rate[B.1]" type="text" value="<%= @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] %>">
+        <% end %>
       </td>
     </tr>
     </tbody>
@@ -139,4 +228,4 @@
   <a href="" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
 
   <% end %>
-    </div>
+</div>

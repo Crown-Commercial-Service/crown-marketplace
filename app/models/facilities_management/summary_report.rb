@@ -218,6 +218,7 @@ module FacilitiesManagement
 
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
                                                v[:service_code],
+                                               v[:service_standard],
                                                uom_value,
                                                occupants,
                                                @tupe_flag,
@@ -259,7 +260,7 @@ module FacilitiesManagement
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
           return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
-        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
       end
@@ -268,21 +269,23 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.framework_rate_for(code).nil?
+      @procurement.procurement_building_services.each do |pbs|
+        return true if CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil?
       end
       false
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
+      @procurement.procurement_building_services.each do |pbs|
+        return true if CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil?
       end
       false
     end
 
-    def variance_over_30_percent?(sample_average, value)
-      (value - sample_average) / value > 0.03
+    def variance_over_30_percent?(new, baseline)
+      variance = (new - baseline) / baseline
+
+      variance > 0.3 || variance < -0.3
     end
   end
 end

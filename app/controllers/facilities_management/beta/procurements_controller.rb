@@ -27,6 +27,7 @@ module FacilitiesManagement
         redirect_to edit_facilities_management_beta_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
 
         @view_name = set_view_data unless @procurement.quick_search?
+        reset_security_policy_document_page
       end
 
       def new
@@ -183,18 +184,13 @@ module FacilitiesManagement
           create_da_buyer_page_data(@view_da)
         else
           @page_data = {}
-          @procurement_reference = generate_contract_number_further_competition
+          @procurement_reference = @procurement.contract_number
           @page_data[:model_object] = @procurement
         end
 
         view_name
       end
       # rubocop:enable Metrics/AbcSize
-
-      def generate_contract_number_further_competition
-        time = Time.now.getlocal
-        FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: []).new_number_fc(@procurement.id + @procurement.contract_name) + " -  #{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
-      end
 
       def update_procurement
         assign_procurement_parameters
@@ -223,6 +219,10 @@ module FacilitiesManagement
 
         @procurement.reload.security_policy_document_file.purge
         @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
+      end
+
+      def reset_security_policy_document_page
+        @procurement.security_policy_document_required = nil if @procurement.security_policy_document_required == true && @procurement.security_policy_document_file.attachment.nil?
       end
 
       def set_da_journey_render
@@ -575,7 +575,7 @@ module FacilitiesManagement
       end
 
       def sent_offers
-        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by { |sent_offer| [sent_offer.offer_sent_date, FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(sent_offer.aasm_state)] }
+        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by(&:offer_sent_date)&.sort_by { |each| FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state) }
       end
 
       def live_contracts

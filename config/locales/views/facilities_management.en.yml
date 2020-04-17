@@ -22,24 +22,31 @@ en:
             friday:
               invalid: Select not required if you don't need the service on Friday
               not_a_date: Enter a real start time or end time for Friday
+              required: You must provide hours required for at least one of the days
             monday:
               invalid: Select not required if you don't need the service on Monday
               not_a_date: Enter a real start time or end time for Monday
+              required: You must provide hours required for at least one of the days
             saturday:
               invalid: Select not required if you don't need the service on Saturday
               not_a_date: Enter a real start time or end time for Saturday
+              required: You must provide hours required for at least one of the days
             sunday:
               invalid: Select not required if you don't need the service on Sunday
               not_a_date: Enter a real start time or end time for Sunday
+              required: You must provide hours required for at least one of the days
             thursday:
               invalid: Select not required if you don't need the service on Thursday
               not_a_date: Enter a real start time or end time for Thursday
+              required: You must provide hours required for at least one of the days
             tuesday:
               invalid: Select not required if you don't need the service on Tuesday
               not_a_date: Enter a real start time or end time for Tuesday
+              required: You must provide hours required for at least one of the days
             wednesday:
               invalid: Select not required if you don't need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
+              required: You must provide hours required for at least one of the days
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
@@ -157,7 +164,7 @@ en:
             security_policy_document_name:
               blank: Enter a security policy document name
             security_policy_document_required:
-              inclusion: Select yes if a security policy document is required for your contract
+              inclusion: Select one option
               not_present_contract_details: You must answer the question about 'Security policy'
             security_policy_document_version_number:
               blank: Enter a security policy document version number
@@ -342,7 +349,9 @@ en:
             heading_title_two: Variances
             leading_text: Sub-lot 1a services, prices, and variances
             note: The tick boxes in the first column indicate the services this suppler can provide.
+            rate_error: The rate must be a number, like 2.60 or 8
             return_button: Return to supplier framework data
+            there_is_a_problem: There is a problem
             update_button: Save and return to supplier framework data
         supplier_rates:
           supplier_benchmark_rates:
@@ -1220,18 +1229,41 @@ en:
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     home:
+      1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
+      1_you_will_tell_us_html: |
+        <li>which services you are looking for</li>
+        <li>building locations and information</li>
+      2_we_will_tell_you_html: |
+        <li>which sub-lot is suitable</li>
+        <li>an estimated contract cost</li>
+        <li>a shortlist of suppliers</li>
+        <li>procurement options to proceed</li>
+      2_you_will_tell_us_html: |
+        <li>about your buildings and service requirements</li>
+        <li>basic contract information</li>
+      3_DA_list_html: |
+        <li>create your contract online, and offer to the cheapest supplier</li>
+        <li>the quickest, simplest way to procure FM services</li>
+      3_FC_list_html: "<li>download your supplier shortlist and requirement documents</li>\n"
+      3_offline_list_html: |
+        <li>use our templates to create a bid pack offline</li>
+        <li>invite shortlisted suppliers to bid for your contract</li>
+        <li>evaluate supplier responses and pricing</li>
+        <li>award your contract</li>
       beforeyoustart: Before you start
-      heading: Find Facilities Management services
+      heading: Find a facilities management supplier
       startlist: |
         <li>what services you are looking for</li>
-        <li>building locations and information</li>
-        <li>details of how long you want the services for</li>
+        <li>your building locations and information</li>
+        <li>your basic contract requirements</li>
       startnow: Start now
-      subheading: 'Use this tool to:'
+      subheading: 'Use this service to:'
       usagelist: |
-        <li>find a supplier for your facilities management requirements</li>
-        <li>see a shortlist of suppliers available in your region</li>
-        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
+        <li>quick view suppliers who can provide services to your locations</li>
+        <li>see an estimated contract cost</li>
+        <li>create and offer a direct award contract</li>
+        <li>shortlist of suppliers ready for further competition</li>
+        <li>compliantly place a contract with a supplier</li>
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
