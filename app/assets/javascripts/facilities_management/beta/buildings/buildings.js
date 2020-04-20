@@ -181,7 +181,7 @@ LookupHandler.prototype.init = function () {
     this.regionResultsText = this.resultsContainer.querySelector('[data-module-part="region-text"]');
     if (!this.resultsDropDown || !this.addressDisplay) return;
 
-    this.regionDropDown = this.resultsContainer?.querySelector('[data-module-element="region-results-container"]');
+    this.regionDropDown = this.resultsContainer.querySelector('[data-module-element="region-results-container"]');
     this.btnCantFindAddress = this.resultsContainer.querySelector('[data-module-element="cant-find"]');
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
