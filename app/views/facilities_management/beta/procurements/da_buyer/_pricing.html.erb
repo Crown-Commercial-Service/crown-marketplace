@@ -21,7 +21,7 @@
       <div class="govuk-summary-list__row">
         <tr class="govuk-summary-list__value govuk-heading-m govuk-!-margin-bottom-0">
           <td class= "govuk-!-width-full"><%= "Supplier #{i + 2}" %></td>
-          <td align="right"><%= number_to_currency(s[:price]) %></td>
+          <td align="right" style="min-width:10em"><%= number_to_currency(s[:price]) %></td>
         </tr>
       </div>
     <% end %>

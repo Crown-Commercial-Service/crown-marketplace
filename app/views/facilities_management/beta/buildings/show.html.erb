@@ -34,7 +34,7 @@
             <%= link_to t('.add_desc_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
           <% end %>
         </td>
-        <td>
+        <td style="width:4em">
           <% unless @page_data[:model_object].description.blank? %>
             <%= link_to t('.change_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
           <% end %>
