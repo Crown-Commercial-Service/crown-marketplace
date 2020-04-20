@@ -15,7 +15,7 @@
   <div class="govuk-form-group initial_call_off_start_date <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_start_date].any?%>"
        data-propertyname="Initial call-off start date">
     <%= f.label :initial_call_off_start_date, 'Initial call-off start date', class: "govuk-heading-s govuk-!-margin-bottom-0"%>
-    <span class="govuk-caption-m">For example, 01 11 2010</span>
+    <span class="govuk-caption-m">For example, 28 2 2021</span>
     <%= display_errors(f.object, :initial_call_off_start_date)%>
     <%= f.gov_uk_date_field :initial_call_off_start_date, legend_options: { page_heading: false, visually_hidden: true } %>
   </div>
