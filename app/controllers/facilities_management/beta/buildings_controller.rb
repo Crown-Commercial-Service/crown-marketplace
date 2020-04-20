@@ -171,7 +171,7 @@ module FacilitiesManagement
         @page_data                = {}
         @page_data[:model_object] = Building.find(params[:id]) if params[:id]
         @page_data[:model_object] = current_user.buildings.order('lower(building_name)') if action_name == 'index'
-        @page_data[:model_object] = Building.new if @page_data[:model_object].blank?
+        @page_data[:model_object] = Building.new if @page_data[:model_object].nil?
 
         build_page_description
       end
