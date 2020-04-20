@@ -4,9 +4,8 @@ module BuildingsControllerRegions
   def find_addresses_by_postcode(postcode)
     Rails.logger.info "Postcode lookup: #{postcode}"
     Postcode::PostcodeChecker_V2.location_info(postcode)
-
   rescue StandardError => e
-    Rails.logger.error("Postcode lookup error:\n#{([e.message]+e.backtrace).join($/)}")
+    Rails.logger.error("Postcode lookup error:\n#{e.message}")
     []
   end
 
@@ -20,7 +19,7 @@ module BuildingsControllerRegions
 
     result
   rescue StandardError => e
-    Rails.logger.error("Region lookup error:\n#{([e.message]+e.backtrace).join($/)}")
+    Rails.logger.error("Region lookup error:\n#{e.message}")
     []
   end
 
