@@ -30,14 +30,13 @@
           </tr>
           </thead>
           <tbody class="govuk-table__body">
-          <% @page_data[:model_object].each do |record| %>
-            <% building = record['building_json'] %>
+          <% @page_data[:model_object].each do |building| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to building['name'].to_s, facilities_management_beta_building_path(record.id), class: 'govuk-link', 'aria-label' => t('.link_to_building_summary') %>
+              <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_beta_building_path(building.id), class: 'govuk-link', 'aria-label' => t('.link_to_building_summary') %>
               </td>
-              <td class="govuk-table__cell"><%= building['description'].to_s.length > 0 ? building['description'].to_s : '-' %></td>
-              <td class="govuk-table__cell"><%= record['updated_at'].to_datetime.strftime("%d/%m/%Y") %>&nbsp;<%= record['updated_at'].to_datetime.strftime("%H:%M") %>&nbsp;BST</td>
-              <td class="govuk-table__cell"><strong class="govuk-tag ccs-tag-<%= record['status'] == 'Ready' ? 'approved' : 'rejected' %>"><%= record['status'].to_s %></td>
+              <td class="govuk-table__cell"><%= building.description.to_s.length > 0 ? building['description'].to_s : '-' %></td>
+              <td class="govuk-table__cell"><%= building.updated_at.to_datetime.strftime("%d/%m/%Y") %>&nbsp;<%= building.updated_at.to_datetime.strftime("%H:%M") %>&nbsp;BST</td>
+              <td class="govuk-table__cell"><strong class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></td>
             </tr>
           <% end %>
           </tbody>

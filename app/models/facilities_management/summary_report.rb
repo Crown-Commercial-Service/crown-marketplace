@@ -19,7 +19,7 @@ module FacilitiesManagement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
       @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building['building_json']['address']['fm-address-region-code'] }
+      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
