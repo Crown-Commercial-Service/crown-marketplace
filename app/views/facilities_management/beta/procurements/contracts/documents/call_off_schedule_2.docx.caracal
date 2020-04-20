@@ -294,7 +294,7 @@ docx.table(
     ],
     [
       '3.3',
-      '3.3	The Supplier shall comply with all its obligations under the Employment Regulations and shall perform and discharge all its obligations in respect of the Transferring Buyer Employees, from (and including) the Relevant Transfer Date including (without limit) the payment of all remuneration, benefits, entitlements, PAYE, national insurance contributions and pension contributions and any other sums due under Part D: Pensions.'
+      'The Supplier shall comply with all its obligations under the Employment Regulations and shall perform and discharge all its obligations in respect of the Transferring Buyer Employees, from (and including) the Relevant Transfer Date including (without limit) the payment of all remuneration, benefits, entitlements, PAYE, national insurance contributions and pension contributions and any other sums due under Part D: Pensions.'
     ]
   ]
 ) do
@@ -482,7 +482,7 @@ docx.table(
     ],
     [
       '2.3',
-      '2.3	Subject to Paragraphs 2.4 and 2.5, if any employee of a Former Supplier who is not identified as a Transferring Former Supplier Employee and claims, and/or it is determined, in relation to such person that his/her contract of employment has been transferred from a Former Supplier to the Supplier and/or any Notified Subcontractor pursuant to the Employment Regulations then:'
+      'Subject to Paragraphs 2.4 and 2.5, if any employee of a Former Supplier who is not identified as a Transferring Former Supplier Employee and claims, and/or it is determined, in relation to such person that his/her contract of employment has been transferred from a Former Supplier to the Supplier and/or any Notified Subcontractor pursuant to the Employment Regulations then:'
     ]
   ]
 ) do
@@ -592,7 +592,7 @@ docx.table(
     ],
     [
       '3.3',
-      '3.3	The Supplier shall comply with all its obligations under the Employment Regulations and shall perform and discharge all its obligations in respect of all the Transferring Former Supplier Employees, on and from the Relevant Transfer Date including (without limit) the payment of all remuneration, benefits, entitlements, PAYE, national insurance contributions and pension contributions and all such sums due under Part D: Pensions.'
+      'The Supplier shall comply with all its obligations under the Employment Regulations and shall perform and discharge all its obligations in respect of all the Transferring Former Supplier Employees, on and from the Relevant Transfer Date including (without limit) the payment of all remuneration, benefits, entitlements, PAYE, national insurance contributions and pension contributions and all such sums due under Part D: Pensions.'
     ]
   ]
 ) do
@@ -909,91 +909,108 @@ docx.table(
     cell_style cols[1], font: 'Calibri'
   end
 
-
-docx.p "In this Part D, the following words have the following meanings and they shall supplement Schedule J1: Definitions, and shall be deemed to include the definitions set out in the Annexes:", font: 'Calibri'
-
 docx.table(
   [
     [
+      '',
       '"Actuary"',
       'a Fellow of the Institute and Faculty of Actuaries;'
     ],
     [
+      '',
       '"Admission Agreement"',
       'means either or both of the CSPS Admission Agreement (as defined in Annex D1: CSPS) or the LGPS Admission Agreement) as defined in Annex D3: LGPS), as the context requires;'
     ],
     [
+      '',
       '"Broadly Comparable"',
       '(a)	in respect of a pension scheme, a status satisfying the condition that there are no identifiable employees who will suffer material detriment overall in terms of future accrual of pension benefits as assessed in accordance with Annex A of New Fair Deal and demonstrated by the issue by the Government Actuary’s Department of a broad comparability certificate; and'
     ],
     [
       '',
+      '',
       '(b)	in respect of benefits provided for or in respect of a member under a pension scheme, benefits that are consistent with that pension scheme’s certificate of broad comparability issued by the Government Actuary’s Department,'
     ],
     [
       '',
+      '',
       'and "Broad Comparability" shall be construed accordingly;'
     ],
     [
+      '',
       '"CSPS"',
       'the schemes as defined in Annex D1 to this Part D;'
     ],
     [
+      '',
       '"Fair Deal Employees"',
       'those:'
     ],
     [
       '',
+      '',
       '(a)	Transferring Buyer Employees; and/or'
     ],
     [
+      '',
       '',
       '(b)	Transferring Former Supplier Employees; and/or'
     ],
     [
       '',
+      '',
       '(c)	employees who are not Transferring Buyer Employees or Transferring Former Supplier Employees but to whom the Employment Regulations apply on the Relevant Transfer Date to transfer their employment to the Supplier or a Subcontractor, , and whose employment is not terminated in accordance with the provisions of Paragraphs 2.3.4 of Parts A or B or Paragraph 1.2.4 of Part C;'
     ],
     [
+      '',
       '',
       '(d)	where the Former Supplier becomes the Supplier those employees;'
     ],
     [
       '',
+      '',
       'who at the Commencement Date or Relevant Transfer Date (as appropriate) are or become entitled to New Fair Deal protection in respect of any of the Statutory Schemes as notified by the Buyer;'
     ],
     [
+      '',
       '"Fair Deal Schemes"',
       'means the relevant Statutory Scheme or a Broadly Comparable pension scheme;'
     ],
     [
+      '',
       '"Fund Actuary"',
       'means Fund Actuary as defined in Annex D3 to this Part D;'
     ],
     [
+      '',
       '"LGPS"',
       'the schemes as defined in Annex D3 to this Part D;'
     ],
     [
+      '',
       '"NHSPS"',
       'the schemes  as defined in Annex D2 to this Part D;'
     ],
     [
+      '',
       '"New Fair Deal"',
       'the revised Fair Deal position set out in the HM Treasury guidance:  "Fair Deal for Staff Pensions: Staff Transfer from Central Government" issued in October 2013 including:'
     ],
     [
       '',
+      '',
       '(b)	any amendments to that document immediately prior to the Relevant Transfer Date; and'
     ],
     [
+      '',
       '',
       '(c)	any similar pension protection in accordance with the subsequent Annex D1-D3 inclusive as notified to the Supplier by the CCS or Buyer; and'
     ]
   ]
 ) do
-    cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-    cell_style cols[1], font: 'Calibri'
+    cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+    cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+    cell_style cols[2], font: 'Calibri'
   end
 
 docx.table(
@@ -1062,7 +1079,7 @@ docx.table(
   [
     [
       '3.1',
-      '3.1	The Supplier undertakes to the Buyer:'
+      'The Supplier undertakes to the Buyer:'
     ]
   ]
 ) do
@@ -1108,7 +1125,7 @@ docx.table(
     ],
     [
       '4.2',
-      '4.2	The Supplier hereby indemnifies the CCS, NHS Pensions, the Buyer and/or any Replacement Supplier and/or Replacement Subcontractor from and against all Losses suffered or incurred by it or them which arise from claims by Fair Deal Employees of the Supplier and/or of any Subcontractor or by any trade unions, elected employee representatives or staff associations in respect of all or any such Fair Deal Employees which Losses:'
+      'The Supplier hereby indemnifies the CCS, NHS Pensions, the Buyer and/or any Replacement Supplier and/or Replacement Subcontractor from and against all Losses suffered or incurred by it or them which arise from claims by Fair Deal Employees of the Supplier and/or of any Subcontractor or by any trade unions, elected employee representatives or staff associations in respect of all or any such Fair Deal Employees which Losses:'
     ]
   ]
 ) do
@@ -1126,7 +1143,7 @@ docx.table(
     [
       '',
       '4.2.2',
-      '4.2.2	arise out of the failure of the Supplier and/or any relevant Subcontractor to comply with the provisions of this Part D before the date of termination or expiry of this Contract.'
+      'arise out of the failure of the Supplier and/or any relevant Subcontractor to comply with the provisions of this Part D before the date of termination or expiry of this Contract.'
     ]
   ]
 ) do
@@ -1138,7 +1155,7 @@ docx.table(
   [
     [
       '4.3',
-      '4.3	The indemnities in this Part D and its Annexes:'
+      'The indemnities in this Part D and its Annexes:'
     ]
   ]
 ) do
@@ -1203,7 +1220,7 @@ docx.table(
     [
       '',
       '5.1.3',
-      '5.1.3	whose expenses shall be borne equally by the CCS and/or the Buyer and/or the Supplier unless the independent Actuary shall otherwise direct.'
+      'whose expenses shall be borne equally by the CCS and/or the Buyer and/or the Supplier unless the independent Actuary shall otherwise direct.'
     ]
   ]
 ) do
@@ -1367,7 +1384,8 @@ docx.table(
     ]
   ]
 ) do
-    cell_style cols[0], width: 1000
+    cell_style cols[0], width: 1000, font: 'Calibri'
+    cell_style cols[1], font: 'Calibri'
   end
 
 docx.table(
@@ -1380,12 +1398,13 @@ docx.table(
     [
       '',
       '10.1.2',
-      '10.1.2	the Buyer agrees, having considered the exceptional cases provided for in New Fair Deal, (such agreement not to be unreasonably withheld) that the Supplier (and/or its Subcontractors, if any) need not continue to provide the Fair Deal Employees, who continue to qualify for Fair Deal Protection, with access to the appropriate Statutory Scheme;'
+      'the Buyer agrees, having considered the exceptional cases provided for in New Fair Deal, (such agreement not to be unreasonably withheld) that the Supplier (and/or its Subcontractors, if any) need not continue to provide the Fair Deal Employees, who continue to qualify for Fair Deal Protection, with access to the appropriate Statutory Scheme;'
     ]
   ]
 ) do
-    cell_style cols[0], width: 1000
-    cell_style cols[1], width: 1000
+    cell_style cols[0], width: 1000, font: 'Calibri'
+    cell_style cols[1], width: 1000, font: 'Calibri'
+    cell_style cols[2], font: 'Calibri'
   end
 
 docx.table(
@@ -1474,21 +1493,26 @@ docx.table(
 docx.table(
   [
     [
+      '',
       '"CSPS Admission Agreement"',
       'an admission agreement in the form available on the Civil Service Pensions website immediately prior to the Relevant Transfer Date to be entered into for the CSPS in respect of the Services;'
     ],
     [
+      '',
       '"CSPS Eligible Employee"',
       'any Fair Deal Employee who at the relevant time is an eligible employee as defined in the CSPS Admission Agreement;'
     ],
     [
+      '',
       '"CSPS"',
       'the Principal Civil Service Pension Scheme available to Civil Servants and employees of bodies under Schedule 1 of the Superannuation Act 1972 (and eligible employees of other bodies admitted to participate under a determination under section 25 of the Public Service Pensions Act 2013), as governed by rules adopted by Parliament; the Partnership Pension Account and its (i) Ill health Benefits Scheme and (ii) Death Benefits Scheme; the Civil Service Additional Voluntary Contribution Scheme; the Designated Stakeholder Pension Scheme (which is scheduled to close to new members in September 2018)  and "alpha" introduced under The Public Service (Civil Servants and Others) Pensions Regulations 2014.'
     ]
   ],
   font: 'Calibri'
 ) do
-    cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
+    cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+    cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+    cell_style cols[2], font: 'Calibri'
   end
 
 docx.table(
@@ -1550,65 +1574,80 @@ docx.table(
 docx.table(
   [
     [
+      '',
       '"Direction Letter"',
       'an NHS Pensions Direction or Determination (as appropriate) issued by the Secretary of State in exercise of the powers conferred by section 7 of the Superannuation (Miscellaneous Provisions) Act 1967 or by section 25 of the Public Service Pensions Act 2013 (as appropriate) and issued to the Supplier or a Subcontractor of the Supplier (as appropriate) relating to the terms of participation of the Supplier or Subcontractor in the NHSPS in respect of the NHSPS Eligible Employees;'
     ],
     [
+      '',
       '"NHSPS Eligible Employees"',
       'each of the Fair Deal Employees who at a Relevant Transfer Date was a member of, or was entitled to become a member of, or but for their compulsory transfer of employment would have been entitled to be or become a member of, the NHSPS as a result of either:'
     ],
     [
       '',
+      '',
       '(a)	their employment with the Buyer, an NHS Body or other employer which participates automatically in the NHSPS; or'
     ],
     [
+      '',
       '',
       '(b)	their employment with a Former Supplier who provides access to the NHSPS pursuant to an NHS Pensions Direction or Determination (as appropriate) issued by the Secretary of State in exercise of the powers conferred by section 7 of the Superannuation (Miscellaneous Provisions) Act 1967 or by section 25 of the Public Service Pensions Act 2013 (as appropriate) in respect of their employment with that Former Supplier (on the basis that they are entitled to protection under New Fair Deal and were permitted to re-join the NHSPS, having been formerly in employment with the Buyer, an NHS Body or other employer who participated automatically in the NHSPS in connection with the Services, prior to being employed by the Former Supplier),'
     ],
     [
       '',
+      '',
       'and, in each case, being continuously engaged for more than fifty per cent (50%) of their employed time in the delivery of services (the same as or similar to the Services).'
     ],
     [
       '',
+      '',
       'For the avoidance of doubt, an individual who is in or entitled to become a member of the NHSPS as a result of being engaged in the Services and being covered by an "open" Direction Letter or other NHSPS "access" facility but who has never been employed directly by an NHS Body (or other body which participates automatically in the NHSPS) is not an NHSPS Eligible Employee; '
     ],
     [
+      '',
       '"NHS Body"',
       'has the meaning given to it in section 275 of the National Health Service Act 2006 as amended by section 138(2)(c) of Schedule 4 to the Health and Social Care Act 2012;'
     ],
     [
+      '',
       '"NHS Pensions"',
       'NHS Pensions as the administrators of the NHSPS or such other body as may from time to time be responsible for relevant administrative functions of the NHSPS;'
     ],
     [
+      '',
       '"NHSPS"',
       'the National Health Service Pension Scheme for England and Wales, established pursuant to the Superannuation Act 1972 and governed by subsequent regulations under that Act including the NHS Pension Scheme Regulations;'
     ],
     [
+      '',
       '"NHS Pension Scheme Arrears"',
       'any failure on the part of the Supplier or its Subcontractors (if any) to pay employer’s contributions or deduct and pay across employee’s contributions to the NHSPS or meet any other financial obligations under the NHSPS or any Direction Letter in respect of the NHSPS Eligible Employees;'
     ],
     [
+      '',
       '"NHS Pension Scheme Regulations"',
       'as appropriate, any or all of the National Health Service Pension Scheme Regulations 1995 (SI 1995/300), the National Health Service Pension Scheme Regulations 2008 (SI 2008/653), the National Health Service Pension Scheme Regulations 2015 (2015/94) and any subsequent regulations made in respect of the NHSPS, each as amended from time to time;'
     ],
     [
+      '',
       '"NHS Premature Retirement Rights"',
       'rights to which any Fair Deal Employee (had they remained in the employment of the Buyer, an NHS Body or other employer which participates automatically in the NHSPS) would have been or are entitled under the NHS Pension Scheme Regulations, the NHS Compensation for Premature Retirement Regulations 2002 (SI 2002/1311), the NHS (Injury Benefits) Regulations 1995 (SI 1995/866) and section 45 of the General Whitley Council conditions of service, or any other legislative or contractual provision which replaces, amends, extends or consolidates the same from time to time;'
     ],
     [
+      '',
       '"Pension Benefits"',
       'any benefits payable in respect of an individual (including but not limited to pensions related allowances and lump sums) relating to old age, invalidity or survivor’s benefits provided under an occupational pension scheme; and'
     ],
     [
+      '',
       '"Retirement Benefits Scheme"',
       'a pension scheme registered under Chapter 2 of Part 4 of the Finance Act 2004.'
     ]
   ]
 ) do
-    cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-    cell_style cols[1], font: 'Calibri'
+    cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+    cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+    cell_style cols[2], font: 'Calibri'
   end
 
 docx.table(
@@ -1669,21 +1708,8 @@ docx.table(
   ]
 ) do
     cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
-    cell_style cols[1], bold: true, font: 'Calibri'
-  end
-
-docx.table(
-  [
-    [
-      '',
-      'The Supplier will procure that with effect from the Relevant Transfer Date the NHSPS Eligible Employees shall be either eligible for or remain in continuous active membership of (as the case may be) the NHSPS for employment from (and including) the Relevant Transfer Date.'
-    ]
-  ]
-) do
-    cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
     cell_style cols[1], font: 'Calibri'
   end
-
 
 docx.table(
   [
@@ -1792,7 +1818,7 @@ docx.table(
     ],
     [
       '6.2',
-      '6.2	This flexibility for the Buyer to allow compensation in place of Pension Benefits is in addition to and not instead of the Buyer’s right to terminate the Contract.'
+      'This flexibility for the Buyer to allow compensation in place of Pension Benefits is in addition to and not instead of the Buyer’s right to terminate the Contract.'
     ]
   ]
 ) do
@@ -1862,7 +1888,7 @@ docx.table(
     [
       '',
       '8.1.2',
-      '8.1.2	if, in accordance with Paragraph 4 of this Annex, the Supplier has offered the NHSPS Eligible Employees access to a pension scheme under which the benefits are Broadly Comparable to those provided under the NHSPS, the Subcontractor either secures a Direction Letter in respect of the NHSPS Eligible Employees or (with the prior consent of the Buyer) provides NHSPS Eligible Employees with access to a scheme with Pension Benefits which are Broadly Comparable to those provided under the NHSPS whereupon the provisions of Paragraph 10 below (Bulk Transfer Obligations in relation to any Broadly Comparable Scheme) shall apply.'
+      'if, in accordance with Paragraph 4 of this Annex, the Supplier has offered the NHSPS Eligible Employees access to a pension scheme under which the benefits are Broadly Comparable to those provided under the NHSPS, the Subcontractor either secures a Direction Letter in respect of the NHSPS Eligible Employees or (with the prior consent of the Buyer) provides NHSPS Eligible Employees with access to a scheme with Pension Benefits which are Broadly Comparable to those provided under the NHSPS whereupon the provisions of Paragraph 10 below (Bulk Transfer Obligations in relation to any Broadly Comparable Scheme) shall apply.'
     ]
   ]
 )  do
@@ -1924,34 +1950,39 @@ docx.p
   docx.table(
     [
       [
+        '',
         '"Administering Authority"',
         'in relation to the Fund, the relevant Administering Authority of that Fund for the purposes of the Local Government Pension Scheme Regulations 2013;'
       ],
       [
+        '',
         '“Excess Amount”',
         'any Pension Costs incurred by the Supplier or its Subcontractors in any Pension Period that exceed the Pension Base Cost.'
       ],
       [
+        '',
         '"Fund Actuary"',
         'the actuary to a Fund appointed by the Administering Authority of that Fund;'
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], font: 'Calibri'
     end
-
-if @pension_funds.any?
+if @procurement.local_government_pension_scheme?
   docx.table(
     [
       [
+        '',
         '"Fund"',
-        "#{@pension_funds.first.name}, a pension fund within the LGPS;"
+        "#{@pension_funds[0].name}, a pension fund within the LGPS;"
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], bold: true, font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], bold: true, font: 'Calibri'
     end
 
   @pension_funds[1..-1].each do |pension_fund|
@@ -1959,71 +1990,113 @@ if @pension_funds.any?
       [
         [
           '',
+          '',
           "#{pension_fund.name}, a pension fund within the LGPS;"
         ]
       ]
     ) do
-        cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-        cell_style cols[1], bold: true, font: 'Calibri'
+        cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+        cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+        cell_style cols[2], bold: true, font: 'Calibri'
       end
   end
 else
   docx.table(
     [
       [
+        '',
         '"Fund"',
-        ''
+        'Not Applicable'
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], bold: true, font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], bold: true, font: 'Calibri'
     end
 end
 
   docx.table(
     [
       [
+        '',
         '"LGPS"',
         'the Local Government Pension Scheme as governed by the LGPS Regulations, and any other regulations (in each case as amended from time to time) which are from time to time applicable to the Local Government Pension Scheme;'
       ],
       [
+        '',
         '"LGPS Admission Agreement"',
         'an admission agreement within the meaning in Schedule 1 of the  Local Government Pension Scheme Regulations 2013;'
       ],
       [
+        '',
         '"LGPS Admission Body"',
         'an admission body (within the meaning of Part 3 of Schedule 2 of the Local Government Pension Scheme Regulations 2013);'
       ],
       [
+        '',
         '"LGPS Eligible Employees"',
         'any Fair Deal Employee who at the relevant time is an eligible employee as defined in the LGPS Admission Agreement or otherwise any Fair Deal Employees who immediately before the Relevant Transfer Date was a member of, or was entitled to become a member of, or but for their compulsory transfer of employment would have been entitled to be or become a member of, the LGPS or of a scheme Broadly Comparable to the LGPS;'
       ],
       [
+        '',
         '"LGPS Regulations"',
         'the Local Government Pension Scheme Regulations 2013 (SI 2013/2356) and The Local Government Pension Scheme (Transitional Provisions, Savings and Amendment) Regulations 2014, and any other regulations (in each case as amended from time to time) which are from time to time applicable to the LGPS.'
-      ],
-      [
-        '“Pension Base Cost”',
-        'in relation to the LGPS Eligible Employees, who are at the relevant time members of the LGPS:'
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], font: 'Calibri'
     end
 
-  @pension_funds.each do |pension_fund|
+  if @procurement.local_government_pension_scheme?
     docx.table(
       [
         [
           '',
-          "- #{pension_fund.percentage}% of pensionable pay for those who are members of #{pension_fund.name}"
+          '“Pension Base Cost”',
+          'in relation to the LGPS Eligible Employees, who are at the relevant time members of the LGPS:'
         ]
       ]
     ) do
-        cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-        cell_style cols[1], font: 'Calibri'
+        cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+        cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+        cell_style cols[2], font: 'Calibri'
+      end
+
+    @pension_funds.each do |pension_fund|
+      docx.ul do
+        li "#{pension_fund.percentage}% of pensionable pay for those who are members of #{pension_fund.name}", font: 'Calibri'
+      end
+    end
+
+    docx.table(
+      [
+        [
+          '',
+          '',
+          '("pensionable pay" for these purposes as defined under the LGPS Regulations);'
+        ]
+      ]
+    ) do
+        cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+        cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+        cell_style cols[2], font: 'Calibri'
+      end
+  else
+    docx.table(
+      [
+        [
+          '',
+          '“Pension Base Cost”',
+          'Not Applicable'
+        ]
+      ]
+    ) do
+        cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+        cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+        cell_style cols[2], font: 'Calibri'
       end
   end
 
@@ -2031,34 +2104,13 @@ end
     [
       [
         '',
-        '("pensionable pay" for these purposes as defined under the LGPS Regulations);'
-      ],
-      [
         '“Pension Costs”',
         'the costs of complying with the Pension Requirements, but excluding any costs relating to:'
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], font: 'Calibri'
-    end
-
-  docx.table(
-    [
-      [
-        '',
-        '(a)',
-        'the provision of any bond or indemnity that the Supplier or its Subcontractors are required to provide under the terms of any Admission Agreement; and'
-      ],
-      [
-        '',
-        '(b)',
-        'the provision of advice from the actuary to the LGPS arising from the instruction from the Supplier or its Subcontractors in relation to the Pension Requirements;'
-      ],
-    ]
-  ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], width: 1000, font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
       cell_style cols[2], font: 'Calibri'
     end
 
@@ -2066,34 +2118,76 @@ end
     [
       [
         '',
-        'which will be covered by the Supplier or Subcontractor, as appropriate; and'
+        '',
+        '(a)',
+        'the provision of any bond or indemnity that the Supplier or its Subcontractors are required to provide under the terms of any Admission Agreement; and'
       ],
       [
-        '“Pension Requirements” ',
-        'the terms and conditions set out in:'
+        '',
+        '',
+        '(b)',
+        'the provision of advice from the actuary to the LGPS arising from the instruction from the Supplier or its Subcontractors in relation to the Pension Requirements;'
       ],
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], width: 1000, font: 'Calibri'
+      cell_style cols[3], font: 'Calibri'
     end
 
   docx.table(
     [
       [
         '',
+        '',
+        'which will be covered by the Supplier or Subcontractor, as appropriate; and'
+      ],
+      [
+        '',
+        '“Pension Requirements” ',
+        'the terms and conditions set out in:'
+      ],
+    ]
+  ) do
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], font: 'Calibri'
+    end
+
+  docx.table(
+    [
+      [
+        '',
+        '',
         '(a)',
         'paragraph 2 of this Annex D3 (Supplier to Become an LGPS Admission Body), and paragraph 4 of Annex D3 (Discretionary Benefits); and'
       ],
       [
+        '',
         '',
         '(b)',
         'the LGPS Admission Agreement,'
       ]
     ]
   ) do
-      cell_style cols[0], width: 3000, bold: true, font: 'Calibri'
-      cell_style cols[1], width: 1000, font: 'Calibri'
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
+      cell_style cols[2], width: 1000, font: 'Calibri'
+      cell_style cols[3], font: 'Calibri'
+    end
+
+  docx.table(
+    [
+      [
+        '',
+        '',
+        'but in each case in respect of LGPS Eligible Employees only.'
+      ]
+    ]
+  ) do
+      cell_style cols[0], width: 1000, bold: true, font: 'Calibri'
+      cell_style cols[1], width: 3000, bold: true, font: 'Calibri'
       cell_style cols[2], font: 'Calibri'
     end
 
@@ -2439,7 +2533,7 @@ end
       ],
       [
         '1.8',
-        '1.8	EXIT COSTS AT CALL-OFF STAGE - Any decision regarding Suppliers exposure to LGPS costs arising at the end of the Contract will be notified at Call Off.'
+        'EXIT COSTS AT CALL-OFF STAGE - Any decision regarding Suppliers exposure to LGPS costs arising at the end of the Contract will be notified at Call Off.'
       ]
     ]
   ) do
