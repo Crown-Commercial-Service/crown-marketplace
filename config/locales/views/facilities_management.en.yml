@@ -295,10 +295,13 @@ en:
               not_a_date: Enter a valid start date
             reason_for_closing:
               blank: Enter a reason for closing this procurement
+              too_long: Reason for not closing must be 500 characters or less
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
+              too_long: Reason for declining must be 500 characters or less
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
+              too_long: Reason for not signing must be 100 characters or less
         facilities_management/service_hour_choice:
           attributes:
             end_time:
