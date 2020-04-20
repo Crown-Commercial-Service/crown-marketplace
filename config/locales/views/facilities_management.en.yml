@@ -52,6 +52,38 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/building:
+          attributes:
+            address:
+              not_selected: You must select an address to save a building
+            address_line_1:
+              blank: Building and street name must be 100 characters or less
+              too_short: Building and street name must be 100 characters or less
+            address_postcode:
+              blank: Enter a valid postcode, like AA1 1AA
+              invalid: Enter a valid postcode, like AA1 1AA
+              not_selected: You must select an address to save a building
+              too_short: Enter a valid postcode, like AA1 1AA
+            address_region:
+              blank: You must select a region for your address
+            address_town:
+              blank: Town or city name for this building must be 30 characters or less
+            building_name:
+              blank: Enter a name for your building
+            building_type:
+              blank: You must select a buiding type or describe your own
+            gia:
+              blank: Enter a whole number for the size of internal area of this building
+              not_an_integer: Enter a whole number for the size of internal area of this building
+            other_building_type:
+              blank: You must enter your description of a building type
+            other_security_type:
+              blank: You must describe the security clearance level
+            postcode_entry:
+              blank: You must select an address to save a building
+              invalid: Enter a valid postcode, like AA1 1AA
+            security_type:
+              blank: You must select a security clearance level
         facilities_management/buyer_detail:
           attributes:
             central_government:
@@ -406,32 +438,94 @@ en:
             td_profit: Profit (%)
             td_tupe: Direct award TUPE risk premium (%)
             update_button: Save and return to dashboard
-      building-details-summary:
-        add_address_text: Add address
-        add_desc_text: Add description
-        add_name_text: Add name
-        answer_question_text: Answer question
-        caption_addr: Address
-        caption_desc: Description
-        caption_gia: Gross internal area
-        caption_name: Name
-        caption_region_nuts: Location (NUTS region)
-        caption_sec: Security clearance
-        caption_type: Building type
-        change_text: Change
-        no_data_message: There are no building details to view
-        return_to_management_text: Return to manage buildings
-        section-header: Building details summary
-        select_one_option_text: Please select one option
-      building-gross-internal-area:
-        add_header: Add building GIA
-        edit_header: Change building GIA
-        guidance_1: Gross internal area (GIA) is the area of the building measured to the internal face of the perimeter walls at each floor area.
-        guidance_2: For example, 18000 square metres.
-        guidance_3: Use
-        guidance_link_text: this guidance on how to measure GIA
-        heading: What's the internal area of the building?
-        input_label: sqm (square metres)
+      buildings:
+        add_address:
+          add_address_header: Address
+          description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+          line_1_of_2: Building and street line 1 or 2
+          line_2_of_2: Building and street line 2 of 2 (optional)
+          postcode: Postcode
+          town_or_city: Town or city
+        details_form:
+          address: Address
+          address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+          building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
+          cant_find_address: I can't find my building's address in the list
+          change: Change
+          description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</span> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
+          find_address: Find address
+          option_with_data_plural: "{%} addresses found"
+          option_with_data_single: 1 address found
+          postcode: Postcode
+          region: Region
+          region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
+          region_option_with_data_plural: "{%} regions found"
+          region_option_with_data_single: 1 region found
+          select_a_region: Select a region
+          select_an_address: Select an address
+          zero_address_found: 0 addresses found
+          zero_regions_found: 0 regions found
+        gia:
+          description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
+          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+          gia_header: What's the size of internal area of this building?
+        index:
+          column_desc_header: Description
+          column_lstup_header: Last updated
+          column_name_header: Name
+          column_status_header: Status
+          create_new_button: Add a building
+          link_to_building_summary: View details for building
+          my_buildings_header: My buildings
+          no_buildings_text: You have no saved buildings
+          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
+          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+        page_definitions:
+          add_building_address: Add building address
+          building_size: Building size
+          building_type: Building type
+          change_building_details: Change building details
+          create_new_building: Save and continue
+          create_single_building: Add a building
+          manage_building_title: Manage buildings
+          return_to_manage_buildings: Return to manage buildings
+          save_and_continue: Save and continue
+          save_and_return_to_detailed_summary: Save and continue to building details summary
+          security_clearance: Security clearance
+          skip_this_step: Skip this step
+        security:
+          building_details_summary: Building details summary
+          describe_security: Describe security level
+          next_step: 'Next:'
+          other: Other
+          security_description_html: Select the level of security clearance a suppliers staff will need to access this building.<br/>This is the security level of the contractor's staff.
+          select_security: Select the level of security clearance needed
+        show:
+          add_address_text: Add address
+          add_desc_text: Add description
+          add_name_text: Add name
+          answer_question_text: Answer question
+          caption_addr: Address
+          caption_desc: Description (optional)
+          caption_gia: Gross internal area
+          caption_name: Name
+          caption_region_nuts: Region
+          caption_sec: Security clearance
+          caption_type: Building type
+          change_text: Change
+          complete_text: This building is ready for use in procurements.
+          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+          section-header: Building details summary
+          select_one_option_text: Please select one option
+        step_footer:
+          step_footer: 'Next: %{description}'
+        step_title:
+          step_title: Step %{position} of %{total}
+        type:
+          choose_building_type: Choose the building type that best describes your building
+          describe_building: Describe building type
+          other: Other
+          view_more: View more building types
       buyer_account:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
@@ -441,6 +535,7 @@ en:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
+          manage_buildings: Manage buildings
       buyer_details:
         edit:
           buyer_details: Buyer details
@@ -469,20 +564,6 @@ en:
           submit: Save and continue
           town_or_city: Town or city
           your_details: Your details
-      index:
-        column_desc_header: Description
-        column_lstup_header: Last updated
-        column_name_header: Name
-        column_status_header: Status
-        create_new_button: Create Single Building
-        link_to_building_summary: View details for building
-        manage_building: Manage buildings
-        manage_buildings_header: Manage buildings
-        my_buildings_header: My buildings
-        no_buildings_text: You have no saved buildings
-        procurements_dashboard_button: Procurements dashboard
-        start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
-        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
       procurement_buildings:
         building_standards:
           back_to_service_information: Back to service information

@@ -111,31 +111,17 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       get '/buyer_account', to: 'buyer_account#buyer_account'
-      get '/buildings-management', to: 'buildings_management#buildings_management'
-      get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
-      get '/building-details-summary', to: 'buildings_management#building_details_summary'
-      post '/building-details-summary', to: 'buildings_management#building_details_summary'
-      get '/building', to: 'buildings_management#building'
-      post '/building', to: 'buildings_management#building'
-      put '/building', to: 'buildings_management#update_building_details'
-      get '/building-type', to: 'buildings_management#building_type'
-      post '/building-type', to: 'buildings_management#building_type'
-      put '/building-type', to: 'buildings_management#update_building_type'
-      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
-      get '/building-address', to: 'buildings_management#building_address'
-      get '/building-security-type', to: 'buildings_management#building_security_type'
-      post '/building-security-type', to: 'buildings_management#building_security_type'
-      put '/building-security-type', to: 'buildings_management#update_security_type'
-      match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
+      resources :buildings do
+        member do
+          get 'gia'
+          get 'type'
+          get 'security'
+          match 'add_address', via: %i[get post patch]
+        end
+      end
       match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
       match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
       match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
-      match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
-      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
-      match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
-      match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
       # post '/summary', to: 'summary#index'
       match '/summary', to: 'summary#index', via: %i[get post]
       post '/summary/guidance', to: 'summary#guidance'
@@ -340,6 +326,15 @@ Rails.application.routes.draw do
       post '/postcode/:slug', to: 'uploads#postcodes'
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
+      get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
+    end
+    namespace :v2 do
+      resources :postcodes, only: :show
+      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
+      get '/search-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
       get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
       get '/test-notification', to: 'api_test_notifications#send_notification'

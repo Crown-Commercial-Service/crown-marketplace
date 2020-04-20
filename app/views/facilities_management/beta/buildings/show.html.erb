@@ -1,0 +1,118 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+  <div class="govuk-body govuk-!-width-two-thirds">
+    <strong class="govuk-tag ccs-tag-<%= @page_data[:model_object].status == 'Ready' ? 'approved' : 'rejected' %>"><%= @page_data[:model_object].status.to_s %></strong>
+    <div class="govuk-inset-text">
+      <%= t('.incomplete_text') if @page_data[:model_object].status == 'Incomplete' %>
+      <%= t('.complete_text', { name: @page_data[:model_object].building_name }) if @page_data[:model_object].status == 'Ready' %>
+    </div>
+  </div>
+  <h2 class="govuk-heading-m"><%= t('.section-header') %></h2>
+  <div class="govuk-table govuk-!-width-three-quarters" data-module="table" id="fm-buildings-container">
+    <table style="width:100%; border-collapse: collapse;">
+      <tbody>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_name') %></th>
+        <td>
+          <% if !@page_data[:model_object].building_name.blank? %>
+            <%= @page_data[:model_object].building_name %>
+          <% else %>
+            <%= link_to t('.add_name_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+        <td>
+          <% unless @page_data[:model_object].building_name.blank? %>
+            <%= link_to t('.change_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_desc') %></th>
+        <td>
+          <% if !@page_data[:model_object].description.blank? %>
+            <%= @page_data[:model_object].description %>
+          <% else %>
+            <%= link_to t('.add_desc_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+        <td>
+          <% unless @page_data[:model_object].description.blank? %>
+            <%= link_to t('.change_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_addr') %></th>
+        <td>
+          <%= address_in_a_line(@page_data[:model_object]) if address?(@page_data[:model_object]) %>
+          <%= link_to t('.add_address_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } unless address?(@page_data[:model_object])%>
+        </td>
+        <td>
+          <% if address?(@page_data[:model_object]) %>
+            <%= link_to t('.change_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third">
+          <%= t('.caption_region_nuts') %>
+        </th>
+        <td>
+          <%= @page_data[:model_object].address_region if address?(@page_data[:model_object])%>
+          <%= link_to t('.add_address_text'), edit_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } unless address?(@page_data[:model_object])%>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_gia') %></th>
+        <td>
+          <% if !@page_data[:model_object].gia.blank? %>
+            <%= number_with_delimiter(@page_data[:model_object].gia.to_i, :delimiter => ',') + " sqm" %>
+          <% else %>
+            <%= link_to t('.answer_question_text'), gia_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+        <td>
+          <% unless @page_data[:model_object].gia.blank? %>
+            <%= link_to t('.change_text'), gia_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %></td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_type') %></th>
+        <td>
+          <% unless @page_data[:model_object].building_type.blank? %>
+            <%= @page_data[:model_object].building_type.capitalize %>
+            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_building_type, length: 75)}".html_safe if @page_data[:model_object].building_type == 'other'%>
+          <% else %>
+            <%= link_to t('.select_one_option_text'), type_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+        <td>
+          <% unless @page_data[:model_object].building_type.blank? %>
+            <%= link_to t('.change_text'), type_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="govuk-!-width-one-third"><%= t('.caption_sec') %></th>
+        <td>
+          <% unless @page_data[:model_object].security_type.blank? %>
+            <%= @page_data[:model_object].security_type.capitalize %>
+            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_security_type, length: 75)}".html_safe if @page_data[:model_object].security_type == 'other'%>
+          <% else %>
+            <%= link_to t('.select_one_option_text'), security_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
+          <% end %>
+        </td>
+        <td>
+          <% unless @page_data[:model_object].security_type.blank? %>
+          <%=  link_to t('.change_text'), security_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" }  %>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <%= form_for @page_data[:model_object], url: '#', method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <%= govuk_continuation_buttons(pd, f, false, false, true, false, true, true) %>
+  <% end %>
+<% end %>

@@ -38,22 +38,28 @@ ActiveRecord::Schema.define(version: 2020_04_16_165106) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "eurostat_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["postcode"], name: "index_eurostat_nuts_regions_on_postcode", unique: true
+  end
+
+  create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
-    t.string "updated_by", null: false
+    t.text "updated_by"
     t.text "user_email"
     t.jsonb "building_json"
-    t.text "building_ref"
     t.text "building_name"
     t.text "description"
-    t.decimal "gia"
+    t.integer "gia"
     t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
-    t.text "address_county"
     t.text "address_line_1"
     t.text "address_line_2"
     t.text "address_postcode"
@@ -484,6 +490,12 @@ ActiveRecord::Schema.define(version: 2020_04_16_165106) do
     t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
+  create_table "ons_nuts3_regions", id: false, force: :cascade do |t|
+    t.string "NUTS318CD", limit: 255
+    t.string "NUTS318NM", limit: 255
+    t.integer "FID"
+  end
+
   create_table "os_address", id: false, force: :cascade do |t|
     t.bigint "uprn", null: false
     t.bigint "udprn"
@@ -563,6 +575,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_165106) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
+    t.index ["postcode_locator"], name: "index_os_address_on_postcode_locator"
   end
 
   create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -578,8 +591,8 @@ ActiveRecord::Schema.define(version: 2020_04_16_165106) do
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "postcode", limit: 20
     t.string "code", limit: 20
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 

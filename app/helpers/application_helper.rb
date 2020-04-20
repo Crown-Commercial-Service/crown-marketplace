@@ -48,20 +48,23 @@ module ApplicationHelper
   def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
+    label_for_id = form_object_name
+    id_for_label = "#{form_object_name}_#{attribute}-info"
+    label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
+        concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
         concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
-        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
-        concat yield
+        yield
       end
     end
   end
   # rubocop:enable Metrics/ParameterLists
 
-  def display_label(attribute, text, form_object_name)
-    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  def display_label(_attribute, text, form_object_name, _id_for_label)
+    content_tag :label, text, class: 'govuk-label', for: form_object_name
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)

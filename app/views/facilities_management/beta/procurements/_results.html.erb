@@ -53,7 +53,7 @@
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_grouped_field(f, t('.available_routes_to_market'), :route_to_market) do |ff, attr| %>
       <%= f.hidden_field :route_to_market %>
-      <%= govuk_start_individual_field(ff, attr, {}, false, false) do |a| %>
+      <%= govuk_start_individual_field(ff, :route_to_market, {}, false, false) do |a| %>
         <div class="govuk-radios">
           <div class="govuk-radios__item">
             <%= f.radio_button :route_to_market, 'da_draft', class: 'govuk-radios__input' %>

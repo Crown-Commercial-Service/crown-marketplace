@@ -1,64 +1,68 @@
 
 .fm-postcode-lookup-panel {
-  background-color: #e1e8e8;
-  border: 1px black;
-  padding: 20px;
-}
+  background-color : #e1e8e8;
+  border           : 1px black;
+  padding          : 20px;
+  }
 
 .fm-building-services-panel {
-  background-color: #e1e8e8;
-  padding: 20px;
-}
+  background-color : #e1e8e8;
+  padding          : 20px;
+  }
 
 .fm-delete-building-link {
-  float: right;
-}
+  float : right;
+  }
+
+#fm-building-container table {
+  border-collapse : collapse;
+  }
 
 #fm-buildings-container thead tr {
-  border-top: 2px solid #CCCCCC;
-  border-bottom: 2px solid #CCCCCC;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
+  border-top     : 2px solid #CCCCCC;
+  border-bottom  : 2px solid #CCCCCC;
+  padding-top    : 4px;
+  padding-bottom : 4px;
+  }
 
 #fm-buildings-container tfoot tr {
-  border-bottom: 2px solid #CCCCCC;
-  padding-top: -6px;
-  padding-bottom: 1px;
-}
+  border-bottom  : 2px solid #CCCCCC;
+  padding-top    : -6px;
+  padding-bottom : 1px;
+  }
 
 #fm-buildings-container th {
-  text-align: left;
-  padding: 1ex 1ex 1ex 0;
-}
+  text-align : left;
+  padding    : 1ex 1ex 1ex 0;
+  }
 
 #fm-buildings-container tbody td {
-  text-align: left;
-  padding: 1ex 1ex 1ex 0;
-}
+  text-align : left;
+  padding    : 1ex 1ex 1ex 0;
+  }
 
 #fm-buildings-container tbody tr {
-  padding: 1ex 1ex 1ex 0;
-  border-bottom: 2px solid #CCCCCC;
-}
+  padding       : 1ex 1ex 1ex 0;
+  border-bottom : 2px solid #CCCCCC;
+  }
 
 .govuk-button.muted {
-  background-color: #CCCCCC;
-  color: #000000;
-}
+  background-color : #CCCCCC;
+  color            : #000000;
+  }
 
 .fm-postcode-input {
-  width: 150px;
-}
+  width : 150px;
+  }
 
 .fm-security-type-text {
-  float: left;
-}
+  float : left;
+  }
 
 .fm-bulding-address-hide, .fm-bulding-postcode-hide {
-  display: none;
-}
+  display : none;
+  }
 
 .fm-bm-bulding-region-hide {
-  display: none;
-}
+  display : none;
+  }

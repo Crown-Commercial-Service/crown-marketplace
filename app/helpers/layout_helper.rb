@@ -8,12 +8,13 @@ module LayoutHelper
 
   # Value Objects (Classes) to structure data for parameters to helper methods
   class NavigationDetail
-    attr_accessor(:primary_text, :primary_name, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
+    attr_accessor(:primary_text, :primary_name, :primary_url, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = '', secondary_name = '')
+    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = nil, secondary_name = nil, primary_url = nil)
       @primary_text   = primary_text
       @primary_name   = primary_name
+      @primary_url = primary_url
       @return_url     = return_url
       @return_text    = return_text
       @secondary_url  = secondary_url
@@ -69,6 +70,7 @@ module LayoutHelper
 
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety
+  # rubocop:disable Metrics/CyclomaticComplexity
   def govuk_page_content(page_details, model_object = nil, no_headings = false, no_back_button = false, no_error_block = false)
     raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
 
@@ -78,7 +80,7 @@ module LayoutHelper
 
     out = ''
     out = capture { govuk_back_button(page_details.back_button) } unless no_back_button
-    out << capture { govuk_page_error_summary(model_object) } unless model_object.nil? || no_error_block
+    out << capture { govuk_page_error_summary(model_object) } unless model_object.nil? || !model_object.respond_to?(:errors) || no_error_block
     out << capture { govuk_page_header(page_details.heading_details) } unless no_headings
 
     out << capture do
@@ -87,10 +89,11 @@ module LayoutHelper
 
     out.html_safe
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # rubocop:disable Metrics/AbcSize
   def govuk_page_header(heading_details)
-    content_tag(:h1, class: 'govuk-heading-xl') do
+    content_tag(:h1, class: 'govuk-heading-xl', id: 'main_title') do
       if heading_details.caption3.present?
         concat(content_tag(:span, class: 'govuk-caption-m govuk-!-margin-bottom-1') do
           concat(heading_details.caption3)
@@ -117,32 +120,37 @@ module LayoutHelper
 
   # rubocop:enable Rails/OutputSafety
 
-  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
-  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false)
+  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false, primary_btn_as_link = false, secondary_btn_as_link = false)
     buttons = ActiveSupport::SafeBuffer.new
-    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button
-    buttons << capture { tag.br } if secondary_button || primary_button
-    buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') if return_link
+
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button && !primary_btn_as_link
+    buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
+    buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
+    if secondary_button || primary_button
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before') if return_link
+    end
+
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
-
-  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def govuk_page_error_summary(model_object)
-    render partial: 'shared/error_summary', locals: { errors: model_object.errors }
+    render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists
-  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, &block)
+  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
 
-    options                     = { class: css_classes }
+    options.merge!(class: css_classes.join(' '))
     options['aria-describedby'] = error_id(attribute) if attribute_errors
+    options.merge!(property_name: attribute).symbolize_keys!
 
     content_tag :div, options do
       capture do
@@ -183,37 +191,38 @@ module LayoutHelper
     end
   end
 
-  def govuk_grouped_field(form, caption, attribute, &block)
-    attribute_has_errors  = form.object.errors[attribute].any?
-    attribute_is_an_array = form.object[attribute].is_a? Array
+  def govuk_grouped_field(form, caption, attribute, header_text = '', &block)
+    attribute_has_errors = form.object.errors[attribute].any?
 
     options                     = {}
-    options['aria-describedby'] = error_id(attribute) if attribute_has_errors
+    options['aria-describedby'] = error_id(attribute)
     css_classes                 = ['govuk-fieldset']
     options['class']            = css_classes
 
     if attribute_has_errors
-      content_tag :div, fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block),
+      content_tag :div, fieldset_structure(form, caption, options, header_text, attribute, &block),
                   class: 'govuk-form-group govuk-form-group--error'
     else
-      fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
+      fieldset_structure(form, caption, options, header_text, attribute, &block)
     end
   end
 
   # rubocop:disable Metrics/ParameterLists
-  def fieldset_structure(form, caption, attribute, attribute_is_an_array, options, &block)
+  def fieldset_structure(form, caption, options, header_text, *attributes, &block)
     content_tag :fieldset, options do
       capture do
         concat(content_tag(:legend,
                            content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
-        concat(list_errors_for_attributes(attribute)) if attribute_is_an_array
-        concat(display_error(form.object, attribute)) unless attribute_is_an_array
-        block.call(form, attribute)
+        concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
+        attributes.flatten.each do |attr|
+          concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array
+          concat(display_error(form.object, attr, false)) unless form.object[attr].is_a? Array
+        end
+        block.call(form, attributes.flatten)
       end
     end
   end
-
   # rubocop:enable Metrics/ParameterLists
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
@@ -224,12 +233,12 @@ module LayoutHelper
                   two_thirds: 'govuk-!-width-two-thirds',
                   one_quarter: 'govuk-!-width-one-quarter' }.freeze
 
-  def govuk_text_input(builder, attribute, text_size, *option)
+  def govuk_text_input(builder, attribute, text_size, **options)
     css_classes = ['govuk-input']
     css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
     css_classes += [INPUT_WIDTH[text_size]]
 
-    options = option.to_h.merge(class: css_classes)
+    options.merge!(class: css_classes.join(' ')) { |_key, oldval, newval| newval + ' ' + oldval }
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
 
     builder.text_field attribute, options
@@ -238,11 +247,12 @@ module LayoutHelper
   def govuk_text_area_input(builder, attribute, char_count = false, *option)
     css_classes = ['govuk-textarea']
     css_classes += ['govuk-textarea--error'] if builder.object.errors.key?(attribute)
-    css_classes << option.to_h[:class] if option.to_h.key? :class
     css_classes += ['js-ccs-character-count'] if char_count
 
-    options = option.to_h.merge(class: css_classes)
+    options = {}
     options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+    options.merge!(class: css_classes)
+    options.merge!(option[0].to_h) { |_key, old, new| Array(old).push(new).join(' ') } if option
 
     builder.text_area attribute, options
   end

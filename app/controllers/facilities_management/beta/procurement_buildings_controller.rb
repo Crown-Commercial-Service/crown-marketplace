@@ -46,9 +46,8 @@ module FacilitiesManagement
       end
 
       def set_building_data
-        fm_building_data = FMBuildingData.new(current_user)
-        @building = fm_building_data.get_building_data_by_id(current_user.email, @procurement_building.building_id).first
-        @building_data = JSON.parse(@building['building_json'])
+        @building = current_user.buildings.find(@procurement_building.building_id)
+        @building_data = @building['building_json']
       end
 
       def set_back_path

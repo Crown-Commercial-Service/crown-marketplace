@@ -1,0 +1,27 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+  <%= form_for @page_data[:model_object], url: add_address_form_details[:url], method: add_address_form_details[:method], html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <input type="hidden" name="step" value="add_address"/>
+    <div class="govuk-!-width-three-quarters">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.add_address_header') %></h2>
+      <p class="govuk-caption-m"><%= t('.description') %></p>
+      <%= govuk_form_field(@page_data[:model_object], :address_line_1, f.object_name, t('.line_1_of_2'), "", {}) do %>
+        <%= f.text_field :address_line_1, class: "govuk-input govuk-input--width-20" + ( @page_data[:model_object].errors[:address_line_1].present? ? ' govuk-input--error' : '' ), maxlength: 100 %>
+      <% end %>
+      <%= govuk_form_field(@page_data[:model_object], :address_line_2, f.object_name, t('.line_2_of_2'), "", {}) do %>
+        <%= f.text_field :address_line_2, class: "govuk-input govuk-input--width-20", maxlength: 100 %>
+      <% end %>
+      <%= govuk_form_field(@page_data[:model_object], :address_town, f.object_name, t('.town_or_city'), "", {}) do %>
+        <%= f.text_field :address_town, class: "govuk-input govuk-input--width-10" + ( @page_data[:model_object].errors[:address_town].present? ? ' govuk-input--error' : '' ), maxlength: 30 %>
+      <% end %>
+      <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.postcode'), "", {}) do %>
+        <%= f.text_field :address_postcode, class: "govuk-input govuk-input--width-10" + ( @page_data[:model_object].errors[:address_postcode].present? ? ' govuk-input--error' : '' ), maxlength: 9 %>
+      <% end %>
+      <%= f.hidden_field :address_region, value:'' %>
+      <%= f.hidden_field :address_region_code, value:'' %>
+      <%= f.hidden_field :building_name%>
+      <%= f.hidden_field :description%>
+
+    </div>
+    <%= govuk_continuation_buttons(pd, f, false, false, true) %>
+  <% end %>
+<% end %>

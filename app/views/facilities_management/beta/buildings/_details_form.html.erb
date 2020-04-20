@@ -1,0 +1,153 @@
+<div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="25">
+  <%= govuk_form_field(@page_data[:model_object], :building_name, f.object_name, t('.building_name_label_html'), "building_name", {}) do |gf| %>
+    <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25 %>
+  <% end %>
+</div>
+<div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="50">
+  <%= govuk_form_field(@page_data[:model_object], :description, f.object_name, t('.description_label_html'), "", {}) do |gf| %>
+    <%= f.text_field :description, class: "govuk-input govuk-input--width-20 js-character-count",
+                     maxlength:           50, required: false %>
+  <% end %>
+</div>
+<div class="govuk-!-width-two-thirds" data-module="find-address" data-element_prefix="postcode">
+  <div data-module-part="postcode-source-container" class="<%= ' govuk-visually-hidden' if hide_postcode_source? %>">
+    <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.address_label_html'), "address_postcode", {}) do |gf| %>
+      <%= f.label :address_postcode, "Postcode", for: 'postcode_entry', class: "govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0" %>
+      <%= display_potential_errors(@page_data[:model_object], :postcode_entry, "#{f.object_name}_postcode_entry") %>
+      <%= f.text_field :postcode_entry,
+                       class:                 "govuk-input govuk-input--width-10 " + (@page_data[:model_object].errors[:address_postcode].any? ? 'govuk-input--error' : ''),
+                       id:                    "postcode_entry",
+                       "data-module-element": "postcode-source-input",
+                       pattern:               '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
+                       required:              true,
+                       maxlength:             8 %>
+      <% if Rails.env.development? || Rails.env.test? %>
+        <details class="govuk-details" style="z-index: 1; margin-left:1ex; margin-top:1ex; display:inline-block; position:absolute; font-size:smaller; width:50%;" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Postcode lookup helpers (visible in dev &amp; test)
+          </span>
+          </summary>
+          <div class="govuk-details__text" onclick="this.parentElement.getElementsByTagName('summary').item(0).click()" style="background-color: lemonchiffon;">
+            <p class="govuk-heading-s">Bad postcodes:</p>
+            <blockquote>
+              <% ['X12 1XX'].each do |pcode| %>
+                <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode %></span>
+              <% end %>
+            </blockquote>
+            <p class="govuk-heading-s">Postcode with new developments (non-existant addresses?):</p>
+            <blockquote>
+              <%
+                ['NN8 1RF', 'NN8 1LF', 'WV1 4JX'].each do |pcode| %>
+                <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode %></span>
+              <% end %>
+            </blockquote>
+            <p class="govuk-heading-s">Multiple regions:</p>
+            <blockquote>
+              <% ['N12 9RF'].each do |pcode| %>
+                <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode %></span>
+              <% end %>
+            </blockquote>
+            <p class="govuk-heading-s">No regions:</p>
+            <blockquote>
+              <% ['NN8 1LF', 'BL0 0KX'].each do |pcode| %>
+                <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode %></span>
+              <% end %>
+            </blockquote>
+            <p class="govuk-heading-s">Complex results:</p>
+            <blockquote>
+              <%
+                ['L3 9PP', 'L7 6HD', 'SA38 9BH', 'SP11 9AY', 'NN1 5BT', 'NN8 1LS', 'BL5 1HT', 'N12 9RF', 'AB11 5PN', 'AB11 5PL', 'AB12 4SB', 'AB12 3LF', 'AB10 6PP', 'AB10 1QS', 'NE6 1LA', 'SW1X 9AE', 'MK41 0RU', 'NN8 4PW'].each do |pcode| %>
+                <span style="cursor: default;" onmouseout="this.style.textDecoration='none'" onmouseover="this.style.textDecoration='underline'" data-module-helper=postcode><%= pcode %></span>
+              <% end %>
+            </blockquote>
+          </div>
+        </details>
+      <% end %>
+      <%= f.hidden_field :address_postcode, id: "address-postcode" %>
+      <%= f.hidden_field :address_line_1, id: 'address-line-1' %>
+      <%= f.hidden_field :address_line_2, id: 'address-line-2' %>
+      <%= f.hidden_field :address_town, id: 'address-town' %>
+      <%= f.hidden_field :address_region, id: 'address-region' %>
+      <%= f.hidden_field :address_region_code, id: 'address-region-code' %>
+      <br/>
+    <% end %>
+    <button type="button" class="govuk-button" style="clear:both" data-module-element="trigger"><%= t('.find_address') %></button>
+  </div>
+  <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-0" data-module-part="lookup-container">
+    <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>" class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
+      <span id="postcode-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.postcode') %></span>
+      <span class="govuk-body govuk-!-margin-right-4" data-module-element="postcode-entry-text"><%= @page_data[:model_object].postcode_entry %></span>
+      <a href="#postcode_header" class="govuk-link" data-module-element="change-input"><%= t('.change') %></a>
+      <label for="results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_an_address') %></label>
+      <%= display_potential_errors(@page_data[:model_object], :address, "#{f.object_name}_address") %>
+      <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected %>" data-module-element="results-container" data-nodata-text="<%= t('.zero_address_found') %>" data-withdata-text-single="<%= t('.option_with_data_single') %>" data-withdata-text-plural="<%= t('.option_with_data_plural') %>" id="results-container">
+        <optgroup label="<%= if valid_addresses.length.zero?
+                               t('.zero_address_found')
+                             else
+                               multiple_addresses? ? t('.option_with_data_plural').sub('{%}', valid_addresses.length.to_s) : t('.option_with_data_single')
+                             end %>"></optgroup>
+        <% if valid_addresses.length.zero? %>
+          <option value=""><%= t('.zero_address_found') %></option>
+        <% elsif @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected %>
+          <% if valid_addresses.length > 1 %>
+            <option value="">Please select an address</option>
+          <% end %>
+          <% valid_addresses.each do |addr| %>
+            <option <%= 'selected' if @page_data[:model_object].address_line_1 == addr['address_line_1'] %>
+                    data-address_line_1="<%= addr['address_line_1'] %>"
+                    data-address_line_2="<%= addr['address_line_1'] %>"
+                    data-address_town="<%= addr['address_town'] %>"
+                    data-address_postcode="<%= addr['address_postcode'] %>"
+                    data-address_region="<%= addr['address_region'] %>"
+                    data-address_region_code="<%= addr['address_region_code'] %>"><%= addr['summary_line'] %></option>
+          <% end %>
+        <% end %>
+      </select>
+      <%= f.submit(t('.cant_find_address'),
+                   class: 'govuk-link govuk-!-margin-right-4 button_as_link',
+                   data:  { disable_with: false }, name: 'add_address', style: 'display:block') %>
+    </div>
+    <div data-module-part="address-display" class="govuk-!-margin-top-3 govuk-!-margin-bottom-3 <%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>">
+      <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
+      <div class="govuk-body govuk-!-margin-bottom-2" data-module-part="address_text">
+        <% unless @page_data[:model_object].address_line_1.blank? %>
+          <%= address_in_a_line @page_data[:model_object] %>
+        <% end %>
+      </div>
+      <a href="#postcode-header" class="govuk-link" data-module-element="change-input"><%= t('.change') %></a>
+    </div>
+    <div data-module-part="region-area" class="govuk-form-group <%= 'govuk-visually-hidden' if hide_region_section? %>">
+      <div class="govuk-!-margin-top-3" data-propertyname="address_region">
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if @page_data[:model_object].errors.details.dig(:address_region, 0)&.dig(:error).present? %>">
+          <div data-module-part="lookup-region-results" class="<%= 'govuk-visually-hidden' if hide_region_dropdown? %>">
+            <div class="govuk-!-margin-bottom-3">
+              <br/>
+              <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.region') %></span>
+              <span class="govuk-caption-m"><%= t('.region_desc') %></span>
+            </div>
+            <label for="region-results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_a_region') %></label>
+            <%= display_potential_errors(@page_data[:model_object], :address_region, "") %>
+            <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address_region, 0)&.dig(:error).present? %>"
+                    data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>" data-withdata-text-single="<%= t('.region_option_with_data_single') %>" data-withdata-text-plural="<%= t('.region_option_with_data_plural') %>" id="region-results-container">
+              <optgroup label="<%= multiple_regions? ? t('.region_option_with_data_plural').sub('{%}', valid_regions.length.to_s) : t('.region_option_with_data_single') %>"></optgroup>
+              <% if valid_regions.length > 0 %>
+                <option value="">Please select a region</option>
+              <% end %>
+              <% valid_regions.each do |region| %>
+                <option value="<%= region['code'] %>" <%= 'selected' if @page_data[:model_object].address_region_code == region['code'] %>
+                        data-address_region="<%= region['region'] %>" data-address_region_code="<%= region['code'] %>"><%= region['region'] %></option>
+              <% end %>
+            </select>
+          </div>
+          <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
+            <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.region') %></span>
+            <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
+            <a href="#region-header" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
+               data-module-element="change-region-button"><%= t('.change') %></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -225,9 +225,13 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
     this.clearFieldErrors = function (jElem) {
         var errorCollection = jElem.siblings("label[class=govuk-error-message]");
-        jElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
+        errorCollection = errorCollection.add(jElem.closest(".govuk-form-group.govuk-form-group--error").find("label.govuk-error-message").not(".govuk-visually-hidden"));
+        var groupCollection = jElem.closest(".govuk-form-group .govuk-form-group--error");
+        groupCollection = groupCollection.add(jElem.closest(".govuk-form-group.govuk-form-group--error"));
         jElem.removeClass("govuk-input--error");
+        jElem.removeClass("govuk-select--error");
         errorCollection.addClass("govuk-visually-hidden");
+        groupCollection.removeClass("govuk-form-group--error");
     };
 
     this.testError = function (errFn, jElem, errorType) {
@@ -314,77 +318,84 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     };
 
     this.clearBannerErrorList = function () {
-        if (null != this.bannerErrorContainer) {
+        if (null != this.bannerErrorContainer && this.bannerErrorContainer.length > 0) {
             var ul = this.bannerErrorContainer.find("ul");
             ul.empty();
         }
     };
 
     this.insertListElementInBannerError = function (inputElement, error_type, message_text) {
-        var ul = this.bannerErrorContainer.find("ul");
-        var display_text = "";
-        if (ul.length > 0) {
-            var href_value = "#" + this.getErrorID(inputElement);
-            var propertyName = this.getPropertyName(inputElement);
-            if (typeof message_text === "undefined" || message_text + "" === "") {
-                display_text = this.errorMessage(propertyName, error_type)
-            } else {
-                display_text = message_text;
-            }
-            // is there a message, of any other type, with the same text...
-            var link = ul.find("a").filter(function () {
-                return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
-            });
-
-            if (link.length === 0) {
-                link = ul.find("a").filter(function () {
-                    return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+        if (null != this.bannerErrorContainer && this.bannerErrorContainer.length > 0) {
+            var ul = this.bannerErrorContainer.find("ul");
+            var display_text = "";
+            if (ul.length > 0) {
+                var href_value = "#" + this.getErrorID(inputElement);
+                var propertyName = this.getPropertyName(inputElement);
+                if (typeof message_text === "undefined" || message_text + "" === "") {
+                    display_text = this.errorMessage(propertyName, error_type)
+                } else {
+                    display_text = message_text;
+                }
+                // is there a message, of any other type, with the same text...
+                var link = ul.find("a").filter(function () {
+                    return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
                 });
-            }
 
-            if ( link.length === 0 ) {
-                link = ul.find("a").filter(function () {
-                    return $(this).attr("href") === href_value && $(this).text() === display_text;
-                });
-            }
+                if (link.length === 0) {
+                    link = ul.find("a").filter(function () {
+                        return $(this).attr("data-errortype") === error_type && $(this).attr("data-propertyname") === propertyName;
+                    });
+                }
 
-            if ( link.length === 0) {
-                link = ul.find("a").filter(function () {
-                    return $(this).text() === display_text;
-                });
-            }
+                if (link.length === 0) {
+                    link = ul.find("a").filter(function () {
+                        return $(this).attr("href") === href_value && $(this).text() === display_text;
+                    });
+                }
 
-            // ensure duplicates
-            if (link.length <= 0) {
-                var link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
-                ul.append("<li>" + link + "</li>");
+                if (link.length === 0) {
+                    link = ul.find("a").filter(function () {
+                        return $(this).text() === display_text;
+                    });
+                }
+
+                // ensure duplicates
+                if (link.length <= 0) {
+                    var link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
+                    ul.append("<li>" + link + "</li>");
+                }
             }
         }
     };
 
     this.removeListElementInBannerError = function (inputElement, error_type) {
-        var ul = this.bannerErrorContainer.find("ul");
-        if (ul.length > 0) {
-            var propertyName = this.getPropertyName(inputElement);
-            var link = ul.find("a").filter(function () {
-                return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
-            });
+        if (null != this.bannerErrorContainer && this.bannerErrorContainer.length > 0) {
+            var ul = this.bannerErrorContainer.find("ul");
+            if (ul.length > 0) {
+                var propertyName = this.getPropertyName(inputElement);
+                var link = ul.find("a").filter(function () {
+                    return $(this).attr("data-propertyname") === propertyName && $(this).attr("data-errortype") === error_type;
+                });
 
-            if (link.length > 0) {
-                link.remove();
+                if (link.length > 0) {
+                    link.remove();
+                }
             }
         }
     };
 
     this.toggleBannerError = function (bShow) {
-        if (null != this.bannerErrorContainer) {
+        if (null != this.bannerErrorContainer && this.bannerErrorContainer.length > 0) {
             if (bShow) {
                 this.bannerErrorContainer.removeClass("govuk-visually-hidden");
                 $("html, body").animate({
                     scrollTop: this.bannerErrorContainer.offset().top
                 }, 500);
             } else {
-                this.bannerErrorContainer.addClass("govuk-visually-hidden");
+	            var ul = this.bannerErrorContainer.find("ul");
+	            if (ul.length > 0) {
+		            this.bannerErrorContainer.addClass("govuk-visually-hidden");
+	            }
             }
         }
     };
@@ -439,6 +450,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 jqueryElementForRequiredMessage.prop("id", this.getErrorID(jQueryElement));
                 if (jQueryElement.prop("type") === "radio") {
                     jqueryElementForRequiredMessage.insertBefore(jQueryElement.parent());
+                } else if (jQueryElement.prop("class").indexOf('input-type__input') > -1 ) {
+                    jqueryElementForRequiredMessage.insertBefore(jQueryElement.parent().parent());
                 } else {
                     jqueryElementForRequiredMessage.insertBefore(jQueryElement);
                 }
@@ -492,8 +505,8 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             var newParent = null;
             if ((newParent = jqueryInputElement.closest("[data-propertyname]")).length > 0) {
                 propertyName = newParent.attr("data-propertyname")
-            } else {
-                propertyName = "";
+            } else if ((newParent = jqueryInputElement.closest("[property_name]")).length > 0) {
+                propertyName = newParent.attr("property_name");
             }
         }
         if (typeof propertyName === "undefined" || propertyName === "") {

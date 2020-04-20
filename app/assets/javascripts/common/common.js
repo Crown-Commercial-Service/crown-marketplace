@@ -142,6 +142,31 @@ const pageUtils = {
         }
         ,
 
+        destructurePostCode: function (pc) {
+            var input  = ("" + pc).trim();
+            var regEx = /^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i ;
+            var matches = input.match(regEx);
+
+            var result = {valid: false, input: input};
+            if (matches !== null ) {
+                result = {
+                    valid: true,
+                    fullPostcode: matches[1] + ' ' + matches[4],
+                    postcodeArea: matches[2],
+                    outCode: matches[1],
+                    postcodeDistrict: matches[1],
+                    inCode: matches[4],
+                    postcodeSector: matches[5],
+                    unitPostcode: matches[6],
+                    formattedInput: function() {
+                        return this.fullPostcode
+                    }
+                };
+            }
+
+            return result
+        },
+
         /* Sort an un-ordered list */
         sortUnorderedList: function (listID) {
             let list, i, switching, b, shouldSwitch;

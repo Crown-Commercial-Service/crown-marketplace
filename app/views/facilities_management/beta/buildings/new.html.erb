@@ -1,0 +1,8 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+  <%= form_for @page_data[:model_object], url: facilities_management_beta_buildings_path, method: :post, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <input type="hidden" name="step" value="new"/>
+    <%= render partial: 'details_form', locals: { f: f } %>
+    <%= govuk_continuation_buttons(pd, f, true, false, true, false, false, true) %>
+    <span class="govuk-caption-m govuk-!-margin-top-3"><%= step_footer %></span>
+  <% end %>
+<% end %>

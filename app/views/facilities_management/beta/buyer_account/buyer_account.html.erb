@@ -35,7 +35,7 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management">Manage buildings</a>
+        <%= link_to t(".manage_buildings"), facilities_management_beta_buildings_path, class: "fm-buyer-account-panel__title"%>
         <p class="fm-buyer-account-panel__body">
           Create and manage your buildings used in your procurements
         </p>
