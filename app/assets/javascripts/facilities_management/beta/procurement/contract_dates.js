@@ -223,14 +223,14 @@ $(function () {
             if (mobilisationPeriod && !isNaN(dd)) {
                 let dates = contractDateUtils.calcContractDates(contractStartDate, initialCallOffPeriod, mobilisationPeriod);
                 /* display mobilisation start date */
-                $("#mobilisation-start-date-dd").val(dates["Contract-Mob-Start"].substr(0, 2));
-                $("#mobilisation-start-date-mm").val(dates["Contract-Mob-Start"].substr(3, 2));
-                $("#mobilisation-start-date-yyyy").val(dates["Contract-Mob-Start"].substr(6, 4));
-
+                $("#mobilisation-start-date-dd").val(leadingZero(dates["Contract-Mob-Start"].getDate()));
+                $("#mobilisation-start-date-mm").val(leadingZero(dates["Contract-Mob-Start"].getMonth() + 1));
+                $("#mobilisation-start-date-yyyy").val(leadingZero(dates["Contract-Mob-Start"].getFullYear()));
+                
                 /* display mobilisation end date */
-                $("#mobilisation-end-date-dd").val(dates["Contract-Mob-End"].substr(0, 2));
-                $("#mobilisation-end-date-mm").val(dates["Contract-Mob-End"].substr(3, 2));
-                $("#mobilisation-end-date-yyyy").val(dates["Contract-Mob-End"].substr(6, 4));
+                $("#mobilisation-end-date-dd").val(leadingZero(dates["Contract-Mob-End"].getDate()));
+                $("#mobilisation-end-date-mm").val(leadingZero(dates["Contract-Mob-End"].getMonth() + 1));
+                $("#mobilisation-end-date-yyyy").val(leadingZero(dates["Contract-Mob-End"].getFullYear()));
 
             } else {
                 clearMobilisationDates();
