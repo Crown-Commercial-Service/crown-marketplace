@@ -26,12 +26,12 @@ module Postcode
 
     def self.find_region(postcode)
       query = <<~HEREDOC
-        select
-        distinct public.postcodes_nuts_regions.code,
-        initcap(public.nuts_regions.name) as region
-        from public.postcodes_nuts_regions
-        left join public.nuts_regions ON public.nuts_regions.code = public.postcodes_nuts_regions.code
-        where public.postcodes_nuts_regions.postcode like '#{postcode.replace(' ', '').upcase}%'
+        SELECT DISTINCT PUBLIC.postcodes_nuts_regions.code,
+                        initcap(PUBLIC.nuts_regions.NAME) AS region
+        FROM   PUBLIC.postcodes_nuts_regions
+               LEFT JOIN PUBLIC.nuts_regions
+                      ON PUBLIC.nuts_regions.code = PUBLIC.postcodes_nuts_regions.code
+        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{postcode.replace(' ', '').upcase}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     rescue StandardError => e
