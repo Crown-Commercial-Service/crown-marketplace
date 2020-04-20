@@ -47,7 +47,6 @@ module FacilitiesManagement
 
       def set_building_data
         @building = current_user.buildings.find(@procurement_building.building_id)
-        @building_data = @building['building_json']
       end
 
       def set_back_path

@@ -1,22 +1,22 @@
 <%= govuk_page_content(@page_description, @contract) do |pd| %>
-    <%= render partial: 'contract_summary_head' %>
-    
-    <%= render partial: 'contract_offer_details' %>
-    
-    <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-        <%= t('.requirements') %> 
-    </h1>
-    <div class="govuk-!-font-size-19">
+  <%= render partial: 'contract_summary_head' %>
+
+  <%= render partial: 'contract_offer_details' %>
+
+  <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
+    <%= t('.requirements') %>
+  </h1>
+  <div class="govuk-!-font-size-19">
     <%= render partial: 'procurement_requirements_head' %>
     <%= render partial: 'facilities_management/beta/procurements/contracts/procurement_requirements' %>
-    
+
     <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-            <%= t('.buyer_contact_details') %>
+      <%= t('.buyer_contact_details') %>
     </h1>
     <%= render partial: 'buyer_contact_details' %>
-    
+
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
-        <%= t('.call_off_contract_documents') %>
+      <%= t('.call_off_contract_documents') %>
     </h1>
     <%= render partial: 'facilities_management/beta/procurements/contracts/call_off_contract_documents' %>
 
@@ -27,13 +27,15 @@
 
     <% case @contract.aasm_state %>
     <% when 'sent' %>
-        <div class='govuk-!-margin-top-5'>
-            <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button') %> <br/>
-            <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
-        </div>
+      <div class='govuk-!-margin-top-5'>
+        <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_beta_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button') %>
+        <br/>
+        <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
+      </div>
     <% else %>
-        <div class='govuk-!-margin-top-5'>
-            <%= link_to(pd.navigation_details.secondary_text, @page_description.navigation_details.secondary_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button govuk-button--secondary') %>
-        </div>
+      <div class='govuk-!-margin-top-5'>
+        <%= link_to(pd.navigation_details.secondary_text, @page_description.navigation_details.secondary_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button govuk-button--secondary') %>
+      </div>
     <% end %>
+  </div>
 <% end %>

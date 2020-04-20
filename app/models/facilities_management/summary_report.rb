@@ -160,7 +160,7 @@ module FacilitiesManagement
 
           uvals << { user_id: @procurement.user.id,
                      service_code: s.code.gsub('-', '.'),
-                     uom_value: b.building.building_json['gia'].to_f,
+                     uom_value: b.building.gia.to_f,
                      building_id: b.building_id,
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',

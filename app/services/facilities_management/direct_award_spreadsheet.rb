@@ -184,7 +184,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   def get_building_data(selected_building_names, selected_building_info)
     selected_buildings_data = @active_procurement_buildings.map(&:building).flatten
-    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_json['building-type'] }
+    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
     selected_building_names.uniq!
 
     selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type } }
