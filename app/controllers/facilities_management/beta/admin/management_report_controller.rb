@@ -11,10 +11,8 @@ module FacilitiesManagement
           @management_report.assign_attributes(management_report_params)
 
           if @management_report.valid?
-            current_user.csv_export.purge
             csv_string = ProcurementCsvExport.call(@management_report.start_date, @management_report.end_date)
-            current_user.csv_export.attach(io: StringIO.new(csv_string), filename: 'procurements_data.csv', content_type: 'text/csv')
-            render :download
+            send_data(csv_string, filename: 'procurements_data.csv', type: 'text/csv')
           else
             render :index
           end
