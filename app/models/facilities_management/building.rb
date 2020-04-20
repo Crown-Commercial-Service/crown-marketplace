@@ -7,10 +7,9 @@ module FacilitiesManagement
 
     attr_accessor :postcode_entry, :address
 
-    before_save :populate_other_data, :determine_status
+    before_save :populate_other_data, :determine_status, :populate_json_attribute
     before_validation :determine_status
     after_find :populate_json_attribute
-    after_save :populate_json_attribute
 
     after_initialize do |building|
       building.postcode_entry = building.address_postcode if building.postcode_entry.blank?
@@ -50,10 +49,6 @@ module FacilitiesManagement
       populate_row_from_json(self[:building_json].deep_symbolize_keys) if building_name.blank? && self&.building_json&.dig('name').present?
     end
 
-    def populate_row
-      populate_row_from_json(self[:building_json].deep_symbolize_keys)
-    end
-
     def building_standard
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
@@ -73,7 +68,6 @@ module FacilitiesManagement
                       'Incomplete'
                     end
     end
-
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def json_from_row
@@ -98,18 +92,20 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/AbcSize
     def populate_row_from_json(building_json)
-      self.building_name       = building_json[:building_name] || building_json[:name]
-      self.description         = building_json[:description]
-      self.region              = building_json[:region]
-      self.building_type       = building_json['building-type'.to_sym]
-      self.security_type       = building_json['security-type'.to_sym]
-      self.gia                 = building_json[:gia]
-      self.address_town        = building_json[:address]['fm-address-town'.to_sym]
-      self.address_line_1      = building_json[:address]['fm-address-line-1'.to_sym]
-      self.address_line_2      = building_json[:address]['fm-address-line-2'.to_sym]
-      self.address_region      = building_json[:address]['fm-address-region'.to_sym] || building_json[:address]['fm-nuts-region'.to_sym]
-      self.address_postcode    = building_json[:address]['fm-address-postcode'.to_sym]
-      self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
+      self.building_name = building_json[:building_name] || building_json[:name]
+      self.description   = building_json[:description]
+      self.region        = building_json[:region]
+      self.building_type = building_json['building-type'.to_sym]
+      self.security_type = building_json['security-type'.to_sym]
+      self.gia           = building_json[:gia]
+      if building_json&.dig(:address).present?
+        self.address_town        = building_json[:address]['fm-address-town'.to_sym]
+        self.address_line_1      = building_json[:address]['fm-address-line-1'.to_sym]
+        self.address_line_2      = building_json[:address]['fm-address-line-2'.to_sym]
+        self.address_region      = building_json[:address]['fm-address-region'.to_sym] || building_json[:address]['fm-nuts-region'.to_sym]
+        self.address_postcode    = building_json[:address]['fm-address-postcode'.to_sym]
+        self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
+      end
       determine_status
     end
 
