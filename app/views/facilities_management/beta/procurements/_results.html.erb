@@ -1,18 +1,28 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd| %>
-  <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds"><%= t('.sub-text') %></h1>
-  <h1 class="govuk-heading govuk-heading-l"><%= t('.sub-lot') %>&nbsp;<%= @page_data[:selected_sublot] %></h1>
-  <h2 class="govuk-heading govuk-heading-m"><%= t('.estimated_cost') %>
+  <% unless @procurement.lot_number_selected_by_customer %>
+    <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds"><%= t('.sub-text') %></h1>
+    <h1 class="govuk-heading govuk-heading-l"><%= t('.sub-lot') %>&nbsp;<%= @page_data[:selected_sublot] %></h1>
+    <h2 class="govuk-heading govuk-heading-m"><%= t('.estimated_cost') %>
     <br/><span class="govuk-heading govuk-heading-l"><%= number_to_currency(@page_data[:estimated_cost], precision: 0) %></span></h2>
-  <details class="govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6" data-module="govuk-details">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">
-        <%= t('.estimated_cost_how') %>
-      </span>
-    </summary>
-    <div class="govuk-details__text govuk-!-width-two-thirds">
-      <%= t('.estimated_cost_calc_html') %>
+    <details class="govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t('.estimated_cost_how') %>
+        </span>
+      </summary>
+      <div class="govuk-details__text govuk-!-width-two-thirds">
+        <%= t('.estimated_cost_calc_html') %>
+      </div>
+    </details>
+  <% else %>
+    <h1 class="govuk-heading govuk-heading-l govuk-!-width-three-quarters"><%= t('.sub-text-FC-unpriced') %></h1>
+    <h1 class="govuk-heading govuk-heading-l govuk-!-margin-bottom-1">
+      <%= t(".sub-lot-#{@procurement.lot_number}") %>
+    </h1>
+    <div class="govuk-hint">
+      <%= t(".hint-text-unpriced-sub-lot-#{@procurement.lot_number}") %>
     </div>
-  </details>
+  <% end %>
   <h2 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-0"><%= t('.suppliers_shortlisted_html', count: @page_data[:no_suppliers]) %></h2>
   <h2 class="govuk-heading govuk-heading-s govuk-!-margin-top-0"><%= t('.who_are') %></h2>
   <% @page_data[:supplier_collection].each do |s| %>
