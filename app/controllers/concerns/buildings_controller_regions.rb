@@ -2,7 +2,12 @@ module BuildingsControllerRegions
   extend ActiveSupport::Concern
 
   def find_addresses_by_postcode(postcode)
+    Rails.logger.info "Postcode lookup: #{postcode}"
     Postcode::PostcodeChecker_V2.location_info(postcode)
+
+  rescue StandardError => e
+    Rails.logger.error("Postcode lookup error:\n#{([e.message]+e.backtrace).join($/)}")
+    []
   end
 
   def find_region_query_by_postcode(postcode)
@@ -14,6 +19,9 @@ module BuildingsControllerRegions
     result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
 
     result
+  rescue StandardError => e
+    Rails.logger.error("Region lookup error:\n#{([e.message]+e.backtrace).join($/)}")
+    []
   end
 
   def get_region_by_prefix(postcode)
