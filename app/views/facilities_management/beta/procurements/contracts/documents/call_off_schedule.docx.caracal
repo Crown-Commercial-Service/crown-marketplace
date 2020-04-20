@@ -32,8 +32,33 @@ docx.p
 
 docx.p 'Direct Award under Lot 1a of Facilities Management Marketplace RM3830', size: 40, font: 'Calibri'
 
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p 'Order Form and Call-Off Schedules', size: 16, font: 'Calibri', bottom: 0
+docx.p "#{@buyer_detail.organisation_name} #{@contract.contract_number}", size: 16, font: 'Calibri', bottom: 0
+docx.p '© Crown Copyright 2018', size: 16, font: 'Calibri', bottom: 0
+
 docx.page
 docx.font name: 'Calibri'
+
+docx.p
 
 docx.p 'ORDER FORM TEMPLATE AND CALL-OFF SCHEDULES', align: :center, bold: true, font: 'Calibri'
 docx.p 'Part A - Order Form', align: :center, bold: true, font: 'Calibri'
@@ -431,3 +456,35 @@ docx.p
 
 docx.p 'Part B - Call-Off Schedules', align: :center, bold: true, font: 'Calibri'
 docx.p 'All Schedules listed within Part A are to be found within the zipped folder.', font: 'Calibri'
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p
+docx.p 'Order Form and Call-Off Schedules', size: 16, font: 'Calibri', bottom: 0
+docx.p "#{@buyer_detail.organisation_name} #{@contract.contract_number}", size: 16, font: 'Calibri', bottom: 0
+docx.p '© Crown Copyright 2018', size: 16, font: 'Calibri', bottom: 0
