@@ -21,7 +21,7 @@
           <div class="govuk-radios__item" data-module="other-expando">
             <div class="other_container">
               <%= ff.radio_button :security_type, 'other', class: 'govuk-radios__input' %>
-              <%= ff.label :security_type, 'other', class: 'govuk-label govuk-radios__label' do
+              <%= ff.label :security_type, value: 'other', class: 'govuk-label govuk-radios__label' do
                 t('.other')
               end %>
               <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].security_type != 'other'%> govuk-!-margin-top-2 govuk-!-padding-left-4"  style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
