@@ -17,7 +17,7 @@ module FacilitiesManagement
 
     validates :building_name, presence: true, on: %i[new edit all]
     validates :gia, presence: true, on: %i[gia all]
-    validates :gia, numericality: { only_integer: true }, allow_blank: true
+    validates :gia, numericality: { only_integer: true }, allow_blank: true, on: %i[gia all]
     validates :security_type, presence: true, on: %i[security all]
     validates :building_type, presence: true, on: %i[type all]
     validates :address_region, presence: true, on: %i[new edit all], if: -> { address_postcode.present? && address_line_1.present? }
