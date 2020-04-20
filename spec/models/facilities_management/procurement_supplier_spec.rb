@@ -61,7 +61,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
   end
 
   describe 'contracts' do
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
     let(:user) { create(:user) }
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
     let(:da_value_test1) {  347.60116658878 }
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test1, da_value_test1], [:test2, da_value_test2], [:test3, da_value_test3], [:test4, da_value_test4]])
       allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-      procurement.save_eligible_suppliers_and_set_state
+      procurement.set_state_to_results_if_possible
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)

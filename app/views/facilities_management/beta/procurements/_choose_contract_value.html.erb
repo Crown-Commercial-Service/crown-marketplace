@@ -1,0 +1,32 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd| %>
+  <h2 class="govuk-heading govuk-heading-m"><%= t('.heading') %></h2>
+  <h2 class="govuk-caption-m"><%= t('.description_html') %></h2>
+  <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <%= f.hidden_field :lot_number_selected_by_customer, value: true %>
+    <%= govuk_grouped_field(f, nil, :lot_number) do |ff, attr| %>
+      <%= govuk_start_individual_field(ff, attr, {}, false, false) do |a| %>
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <%= f.radio_button :lot_number, '1a', class: 'govuk-radios__input' %>
+            <%= f.label :lot_number, value: '1a', class: 'govuk-label govuk-radios__label' do %>
+              <%= t('.lot_number_1a_description') %>
+            <% end %>
+          </div>
+          <div class="govuk-radios__item">
+            <%= f.radio_button :lot_number, '1b', class: 'govuk-radios__input' %>
+            <%= f.label :lot_number, value: '1b', class: 'govuk-label govuk-radios__label' do %>
+              <%= t('.lot_number_1b_description') %>
+            <% end %>
+          </div>
+          <div class="govuk-radios__item">
+            <%= f.radio_button :lot_number, '1c', class: 'govuk-radios__input' %>
+            <%= f.label :lot_number, value: '1c', class: 'govuk-label govuk-radios__label' do %>
+              <%= t('.lot_number_1c_description') %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <%= govuk_continuation_buttons(pd, f) %>
+  <% end %>
+<% end %>

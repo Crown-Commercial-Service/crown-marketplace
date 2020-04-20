@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_204754) do
+ActiveRecord::Schema.define(version: 2020_04_16_165106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "eurostat_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "postcode", limit: 20
+    t.string "code", limit: 20
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["postcode"], name: "index_eurostat_nuts_regions_on_postcode", unique: true
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -203,6 +211,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
     t.boolean "local_government_pension_scheme"
     t.string "contract_number"
     t.string "contract_datetime"
+    t.boolean "lot_number_selected_by_customer", default: false
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -481,6 +490,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
     t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
 
+  create_table "ons_nuts3_regions", id: false, force: :cascade do |t|
+    t.string "NUTS318CD", limit: 255
+    t.string "NUTS318NM", limit: 255
+    t.integer "FID"
+  end
+
   create_table "os_address", id: false, force: :cascade do |t|
     t.bigint "uprn", null: false
     t.bigint "udprn"
@@ -576,8 +591,8 @@ ActiveRecord::Schema.define(version: 2020_04_14_204754) do
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "postcode", limit: 20
     t.string "code", limit: 20
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 

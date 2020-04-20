@@ -327,10 +327,13 @@ en:
               not_a_date: Enter a valid start date
             reason_for_closing:
               blank: Enter a reason for closing this procurement
+              too_long: Reason for not closing must be 500 characters or less
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
+              too_long: Reason for declining must be 500 characters or less
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
+              too_long: Reason for not signing must be 100 characters or less
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -654,6 +657,12 @@ en:
         call_off_extensions:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+        choose_contract_value:
+          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          heading: Looking at the options below are you able to select the correct value range based on your budget, and expected cost of the contract?
+          lot_number_1a_description: Total contract value up to £7 million
+          lot_number_1b_description: Total contract value between £7 million and £50 million
+          lot_number_1c_description: Total contract value over £50 million
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1208,8 +1217,15 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
+          hint-text-unpriced-sub-lot-1a: Suitable for contracts up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contracts £7 million - £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contracts over £50m
           sub-lot: Lot
+          sub-lot-1a: Sub-lot 1a
+          sub-lot-1b: Sub-lot 1b
+          sub-lot-1c: Sub-lot 1c
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          sub-text-FC-unpriced: 'Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?

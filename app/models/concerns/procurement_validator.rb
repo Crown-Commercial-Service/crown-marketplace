@@ -79,6 +79,9 @@ module ProcurementValidator
     # Validation for the contract_details page
     validate :validate_contract_details, on: :contract_details
 
+    # Validation for the choose_contract_value page
+    validates :lot_number, presence: true, on: :choose_contract_value
+
     private
 
     #############################################
