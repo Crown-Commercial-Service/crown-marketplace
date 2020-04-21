@@ -165,7 +165,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:description]
+      row << building.building.description
     end
 
     row
@@ -205,7 +205,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @active_procurement_buildings.each do |building|
-      row << building.county
+      row << building.building.address_region
     end
 
     row
@@ -215,7 +215,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:gia]
+      row << building.building.gia
     end
 
     row
@@ -225,7 +225,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:'building-type']
+      row << building.building.building_type
     end
 
     row
@@ -235,7 +235,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:'security-type']
+      row << building.building.security_type
     end
 
     row

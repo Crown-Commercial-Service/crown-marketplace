@@ -39,6 +39,8 @@
 @import "typography/typography";
 @import "print-page/print-page";
 /* CCS override and bespoke styles; re-used globally across all modules */
+@import "ccs-character-count/ccs-character-count";
+@import "input-type/input_type";
 @import "ccs-global/ccs-global";
 @import "step-by-step-nav/focused";
 @import "step-by-step-nav/step-by-step-header";

@@ -84,7 +84,7 @@ class FMBuildingData
     # returns building details for a given building_id
     query = "select building_json from facilities_management_buildings where id = '" + building_id + "';"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
-    JSON.parse(result[0].to_json)
+    JSON.parse(result[0].json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get new building details: #{e}"
   end
@@ -141,7 +141,7 @@ class FMBuildingData
     query = "select id, updated_at, status, building_json from facilities_management_buildings where user_email = '" + Base64.encode64(email_address) + "' order by LOWER(building_json->>'name')"
     result = ActiveRecord::Base.connection_pool.with_connection { |con| con.exec_query(query) }
     Rails.logger.info '<== FMBuildingData.get_building_data()'
-    JSON.parse(result.to_json)
+    JSON.parse(result.json_from_row)
   rescue StandardError => e
     Rails.logger.warn "Couldn't get building data: #{e}"
   end

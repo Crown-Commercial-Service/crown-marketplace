@@ -127,6 +127,8 @@ ignore_unused:
   - home.index.legal_services_link
   - home.index.facilities_management_link
   - facilities_management.beta.admin.supplier_rates.supplier_framework_rates.*
+  - facilities_management.beta.procurements.results.hint-text-unpriced*
+  - facilities_management.beta.procurements.results.sub-lot-1*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

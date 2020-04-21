@@ -5,7 +5,7 @@
     <ul id="navigation" class="govuk-header__navigation ">
       <% unless landing_or_admin_page || fm_buyer_landing_page || fm_supplier_landing_page || not_permitted_page || fm_landing_page %>
         <li class="govuk-header__navigation-item">
-          <% if controller.controller_name == 'buildings_management' || controller.class.parent == FacilitiesManagement::Beta::Procurements%>
+          <% if controller.controller_name == 'buildings' || controller.class.parent == FacilitiesManagement::Beta::Procurements%>
             <%= link_to 'My account', facilities_management_beta_path, class: 'govuk-header__link' %>
           <% else %>
             <%= link_to 'Back to start', facilities_management_beta_path, class: 'govuk-header__link' %>

@@ -26,6 +26,12 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
       end
     end
 
+    context 'when everything is present verify alias methods' do
+      it 'is valid email' do
+        expect(buyer_detail.user.email).to eq buyer_detail.email
+      end
+    end
+
     context 'when telephone number not present' do
       it 'is invalid' do
         expect(buyer_detail.update(telephone_number: nil)).to eq false

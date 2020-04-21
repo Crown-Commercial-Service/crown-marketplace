@@ -1,4 +1,5 @@
 <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0">Estimated annual cost</h1>
+<% content_for :page_title, 'Estimated annual cost' %>
 <div class="govuk-!-margin-top-3">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>" data-propertyname="Estimated cost"
        style="<%= 'padding-left:1em' if @procurement.errors[:estimated_cost_known].any? %>">

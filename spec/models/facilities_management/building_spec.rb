@@ -81,10 +81,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           expect(building.building_json[:address]['fm-address-line-2'.to_sym]).to eq(building.address_line_2)
         end
 
-        it 'will save county correctly' do
-          expect(building.building_json[:address]['fm-address-county'.to_sym]).to eq(building.address_county)
-        end
-
         it 'will save region correctly' do
           expect(building.building_json[:address]['fm-address-region'.to_sym]).to eq(building.address_region)
         end

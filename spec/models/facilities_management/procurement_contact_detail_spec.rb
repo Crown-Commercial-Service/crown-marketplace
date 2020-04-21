@@ -30,6 +30,10 @@ RSpec.describe FacilitiesManagement::ProcurementContactDetail, type: :model do
       it 'expected to be valid' do
         expect(procurement_contact_detail.valid?(:new_invoicing_contact_details)).to eq true
       end
+
+      it 'expected full_name alias to be valid' do
+        expect(procurement_contact_detail.name).to eq procurement_contact_detail.full_name
+      end
     end
 
     context 'when the name is 50 character long' do
@@ -132,6 +136,14 @@ RSpec.describe FacilitiesManagement::ProcurementContactDetail, type: :model do
     context 'when the organisation_address_postcode is valid' do
       it 'expected to be valid' do
         expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq true
+      end
+    end
+
+    describe '#full_organisation_address' do
+      context 'when verify full  is present' do
+        it 'expected to be valid' do
+          expect(procurement_contact_detail.full_organisation_address).to include(procurement_contact_detail.organisation_address_line_1)
+        end
       end
     end
   end

@@ -64,7 +64,7 @@
               </a>
             </li>
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-              <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+              <a href="<%= facilities_management_beta_procurement_contract_documents_call_off_schedule_2_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
                 <%= t(".contract_documents.call_off_schedule_2.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
               </a>
             </li>
@@ -89,16 +89,22 @@
             </li>
           </ul>
 
-
-          <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h3>
-          <ul class="govuk-list govuk-!-margin-top-6 documents">
-            <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-              <a href="#?format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
-                <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
-              </a>
-              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
-            </li>
-          </ul>
+          <% if @procurement.security_policy_document_required? %>
+            <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h3>
+            <ul class="govuk-list govuk-!-margin-top-6 documents">
+              <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+                <% if @procurement.security_policy_document_file.content_type == 'application/pdf' %>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
+                    <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
+                <% else %>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                    <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                <% end %>
+                </a>
+                <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
+              </li>
+            </ul>
+          <% end %>
 
           <%= link_to t('.download_documents.title'), '#', class: 'govuk-button govuk-button--secondary' %>
         </div>

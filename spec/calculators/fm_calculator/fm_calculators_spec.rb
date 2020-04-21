@@ -20,7 +20,7 @@ RSpec.describe FMCalculator::Calculator do
         puts "Test #{row['test_name']}: #{method_to_call}"
         
         calculator = described_class.new(
-          row['contract_length_years'].to_i, row['service_ref'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'] == 'true', row['cafm_flag'] == 'true', row['helpdesk_flag'] == 'true', rates, rate_card
+          row['contract_length_years'].to_i, row['service_ref'], row['service_standard'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'] == 'true', row['cafm_flag'] == 'true', row['helpdesk_flag'] == 'true', rates, rate_card
         )
         
         result = calculator.send(method_to_call.to_sym)
@@ -38,12 +38,12 @@ RSpec.describe FMCalculator::Calculator do
           puts test['test_name']
           
           calculator = described_class.new(
-            test['contract_length_years'].to_i, test['service_ref'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates, rate_card
+            test['contract_length_years'].to_i, test['service_ref'], test['service_standard'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates, rate_card
           )
           
           test['expectations'].each do |method_name, expect_value|
             result = calculator.send(method_name.to_sym)
-            
+
             expect(result.round(2)).to eq(expect_value.sub(',','').to_f.round(2))
           end
         end

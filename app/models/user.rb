@@ -20,7 +20,7 @@ class User < ApplicationRecord
           dependent: :destroy
 
   has_many :buildings,
-           foreign_key: :users_id,
+           foreign_key: :user_id,
            class_name: 'FacilitiesManagement::Building',
            inverse_of: :user,
            dependent: :destroy

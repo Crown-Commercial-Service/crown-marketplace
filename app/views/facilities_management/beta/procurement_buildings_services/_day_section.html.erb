@@ -4,6 +4,7 @@
     <div class="govuk-form-group <%= 'govuk-form-group--error' if service_choice.errors.any? %>" data-propertyname="<%= day %>_service_choice">
       <%= display_potential_errors service_choice, :service_choice, f.object_name, nil, nil, day %>
       <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+        <%= display_error(f.object, day.to_sym) %>
         <div class="govuk-radios__item">
           <%= f.radio_button :service_choice, value = "not_required", class: 'govuk-radios__input', id: "#{day}_not_required", data: {propertyname: "#{day}_service_choice"} %>
           <%= f.label :service_choice, value: :not_required, for: "#{day}_not_required", class: "govuk-label govuk-radios__label" %>

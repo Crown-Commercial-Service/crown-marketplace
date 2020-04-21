@@ -1,1 +1,2 @@
 <%= render @view_name %>
+<% content_for(:page_title, @page_description.heading_details.text) unless @page_description.nil?  %>
