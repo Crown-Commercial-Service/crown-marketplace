@@ -94,10 +94,10 @@
             <ul class="govuk-list govuk-!-margin-top-6 documents">
               <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
                 <% if @procurement.security_policy_document_file.content_type == 'application/pdf' %>
-                  <a href="#?format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
                     <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
                 <% else %>
-                  <a href="#?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
                     <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
                 <% end %>
                 </a>
