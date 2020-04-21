@@ -1167,12 +1167,15 @@ en:
           save_for_later: Save for later
         filter_details:
           apply_filters: Apply filters
-          change_add_region: Change/Add region
-          change_add_service: Change/Add service
+          change_add_region: Change
+          change_add_service: Change
           edit_filters: Show filter
           hide_filters: Hide filter
-          region: Region
-          service: Service
+          hide_requirements: Hide requirements
+          regions: Regions
+          requirements: Requirements
+          services: Services
+          show_requirements: Show requirements
         further_competition:
           further_competition_partial:
             awarding_the_contract: Awarding the contract
