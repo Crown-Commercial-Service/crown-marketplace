@@ -337,6 +337,14 @@ module FacilitiesManagement
       procurement_suppliers.find_by(aasm_state: 'unsent')
     end
 
+    def procurement_building_service_codes
+      procurement_building_services.map(&:code).uniq
+    end
+
+    def active_procurement_building_region_codes
+      active_procurement_buildings.map { |proc_building| proc_building.building.address_region_code } .uniq
+    end
+
     private
 
     def save_results_data
