@@ -81,8 +81,8 @@
         <th class="govuk-!-width-one-third"><%= t('.caption_type') %></th>
         <td>
           <% unless @page_data[:model_object].building_type.blank? %>
-            <%= @page_data[:model_object].building_type.capitalize %>
-            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_building_type, length: 75)}".html_safe if @page_data[:model_object].building_type == 'other'%>
+            <%= FacilitiesManagement::Building::BUILDING_TYPES.find { |bt| bt[:id] == @page_data[:model_object].building_type }[:title].capitalize.html_safe %>
+            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_building_type, length: 150)}".html_safe if @page_data[:model_object].building_type == 'other'%>
           <% else %>
             <%= link_to t('.select_one_option_text'), type_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
           <% end %>
@@ -98,7 +98,7 @@
         <td>
           <% unless @page_data[:model_object].security_type.blank? %>
             <%= @page_data[:model_object].security_type.capitalize %>
-            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_security_type, length: 75)}".html_safe if @page_data[:model_object].security_type == 'other'%>
+            <%= "&nbsp;&mdash;&nbsp;#{truncate(@page_data[:model_object].other_security_type, length: 150)}".html_safe if @page_data[:model_object].security_type == 'other' && @page_data[:model_object].other_security_type.present? %>
           <% else %>
             <%= link_to t('.select_one_option_text'), security_facilities_management_beta_building_path(@page_data[:model_object].id), { role: 'change', class: 'govuk-link', method: "get" } %>
           <% end %>

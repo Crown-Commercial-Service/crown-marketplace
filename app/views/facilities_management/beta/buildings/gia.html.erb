@@ -5,10 +5,10 @@
     <p class="govuk-caption-m"><%= t('.further_info_html') %></p>
     <%= form_for @page_data[:model_object], url: facilities_management_beta_building_path(@page_data[:model_object].id), html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
       <input type="hidden" name="step" value="gia"/>
-      <%= govuk_start_individual_field(f, :gia, {}, false, true, { 'data-module': 'ccs-character-count', 'data-maxlength': '10' }) do %>
+      <%= govuk_start_individual_field(f, :gia, {}, false, true, { 'data-module': 'ccs-character-count', 'data-maxlength': '10', 'data-numbertype': 'integer' }) do %>
         <span class="input-type">
           <span class="input-type__inner ccs-character-count-container">
-            <%= govuk_text_input(f, :gia, :small, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 10, class: 'input-type__input ccs-character-count', 'aria-live': 'polite') %>
+            <%= govuk_text_input(f, :gia, :large, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 10, size: 12, class: 'input-type__input ccs-character-count', style: 'min-width: 10ex', 'aria-live': 'polite') %>
             <abbr class="input-type__type" aria-hidden="true" title="Square metres">sqm</abbr>
           </span>
         </span>
