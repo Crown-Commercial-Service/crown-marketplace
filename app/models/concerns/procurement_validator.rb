@@ -81,7 +81,9 @@ module ProcurementValidator
     validate :validate_contract_details, on: :contract_details
 
     # Validation for the choose_contract_value page
-    validates :lot_number, presence: true, on: :choose_contract_value
+    validates :lot_number, presence: true, inclusion: { in: %w[1a 1b 1c] }, on: :choose_contract_value
+    validate :lot_number_in_range, on: :choose_contract_value
+    validates :lot_number_selected_by_customer, acceptance: true, on: :choose_contract_value
 
     private
 
@@ -164,6 +166,18 @@ module ProcurementValidator
 
     def validate_mobilisation_and_tupe
       errors.add(:mobilisation_period, :not_valid_with_tupe) if (mobilisation_period_required && mobilisation_period < 4) && tupe == true
+    end
+
+    def lot_number_in_range
+      lot_number_in_correct_range = if assessed_value < 7000000
+                                      true
+                                    elsif assessed_value <= 50000000
+                                      %w[1b 1c].include? lot_number
+                                    else
+                                      lot_number == '1c'
+                                    end
+
+      errors.add(:lot_number, :blank) unless lot_number_in_correct_range
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
