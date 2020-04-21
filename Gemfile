@@ -42,6 +42,8 @@ gem 'holidays'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.3.5'
 
+gem 'rollbar', '~> 2.24.0'
+
 # for cognito authentication
 gem 'omniauth', '~> 1.9.0'
 gem 'omniauth-oauth2', '~> 1.6.0'
