@@ -77,6 +77,7 @@ $(function () {
 
             if (activeExtCount < 5 && currentValue && totalContractYears < 10) {
                 $("#ext" + (activeExtCount) + "-container").removeClass("govuk-visually-hidden");
+                $("#facilities_management_procurement_call_off_extension_" + (activeExtCount)).val("true");
                 $("#fm-ext" + (activeExtCount - 1) + "-remove-btn").addClass("govuk-visually-hidden");
                 updateButtonText();
             }
@@ -86,6 +87,7 @@ $(function () {
     $("#fm-ext2-remove-btn").on("click", function (e) {
         e.preventDefault();
         $("#facilities_management_procurement_optional_call_off_extensions_2").val("");
+        $("#facilities_management_procurement_call_off_extension_2").val("false");
         $("#ext2-container").addClass("govuk-visually-hidden");
         updateButtonText();
     });
@@ -93,6 +95,7 @@ $(function () {
     $("#fm-ext3-remove-btn").on("click", function (e) {
         e.preventDefault();
         $("#facilities_management_procurement_optional_call_off_extensions_3").val("");
+        $("#facilities_management_procurement_call_off_extension_3").val("false");
         $("#ext3-container").addClass("govuk-visually-hidden");
         $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
         updateButtonText();
@@ -101,6 +104,7 @@ $(function () {
     $("#fm-ext4-remove-btn").on("click", function (e) {
         e.preventDefault();
         $("#facilities_management_procurement_optional_call_off_extensions_4").val("");
+        $("#facilities_management_procurement_call_off_extension_4").val("false");
         $("#ext4-container").addClass("govuk-visually-hidden");
         $("#fm-ext3-remove-btn").removeClass("govuk-visually-hidden");
         updateButtonText();
@@ -115,6 +119,9 @@ $(function () {
         $("#ext3-container").addClass("govuk-visually-hidden");
         $("#ext4-container").addClass("govuk-visually-hidden");
         $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
+        $("#facilities_management_procurement_call_off_extension_2").val("false");
+        $("#facilities_management_procurement_call_off_extension_3").val("false");
+        $("#facilities_management_procurement_call_off_extension_4").val("false");
         updateButtonText();
     });
 

@@ -172,7 +172,7 @@ en:
               blank: Enter mobilisation length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than: Mobilisation length must be between 1 and 52 weeks
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
@@ -187,13 +187,17 @@ en:
               too_long: Search name must be 100 characters or less
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
               too_long: Call-off contract period, including extensions must not be more than 10 years
             optional_call_off_extensions_2:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_3:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_4:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             payment_method:
               inclusion: Select one payment method

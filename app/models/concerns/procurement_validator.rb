@@ -53,13 +53,15 @@ module ProcurementValidator
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than: 0, less_than: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
+    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_dates
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
-    validates :optional_call_off_extensions_1, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
-    validates :optional_call_off_extensions_2, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
-    validates :optional_call_off_extensions_3, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
-    validates :optional_call_off_extensions_4, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
+    validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :optional_call_off_extensions_1, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_2 != 'false' }, on: :contract_dates
+    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_3 != 'false' }, on: :contract_dates
+    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_4 != 'false' }, on: :contract_dates
     validate :optional_call_off_extensions_too_long, on: :contract_dates
     #
     # End of validation rules for contract-dates
@@ -192,5 +194,10 @@ module ProcurementValidator
     end
   end
   # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+  def mobilisation_start_date_validation
+    mobilisation_start_date = initial_call_off_start_date - mobilisation_period.weeks - 1.day
+    errors.add(:mobilisation_start_date, :greater_than) if mobilisation_start_date <= Time.zone.today
+  end
 end
 # rubocop:enable Metrics/ModuleLength
