@@ -324,7 +324,7 @@ module FacilitiesManagement
     def mobilisation_period_start_date
       return nil if mobilisation_period.nil?
 
-      initial_call_off_start_date - mobilisation_period.weeks
+      mobilisation_period_end_date - mobilisation_period.weeks
     end
 
     def mobilisation_period_end_date
