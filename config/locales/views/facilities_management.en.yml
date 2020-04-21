@@ -1166,11 +1166,8 @@ en:
           save_and_continue: Save and continue
           save_for_later: Save for later
         filter_details:
-          apply_filters: Apply filters
           change_add_region: Change
           change_add_service: Change
-          edit_filters: Show filter
-          hide_filters: Hide filter
           hide_requirements: Hide requirements
           regions: Regions
           requirements: Requirements
