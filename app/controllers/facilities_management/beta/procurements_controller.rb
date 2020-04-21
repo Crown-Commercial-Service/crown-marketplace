@@ -74,6 +74,8 @@ module FacilitiesManagement
 
         continue_to_results && return if params['continue_to_results'].present?
 
+        continue_from_change_contract_value && return if params['continue_from_change_contract_value'].present?
+
         set_route_to_market && return if params['set_route_to_market'].present?
 
         change_contract_details && return if params['change_contract_details'].present?
@@ -190,6 +192,8 @@ module FacilitiesManagement
           @page_data[:model_object] = @procurement
         end
 
+        contract_value_page_details if @procurement.aasm_state == 'choose_contract_value'
+
         view_name
       end
       # rubocop:enable Metrics/AbcSize
@@ -270,6 +274,17 @@ module FacilitiesManagement
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def continue_from_change_contract_value
+        @procurement.assign_attributes(procurement_params)
+        if @procurement.valid?(:choose_contract_value)
+          @procurement.set_state_to_results!
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          @view_name = set_view_data
+          render :show
         end
       end
 
@@ -450,6 +465,10 @@ module FacilitiesManagement
           set_step_param
           render :edit
         end
+      end
+
+      def contract_value_page_details
+        @page_details[:unpriced_services] = @procurement.procurement_building_services_not_used_in_calculation
       end
 
       # sets the state of the procurement depending on the submission from the results view
@@ -742,8 +761,6 @@ module FacilitiesManagement
           secondary_text: 'Change requirements',
           secondary_url: facilities_management_beta_procurements_path
         }
-        # TODO: change the value from LGPS to whatever the variable that puts it in the unpriced state
-        # if @procurement.all_services_unpriced_and_no_buyer_input?
         if @procurement.lot_number_selected_by_customer
           page_definitions[:secondary_name] = 'change_the_contract_value'
           page_definitions[:secondary_url] = facilities_management_beta_procurements_path
@@ -984,7 +1001,7 @@ module FacilitiesManagement
           },
           choose_contract_value: {
             page_title: 'Contract Value',
-            primary_name: 'commit'
+            primary_name: 'continue_from_change_contract_value'
           },
           results: set_results_page_definitions,
           direct_award: {

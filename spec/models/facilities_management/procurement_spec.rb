@@ -518,17 +518,30 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'does not start da_journey' do
           expect(procurement.da_journey_state).not_to eq 'pricing'
         end
+
+        it 'some_services_unpriced_and_no_buyer_input? returns true' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
       end
 
-      context 'when customer does not have all services unpriced' do
+      context 'when customer has some services unpriced' do
         let(:codes) { %w[G.1 L.7 L.8] }
 
-        it 'changes state to results' do
-          expect(procurement.aasm_state).to eq 'results'
+        it 'changes state to choose_contract_value' do
+          expect(procurement.aasm_state).to eq 'choose_contract_value'
         end
 
-        it 'does start da_journey' do
-          expect(procurement.da_journey_state).to eq 'pricing'
+        it 'does not start da_journey' do
+          expect(procurement.da_journey_state).not_to eq 'pricing'
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input? returns true' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
+        end
+
+        it 'procurement_building_services_not_used_in_calculation returns a list with L.7 and L.8' do
+          unpriced_services = procurement.procurement_building_services_not_used_in_calculation
+          expect(unpriced_services.size).to eq 2
         end
       end
     end
