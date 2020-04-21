@@ -172,7 +172,7 @@ en:
               blank: Enter mobilisation length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than: Mobilisation length must be between 1 and 52 weeks
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected

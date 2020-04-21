@@ -53,8 +53,9 @@ module ProcurementValidator
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than: 0, less_than: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
+    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_dates
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :optional_call_off_extensions_1, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
     validates :optional_call_off_extensions_2, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
@@ -192,5 +193,10 @@ module ProcurementValidator
     end
   end
   # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+  def mobilisation_start_date_validation
+    mobilisation_start_date = initial_call_off_start_date - ((mobilisation_period * 7) + 1)
+    errors.add(:mobilisation_start_date, :greater_than) if mobilisation_start_date <= Time.zone.today
+  end
 end
 # rubocop:enable Metrics/ModuleLength

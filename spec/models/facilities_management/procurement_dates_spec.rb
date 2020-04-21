@@ -149,6 +149,42 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.save context: :contract_dates
           expect(procurement.valid?(:contract_dates)).to eq true
         end
+        it 'will be invalid when mob period is greater than 52 and TUPE is false' do
+          procurement.initial_call_off_period = 1
+          procurement.tupe = false
+          procurement.mobilisation_period_required = true
+          procurement.mobilisation_period = 53
+          procurement.initial_call_off_start_date = DateTime.current + 100
+          procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
+          procurement.save context: :contract_dates
+          expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :less_than_or_equal_to
+          expect(procurement.valid?(:contract_dates)).to eq false
+        end
+        it 'will be invalid when mob period is greater than 52 and TUPE is true' do
+          procurement.initial_call_off_period = 1
+          procurement.tupe = true
+          procurement.mobilisation_period_required = true
+          procurement.mobilisation_period = 53
+          procurement.initial_call_off_start_date = DateTime.current + 100
+          procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
+          procurement.save context: :contract_dates
+          expect(procurement.errors.details[:mobilisation_period][0][:error]).to eq :less_than_or_equal_to
+          expect(procurement.valid?(:contract_dates)).to eq false
+        end
+        it 'will be invalid when mob period start date is not in the future' do
+          procurement.initial_call_off_period = 1
+          procurement.tupe = false
+          procurement.mobilisation_period_required = true
+          procurement.mobilisation_period = 5
+          procurement.initial_call_off_start_date = DateTime.current
+          procurement.initial_call_off_end_date = DateTime.current + 200
+          procurement.extensions_required = false
+          procurement.save context: :contract_dates
+          expect(procurement.errors.details[:mobilisation_start_date][0][:error]).to eq :greater_than
+          expect(procurement.valid?(:contract_dates)).to eq false
+        end
       end
     end
   end
