@@ -130,6 +130,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'will be invalid when mob period is 1 and TUPE is true' do
           procurement.initial_call_off_period = 1
           procurement.tupe = true
+          procurement.mobilisation_period_required = true
           procurement.mobilisation_period = 1
           procurement.initial_call_off_start_date = DateTime.current + 100
           procurement.initial_call_off_end_date = DateTime.current + 200

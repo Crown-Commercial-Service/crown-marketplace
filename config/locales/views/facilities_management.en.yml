@@ -148,16 +148,19 @@ en:
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
+              after_2100: Initial call-off start date must be before 31 December 2100
               after_or_equal_to: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
-              not_a_date: dada
+              not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
               not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
             mobilisation_period:
-              greater_than: Enter mobilisation length
+              blank: Enter mobilisation length
+              greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              less_than: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected

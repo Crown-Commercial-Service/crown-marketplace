@@ -52,8 +52,9 @@ module ProcurementValidator
     validates :initial_call_off_start_date, presence: true, if: :initial_call_off_period_expects_a_date?, on: :contract_dates
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
-    validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than: -1 }, if: -> { initial_call_off_period.present? ? initial_call_off_period.positive? : false }, on: :contract_dates
-    validates :mobilisation_period, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 4 }, if: -> { tupe? && (initial_call_off_period.present? ? initial_call_off_period.positive? : false) }, on: :contract_dates
+    validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required.present? && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than: 0, less_than: 52 }, if: -> { mobilisation_period_required.present? && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than: 52 }, if: -> { mobilisation_period_required.present? && initial_call_off_start_date.present? && tupe }, on: :contract_dates
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :optional_call_off_extensions_1, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
     validates :optional_call_off_extensions_2, numericality: { allow_nil: true, only_integer: true, greater_than_or_equal_to: 1 }, on: :contract_dates
@@ -88,7 +89,7 @@ module ProcurementValidator
     # Start of validation methods for contract-dates
 
     def initial_call_off_start_date_yyyy_after_2100
-      errors.add(:initial_call_off_start_date, 'fafa') if initial_call_off_start_date_yyyy.to_i > 2100
+      errors.add(:initial_call_off_start_date, :after_2100) if initial_call_off_start_date_yyyy.to_i > 2100
     end
 
     def remove_excess_whitespace_from_name

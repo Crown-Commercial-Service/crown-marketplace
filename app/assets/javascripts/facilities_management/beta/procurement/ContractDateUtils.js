@@ -38,6 +38,11 @@ const contractDateUtils = {
     },
 
     contractEndDate: function (contractStartDate, initialCallOffPeriod) {
+        currentYear = new Date().getFullYear();
+
+        if (contractStartDate.getFullYear() < currentYear){
+            return null
+        }
         let contractEndDate = contractDateUtils.dateAdd(contractStartDate, 'y', initialCallOffPeriod);
         contractEndDate = contractDateUtils.dateAdd(contractEndDate, 'd', -1);
         return contractEndDate;
