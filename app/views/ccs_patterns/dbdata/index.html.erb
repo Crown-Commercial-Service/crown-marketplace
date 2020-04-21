@@ -1,10 +1,19 @@
 <h2>Migrations</h2>
+<% if @migration_file_list.length == 0 %>
+  <p>No migration files accessible.  This information is from the database.<br/><span class="govuk-error-message"><%= @file_message %></span></p>
+  <ul>
+    <% @migration_list.to_a.each do |m| %>
+      <li><%= m %></li>
+    <% end %>
+  </ul>
+<% end %>
 <ul>
-  <% @migration_list.to_a.each do |m| %>
-    <li><%= m['version'] %></li>
+  <% @migration_file_list.to_a.each do |m| %>
+    <li>
+      <span class="<%= 'govuk-error-message' if @migration_list.exclude?(m[0..13]) %>" style="padding:0; margin:0"><%= m %></span>
+    </li>
   <% end %>
 </ul>
-
 <h2>OS views</h2>
 <% @view_list.to_a.each do |v| %>
   <%= govuk_details v['table_name'] do %>
@@ -32,7 +41,9 @@
   <% if @advisory_locks.to_a.count.zero? %>
     <tr>
       <td>none</td>
-      <td></td><td></td><td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   <% end %>
   <% @advisory_locks.to_a.each do |l| %>
@@ -42,7 +53,7 @@
       <td><%= l['mode'] %></td>
       <% if l['locktype'] == 'advisory' %>
         <td><%= link_to 'Kill pid', ccs_patterns_killlockpid_url(l['pid']), method: 'put' %></td>
-      <%else %>
+      <% else %>
         <td>&nbsp;</td>
       <% end %>
     </tr>
