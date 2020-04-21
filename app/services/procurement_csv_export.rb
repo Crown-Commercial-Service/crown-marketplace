@@ -223,15 +223,16 @@ class ProcurementCsvExport
   end
 
   def self.call_off_extensions(procurement)
-    list = [
+    extensions = [
       procurement.optional_call_off_extensions_1,
       procurement.optional_call_off_extensions_2,
       procurement.optional_call_off_extensions_3,
       procurement.optional_call_off_extensions_4
     ].compact
 
-    return nil if list.none?
+    return nil if extensions.none?
 
-    "#{list.size} extensions, " + list.join(', ')
+    "#{helpers.pluralize(extensions.size, 'extension')}, " +
+      extensions.map { |ext| helpers.pluralize(ext, 'year') } .join(', ')
   end
 end
