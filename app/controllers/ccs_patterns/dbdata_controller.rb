@@ -23,8 +23,6 @@ module CcsPatterns
     end
     # rubocop:enable Metrics/AbcSize
 
-    # rubocop:enable Metrics/AbcSize
-
     def killpid
       kill_message = ActiveRecord::Base.connection.execute("SELECT pg_terminate_backend(#{params[:id]})").first[0]
       redirect_to action: :index, kill_message: kill_message
