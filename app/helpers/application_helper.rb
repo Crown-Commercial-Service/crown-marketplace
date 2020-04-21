@@ -292,8 +292,8 @@ module ApplicationHelper
     date_object&.in_time_zone('London')&.strftime '%A %e %B %Y at %l:%M%P'
   end
 
-  def format_money(cost)
-    number_to_currency(cost, precision: 2, unit: '£')
+  def format_money(cost, precision = 2)
+    number_to_currency(cost, precision: precision, unit: '£')
   end
 
   def link_to_add_row(name, form, association, **args)

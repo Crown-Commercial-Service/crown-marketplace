@@ -108,19 +108,17 @@ module FacilitiesManagement
       event :set_state_to_results_if_possible do
         before do
           save_results_data
+          contract_value_needed? ? remove_buyer_choice : save_data_if_contract_value_not_required
         end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
             contract_value_needed?
           end
         end
-        transitions from: :detailed_search, to: :results, after: :start_da_journey
+        transitions from: %i[detailed_search da_draft], to: :results, after: :start_da_journey
       end
 
       event :set_state_to_choose_contract_value do
-        before do
-          self.lot_number_selected_by_customer = nil
-        end
         transitions from: :results, to: :choose_contract_value
       end
 
@@ -129,6 +127,9 @@ module FacilitiesManagement
       end
 
       event :set_state_to_detailed_search do
+        before do
+          remove_buyer_choice
+        end
         transitions to: :detailed_search
       end
 
@@ -345,14 +346,20 @@ module FacilitiesManagement
       active_procurement_buildings.map { |proc_building| proc_building.building.address_region_code } .uniq
     end
 
+    def procurement_building_services_not_used_in_calculation
+      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code).nil? || CCS::FM::Rate.benchmark_rate_for(service.code).nil? }.map(&:name).uniq
+    end
+
+    def some_services_unpriced_and_no_buyer_input?
+      percentage_of_services_missing_framework_and_benchmark_price < 1 && !estimated_cost_known?
+    end
+
     private
 
     def save_results_data
       eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
 
       self.assessed_value = eligible_suppliers.assessed_value
-      self.lot_number = eligible_suppliers.lot_number
-      self.lot_number_selected_by_customer = false
       self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
 
       # if any procurement_suppliers present, they need to be removed
@@ -362,6 +369,18 @@ module FacilitiesManagement
       end
 
       save
+    end
+
+    def save_data_if_contract_value_not_required
+      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
+
+      self.lot_number = eligible_suppliers.lot_number
+      self.lot_number_selected_by_customer = false
+    end
+
+    def remove_buyer_choice
+      self.lot_number_selected_by_customer = nil
+      self.lot_number = nil
     end
 
     def all_services_unpriced_and_no_buyer_input?
@@ -393,7 +412,13 @@ module FacilitiesManagement
     end
 
     def contract_value_needed?
-      all_services_unpriced_and_no_buyer_input? && !lot_number_selected_by_customer
+      (all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?) && !lot_number_selected_by_customer
+    end
+
+    def percentage_of_services_missing_framework_and_benchmark_price
+      uniq_building_services = procurement_building_services.all.uniq
+      unpriced_services = uniq_building_services.select { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? || CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      unpriced_services.size / uniq_building_services.size.to_f
     end
   end
 end
