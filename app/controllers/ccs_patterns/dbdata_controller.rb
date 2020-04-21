@@ -13,7 +13,7 @@ module CcsPatterns
       kill_message = ActiveRecord::Base.connection.execute("SELECT pg_terminate_backend(#{params[:id]})").first[0]
       redirect_to action: :index, kill_message: kill_message
     rescue StandardError => e
-        redirect_to action: :index, kill_message: e.message
+      redirect_to action: :index, kill_message: e.message
     end
   end
 end
