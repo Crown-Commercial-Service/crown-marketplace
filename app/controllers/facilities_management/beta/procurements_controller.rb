@@ -593,7 +593,7 @@ module FacilitiesManagement
       end
 
       def sent_offers
-        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by(&:offer_sent_date)&.sort_by { |each| FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state) }
+        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts
