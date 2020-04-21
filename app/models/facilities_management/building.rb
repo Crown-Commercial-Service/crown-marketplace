@@ -98,7 +98,7 @@ module FacilitiesManagement
       self.region        = building_json[:region]
       self.building_type = building_json['building-type'.to_sym]
       self.security_type = building_json['security-type'.to_sym]
-      self.gia           = building_json[:gia]
+      self.gia           = building_json[:gia].to_s.to_i
       if building_json&.dig(:address).present?
         self.address_town        = building_json[:address]['fm-address-town'.to_sym]
         self.address_line_1      = building_json[:address]['fm-address-line-1'.to_sym]
