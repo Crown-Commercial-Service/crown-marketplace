@@ -69,8 +69,7 @@ module FacilitiesManagement
     end
 
     def assign_contract_datetime
-      time = Time.now.getlocal
-      self.contract_datetime = "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}"
+      self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
     end
 
     def generate_contract_number_fc
@@ -325,7 +324,7 @@ module FacilitiesManagement
     def mobilisation_period_start_date
       return nil if mobilisation_period.nil?
 
-      initial_call_off_start_date - mobilisation_period.weeks
+      mobilisation_period_end_date - mobilisation_period.weeks
     end
 
     def mobilisation_period_end_date
@@ -336,6 +335,14 @@ module FacilitiesManagement
 
     def first_unsent_contract
       procurement_suppliers.find_by(aasm_state: 'unsent')
+    end
+
+    def procurement_building_service_codes
+      procurement_building_services.map(&:code).uniq
+    end
+
+    def active_procurement_building_region_codes
+      active_procurement_buildings.map { |proc_building| proc_building.building.address_region_code } .uniq
     end
 
     private

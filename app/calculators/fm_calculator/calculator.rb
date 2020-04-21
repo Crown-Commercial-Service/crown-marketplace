@@ -77,7 +77,7 @@ module FMCalculator
         if @supplier_name
           subtotal1 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
         else
-          subtotal1 * @benchmark_rates['M144'].to_f
+          subtotal1 * @framework_rates['M144'].to_f
         end
       else
         0

@@ -9,6 +9,15 @@ en:
         time_to: to
     errors:
       models:
+        facilities_management/admin/management_report:
+          attributes:
+            end_date:
+              blank: You must enter a date
+              invalid: Enter a valid date
+              less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
+            start_date:
+              blank: You must enter a date
+              invalid: Enter a valid date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -148,16 +157,19 @@ en:
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
+              after_2100: Initial call-off start date must be before 31 December 2100
               after_or_equal_to: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
-              not_a_date: dada
+              not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
               not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
             mobilisation_period:
-              greater_than: Enter mobilisation length
+              blank: Enter mobilisation length
+              greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              less_than: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
@@ -368,9 +380,18 @@ en:
             dashboard_header: RM3830 administration dashboard
             dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
             dashboard_manage_rate: Manage the average framework rates and variances
+            dashboard_management_report_detail: Download the management data in CSV format
+            dashboard_management_report_header: Management report
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
+        management_report:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate and download report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          heading_title: Management report
+          return_link: Return to admin dashboard
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
