@@ -21,6 +21,7 @@ module CcsPatterns
       @advisory_locks = ActiveRecord::Base.connection.execute('SELECT pid, locktype, mode FROM pg_locks')
       @kill_message   = params[:kill_message]
     end
+    # rubocop:enable Metrics/AbcSize
 
     # rubocop:enable Metrics/AbcSize
 
