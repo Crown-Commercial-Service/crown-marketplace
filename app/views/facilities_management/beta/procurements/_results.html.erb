@@ -15,7 +15,15 @@
       </div>
     </details>
   <% else %>
-    <h1 class="govuk-heading govuk-heading-l govuk-!-width-three-quarters"><%= t('.sub-text-FC-unpriced') %></h1>
+    <% if @procurement.some_services_unpriced_and_no_buyer_input? && @procurement.assessed_value > 5e7%>
+    <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds">
+      <%= t('.sub-text') %>
+    </h1>
+    <% else %>
+    <h1 class="govuk-heading govuk-heading-l govuk-!-width-three-quarters">
+      <%= t('.sub-text-FC-unpriced') %>
+    </h1>
+    <% end  %>
     <h1 class="govuk-heading govuk-heading-l govuk-!-margin-bottom-1">
       <%= t(".sub-lot-#{@procurement.lot_number}") %>
     </h1>
