@@ -251,6 +251,7 @@ Rails.application.routes.draw do
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
     get '/metadata', to: 'dbdata#index', as: 'ccsmetadata'
+    put '/metadata/kill/:id', to: 'dbdata#killpid', as: 'killpid'
     get '/new_layout', to: 'home#new_layout'
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'

@@ -1,13 +1,51 @@
 <h2>Migrations</h2>
 <ul>
-<%@migration_list.to_a.each do |m| %>
+  <% @migration_list.to_a.each do |m| %>
     <li><%= m['version'] %></li>
-<%end%>
+  <% end %>
 </ul>
 
 <h2>OS views</h2>
-<%@view_list.to_a.each do |v| %>
-  <%=govuk_details v['table_name'] do%>
+<% @view_list.to_a.each do |v| %>
+  <%= govuk_details v['table_name'] do %>
     <pre style="width:100%"><code><%= v['view_definition'] %></code></pre>
-  <%end%>
-<%end %>
+  <% end %>
+<% end %>
+
+<h2>Locks</h2>
+<table class="ccs-at-govuk-table--3070">
+  <thead>
+  <tr>
+    <th>PID</th>
+    <th>locktype</th>
+    <th>mode</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @kill_message.present? %>
+    <tr>
+      <td colspan="4">
+        <span class="govuk-error-message"><%= @kill_message %></span>
+      </td>
+    </tr>
+  <% end %>
+  <% if @advisory_locks.to_a.count.zero? %>
+    <tr>
+      <td>none</td>
+      <td></td><td></td><td></td>
+    </tr>
+  <% end %>
+  <% @advisory_locks.to_a.each do |l| %>
+    <tr>
+      <td><%= l['pid'] %></td>
+      <td><%= l['locktype'] %></td>
+      <td><%= l['mode'] %></td>
+      <% if l['locktype'] == 'advisory' %>
+        <td><%= link_to 'Kill pid', ccs_patterns_killpid_url(l['pid']), method: 'put' %></td>
+      <%else %>
+        <td></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
