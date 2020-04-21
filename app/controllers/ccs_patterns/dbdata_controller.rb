@@ -6,7 +6,7 @@ module CcsPatterns
       @migration_list = ActiveRecord::Base.connection.execute('select * from schema_migrations order by version desc').to_a.map { |m| m['version'] }
       begin
         @file_message = ''
-        @migration_file_list = Dir.entries('./db/migrates /').reject { |f| f.length <= 2 }.sort.reverse
+        @migration_file_list = Dir.entries('./db/migrate/').reject { |f| f.length <= 2 }.sort.reverse
       rescue StandardError => e
         @file_message = "#{e.message}.  Current working directory: #{Dir.getwd}"
         @migration_file_list = []
