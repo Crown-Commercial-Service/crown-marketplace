@@ -41,9 +41,9 @@
       <td><%= l['locktype'] %></td>
       <td><%= l['mode'] %></td>
       <% if l['locktype'] == 'advisory' %>
-        <td><%= link_to 'Kill pid', ccs_patterns_killpid_url(l['pid']), method: 'put' %></td>
+        <td><%= link_to 'Kill pid', ccs_patterns_killlockpid_url(l['pid']), method: 'put' %></td>
       <%else %>
-        <td></td>
+        <td>&nbsp;</td>
       <% end %>
     </tr>
   <% end %>
