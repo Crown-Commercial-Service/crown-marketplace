@@ -342,6 +342,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the tupe is selected and mobilisation length is less than 4 weeks' do
       it 'is expected to not be valid' do
         procurement.tupe = true
+        procurement.mobilisation_period_required = true
         procurement.mobilisation_period = 3
         expect(procurement.valid?(:all)).to eq false
       end
