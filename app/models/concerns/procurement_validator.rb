@@ -53,8 +53,8 @@ module ProcurementValidator
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
+    validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
+    validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
     validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_dates
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
@@ -117,6 +117,8 @@ module ProcurementValidator
     end
 
     def optional_call_off_extensions_too_long
+      return if initial_call_off_period.to_i > 7
+
       errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period.to_i + total_extensions <= 10
     end
     # End of validation methods for contract-dates
@@ -167,7 +169,7 @@ module ProcurementValidator
     end
 
     def validate_mobilisation_and_tupe
-      errors.add(:mobilisation_period, :not_valid_with_tupe) if (mobilisation_period_required && mobilisation_period < 4) && tupe == true
+      errors.add(:mobilisation_period, :not_valid_with_tupe) if ((mobilisation_period_required && mobilisation_period < 4) || mobilisation_period_required == false) && tupe == true
     end
 
     def lot_number_in_range

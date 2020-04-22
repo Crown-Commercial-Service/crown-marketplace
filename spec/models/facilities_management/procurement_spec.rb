@@ -849,28 +849,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
     end
-
-    describe '#extension_periods_when_selected' do
-      context 'when extension period 1 is selected alone' do
-        it 'is expected to be valid' do
-          initial_call_off_period_end_date = procurement.initial_call_off_start_date + procurement.initial_call_off_period.years - 1.day
-          procurement.extension_period_1_start_date = initial_call_off_period_end_date + 1.day
-
-          expect(procurement.valid?).to eq true
-        end
-      end
-
-      context 'when extension period 1 is selected with extension period 2' do
-        it 'is expected to be valid' do
-          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1)
-          extension_period_1_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
-          procurement.extension_period_2_start_date = extension_period_1_end_date + 1.day
-          procurement.call_off_extension_2 = true
-
-          expect(procurement.valid?).to eq true
-        end
-      end
-    end
   end
 
   describe '#more_than_max_pensions?' do
