@@ -20,6 +20,13 @@ module CcsPatterns
       @view_list      = ActiveRecord::Base.connection.execute('select * from INFORMATION_SCHEMA.views WHERE table_schema = ANY (current_schemas(false))')
       @advisory_locks = ActiveRecord::Base.connection.execute('SELECT pid, locktype, mode FROM pg_locks')
       @kill_message   = params[:kill_message]
+
+      @building_csv_text = CSV.generate do |csv|
+        csv << FacilitiesManagement::Building.attribute_names
+        FacilitiesManagement::Building.find_each do |building|
+          csv << building.attributes.values
+        end
+      end
     end
     # rubocop:enable Metrics/AbcSize
 
