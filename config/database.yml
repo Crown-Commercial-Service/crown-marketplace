@@ -82,6 +82,7 @@ test:
 #
 production:
   <<: *default
+  advisory_locks: false
   host: <%= ENV['CCS_DEFAULT_DB_HOST'] %>
   port: <%= ENV['CCS_DEFAULT_DB_PORT'] %>
   database: <%= ENV['CCS_DEFAULT_DB_NAME'] %>
