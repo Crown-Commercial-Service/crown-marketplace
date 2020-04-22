@@ -9,6 +9,15 @@ en:
         time_to: to
     errors:
       models:
+        facilities_management/admin/management_report:
+          attributes:
+            end_date:
+              blank: You must enter a date
+              invalid: Enter a valid date
+              less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
+            start_date:
+              blank: You must enter a date
+              invalid: Enter a valid date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -52,6 +61,38 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/building:
+          attributes:
+            address:
+              not_selected: You must select an address to save a building
+            address_line_1:
+              blank: Building and street name must be 100 characters or less
+              too_short: Building and street name must be 100 characters or less
+            address_postcode:
+              blank: Enter a valid postcode, like AA1 1AA
+              invalid: Enter a valid postcode, like AA1 1AA
+              not_selected: You must select an address to save a building
+              too_short: Enter a valid postcode, like AA1 1AA
+            address_region:
+              blank: You must select a region for your address
+            address_town:
+              blank: Town or city name for this building must be 30 characters or less
+            building_name:
+              blank: Enter a name for your building
+            building_type:
+              blank: You must select a buiding type or describe your own
+            gia:
+              blank: Enter a whole number for the size of internal area of this building
+              not_an_integer: Enter a whole number for the size of internal area of this building
+            other_building_type:
+              blank: You must enter your description of a building type
+            other_security_type:
+              blank: You must describe the security clearance level
+            postcode_entry:
+              blank: You must select an address to save a building
+              invalid: Enter a valid postcode, like AA1 1AA
+            security_type:
+              blank: You must select a security clearance level
         facilities_management/buyer_detail:
           attributes:
             central_government:
@@ -103,6 +144,8 @@ en:
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
               not_present: You must answer the question about 'Estimated annual cost'
+            extensions_required:
+              inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
@@ -114,17 +157,27 @@ en:
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
+              after_2100: Initial call-off start date must be before 31 December 2100
+              after_or_equal_to: Initial call-off period start date must be in the future
               blank: Initial call-off period start date must be in the future
+              not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
               not_present: Select one answer
               not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
+            lot_number:
+              blank: Please select one option
+              inclusion: Please select one option
             mobilisation_period:
-              greater_than: Enter mobilisation length
+              blank: Enter mobilisation length
+              greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
+              less_than: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_period_required:
+              inclusion: Select yes if you need a mobilisation period
             mobilisation_start_date:
               greater_than: Mobilisation start date must be in the future
             name:
@@ -289,10 +342,13 @@ en:
               not_a_date: Enter a valid start date
             reason_for_closing:
               blank: Enter a reason for closing this procurement
+              too_long: Reason for not closing must be 500 characters or less
             reason_for_declining:
               blank: Enter a reason for declining this contract offer
+              too_long: Reason for declining must be 500 characters or less
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
+              too_long: Reason for not signing must be 100 characters or less
         facilities_management/service_hour_choice:
           attributes:
             end_time:
@@ -327,9 +383,18 @@ en:
             dashboard_header: RM3830 administration dashboard
             dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
             dashboard_manage_rate: Manage the average framework rates and variances
+            dashboard_management_report_detail: Download the management data in CSV format
+            dashboard_management_report_header: Management report
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
+        management_report:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate and download report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          heading_title: Management report
+          return_link: Return to admin dashboard
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
@@ -397,32 +462,94 @@ en:
             td_profit: Profit (%)
             td_tupe: Direct award TUPE risk premium (%)
             update_button: Save and return to dashboard
-      building-details-summary:
-        add_address_text: Add address
-        add_desc_text: Add description
-        add_name_text: Add name
-        answer_question_text: Answer question
-        caption_addr: Address
-        caption_desc: Description
-        caption_gia: Gross internal area
-        caption_name: Name
-        caption_region_nuts: Location (NUTS region)
-        caption_sec: Security clearance
-        caption_type: Building type
-        change_text: Change
-        no_data_message: There are no building details to view
-        return_to_management_text: Return to manage buildings
-        section-header: Building details summary
-        select_one_option_text: Please select one option
-      building-gross-internal-area:
-        add_header: Add building GIA
-        edit_header: Change building GIA
-        guidance_1: Gross internal area (GIA) is the area of the building measured to the internal face of the perimeter walls at each floor area.
-        guidance_2: For example, 18000 square metres.
-        guidance_3: Use
-        guidance_link_text: this guidance on how to measure GIA
-        heading: What's the internal area of the building?
-        input_label: sqm (square metres)
+      buildings:
+        add_address:
+          add_address_header: Address
+          description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+          line_1_of_2: Building and street line 1 or 2
+          line_2_of_2: Building and street line 2 of 2 (optional)
+          postcode: Postcode
+          town_or_city: Town or city
+        details_form:
+          address: Address
+          address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+          building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
+          cant_find_address: I can't find my building's address in the list
+          change: Change
+          description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</span> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
+          find_address: Find address
+          option_with_data_plural: "{%} addresses found"
+          option_with_data_single: 1 address found
+          postcode: Postcode
+          region: Region
+          region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
+          region_option_with_data_plural: "{%} regions found"
+          region_option_with_data_single: 1 region found
+          select_a_region: Select a region
+          select_an_address: Select an address
+          zero_address_found: 0 addresses found
+          zero_regions_found: 0 regions found
+        gia:
+          description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
+          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+          gia_header: What's the size of internal area of this building?
+        index:
+          column_desc_header: Description
+          column_lstup_header: Last updated
+          column_name_header: Name
+          column_status_header: Status
+          create_new_button: Add a building
+          link_to_building_summary: View details for building
+          my_buildings_header: My buildings
+          no_buildings_text: You have no saved buildings
+          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
+          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+        page_definitions:
+          add_building_address: Add building address
+          building_size: Building size
+          building_type: Building type
+          change_building_details: Change building details
+          create_new_building: Save and continue
+          create_single_building: Add a building
+          manage_building_title: Manage buildings
+          return_to_manage_buildings: Return to manage buildings
+          save_and_continue: Save and continue
+          save_and_return_to_detailed_summary: Save and continue to building details summary
+          security_clearance: Security clearance
+          skip_this_step: Skip this step
+        security:
+          building_details_summary: Building details summary
+          describe_security: Describe security level
+          next_step: 'Next:'
+          other: Other
+          security_description_html: Select the level of security clearance a suppliers staff will need to access this building.<br/>This is the security level of the contractor's staff.
+          select_security: Select the level of security clearance needed
+        show:
+          add_address_text: Add address
+          add_desc_text: Add description
+          add_name_text: Add name
+          answer_question_text: Answer question
+          caption_addr: Address
+          caption_desc: Description (optional)
+          caption_gia: Gross internal area
+          caption_name: Name
+          caption_region_nuts: Region
+          caption_sec: Security clearance
+          caption_type: Building type
+          change_text: Change
+          complete_text: This building is ready for use in procurements.
+          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+          section-header: Building details summary
+          select_one_option_text: Please select one option
+        step_footer:
+          step_footer: 'Next: %{description}'
+        step_title:
+          step_title: Step %{position} of %{total}
+        type:
+          choose_building_type: Choose the building type that best describes your building
+          describe_building: Describe building type
+          other: Other
+          view_more: View more building types
       buyer_account:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
@@ -432,6 +559,7 @@ en:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
+          manage_buildings: Manage buildings
       buyer_details:
         edit:
           buyer_details: Buyer details
@@ -460,20 +588,6 @@ en:
           submit: Save and continue
           town_or_city: Town or city
           your_details: Your details
-      index:
-        column_desc_header: Description
-        column_lstup_header: Last updated
-        column_name_header: Name
-        column_status_header: Status
-        create_new_button: Create Single Building
-        link_to_building_summary: View details for building
-        manage_building: Manage buildings
-        manage_buildings_header: Manage buildings
-        my_buildings_header: My buildings
-        no_buildings_text: You have no saved buildings
-        procurements_dashboard_button: Procurements dashboard
-        start_paragraph: You will use your buildings to inform suppliers where you want particular services to be delivered to. Once set up, your buildings can be reused in this system for other FM procurements.
-        start_warning: When creating your buildings, you are not restricted to creating just full buildings. For example, you may choose to set up just a floor within a building, or a specific area. Ultimately, your service pricing will be broken down to da_buyer a cost per service per 'building', allowing your to manage your contract effectively. You should therefore create buildings dependent on the level of detail you require.
       procurement_buildings:
         building_standards:
           back_to_service_information: Back to service information
@@ -567,6 +681,26 @@ en:
         call_off_extensions:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+        choose_contract_value:
+          can_you_estimate_cost: Are you able to estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
+          contract_value_heading: When calculating your total contract value, we haven't been able to estimate the costs of some of your services, for which pricing is very customer specific.
+          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          following_services_are_not_included: The following services aren’t included within the above value
+          heading: Looking at the options below are you able to select the correct value range based on your budget, and expected cost of the contract?
+          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you've selected.
+          lot_number_1a_description: Total contract value up to £7 million
+          lot_number_1b_description: Total contract value between £7 million and £50 million
+          lot_number_1c_description: Total contract value over £50 million
+          not_able_to_select_range: If you are not able to select a value range please contact us for assistance.
+          partialy_estimated_contract_value: Partially estimated contract value
+          service: Service
+          sub_lot_1a: Sub-lot 1a
+          sub_lot_1a_hint: Total contract value up to £7 million
+          sub_lot_1b: Sub-lot 1b
+          sub_lot_1b_hint: Total contract value between £7 million and £50 million
+          sub_lot_1c: Sub-lot 1c
+          sub_lot_1c_hint: Total contract value over £50 million
+          sugested_sublot: Suggested sub-lot
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1032,13 +1166,13 @@ en:
           save_and_continue: Save and continue
           save_for_later: Save for later
         filter_details:
-          apply_filters: Apply filters
-          change_add_region: Change/Add region
-          change_add_service: Change/Add service
-          edit_filters: Show filter
-          hide_filters: Hide filter
-          region: Region
-          service: Service
+          change_add_region: Change
+          change_add_service: Change
+          hide_requirements: Hide requirements
+          regions: Regions
+          requirements: Requirements
+          services: Services
+          show_requirements: Show requirements
         further_competition:
           further_competition_partial:
             awarding_the_contract: Awarding the contract
@@ -1121,8 +1255,15 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
+          hint-text-unpriced-sub-lot-1a: Suitable for contracts up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contracts £7 million - £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contracts over £50m
           sub-lot: Lot
+          sub-lot-1a: Sub-lot 1a
+          sub-lot-1b: Sub-lot 1b
+          sub-lot-1c: Sub-lot 1c
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          sub-text-FC-unpriced: 'Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
@@ -1229,18 +1370,41 @@ en:
           lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     home:
+      1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
+      1_you_will_tell_us_html: |
+        <li>which services you are looking for</li>
+        <li>building locations and information</li>
+      2_we_will_tell_you_html: |
+        <li>which sub-lot is suitable</li>
+        <li>an estimated contract cost</li>
+        <li>a shortlist of suppliers</li>
+        <li>procurement options to proceed</li>
+      2_you_will_tell_us_html: |
+        <li>about your buildings and service requirements</li>
+        <li>basic contract information</li>
+      3_DA_list_html: |
+        <li>create your contract online, and offer to the cheapest supplier</li>
+        <li>the quickest, simplest way to procure FM services</li>
+      3_FC_list_html: "<li>download your supplier shortlist and requirement documents</li>\n"
+      3_offline_list_html: |
+        <li>use our templates to create a bid pack offline</li>
+        <li>invite shortlisted suppliers to bid for your contract</li>
+        <li>evaluate supplier responses and pricing</li>
+        <li>award your contract</li>
       beforeyoustart: Before you start
-      heading: Find Facilities Management services
+      heading: Find a facilities management supplier
       startlist: |
         <li>what services you are looking for</li>
-        <li>building locations and information</li>
-        <li>details of how long you want the services for</li>
+        <li>your building locations and information</li>
+        <li>your basic contract requirements</li>
       startnow: Start now
-      subheading: 'Use this tool to:'
+      subheading: 'Use this service to:'
       usagelist: |
-        <li>find a supplier for your facilities management requirements</li>
-        <li>see a shortlist of suppliers available in your region</li>
-        <li>download a spreadsheet with your requirements and list of potential suppliers</li>
+        <li>quick view suppliers who can provide services to your locations</li>
+        <li>see an estimated contract cost</li>
+        <li>create and offer a direct award contract</li>
+        <li>shortlist of suppliers ready for further competition</li>
+        <li>compliantly place a contract with a supplier</li>
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurement, type: :model do
-  subject(:procurement) { create(:facilities_management_procurement, user: user) }
+  subject(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
 
   let(:user) { create(:user) }
 
@@ -342,6 +342,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when the tupe is selected and mobilisation length is less than 4 weeks' do
       it 'is expected to not be valid' do
         procurement.tupe = true
+        procurement.mobilisation_period_required = true
         procurement.mobilisation_period = 3
         expect(procurement.valid?(:all)).to eq false
       end
@@ -446,7 +447,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#save_eligible_suppliers_and_set_state' do
+  describe '#set_state_to_results_if_possible' do
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
     let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
@@ -468,30 +469,80 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when no eligible suppliers' do
       it 'does not create any procurement suppliers' do
         allow(obj).to receive(:sorted_list).and_return([])
-        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
+        expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(0)
       end
     end
 
     context 'when some eligible suppliers' do
       it 'creates procurement_suppliers' do
-        expect { procurement.save_eligible_suppliers_and_set_state }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
+        expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
       end
       it 'creates procurement_suppliers with the right direct award value' do
-        procurement.save_eligible_suppliers_and_set_state
+        procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
       it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
-        procurement.save_eligible_suppliers_and_set_state
+        procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
       end
       it 'saves assessed_value' do
-        procurement.save_eligible_suppliers_and_set_state
+        procurement.set_state_to_results_if_possible
         expect(procurement.assessed_value).not_to be_nil
       end
       it 'saves lot_number' do
-        procurement.save_eligible_suppliers_and_set_state
+        procurement.set_state_to_results_if_possible
         expect(procurement.lot_number).not_to be_nil
+      end
+    end
+
+    describe 'changing state' do
+      let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
+
+      before do
+        procurement.procurement_buildings.destroy_all
+        codes.each do |code|
+          create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building)
+        end
+        procurement.update(estimated_cost_known: nil, da_journey_state: 'review')
+        procurement.set_state_to_results_if_possible!
+      end
+
+      context 'when customer has all services unpriced' do
+        let(:codes) { %w[L.6 L.7 L.8] }
+
+        it 'changes state to choose_contract_value' do
+          expect(procurement.aasm_state).to eq 'choose_contract_value'
+        end
+
+        it 'does not start da_journey' do
+          expect(procurement.da_journey_state).not_to eq 'pricing'
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input? returns true' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+      end
+
+      context 'when customer has some services unpriced' do
+        let(:codes) { %w[G.1 L.7 L.8] }
+
+        it 'changes state to choose_contract_value' do
+          expect(procurement.aasm_state).to eq 'choose_contract_value'
+        end
+
+        it 'does not start da_journey' do
+          expect(procurement.da_journey_state).not_to eq 'pricing'
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input? returns true' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
+        end
+
+        it 'procurement_building_services_not_used_in_calculation returns a list with L.7 and L.8' do
+          unpriced_services = procurement.procurement_building_services_not_used_in_calculation
+          expect(unpriced_services.size).to eq 2
+        end
       end
     end
 
@@ -509,7 +560,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
         allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
         # rubocop:enable RSpec/AnyInstance
-        procurement.save_eligible_suppliers_and_set_state
+        procurement.set_state_to_results_if_possible
         procurement.aasm_state = 'direct_award'
         procurement.save
       end
@@ -854,6 +905,112 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'returns value' do
           expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
         end
+      end
+    end
+  end
+
+  describe '#all_services_unpriced_and_no_buyer_input?' do
+    let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
+
+    before do
+      procurement.procurement_buildings.destroy_all
+      codes.each do |code|
+        create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building)
+      end
+      procurement.update(estimated_cost_known: estimated_cost_known)
+    end
+
+    context 'when buyer input not present' do
+      let(:estimated_cost_known) { false }
+
+      context 'when all services are missing FW & BM prices' do
+        let(:codes) { %w[L.6 L.7 L.8] }
+
+        it 'returns true' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+        end
+      end
+
+      context 'when all but one service missing FW price' do
+        let(:codes) { %w[G.1 G.2 D.6] }
+
+        it 'returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+
+      context 'when all but one service missing BM and FW price' do
+        let(:codes) { %w[G.1 G.2 L.6] }
+
+        it 'returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+    end
+
+    context 'when buyer input present' do
+      let(:estimated_cost_known) { true }
+
+      context 'when all services are missing FW & BM prices' do
+        let(:codes) { %w[L.6 L.7 L.8] }
+
+        it 'returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+
+      context 'when all but one service missing FW price' do
+        let(:codes) { %w[G.1 G.2 D.6] }
+
+        it 'returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+
+      context 'when all but one service missing BM and FW price' do
+        let(:codes) { %w[G.1 G.2 L.6] }
+
+        it 'returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+    end
+  end
+
+  describe '#set_state_to_results' do
+    let(:procurement) { create(:facilities_management_procurement, aasm_state: state) }
+
+    before do
+      procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
+      procurement.save
+    end
+
+    context 'when state of procurement is choose_contract_value' do
+      let(:state) { 'choose_contract_value' }
+
+      context 'when lot_number_selected_by_customer is true' do
+        let(:lot_number_selected_by_customer) { true }
+
+        it 'sets state to results' do
+          expect(procurement.aasm_state).to eq 'results'
+        end
+      end
+
+      context 'when lot_number_selected_by_customer is false' do
+        let(:lot_number_selected_by_customer) { false }
+
+        it 'does not set state to results' do
+          expect(procurement.aasm_state).not_to eq 'results'
+        end
+      end
+    end
+
+    context 'when state of procurement is not choose_contract_value' do
+      let(:state) { 'quick_search' }
+      let(:lot_number_selected_by_customer) { true }
+
+      it 'does not set state to results' do
+        expect(procurement.aasm_state).not_to eq 'results'
       end
     end
   end

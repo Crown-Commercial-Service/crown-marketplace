@@ -20,8 +20,13 @@ FactoryBot.define do
     optional_call_off_extensions_4 { 1 }
   end
 
+  factory :facilities_management_procurement_detailed_search, parent: :facilities_management_procurement do
+    aasm_state { 'detailed_search' }
+  end
+
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
     aasm_state { 'da_draft' }
+    procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
   end
 
   factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do

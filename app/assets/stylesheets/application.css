@@ -20,8 +20,11 @@
 
 
 @media print {
-    .govuk-link, .app-prose-scope a {
-        font-family: sans-serif
+    .govuk-link {
+        font-size: 1em;
+        border:0;
+        text-decoration: underline;
+        padding: 0;
     }
 }
 
@@ -1833,7 +1836,6 @@
     font-size: 1rem;
     line-height: 1.25;
     display: block;
-    margin-bottom: 15px;
     color: #6f777b
 }
 

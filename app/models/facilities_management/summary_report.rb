@@ -19,7 +19,7 @@ module FacilitiesManagement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
       @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building['building_json']['address']['fm-address-region-code'] }
+      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
@@ -160,7 +160,7 @@ module FacilitiesManagement
 
           uvals << { user_id: @procurement.user.id,
                      service_code: s.code.gsub('-', '.'),
-                     uom_value: b.building.building_json['gia'].to_f,
+                     uom_value: b.building.gia.to_f,
                      building_id: b.building_id,
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
@@ -259,8 +259,8 @@ module FacilitiesManagement
     def values_to_average
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
-        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input) && !buyer_input.zero?
+        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
       end
@@ -269,21 +269,17 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.framework_rate_for(code).nil?
-      end
-      false
+      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
-      end
-      false
+      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
-    def variance_over_30_percent?(sample_average, value)
-      (value - sample_average) / value > 0.3
+    def variance_over_30_percent?(new, baseline)
+      variance = (new - baseline) / baseline
+
+      variance > 0.3 || variance < -0.3
     end
   end
 end

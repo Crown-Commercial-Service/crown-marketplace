@@ -4,7 +4,7 @@
     <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
       - <%= @procurement_building.name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    
+
     <table class="govuk-table govuk-!-margin-bottom-6 govuk-!-font-size-16">
       <thead>
         <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></th>
@@ -16,7 +16,7 @@
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.gia') %></th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.gia-summary') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building_data['gia'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building.gia %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
         </tr>
         <tr class="govuk-table__row">

@@ -29,6 +29,16 @@ module FacilitiesManagement
             @procurement = FacilitiesManagement::Procurement.find(params[:procurement_id])
             send_data @procurement.contract_documents_zip.download, filename: 'review_your_contract.zip', type: 'application/zip'
           end
+          
+          def call_off_schedule_2
+            @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+            @procurement = @contract.procurement
+            @pension_funds = @procurement.procurement_pension_funds
+
+            respond_to do |format|
+              format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA).docx"' }
+            end
+          end
         end
       end
     end

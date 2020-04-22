@@ -1,10 +1,11 @@
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group" data-propertyname="Mobilisation period choice">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period_required].any? %>" data-propertyname="Mobilisation period choice">
     <%= f.label :mobilisation_period, 'Do you need a mobilisation period?', class: "govuk-heading-m govuk-!-margin-bottom-0" %>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
     <span id="mobilisation-required-warning"></span>
     <div class="govuk-form-group" data-propertyname="Mobilisation period choice">
       <div class="govuk-radios govuk-!-margin-top-3">
+        <%= display_errors(f.object, :mobilisation_period_required)%>
         <div class="govuk-radios__item">
           <%= f.radio_button :mobilisation_period_required, true, class: "govuk-radios__input" %>
           <%= f.label :mobilisation_period_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
