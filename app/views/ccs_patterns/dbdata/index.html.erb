@@ -61,25 +61,26 @@
   </tbody>
 </table>
 
-<h2>Indices</h2>
-<table class="ccs-at-govuk-table--3070">
-  <thead>
-  <tr>
-    <th>table name</th>
-    <th>index name</th>
-    <th>column</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @index_list.to_a.each do |i|%>
+<%= govuk_details('<h2>Indices</h2>'.html_safe) do %>
+  <table class="ccs-at-govuk-table--3070 govuk-!-font-size-14">
+    <thead>
     <tr>
-      <td><%= i['table_name'] %></td>
-      <td><%= i['index_name'] %></td>
-      <td><%= i['column_name'] %></td>
+      <th>table name</th>
+      <th>index name</th>
+      <th>column</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @index_list.to_a.each do |i|%>
+      <tr>
+        <td><%= i['table_name'] %></td>
+        <td><%= i['index_name'] %></td>
+        <td><%= i['column_name'] %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<%end %>
 <h2>Building extract</h2>
 <%=govuk_details 'CSV Data' do%>
   <pre style="width:100%"><code><%= @building_csv_text %></code></pre>

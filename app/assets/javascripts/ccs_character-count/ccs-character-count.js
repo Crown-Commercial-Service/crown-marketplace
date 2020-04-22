@@ -147,7 +147,7 @@ CCSCharacterCount.prototype.createCountMessage = function () {
 // Bind input propertychange to the elements and update based on the change
 CCSCharacterCount.prototype.bindChangeEvents = function () {
 	var $textarea = this.$textarea;
-	if ( null !== this.numberFormat ) {
+	if (null !== this.numberFormat) {
 		$textarea.addEventListener('keydown', this.restrictToNumberFormat.bind(this));
 	}
 	$textarea.addEventListener('keyup', this.checkIfValueChanged.bind(this));
@@ -178,10 +178,12 @@ CCSCharacterCount.prototype.checkIfValueChanged = function () {
 	if (!this.$textarea.oldValue) this.$textarea.oldValue = '';
 	if (this.$textarea.value !== this.$textarea.oldValue) {
 		if (null !== this.numberFormat) {
-			if (!this.numberFormat.pattern.test(this.$textarea.value)) {
-				this.$textarea.value = this.$textarea.oldvalue;
-			} else {
-				this.$textarea.oldValue = this.$textarea.value;
+			if (this.$textarea.value !== "") {
+				if (!this.numberFormat.pattern.test(this.$textarea.value)) {
+					this.$textarea.value = this.$textarea.oldValue;
+				} else {
+					this.$textarea.oldValue = this.$textarea.value;
+				}
 			}
 		} else {
 			this.$textarea.oldValue = this.$textarea.value;

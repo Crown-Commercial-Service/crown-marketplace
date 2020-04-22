@@ -21,10 +21,10 @@ module CcsPatterns
       @advisory_locks = ActiveRecord::Base.connection.execute('SELECT pid, locktype, mode FROM pg_locks')
       @kill_message   = params[:kill_message]
 
-      @building_csv_text = CSV.generate(row_sep: '\n') do |csv|
+      @building_csv_text = CSV.generate(headers: true, col_sep: "\t") do |csv|
         csv << FacilitiesManagement::Building.attribute_names
         FacilitiesManagement::Building.find_each do |building|
-          csv << building.attributes.values
+          csv << building.attributes.map { |k| (k[0] == 'user_email' ? k[1].sub("\n", '') : k[1]) }
         end
       end
 
