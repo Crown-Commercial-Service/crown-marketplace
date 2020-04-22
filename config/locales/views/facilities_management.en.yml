@@ -1400,10 +1400,10 @@ en:
       startnow: Start now
       subheading: 'Use this service to:'
       usagelist: |
-        <li>quick view suppliers who can provide services to your locations</li>
+        <li>quickly view suppliers who can provide services to your locations</li>
         <li>see an estimated contract cost</li>
         <li>create and offer a direct award contract</li>
-        <li>shortlist of suppliers ready for further competition</li>
+        <li>shortlist suppliers ready for further competition</li>
         <li>compliantly place a contract with a supplier</li>
       youneedtoknow: 'You need to know:'
     journey:
