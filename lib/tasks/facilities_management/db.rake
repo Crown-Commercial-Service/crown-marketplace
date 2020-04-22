@@ -101,10 +101,5 @@ namespace :db do
 
   desc 'add static data to the database'
   task setup: :static do
-    OrdnanceSurvey.create_postcode_table
-    OrdnanceSurvey.create_address_lookup_view
-    OrdnanceSurvey.create_postcode_locator_index
-    OrdnanceSurvey.create_new_postcode_views
-    OrdnanceSurvey.create_upload_log
   end
 end

@@ -25,7 +25,6 @@ before_script:
   - psql -U postgres -d marketplace_test -c 'create extension postgis'
 script:
   - bundle exec rake db:test:prepare
-  - bundle exec rake db:pctable
   - bundle exec rake assets:precompile
   - bundle exec rake
   - rm public/assets/.sprockets-manifest-*.json
