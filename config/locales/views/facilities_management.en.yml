@@ -1166,13 +1166,13 @@ en:
           save_and_continue: Save and continue
           save_for_later: Save for later
         filter_details:
-          apply_filters: Apply filters
-          change_add_region: Change/Add region
-          change_add_service: Change/Add service
-          edit_filters: Show filter
-          hide_filters: Hide filter
-          region: Region
-          service: Service
+          change_add_region: Change
+          change_add_service: Change
+          hide_requirements: Hide requirements
+          regions: Regions
+          requirements: Requirements
+          services: Services
+          show_requirements: Show requirements
         further_competition:
           further_competition_partial:
             awarding_the_contract: Awarding the contract
@@ -1400,10 +1400,10 @@ en:
       startnow: Start now
       subheading: 'Use this service to:'
       usagelist: |
-        <li>quick view suppliers who can provide services to your locations</li>
+        <li>quickly view suppliers who can provide services to your locations</li>
         <li>see an estimated contract cost</li>
         <li>create and offer a direct award contract</li>
-        <li>shortlist of suppliers ready for further competition</li>
+        <li>shortlist suppliers ready for further competition</li>
         <li>compliantly place a contract with a supplier</li>
       youneedtoknow: 'You need to know:'
     journey:
