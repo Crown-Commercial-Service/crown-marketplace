@@ -113,8 +113,8 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
-          save_results_data
-          contract_value_needed? ? remove_buyer_choice : save_data_if_contract_value_not_required
+          calculate_initial_assesed_value
+          save_data_for_procurement unless contract_value_needed?
         end
         after do
           copy_fm_rates_to_frozen
@@ -134,6 +134,9 @@ module FacilitiesManagement
 
       event :set_state_to_results do
         transitions from: :choose_contract_value, to: :results, after: :start_da_journey
+        after do
+          set_suppliers_for_procurement
+        end
       end
 
       event :set_state_to_detailed_search do
@@ -392,26 +395,30 @@ module FacilitiesManagement
 
     private
 
-    def save_results_data
-      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
-
-      self.assessed_value = eligible_suppliers.assessed_value
-      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
-
-      # if any procurement_suppliers present, they need to be removed
-      procurement_suppliers.destroy_all
-      eligible_suppliers.sorted_list.each do |supplier_data|
-        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
-      end
-
-      save
-    end
-
-    def save_data_if_contract_value_not_required
+    def save_data_for_procurement
+      calculate_initial_assesed_value
       eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
 
       self.lot_number = eligible_suppliers.lot_number
       self.lot_number_selected_by_customer = false
+      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
+
+      set_suppliers_for_procurement
+    end
+
+    def set_suppliers_for_procurement
+      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
+
+      procurement_suppliers.destroy_all
+      eligible_suppliers.sorted_list.each do |supplier_data|
+        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
+      end
+    end
+
+    def calculate_initial_assesed_value
+      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
+
+      self.assessed_value = eligible_suppliers.assessed_value
     end
 
     def remove_buyer_choice
