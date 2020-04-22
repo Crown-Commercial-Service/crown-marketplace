@@ -162,6 +162,7 @@ module FacilitiesManagement
 
       this_service[:context][:volume].each do |question|
         validates_numericality_of(question.to_sym, greater_than: 0, only_integer: true, message: :invalid) if send(this_service[:context][:volume].first).present?
+        validates_numericality_of(question.to_sym, less_than: 10000000000, only_integer: true, message: :less_than) if send(this_service[:context][:volume].first).present?
       end
     end
 
