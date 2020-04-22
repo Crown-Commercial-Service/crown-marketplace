@@ -42,9 +42,15 @@ module FacilitiesManagement
     validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
 
+    attr_accessor :mobilisation_start_date
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
+
+    # attributes to hold and validate optional call off extension
+    attribute :call_off_extension_2
+    attribute :call_off_extension_3
+    attribute :call_off_extension_4
 
     # For making a copy of a procurement
     amoeba do
