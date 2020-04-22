@@ -195,7 +195,7 @@ module ProcurementValidator
   # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   def mobilisation_start_date_validation
-    mobilisation_start_date = initial_call_off_start_date - ((mobilisation_period * 7) + 1)
+    mobilisation_start_date = initial_call_off_start_date - mobilisation_period.weeks - 1.day
     errors.add(:mobilisation_start_date, :greater_than) if mobilisation_start_date <= Time.zone.today
   end
 end
