@@ -3,6 +3,7 @@ module CCS
   require 'csv'
   require 'json'
   require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require Rails.root.join('lib', 'tasks', 'ordnance_survey')
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
@@ -100,5 +101,10 @@ namespace :db do
 
   desc 'add static data to the database'
   task setup: :static do
+    OrdnanceSurvey.create_postcode_table
+    OrdnanceSurvey.create_address_lookup_view
+    OrdnanceSurvey.create_postcode_locator_index
+    OrdnanceSurvey.create_new_postcode_views
+    OrdnanceSurvey.create_upload_log
   end
 end
