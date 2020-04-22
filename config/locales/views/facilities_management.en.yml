@@ -165,6 +165,9 @@ en:
               inclusion: Select one answer
               not_present: Select one answer
               not_present_contract_details: You must answer the question about 'Local Government Pension Scheme'
+            lot_number:
+              blank: Please select one option
+              inclusion: Please select one option
             mobilisation_period:
               blank: Enter mobilisation length
               greater_than: Mobilisation length must be between 1 and 52 weeks
@@ -679,11 +682,25 @@ en:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         choose_contract_value:
+          can_you_estimate_cost: Are you able to estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
+          contract_value_heading: When calculating your total contract value, we haven't been able to estimate the costs of some of your services, for which pricing is very customer specific.
           description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          following_services_are_not_included: The following services aren’t included within the above value
           heading: Looking at the options below are you able to select the correct value range based on your budget, and expected cost of the contract?
+          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you've selected.
           lot_number_1a_description: Total contract value up to £7 million
           lot_number_1b_description: Total contract value between £7 million and £50 million
           lot_number_1c_description: Total contract value over £50 million
+          not_able_to_select_range: If you are not able to select a value range please contact us for assistance.
+          partialy_estimated_contract_value: Partially estimated contract value
+          service: Service
+          sub_lot_1a: Sub-lot 1a
+          sub_lot_1a_hint: Total contract value up to £7 million
+          sub_lot_1b: Sub-lot 1b
+          sub_lot_1b_hint: Total contract value between £7 million and £50 million
+          sub_lot_1c: Sub-lot 1c
+          sub_lot_1c_hint: Total contract value over £50 million
+          sugested_sublot: Suggested sub-lot
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.

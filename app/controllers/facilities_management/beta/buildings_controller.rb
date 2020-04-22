@@ -28,7 +28,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
       def create
         @page_data[:model_object] = current_user.buildings.build(building_params)
-        @page_data[:model_object].address_postcode = params['postcode_entry'] if @page_data[:model_object].address_postcode.blank?
+        @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry if @page_data[:model_object].address_postcode.blank?
         rebuild_page_data(@page_data[:model_object]) if params[:add_address].present?
 
         if params[:add_address].present?
@@ -55,6 +55,7 @@ module FacilitiesManagement
       def update
         @page_data[:model_object].assign_attributes(building_params)
 
+        rebuild_page_description 'add_address' if params[:add_address].present?
         render action: :add_address and return if params[:add_address].present?
 
         resolve_region if params[:step] == 'add_address'

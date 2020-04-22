@@ -45,7 +45,7 @@
                     t('.other')
                   end %>
                   <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].building_type != 'other'%>govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
-                    <div class="other_input ccs-character-count-container" data-module="character-count" data-maxlength="150" style="margin-left: 1.5ex">
+                    <div class="other_input ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150" style="margin-left: 1.5ex">
                       <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></label>
                       <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex') %>
                     </div>
