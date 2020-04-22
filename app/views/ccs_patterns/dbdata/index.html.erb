@@ -81,6 +81,6 @@
   </tbody>
 </table>
 <h2>Building extract</h2>
-<code>
-  <%= @building_csv_text %>
-</code>
+<%=govuk_details 'CSV Data' do%>
+  <pre style="width:100%"><code><%= @building_csv_text %></code></pre>
+<%end %>
