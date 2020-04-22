@@ -7963,3 +7963,11 @@ li code, td code, p code {
 .govuk-header_muted {
     color: #6F777B;
 }
+.bg_gov-mssg {
+    background-color: #6F777B;
+    color: #FFFFFF;
+    padding: 5px;
+}
+.govuk-table__header, .govuk-border-bottom_none {
+    border-bottom: 0px !important;
+}

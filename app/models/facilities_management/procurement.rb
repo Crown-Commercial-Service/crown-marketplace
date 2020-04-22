@@ -32,6 +32,8 @@ module FacilitiesManagement
     accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
     acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
+    
+    has_one_attached :contract_documents_zip
 
     has_one_attached :security_policy_document_file
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong

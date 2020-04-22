@@ -99,8 +99,8 @@
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
             </li>
           </ul>
-
-          <%= link_to t('.download_documents.title'), '#', class: 'govuk-button govuk-button--secondary' %>
+          <%  %>
+          <%= link_to t('.download_documents.title'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
         </div>
 
 
