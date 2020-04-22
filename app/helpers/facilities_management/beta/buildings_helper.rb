@@ -9,7 +9,7 @@ module FacilitiesManagement::Beta::BuildingsHelper
     [building.address_line_1, building.address_line_2, building.address_town, building.address_postcode].reject(&:blank?).join(', ')
   end
 
-   def margin_if_security_has_other_error(building)
+  def margin_if_security_has_other_error(building)
     building.errors.key?(:other_security_type) ? { style: 'margin-left: 1em' } : {}
   end
 

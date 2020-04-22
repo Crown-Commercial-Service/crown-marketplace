@@ -62,7 +62,7 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def determine_status
       self.status = if building_name.present? && address_postcode.present? && address_region_code.present? &&
-                       building_type.present? && security_type.present? && gia.present? && gia > 0
+                       building_type.present? && security_type.present? && gia.present? && gia.positive?
                       'Ready'
                     else
                       'Incomplete'
