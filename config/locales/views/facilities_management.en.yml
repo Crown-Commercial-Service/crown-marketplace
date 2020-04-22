@@ -268,7 +268,7 @@ en:
               less_than: The number of building occupants cannot be more than 999,999,999
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of consoles to be serviced cannot be more than 999,999,999  
+              less_than: The number of consoles to be serviced cannot be more than 999,999,999
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
               less_than: The number of units to be serviced cannot be more than 999,999,999
