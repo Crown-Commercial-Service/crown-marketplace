@@ -10,10 +10,10 @@ module BuildingsControllerRegions
   end
 
   def find_region_query_by_postcode(postcode)
-    result = get_region_postcode postcode
+    result = get_region_postcode(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
     if result.length.positive?
     else
-      result = get_region_by_prefix postcode
+      result = get_region_by_prefix(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
     end
     result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
 

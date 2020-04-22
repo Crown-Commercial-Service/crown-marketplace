@@ -13,12 +13,11 @@ module FacilitiesManagement
 
     after_initialize do |building|
       building.postcode_entry = building.address_postcode if building.postcode_entry.blank?
-      building.gia = building.gia.to_i
     end
 
     validates :building_name, presence: true, on: %i[new edit all]
     validates :gia, presence: true, on: %i[gia all]
-    validates :gia, numericality: { only_integer: true }, allow_blank: true, on: %i[gia all]
+    validates :gia, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true, on: %i[gia all]
     validates :security_type, presence: true, on: %i[security all]
     validates :building_type, presence: true, on: %i[type all]
     validates :address_line_1, presence: true, on: %i[all add_address], if: -> { address_postcode.present? }
@@ -63,7 +62,7 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def determine_status
       self.status = if building_name.present? && address_postcode.present? && address_region_code.present? &&
-                       building_type.present? && security_type.present? && gia.present?
+                       building_type.present? && security_type.present? && gia.present? && gia > 0
                       'Ready'
                     else
                       'Incomplete'
