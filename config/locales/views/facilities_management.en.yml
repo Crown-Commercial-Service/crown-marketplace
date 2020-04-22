@@ -154,6 +154,7 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
+              not_an_integer: Initial call-off period must be a whole number
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
@@ -172,7 +173,7 @@ en:
               blank: Enter mobilisation length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
+              less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
