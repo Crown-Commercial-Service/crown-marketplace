@@ -494,12 +494,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.set_state_to_results_if_possible
         expect(procurement.lot_number).not_to be_nil
       end
-
-      it 'saves the rates to frozen' do
-        procurement.save_eligible_suppliers_and_set_state
-        expect(CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement.id).size).to eq 155
-        expect(CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement.id).size).to eq 1
-      end
     end
 
     describe 'changing state' do
