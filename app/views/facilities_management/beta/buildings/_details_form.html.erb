@@ -135,8 +135,8 @@
                 <option value="">Please select a region</option>
               <% end %>
               <% valid_regions.each do |region| %>
-                <option value="<%= region['code'] %>" <%= 'selected' if @page_data[:model_object].address_region_code == region['code'] %>
-                        data-address_region="<%= region['region'] %>" data-address_region_code="<%= region['code'] %>"><%= region['region'] %></option>
+                <option value="<%= region[:code] %>" <%= 'selected' if @page_data[:model_object].address_region_code == region[:code] %>
+                        data-address_region="<%= region[:region] %>" data-address_region_code="<%= region[:code] %>"><%= region[:region] %></option>
               <% end %>
             </select>
           </div>

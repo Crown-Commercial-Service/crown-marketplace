@@ -21,12 +21,35 @@ module CcsPatterns
       @advisory_locks = ActiveRecord::Base.connection.execute('SELECT pid, locktype, mode FROM pg_locks')
       @kill_message   = params[:kill_message]
 
-      @building_csv_text = CSV.generate do |csv|
+      @building_csv_text = CSV.generate(row_sep: '\n') do |csv|
         csv << FacilitiesManagement::Building.attribute_names
         FacilitiesManagement::Building.find_each do |building|
           csv << building.attributes.values
         end
       end
+
+      index_sql = <<~SQL
+        select
+        t.relname as table_name,
+            i.relname as index_name,
+            a.attname as column_name
+        from
+            pg_class t,
+            pg_class i,
+            pg_index ix,
+            pg_attribute a
+        where
+            t.oid = ix.indrelid
+            and i.oid = ix.indexrelid
+            and a.attrelid = t.oid
+            and a.attnum = ANY(ix.indkey)
+            and t.relkind = 'r'
+        order by
+            t.relname,
+            i.relname;
+      SQL
+
+      @index_list = ActiveRecord::Base.connection.execute(index_sql)
     end
     # rubocop:enable Metrics/AbcSize
 
