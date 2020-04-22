@@ -56,6 +56,7 @@ module FacilitiesManagement
         @page_data[:model_object].assign_attributes(building_params)
 
         rebuild_page_description 'add_address' if params[:add_address].present?
+        @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry if params[:add_address].present?
         render action: :add_address and return if params[:add_address].present?
 
         resolve_region if params[:step] == 'add_address'
