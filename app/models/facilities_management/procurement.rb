@@ -124,6 +124,10 @@ module FacilitiesManagement
 
       event :set_state_to_results do
         transitions from: :choose_contract_value, to: :results, after: :start_da_journey
+        after do
+          copy_fm_rates_to_frozen
+          copy_fm_rate_cards_to_frozen
+        end
       end
 
       event :set_state_to_detailed_search do
@@ -158,6 +162,32 @@ module FacilitiesManagement
       end
     end
     # rubocop:enable Metrics/BlockLength
+
+    def copy_fm_rates_to_frozen
+      ActiveRecord::Base.transaction do
+        CCS::FM::Rate.all.find_each do |rate|
+          new_rate = CCS::FM::FrozenRate.new
+          new_rate.facilities_management_procurement_id = id
+          new_rate.code = rate.code
+          new_rate.framework = rate.framework
+          new_rate.benchmark = rate.benchmark
+          new_rate.standard = rate.standard
+          new_rate.direct_award = rate.direct_award
+          new_rate.save!
+        end
+      end
+    rescue ActiveRecord::Rollback => e
+      logger.error e.message
+    end
+
+    def copy_fm_rate_cards_to_frozen
+      latest_rate_card = CCS::FM::RateCard.latest
+      new_rate_card = CCS::FM::FrozenRateCard.new
+      new_rate_card.facilities_management_procurement_id = id
+      new_rate_card.data = latest_rate_card.data
+      new_rate_card.source_file = latest_rate_card.source_file
+      new_rate_card.save!
+    end
 
     def move_to_next_da_step
       next_event = aasm(:da_journey).events(reject: :start_da_journey, permitted: true).first

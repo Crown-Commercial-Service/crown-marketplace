@@ -4,7 +4,7 @@ module CCS
       'fm_'
     end
 
-    class Rate < ApplicationRecord
+    class FrozenRate < ApplicationRecord
       include CommonRate
 
       private_class_method :service_for
