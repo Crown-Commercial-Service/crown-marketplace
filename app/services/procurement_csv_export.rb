@@ -193,11 +193,15 @@ class ProcurementCsvExport
   end
 
   def self.expand_services(service_codes)
-    service_codes.map { |code| "#{code} #{FacilitiesManagement::Service.find_by(code: code).name};\n" } .join
+    service_codes.compact.map do |code|
+      "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'};\n"
+    end.join
   end
 
   def self.expand_regions(region_codes)
-    region_codes.map { |code| "#{code} #{FacilitiesManagement::Region.find_by(code: code).name};\n" } .join
+    region_codes.compact.map do |code|
+      "#{code} #{FacilitiesManagement::Region.find_by(code: code)&.name || 'region description not found'};\n"
+    end.join
   end
 
   def self.unpriced_services(service_codes)

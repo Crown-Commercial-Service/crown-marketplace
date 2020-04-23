@@ -116,7 +116,6 @@ module FacilitiesManagement
           supplier_checkboxes
         end
 
-        # rubocop:disable Metrics/AbcSize
         def update_rates(only_validate)
           invalid_services = []
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
@@ -127,44 +126,31 @@ module FacilitiesManagement
           if only_validate
             update_rates_invalid_services(invalid_services)
           else
-            @variance_supplier_data['Management Overhead %'.to_sym] = params['rate']['M.140'].to_f
-            @variance_supplier_data['Corporate Overhead %'.to_sym] = params['rate']['M.141'].to_f
-            @variance_supplier_data['Profit %'.to_sym] = params['rate']['M.142'].to_f
-            @variance_supplier_data['London Location Variance Rate (%)'.to_sym] = params['rate']['M.144'].to_f
-            @variance_supplier_data['Cleaning Consumables per Building User (£)'.to_sym] = params['rate']['M.146'].to_f
-            @variance_supplier_data['TUPE Risk Premium (DA %)'.to_sym] = params['rate']['M.148'].to_f
-            @variance_supplier_data['Mobilisation Cost (DA %)'.to_sym] = params['rate']['B.1'].to_f
+            codes = ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
+            names = ['Management Overhead %', 'Corporate Overhead %', 'Profit %', 'London Location Variance Rate (%)', 'Cleaning Consumables per Building User (£)', 'TUPE Risk Premium (DA %)', 'Mobilisation Cost (DA %)']
+            codes.each.with_index do |code, i|
+              @variance_supplier_data[names[i].to_sym] = params['rate'][code].to_f
+            end
+
             rate_card.save
           end
           invalid_services
         end
-        # rubocop:enable Metrics/AbcSize
 
-        # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize
         def update_rates_invalid_services(invalid_services)
           # Note: I add the service name to the flash error ,and the value the user entered in the next array index
-          invalid_services << 'M.140' unless numeric?(params['rate']['M.140'])
-          invalid_services << params['rate']['M.140'] unless numeric?(params['rate']['M.140'])
+          ['M.140', 'M.141', 'M.142', 'M.144', 'M.148', 'B.1'].each do |code|
+            unless numeric?(params['rate'][code]) && value_in_range?(params['rate'][code])
+              invalid_services << code
+              invalid_services << params['rate'][code]
+            end
+          end
 
-          invalid_services << 'M.141' unless numeric?(params['rate']['M.141'])
-          invalid_services << params['rate']['M.141'] unless numeric?(params['rate']['M.141'])
-
-          invalid_services << 'M.142' unless numeric?(params['rate']['M.142'])
-          invalid_services << params['rate']['M.142'] unless numeric?(params['rate']['M.142'])
-
-          invalid_services << 'M.144' unless numeric?(params['rate']['M.144'])
-          invalid_services << params['rate']['M.144'] unless numeric?(params['rate']['M.144'])
-
-          invalid_services << 'M.146' unless numeric?(params['rate']['M.146'])
-          invalid_services << params['rate']['M.146'] unless numeric?(params['rate']['M.146'])
-
-          invalid_services << 'M.148' unless numeric?(params['rate']['M.148'])
-          invalid_services << params['rate']['M.148'] unless numeric?(params['rate']['M.148'])
-
-          invalid_services << 'B.1' unless numeric?(params['rate']['B.1'])
-          invalid_services << params['rate']['B.1'] unless numeric?(params['rate']['B.1'])
+          invalid_services << 'M.146' unless numeric?(params['rate']['M.146']) && !more_than_max_decimals?(params['rate']['M.146'])
+          invalid_services << params['rate']['M.146'] unless numeric?(params['rate']['M.146']) & !more_than_max_decimals?(params['rate']['M.146'])
         end
-        # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity, Metrics/AbcSize
+        # rubocop:enable Metrics/AbcSize
 
         def setup_supplier_data_ratecard
           latest_rate_card = CCS::FM::RateCard.latest
@@ -192,13 +178,22 @@ module FacilitiesManagement
 
               if only_validate
                 numeric_result = numeric?(params['data'][service_key][service_type_key])
-                invalid_services << service_key unless numeric_result
-                invalid_services << service_key + service_type_key unless numeric_result
-                invalid_services << params['data'][service_key][service_type_key] unless numeric_result
+                range_result = if service_type_key.include?('%') && numeric_result
+                                 value_in_range?(params['data'][service_key][service_type_key])
+                               else
+                                 true
+                               end
+                invalid_services << service_key unless numeric_result && range_result
+                invalid_services << service_key + service_type_key unless numeric_result && range_result
+                invalid_services << params['data'][service_key][service_type_key] unless numeric_result && range_result
               elsif key == 'Direct Award Discount'
-                @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
+                new_value = params['data'][service_key][service_type_key]
+                new_value = new_value.to_f unless new_value.empty?
+                @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = new_value unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
               else
-                @supplier_data_ratecard_prices.values[0][service_key][key] = params['data'][service_key][service_type_key].to_f unless @supplier_data_ratecard_prices.values[0][service_key].nil?
+                new_value = params['data'][service_key][service_type_key]
+                new_value = new_value.to_f unless new_value.empty?
+                @supplier_data_ratecard_prices.values[0][service_key][key] = new_value unless @supplier_data_ratecard_prices.values[0][service_key].nil?
               end
             end
           end
@@ -207,13 +202,25 @@ module FacilitiesManagement
         end
         # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
-        # rubocop:disable Style/MultipleComparison
         def numeric?(user_entered_value)
           return true if user_entered_value.nil? || user_entered_value.blank?
 
-          user_entered_value.to_i.to_s == user_entered_value || user_entered_value.to_f.to_s == user_entered_value
+          user_entered_value.match(/\A[+]?\d+?(_?\d+)*(\.\d+e?\d*)?\Z/) != nil
         end
-        # rubocop:enable Style/MultipleComparison
+
+        def value_in_range?(user_entered_value)
+          return true if user_entered_value.nil? || user_entered_value.blank?
+
+          return false if more_than_max_decimals?(user_entered_value)
+
+          user_entered_value.to_f <= 100
+        end
+
+        def more_than_max_decimals?(user_entered_value)
+          return false if user_entered_value.nil? || user_entered_value.blank?
+
+          (BigDecimal(user_entered_value) - BigDecimal(user_entered_value).floor).to_s.size - 2 > 20
+        end
       end
     end
   end

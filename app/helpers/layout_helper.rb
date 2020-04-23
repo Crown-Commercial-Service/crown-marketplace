@@ -257,6 +257,16 @@ module LayoutHelper
     builder.text_area attribute, options
   end
 
+  def govuk_text_area_input_contracts(builder, attribute, char_count = false, *option)
+    css_classes = ['govuk-textarea']
+    css_classes += ['govuk-textarea--error'] if builder.object.errors.key?(attribute)
+    css_classes << option.to_h[:class] if option.to_h.key? :class
+    css_classes += ['js-ccs-character-count'] if char_count
+    options = option.to_h.merge(class: css_classes)
+    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+    builder.text_area attribute, options
+  end
+
   def govuk_button(builder, text, options = { submit: true, class: '' })
     css_classes = ['govuk-button']
     css_classes << options[:class]
