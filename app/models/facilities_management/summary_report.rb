@@ -75,6 +75,8 @@ module FacilitiesManagement
     end
 
     def current_lot
+      return @procurement.lot_number if @procurement.lot_number_selected_by_customer
+
       case assessed_value
       when 0..7000000
         '1a'

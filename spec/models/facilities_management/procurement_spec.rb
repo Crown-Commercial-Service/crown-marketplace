@@ -983,7 +983,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#set_state_to_results' do
-    let(:procurement) { create(:facilities_management_procurement, aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_for_further_competition, aasm_state: state) }
+    let(:building) { create :facilities_management_building_london }
 
     before do
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer

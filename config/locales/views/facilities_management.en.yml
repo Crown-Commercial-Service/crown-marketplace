@@ -1266,9 +1266,9 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
-          hint-text-unpriced-sub-lot-1a: Suitable for contracts up to £7million
-          hint-text-unpriced-sub-lot-1b: Suitable for contracts £7 million - £50 million
-          hint-text-unpriced-sub-lot-1c: Suitable for contracts over £50m
+          hint-text-unpriced-sub-lot-1a: Suitable for contract values up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contract values between £7 million - £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contract values over £50m
           sub-lot: Lot
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
@@ -1278,7 +1278,7 @@ en:
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
-          who_are: who are able to provide the services your require in your location(s)
+          who_are: who can provide the services your require in your location(s)
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
