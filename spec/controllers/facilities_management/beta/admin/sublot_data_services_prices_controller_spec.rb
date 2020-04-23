@@ -37,7 +37,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
 
   describe 'PUT update_rates for variance' do
     it '#update_sublot_data_services_price' do
-      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': 1.123456, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
+      put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.142]': '8.046000000000000005', 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
 
       rate_card = CCS::FM::RateCard.latest
       supplier_name = 'Abernathy and Sons'
@@ -45,7 +45,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
         v if k.to_s == supplier_name
       end
       variance_supplier_data = supplier_rate_card[supplier_name.to_sym]
-      expect(variance_supplier_data['Profit %'.to_sym]).to eq 1.123456
+      expect(variance_supplier_data['Profit %'.to_sym]).to eq '8.046000000000000005'
     end
 
     it 'redirects correctly' do

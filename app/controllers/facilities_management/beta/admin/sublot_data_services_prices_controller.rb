@@ -129,7 +129,7 @@ module FacilitiesManagement
             codes = ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
             names = ['Management Overhead %', 'Corporate Overhead %', 'Profit %', 'London Location Variance Rate (%)', 'Cleaning Consumables per Building User (£)', 'TUPE Risk Premium (DA %)', 'Mobilisation Cost (DA %)']
             codes.each.with_index do |code, i|
-              @variance_supplier_data[names[i].to_sym] = params['rate'][code].to_f
+              @variance_supplier_data[names[i].to_sym] = BigDecimal(params['rate'][code]) unless params['rate'][code].nil?
             end
 
             rate_card.save
@@ -219,7 +219,7 @@ module FacilitiesManagement
         def more_than_max_decimals?(user_entered_value)
           return false if user_entered_value.nil? || user_entered_value.blank?
 
-          (BigDecimal(user_entered_value) - BigDecimal(user_entered_value).floor).to_s.size - 2 > 20
+          (BigDecimal(user_entered_value) - BigDecimal(user_entered_value).floor).to_s.size - 2 > 30
         end
       end
     end
