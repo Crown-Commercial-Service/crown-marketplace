@@ -159,9 +159,9 @@ en:
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
-              after_2100: Initial call-off start date must be before 31 December 2100
+              after_2100: Initial call-off period start date cannot be later than 31 December 2100
               after_or_equal_to: Initial call-off period start date must be in the future
-              blank: Initial call-off period start date must be in the future
+              blank: Enter a valid initial call-off start date
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
