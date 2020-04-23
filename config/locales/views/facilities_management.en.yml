@@ -142,6 +142,7 @@ en:
             estimated_annual_cost:
               blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
+              less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
               not_present: You must answer the question about 'Estimated annual cost'
@@ -155,12 +156,13 @@ en:
               greater_than_or_equal_to: Enter initial call-off period
               less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
               not_a_number: Enter initial call-off period
+              not_an_integer: Initial call-off period must be a whole number
               not_present: You must answer all questions about 'Contract period'
             initial_call_off_start_date:
               after: Initial call-off period start date must be in the future
-              after_2100: Initial call-off start date must be before 31 December 2100
+              after_2100: Initial call-off period start date cannot be later than 31 December 2100
               after_or_equal_to: Initial call-off period start date must be in the future
-              blank: Initial call-off period start date must be in the future
+              blank: Enter a valid initial call-off start date
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
@@ -173,12 +175,13 @@ en:
               blank: Enter mobilisation length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than: Mobilisation length must be between 1 and 52 weeks
+              less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_period_required:
               inclusion: Select yes if you need a mobilisation period
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
               greater_than: Mobilisation start date must be in the future
             name:
@@ -188,13 +191,17 @@ en:
               too_long: Search name must be 100 characters or less
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
               too_long: Call-off contract period, including extensions must not be more than 10 years
             optional_call_off_extensions_2:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_3:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_4:
+              blank: Enter extension period
               not_an_integer: Extension period must be a whole number
             payment_method:
               inclusion: Select one payment method
@@ -263,12 +270,16 @@ en:
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
+              less_than: The number of appliances to be tested cannot be more than 999,999,999
             no_of_building_occupants:
               invalid: The number of building occupants must be a whole number and greater than 0, like 20.
+              less_than: The number of building occupants cannot be more than 999,999,999
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
+              less_than: The number of consoles to be serviced cannot be more than 999,999,999
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
+              less_than: The number of units to be serviced cannot be more than 999,999,999
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
@@ -284,8 +295,10 @@ en:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
+              less_than: The size of the external area must cannot be more than 999,999,999
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
+              less_than: The number of tonnes to be collected and removed per annum cannot be more than 999,999,999
         facilities_management/procurement_contact_detail:
           attributes:
             email:
@@ -766,7 +779,6 @@ en:
             reason_for_not_signed: Your reason for not signing this contract offer was
             sent: You sent this contract offer to the supplier on
             sent_accepted: The supplier accepted the contract offer on
-            sent_no_response: The supplier has not yet responded.
             signed_confirmed_1: You confirmed on the
             signed_confirmed_2: that the contract has been signed by both parties.
             supplier_declined_reason: The supplier's reason for declining was
@@ -1256,9 +1268,9 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
-          hint-text-unpriced-sub-lot-1a: Suitable for contracts up to £7million
-          hint-text-unpriced-sub-lot-1b: Suitable for contracts £7 million - £50 million
-          hint-text-unpriced-sub-lot-1c: Suitable for contracts over £50m
+          hint-text-unpriced-sub-lot-1a: Suitable for contract values up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contract values between £7 million - £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contract values over £50m
           sub-lot: Lot
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
@@ -1268,7 +1280,7 @@ en:
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
-          who_are: who are able to provide the services your require in your location(s)
+          who_are: who can provide the services your require in your location(s)
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
@@ -1293,7 +1305,6 @@ en:
             what_happens_next: What happens next
           contract_offer_details:
             accepted_contract_offer: You accepted this contract offer on
-            buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
             contract_closed_on: This contract offer was closed on
             contract_received_on: This contract offer was received on
             reason_for_declining: Your reason for declining was

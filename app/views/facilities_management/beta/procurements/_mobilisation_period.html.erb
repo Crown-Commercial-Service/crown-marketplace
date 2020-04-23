@@ -19,7 +19,7 @@
             </div>
             <div class="govuk-!-margin-left-3">
               <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3">Mobilisation start date</span>
-              <div class="govuk-form-group-error-placeholder" data-propertyname="Mobilisation start date">
+              <div class=" <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_start_date].any? %>" data-propertyname="Mobilisation start date">
                 <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
                   <%= display_error_label(@procurement, :mobilisation_start_date, '', "#{f.object_name}_mobilisation_start_date") %>
                   <div class="govuk-date-input">
@@ -28,7 +28,7 @@
                         <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-dd">
                           Day
                         </label>
-                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-dd" name="mobilisation-start-date-dd">
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field <%= 'govuk-input--error' if @procurement.errors[:mobilisation_start_date].any? %>" id="mobilisation-start-date-dd" name="mobilisation-start-date-dd">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">           o
@@ -36,7 +36,7 @@
                         <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-mm">
                           Month
                         </label>
-                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field" id="mobilisation-start-date-mm" name="mobilisation-start-date-mm">
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-2 fm-read-only-date-field <%= 'govuk-input--error' if @procurement.errors[:mobilisation_start_date].any? %>" id="mobilisation-start-date-mm" name="mobilisation-start-date-mm">
                       </div>
                     </div>
                     <div class="govuk-date-input__item">
@@ -44,7 +44,7 @@
                         <label class="govuk-label govuk-date-input__label" for="mobilisation-start-date-yyyy">
                           Year
                         </label>
-                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field" id="mobilisation-start-date-yyyy" name="mobilisation-start-date-yyyy">
+                        <input readonly class="govuk-input govuk-date-input__input govuk-input--width-4 fm-read-only-date-field <%= 'govuk-input--error' if @procurement.errors[:mobilisation_start_date].any? %>" id="mobilisation-start-date-yyyy" name="mobilisation-start-date-yyyy">
                       </div>
                     </div>
                   </div>

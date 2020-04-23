@@ -10,8 +10,13 @@ module FacilitiesManagement
       @procurement = FacilitiesManagement::Procurement.find(procurement_id)
       initialize_from_procurement
 
-      @rates ||= CCS::FM::Rate.read_benchmark_rates
-      @rate_card ||= CCS::FM::RateCard.latest
+      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement_id)
+      @rates = frozen_rates.read_benchmark_rates unless frozen_rates.size.zero?
+      @rates = CCS::FM::Rate.read_benchmark_rates if frozen_rates.size.zero?
+
+      frozen_ratecard = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement_id)
+      @rate_card = frozen_ratecard.latest unless frozen_ratecard.size.zero?
+      @rate_card = CCS::FM::RateCard.latest if frozen_ratecard.size.zero?
       regions
     end
 
@@ -70,6 +75,8 @@ module FacilitiesManagement
     end
 
     def current_lot
+      return @procurement.lot_number if @procurement.lot_number_selected_by_customer
+
       case assessed_value
       when 0..7000000
         '1a'
@@ -115,11 +122,11 @@ module FacilitiesManagement
     end
 
     def da_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
     end
 
     def fc_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -269,11 +276,19 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: @procurement.id)
+      rate_model = frozen_rates unless frozen_rates.size.zero?
+      rate_model = CCS::FM::Rate if frozen_rates.size.zero?
+
+      @procurement.procurement_building_services.any? { |pbs| rate_model.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: @procurement.id)
+      rate_model = frozen_rates unless frozen_rates.size.zero?
+      rate_model = CCS::FM::Rate if frozen_rates.size.zero?
+
+      @procurement.procurement_building_services.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def variance_over_30_percent?(new, baseline)

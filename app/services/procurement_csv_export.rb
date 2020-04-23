@@ -95,7 +95,7 @@ class ProcurementCsvExport
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(contract.procurement.assessed_value),
-          'Sub-lot ' + contract.procurement.lot_number,
+          format_lot_number(contract.procurement.lot_number),
           yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
           expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
@@ -108,8 +108,8 @@ class ProcurementCsvExport
           contract.reason_for_declining,
           contract.reason_for_closing,
           contract.reason_for_not_signing,
-          contract.contract_signed_date.strftime(DATE_FORMAT),
-          "#{contract.contract_start_date.strftime(DATE_FORMAT)} - #{contract.contract_end_date.strftime(DATE_FORMAT)}"
+          contract.contract_signed_date&.strftime(DATE_FORMAT),
+          "#{contract.contract_start_date&.strftime(DATE_FORMAT)} - #{contract.contract_end_date&.strftime(DATE_FORMAT)}"
         ]
       end
 
@@ -138,7 +138,7 @@ class ProcurementCsvExport
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(procurement.assessed_value),
-          'Sub-lot ' + procurement.lot_number,
+          format_lot_number(procurement.lot_number),
           yes_no(procurement.eligible_for_da),
           nil,
           expand_services(unpriced_services(procurement.procurement_building_service_codes)),
@@ -193,11 +193,15 @@ class ProcurementCsvExport
   end
 
   def self.expand_services(service_codes)
-    service_codes.map { |code| "#{code} #{FacilitiesManagement::Service.find_by(code: code).name};\n" } .join
+    service_codes.compact.map do |code|
+      "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'};\n"
+    end.join
   end
 
   def self.expand_regions(region_codes)
-    region_codes.map { |code| "#{code} #{FacilitiesManagement::Region.find_by(code: code).name};\n" } .join
+    region_codes.compact.map do |code|
+      "#{code} #{FacilitiesManagement::Region.find_by(code: code)&.name || 'region description not found'};\n"
+    end.join
   end
 
   def self.unpriced_services(service_codes)
@@ -234,5 +238,11 @@ class ProcurementCsvExport
 
     "#{helpers.pluralize(extensions.size, 'extension')}, " +
       extensions.map { |ext| helpers.pluralize(ext, 'year') } .join(', ')
+  end
+
+  def self.format_lot_number(lot_number)
+    return '' if lot_number.blank?
+
+    'Sub-lot ' + lot_number
   end
 end
