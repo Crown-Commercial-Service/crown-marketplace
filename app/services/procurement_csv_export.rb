@@ -108,8 +108,8 @@ class ProcurementCsvExport
           contract.reason_for_declining,
           contract.reason_for_closing,
           contract.reason_for_not_signing,
-          contract.contract_signed_date.strftime(DATE_FORMAT),
-          "#{contract.contract_start_date.strftime(DATE_FORMAT)} - #{contract.contract_end_date.strftime(DATE_FORMAT)}"
+          contract.contract_signed_date&.strftime(DATE_FORMAT),
+          "#{contract.contract_start_date&.strftime(DATE_FORMAT)} - #{contract.contract_end_date&.strftime(DATE_FORMAT)}"
         ]
       end
 
