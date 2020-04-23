@@ -110,6 +110,10 @@ module FacilitiesManagement
           save_results_data
           contract_value_needed? ? remove_buyer_choice : save_data_if_contract_value_not_required
         end
+        after do
+          copy_fm_rates_to_frozen
+          copy_fm_rate_cards_to_frozen
+        end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
             contract_value_needed?
@@ -124,10 +128,6 @@ module FacilitiesManagement
 
       event :set_state_to_results do
         transitions from: :choose_contract_value, to: :results, after: :start_da_journey
-        after do
-          copy_fm_rates_to_frozen
-          copy_fm_rate_cards_to_frozen
-        end
       end
 
       event :set_state_to_detailed_search do
