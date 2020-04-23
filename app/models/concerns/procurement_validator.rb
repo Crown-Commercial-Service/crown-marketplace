@@ -48,8 +48,8 @@ module ProcurementValidator
     validates :initial_call_off_period, presence: true, on: %i[contract_dates]
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { initial_call_off_period.present? }, on: :contract_dates
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, less_than_or_equal_to: 7 }, if: -> { initial_call_off_period.present? }, on: :contract_dates
-    validates :initial_call_off_start_date, date: { allow_nil: false, after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: :contract_dates
-    validates :initial_call_off_start_date, presence: true, if: :initial_call_off_period_expects_a_date?, on: :contract_dates
+    validate  :initial_call_off_start_date_yyyy_invalid, on: :contract_dates
+    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: :contract_dates
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
@@ -91,6 +91,10 @@ module ProcurementValidator
 
     #############################################
     # Start of validation methods for contract-dates
+
+    def initial_call_off_start_date_yyyy_invalid
+      errors.add(:initial_call_off_start_date, :not_a_date) if initial_call_off_start_date_yyyy.to_i < 100
+    end
 
     def initial_call_off_start_date_yyyy_after_2100
       errors.add(:initial_call_off_start_date, :after_2100) if initial_call_off_start_date_yyyy.to_i > 2100
