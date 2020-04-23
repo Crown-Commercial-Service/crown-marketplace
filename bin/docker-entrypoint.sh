@@ -24,4 +24,8 @@ if [ "$APP_RUN_NUTS_IMPORT" = 'TRUE' ]; then
   bundle exec rails db:run_postcodes_to_nuts_worker
 fi
 
+if [ "$APP_RUN_PROCUREMENTS_CLEANUP" = 'TRUE' ]; then
+  bundle exec rails procurements:cleanup
+fi
+
 bundle exec rails server
