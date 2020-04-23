@@ -40,9 +40,11 @@ module OrdnanceSurvey
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
     query = <<~SQL
-      CREATE OR REPLACE VIEW public.os_address_view_2
-       AS
-       SELECT
+      DO $$
+      BEGIN
+        CREATE VIEW public.os_address_view_2
+        AS
+        SELECT
               CASE
                   WHEN NULLIF(adds.rm_organisation_name::text, ''::text) IS NULL THEN NULL::character varying
                   ELSE adds.rm_organisation_name
@@ -110,25 +112,37 @@ module OrdnanceSurvey
               END AS post_town,
           replace(adds.postcode_locator::text, ' '::text, ''::text) AS formatted_postcode,
           replace(adds.postcode_locator::text, ' '::text, adds.delivery_point_suffix::text) AS building_ref
-         FROM os_address adds;
+        FROM os_address adds;
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-      CREATE OR REPLACE VIEW public.postcode_region_view
-                AS
-                SELECT nuts.code AS region_code,
-                   nuts3.name AS region,
-                   nuts.postcode
-                  FROM postcodes_nuts_regions nuts
-                    JOIN nuts_regions nuts3 ON nuts3.code::text = nuts.code::text;
+      DO $$
+      BEGIN
+        CREATE VIEW public.postcode_region_view
+        AS
+        SELECT nuts.code AS region_code,
+           nuts3.name AS region,
+           nuts.postcode
+        FROM postcodes_nuts_regions nuts
+          JOIN nuts_regions nuts3 ON nuts3.code::text = nuts.code::text;
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-      CREATE OR REPLACE VIEW public.postcode_lookup
-       AS
-           SELECT ((((
+      DO $$
+      BEGIN
+        CREATE VIEW public.postcode_lookup
+        AS
+          SELECT ((((
             CASE
                 WHEN addresses.organisation IS NOT NULL AND NULLIF("position"(addresses.addressable_object, addresses.organisation::text), 0) IS NULL THEN initcap(addresses.organisation::text) || ', '::text
                 ELSE ''::text
@@ -168,13 +182,17 @@ module OrdnanceSurvey
       				END
       			ELSE
       				''::text
-              END AS address_line_2,
-          initcap(addresses.postal_town) AS address_town,
-          addresses.postcode_locator AS address_postcode,
-          initcap(regions.region::text) AS address_region,
-          regions.region_code AS address_region_code
-         FROM os_address_view_2 addresses
-           LEFT outer JOIN postcode_region_view regions ON regions.postcode::text = replace(addresses.postcode_locator::text, ' '::text, ''::text);
+            END AS address_line_2,
+            initcap(addresses.postal_town) AS address_town,
+            addresses.postcode_locator AS address_postcode,
+            initcap(regions.region::text) AS address_region,
+            regions.region_code AS address_region_code
+          FROM os_address_view_2 addresses
+            LEFT outer JOIN postcode_region_view regions ON regions.postcode::text = replace(addresses.postcode_locator::text, ' '::text, ''::text);
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
