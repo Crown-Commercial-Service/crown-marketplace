@@ -180,6 +180,7 @@ en:
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_period_required:
               inclusion: Select yes if you need a mobilisation period
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
               greater_than: Mobilisation start date must be in the future
             name:
