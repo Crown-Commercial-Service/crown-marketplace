@@ -257,7 +257,7 @@ module FacilitiesManagement
     def calculate_assessed_value
       return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
 
-      values = values_to_average
+      values = buyer_input.zero? ? [sum_uom, sum_benchmark] : values_to_average
 
       values << buyer_input unless buyer_input.zero?
       (values.sum / values.size).to_f
@@ -266,7 +266,7 @@ module FacilitiesManagement
     def values_to_average
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input) && !buyer_input.zero?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
         elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
