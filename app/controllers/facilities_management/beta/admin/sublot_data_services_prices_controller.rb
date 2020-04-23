@@ -116,7 +116,6 @@ module FacilitiesManagement
           supplier_checkboxes
         end
 
-        # rubocop:disable Metrics/AbcSize
         def update_rates(only_validate)
           invalid_services = []
           supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
@@ -130,18 +129,13 @@ module FacilitiesManagement
             codes = ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
             names = ['Management Overhead %', 'Corporate Overhead %', 'Profit %', 'London Location Variance Rate (%)', 'Cleaning Consumables per Building User (£)', 'TUPE Risk Premium (DA %)', 'Mobilisation Cost (DA %)']
             codes.each.with_index do |code, i|
-              @variance_supplier_data[names[i].to_sym] = if params['rate'][code].nil? || params['rate'][code].blank?
-                                                           params['rate'][code].to_f
-                                                         else
-                                                           BigDecimal(params['rate'][code]).to_s
-                                                         end
+              @variance_supplier_data[names[i].to_sym] = params['rate'][code].to_f
             end
 
             rate_card.save
           end
           invalid_services
         end
-        # rubocop:enable Metrics/AbcSize
 
         # rubocop:disable Metrics/AbcSize
         def update_rates_invalid_services(invalid_services)

@@ -45,7 +45,7 @@ RSpec.describe FacilitiesManagement::Beta::Admin::SublotDataServicesPricesContro
         v if k.to_s == supplier_name
       end
       variance_supplier_data = supplier_rate_card[supplier_name.to_sym]
-      expect(variance_supplier_data['Profit %'.to_sym].to_f).to eq 1.123456
+      expect(variance_supplier_data['Profit %'.to_sym]).to eq 1.123456
     end
 
     it 'redirects correctly' do
