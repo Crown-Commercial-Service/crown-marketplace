@@ -141,6 +141,7 @@ en:
             estimated_annual_cost:
               blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
+              less_than_or_equal_to: custom message from chee
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
               not_present: You must answer the question about 'Estimated annual cost'
