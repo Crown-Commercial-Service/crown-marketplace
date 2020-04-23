@@ -776,7 +776,6 @@ en:
             reason_for_not_signed: Your reason for not signing this contract offer was
             sent: You sent this contract offer to the supplier on
             sent_accepted: The supplier accepted the contract offer on
-            sent_no_response: The supplier has not yet responded.
             signed_confirmed_1: You confirmed on the
             signed_confirmed_2: that the contract has been signed by both parties.
             supplier_declined_reason: The supplier's reason for declining was
@@ -1303,7 +1302,6 @@ en:
             what_happens_next: What happens next
           contract_offer_details:
             accepted_contract_offer: You accepted this contract offer on
-            buyer_awaiting_response: The buyer is waiting for a response before the offer expiry deadline shown above.
             contract_closed_on: This contract offer was closed on
             contract_received_on: This contract offer was received on
             reason_for_declining: Your reason for declining was

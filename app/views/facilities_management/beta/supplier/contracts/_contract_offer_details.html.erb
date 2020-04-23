@@ -15,8 +15,10 @@
     <% end %>
 </div>
 <% if @contract.aasm_state == 'sent' %>
-    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6 govuk-body govuk-inset-text" >
-        <%= t('.buyer_awaiting_response') %> 
+    <div class="govuk-!-width-two-thirds govuk-!-margin-bottom-6" >
+        <%= govuk_details('Contract offer history', true) do %>
+            <%= "#{t('.contract_received_on')} #{format_date_time(@contract.offer_sent_date)}." %>
+        <% end %>
     </div>
 <% else %>
     <div class="<% 'govuk-!-width-two-thirds' unless @contract.aasm_state == 'sent' %> govuk-!-margin-bottom-6" >
