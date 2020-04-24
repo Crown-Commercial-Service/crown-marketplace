@@ -106,6 +106,9 @@ module FacilitiesManagement
 
         continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
+        update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+        update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
+
         update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
@@ -351,6 +354,16 @@ module FacilitiesManagement
           create_da_buyer_page_data('local_government_pension_scheme')
           render :edit
         end
+      end
+
+      def update_service_codes
+        @procurement.update(service_codes: procurement_params[:service_codes])
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+      end
+
+      def update_region_codes
+        @procurement.update(region_codes: procurement_params[:region_codes])
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
       end
 
       def update_pension_funds
