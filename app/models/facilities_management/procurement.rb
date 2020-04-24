@@ -390,7 +390,15 @@ module FacilitiesManagement
     end
 
     def some_services_unpriced_and_no_buyer_input?
-      percentage_of_services_missing_framework_and_benchmark_price < 1 && !estimated_cost_known?
+      any_services_missing_framework_price? && any_services_missing_benchmark_price? && !estimated_cost_known?
+    end
+
+    def any_services_missing_framework_price?
+      procurement_building_services.uniq.any? { |pbs| rate_model.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+    end
+
+    def any_services_missing_benchmark_price?
+      procurement_building_services.uniq.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     private
@@ -416,6 +424,11 @@ module FacilitiesManagement
 
     def assessed_value_calculator
       @assessed_value_calculator ||= FacilitiesManagement::AssessedValueCalculator.new(id)
+    end
+
+    def rate_model
+      frozen_rates ||= CCS::FM::FrozenRate.where(facilities_management_procurement_id: id)
+      @rate_model ||= frozen_rates.size.zero? ? CCS::FM::Rate : frozen_rates
     end
 
     def remove_buyer_choice
@@ -453,12 +466,6 @@ module FacilitiesManagement
 
     def contract_value_needed?
       (all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?) && !lot_number_selected_by_customer
-    end
-
-    def percentage_of_services_missing_framework_and_benchmark_price
-      uniq_building_services = procurement_building_services.all.uniq
-      unpriced_services = uniq_building_services.select { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? || CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
-      unpriced_services.size / uniq_building_services.size.to_f
     end
   end
 end

@@ -503,13 +503,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     describe 'changing state' do
       let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
+      let(:estimated_cost_known) { nil }
 
       before do
         procurement.procurement_buildings.destroy_all
         codes.each do |code|
           create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building)
         end
-        procurement.update(estimated_cost_known: nil, da_journey_state: 'review')
+        procurement.update(estimated_cost_known: estimated_cost_known, da_journey_state: 'review')
         procurement.set_state_to_results_if_possible!
       end
 
@@ -525,7 +526,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'some_services_unpriced_and_no_buyer_input? returns true' do
-          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
         end
       end
 
@@ -547,6 +548,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'procurement_building_services_not_used_in_calculation returns a list with L.7 and L.8' do
           unpriced_services = procurement.procurement_building_services_not_used_in_calculation
           expect(unpriced_services.size).to eq 2
+        end
+      end
+
+      context 'when customer has some services unpriced and when buyer input present' do
+        let(:codes) { %w[G.1 L.7 L.8] }
+        let(:estimated_cost_known) { true }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
         end
       end
     end
