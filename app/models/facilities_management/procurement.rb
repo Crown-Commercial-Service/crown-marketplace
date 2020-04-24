@@ -281,6 +281,8 @@ module FacilitiesManagement
     SEARCH = %i[quick_search detailed_search choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
+    DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
+
     MAX_NUMBER_OF_PENSIONS = 99
 
     def initial_call_off_end_date
@@ -352,13 +354,13 @@ module FacilitiesManagement
     end
 
     def offer_to_next_supplier
-      return false if procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
+      return false if procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).empty?
 
-      unless procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').empty?
-        last_contract = procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').last
+      unless procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').last
         last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
       end
-      procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7)&.first&.offer_to_supplier!
+      procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)&.first&.offer_to_supplier!
     end
 
     def mobilisation_period_start_date
