@@ -107,13 +107,13 @@
             </div>
           </fieldset>
         </div>
-        <div class='govuk-body govuk-!-font-size-24'>
-          <%= t('.not_able_to_select_range') %>
-        </div>
       <% else %>
         <%= f.hidden_field(:lot_number, value: '1c') %>
       <% end %>
     <% end %>
+    <div class='govuk-body govuk-!-font-size-24'>
+      <%= t('.not_able_to_select_range') %>
+    </div>
     <%= govuk_continuation_buttons(pd, f) %>
   <% end %>
 <% end %>

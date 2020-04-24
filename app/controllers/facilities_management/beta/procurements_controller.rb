@@ -106,6 +106,9 @@ module FacilitiesManagement
 
         continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
+        update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+        update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
+
         update_procurement && return if params['facilities_management_procurement'].present?
 
         continue_da_journey if params['continue_da'].present?
@@ -353,6 +356,16 @@ module FacilitiesManagement
         end
       end
 
+      def update_service_codes
+        @procurement.update(service_codes: procurement_params[:service_codes])
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+      end
+
+      def update_region_codes
+        @procurement.update(region_codes: procurement_params[:region_codes])
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+      end
+
       def update_pension_funds
         pension_funds = procurement_params[:procurement_pension_funds_attributes]
         updated_pension_funds = {}
@@ -514,7 +527,7 @@ module FacilitiesManagement
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: 0..1.15e6).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: FacilitiesManagement::Procurement::DIRECT_AWARD_VALUE_RANGE).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
         contact_details_data_setup(params[:step])
         verify_completed_contact_details(params[:step])
       end

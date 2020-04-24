@@ -1,4 +1,4 @@
-class FacilitiesManagement::EligibleSuppliers
+class FacilitiesManagement::AssessedValueCalculator
   attr_reader :assessed_value, :lot_number, :results
 
   def initialize(procurement_id)

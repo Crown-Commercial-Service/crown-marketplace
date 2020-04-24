@@ -456,7 +456,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     before do
       # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
@@ -503,13 +503,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     describe 'changing state' do
       let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
+      let(:estimated_cost_known) { nil }
 
       before do
         procurement.procurement_buildings.destroy_all
         codes.each do |code|
           create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building)
         end
-        procurement.update(estimated_cost_known: nil, da_journey_state: 'review')
+        procurement.update(estimated_cost_known: estimated_cost_known, da_journey_state: 'review')
         procurement.set_state_to_results_if_possible!
       end
 
@@ -525,7 +526,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'some_services_unpriced_and_no_buyer_input? returns true' do
-          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
         end
       end
 
@@ -547,6 +548,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'procurement_building_services_not_used_in_calculation returns a list with L.7 and L.8' do
           unpriced_services = procurement.procurement_building_services_not_used_in_calculation
           expect(unpriced_services.size).to eq 2
+        end
+      end
+
+      context 'when customer has some services unpriced and when buyer input present' do
+        let(:codes) { %w[G.1 L.7 L.8] }
+        let(:estimated_cost_known) { true }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
         end
       end
     end
@@ -983,7 +993,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#set_state_to_results' do
-    let(:procurement) { create(:facilities_management_procurement, aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_for_further_competition, aasm_state: state) }
+    let(:building) { create :facilities_management_building_london }
 
     before do
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
