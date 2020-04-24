@@ -6,7 +6,7 @@ module Postcode
   class PostcodeChecker_V2
     def self.location_info(postcode)
       query = <<~HEREDOC
-         SELECT summary_line,
+         SELECT distinct summary_line,
            address_line_1,
            address_line_2,
            address_postcode,
