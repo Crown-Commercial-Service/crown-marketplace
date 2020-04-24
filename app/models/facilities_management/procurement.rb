@@ -116,7 +116,7 @@ module FacilitiesManagement
           copy_fm_rates_to_frozen
           copy_fm_rate_cards_to_frozen
           calculate_initial_assesed_value
-          save_data_for_procurement unless contract_value_needed?
+          save_data_for_procurement
         end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
@@ -401,6 +401,10 @@ module FacilitiesManagement
       procurement_building_services.uniq.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
+    def all_services_unpriced_and_no_buyer_input?
+      all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
+    end
+
     private
 
     def save_data_for_procurement
@@ -434,10 +438,6 @@ module FacilitiesManagement
     def remove_buyer_choice
       self.lot_number_selected_by_customer = nil
       self.lot_number = nil
-    end
-
-    def all_services_unpriced_and_no_buyer_input?
-      all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
     def buyer_selected_contract_value?
