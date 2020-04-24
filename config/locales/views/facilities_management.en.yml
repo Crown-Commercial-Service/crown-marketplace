@@ -567,19 +567,19 @@ en:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
           about_the_buyer_title: About the buyer
-          buyer_account_title: Buyer account
-          procurements: Procurements
-          new_procurement_desc: Quick search for suppliers or create a new procurement
-          procurement_dashboard_desc: See a list of your search results and procurements
           buildings_title: Buildings
           buyer_account_dashboard: Buyer account dashboard
-          manage_buildings_desc: Create and manage your buildings used in your procurements
+          buyer_account_title: Buyer account
           facilities_management:
             beta:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
           manage_buildings: Manage buildings
+          manage_buildings_desc: Create and manage your buildings used in your procurements
+          new_procurement_desc: Quick search for suppliers or create a new procurement
+          procurement_dashboard_desc: See a list of your search results and procurements
+          procurements: Procurements
       buyer_details:
         edit:
           buyer_details: Buyer details
