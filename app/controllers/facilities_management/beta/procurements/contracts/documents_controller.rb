@@ -21,15 +21,16 @@ module FacilitiesManagement
           end
 
           def zip_contracts
-            file_stream = FacilitiesManagement::Beta::Procurements::DocumentsProcurementHelper.build_download_zip_file(params[:procurement_id])
+            file_stream = FacilitiesManagement::Beta::Procurements::DocumentsProcurementHelper.build_download_zip_file(params[:contract_id])
             send_data file_stream.read, filename: 'review_your_contract.zip', type: 'application/zip'
           end
 
           def download_zip_contracts
-            @procurement = FacilitiesManagement::Procurement.find(params[:procurement_id])
+            @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+            @procurement = @contract.procurement
             send_data @procurement.contract_documents_zip.download, filename: 'review_your_contract.zip', type: 'application/zip'
           end
-          
+
           def call_off_schedule_2
             @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
             @procurement = @contract.procurement
