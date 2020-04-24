@@ -514,7 +514,7 @@ module FacilitiesManagement
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: 0..1.15e6).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: FacilitiesManagement::Procurement::DIRECT_AWARD_VALUE_RANGE).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
         contact_details_data_setup(params[:step])
         verify_completed_contact_details(params[:step])
       end
@@ -627,6 +627,7 @@ module FacilitiesManagement
         params.require(:facilities_management_procurement).permit(:route_to_market)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def procurement_params
         params.require(:facilities_management_procurement)
               .permit(
@@ -644,6 +645,9 @@ module FacilitiesManagement
                 :optional_call_off_extensions_2,
                 :optional_call_off_extensions_3,
                 :optional_call_off_extensions_4,
+                :call_off_extension_2,
+                :call_off_extension_3,
+                :call_off_extension_4,
                 :mobilisation_period_required,
                 :extensions_required,
                 :security_policy_document_required,
@@ -677,6 +681,7 @@ module FacilitiesManagement
                 notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
+      # rubocop:enable Metrics/MethodLength
 
       def set_current_step
         @current_step = nil

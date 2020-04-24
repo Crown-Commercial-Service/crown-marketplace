@@ -27,4 +27,13 @@ module FacilitiesManagement::Beta::BuildingsHelper
       false
     end
   end
+
+  def building_type_description(building_type_id)
+    building_type = FacilitiesManagement::Building::BUILDING_TYPES.find { |bt| bt[:id] == building_type_id }
+    if building_type.present?
+      building_type[:title].capitalize
+    else
+      building_type_id.capitalize
+    end
+  end
 end

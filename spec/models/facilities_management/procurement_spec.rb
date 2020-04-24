@@ -494,6 +494,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.set_state_to_results_if_possible
         expect(procurement.lot_number).not_to be_nil
       end
+      it 'create a frozen rate' do
+        procurement.set_state_to_results_if_possible
+        expect(CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement.id).size).to eq 155
+        expect(CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement.id).size).to eq 1
+      end
     end
 
     describe 'changing state' do
@@ -978,7 +983,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#set_state_to_results' do
-    let(:procurement) { create(:facilities_management_procurement, aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_for_further_competition, aasm_state: state) }
+    let(:building) { create :facilities_management_building_london }
 
     before do
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer

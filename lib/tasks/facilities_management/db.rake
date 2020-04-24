@@ -3,6 +3,7 @@ module CCS
   require 'csv'
   require 'json'
   require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  require Rails.root.join('lib', 'tasks', 'ordnance_survey')
 
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
