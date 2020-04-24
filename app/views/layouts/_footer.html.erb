@@ -23,7 +23,7 @@
             </span>
           </div>
 
-          <div class="govuk-grid-column-two-thirds">
+          <nav class="govuk-grid-column-two-thirds" aria-label="Footer navigation">
             <div class="govuk-footer__meta">
               <div class="govuk-footer__meta-item">
                 <%= link_to t("layouts.application.cookie_link"), cookies_path(service: params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]), class: "ccs-footer__links ccs-no-print", aria: {label: t('layouts.application.cookie_link_aria_label')} %>
@@ -35,7 +35,7 @@
                 <%= t("layouts.application.crown_copyright") %>
               </div>
             </div>
-          </div>
+          </nav>
 
         </div>
       </div>
