@@ -115,6 +115,7 @@ module LayoutHelper
   def govuk_back_button(back_button)
     link_to(back_button.text.nil? ? t('layouts.application.back') : back_button.text, back_button.url,
             aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
+            title: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label,
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
 
