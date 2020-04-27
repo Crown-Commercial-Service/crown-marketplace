@@ -10,7 +10,7 @@
             </h1>
             <%= render partial: 'facilities_management/beta/procurements/da_buyer/procurement_requirements' %>
             
-            <%= f.submit('Change requirements', class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :change_requirements) %>
+            <%= f.submit('Change requirements', class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :change_requirements, 'aria-labelledby': "Change requirements") %>
         </div>
     
         <div>
@@ -19,7 +19,7 @@
             </h1>
             <%= render partial: 'facilities_management/beta/procurements/da_buyer/contract_details_summary' %>
             
-            <%= f.submit('Change contract details', class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :change_contract_details) %>
+            <%= f.submit('Change contract details', class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :change_contract_details, 'aria-labelledby': "Change contract details") %>
         </div>
         
         <div>

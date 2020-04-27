@@ -20,6 +20,6 @@
             Start date: <%= @page_data[:start_date] %> <br />
             End date: <%= @page_data[:end_date] %>
         </div>
-        <%= f.submit(pd.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit') %>
+        <%= f.submit(pd.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: 'commit', 'aria-labelledby': "#{@page_description.navigation_details.secondary_text}") %>
     <% end %>
 <% end %>

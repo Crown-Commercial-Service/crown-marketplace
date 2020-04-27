@@ -63,7 +63,7 @@
         </div>
       <% end %>
 
-      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-labelledby': "#{t('common.continue')}" %>
 
     <% end %>
 

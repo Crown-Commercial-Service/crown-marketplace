@@ -38,12 +38,12 @@
 
     <%= form_tag '/facilities-management/standard-contract/questions', id: 'fm-long-list-form', method: :post do %>
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print govuk-!-margin-top-4" role="button">Continue</a><br>
+      <a id="fm-suppliers-continue-button" href="#" class="govuk-button ccs-no-print govuk-!-margin-top-4" role="button" aria-labelledby="Continue" >Continue</a><br>
     <% end %>
 
 
     <p>
-      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="">Print this
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" aria-labelledby="Print this">Print this
         page</a>
     </p>
   </div>

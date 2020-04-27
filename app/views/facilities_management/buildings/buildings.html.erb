@@ -17,7 +17,7 @@
              class="govuk-button ccs-no-print" role="button">Continue</a>
           -->
 
-          <%= submit_tag t('common.submit'), class: "govuk-button" %>
+          <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-labelledby': "#{t('common.submit')}" %>
 
         </div>
       <% end %>

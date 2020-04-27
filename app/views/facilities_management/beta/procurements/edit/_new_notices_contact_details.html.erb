@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= 'Find Address' %></a>
+                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn" aria-labelledby="Find Address"><%= 'Find Address' %></a>
               </div>
               <div class="govuk-!-margin-top-0">
                 <%= link_to t('.missing_address'), edit_facilities_management_beta_procurement_path(:step => 'new_notices_address'), class: "govuk-link--no-visited-state govuk-caption-m", id: 'add_new_notices_contact_details_adress_1' %>

@@ -19,7 +19,7 @@
                 You have 100 characters remaining
             </span>
         </div>
-        <%= f.submit pd.navigation_details.primary_text, { class: 'govuk-button govuk-!-margin-right-4', contract_id: find_contract_id } %>
-        <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary' %>
+        <%= f.submit pd.navigation_details.primary_text, { class: 'govuk-button govuk-!-margin-right-4', contract_id: find_contract_id, 'aria-labelledby': "#{pd.navigation_details.primary_text}" } %>
+        <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary', 'aria-labelledby': "#{pd.navigation_details.secondary_text}" %>
     <% end %>
 <% end %>
