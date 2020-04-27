@@ -12,7 +12,29 @@
   </ol>
 </div>
 
-<%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
+<% if f.object.errors.any? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <%= t('facilities_management.beta.admin.management_report.there_is_a_problem') %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% f.object.errors.keys.each do |attribute| %>
+          <% case attribute %>
+          <% when :start_date, :end_date %>
+            <li>
+             <%= link_to "#{f.object.errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(f.object.errors, attribute).to_s } %>
+            </li>
+          <% else %>
+            <% next %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <% end %>
+
+<% render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
 
 <h1 class="govuk-heading-xl"><%= t('facilities_management.beta.admin.management_report.heading_title') %></h1>
 <h2 class="govuk-heading-l"><%= t('facilities_management.beta.admin.management_report.heading_sub') %></h2>

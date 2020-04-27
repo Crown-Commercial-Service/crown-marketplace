@@ -12,12 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a date
-              invalid: Enter a valid date
+              blank: You must enter a  To date
+              invalid: Enter a valid To date
               less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
+              not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a date
-              invalid: Enter a valid date
+              blank: You must enter a From date
+              invalid: Enter a valid  From date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -407,6 +408,7 @@ en:
           heading_sub: Download management data
           heading_sub_detail: To generate a download file, please input your date range.
           heading_title: Management report
+          there_is_a_problem: There is a problem
           return_link: Return to admin dashboard
         sessions:
           new:
