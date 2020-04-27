@@ -32,11 +32,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '.used_further_competition_contract_numbers_for_current_year' do
     it 'presents all of the further competition contract numbers used for the current year' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year).to match(['0005', '0006'])
+      expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
     end
 
     it 'does not present any of the further competition contract numbers used for the previous years' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year).not_to match(['0007', '0008'])
+      expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).not_to match(['0007', '0008'])
     end
   end
 
