@@ -762,8 +762,7 @@ en:
       privacy_link: Privacy policy
       privacy_link_aria_label: View our privacy policy
       skip: Skip to main content
-      support_email_html: Email %{link}.
-      support_html: email %{link} or call %{phone}.
+      support_html: Email %{link} or call %{phone} for support.
       support_link_aria_label: Email us for support with this service
       title: Crown Commercial Service
     header:
