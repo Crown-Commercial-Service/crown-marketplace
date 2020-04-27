@@ -454,16 +454,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:obj) { double }
 
     before do
-      # rubocop:disable RSpec/AnyInstance, RSpec/SubjectStub
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
-      allow_any_instance_of(DirectAward).to receive(:calculate).and_return(true)
-      allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-      allow(procurement).to receive(:priced_at_framework).and_return(true)
-      # rubocop:enable RSpec/AnyInstance, RSpec/SubjectStub
     end
 
     context 'when no eligible suppliers' do
@@ -503,18 +498,21 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     describe 'changing state' do
       let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
+      let(:estimated_cost_known) { nil }
+      let(:services_standard) { nil }
 
       before do
         procurement.procurement_buildings.destroy_all
-        codes.each do |code|
-          create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building)
+        codes.each_with_index do |code, index|
+          create(:facilities_management_procurement_building_service, code: code, service_standard: services_standard[index], procurement_building: procurement_building)
         end
-        procurement.update(estimated_cost_known: nil, da_journey_state: 'review')
+        procurement.update(estimated_cost_known: estimated_cost_known, da_journey_state: 'review')
         procurement.set_state_to_results_if_possible!
       end
 
       context 'when customer has all services unpriced' do
         let(:codes) { %w[L.6 L.7 L.8] }
+        let(:services_standard) { [nil, nil, nil] }
 
         it 'changes state to choose_contract_value' do
           expect(procurement.aasm_state).to eq 'choose_contract_value'
@@ -525,12 +523,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'some_services_unpriced_and_no_buyer_input? returns true' do
-          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be false
         end
       end
 
       context 'when customer has some services unpriced' do
         let(:codes) { %w[G.1 L.7 L.8] }
+        let(:services_standard) { ['A', nil, nil] }
 
         it 'changes state to choose_contract_value' do
           expect(procurement.aasm_state).to eq 'choose_contract_value'
@@ -547,6 +550,52 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'procurement_building_services_not_used_in_calculation returns a list with L.7 and L.8' do
           unpriced_services = procurement.procurement_building_services_not_used_in_calculation
           expect(unpriced_services.size).to eq 2
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be false
+        end
+      end
+
+      context 'when customer has some services unpriced and when buyer input present' do
+        let(:codes) { %w[G.1 L.7 L.8] }
+        let(:services_standard) { ['A', nil, nil] }
+        let(:estimated_cost_known) { true }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be false
+        end
+      end
+
+      context 'when customer has all services priced and buyer input is present' do
+        let(:codes) { %w[I.1 I.2 I.3] }
+        let(:services_standard) { [nil, nil, nil] }
+        let(:estimated_cost_known) { true }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'contract_value_needed? returns false' do
+          expect(procurement.send(:contract_value_needed?)).to be false
+        end
+
+        it 'eligible_for_da returns true' do
+          expect(procurement.eligible_for_da).to be true
+        end
+      end
+
+      context 'when customer has some services unpriced and when buyer input present' do
+        let(:codes) { %w[G.1 L.7 L.8] }
+        let(:services_standard) { [nil, nil, nil] }
+        let(:estimated_cost_known) { true }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
         end
       end
     end

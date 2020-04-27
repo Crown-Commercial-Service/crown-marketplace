@@ -567,12 +567,19 @@ en:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
           about_the_buyer_title: About the buyer
+          buildings_title: Buildings
+          buyer_account_dashboard: Buyer account dashboard
+          buyer_account_title: Buyer account
           facilities_management:
             beta:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
           manage_buildings: Manage buildings
+          manage_buildings_desc: Create and manage your buildings used in your procurements
+          new_procurement_desc: Quick search for suppliers or create a new procurement
+          procurement_dashboard_desc: See a list of your search results and procurements
+          procurements: Procurements
       buyer_details:
         edit:
           buyer_details: Buyer details
@@ -699,8 +706,8 @@ en:
           contract_value_heading: When calculating your total contract value, we haven't been able to estimate the costs of some of your services, for which pricing is very customer specific.
           description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
           following_services_are_not_included: The following services aren’t included within the above value
-          heading: Looking at the options below, are you able to select the correct value range based on your budget, and expected cost of the contract?
-          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you've selected.
+          heading: Looking at the options below, can you select the correct value range based on your budget, and expected cost of the contract?
+          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you have selected.
           lot_number_1a_description: Total contract value up to £7 million
           lot_number_1b_description: Total contract value between £7 million and £50 million
           lot_number_1c_description: Total contract value over £50 million

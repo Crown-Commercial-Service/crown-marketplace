@@ -105,11 +105,11 @@ $ccs_header_fg: govuk-colour("white");
 }
 
 @media (max-width: 800px){     
-  .js-enabled .govuk-header__navigation {     
-    display: inline-block;
-  } 
-
   .govuk-header__navigation-item {
     margin-top: 0.5em;
   }
+}
+
+.js-enabled .govuk-header__navigation {
+  display: inline-block;
 }
