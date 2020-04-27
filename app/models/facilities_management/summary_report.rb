@@ -10,8 +10,13 @@ module FacilitiesManagement
       @procurement = FacilitiesManagement::Procurement.find(procurement_id)
       initialize_from_procurement
 
-      @rates ||= CCS::FM::Rate.read_benchmark_rates
-      @rate_card ||= CCS::FM::RateCard.latest
+      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement_id)
+      @rates = frozen_rates.read_benchmark_rates unless frozen_rates.size.zero?
+      @rates = CCS::FM::Rate.read_benchmark_rates if frozen_rates.size.zero?
+
+      frozen_ratecard = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement_id)
+      @rate_card = frozen_ratecard.latest unless frozen_ratecard.size.zero?
+      @rate_card = CCS::FM::RateCard.latest if frozen_ratecard.size.zero?
       regions
     end
 
@@ -70,6 +75,8 @@ module FacilitiesManagement
     end
 
     def current_lot
+      return @procurement.lot_number if @procurement.lot_number_selected_by_customer
+
       case assessed_value
       when 0..7000000
         '1a'
@@ -115,11 +122,11 @@ module FacilitiesManagement
     end
 
     def da_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
     end
 
     def fc_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -250,7 +257,7 @@ module FacilitiesManagement
     def calculate_assessed_value
       return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
 
-      values = values_to_average
+      values = buyer_input.zero? ? [sum_uom, sum_benchmark] : values_to_average
 
       values << buyer_input unless buyer_input.zero?
       (values.sum / values.size).to_f
@@ -259,7 +266,7 @@ module FacilitiesManagement
     def values_to_average
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input) && !buyer_input.zero?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
         elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
@@ -269,11 +276,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      @procurement.any_services_missing_framework_price?
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.any? { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+      @procurement.any_services_missing_benchmark_price?
     end
 
     def variance_over_30_percent?(new, baseline)

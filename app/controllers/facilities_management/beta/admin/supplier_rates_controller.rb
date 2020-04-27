@@ -71,11 +71,11 @@ module FacilitiesManagement
         def save_updated_rates
           @full_services.each do |service|
             service['work_package'].each do |package|
-              package['rates'].each(&:save)
+              package['rates'].each { |rate| rate.save if rate.changed? }
             end
           end
 
-          @variances.each { |_label, rate| rate.save }
+          @variances.each { |_label, rate| rate.save if rate.changed? }
         end
       end
     end

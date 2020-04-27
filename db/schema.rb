@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_100958) do
+ActiveRecord::Schema.define(version: 2020_04_22_110415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -271,6 +271,29 @@ ActiveRecord::Schema.define(version: 2020_04_21_100958) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
+  end
+
+  create_table "fm_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.jsonb "data"
+    t.text "source_file", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_gin", using: :gin
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rate_cards_procurement"
+  end
+
+  create_table "fm_frozen_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.string "code", limit: 5
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rates_procurement"
   end
 
   create_table "fm_lifts", id: false, force: :cascade do |t|
@@ -674,6 +697,8 @@ ActiveRecord::Schema.define(version: 2020_04_21_100958) do
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
   add_foreign_key "facilities_management_supplier_details", "users"
+  add_foreign_key "fm_frozen_rate_cards", "facilities_management_procurements"
+  add_foreign_key "fm_frozen_rates", "facilities_management_procurements"
   add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
   add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
   add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"

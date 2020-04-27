@@ -22,7 +22,7 @@
             <% collection.each do |item| %>
               <li>
                 <%= item.name.gsub(160.chr("UTF-8"), " ") %>
-                <%= hidden_field_tag("facilities_management_procurement[#{section_name}_codes][]", item.code) %>
+                <%= hidden_field_tag("facilities_management_procurement[#{section_name}_codes][]", item.code, {id: item.code}) %>
               </li>
             <% end %>
           </ul>

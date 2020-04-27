@@ -262,6 +262,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:code2) { nil }
     let(:lift_data) { nil }
     let(:estimated_annual_cost) { 7000000 }
+    let(:estimated_cost_known) { true }
     let(:service_standard) { 'A' }
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
@@ -272,7 +273,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                           building_id: create(:facilities_management_building_london).id,
                                           procurement: create(:facilities_management_procurement_no_procurement_buildings,
                                                               estimated_annual_cost: estimated_annual_cost,
-                                                              estimated_cost_known: true)))
+                                                              estimated_cost_known: estimated_cost_known)))
     end
     let(:procurement_building_service_1) do
       create(:facilities_management_procurement_building_service,
@@ -321,6 +322,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           expect(report.assessed_value.round(2)).to eq(((report.buyer_input + report.sum_benchmark) / 2.0).round(2))
         end
       end
+
+      context 'when no Customer price' do
+        let(:estimated_annual_cost) { nil }
+        let(:estimated_cost_known) { false }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark) / 2.0).round(2))
+        end
+      end
     end
 
     context 'when at least one service missing framework price and at least one service is missing benchmark price' do
@@ -351,6 +361,15 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
         it 'uses FW, BM and Customer prices' do
           expect(report.assessed_value.round(2)).to eq(report.buyer_input.round(2))
+        end
+      end
+
+      context 'when no Customer price' do
+        let(:estimated_annual_cost) { nil }
+        let(:estimated_cost_known) { false }
+
+        it 'uses FW, BM and Customer prices' do
+          expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark) / 2.0).round(2))
         end
       end
     end
