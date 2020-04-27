@@ -125,9 +125,9 @@ module FacilitiesManagement
       pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
     end
 
-    STANDARD_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations',
-                               'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools',
-                               'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes'].freeze
+    STANDARD_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call-Centre-Operations',
+                               'Warehouses', 'Restaurant-and-Catering-Facilities', 'Pre-School', 'Primary-School', 'Secondary-School', 'Special-Schools',
+                               'Universities-and-Colleges', 'Doctors,-Dentists-and-Health-Clinics', 'Nursery-and-Care-Homes'].freeze
     BUILDING_TYPES          = [{ id: 'General-office---Customer-Facing', title: 'General office - Customer Facing', caption: 'General office areas and customer facing areas.' },
                                { id: 'General-office---Non-Customer-Facing', title: 'General office - Non Customer Facing', caption: 'General office areas and non-customer facing areas.' },
                                { id: 'Call-Centre-Operations', title: 'Call Centre Operations', caption: 'Call centre operations.' },
