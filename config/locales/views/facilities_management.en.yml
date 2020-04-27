@@ -269,16 +269,16 @@ en:
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
-              less_than: The number of appliances to be tested must be a whole number between 1 and 999,999,999. 
+              less_than: The number of appliances to be tested must be a whole number between 1 and 999,999,999.
             no_of_building_occupants:
               invalid: The number of building occupants must be a whole number and greater than 0, like 20.
-              less_than: The number of building occupants must be a whole number between 1 and 999,999,999. 
+              less_than: The number of building occupants must be a whole number between 1 and 999,999,999.
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of consoles to be serviced must be a whole number between 1 and 999,999,999. 
+              less_than: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of units to be serviced must be a whole number between 1 and 999,999,999. 
+              less_than: The number of units to be serviced must be a whole number between 1 and 999,999,999.
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
@@ -294,10 +294,10 @@ en:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
-              less_than: The size of the external area must be a whole number between 1 and 999,999,999. 
+              less_than: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-              less_than: The number of tonnes to be collected and removed per annum must be a whole number between 1 and 999,999,999. 
+              less_than: The number of tonnes to be collected and removed per annum must be a whole number between 1 and 999,999,999.
         facilities_management/procurement_contact_detail:
           attributes:
             email:
