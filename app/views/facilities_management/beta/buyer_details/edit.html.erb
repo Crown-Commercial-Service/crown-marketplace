@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
-                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn"><%= t('.find_addr') %></a>
+                <a role="button" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn" aria-label="<%= t('.find_addr') %>"><%= t('.find_addr') %></a>
               </div>
               <div class="govuk-!-margin-top-0">
                 <%= link_to t('.cant_find_addr_in_list'), facilities_management_beta_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m", id: 'add-buyer-address-link-1' %>
@@ -140,7 +140,7 @@
         </div>
 
         <div>
-          <%= f.submit t('.submit'), class: "govuk-button", data: { disable_with:false }  %>
+          <%= f.submit t('.submit'), class: "govuk-button", data: { disable_with:false }, 'aria-label': t('.submit')  %>
         </div>
 
       </fieldset>

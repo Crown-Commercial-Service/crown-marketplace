@@ -18,7 +18,7 @@
               <span class="govuk-accordion__section-button" id="<%= service['code'] %>"><%= service['name'] %></span>
             </h2>
           </div>
-          <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
+          <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelled="<%= service['name'] %>">
             <% filteredCollection = @work_packages.select { |wp| wp['work_package_code'].starts_with?(service['code'])} %>
             <% filteredCollection.each do |workPackage| %>
               <% if workPackage['work_package_code'].start_with?(service['code']) %>
@@ -71,7 +71,7 @@
       <% end %>
     </div>
     <%= form_tag '/facilities-management/buildings/select-locations', id: 'save-services-link-form', method: :post do %>
-      <%= link_to t('common.continue'), "/facilities-management/select-locations?#{request.query_string}", role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link' %>
+      <%= link_to t('common.continue'), "/facilities-management/select-locations?#{request.query_string}", role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', id: 'save-services-link', name: 'save-services-link', 'aria-label': "#{t('common.continue')}" %>
     <% end %>
   </div>
   <div class="govuk-grid-column-one-third">
