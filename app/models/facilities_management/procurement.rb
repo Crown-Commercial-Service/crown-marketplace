@@ -113,12 +113,10 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
-          calculate_initial_assesed_value
-          save_data_for_procurement unless contract_value_needed?
-        end
-        after do
           copy_fm_rates_to_frozen
           copy_fm_rate_cards_to_frozen
+          calculate_initial_assesed_value
+          save_data_for_procurement
         end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
@@ -281,6 +279,8 @@ module FacilitiesManagement
     SEARCH = %i[quick_search detailed_search choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
+    DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
+
     MAX_NUMBER_OF_PENSIONS = 99
 
     def initial_call_off_end_date
@@ -352,13 +352,13 @@ module FacilitiesManagement
     end
 
     def offer_to_next_supplier
-      return false if procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
+      return false if procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).empty?
 
-      unless procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').empty?
-        last_contract = procurement_suppliers.where(direct_award_value: 0..0.15e7).where.not(aasm_state: 'unsent').last
+      unless procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').empty?
+        last_contract = procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').last
         last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
       end
-      procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7)&.first&.offer_to_supplier!
+      procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)&.first&.offer_to_supplier!
     end
 
     def mobilisation_period_start_date
@@ -390,16 +390,25 @@ module FacilitiesManagement
     end
 
     def some_services_unpriced_and_no_buyer_input?
-      percentage_of_services_missing_framework_and_benchmark_price < 1 && !estimated_cost_known?
+      any_services_missing_framework_price? && any_services_missing_benchmark_price? && !estimated_cost_known?
+    end
+
+    def any_services_missing_framework_price?
+      procurement_building_services.uniq.any? { |pbs| rate_model.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+    end
+
+    def any_services_missing_benchmark_price?
+      procurement_building_services.uniq.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+    end
+
+    def all_services_unpriced_and_no_buyer_input?
+      all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
     private
 
     def save_data_for_procurement
-      calculate_initial_assesed_value
-      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
-
-      self.lot_number = eligible_suppliers.lot_number
+      self.lot_number = assessed_value_calculator.lot_number
       self.lot_number_selected_by_customer = false
       self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
 
@@ -407,27 +416,28 @@ module FacilitiesManagement
     end
 
     def set_suppliers_for_procurement
-      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
-
       procurement_suppliers.destroy_all
-      eligible_suppliers.sorted_list.each do |supplier_data|
+      assessed_value_calculator.sorted_list.each do |supplier_data|
         procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
       end
     end
 
     def calculate_initial_assesed_value
-      eligible_suppliers = FacilitiesManagement::EligibleSuppliers.new(id)
+      self.assessed_value = assessed_value_calculator.assessed_value
+    end
 
-      self.assessed_value = eligible_suppliers.assessed_value
+    def assessed_value_calculator
+      @assessed_value_calculator ||= FacilitiesManagement::AssessedValueCalculator.new(id)
+    end
+
+    def rate_model
+      frozen_rates ||= CCS::FM::FrozenRate.where(facilities_management_procurement_id: id)
+      @rate_model ||= frozen_rates.size.zero? ? CCS::FM::Rate : frozen_rates
     end
 
     def remove_buyer_choice
       self.lot_number_selected_by_customer = nil
       self.lot_number = nil
-    end
-
-    def all_services_unpriced_and_no_buyer_input?
-      all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
     def buyer_selected_contract_value?
@@ -456,12 +466,6 @@ module FacilitiesManagement
 
     def contract_value_needed?
       (all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?) && !lot_number_selected_by_customer
-    end
-
-    def percentage_of_services_missing_framework_and_benchmark_price
-      uniq_building_services = procurement_building_services.all.uniq
-      unpriced_services = uniq_building_services.select { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? || CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
-      unpriced_services.size / uniq_building_services.size.to_f
     end
   end
 end

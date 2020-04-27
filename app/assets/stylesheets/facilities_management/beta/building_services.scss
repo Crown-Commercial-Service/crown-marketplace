@@ -131,6 +131,10 @@
 
 .browse-panes .root-pane li.active .building-button {
   color: #fff !important;
+  &:focus {
+    background: #fd0;
+    color: #000 !important;
+  }
 }
 
 @media (min-width: 641px) {

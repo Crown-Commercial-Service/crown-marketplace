@@ -257,7 +257,7 @@ module FacilitiesManagement
     def calculate_assessed_value
       return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
 
-      values = values_to_average
+      values = buyer_input.zero? ? [sum_uom, sum_benchmark] : values_to_average
 
       values << buyer_input unless buyer_input.zero?
       (values.sum / values.size).to_f
@@ -266,7 +266,7 @@ module FacilitiesManagement
     def values_to_average
       if any_services_missing_framework_price?
         if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input) && !buyer_input.zero?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
         elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
           return [sum_benchmark]
         end
@@ -276,19 +276,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: @procurement.id)
-      rate_model = frozen_rates unless frozen_rates.size.zero?
-      rate_model = CCS::FM::Rate if frozen_rates.size.zero?
-
-      @procurement.procurement_building_services.any? { |pbs| rate_model.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      @procurement.any_services_missing_framework_price?
     end
 
     def any_services_missing_benchmark_price?
-      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: @procurement.id)
-      rate_model = frozen_rates unless frozen_rates.size.zero?
-      rate_model = CCS::FM::Rate if frozen_rates.size.zero?
-
-      @procurement.procurement_building_services.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+      @procurement.any_services_missing_benchmark_price?
     end
 
     def variance_over_30_percent?(new, baseline)

@@ -263,23 +263,23 @@ en:
             lift_data:
               above_maximum: The maximum number of lifts is 99
               greater_than: The number of floors accessed must be a whole number greater than 0.
-              less_than: The number of floors accessed must be a whole number greater than 0.
+              less_than: Enter a whole number between 1 and 999, like 100.
               not_an_integer: The number of floors accessed must be a whole number greater than 0.
               required: The number of floors accessed must be a whole number greater than 0.
               too_long: The number of floors accessed must be a whole number greater than 0.
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
-              less_than: The number of appliances to be tested cannot be more than 999,999,999
+              less_than: The number of appliances to be tested must be a whole number between 1 and 999,999,999.
             no_of_building_occupants:
               invalid: The number of building occupants must be a whole number and greater than 0, like 20.
-              less_than: The number of building occupants cannot be more than 999,999,999
+              less_than: The number of building occupants must be a whole number between 1 and 999,999,999.
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of consoles to be serviced cannot be more than 999,999,999
+              less_than: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of units to be serviced cannot be more than 999,999,999
+              less_than: The number of units to be serviced must be a whole number between 1 and 999,999,999.
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
@@ -295,10 +295,10 @@ en:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
-              less_than: The size of the external area must cannot be more than 999,999,999
+              less_than: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-              less_than: The number of tonnes to be collected and removed per annum cannot be more than 999,999,999
+              less_than: The number of tonnes to be collected and removed per annum must be a whole number between 1 and 999,999,999.
         facilities_management/procurement_contact_detail:
           attributes:
             email:
@@ -568,12 +568,19 @@ en:
         buyer_account:
           about_the_buyer_description: Edit buyer account details such as contact name, organisation name
           about_the_buyer_title: About the buyer
+          buildings_title: Buildings
+          buyer_account_dashboard: Buyer account dashboard
+          buyer_account_title: Buyer account
           facilities_management:
             beta:
               index:
                 manage_procurements_link: Procurements dashboard
           link_text: Update buyer details
           manage_buildings: Manage buildings
+          manage_buildings_desc: Create and manage your buildings used in your procurements
+          new_procurement_desc: Quick search for suppliers or create a new procurement
+          procurement_dashboard_desc: See a list of your search results and procurements
+          procurements: Procurements
       buyer_details:
         edit:
           buyer_details: Buyer details
@@ -698,10 +705,10 @@ en:
         choose_contract_value:
           can_you_estimate_cost: Are you able to estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
           contract_value_heading: When calculating your total contract value, we haven't been able to estimate the costs of some of your services, for which pricing is very customer specific.
-          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you have selected.
           following_services_are_not_included: The following services aren’t included within the above value
-          heading: Looking at the options below are you able to select the correct value range based on your budget, and expected cost of the contract?
-          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you've selected.
+          heading: Looking at the options below, can you select the correct value range based on your budget, and expected cost of the contract?
+          help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you have selected.
           lot_number_1a_description: Total contract value up to £7 million
           lot_number_1b_description: Total contract value between £7 million and £50 million
           lot_number_1c_description: Total contract value over £50 million
@@ -1172,7 +1179,7 @@ en:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
             tupe_title: TUPE
-            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state" tabindex="-1">Find out when TUPE applies</a>
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state hidden-link" tabindex='-1'>Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
         edit_procurement:
           cancel_and_return: Cancel and return to Procurements
@@ -1268,9 +1275,9 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
-          hint-text-unpriced-sub-lot-1a: Suitable for contract values up to £7million
-          hint-text-unpriced-sub-lot-1b: Suitable for contract values between £7 million - £50 million
-          hint-text-unpriced-sub-lot-1c: Suitable for contract values over £50m
+          hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
           sub-lot: Lot
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
@@ -1280,7 +1287,7 @@ en:
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
-          who_are: who can provide the services your require in your location(s)
+          who_are: who can provide the services you require in your location(s)
         services:
           no_services_selected: No services selected
           question: Select the facilities management services that you need
