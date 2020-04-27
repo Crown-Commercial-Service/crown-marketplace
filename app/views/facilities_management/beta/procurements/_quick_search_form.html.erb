@@ -29,7 +29,7 @@
               <%= govuk_form_group_with_optional_error @procurement, :contract_name do %>
                 <%= display_errors(f.object, :contract_name)%>
                 <%= f.label :contract_name, t('.new_name_label'), class: 'govuk-label' %>
-                <%= f.text_field :contract_name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count' %>
+                <%= f.text_field :contract_name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count', "aria-describedby": "facilities_management_procurement_contract_name" %>
               <% end %>
             </div>
           </div>

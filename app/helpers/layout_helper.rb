@@ -195,7 +195,7 @@ module LayoutHelper
     attribute_has_errors = form.object.errors[attribute].any?
 
     options                     = {}
-    options['aria-describedby'] = error_id(attribute)
+    options['aria-describedby'] = error_id(attribute) if attribute_has_errors
     css_classes                 = ['govuk-fieldset']
     options['class']            = css_classes
 
