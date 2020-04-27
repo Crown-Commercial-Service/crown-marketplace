@@ -1,7 +1,6 @@
 <table class="govuk-table govuk-!-margin-bottom-0 govuk-!-width-three-quarters">
     <tbody class="govuk-table__body">
-    <% @procurement.contract_documents_zip.attached? %>
-        <% if @procurement.contract_documents_zip.attached? %>
+        <% if @contract.contract_documents_zip_generated %>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">
             </td>
@@ -14,9 +13,9 @@
                 <%= image_tag('zip_image.png', :alt => 'download zip file', width: '60px') %>
             </td>
             <td class="govuk-table__cell">
-                <a href="<%= rails_blob_path(@procurement.contract_documents_zip, disposition: 'attachment') %>&format=<%= @procurement.contract_documents_zip.filename.to_s.split('.').last[0..2] %>" download> <%= @procurement.contract_documents_zip.filename.to_s %> </a>          
+                <a href="<%= rails_blob_path(@contract.contract_documents_zip, disposition: 'attachment') %>&format=<%= @contract.contract_documents_zip.filename.to_s.split('.').last[0..2] %>" download> <%= @contract.contract_documents_zip.filename.to_s %> </a>          
             <br/>
-            <p class="govuk-hint govuk-!-margin-bottom-0">Created <%= format_date_time_day(@contract.offer_sent_date) %></p>
+            <p class="govuk-hint govuk-!-margin-bottom-0">Created on <%= format_date_time_day(@contract.offer_sent_date) %></p>
             </td>
         </tr>
         <% else %>

@@ -124,13 +124,14 @@ module FacilitiesManagement
           @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
           @procurement = @contract.procurement
           file_stream = build_download_zip_file(contract_id)
-          @procurement.contract_documents_zip.attach(
+          @contract.contract_documents_zip.attach(
             io: StringIO.new(file_stream.read),
             filename: 'call-off-contract-documents.zip',
             content_type: 'application/zip'
           )
-          @procurement.save
-          @procurement
+          @contract.contract_documents_zip_generated = true
+          @contract.save
+          @contract
         end
       end
     end

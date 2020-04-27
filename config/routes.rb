@@ -135,7 +135,6 @@ Rails.application.routes.draw do
         post 'da_spreadsheets'
         get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
         get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
-        
         resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
