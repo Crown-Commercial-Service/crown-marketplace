@@ -12,16 +12,9 @@
   </div>
 
   <div class="govuk-!-margin-top-3">
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      <%= t('.what_you_need_to_know_title') %>
-    </span>
-      </summary>
-      <div class="govuk-details__text">
-        <%= t('.what_you_need_to_know_html') %>
-      </div>
-    </details>
+    <%= govuk_details(t('.what_you_need_to_know_title'), true) do %>
+      <%= t('.what_you_need_to_know_html') %>
+    <% end %>
   </div>
 
   <div class="govuk-!-margin-top-3">
