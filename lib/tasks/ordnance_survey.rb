@@ -262,6 +262,59 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     Aws.config[:http_idle_timeout] = 6000
   end
 
+  def self.os_address_headers
+    File.read(Rails.root.join('data', 'postcode', 'os_address_headers.csv'))
+  end
+
+  def self.unzip_file(filename, &block)
+    Zip::File.open(filename) do |zip_file|
+      zip_file.each do |entry|
+        block.call entry.get_input_stream
+      end
+    end
+  end
+
+  def self.stream_file(filename, &block)
+    file_data = File.read(filename)
+    file_data.each_line do |line|
+      block.call(line)
+    end
+  end
+
+  def self.read_file(filename, &block)
+    if File.extname(filename) == '.zip'
+      unzip_file(filename) do |stream|
+        file_data = stream.read
+        file_data.each_line do |line|
+          block.call(line)
+        end
+      end
+    else
+      stream_file(filename, &block)
+    end
+  end
+
+  def self.import_postcodes_locally(directory)
+    if Dir.exist?(directory)
+      file_header = os_address_headers
+
+      Dir.entries(directory).reject { |f| File.directory? f }.sort.each do |filename|
+        next if postcode_file_already_loaded(File.basename(filename, File.extname(filename)))
+
+        read_file("#{directory}/#{filename}") do |csv_line|
+          line_data = file_header
+          line_data << csv_line
+          CSV.parse(line_data, col_sep: ',', headers: true) do |row|
+            Rails.logger.info "Postcode line #{row}"
+            # upsert here
+          end
+        end
+      end
+    else
+      Rails.logger.info("No folder for local postcode import found (#{directory})")
+    end
+  end
+
   # rubocop:disable Metrics/AbcSize
   def self.import_postcodes(access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
