@@ -551,7 +551,7 @@ en:
           caption_sec: Security clearance
           caption_type: Building type
           change_text: Change
-          complete_text: This building is ready for use in procurements.
+          complete_text: This building is ready to use in procurements.
           incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
           section-header: Building details summary
           select_one_option_text: Please select one option
