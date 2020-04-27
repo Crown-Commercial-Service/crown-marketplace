@@ -213,7 +213,7 @@ module LayoutHelper
     content_tag :fieldset, options do
       capture do
         concat(content_tag(:legend,
-                           content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
+                           content_tag(:h2, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
         concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
         attributes.flatten.each do |attr|
