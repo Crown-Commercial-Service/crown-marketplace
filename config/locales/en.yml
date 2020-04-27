@@ -1440,11 +1440,13 @@ en:
           lead: Reset password for
           lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
           new_password: New password
+          page_title: Reset your password
           password: Your password must have
           text01: If you don't receive this, contact CCS customer services team.
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+          page_title: A reset email has been sent
           text01: If you don't receive this, email
           text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
         new:
@@ -1452,20 +1454,24 @@ en:
           email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
           heading: Reset password
           lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+          page_title: Reset password
         password_reset_success:
           heading: You have successfully changed your password
           lead: You can now sign in to your Crown Commercial Service account
+          page_title: You have successfully changed your password
       sessions:
         new:
           email_address: Email address
           email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
           forgotten_password_html: I've forgotten my password
+          page_title: Sign in
           password: Password
       uploads:
         in_progress:
           button: Return to manage supplier data
           content: We are processing the uploaded spreadsheets.
           heading: Upload successful
+          page_title: Upload successful
         index:
           approved: Published on live
           canceled: Cancelled session
@@ -1479,6 +1485,7 @@ en:
           in_review: Waiting to publish
           name: Name
           no_of_files: Number of files
+          page_title: Supply teachers and agency workers
           rejected: Cancelled session
           spreadsheet: Spreadsheet
           status: Status
@@ -1488,6 +1495,7 @@ en:
         new:
           caption: Supply teachers and agency workers
           heading: Set up a new upload session
+          page_title: Set up a new upload session
           upload_button: Upload spreadsheets
           upload_caption: XLS, XLSX and CSV are supported. Maximum file size is 5mb.
           upload_title: Choose one or more spreadsheets to upload
@@ -1496,6 +1504,7 @@ en:
           heading_html: Upload session %{number} has been cancelled
           index_button: Return to manage supplier data
           new_button: Set up a new upload session
+          page_title: Upload cancelled
         show:
           approve: Publish to live service
           caption: Supply teachers and agency workers
@@ -1510,6 +1519,7 @@ en:
           lot_1_and_lot_2_comparisons: Lot 1 and Lot 2 comparisons
           master_vendor_contacts: Master vendor contacts
           neutral_vendor_contacts: Neutral vendor contacts
+          page_title: Upload session
           pricing_for_tool: Pricing for tool
           reject: Cancel session
           spreadsheet: Spreadsheet
@@ -1519,7 +1529,12 @@ en:
           button: Return to manage supplier data
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
           heading: Data published
+          page_title: Data published
       users:
+        challenge_new:
+          page_title: Challenge
+        confirm_new:
+          page_title: Confirm
         new_password_required:
           confirm_your_password: Confirm your password
           create_your_password: Create a password you'll remember
@@ -1600,6 +1615,7 @@ en:
           not_for_profit_html: Only not-for-profit and schools with charitable status are able to get access to the online and offline version of the service.
           outside_england_html: Outside of England, not-for-profit and schools with charitable status cannot yet use the online agency selection service. They can <a href="%{url}" aria-label="Crown Commercial Service contact form">request access to an offline version</a> (an Excel spreadsheet) by putting 'offline agency selection tool’ in the comments box.
         heading: Sign in to find supply teachers and agency workers
+        page_title: Sign in to find supply teachers and agency workers
         subheading: If you don’t have a DfE Sign-in account
     home:
       fta_to_perm_fee:
@@ -1663,6 +1679,7 @@ en:
         notice_period_disclaimer: You may be charged more than the fee displayed, up to a maximum of %{max_fee}, if you don't notify the supplier of your intention to make the worker permanent by %{latest_notice_date}.
         notice_period_given: 'Notice period given: %{days} working days between %{notice_date} and %{hire_date}'
         notice_period_required: 'Notice period needed: %{days} working days'
+        page_title: Temp-to-perm fee
         panel_body: Based on the information provided you could be charged
         total_chargeable_days: 'Total chargeable days: %{days}'
         total_fee: 'Fee the agency can charge: %{fee}'
@@ -1763,6 +1780,7 @@ en:
         markup_rate_question_hint: This is the percentage fee you agreed with the agency. For example, 20
         notice_date_question: What date did you notify the agency that you wish to hire the worker?
         notice_date_question_hint: Leave this blank if you haven’t yet notified the agency
+        page_title: Find out how much you’ll be charged if you make an agency worker permanent
       worker_type:
         answer_agency_supplied: 'Yes'
         answer_nominated_worker: No, I have a worker I want the agency to manage (a ‘nominated worker’)
@@ -1778,11 +1796,13 @@ en:
         lead: Reset password for
         lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
         new_password: New password
+        page_title: Reset your password
         password: Your password must have
         text01: If you don't receive this, contact CCS customer services team.
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
+        page_title: A reset email has been sent
         text01: If you don't receive this, email
         text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
       new:
@@ -1790,14 +1810,17 @@ en:
         email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
         heading: Reset password
         lead: Enter your email address and we'll send you verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        page_title: Reset password
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
+        page_title: You have successfully changed your password
     sessions:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
         forgotten_password_html: I've forgotten my password
+        page_title: Sign in
         password: Password
     suppliers:
       all_suppliers:
@@ -1829,6 +1852,8 @@ en:
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
     users:
+      challenge_new:
+        page_title: Challenge
       new_password_required:
         confirm_your_password: Confirm your password
         create_your_password: Create a password you'll remember

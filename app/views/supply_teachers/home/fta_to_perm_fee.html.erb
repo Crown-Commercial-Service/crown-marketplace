@@ -5,8 +5,10 @@
         <h1 class="govuk-panel__title">
           <% if @previous_step.try(:no_fee_reason) %>
             <%= t('.header_no_fee') %>
+            <%= content_for :page_title, t('.header_no_fee') %>
           <% else %>
             <%= t('.header') %> <%= number_to_currency(@calculator.fee) %>
+            <%= content_for :page_title, t('.header') %>
           <% end %>
         </h1>
         <div class="govuk-panel__body">
