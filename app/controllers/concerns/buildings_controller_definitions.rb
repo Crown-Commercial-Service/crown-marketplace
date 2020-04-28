@@ -50,7 +50,8 @@ module BuildingsControllerDefinitions
       new: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption3: step_title,
-        page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building')
+        page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building'),
+        secondary_name: 'save_and_return'
       },
       add_address: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
