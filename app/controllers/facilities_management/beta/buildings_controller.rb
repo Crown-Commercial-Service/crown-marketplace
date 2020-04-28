@@ -45,7 +45,9 @@ module FacilitiesManagement
         end
 
         if @page_data[:model_object].save(context: :new)
-          redirect_to action: next_step[0], id: @page_data[:model_object].id
+          redirect_to action: next_step[0], id: @page_data[:model_object].id unless params.key?('save_and_return')
+
+          redirect_to facilities_management_beta_building_path(@page_data[:model_object].id)
         else
           rebuild_page_data(@page_data[:model_object])
           render :new
