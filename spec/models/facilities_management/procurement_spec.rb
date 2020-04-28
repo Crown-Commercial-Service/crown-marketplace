@@ -510,7 +510,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.set_state_to_results_if_possible!
       end
 
-      context 'when customer has all services unpriced' do
+      context 'when customer has all services unpriced and no buyer input' do
         let(:codes) { %w[L.6 L.7 L.8] }
         let(:services_standard) { [nil, nil, nil] }
 
@@ -529,9 +529,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
         end
+
+        it 'does not save lot number' do
+          expect(procurement.lot_number).to be nil
+        end
       end
 
-      context 'when customer has some services unpriced' do
+      context 'when customer has some services unpriced and no buyer input' do
         let(:codes) { %w[G.1 L.7 L.8] }
         let(:services_standard) { ['A', nil, nil] }
 
@@ -555,6 +559,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
         end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).to_not be nil
+        end
       end
 
       context 'when customer has some services unpriced and when buyer input present' do
@@ -568,6 +576,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).to_not be nil
         end
       end
 
@@ -587,6 +599,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'eligible_for_da returns true' do
           expect(procurement.eligible_for_da).to be true
         end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).to_not be nil
+        end
       end
 
       context 'when customer has some services unpriced and when buyer input present' do
@@ -596,6 +612,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'some_services_unpriced_and_no_buyer_input? returns false' do
           expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).to_not be nil
         end
       end
     end
