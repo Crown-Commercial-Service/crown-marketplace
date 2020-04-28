@@ -115,6 +115,7 @@ module LayoutHelper
   def govuk_back_button(back_button)
     link_to(back_button.text.nil? ? t('layouts.application.back') : back_button.text, back_button.url,
             aria: { label: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label },
+            title: back_button.label.nil? ? t('layouts.application.back_aria_label') : back_button.label,
             class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6')
   end
 
@@ -195,7 +196,7 @@ module LayoutHelper
     attribute_has_errors = form.object.errors[attribute].any?
 
     options                     = {}
-    options['aria-describedby'] = error_id(attribute)
+    options['aria-describedby'] = error_id(attribute) if attribute_has_errors
     css_classes                 = ['govuk-fieldset']
     options['class']            = css_classes
 
@@ -212,7 +213,7 @@ module LayoutHelper
     content_tag :fieldset, options do
       capture do
         concat(content_tag(:legend,
-                           content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
+                           content_tag(:h2, caption, class: 'govuk-fieldset__heading'),
                            class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
         concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
         attributes.flatten.each do |attr|

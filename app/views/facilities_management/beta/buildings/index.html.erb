@@ -35,8 +35,10 @@
               <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_beta_building_path(building.id), class: 'govuk-link', 'aria-label' => t('.link_to_building_summary') %>
               </td>
               <td class="govuk-table__cell"><%= building.description.to_s.length > 0 ? building['description'].to_s : '-' %></td>
-              <td class="govuk-table__cell"><%= building.updated_at.to_datetime.strftime("%d/%m/%Y") %>&nbsp;<%= building.updated_at.to_datetime.strftime("%H:%M") %>&nbsp;BST</td>
-              <td class="govuk-table__cell"><strong class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></td>
+              <td class="govuk-table__cell" style="word-wrap: break-spaces;"><span style="display: inline-block; word-break: keep-all">&#32;
+                <%= building.updated_at.to_datetime.strftime("%-d %b %Y,")%></span><span style="display: inline-block; word-break:keep-all">
+                <%= building.updated_at.to_datetime.strftime("%-I:%M%#p") %></span></td>
+              <td class="govuk-table__cell"><strong style="word-break: normal" class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></td>
             </tr>
           <% end %>
           </tbody>

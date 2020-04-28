@@ -97,13 +97,7 @@ $(function () {
 			removeDetails();
 		}
 	}
-	
-	if ($('.edit_facilities_management_buyer_detail').length) {
-		$('.edit_facilities_management_buyer_detail :submit').on('click', function (e) {
-			removeDetails();
-		});
-	}
-	
+
 	function fillInDetails(formBuyerDetails) {
 		var buyerDetailsFormElements = makeElementName();
 		var nameElem = buyerDetailsFormElements[0];

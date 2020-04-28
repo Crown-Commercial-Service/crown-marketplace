@@ -12,12 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a date
-              invalid: Enter a valid date
+              blank: You must enter a  To date
+              invalid: Enter a valid To date
               less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
+              not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a date
-              invalid: Enter a valid date
+              blank: You must enter a From date
+              invalid: Enter a valid  From date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -83,6 +84,7 @@ en:
               blank: You must select a buiding type or describe your own
             gia:
               blank: Enter a whole number for the size of internal area of this building
+              greater_than: Enter a whole number for the size of internal area of this building
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -262,23 +264,23 @@ en:
             lift_data:
               above_maximum: The maximum number of lifts is 99
               greater_than: The number of floors accessed must be a whole number greater than 0.
-              less_than: The number of floors accessed must be a whole number greater than 0.
+              less_than: Enter a whole number between 1 and 999, like 100.
               not_an_integer: The number of floors accessed must be a whole number greater than 0.
               required: The number of floors accessed must be a whole number greater than 0.
               too_long: The number of floors accessed must be a whole number greater than 0.
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
-              less_than: The number of appliances to be tested cannot be more than 999,999,999
+              less_than: The number of appliances to be tested must be a whole number between 1 and 999,999,999.
             no_of_building_occupants:
               invalid: The number of building occupants must be a whole number and greater than 0, like 20.
-              less_than: The number of building occupants cannot be more than 999,999,999
+              less_than: The number of building occupants must be a whole number between 1 and 999,999,999.
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of consoles to be serviced cannot be more than 999,999,999
+              less_than: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number and greater than 0, like 30.
-              less_than: The number of units to be serviced cannot be more than 999,999,999
+              less_than: The number of units to be serviced must be a whole number between 1 and 999,999,999.
             service_hours:
               end_time:
                 greater_than: The end time must be after the start time of your specified hours
@@ -294,10 +296,10 @@ en:
               blank: Select level of standard for your
             size_of_external_area:
               invalid: The size of the external area must be a whole number and greater than 0, like 1500.
-              less_than: The size of the external area must cannot be more than 999,999,999
+              less_than: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
               invalid: The number of tonnes to be collected and removed per annum must be a whole number and greater than 0, like 10.
-              less_than: The number of tonnes to be collected and removed per annum cannot be more than 999,999,999
+              less_than: The number of tonnes to be collected and removed per annum must be a whole number between 1 and 999,999,999.
         facilities_management/procurement_contact_detail:
           attributes:
             email:
@@ -408,6 +410,7 @@ en:
           heading_sub_detail: To generate a download file, please input your date range.
           heading_title: Management report
           return_link: Return to admin dashboard
+          there_is_a_problem: There is a problem
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
@@ -535,7 +538,7 @@ en:
           describe_security: Describe security level
           next_step: 'Next:'
           other: Other
-          security_description_html: Select the level of security clearance a suppliers staff will need to access this building.<br/>This is the security level of the contractor's staff.
+          security_description_html: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
         show:
           add_address_text: Add address
@@ -550,7 +553,7 @@ en:
           caption_sec: Security clearance
           caption_type: Building type
           change_text: Change
-          complete_text: This building is ready for use in procurements.
+          complete_text: This building is ready to use in procurements.
           incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
           section-header: Building details summary
           select_one_option_text: Please select one option
@@ -702,9 +705,9 @@ en:
           add_extension_period: Add another extension period
           description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
         choose_contract_value:
-          can_you_estimate_cost: Are you able to estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
-          contract_value_heading: When calculating your total contract value, we haven't been able to estimate the costs of some of your services, for which pricing is very customer specific.
-          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you selected.
+          can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
+          contract_value_heading: When calculating your total contract value, we have not been been able to estimate the costs of some of your services, for which pricing is very customer specific.
+          description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you have selected.
           following_services_are_not_included: The following services aren’t included within the above value
           heading: Looking at the options below, can you select the correct value range based on your budget, and expected cost of the contract?
           help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you have selected.
@@ -714,13 +717,9 @@ en:
           not_able_to_select_range: If you are not able to select a value range please contact us for assistance.
           partialy_estimated_contract_value: Partially estimated contract value
           service: Service
-          sub_lot_1a: Sub-lot 1a
           sub_lot_1a_hint: Total contract value up to £7 million
-          sub_lot_1b: Sub-lot 1b
           sub_lot_1b_hint: Total contract value between £7 million and £50 million
-          sub_lot_1c: Sub-lot 1c
           sub_lot_1c_hint: Total contract value over £50 million
-          sugested_sublot: Suggested sub-lot
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1190,7 +1189,7 @@ en:
             body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
             tupe_title: TUPE
-            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state">Find out when TUPE applies</a>
+            what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state hidden-link" tabindex='-1'>Find out when TUPE applies</a>
             what_you_need_to_know_title: What you need to know about TUPE
         edit_procurement:
           cancel_and_return: Cancel and return to Procurements

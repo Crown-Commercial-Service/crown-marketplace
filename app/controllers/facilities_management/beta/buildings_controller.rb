@@ -28,18 +28,18 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
       def create
         @page_data[:model_object] = current_user.buildings.build(building_params)
-        @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry if @page_data[:model_object].address_postcode.blank?
-        rebuild_page_data(@page_data[:model_object]) if params[:add_address].present?
 
         if params[:add_address].present?
+          @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry
+          rebuild_page_data(@page_data[:model_object])
           rebuild_page_description('add_address')
           render action: :add_address and return
         end
 
-        unless params[:step] != 'add_address'
+        if params[:step] == 'add_address'
           render :add_address and return if @page_data[:model_object].invalid?(:add_address)
 
-          resolve_region if params[:step] == 'add_address'
+          resolve_region
           rebuild_page_data(@page_data[:model_object])
           render :new and return
         end
@@ -55,9 +55,11 @@ module FacilitiesManagement
       def update
         @page_data[:model_object].assign_attributes(building_params)
 
-        rebuild_page_description 'add_address' if params[:add_address].present?
-        @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry if params[:add_address].present?
-        render action: :add_address and return if params[:add_address].present?
+        if params[:add_address].present?
+          @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry
+          rebuild_page_description 'add_address'
+          render action: :add_address and return
+        end
 
         resolve_region if params[:step] == 'add_address'
 
@@ -158,8 +160,8 @@ module FacilitiesManagement
 
         return if valid_regions.length > 1 || valid_regions.empty?
 
-        @page_data[:model_object].address_region = valid_regions[0]['region']
-        @page_data[:model_object].address_region_code = valid_regions[0]['code']
+        @page_data[:model_object].address_region = valid_regions[0][:region]
+        @page_data[:model_object].address_region_code = valid_regions[0][:code]
       end
 
       def rebuild_page_data(building)
