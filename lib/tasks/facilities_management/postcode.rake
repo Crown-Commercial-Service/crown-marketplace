@@ -12,7 +12,7 @@ namespace :db do
     OrdnanceSurvey.import_postcodes args[:access_key], args[:secret_access_key], args[:bucket], args[:region]
   end
 
-  task local_postcode: :environment do |argv, args|
+  task local_postcode: :environment do |_, args|
     p 'Creating postcode database and local import'
 =begin
     OrdnanceSurvey.create_postcode_table
@@ -22,9 +22,7 @@ namespace :db do
     OrdnanceSurvey.create_upload_log
 =end
 
-    DistributedLocks.distributed_lock(153) do
       OrdnanceSurvey.import_postcodes_locally args.to_a[0] || Rails.root.join('data', 'local_postcodes')
-    end
   end
 
   task postcode: :environment do

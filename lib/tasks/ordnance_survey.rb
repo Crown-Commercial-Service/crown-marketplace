@@ -281,16 +281,32 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
+  MAX_LINE_BUFFER = 40
+
+  def self.chunk_file(stream, &block)
+    lines ''
+    line_counter = 0
+
+    until stream.eof?
+      lines << stream.readline
+      line_counter += 1
+      block.call(lines) if line_counter == MAX_LINE_BUFFER
+      lines = '' if line_counter == MAX_LINE_BUFFER
+      line_counter = 0 if line_counter == MAX_LINE_BUFFER
+    end
+
+    block.call(lines) if lines.present?
+  end
+
   def self.read_file(filename, &block)
     if File.extname(filename) == '.zip'
       unzip_file(filename) do |stream|
-        file_data = stream.read
-        file_data.each_line do |line|
-          block.call(line)
-        end
+        chunk_file(stream, block)
       end
     else
-      stream_file(filename, &block)
+      stream_file filename do |stream|
+        chunk_file(stream, block)
+      end
     end
   end
 
@@ -306,7 +322,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
           line_data << csv_line
           CSV.parse(line_data, col_sep: ',', headers: true) do |row|
             Rails.logger.info "Postcode line #{row}"
-            # upsert here
+            DistributedLocks.distributed_lock(153) do
+              # upsert here
+            end
           end
         end
       end
@@ -325,6 +343,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
       next if postcode_file_already_loaded(obj.key)
 
+      next if obj.key.include? 'zip'
+
       # rc.put_copy_data(obj.get.body)
       # obj.get.body.each_line { |line| rc.put_copy_data(line) }
       puts "*** Loading file #{obj.key}"
@@ -340,6 +360,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       end
 
       log_postcode_file_loaded(obj.data.key, obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc)
+
+    rescue Aws::S3::Errors::AccessDenied => e
+      Rails.logger.warn "Access denied on #{obj.key}"
+      puts "*** Access denied on #{obj.key}"
     end
   rescue PG::Error => e
     puts e.message
