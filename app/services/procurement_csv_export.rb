@@ -81,7 +81,7 @@ class ProcurementCsvExport
           contract.procurement.user.buyer_detail.full_name,
           contract.procurement.user.buyer_detail.job_title,
           contract.procurement.user.email,
-          contract.procurement.user.buyer_detail.telephone_number,
+          string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(contract.procurement.estimated_annual_cost),
@@ -123,7 +123,7 @@ class ProcurementCsvExport
           procurement.user.buyer_detail.full_name,
           procurement.user.buyer_detail.job_title,
           procurement.user.email,
-          procurement.user.buyer_detail.telephone_number,
+          string_as_formula(procurement.user.buyer_detail.telephone_number),
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
           helpers.number_to_currency(procurement.estimated_annual_cost),
@@ -253,5 +253,16 @@ class ProcurementCsvExport
     return '' if datetime.blank?
 
     datetime.getlocal.strftime(DATE_FORMAT)
+  end
+
+  # This is a hack to force spreadsheet programs to import the string as a formula.
+  #   E.g: '="07882898978"'
+  #
+  # This will preserve leading zeros in telephone numbers.
+  # Works in Apple Numbers - tested.
+  # Works in Microsoft Excel according to:
+  #   https://stackoverflow.com/questions/308324/csv-for-excel-including-both-leading-zeros-and-commas
+  def self.string_as_formula(string)
+    "=\"#{string}\""
   end
 end
