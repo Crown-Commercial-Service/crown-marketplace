@@ -28,9 +28,9 @@
           </div>
         <% end %>
       <% end %>
-      <div class='govuk-body govuk-!-font-size-24'>
+      <p class='govuk-body-m'>
         <%= t('.not_able_to_select_range') %>
-      </div>
+      </p>
     <% else %>
       <div class='govuk-body-l govuk-!-width-three-quarters'>
         <%= t('.contract_value_heading')%>
@@ -61,7 +61,7 @@
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors.any? %>">
           <fieldset class='govuk-fieldset'>
             <legend class='govuk-fieldset__legend govuk-fieldset__legend--m'>
-              <h1 class='govuk-fieldset__heading govuk-!-width-three-quarters govuk-!-margin-bottom-2'>
+              <h1 class='govuk-fieldset__heading govuk-heading-m govuk-!-width-three-quarters govuk-!-margin-bottom-2'>
                 <%= t('.can_you_estimate_cost') %>
               </h1>
               <span class='govuk-hint govuk-!-font-size-19 govuk-!-width-three-quarters'>
@@ -97,9 +97,9 @@
         <%= f.hidden_field(:lot_number, value: '1c') %>
       <% end %>
       <% unless @procurement.lot_number == '1c' %>
-        <div class='govuk-body govuk-!-font-size-24'>
+        <p class='govuk-body-m'>
           <%= t('.not_able_to_select_range') %>
-        </div>
+        </p>
       <% end %>
     <% end %>
     <%= govuk_continuation_buttons(pd, f) %>
