@@ -11,7 +11,7 @@
           <%= govuk_form_group_with_optional_error(@journey, :service_codes) do %>
             <%= govuk_fieldset_with_optional_error(@journey, :service_codes) do %>
               <div>
-                <fieldset class="govuk-fieldset" aria-describedby="">
+                <fieldset class="govuk-fieldset">
                   <h1 class="govuk-heading-xl">
                     <%= t('.start_a_new_procurement_header') %>
                   </h1>
@@ -42,7 +42,7 @@
                           <div id="procurement-services-accordion-content-<%= i+=1 %>" class="govuk-accordion__section-content" aria-labelledby="<%= service['code'] %>">
                             <% @journey.current_step.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
                               <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
-                                <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
+                                <fieldset class="govuk-fieldset" aria-describedby='<%= "service_#{work_package['code'].gsub('.', '-')}" %>'>
                                   <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
                                       <%= check_box_tag("service_codes[]", work_package['code'], @journey.current_step.service_codes.include?(work_package['code']),
