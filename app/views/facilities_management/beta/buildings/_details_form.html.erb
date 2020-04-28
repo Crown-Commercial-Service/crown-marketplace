@@ -72,7 +72,7 @@
       <%= f.hidden_field :address_region_code, id: 'address-region-code' %>
       <br/>
     <% end %>
-    <button type="button" class="govuk-button" style="clear:both" data-module-element="trigger"><%= t('.find_address') %></button>
+    <button type="button" class="govuk-button" style="clear:both" data-module-element="trigger" aria-label="<%= t('.find_address') %>"><%= t('.find_address') %></button>
   </div>
   <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-0" data-module-part="lookup-container">
     <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>" class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
@@ -106,7 +106,7 @@
       </select>
       <%= f.submit(t('.cant_find_address'),
                    class: 'govuk-link govuk-!-margin-right-4 button_as_link',
-                   data:  { disable_with: false }, name: 'add_address', style: 'display:block') %>
+                   data:  { disable_with: false }, name: 'add_address', style: 'display:block', aria-label: "#{t('.cant_find_address')}") %>
     </div>
     <div data-module-part="address-display" class="govuk-!-margin-top-3 govuk-!-margin-bottom-3 <%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>">
       <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
@@ -144,7 +144,7 @@
             <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.region') %></span>
             <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
             <a href="#region-header" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
-               data-module-element="change-region-button"><%= t('.change') %></a>
+               data-module-element="change-region-button" aria-label="<%= t('.change') %>"><%= t('.change') %></a>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@
         <%= t('facilities_management.home.startlist').html_safe %>
       </ul>
 
-      <%= link_to t('facilities_management.home.startnow'), facilities_management_beta_gateway_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+      <%= link_to t('facilities_management.home.startnow'), facilities_management_beta_gateway_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': t('facilities_management.home.startnow') %>
     </div>
 
     <div class="govuk-grid-column-one-third">

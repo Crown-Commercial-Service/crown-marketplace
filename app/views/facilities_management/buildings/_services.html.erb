@@ -26,7 +26,7 @@
     <%= form_tag '/facilities-management/select-services', id: 'fm-buldings-add-services-continue-link-form', method: :post do %>
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
 
-      <a onclick="document.getElementById('fm-buldings-add-services-continue-link-form').submit();" id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button">+
+      <a onclick="document.getElementById('fm-buldings-add-services-continue-link-form').submit();" id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button" aria-label="Add new services">+
         Add new services</a>
 
       <!-- submit_tag '+ Add services', class: "govuk-link--no-visited-state ccs-no-print" -->
@@ -37,7 +37,7 @@
     <%= hidden_field_tag 'fm-services', "" %>
     <%= hidden_field_tag 'fm-locations', "" %>
     <div class="govuk-grid-row govuk-!-margin-top-6">
-      <a id="fm-select-services-continue-btn" href="" class="govuk-button ccs-no-print" role="button">Continue</a>
+      <a id="fm-select-services-continue-btn" href="" class="govuk-button ccs-no-print" role="button" aria-label="Continue">Continue</a>
     </div>
   <% end %>
 </div>
