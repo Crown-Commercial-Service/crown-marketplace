@@ -182,6 +182,8 @@ class ProcurementCsvExport
   end
 
   def self.yes_no(flag)
+    return '' if flag.blank?
+
     flag ? 'Yes' : 'No'
   end
 
