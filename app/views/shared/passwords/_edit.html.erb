@@ -104,8 +104,7 @@
         </div>
 
       </fieldset>
-
-      <%= hidden_field_tag :username, @response.email %>
+      <%= hidden_field_tag :username, params[:username] %>
 
       <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
 
