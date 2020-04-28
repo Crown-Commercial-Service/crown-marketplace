@@ -386,7 +386,7 @@ module FacilitiesManagement
     end
 
     def procurement_building_services_not_used_in_calculation
-      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code).nil? || CCS::FM::Rate.benchmark_rate_for(service.code).nil? }.map(&:name).uniq
+      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code, service.service_standard).nil? && CCS::FM::Rate.benchmark_rate_for(service.code, service.service_standard).nil? }.map(&:name).uniq
     end
 
     def some_services_unpriced_and_no_buyer_input?
