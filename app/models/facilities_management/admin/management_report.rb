@@ -29,9 +29,11 @@ module FacilitiesManagement
         @end_date = end_date
       end
 
+      # rubocop:disable Metrics/AbcSize
       def set_start_date
         self.start_date = Date.new(start_date_yyyy.to_i, start_date_mm.to_i, start_date_dd.to_i)
         errors.add(:start_date, :not_a_date) if start_date_yyyy.to_i < Time.now.year.to_i
+        errors.add(:start_date, :invalid) if errors[:start_date_dd].any? || errors[:start_date_mm].any? || errors[:start_date_yyyy].any?
       rescue StandardError
         errors.add(:start_date, :invalid)
         self.start_date = nil
@@ -40,10 +42,12 @@ module FacilitiesManagement
       def set_end_date
         self.end_date = Date.new(end_date_yyyy.to_i, end_date_mm.to_i, end_date_dd.to_i)
         errors.add(:end_date, :not_a_date) if end_date_yyyy.to_i < Time.now.year.to_i
+        errors.add(:end_date, :invalid) if errors[:end_date_dd].any? || errors[:end_date_mm].any? || errors[:end_date_yyyy].any?
       rescue StandardError
         errors.add(:end_date, :invalid)
         self.end_date = nil
       end
+      # rubocop:enable Metrics/AbcSize
 
       def dates_present?
         dates_present = true
@@ -72,16 +76,6 @@ module FacilitiesManagement
           return false
         end
 
-        if errors[:start_date_dd].any? || errors[:start_date_mm].any? || errors[:start_date_yyyy].any?
-          errors.add(:start_date, :invalid)
-          return false
-        end
-
-        if errors[:end_date_dd].any? || errors[:end_date_mm].any? || errors[:end_date_yyyy].any?
-          errors.add(:end_date, :invalid)
-          return false
-        end
-        # binding.pry
         true
       end
     end
