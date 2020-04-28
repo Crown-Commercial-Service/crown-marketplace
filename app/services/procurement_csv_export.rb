@@ -72,8 +72,8 @@ class ProcurementCsvExport
       find_contracts(start_date, end_date).each do |contract|
         csv << [
           contract.procurement.contract_name,
-          contract.procurement.created_at.strftime(TIME_FORMAT),
-          contract.unsent? ? contract.procurement.updated_at.strftime(TIME_FORMAT) : contract.updated_at.strftime(TIME_FORMAT),
+          localised_datetime(contract.procurement.created_at),
+          contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
           procurement_status(contract.procurement, contract),
           contract.procurement.user.buyer_detail.organisation_name,
           [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
@@ -106,16 +106,16 @@ class ProcurementCsvExport
           contract.reason_for_declining,
           contract.reason_for_closing,
           contract.reason_for_not_signing,
-          contract.contract_signed_date&.strftime(DATE_FORMAT),
-          "#{contract.contract_start_date&.strftime(DATE_FORMAT)} - #{contract.contract_end_date&.strftime(DATE_FORMAT)}"
+          localised_date(contract.contract_signed_date),
+          "#{localised_date(contract.contract_start_date)} - #{localised_date(contract.contract_end_date)}"
         ]
       end
 
       find_procurements(start_date, end_date).each do |procurement|
         csv << [
           procurement.contract_name,
-          procurement.created_at.strftime(TIME_FORMAT),
-          procurement.updated_at.strftime(TIME_FORMAT),
+          localised_datetime(procurement.created_at),
+          localised_datetime(procurement.updated_at),
           procurement_status(procurement, nil),
           procurement.user.buyer_detail.organisation_name,
           [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
@@ -241,5 +241,17 @@ class ProcurementCsvExport
     return '' if lot_number.blank?
 
     'Sub-lot ' + lot_number
+  end
+
+  def self.localised_datetime(datetime)
+    return '' if datetime.blank?
+
+    datetime.getlocal.strftime(TIME_FORMAT)
+  end
+
+  def self.localised_date(datetime)
+    return '' if datetime.blank?
+
+    datetime.getlocal.strftime(DATE_FORMAT)
   end
 end
