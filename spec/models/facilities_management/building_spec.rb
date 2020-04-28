@@ -143,37 +143,37 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       it 'returns STANDARD when Call Centre Operations' do
-        building.building_type = 'Call centre Operations'
+        building.building_type = 'call-centre-operations'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Primary school' do
-        building.building_type = 'Primary school'
+        building.building_type = 'primary-school'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Restaurant and Catering-Facilities' do
-        building.building_type = 'Restaurant and Catering Facilities'
+        building.building_type = 'restaurant-and-catering-facilities'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Special Schools' do
-        building.building_type = 'Special Schools'
+        building.building_type = 'special-schools'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Universities and Colleges' do
-        building.building_type = 'Universities and Colleges'
+        building.building_type = 'universities-and-colleges'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Doctors, Dentists and Health Clinics' do
-        building.building_type = 'Doctors, Dentists and Health Clinics'
+        building.building_type = 'doctors,-dentists-and-health-clinics'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
       it 'returns STANDARD when Nursery and Care-Homes' do
-        building.building_type = 'Nursery and Care Homes'
+        building.building_type = 'nursery-and-care-homes'
         expect(building.building_standard).to eq 'STANDARD'
       end
     end

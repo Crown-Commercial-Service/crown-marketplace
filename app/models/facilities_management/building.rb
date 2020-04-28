@@ -124,12 +124,12 @@ module FacilitiesManagement
       pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
     end
 
-    STANDARD_BUILDING_TYPES = ['general office - customer facing', 'general office - non customer facing', 'call centre operations',
-                               'warehouses', 'restaurant and catering facilities', 'pre-school', 'primary school', 'secondary school', 'special schools',
-                               'universities and colleges', 'doctors, dentists and health clinics', 'nursery and care homes'].freeze
-    BUILDING_TYPES          = [{ id: 'General-office---Customer-Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },
-                               { id: 'General-office---Non-Customer-Facing', title: 'General office - non customer facing', caption: 'General office areas and non-customer facing areas.' },
-                               { id: 'Call-Centre-Operations', title: 'Call centre Operations', caption: '' },
+    STANDARD_BUILDING_TYPES = ['general office - customer facing', 'general office - non customer facing', 'call-centre-operations',
+                               'warehouses', 'restaurant-and-catering-facilities', 'pre-school', 'primary-school', 'secondary-school', 'special-schools',
+                               'universities-and-colleges', 'doctors,-dentists-and-health-clinics', 'nursery-and-care-homes'].freeze
+    BUILDING_TYPES          = [{ id: 'General-office---Customer-Facing', title: 'General office - Customer Facing', caption: 'General office areas and customer facing areas.' },
+                               { id: 'General-office---Non-Customer-Facing', title: 'General office - Non Customer Facing', caption: 'General office areas and non-customer facing areas.' },
+                               { id: 'Call-Centre-Operations', title: 'Call Centre Operations', caption: 'Call centre operations.' },
                                { id: 'Warehouses', title: 'Warehouses', caption: 'Large storage facility with limited office space and low density occupation by supplier personnel.' },
                                { id: 'Restaurant-and-Catering-Facilities', title: 'Restaurant and catering facilities', caption: 'Areas including restaurants, deli-bars and coffee lounges areas used exclusively for consuming food and beverages.' },
                                { id: 'Pre-School', title: 'Pre-school', caption: 'Pre-school, including crèche, nursery and after-school facilities.' },
