@@ -289,7 +289,7 @@ module ApplicationHelper
   end
 
   def format_date_time_day(date_object)
-    date_object&.in_time_zone('London')&.strftime '%A %e %B %Y, %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y, %l:%M%P'
   end
 
   def format_money(cost, precision = 2)
