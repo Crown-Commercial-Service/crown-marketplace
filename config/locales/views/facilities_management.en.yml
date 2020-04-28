@@ -193,16 +193,20 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
               too_long: Call-off contract period, including extensions must not be more than 10 years
             optional_call_off_extensions_2:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_3:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_4:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             payment_method:
               inclusion: Select one payment method
