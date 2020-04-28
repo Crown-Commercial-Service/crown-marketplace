@@ -143,7 +143,7 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ParameterLists
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity,Metrics/ParameterLists
   def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, hide_error_text = false, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
@@ -161,7 +161,7 @@ module LayoutHelper
       end
     end
   end
-  # rubocop:enable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity,Metrics/ParameterLists
+  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity,Metrics/ParameterLists
 
   def govuk_grouped_fields(form, caption, *attributes)
     attributes_with_errors      = attributes.flatten.select { |a| form.object.errors[a].any? }

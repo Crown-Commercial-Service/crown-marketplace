@@ -2,7 +2,7 @@
   <div class="govuk-body-l">
       <%= t('.price')%> <b><%= format_money @procurement.procurement_suppliers.unsent.first.direct_award_value %>.</b>
   </div>
-  
+
   <div>
       <details class="govuk-details govuk-!-margin-bottom-6" data-module="govuk-details">
         <summary class="govuk-details__summary">
@@ -15,6 +15,21 @@
         </div>
       </details>
   </div>
+
+  <div class="govuk-body-l govuk-!-width-two-thirds">
+    <%= link_to t('.download_documents'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          <%= t('.download_docs_description') %>
+      </strong>
+    </div>
+
+
+  </div>
+
 <div>
   <div>
     <h2 class="govuk-body-l govuk-!-font-weight-bold govuk-!-font-size-24"><%= t('.next_steps') %></div>
@@ -33,7 +48,8 @@
       </ul>
     <li class="govuk-!-font-weight-bold"><%= t('.return_to_dashboard') %></li>
       <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
-        <li> <%= t('.return_to_dashboard_description') %> </li>
+        <li> <%= t('.return_to_dashboard_description') %></li>
       </ul>
   </ol>
-    <%= render partial: 'call_off_contract_documents' %>
+
+   
