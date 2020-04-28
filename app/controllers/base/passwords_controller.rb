@@ -22,7 +22,9 @@ module Base
     end
 
     def update
-      @response = Cognito::ConfirmPasswordReset.call(params[:username], params[:password], params[:password_confirmation], params[:confirmation_code])
+      email = params[:user_email_reset_by_CSC].blank? ? params[:user_email_reset_by_themself] : params[:user_email_reset_by_CSC]
+
+      @response = Cognito::ConfirmPasswordReset.call(email, params[:password], params[:password_confirmation], params[:confirmation_code])
       if @response.success?
         redirect_to after_password_reset_path
       else
