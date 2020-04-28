@@ -84,6 +84,7 @@ en:
               blank: You must select a buiding type or describe your own
             gia:
               blank: Enter a whole number for the size of internal area of this building
+              greater_than: Enter a whole number for the size of internal area of this building
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -537,7 +538,7 @@ en:
           describe_security: Describe security level
           next_step: 'Next:'
           other: Other
-          security_description_html: Select the level of security clearance a suppliers staff will need to access this building.<br/>This is the security level of the contractor's staff.
+          security_description_html: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
         show:
           add_address_text: Add address
@@ -552,7 +553,7 @@ en:
           caption_sec: Security clearance
           caption_type: Building type
           change_text: Change
-          complete_text: This building is ready for use in procurements.
+          complete_text: This building is ready to use in procurements.
           incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
           section-header: Building details summary
           select_one_option_text: Please select one option

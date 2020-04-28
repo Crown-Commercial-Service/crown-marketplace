@@ -896,11 +896,11 @@ table.ccs-at-govuk-table--3070 {
   tr th:nth-last-child(2),
   tr td:nth-last-child(2) {
     padding: 1ex 0;
-    min-width : 9em;
+    min-width : 5em;
     }
   thead tr {
-    border-top     : 2px solid #CCCCCC;
-    border-bottom  : 2px solid #CCCCCC;
+    border-top     : 1px solid #CCCCCC;
+    border-bottom  : 1px solid #CCCCCC;
     padding-top    : 4px;
     padding-bottom : 4px;
     }
