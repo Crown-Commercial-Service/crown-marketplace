@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
   <%= form_for @page_data[:model_object], url: add_address_form_details[:url], method: add_address_form_details[:method], html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <input type="hidden" name="step" value="add_address"/>

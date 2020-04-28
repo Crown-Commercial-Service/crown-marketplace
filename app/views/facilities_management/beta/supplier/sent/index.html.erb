@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <%= render partial: 'accepted_offer' if @contract.aasm_state == 'accepted' %>
 <%= render partial: 'declined_offer' if @contract.aasm_state == 'declined' %>
 

@@ -407,6 +407,7 @@ en:
             dashboard_supplier_data: Supplier data
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
+            page_title: RM3830 administration dashboard
         management_report:
           breadcrumb_text_management_report: Management report
           download_btn_text: Generate and download report

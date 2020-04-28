@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <%= render partial: "contract_closed" if @contract.closed? %>
 <%= render partial: "contract_signed" if @contract.aasm_state == "signed" %>
 

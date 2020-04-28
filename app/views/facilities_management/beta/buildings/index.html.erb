@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
   <div id="buildings-container">
     <%= link_to t('.create_new_button'), new_facilities_management_beta_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button" %>

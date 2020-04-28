@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <div class="govuk-body govuk-grid-row procurement-building-service">
   <%= form_for @procurement_building, url: facilities_management_beta_procurement_building_path(@procurement_building, service_question: @service_question), method: :put, html: { multipart: true } do |f| %>
     <div class="govuk-grid-column-full">

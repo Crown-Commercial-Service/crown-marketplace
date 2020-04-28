@@ -1,3 +1,5 @@
+<%= content_for :page_title, t('.page_title') %>
+
 <%= govuk_page_content(@page_description, @contract) do |pd| %>
     <%= form_for @contract, url: facilities_management_beta_procurement_contract_path do |f| %>
         <%= render partial: 'contract_summary_head' %>
