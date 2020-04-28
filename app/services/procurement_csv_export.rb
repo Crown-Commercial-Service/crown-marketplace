@@ -27,7 +27,6 @@ class ProcurementCsvExport
     'Date created',
     'Date last updated',
     'Stage/Status',
-    '', # Separator column
     'Buyer organisation',
     'Buyer organisation address',
     'Buyer sector',
@@ -76,7 +75,6 @@ class ProcurementCsvExport
           contract.procurement.created_at.strftime(TIME_FORMAT),
           contract.unsent? ? contract.procurement.updated_at.strftime(TIME_FORMAT) : contract.updated_at.strftime(TIME_FORMAT),
           procurement_status(contract.procurement, contract),
-          nil, # Separator column
           contract.procurement.user.buyer_detail.organisation_name,
           [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
@@ -119,7 +117,6 @@ class ProcurementCsvExport
           procurement.created_at.strftime(TIME_FORMAT),
           procurement.updated_at.strftime(TIME_FORMAT),
           procurement_status(procurement, nil),
-          nil, # Separator column
           procurement.user.buyer_detail.organisation_name,
           [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
