@@ -486,7 +486,7 @@ en:
         add_address:
           add_address_header: Address
           description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-          line_1_of_2: Building and street line 1 or 2
+          line_1_of_2: Building and street line 1 of 2
           line_2_of_2: Building and street line 2 of 2 (optional)
           postcode: Postcode
           town_or_city: Town or city
@@ -522,7 +522,7 @@ en:
           link_to_building_summary: View details for building
           my_buildings_header: My buildings
           no_buildings_text: You have no saved buildings
-          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
+          start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
           start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
         page_definitions:
           add_building_address: Add building address
