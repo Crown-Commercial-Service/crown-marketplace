@@ -1,145 +1,94 @@
 $(function () {
 
-    const countActiveExtensions = function () {
-        let result = 4;
-        let bRemoveBtnShown = false ;
-
-        if ($("#ext4-container").hasClass("govuk-visually-hidden")) {
-            result--;
+  $("#fm-add-contract-ext-btn").on("click", function (e) {
+    e.preventDefault();
+    for (var i = 2; i <= 4; i++) {
+      let extenionPeriodHidden = document.getElementById('facilities_management_procurement_call_off_extension_' + i).value;
+      let lastInput = document.getElementById('facilities_management_procurement_optional_call_off_extensions_' + (i - 1)).value;
+      if(lastInput > 0) {
+        if (extenionPeriodHidden === 'false') {
+          $("#ext" + (i) + "-container").removeClass("govuk-visually-hidden");
+          $("#facilities_management_procurement_call_off_extension_" + (i)).val("true");
+          updateRemoveButtons();
+          break;
         } else {
-            bRemoveBtnShown = true;
-            $("#ext4-container").find("button").removeClass("govuk-visually-hidden");
+          continue;
         }
-
-        if ($("#ext3-container").hasClass("govuk-visually-hidden")) {
-            result--;
-            $("#ext3-container").find("button").removeClass("govuk-visually-hidden");
-        } else {
-            if ( !bRemoveBtnShown) {
-                $("#ext3-container").find("button").removeClass("govuk-visually-hidden");
-                bRemoveBtnShown = true;
-            }
-        }
-
-        if ($("#ext2-container").hasClass("govuk-visually-hidden")) {
-            result--;
-            $("#ext2-container").find("button").removeClass("govuk-visually-hidden");
-        } else {
-            if ( !bRemoveBtnShown) {
-                $("#ext2-container").find("button").removeClass("govuk-visually-hidden");
-                bRemoveBtnShown = true;
-            }
-        }
-
-        return result;
-    };
-
-    const calcTotalContractYears = function () {
-
-        let result = 0;
-        let initialCallOffPeriod = $("#facilities_management_procurement_initial_call_off_period").val();
-        let ext1 = $("#facilities_management_procurement_optional_call_off_extensions_1").val();
-        let ext2 = $("#facilities_management_procurement_optional_call_off_extensions_2").val();
-        let ext3 = $("#facilities_management_procurement_optional_call_off_extensions_3").val();
-        let ext4 = $("#facilities_management_procurement_optional_call_off_extensions_4").val();
-
-        initialCallOffPeriod = initialCallOffPeriod ? parseInt(initialCallOffPeriod) : 0;
-
-        if (initialCallOffPeriod > 0) {
-            ext1 = ext1 ? parseInt(ext1) : 0;
-            ext2 = ext2 ? parseInt(ext2) : 0;
-            ext3 = ext3 ? parseInt(ext3) : 0;
-            ext4 = ext4 ? parseInt(ext4) : 0;
-            result = initialCallOffPeriod + ext1 + ext2 + ext3 + ext4;
-
-        }
-        return result;
-    };
-
-    const updateButtonText = function () {
-        let count = calcTotalContractYears();
-        if ((10 - count) > 0) {
-            $("#fm-add-contract-ext-btn").removeClass("govuk-visually-hidden");
-            $("#fm-add-contract-ext-btn").text("+ Add another extension period (" + (10 - count) + " remaining)");
-        } else {
-            $("#fm-add-contract-ext-btn").addClass("govuk-visually-hidden");
-        }
-    };
-
-    $("#fm-add-contract-ext-btn").on("click", function (e) {
-        e.preventDefault();
-
-        let activeExtCount = countActiveExtensions();
-        if ( activeExtCount < 4) {
-            activeExtCount++;
-            let currentValue = $("#facilities_management_procurement_optional_call_off_extensions_" + (activeExtCount - 1)).val();
-            let totalContractYears = calcTotalContractYears();
-
-            if (activeExtCount < 5 && currentValue && totalContractYears < 10) {
-                $("#ext" + (activeExtCount) + "-container").removeClass("govuk-visually-hidden");
-                $("#facilities_management_procurement_call_off_extension_" + (activeExtCount)).val("true");
-                $("#fm-ext" + (activeExtCount - 1) + "-remove-btn").addClass("govuk-visually-hidden");
-                updateButtonText();
-            }
-        }
-    });
-
-    $("#fm-ext2-remove-btn").on("click", function (e) {
-        e.preventDefault();
-        $("#facilities_management_procurement_optional_call_off_extensions_2").val("");
-        $("#facilities_management_procurement_call_off_extension_2").val("false");
-        $("#ext2-container").addClass("govuk-visually-hidden");
-        updateButtonText();
-    });
-
-    $("#fm-ext3-remove-btn").on("click", function (e) {
-        e.preventDefault();
-        $("#facilities_management_procurement_optional_call_off_extensions_3").val("");
-        $("#facilities_management_procurement_call_off_extension_3").val("false");
-        $("#ext3-container").addClass("govuk-visually-hidden");
-        $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
-        updateButtonText();
-    });
-
-    $("#fm-ext4-remove-btn").on("click", function (e) {
-        e.preventDefault();
-        $("#facilities_management_procurement_optional_call_off_extensions_4").val("");
-        $("#facilities_management_procurement_call_off_extension_4").val("false");
-        $("#ext4-container").addClass("govuk-visually-hidden");
-        $("#fm-ext3-remove-btn").removeClass("govuk-visually-hidden");
-        updateButtonText();
-    });
-
-    $("#facilities_management_procurement_extensions_required_false").on("click", function (e) {
-        $("#facilities_management_procurement_optional_call_off_extensions_1").val("");
-        $("#facilities_management_procurement_optional_call_off_extensions_2").val("");
-        $("#facilities_management_procurement_optional_call_off_extensions_3").val("");
-        $("#facilities_management_procurement_optional_call_off_extensions_4").val("");
-        $("#ext2-container").addClass("govuk-visually-hidden");
-        $("#ext3-container").addClass("govuk-visually-hidden");
-        $("#ext4-container").addClass("govuk-visually-hidden");
-        $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
-        $("#facilities_management_procurement_call_off_extension_2").val("false");
-        $("#facilities_management_procurement_call_off_extension_3").val("false");
-        $("#facilities_management_procurement_call_off_extension_4").val("false");
-        updateButtonText();
-    });
-
-    $("#facilities_management_procurement_optional_call_off_extensions_1").on("keyup", function (e) {
-        updateButtonText()
-    });
-
-    $("#facilities_management_procurement_optional_call_off_extensions_2").on("keyup", function (e) {
-        updateButtonText()
-    });
-
-    $("#facilities_management_procurement_optional_call_off_extensions_3").on("keyup", function (e) {
-        updateButtonText()
-    });
-
-    $("#facilities_management_procurement_optional_call_off_extensions_4").on("keyup", function (e) {
-        updateButtonText()
-    });
-
+      } else {
+        break;
+      }
+    }
     updateButtonText();
+  })
+  
+  const updateRemoveButtons = function() {
+    if ($('#ext1-container').length) {
+      for (var i = 3; i <= 4; i++) {
+        let extenionPeriodHidden = document.getElementById('facilities_management_procurement_call_off_extension_' + i).value;
+        if (extenionPeriodHidden === 'true') {
+          $('#fm-ext' + (i-1) + '-remove-btn').addClass('govuk-visually-hidden');
+        }
+      }
+    }
+  }
+
+  const calcTotalContractYears = function() {
+    let result =  parseInt($("#facilities_management_procurement_initial_call_off_period").val());
+    for (var i = 1; i <= 4; i++) {
+      var period = parseInt($("#facilities_management_procurement_optional_call_off_extensions_" + i).val())
+      result += isNaN(period) ? 0 : period;
+    }
+    return result;
+  }
+
+  const updateButtonText = function () {
+    let count = calcTotalContractYears();
+    if ((10 - count) > 0 && $("#facilities_management_procurement_call_off_extension_4").val() !== 'true') {
+        $("#fm-add-contract-ext-btn").removeClass("govuk-visually-hidden");
+        $("#fm-add-contract-ext-btn").text("+ Add another extension period (" + (10 - count) + " remaining)");
+    } else {
+        $("#fm-add-contract-ext-btn").addClass("govuk-visually-hidden");
+    }
+  };
+
+  for(i = 2; i <= 4; i++) {
+    $("#fm-ext" + i + "-remove-btn").on("click", function (e) {
+      e.preventDefault();
+
+      var buttonNumber = parseInt(this.id[6]);
+      $("#facilities_management_procurement_optional_call_off_extensions_" + buttonNumber).val("");
+      $("#facilities_management_procurement_call_off_extension_" + buttonNumber).val("false");
+      $("#ext" + buttonNumber + "-container").addClass("govuk-visually-hidden");
+      if (buttonNumber !== 2) {
+        $("#fm-ext" + (buttonNumber - 1) + "-remove-btn").removeClass("govuk-visually-hidden");
+      }
+      updateButtonText();
+    })
+  }
+
+  for(i = 1; i <= 4; i++) {
+    $("#facilities_management_procurement_optional_call_off_extensions_" + i).on("keyup", function (e) {
+        updateButtonText();
+    });
+  }
+
+  $("#facilities_management_procurement_extensions_required_false").on("click", function (e) {
+    for (var i = 2; i <= 4; i ++) {
+      $("#facilities_management_procurement_optional_call_off_extensions_" + i).val("");
+      $("#ext" + i + "-container").addClass("govuk-visually-hidden");
+      $("#facilities_management_procurement_call_off_extension_" + i).val("false");
+    }
+
+    $("#facilities_management_procurement_optional_call_off_extensions_1").val("");
+    $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
+    updateButtonText();
+  });
+
+  $('#facilities_management_procurement_initial_call_off_period').on("keyup", function (e) {
+    updateButtonText();
+  });
+
+  updateButtonText();
+
+  updateRemoveButtons();
 });

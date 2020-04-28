@@ -52,19 +52,23 @@ module ProcurementValidator
     validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: :contract_dates
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
     validate  :initial_call_off_start_date_valid_date, if: -> { initial_call_off_period_expects_a_date? && initial_call_off_period_whole_number? }, on: :contract_dates
+
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }, on: :contract_dates
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
     validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
     validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
     validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_dates
+
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
     validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
     validates :optional_call_off_extensions_1, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_2 != 'false' }, on: :contract_dates
-    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_3 != 'false' }, on: :contract_dates
-    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && call_off_extension_4 != 'false' }, on: :contract_dates
+    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_2 != 'false' || !optional_call_off_extensions_2.nil?) }, on: :contract_dates
+    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_3 != 'false' || !optional_call_off_extensions_3.nil?) }, on: :contract_dates
+    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_4 != 'false' || !optional_call_off_extensions_4.nil?) }, on: :contract_dates
     validate :optional_call_off_extensions_too_long, on: :contract_dates
+    validate :optional_call_off_extensions_catch_validation, on: :contract_dates
+
     #
     # End of validation rules for contract-dates
     #############################################
@@ -129,6 +133,15 @@ module ProcurementValidator
 
     def total_extensions
       optional_call_off_extensions_1.to_i + optional_call_off_extensions_2.to_i + optional_call_off_extensions_3.to_i + optional_call_off_extensions_4.to_i
+    end
+
+    def optional_call_off_extensions_catch_validation
+      unless optional_call_off_extensions_4.nil?
+        errors.add(:optional_call_off_extensions_3, :blank) if optional_call_off_extensions_3.nil?
+        errors.add(:optional_call_off_extensions_2, :blank) if optional_call_off_extensions_2.nil?
+      end
+
+      errors.add(:optional_call_off_extensions_2, :blank) if !optional_call_off_extensions_3.nil? && optional_call_off_extensions_4.nil?
     end
 
     def optional_call_off_extensions_too_long
