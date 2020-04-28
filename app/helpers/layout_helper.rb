@@ -144,7 +144,7 @@ module LayoutHelper
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists
-  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, &block)
+  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, hide_error_text = false, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
@@ -156,7 +156,7 @@ module LayoutHelper
     content_tag :div, options do
       capture do
         concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
-        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors
+        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors && !hide_error_text
         block.call(attribute) if block_given?
       end
     end
