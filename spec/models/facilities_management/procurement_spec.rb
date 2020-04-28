@@ -561,7 +561,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).to_not be nil
+          expect(procurement.lot_number).not_to be nil
         end
       end
 
@@ -579,7 +579,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).to_not be nil
+          expect(procurement.lot_number).not_to be nil
         end
       end
 
@@ -601,7 +601,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).to_not be nil
+          expect(procurement.lot_number).not_to be nil
         end
       end
 
@@ -615,7 +615,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'does save lot number' do
-          expect(procurement.lot_number).to_not be nil
+          expect(procurement.lot_number).not_to be nil
         end
       end
     end
