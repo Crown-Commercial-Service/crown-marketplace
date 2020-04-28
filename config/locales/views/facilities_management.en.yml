@@ -408,8 +408,8 @@ en:
           heading_sub: Download management data
           heading_sub_detail: To generate a download file, please input your date range.
           heading_title: Management report
-          there_is_a_problem: There is a problem
           return_link: Return to admin dashboard
+          there_is_a_problem: There is a problem
         sessions:
           new:
             admin_sign_in_header: Sign in to your administration dashboard
