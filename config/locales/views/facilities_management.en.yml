@@ -751,6 +751,10 @@ en:
             you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
             you_sign_2: this will happen offline (outside this portal)
             you_sign_3: usually within 2 working days
+          call_off_contract_documents:
+            call_out_leading: Download Call-off contract
+            colating: COLLATING DOCUMENTS
+            colating_message: Call-off contract will be available for download shortly
           closed:
             contract_closed:
               info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
@@ -807,6 +811,8 @@ en:
             close: You can close this procurement
             close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
             close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
+            download_docs_description: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to a supplier.
+            download_documents: Download all contract documents
             next_lowest: The next lowest supplier who can deliver the services to your buildings is
             next_steps: Available next steps
             offer: You can offer your contract to this supplier
@@ -892,6 +898,12 @@ en:
             notices_contact_details: Notices contact details
             payment_method: Payment method
             security_policy_document: Security policy
+          contract_summary:
+            call_off_contract_documents:
+              call_out_leading: Download Call-off contract
+              call_out_leading_main: Call-off contract documents
+              colating: COLLATING DOCUMENTS
+              colating_message: Call-off contract will be available for download shortly
           did_you_know:
             contract_documents:
               call_off_schedule_5:
