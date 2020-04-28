@@ -142,55 +142,55 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Call-Centre-Operations' do
-        building.building_type = 'Call-Centre-Operations'
+      it 'returns STANDARD when Call Centre Operations' do
+        building.building_type = 'call-centre-operations'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Primary-School' do
-        building.building_type = 'Primary-School'
+      it 'returns STANDARD when Primary school' do
+        building.building_type = 'primary-school'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Restaurant-and-Catering-Facilities' do
-        building.building_type = 'Restaurant-and-Catering-Facilities'
+      it 'returns STANDARD when Restaurant and Catering-Facilities' do
+        building.building_type = 'restaurant-and-catering-facilities'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Special-Schools' do
-        building.building_type = 'Special-Schools'
+      it 'returns STANDARD when Special Schools' do
+        building.building_type = 'special-schools'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Universities-and-Colleges' do
-        building.building_type = 'Universities-and-Colleges'
+      it 'returns STANDARD when Universities and Colleges' do
+        building.building_type = 'universities-and-colleges'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Doctors,-Dentists-and-Health-Clinics' do
-        building.building_type = 'Doctors,-Dentists-and-Health-Clinics'
+      it 'returns STANDARD when Doctors, Dentists and Health Clinics' do
+        building.building_type = 'doctors,-dentists-and-health-clinics'
         expect(building.building_standard).to eq 'STANDARD'
       end
 
-      it 'returns STANDARD when Nursery-and-Care-Homes' do
-        building.building_type = 'Nursery-and-Care-Homes'
+      it 'returns STANDARD when Nursery and Care-Homes' do
+        building.building_type = 'nursery-and-care-homes'
         expect(building.building_standard).to eq 'STANDARD'
       end
     end
 
     context 'when the building is not a standard type' do
-      it 'returns NON-STANDARD when Nuclear-Facilities' do
-        building.building_type = 'Nuclear-Facilities'
+      it 'returns NON-STANDARD when Nuclear Facilities' do
+        building.building_type = 'Nuclear Facilities'
         expect(building.building_standard).to eq 'NON-STANDARD'
       end
 
-      it 'returns NON-STANDARD when Fitness-or-Training-Establishmentss' do
-        building.building_type = 'Fitness-or-Training-Establishments'
+      it 'returns NON-STANDARD when Fitness or Training Establishments' do
+        building.building_type = 'Fitness or Training Establishments'
         expect(building.building_standard).to eq 'NON-STANDARD'
       end
 
-      it 'returns NON-STANDARD when List-X-Property' do
-        building.building_type = 'List-X-Property'
+      it 'returns NON-STANDARD when List X Property' do
+        building.building_type = 'List X Property'
         expect(building.building_standard).to eq 'NON-STANDARD'
       end
     end

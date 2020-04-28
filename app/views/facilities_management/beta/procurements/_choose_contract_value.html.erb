@@ -28,6 +28,9 @@
           </div>
         <% end %>
       <% end %>
+      <div class='govuk-body govuk-!-font-size-24'>
+        <%= t('.not_able_to_select_range') %>
+      </div>
     <% else %>
       <div class='govuk-body-l govuk-!-width-three-quarters'>
         <%= t('.contract_value_heading')%>
@@ -38,20 +41,6 @@
         </h3>
         <div class='govuk-!-font-size-24'>
           <%= format_money @procurement.assessed_value, 0 %>
-        </div>
-      </div>
-      <div class='govuk-body'>
-        <h3 class='govuk-heading-m govuk-!-margin-bottom-1'>
-            <%= t('.sugested_sublot') %>
-        </h3>
-        <div class='govuk-!-font-size-24'>
-        <% if @procurement.assessed_value < 7e6 %>
-          <%= t('.sub_lot_1a') %>
-        <% elsif @procurement.assessed_value <= 5e7 %>
-          <%= t('.sub_lot_1b') %>
-        <% else %>
-          <%= t('.sub_lot_1c') %>
-        <% end %>
         </div>
       </div>
       <div class='govuk-body'>
@@ -85,23 +74,20 @@
                 <div class="govuk-radios__item">
                   <%= f.radio_button :lot_number, '1a', class: 'govuk-radios__input' %>
                   <%= f.label :lot_number, value: '1a', class: 'govuk-label govuk-radios__label' do %>
-                    <span class='ccs-font-weight-semi-bold'><%= t('.sub_lot_1a') %></span>
-                    <span class='govuk-hint'><%= t('.sub_lot_1a_hint')%></span>
+                    <span class='govuk-body'><%= t('.sub_lot_1a_hint')%></span>
                   <% end %>
                 </div>
               <% end %>
               <div class="govuk-radios__item">
                 <%= f.radio_button :lot_number, '1b', class: 'govuk-radios__input' %>
                 <%= f.label :lot_number, value: '1b', class: 'govuk-label govuk-radios__label' do %>
-                  <span class='ccs-font-weight-semi-bold'><%= t('.sub_lot_1b') %></span>
-                  <span class='govuk-hint'><%= t('.sub_lot_1b_hint')%></span>
+                  <span class='govuk-body'><%= t('.sub_lot_1b_hint')%></span>
                 <% end %>
               </div>
               <div class="govuk-radios__item">
                 <%= f.radio_button :lot_number, '1c', class: 'govuk-radios__input' %>
                 <%= f.label :lot_number, value: '1c', class: 'govuk-label govuk-radios__label' do %>
-                  <span class='ccs-font-weight-semi-bold'><%= t('.sub_lot_1c') %></span>
-                  <span class='govuk-hint'><%= t('.sub_lot_1c_hint')%></span>
+                  <span class='govuk-body'><%= t('.sub_lot_1c_hint')%></span>
                 <% end %>
               </div>
             </div>
@@ -110,10 +96,12 @@
       <% else %>
         <%= f.hidden_field(:lot_number, value: '1c') %>
       <% end %>
+      <% unless @procurement.lot_number == '1c' %>
+        <div class='govuk-body govuk-!-font-size-24'>
+          <%= t('.not_able_to_select_range') %>
+        </div>
+      <% end %>
     <% end %>
-    <div class='govuk-body govuk-!-font-size-24'>
-      <%= t('.not_able_to_select_range') %>
-    </div>
     <%= govuk_continuation_buttons(pd, f) %>
   <% end %>
 <% end %>

@@ -8,15 +8,15 @@
           <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
             <div class="govuk-radios__item">
               <%= ff.radio_button :building_type, building_type[:title], class: 'govuk-radios__input' %>
-              <%= ff.label :building_type, value: building_type[:title], class: 'govuk-label govuk-radios__label' do %>
+              <%= ff.label :building_type, value: building_type[:title], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                 <%= building_type[:title] %>
-                <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
               <% end %>
+              <span class="govuk-hint govuk-radios__hint"><%= building_type[:caption] %></span>
             </div>
           <% end %>
         </div>
         <div class="govuk-body" style="margin-left:1ex">
-          Or
+          or
         </div>
         <details class="govuk-details" style="margin-left:1.5ex" data-module="govuk-details"  <%= 'open="true"' if open_state_of_building_details(ff.object) %> >
           <summary class="govuk-details__summary">
@@ -28,20 +28,18 @@
             <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
               <div class="govuk-radios__item">
                 <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
-                <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label' do %>
+                <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                   <%= building_type[:title] %>
                   <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
                 <% end %>
               </div>
             <% end %>
-            <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4 govuk-!-margin-left-2">
-              Or
-            </div>
+            <div class="govuk-radios__divider govuk-!-margin-top-4 govuk-!-margin-bottom-4">or</div>
             <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object)) do %>
               <div class="govuk-radios__item" data-module="other-expando">
                 <div class="other_container">
                   <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
-                  <%= ff.label :building_type, value: 'other', class: 'govuk-label govuk-radios__label' do
+                  <%= ff.label :building_type, value: 'other', class: 'govuk-label govuk-radios__label govuk-label--s' do
                     t('.other')
                   end %>
                   <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].building_type != 'other'%>govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">

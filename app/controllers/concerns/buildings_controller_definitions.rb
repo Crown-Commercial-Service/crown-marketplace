@@ -58,11 +58,7 @@ module BuildingsControllerDefinitions
         caption3: step_title,
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.add_building_address'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
-        back_url: if id_present?
-                    edit_facilities_management_beta_building_path(@page_data[:model_object])
-                  else
-                    new_facilities_management_beta_building_path
-                  end
+        back_url: 'javascript:history.back()'
       },
       edit: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
