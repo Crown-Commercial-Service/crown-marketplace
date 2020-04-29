@@ -406,7 +406,7 @@ module FacilitiesManagement
     end
 
     def all_services_missing_framework_price_aa
-      all_services_missing_framework_price?
+      p 'ggggg'
     end
 
     private
