@@ -7974,6 +7974,6 @@ li code, td code, p code {
     background-color: #6F777B !important;
     color: #FFFFFF !important;
 }
-.govuk-table__header, .govuk-border-bottom_none {
+.govuk-border-bottom_none {
     border-bottom: 0px !important;
 }

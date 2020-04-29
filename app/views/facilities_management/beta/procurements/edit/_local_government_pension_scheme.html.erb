@@ -4,7 +4,7 @@
       <%= t('.description')%>
     </div>
     <div class="govuk-radios">
-    <%= display_potential_errors(@procurement, :local_government_pension_scheme, f.object_name)%>
+    <%= display_error(@procurement, :local_government_pension_scheme) %>
         <div class="govuk-radios__item">
           <%= f.radio_button :local_government_pension_scheme, true, value: true, class: 'govuk-radios__input' %>
           <%= f.label :local_government_pension_scheme, "Yes", value: true, class: 'govuk-label govuk-radios__label' %>
