@@ -142,35 +142,26 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
-
-    any_services_missing_framework_price = @procurement.any_services_missing_framework_price?
-
-    sheet.add_row [estimated_cost_text(any_services_missing_framework_price), ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text(any_services_missing_framework_price)], style: standard_style, height: standard_row_height
-    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text(any_services_missing_framework_price)], style: standard_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: standard_style, height: standard_row_height
+    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: standard_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: standard_style, height: standard_row_height
   end
 
-  def  sublot_customer_selected_text(any_services_missing_framework_price)
-    if any_services_missing_framework_price && !@procurement.estimated_cost_known?
+  def  sublot_customer_selected_text
+    if (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
       '(Customer selected)'
     else
       ''
     end
   end
 
-  def estimated_cost_text(any_services_missing_framework_price)
-    if (any_services_missing_framework_price || @procurement.any_services_missing_benchmark_price?) && @procurement.estimated_cost_known?
-      'Estimated cost (Estimated cost not calculated)'
-    else
-      'Estimated cost'
-    end
-  end
-
-  def partial_estimated_text(any_services_missing_framework_price)
-    if any_services_missing_framework_price && !@procurement.estimated_cost_known?
+  def partial_estimated_text
+    if @procurement.all_services_missing_framework_price? && !@procurement.estimated_cost_known?
+      '(Estimated cost not calculated)'
+    elsif (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
       '(Partial estimated cost)'
     else
-      '(Partial estimated cost) / (Estimated cost not calculated)'
+      ''
     end
   end
 
