@@ -108,7 +108,7 @@ class ProcurementCsvExport
           contract.reason_for_closing,
           contract.reason_for_not_signing,
           localised_date(contract.contract_signed_date),
-          "#{localised_date(contract.contract_start_date)} - #{localised_date(contract.contract_end_date)}"
+          ["#{localised_date(contract.contract_start_date)}, #{localised_date(contract.contract_end_date)}"].compact.join(' - ')
         ]
       end
 
@@ -177,11 +177,7 @@ class ProcurementCsvExport
   end
 
   def self.procurement_status(procurement, contract = nil)
-    if procurement.direct_award?
-      STATE_DESCRIPTIONS[contract.aasm_state]
-    else
-      STATE_DESCRIPTIONS[procurement.aasm_state]
-    end
+    contract ? STATE_DESCRIPTIONS[contract.aasm_state] : STATE_DESCRIPTIONS[procurement.aasm_state]
   end
 
   def self.yes_no(flag)
@@ -268,10 +264,14 @@ class ProcurementCsvExport
   # Works in Microsoft Excel according to:
   #   https://stackoverflow.com/questions/308324/csv-for-excel-including-both-leading-zeros-and-commas
   def self.string_as_formula(string)
+    return nil if string.blank?
+
     "=\"#{string}\""
   end
 
   def self.delimited_with_pence(val)
+    return nil if val.blank?
+
     helpers.number_with_precision(val, precision: 2, delimiter: ',')
   end
 end
