@@ -405,7 +405,6 @@ module FacilitiesManagement
       all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
-    
     private
 
     def save_data_for_procurement
