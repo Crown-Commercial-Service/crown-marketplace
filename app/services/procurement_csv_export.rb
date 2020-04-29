@@ -36,7 +36,7 @@ class ProcurementCsvExport
     'Buyer contact telephone number',
     'Quick search services',
     'Quick search regions',
-    'Customer Estimated Contract Value',
+    'Customer Estimated Contract Value (GBP)',
     'Tupe involved',
     'Initial call-off - period length, start date, end date',
     'Mobilisation - period length, start date, end date',
@@ -44,7 +44,7 @@ class ProcurementCsvExport
     'Number of Buildings',
     'Services',
     'Building regions',
-    'Assessed Value',
+    'Assessed Value (GBP)',
     'Recommended Sub-lot',
     'Eligible for DA',
     'Shortlisted Suppliers',
@@ -84,7 +84,7 @@ class ProcurementCsvExport
           string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(contract.procurement.estimated_annual_cost),
+          delimited_with_pence(contract.procurement.estimated_annual_cost),
           yes_no(contract.procurement.tupe),
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
@@ -92,7 +92,7 @@ class ProcurementCsvExport
           contract.procurement.active_procurement_buildings.size,
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(contract.procurement.assessed_value),
+          delimited_with_pence(contract.procurement.assessed_value),
           format_lot_number(contract.procurement.lot_number),
           yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
@@ -126,7 +126,7 @@ class ProcurementCsvExport
           string_as_formula(procurement.user.buyer_detail.telephone_number),
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(procurement.estimated_annual_cost),
+          delimited_with_pence(procurement.estimated_annual_cost),
           yes_no(procurement.tupe),
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
@@ -134,7 +134,7 @@ class ProcurementCsvExport
           procurement.active_procurement_buildings.size,
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(procurement.assessed_value),
+          delimited_with_pence(procurement.assessed_value),
           format_lot_number(procurement.lot_number),
           yes_no(procurement.eligible_for_da),
           nil,
@@ -266,5 +266,9 @@ class ProcurementCsvExport
   #   https://stackoverflow.com/questions/308324/csv-for-excel-including-both-leading-zeros-and-commas
   def self.string_as_formula(string)
     "=\"#{string}\""
+  end
+
+  def self.delimited_with_pence(val)
+    helpers.number_with_precision(val, precision: 2, delimiter: ',')
   end
 end
