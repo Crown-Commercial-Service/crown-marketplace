@@ -358,7 +358,11 @@ module FacilitiesManagement
 
       def update_service_codes
         @procurement.update(service_codes: procurement_params[:service_codes])
-        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+        if @procurement.quick_search?
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+        else
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :building_services)
+        end
       end
 
       def update_region_codes
