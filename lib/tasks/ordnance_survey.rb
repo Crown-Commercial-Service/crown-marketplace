@@ -224,8 +224,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
   def self.postcode_file_already_loaded(key)
     p "Checking file #{key}"
-
-    query = "select count(*) from os_address_admin_uploads where filename = '#{key}'"
+    query = "select count(*) from os_address_admin_uploads where filename = '#{key}' or filename = '#{extract_metadata(key)}'"
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
@@ -235,6 +234,15 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   rescue PG::Error => e
     puts e.message
     false
+  end
+
+  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>[\w]{1,2}))/.freeze
+  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)(?>.csv-)(?<outcode>\w{1,2}))/.freeze
+  def self.extract_metadata(filename)
+    [MATCH_1, MATCH_2].each do |m|
+      match_data = filename.match(m)
+      return "#{match_data.named_captures('date')}#{match_data.named_captures('seq')}#{match_data.named_captures('outcode').upcase}"
+    end
   end
 
   def self.log_postcode_file_loaded(key, size, etag, created_at, updated_at)
@@ -344,6 +352,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       next if postcode_file_already_loaded(obj.key)
 
       next if obj.key.include? 'zip'
+      next if obj.key.include? 'tar'
 
       # rc.put_copy_data(obj.get.body)
       # obj.get.body.each_line { |line| rc.put_copy_data(line) }
