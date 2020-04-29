@@ -86,7 +86,6 @@ en:
               blank: Enter a whole number for the size of internal area of this building
               greater_than: Enter a whole number for the size of internal area of this building
               not_an_integer: Enter a whole number for the size of internal area of this building
-              greater_than: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
             other_security_type:

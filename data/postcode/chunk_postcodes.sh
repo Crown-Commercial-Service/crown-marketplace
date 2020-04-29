@@ -1,6 +1,7 @@
 #! /bin/sh
 echo Chunking postcode files
 zip=0
+tar=0
 csv=0
 keep=0
 ext=dat
@@ -9,6 +10,11 @@ if [[ -n "$1" ]]; then
     case "$1" in
     -zip)
       zip=1
+      tar=0
+      ;;
+    -tar)
+      tar=1
+      zip=0
       ;;
     -csv)
       csv=1
@@ -20,10 +26,11 @@ if [[ -n "$1" ]]; then
     shift
   done
 else
-  echo "You can pass in -zip (-keep) and -csv options."
-  echo "\t"-csv will add the OS_ADDRESS headers to each file
-  echo "\t"-zip will compress each output file
-  echo "\t"-keep will produce zip and dat/csv outputs
+  echo "You can pass in -zip|tar [-keep] and -csv options."
+  echo "\t-csv will add the OS_ADDRESS headers to each file"
+  echo "\t-zip will compress each output file using zip"
+  echo "\t-tar will compress to produce .tar.gz files"
+  echo "\t-keep will produce zip and dat/csv outputs"
   echo Processing files without headers and no final compression
 fi
 if [ $csv = 1 ]; then
@@ -41,7 +48,18 @@ if [ $zip = 1 ]; then
     fi
   fi
 else
-  echo Creating uncompressed files
+  if [ $tar = 1 ]; then
+    echo Creating tars
+    if [ $keep = 1 ]; then
+      if [ $csv = 1 ]; then
+        echo "Keeping CSV files as well as the tar.gz file"
+      else
+        echo "Keeping DAT files as well as the tar.gz file"
+      fi
+    fi
+  else
+    echo Creating uncompressed files
+  fi
 fi
 
 for file in AddressBasePlus_FULL*.csv; do
@@ -71,9 +89,12 @@ for file in AddressBasePlus_FULL*.csv; do
         csvquote -u "$awkfile" >> "${finished_name}_${awksuffix}.${ext}"
         rm "$awkfile"
         if [[ $zip = 1 ]]; then
-          tar -jcf "${finished_name}_${awksuffix}.${ext}.tar" "${finished_name}_${awksuffix}.${ext}";
-          [[ $keep -ne 1 ]] && rm "${finished_name}_${awksuffix}.${ext}"
+          zip "${finished_name}_${awksuffix}.${ext}.zip" "${finished_name}_${awksuffix}.${ext}";
         fi
+        if [[ $tar = 1 ]]; then
+          tar -zc --options "gzip:compression-level=9" -f "${finished_name}_${awksuffix}.${ext}.tar.gz" "${finished_name}_${awksuffix}.${ext}";
+        fi
+        [[ $keep -ne 1 ]] && rm "${finished_name}_${awksuffix}.${ext}"
       done
 
       rm "$pname.csv"

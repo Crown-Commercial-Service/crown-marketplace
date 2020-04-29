@@ -102,6 +102,8 @@ gem 'carrierwave-aws', '~> 1.3.0'
 gem 'sprockets'
 gem 'sprockets-bumble_d', '>= 2.2.0'
 
+gem 'smarter_csv'
+
 # for date layout and validation
 gem 'gov_uk_date_fields', '>= 4.1.0'
 gem 'date_validator'
