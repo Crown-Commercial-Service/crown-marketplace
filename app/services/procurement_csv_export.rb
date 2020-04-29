@@ -9,6 +9,7 @@ class ProcurementCsvExport
     'detailed_search' => 'Detailed search',
     'results' => 'Results',
     'da_draft' => 'DA draft',
+    'direct_award' => 'Direct award',
     'further_competition' => 'FC',
     'closed' => 'DA closed',
 
@@ -158,11 +159,13 @@ class ProcurementCsvExport
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  CONTRACT_BEARING_STATES = %w[direct_award closed].freeze
+
   def self.find_contracts(start_date, end_date)
     FacilitiesManagement::ProcurementSupplier
       .joins(:procurement)
       .where('facilities_management_procurement_suppliers.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where("facilities_management_procurements.aasm_state = 'direct_award'")
+      .where('facilities_management_procurements.aasm_state IN (?)', CONTRACT_BEARING_STATES)
       .where("facilities_management_procurement_suppliers.aasm_state != 'unsent'")
   end
 
@@ -170,7 +173,7 @@ class ProcurementCsvExport
     FacilitiesManagement::Procurement
       .includes(:procurement_suppliers)
       .where('facilities_management_procurements.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where("facilities_management_procurements.aasm_state != 'direct_award'")
+      .where('facilities_management_procurements.aasm_state NOT IN (?)', CONTRACT_BEARING_STATES)
   end
 
   def self.procurement_status(procurement, contract = nil)
