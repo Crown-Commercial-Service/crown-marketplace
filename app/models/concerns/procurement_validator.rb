@@ -135,14 +135,16 @@ module ProcurementValidator
       optional_call_off_extensions_1.to_i + optional_call_off_extensions_2.to_i + optional_call_off_extensions_3.to_i + optional_call_off_extensions_4.to_i
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity
     def optional_call_off_extensions_catch_validation
       unless optional_call_off_extensions_4.nil?
         errors.add(:optional_call_off_extensions_3, :blank) if optional_call_off_extensions_3.nil?
         errors.add(:optional_call_off_extensions_2, :blank) if optional_call_off_extensions_2.nil?
       end
 
-      errors.add(:optional_call_off_extensions_2, :blank) if !optional_call_off_extensions_3.nil? && optional_call_off_extensions_4.nil?
+      errors.add(:optional_call_off_extensions_2, :blank) if !optional_call_off_extensions_3.nil? && !optional_call_off_extensions_4.nil? && optional_call_off_extensions_2.nil?
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def optional_call_off_extensions_too_long
       return if initial_call_off_period.to_i > 7
