@@ -542,7 +542,7 @@ en:
           describe_security: Describe security level
           next_step: 'Next:'
           other: Other
-          security_description_html: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff.
+          security_description_html: Select the level of security clearance a supplier's staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
         show:
           add_address_text: Add address
