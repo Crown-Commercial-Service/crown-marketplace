@@ -405,10 +405,6 @@ module FacilitiesManagement
       all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
-    def all_services_missing_framework_price_for_fc?
-      procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
-    end
-
     private
 
     def save_data_for_procurement
