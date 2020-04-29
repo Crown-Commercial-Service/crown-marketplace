@@ -7965,3 +7965,15 @@ li code, td code, p code {
 .govuk-header_muted {
     color: #6F777B;
 }
+.bg_gov-mssg {
+    background-color: #6F777B;
+    color: #FFFFFF;
+    padding: 5px;
+}
+.govuk-tag--grey {
+    background-color: #6F777B !important;
+    color: #FFFFFF !important;
+}
+.govuk-border-bottom_none {
+    border-bottom: 0px !important;
+}

@@ -636,6 +636,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       before do
         allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
         allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance
