@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+<%= content_for :page_title, t('.section-header')%>
   <div class="govuk-body govuk-!-width-two-thirds">
     <strong class="govuk-tag ccs-tag-<%= @page_data[:model_object].status == 'Ready' ? 'approved' : 'rejected' %>"><%= @page_data[:model_object].status.to_s %></strong>
     <div class="govuk-inset-text">
