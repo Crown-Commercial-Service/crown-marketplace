@@ -401,6 +401,10 @@ module FacilitiesManagement
       procurement_building_services.uniq.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
+    def all_services_unpriced_and_no_buyer_input?
+      all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
+    end
+
     def all_services_missing_framework_price?
       procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
