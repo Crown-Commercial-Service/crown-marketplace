@@ -98,7 +98,7 @@ class ProcurementCsvExport
           yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
           expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
-          contract.procurement.route_to_market,
+          route_to_market(contract.procurement),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.number_to_currency(s.direct_award_value) } .join("\n"),
           contract.supplier.data['supplier_name'],
@@ -140,7 +140,7 @@ class ProcurementCsvExport
           yes_no(procurement.eligible_for_da),
           nil,
           expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-          procurement.route_to_market,
+          route_to_market(procurement),
           nil,
           nil,
           nil,
@@ -273,5 +273,12 @@ class ProcurementCsvExport
     return nil if val.blank?
 
     helpers.number_with_precision(val, precision: 2, delimiter: ',')
+  end
+
+  def self.route_to_market(procurement)
+    return STATE_DESCRIPTIONS['further_competition'] if procurement.further_competition?
+    return STATE_DESCRIPTIONS['da_draft'] if %w[da_draft direct_award closed].include?(procurement.aasm_state)
+
+    nil
   end
 end
