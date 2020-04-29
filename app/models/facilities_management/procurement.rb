@@ -405,7 +405,7 @@ module FacilitiesManagement
       all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
-    def all_services_missing_framework_price?
+    def all_services_missing_framework_price_for_fc?
       procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
@@ -462,6 +462,10 @@ module FacilitiesManagement
 
     def more_than_max_pensions?
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
+    end
+
+    def all_services_missing_framework_price?
+      procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def all_services_missing_benchmark_price?

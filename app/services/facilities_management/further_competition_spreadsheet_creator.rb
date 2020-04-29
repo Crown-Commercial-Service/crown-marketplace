@@ -156,7 +156,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def partial_estimated_text
-    if @procurement.all_services_missing_framework_price? && !@procurement.estimated_cost_known?
+    if @procurement.all_services_missing_framework_price_for_fc? && !@procurement.estimated_cost_known?
       '(Estimated cost not calculated)'
     elsif (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
       '(Partial estimated cost)'
