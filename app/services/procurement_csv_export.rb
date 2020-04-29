@@ -102,7 +102,7 @@ class ProcurementCsvExport
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.number_to_currency(s.direct_award_value) } .join("\n"),
           contract.supplier.data['supplier_name'],
-          helpers.number_to_currency(contract.direct_award_value),
+          delimited_with_pence(contract.direct_award_value),
           contract.contract_number,
           contract.reason_for_declining,
           contract.reason_for_closing,
