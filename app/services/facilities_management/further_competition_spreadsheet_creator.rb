@@ -5,10 +5,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     @units_of_measure_values ||= @active_procurement_buildings.map do |building|
       @report.fc_procurement_building_services(building).map do |procurement_building_service|
         {
-          building_id: building.building_id,
-          service_code: procurement_building_service.code,
-          uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard
+            building_id: building.building_id,
+            service_code: procurement_building_service.code,
+            uom_value: procurement_building_service.uval,
+            service_standard: procurement_building_service.service_standard
         }
       end
     end.flatten
@@ -142,10 +142,27 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
-
-    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2), '(Partial estimated cost) / (Estimated cost not calculated)'], style: standard_style, height: standard_row_height
-    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, '(Customer selected)'], style: standard_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: standard_style, height: standard_row_height
+    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: standard_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: standard_style, height: standard_row_height
+  end
+
+  def  sublot_customer_selected_text
+    if (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
+      '(Customer selected)'
+    else
+      ''
+    end
+  end
+
+  def partial_estimated_text
+    if @procurement.all_services_missing_framework_price? && !@procurement.estimated_cost_known?
+      '(Estimated cost not calculated)'
+    elsif (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
+      '(Partial estimated cost)'
+    else
+      ''
+    end
   end
 
   def add_customer_and_contract_details(package)
@@ -203,7 +220,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
       label = nil
     end
 
-    sheet['A8:A8'].each { |c| c.style = bold_style }
+    sheet['A8:A8'].each { |c| c.style = bold_style } unless supplier_names.empty?
   end
 
   def style_supplier_names_sheet(sheet, style, rows_added)
