@@ -163,17 +163,21 @@ class ProcurementCsvExport
 
   def self.find_contracts(start_date, end_date)
     FacilitiesManagement::ProcurementSupplier
-      .joins(:procurement)
-      .where('facilities_management_procurement_suppliers.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where('facilities_management_procurements.aasm_state IN (?)', CONTRACT_BEARING_STATES)
-      .where("facilities_management_procurement_suppliers.aasm_state != 'unsent'")
+      .includes(procurement: [user: :buyer_detail])
+      .includes(procurement: :active_procurement_buildings)
+      .includes(procurement: :procurement_building_services)
+      .where(updated_at: (start_date..(end_date + 1)))
+      .where.not(aasm_state: 'unsent')
+      .select { |contract| CONTRACT_BEARING_STATES.include?(contract.procurement.aasm_state) }
   end
 
   def self.find_procurements(start_date, end_date)
     FacilitiesManagement::Procurement
-      .includes(:procurement_suppliers)
-      .where('facilities_management_procurements.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where('facilities_management_procurements.aasm_state NOT IN (?)', CONTRACT_BEARING_STATES)
+      .includes(user: :buyer_detail)
+      .includes(:active_procurement_buildings)
+      .includes(:procurement_building_services)
+      .where(updated_at: (start_date..(end_date + 1)))
+      .where.not(aasm_state: CONTRACT_BEARING_STATES)
   end
 
   def self.procurement_status(procurement, contract = nil)
