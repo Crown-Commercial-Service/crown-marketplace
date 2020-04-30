@@ -362,6 +362,7 @@ module FacilitiesManagement
         if @procurement.quick_search?
           redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
         else
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :building_services) if params['commit'] == 'Save and continue'
           redirect_to facilities_management_beta_procurement_path(@procurement)
         end
       end
