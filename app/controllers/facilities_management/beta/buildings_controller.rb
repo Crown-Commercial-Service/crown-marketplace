@@ -28,9 +28,10 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
       def create
         @page_data[:model_object] = current_user.buildings.build(building_params)
+        @page_data[:model_object].postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
 
         if params[:add_address].present?
-          @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry
+          @page_data[:model_object].address_postcode = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
           rebuild_page_data(@page_data[:model_object])
           rebuild_page_description('add_address')
           render action: :add_address and return
@@ -56,9 +57,10 @@ module FacilitiesManagement
 
       def update
         @page_data[:model_object].assign_attributes(building_params)
+        @page_data[:model_object].postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
 
         if params[:add_address].present?
-          @page_data[:model_object].address_postcode = @page_data[:model_object].postcode_entry
+          @page_data[:model_object].address_postcode = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
           rebuild_page_description 'add_address'
           render action: :add_address and return
         end
