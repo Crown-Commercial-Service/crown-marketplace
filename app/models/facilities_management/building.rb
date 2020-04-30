@@ -50,7 +50,7 @@ module FacilitiesManagement
     end
 
     def building_standard
-      STANDARD_BUILDING_TYPES.include?(building_type.downcase) ? 'STANDARD' : 'NON-STANDARD'
+      STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
 
     private
@@ -124,21 +124,18 @@ module FacilitiesManagement
       pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
     end
 
-    STANDARD_BUILDING_TYPES = ['general office - customer facing', 'general office - non customer facing', 'call-centre-operations',
-                               'warehouses', 'restaurant-and-catering-facilities', 'pre-school', 'primary-school', 'secondary-school', 'special-schools',
-                               'universities-and-colleges', 'doctors,-dentists-and-health-clinics', 'nursery-and-care-homes'].freeze
-    BUILDING_TYPES          = [{ id: 'General-office---Customer-Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },
-                               { id: 'General-office---Non-Customer-Facing', title: 'General office - non customer facing', caption: 'General office areas and non-customer facing areas.' },
-                               { id: 'Call-Centre-Operations', title: 'Call centre operations', caption: '' },
+    BUILDING_TYPES          = [{ id: 'General office - Customer Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },
+                               { id: 'General office - Non Customer Facing', title: 'General office - non customer facing', caption: 'General office areas and non-customer facing areas.' },
+                               { id: 'Call Centre Operations', title: 'Call centre operations', caption: '' },
                                { id: 'Warehouses', title: 'Warehouses', caption: 'Large storage facility with limited office space and low density occupation by supplier personnel.' },
-                               { id: 'Restaurant-and-Catering-Facilities', title: 'Restaurant and catering facilities', caption: 'Areas including restaurants, deli-bars, coffee lounges and areas used exclusively for consuming food and beverages.' },
-                               { id: 'Pre-School', title: 'Pre-school', caption: 'Pre-school, including crèche, nursery and after-school facilities.' },
-                               { id: 'Primary-School', title: 'Primary school', caption: 'Primary school facilities.' },
-                               { id: 'Secondary-School', title: 'Secondary school', caption: 'Secondary school facilities.' },
-                               { id: 'Special-Schools', title: 'Special schools', caption: 'Special school facilities.' },
-                               { id: 'Universities-and-Colleges', title: 'Universities and colleges', caption: 'University and college, including on and off site campus facilities but excluding student residential accommodation facilities.' },
-                               { id: 'Doctors,-Dentists-and-Health-Clinics', title: 'Doctors, dentists and health clinics', caption: 'Community led facilities including doctors, dentists and health clinics.' },
-                               { id: 'Nursery-and-Care-Homes', title: 'Nursery and care homes', caption: 'Nursery and care home facilities.' },
+                               { id: 'Restaurant and Catering Facilities', title: 'Restaurant and catering facilities', caption: 'Areas including restaurants, deli-bars, coffee lounges and areas used exclusively for consuming food and beverages.' },
+                               { id: 'Pre-School', title: 'Pre-school', caption: 'Pre-school, including crèche, nursery or after-school facilities.' },
+                               { id: 'Primary School', title: 'Primary school', caption: 'Primary school facilities.' },
+                               { id: 'Secondary Schools', title: 'Secondary school', caption: 'Secondary school facilities.' },
+                               { id: 'Special Schools', title: 'Special schools', caption: 'Special school facilities.' },
+                               { id: 'Universities and Colleges', title: 'Universities and colleges', caption: 'University and college, including on and off site campus facilities but excluding student residential accommodation facilities.' },
+                               { id: 'Community - Doctors, Dentist, Health Clinic', title: 'Doctors, dentists and health clinics', caption: 'Community led facilities including doctors, dentists and health clinics.' },
+                               { id: 'Nursing and Care Homes', title: 'Nursery and care homes', caption: 'Nursery and care home facilities.' },
                                { id: 'Data-Centre-Operations', title: 'Data centre operations', caption: '' },
                                { id: 'External-parks,-grounds-and-car-parks', title: 'External parks, grounds and car parks', caption: 'External car parks and grounds including externally fixed assets. For example: fences, gates, fountains.' },
                                { id: 'Laboratory', title: 'Laboratory', caption: 'Includes all Government facilities where the standard of cleanliness is high, access is restricted and is not public facing.' },
@@ -158,5 +155,10 @@ module FacilitiesManagement
                                { id: 'List-X-Property', title: 'List x property', caption: "A commercial site (that is non-government) on UK soil that is approved to hold UK government protectively marked information marked as 'confidential' and above. It is applied to a company's specific site and not a company as a whole." },
                                { id: 'Hospitals', title: 'Hospitals', caption: 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.' },
                                { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
+
+    # The standard building types are: "General office - Customer Facing", "General office - Non Customer Facing", "Call Centre Operations",
+    #                                  "Warehouses", "Restaurant and catering facilities", "Pre-school", "Primary school", "Secondary school",
+    #                                  "Special schools", "Universities and colleges", "Doctors, dentists and health clinics", "Nursery and care homes"
+    STANDARD_BUILDING_TYPES = BUILDING_TYPES[0..11].map { |bt| bt[:id] }.freeze
   end
 end
