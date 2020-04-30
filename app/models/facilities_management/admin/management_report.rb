@@ -15,12 +15,12 @@ module FacilitiesManagement
       attribute :end_date_mm
       attribute :end_date_yyyy
 
-      validates :start_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { is: 2 }
-      validates :start_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { is: 2 }
+      validates :start_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
+      validates :start_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
       validates :start_date_yyyy, numericality: { only_integer: true, message: :not_a_number }, length: { is: 4 }
-      validates :end_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { is: 2 }
-      validates :end_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { is: 2 }
-      validates :end_date_yyyy, numericality: { only_integer: true, message: :not_a_number }, length: { is: 4 }
+      validates :end_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
+      validates :end_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
+      validates :end_date_yyyy, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 4 }
 
       validate :dates_valid?
 
@@ -32,7 +32,7 @@ module FacilitiesManagement
       # rubocop:disable Metrics/AbcSize
       def set_start_date
         self.start_date = Date.new(start_date_yyyy.to_i, start_date_mm.to_i, start_date_dd.to_i)
-        errors.add(:start_date, :not_a_date) if start_date_yyyy.to_i < Time.now.year.to_i
+        errors.add(:start_date, :invalid) if start_date_yyyy.to_i < Time.now.year.to_i
         errors.add(:start_date, :invalid) if errors[:start_date_dd].any? || errors[:start_date_mm].any? || errors[:start_date_yyyy].any?
       rescue StandardError
         errors.add(:start_date, :invalid)
@@ -41,7 +41,7 @@ module FacilitiesManagement
 
       def set_end_date
         self.end_date = Date.new(end_date_yyyy.to_i, end_date_mm.to_i, end_date_dd.to_i)
-        errors.add(:end_date, :not_a_date) if end_date_yyyy.to_i < Time.now.year.to_i
+        errors.add(:end_date, :invalid) if end_date_yyyy.to_i < Time.now.year.to_i
         errors.add(:end_date, :invalid) if errors[:end_date_dd].any? || errors[:end_date_mm].any? || errors[:end_date_yyyy].any?
       rescue StandardError
         errors.add(:end_date, :invalid)
