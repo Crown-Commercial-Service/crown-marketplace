@@ -9,6 +9,7 @@ class ProcurementCsvExport
     'detailed_search' => 'Detailed search',
     'results' => 'Results',
     'da_draft' => 'DA draft',
+    'direct_award' => 'Direct award',
     'further_competition' => 'FC',
     'closed' => 'DA closed',
 
@@ -27,7 +28,6 @@ class ProcurementCsvExport
     'Date created',
     'Date last updated',
     'Stage/Status',
-    '', # Separator column
     'Buyer organisation',
     'Buyer organisation address',
     'Buyer sector',
@@ -37,7 +37,7 @@ class ProcurementCsvExport
     'Buyer contact telephone number',
     'Quick search services',
     'Quick search regions',
-    'Customer Estimated Contract Value',
+    'Customer Estimated Contract Value (GBP)',
     'Tupe involved',
     'Initial call-off - period length, start date, end date',
     'Mobilisation - period length, start date, end date',
@@ -45,7 +45,7 @@ class ProcurementCsvExport
     'Number of Buildings',
     'Services',
     'Building regions',
-    'Assessed Value',
+    'Assessed Value (GBP)',
     'Recommended Sub-lot',
     'Eligible for DA',
     'Shortlisted Suppliers',
@@ -73,20 +73,19 @@ class ProcurementCsvExport
       find_contracts(start_date, end_date).each do |contract|
         csv << [
           contract.procurement.contract_name,
-          contract.procurement.created_at.strftime(TIME_FORMAT),
-          contract.unsent? ? contract.procurement.updated_at.strftime(TIME_FORMAT) : contract.updated_at.strftime(TIME_FORMAT),
+          localised_datetime(contract.procurement.created_at),
+          contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
           procurement_status(contract.procurement, contract),
-          nil, # Separator column
           contract.procurement.user.buyer_detail.organisation_name,
           [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
           contract.procurement.user.buyer_detail.full_name,
           contract.procurement.user.buyer_detail.job_title,
           contract.procurement.user.email,
-          contract.procurement.user.buyer_detail.telephone_number,
-          expand_services(contract.procurement.procurement_building_service_codes),
-          expand_regions(contract.procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(contract.procurement.estimated_annual_cost),
+          string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
+          expand_services(contract.procurement.service_codes),
+          expand_regions(contract.procurement.region_codes),
+          delimited_with_pence(contract.procurement.estimated_annual_cost),
           yes_no(contract.procurement.tupe),
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
@@ -94,42 +93,41 @@ class ProcurementCsvExport
           contract.procurement.active_procurement_buildings.size,
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(contract.procurement.assessed_value),
+          delimited_with_pence(contract.procurement.assessed_value),
           format_lot_number(contract.procurement.lot_number),
           yes_no(contract.procurement.eligible_for_da),
           contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
           expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
-          contract.procurement.route_to_market,
+          route_to_market(contract.procurement),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.number_to_currency(s.direct_award_value) } .join("\n"),
           contract.supplier.data['supplier_name'],
-          helpers.number_to_currency(contract.direct_award_value),
+          delimited_with_pence(contract.direct_award_value),
           contract.contract_number,
           contract.reason_for_declining,
           contract.reason_for_closing,
           contract.reason_for_not_signing,
-          contract.contract_signed_date&.strftime(DATE_FORMAT),
-          "#{contract.contract_start_date&.strftime(DATE_FORMAT)} - #{contract.contract_end_date&.strftime(DATE_FORMAT)}"
+          localised_date(contract.contract_signed_date),
+          ["#{localised_date(contract.contract_start_date)}, #{localised_date(contract.contract_end_date)}"].compact.join(' - ')
         ]
       end
 
       find_procurements(start_date, end_date).each do |procurement|
         csv << [
           procurement.contract_name,
-          procurement.created_at.strftime(TIME_FORMAT),
-          procurement.updated_at.strftime(TIME_FORMAT),
+          localised_datetime(procurement.created_at),
+          localised_datetime(procurement.updated_at),
           procurement_status(procurement, nil),
-          nil, # Separator column
           procurement.user.buyer_detail.organisation_name,
           [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
           procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
           procurement.user.buyer_detail.full_name,
           procurement.user.buyer_detail.job_title,
           procurement.user.email,
-          procurement.user.buyer_detail.telephone_number,
-          expand_services(procurement.procurement_building_service_codes),
-          expand_regions(procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(procurement.estimated_annual_cost),
+          string_as_formula(procurement.user.buyer_detail.telephone_number),
+          expand_services(procurement.service_codes),
+          expand_regions(procurement.region_codes),
+          delimited_with_pence(procurement.estimated_annual_cost),
           yes_no(procurement.tupe),
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
@@ -137,12 +135,12 @@ class ProcurementCsvExport
           procurement.active_procurement_buildings.size,
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
-          helpers.number_to_currency(procurement.assessed_value),
+          delimited_with_pence(procurement.assessed_value),
           format_lot_number(procurement.lot_number),
           yes_no(procurement.eligible_for_da),
           nil,
           expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-          procurement.route_to_market,
+          route_to_market(procurement),
           nil,
           nil,
           nil,
@@ -161,30 +159,34 @@ class ProcurementCsvExport
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  CONTRACT_BEARING_STATES = %w[direct_award closed].freeze
+
   def self.find_contracts(start_date, end_date)
     FacilitiesManagement::ProcurementSupplier
-      .joins(:procurement)
-      .where('facilities_management_procurement_suppliers.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where("facilities_management_procurements.aasm_state = 'direct_award'")
-      .where("facilities_management_procurement_suppliers.aasm_state != 'unsent'")
+      .includes(procurement: [user: :buyer_detail])
+      .includes(procurement: :active_procurement_buildings)
+      .includes(procurement: :procurement_building_services)
+      .where(updated_at: (start_date..(end_date + 1)))
+      .where.not(aasm_state: 'unsent')
+      .select { |contract| CONTRACT_BEARING_STATES.include?(contract.procurement.aasm_state) }
   end
 
   def self.find_procurements(start_date, end_date)
     FacilitiesManagement::Procurement
-      .includes(:procurement_suppliers)
-      .where('facilities_management_procurements.updated_at BETWEEN ? AND ?', start_date, end_date + 1)
-      .where("facilities_management_procurements.aasm_state != 'direct_award'")
+      .includes(user: :buyer_detail)
+      .includes(:active_procurement_buildings)
+      .includes(:procurement_building_services)
+      .where(updated_at: (start_date..(end_date + 1)))
+      .where.not(aasm_state: CONTRACT_BEARING_STATES)
   end
 
   def self.procurement_status(procurement, contract = nil)
-    if procurement.direct_award?
-      STATE_DESCRIPTIONS[contract.aasm_state]
-    else
-      STATE_DESCRIPTIONS[procurement.aasm_state]
-    end
+    contract ? STATE_DESCRIPTIONS[contract.aasm_state] : STATE_DESCRIPTIONS[procurement.aasm_state]
   end
 
   def self.yes_no(flag)
+    return '' if flag.blank?
+
     flag ? 'Yes' : 'No'
   end
 
@@ -244,5 +246,43 @@ class ProcurementCsvExport
     return '' if lot_number.blank?
 
     'Sub-lot ' + lot_number
+  end
+
+  def self.localised_datetime(datetime)
+    return '' if datetime.blank?
+
+    datetime.getlocal.strftime(TIME_FORMAT)
+  end
+
+  def self.localised_date(datetime)
+    return '' if datetime.blank?
+
+    datetime.getlocal.strftime(DATE_FORMAT)
+  end
+
+  # This is a hack to force spreadsheet programs to import the string as a formula.
+  #   E.g: '="07882898978"'
+  #
+  # This will preserve leading zeros in telephone numbers.
+  # Works in Apple Numbers - tested.
+  # Works in Microsoft Excel according to:
+  #   https://stackoverflow.com/questions/308324/csv-for-excel-including-both-leading-zeros-and-commas
+  def self.string_as_formula(string)
+    return nil if string.blank?
+
+    "=\"#{string}\""
+  end
+
+  def self.delimited_with_pence(val)
+    return nil if val.blank?
+
+    helpers.number_with_precision(val, precision: 2, delimiter: ',')
+  end
+
+  def self.route_to_market(procurement)
+    return STATE_DESCRIPTIONS['further_competition'] if procurement.further_competition?
+    return STATE_DESCRIPTIONS['da_draft'] if %w[da_draft direct_award closed].include?(procurement.aasm_state)
+
+    nil
   end
 end

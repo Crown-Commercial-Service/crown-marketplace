@@ -13,6 +13,13 @@ RSpec.describe ProcurementCsvExport do
     proc.procurement_suppliers.first.update_attribute(:aasm_state, 'sent')
     proc.reload
   end
+
+  let!(:procurement_in_closed) do
+    proc = create(:facilities_management_procurement_with_contact_details)
+    proc.update_attribute(:aasm_state, 'closed')
+    proc.procurement_suppliers.first.update_attribute(:aasm_state, 'sent')
+    proc.reload
+  end
   # rubocop:enable Rails/SkipsModelValidations
 
   describe '.find_procurements' do
@@ -67,6 +74,12 @@ RSpec.describe ProcurementCsvExport do
       context 'with sent contract' do
         it 'includes procurement' do
           expect(found_contracts.map(&:procurement)).to include(procurement_in_da)
+        end
+      end
+
+      context 'with sent contract but closed' do
+        it 'includes procurement' do
+          expect(found_contracts.map(&:procurement)).to include(procurement_in_closed)
         end
       end
     end
