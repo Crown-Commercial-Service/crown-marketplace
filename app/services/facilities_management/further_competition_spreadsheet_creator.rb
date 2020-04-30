@@ -5,10 +5,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     @units_of_measure_values ||= @active_procurement_buildings.map do |building|
       @report.fc_procurement_building_services(building).map do |procurement_building_service|
         {
-            building_id: building.building_id,
-            service_code: procurement_building_service.code,
-            uom_value: procurement_building_service.uval,
-            service_standard: procurement_building_service.service_standard
+          building_id: building.building_id,
+          service_code: procurement_building_service.code,
+          uom_value: procurement_building_service.uval,
+          service_standard: procurement_building_service.service_standard
         }
       end
     end.flatten
