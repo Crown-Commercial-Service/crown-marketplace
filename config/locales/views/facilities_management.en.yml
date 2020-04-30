@@ -805,6 +805,8 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          edit:
+            page_title: Close this procurement
           next_supplier:
             about_the_price: About the price
             about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
@@ -1363,6 +1365,7 @@ en:
             list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
             list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
             list04_title: 4. Withdraw before signing
+            title: You have accepted this contract offer
             what_happens_next: What happens next
           declined_offer:
             contract_name: 'Contract name:'

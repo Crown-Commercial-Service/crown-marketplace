@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @contract) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
   <%= render partial: 'contract_summary_head' %>
 
   <%= render partial: 'contract_offer_details' %>

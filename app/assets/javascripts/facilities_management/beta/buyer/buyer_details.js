@@ -20,6 +20,11 @@ $(function () {
 		
 		let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
 		pageUtils.addressLookUp(postCode, false);
+
+		if ($('#fm-postcode-error').hasClass('govuk-visually-hidden')){
+			tabIndex(true);
+		}
+		
 	});
 	
 	$('#change-selected-address-link').on('click', function (e) {
@@ -28,6 +33,8 @@ $(function () {
 		$('#selected-address-container').addClass('govuk-visually-hidden');
 		$('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
 		focusElem($('#buyer-details-postcode'));
+		tabIndex(false);
+		document.getElementById("change-selected-address-link").tabIndex = "-1";
 	});
 	
 	$('#buyer-details-change-postcode').on('click', function (e) {
@@ -35,6 +42,8 @@ $(function () {
 		$('#fm-post-code-results-container').addClass('govuk-visually-hidden');
 		$('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
 		focusElem($('#buyer-details-postcode'));
+
+		tabIndex(false);
 	});
 	
 	$('#buyer-details-postcode-lookup-results').on('change', function (e) {
@@ -149,6 +158,26 @@ $(function () {
 			$('#facilities_management_buyer_detail_central_government_true').get(0).setAttribute('checked', 'checked');
 		} else {
 			$('#facilities_management_buyer_detail_central_government_false').get(0).setAttribute('checked', 'checked');
+		}
+	}
+
+	function tabIndex(toggle) {
+		if (toggle) {
+			document.getElementById("buyer-details-postcode").tabIndex = "-1";
+			document.getElementById("add-buyer-address-link-1").tabIndex = "-1";
+			document.getElementById("buyer-details-find-address-btn").tabIndex = "-1";
+
+			document.getElementById("buyer-details-change-postcode").tabIndex = "0";
+			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "0";
+			document.getElementById("add-buyer-address-link-2").tabIndex = "0";
+		}else{
+			document.getElementById("buyer-details-postcode").tabIndex = "0";
+			document.getElementById("add-buyer-address-link-1").tabIndex = "0";
+			document.getElementById("buyer-details-find-address-btn").tabIndex = "0";
+
+			document.getElementById("buyer-details-change-postcode").tabIndex = "-1";
+			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "-1";
+			document.getElementById("add-buyer-address-link-2").tabIndex = "-1";
 		}
 	}
 });

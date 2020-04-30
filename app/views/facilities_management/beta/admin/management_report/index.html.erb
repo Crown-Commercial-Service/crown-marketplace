@@ -1,3 +1,4 @@
+<%= content_for :page_title, t('facilities_management.beta.admin.management_report.heading_title') %>
 <%= form_for @management_report, url: facilities_management_beta_admin_update_management_report_path, method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">

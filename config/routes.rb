@@ -150,9 +150,6 @@ Rails.application.routes.draw do
       end
       namespace :supplier do
         get '/', to: 'home#index'
-        get 'offer-declined', to: 'offer#declined'
-        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
-        get 'offer-accepted', to: 'offer#accepted'
         resources :dashboard, only: :index
         resources :contracts, only: %i[show edit update], controller: 'contracts' do
           resources :sent, only: %i[index], controller: 'sent'
