@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
   <div class="govuk-!-width-two-thirds">
     <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.gia_header') %></h2>
     <p class="govuk-caption-m"><%= t('.description_html') %></p>

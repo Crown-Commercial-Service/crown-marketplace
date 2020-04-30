@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @contract) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
     <%= form_for @contract, url: facilities_management_beta_supplier_contract_path do |f| %>
         <table class='govuk-table'>
             <tbody>

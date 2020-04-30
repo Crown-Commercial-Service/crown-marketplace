@@ -1,6 +1,7 @@
+<%= content_for :page_title, t('.title') %>
 <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7">
     <h1 class="govuk-panel__title">
-        You have accepted this contract offer
+        <%= t('.title') %>
     </h1>
     <div class="govuk-panel__body">
         Contract name: <%= @contract.procurement.contract_name %> </br>
