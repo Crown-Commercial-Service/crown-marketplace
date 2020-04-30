@@ -94,10 +94,10 @@ for file in AddressBasePlus_FULL*.csv; do
         if [[ $tar = 1 ]]; then
           tar -zc --options "gzip:compression-level=9" -f "${finished_name}_${awksuffix}.${ext}.tar.gz" "${finished_name}_${awksuffix}.${ext}";
         fi
-        [[ $keep -ne 1 ]] && rm "${finished_name}_${awksuffix}.${ext}"
+        [[ $keep -ne 1 && ($tar = 1 || $zip = 1) ]] && rm "${finished_name}_${awksuffix}.${ext}"
       done
 
-      rm "$pname.csv"
+      rm $pname.csv
     fi
   fi
   echo Done

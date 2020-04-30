@@ -1,5 +1,6 @@
 require 'smarter_csv'
 require 'rubygems/package'
+require 'digest/md5'
 # rubocop:disable Metrics/ModuleLength, Rails/Output
 module OrdnanceSurvey
   require 'csv'
@@ -281,7 +282,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   def self.file_type(filename)
-    :dat if filename.include? '.dat'
+    return :dat if filename.include? '.dat'
 
     :csv if filename.include? '.csv'
   end
@@ -290,6 +291,22 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     Gem::Package::TarReader.new(Zlib::GzipReader.open(filename)) do |tar|
       tar.each do |entry|
         block.call(file_type(entry.full_name), StringIO.new(entry.read)) if entry.file?
+      end
+    end
+  end
+
+  def self.untar_stream(bytes, &block)
+    Gem::Package::TarReader.new(Zlib::GzipReader.new(IO.new(bytes))) do |tar|
+      tar.each do |entry|
+        block.call(file_type(entry.full_name), StringIO.new(entry.read)) if entry.file?
+      end
+    end
+  end
+
+  def self.unzip_stream(bytes, &block)
+    Zip::File.new(IO.new(bytes)) do |zip_file|
+      zip_file.each do |entry|
+        block.call(file_type(entry.name), entry.get_input_stream)
       end
     end
   end
@@ -303,7 +320,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   def self.stream_file(filename, &block)
-    block.call(File.open(filename,'r'))
+    block.call(File.open(filename, 'r'))
   end
 
   MAX_LINE_BUFFER = -1
@@ -339,8 +356,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       untar_file(filename) do |type, stream|
         chunk_file(type, stream, &block)
       end
-      when '.dat', '.csv'
-        return
+    when '.dat', '.csv'
       stream_file filename do |stream|
         chunk_file(:dat, stream, &block)
       end
@@ -349,6 +365,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def self.import_postcodes_locally(directory)
     if Dir.exist?(directory)
       Dir.entries(directory).reject { |f| File.directory? f }.sort.each do |filename|
@@ -357,49 +374,96 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         next if postcode_file_already_loaded(File.basename(filename, File.extname(filename)))
 
         read_file("#{directory}/#{filename}") do |type, csv_lines|
-          inject_data(csv_lines) if type == :dat
-
-          upsert_csv_data(csv_lines) unless type == :dat
+          if process_csv_data(type, csv_lines)
+            log_postcode_file_loaded(extract_metadata(filename), csv_lines.length,
+                                     Digest::MD5.hexdigest(csv_lines),
+                                     File.mtime("#{directory}/#{filename}"),
+                                     DateTime.now.utc)
+          end
+        rescue StandardError => e
+          Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
         end
       end
     else
-      Rails.logger.info("No folder for local postcode import found (#{directory})")
+      Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
     end
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def self.process_csv_data(type, csv_lines)
+    return inject_data(csv_lines) if type == :dat
+
+    return upsert_csv_data(csv_lines) unless type == :dat
   end
 
   def self.upsert_csv_data(csv)
     csv_headers = []
     csv_headers = os_address_headers.split(',') unless csv.include? os_address_headers
-
-    chunks = SmarterCSV.process(StringIO.new(csv), user_provided_headers: csv_headers, chunk_size: 100010Parallel.map(chunks) do |chunk|
-      DistributedLocks.distributed_lock(153) do
-        puts chunk
-        # upsert here
-        #log_postcode_file_loaded(extract_metadata(obj.data.key), obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc)
+    fully_processed = true
+    SmarterCSV.process(StringIO.new(csv), user_provided_headers: csv_headers, chunk_size: 1000, remove_blank_values: false) do |chunk|
+      ActiveRecord::Base.connection_pool.with_connection do |db|
+        db.begin_db_transaction
+        chunk.each do |row|
+          upsert_row(db, row)
+        end
+        db.commit_db_transaction
       rescue StandardError => e
-        Rails.logger.error(e.message)
+        db.rollback_db_transaction
+        Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
+        fully_processed = false
       end
     end
+    fully_processed
   rescue StandardError => e
-    Rails.logger.error(e.message)
+    Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
+    false
+  end
+
+  INSERT_COLUMNS = %i[uprn udprn class parent_uprn last_update_date rm_organisation_name sub_building_name building_name building_number
+                      sao_start_number sao_start_suffix sao_end_number sao_end_suffix sao_text
+                      pao_start_number pao_start_suffix pao_end_number pao_end_suffix pao_text street_description dependent_thoroughfare
+                      thoroughfare dependent_locality locality town_name administrative_area post_town postcode postcode_locator po_box_number ward_code].freeze
+  INTEGER_COLUMNS = %i[uprn udprn parent_uprn sao_start_number sao_end_number pao_start_number pao_end_number].freeze
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def self.upsert_row(db, row)
+    new_date = DateTime.parse(row[:last_update_date])
+    result = db.exec_query(os_address_select(row))
+    db_date = result.empty? ? new_date : DateTime.parse(result[0]['last_update_date'])
+    db.execute(os_address_delete(row)) if db_date < new_date || result.length > 1
+    db.execute(os_address_insert(row)) if result.empty? || new_date >= db_date || result.length > 1
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def self.os_address_select(row)
+    "select last_update_date from os_address where postcode_locator = '#{row[:postcode_locator]}' and uprn = #{row[:uprn]} order by last_update_date desc"
+  end
+
+  def self.os_address_delete(row)
+    "delete from os_address where postcode_locator = '#{row[:postcode_locator]}' and uprn = #{row[:uprn]}"
+  end
+
+  def self.os_address_insert(row)
+    "insert into os_address (#{INSERT_COLUMNS.map(&:to_s).join(',')}) values (#{INSERT_COLUMNS.map { |c| db_value(row, c) }.join(',')})"
+  end
+
+  def self.db_value(row, col)
+    return 'null' if row[col].nil?
+
+    return "'#{row[col]}'" unless INTEGER_COLUMNS.include?(col)
+
+    row[col].to_s
   end
 
   def self.inject_data(lines)
-    csv_headers = []
-    csv_headers = os_address_headers.split(',') unless csv.include? os_address_headers
-
-    SmarterCSV.process(StringIO.new(lines), user_provided_headers: csv_headers, chunk_size: 1000) do |chunk|
-      begin
-        ActiveRecord::Base.connection_pool.with_connection do |conn|
-        rc = conn.raw_connection
-        rc.exec('COPY os_address FROM STDIN WITH CSV')
-        rc.put_copy_data chunk
-        rc.put_copy_end
-        end
-      rescue StandardError => e
-        Rails.logger.error e.message
-      end
+    ActiveRecord::Base.connection_pool.with_connection do |conn|
+      rc = conn.raw_connection
+      rc.exec('COPY os_address FROM STDIN WITH CSV')
+      rc.put_copy_data lines
+      rc.put_copy_end
     end
+    rescue StandardError => e
+      Rails.logger.error e.message
   end
 
   # rubocop:disable CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
@@ -412,7 +476,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
       next if %w[.sh .zip .tar .gz].select { |ext| obj.key.include? ext }.any?
 
-      next if postcode_file_already_loaded(obj.key)
+      next if postcode_file_already_loaded(extract_metadata(obj.key))
 
       # rc.put_copy_data(obj.get.body)
       # obj.get.body.each_line { |line| rc.put_copy_data(line) }
@@ -421,8 +485,23 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       obj.get do |chunk|
         chunks << chunk
       end
-      inject_data(chunks)
-      log_postcode_file_loaded(extract_metadata(obj.data.key), obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc)
+      result = false
+      case File.extname(filename)
+      when '.zip'
+        unzip_stream(chunks) do |type, stream|
+          result = process_csv_data(type, stream)
+        end
+      when '.gz'
+        untar_stream(chunks) do |type, stream|
+          result = process_csv_data(type, stream)
+        end
+      when '.dat', '.csv'
+        result = process_csv_data(:dat, chunks)
+      else
+        Rails.logger.info "Postcode processing ignoring: #{filename}"
+      end
+
+      log_postcode_file_loaded(extract_metadata(obj.key), obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc) if result
     rescue Aws::S3::Errors::AccessDenied => _e
       Rails.logger.warn "Access denied on #{obj.key}"
       puts "*** Access denied on #{obj.key}"
