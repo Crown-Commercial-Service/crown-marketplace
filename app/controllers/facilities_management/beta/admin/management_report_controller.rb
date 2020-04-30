@@ -13,6 +13,7 @@ module FacilitiesManagement
           if @management_report.valid?
             csv_string = ProcurementCsvExport.call(@management_report.start_date, @management_report.end_date)
             send_data(csv_string, filename: 'procurements_data.csv', type: 'text/csv')
+            @management_report.errors.clear
           else
             render :index
           end
