@@ -3,14 +3,25 @@
   <div id="buildings-container">
     <%= link_to t('.create_new_button'), new_facilities_management_beta_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button" %>
     <div class="govuk-!-width-two-thirds">
-      <p class="govuk-body-lead govuk-!-margin-bottom-2">
+      <p class="govuk-!-margin-bottom-2">
         <%= t('.start_paragraph') %>
       </p>
-        <%= t('.start_warning_html') %>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            How it works
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <%= t('.start_warning_html') %>
+        </div>
+      </details>
+
+
     </div>
     <h2 class="govuk-heading-m govuk-!-margin-top-6"><%= t('.my_buildings_header') %></h2>
     <% if @page_data[:model_object].count.zero? %>
-      <div class="govuk-!-width-two-thirds govuk-!-padding-top-2" style="border-top: 1px solid #CCCCCC">
+      <div class="govuk-!-width-two-thirds govuk-!-padding-2" style="border-top: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC">
         <span class="govuk-caption-m"><%= t('.no_buildings_text') %></span></th>
       </div>
     <% else %>
