@@ -7,6 +7,7 @@ class ProcurementCsvExport
     # Procurement
     'quick_search' => 'Quick search',
     'detailed_search' => 'Detailed search',
+    'choose_contract_value' => 'Choose contract value',
     'results' => 'Results',
     'da_draft' => 'DA draft',
     'direct_award' => 'Direct award',
