@@ -372,7 +372,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         next if filename.starts_with?('.')
 
         next if postcode_file_already_loaded(File.basename(filename, File.extname(filename)))
-
+        p "Processing #{filename}"
         read_file("#{directory}/#{filename}") do |type, csv_lines|
           if process_csv_data(type, csv_lines)
             log_postcode_file_loaded(extract_metadata(filename), csv_lines.length,
@@ -386,6 +386,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       end
     else
       Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
+      p "POSTCODE: No folder for local postcode import found (#{directory})"
     end
   end
   # rubocop:enable Metrics/AbcSize

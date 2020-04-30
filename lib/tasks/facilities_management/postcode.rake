@@ -13,16 +13,29 @@ namespace :db do
   end
 
   task local_postcode: :environment do |_, args|
-    p 'Creating postcode database and local import'
-=begin
+    options = {}
+    OptionParser.new(args) do |opts|
+      opts.banner = 'Usage: rake db:local_postcode [option]'
+      opts.on('-f', '--folder {dir}', 'The folder to source postcode data from', String) do |folder|
+        options[:folder] = folder
+      end
+    end.parse!(ARGSV.shift)
+
+    p "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
+    Rails.logger.info "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
+
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
     OrdnanceSurvey.create_postcode_locator_index
     OrdnanceSurvey.create_new_postcode_views
     OrdnanceSurvey.create_upload_log
-=end
 
-      OrdnanceSurvey.import_postcodes_locally args.to_a[0] || Rails.root.join('data', 'local_postcodes')
+    OrdnanceSurvey.import_postcodes_locally options[:folder] || Rails.root.join('data', 'local_postcodes')
+    exit
+  rescue StandardError => e
+    p "Error: #{e.message}"
+    Rails.logger "local_postcode: #{e.message}"
+    exit
   end
 
   task postcode: :environment do
