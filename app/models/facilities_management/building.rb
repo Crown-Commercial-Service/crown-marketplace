@@ -132,7 +132,7 @@ module FacilitiesManagement
                                { id: 'Call-Centre-Operations', title: 'Call centre operations', caption: '' },
                                { id: 'Warehouses', title: 'Warehouses', caption: 'Large storage facility with limited office space and low density occupation by supplier personnel.' },
                                { id: 'Restaurant-and-Catering-Facilities', title: 'Restaurant and catering facilities', caption: 'Areas including restaurants, deli-bars, coffee lounges and areas used exclusively for consuming food and beverages.' },
-                               { id: 'Pre-School', title: 'Pre-school', caption: 'Pre-school, including crèche, nursery or after-school facilities.' },
+                               { id: 'Pre-School', title: 'Pre-school', caption: 'Pre-school, including crèche, nursery and after-school facilities.' },
                                { id: 'Primary-School', title: 'Primary school', caption: 'Primary school facilities.' },
                                { id: 'Secondary-School', title: 'Secondary school', caption: 'Secondary school facilities.' },
                                { id: 'Special-Schools', title: 'Special schools', caption: 'Special school facilities.' },
