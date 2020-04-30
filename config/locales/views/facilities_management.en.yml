@@ -12,13 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a  To date
-              invalid: Enter a valid To date
+              blank: You must enter a 'To' date
+              invalid: Enter a valid 'To' date
               less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
               not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a From date
-              invalid: Enter a valid  From date
+              blank: You must enter a 'From' date
+              invalid: Enter a valid 'From' date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -523,7 +523,7 @@ en:
           my_buildings_header: My buildings
           no_buildings_text: You have no saved buildings
           start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
-          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+          start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
         page_definitions:
           add_building_address: Add building address
           building_size: Building size

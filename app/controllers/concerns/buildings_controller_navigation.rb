@@ -11,7 +11,7 @@ module BuildingsControllerNavigation
     security: { position: 4, desc: 'Security clearance' }
   }.freeze
 
-  def step_title
+  def step_title(action_name)
     t('facilities_management.beta.buildings.step_title.step_title', position: STEPS.dig(action_name.to_sym, :position), total: maximum_step_number)
   end
 
