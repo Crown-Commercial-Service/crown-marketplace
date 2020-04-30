@@ -13,8 +13,12 @@
           <div class="govuk-heading-m govuk-!-margin-left-1">
             <strong><%=t('.requirements') %></strong>
           </div>
-          <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.services'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', region_codes: params[:region_codes], service_codes: params[:service_codes]), collection: @services, superset: @procurement.service_codes} %>
-          <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.regions'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]),collection: @regions, superset: @procurement.region_codes} %>
+          
+          <%  selected_service = @procurement.errors.any? ? @procurement.service_codes : params[:service_codes]  %>
+          <%  selected_region = @procurement.errors.any? ? @procurement.region_codes : params[:region_codes]  %>
+
+          <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.services'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', region_codes: selected_region, service_codes: selected_service), collection: @services, superset: @procurement.service_codes} %>
+          <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.regions'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', region_codes: selected_region, service_codes: selected_service),collection: @regions, superset: @procurement.region_codes} %>
         </div>
       </div>
     </div>
