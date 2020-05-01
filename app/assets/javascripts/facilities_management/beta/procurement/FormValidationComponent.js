@@ -408,7 +408,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
     this.findPreExistingErrorMessage = function (jQueryElement, errorType, jqueryElementForInputGroup) {
         var property_name = this.getPropertyName(jQueryElement);
         var jqueryElementForRequiredMessage = jQueryElement.siblings("label[data-validation='" + errorType + "']");
-        console.log(jqueryElementForRequiredMessage.text())
         if (jqueryElementForRequiredMessage.length === 0) {
             var errorCollectionForPropertyAndType = this.findErrorCollection(jQueryElement, errorType, property_name);
             if (errorCollectionForPropertyAndType.length > 0) {
