@@ -12,36 +12,36 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   describe '#assessed_value' do
-    context 'when one building and one service' do
-      let(:code) { nil }
-      let(:service_standard) { nil }
-      let(:lift_data) { nil }
-      let(:no_of_appliances_for_testing) { nil }
-      let(:no_of_building_occupants) { nil }
-      let(:size_of_external_area) { nil }
-      let(:no_of_consoles_to_be_serviced) { nil }
-      let(:tones_to_be_collected_and_removed) { nil }
-      let(:no_of_units_to_be_serviced) { nil }
-      let(:estimated_annual_cost) { nil }
-      let(:estimated_cost_known) { nil }
-      let(:service_hours) { { "monday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "tuesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "wednesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "thursday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "friday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "saturday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "sunday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "uom": 0 } }
-      let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
-               code: code,
-               service_standard: service_standard,
-               lift_data: lift_data,
-               no_of_appliances_for_testing: no_of_appliances_for_testing,
-               no_of_building_occupants: no_of_building_occupants,
-               size_of_external_area: size_of_external_area,
-               no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
-               tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
-               no_of_units_to_be_serviced: no_of_units_to_be_serviced,
-               service_hours: service_hours,
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
-      end
-      # building gia = 1002
+    let(:code) { nil }
+    let(:service_standard) { nil }
+    let(:lift_data) { nil }
+    let(:no_of_appliances_for_testing) { nil }
+    let(:no_of_building_occupants) { nil }
+    let(:size_of_external_area) { nil }
+    let(:no_of_consoles_to_be_serviced) { nil }
+    let(:tones_to_be_collected_and_removed) { nil }
+    let(:no_of_units_to_be_serviced) { nil }
+    let(:estimated_annual_cost) { nil }
+    let(:estimated_cost_known) { nil }
+    let(:service_hours) { { "monday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "tuesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "wednesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "thursday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "friday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "saturday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "sunday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "uom": 0 } }
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             service_standard: service_standard,
+             lift_data: lift_data,
+             no_of_appliances_for_testing: no_of_appliances_for_testing,
+             no_of_building_occupants: no_of_building_occupants,
+             size_of_external_area: size_of_external_area,
+             no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
+             tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
+             no_of_units_to_be_serviced: no_of_units_to_be_serviced,
+             service_hours: service_hours,
+             procurement_building: create(:facilities_management_procurement_building_no_services,
+                                          procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
+    end
+    # building gia = 1002
 
+    context 'when one building and one service' do
       context 'when service is C.1 standard A' do
         let(:code) { 'C.1' }
         let(:service_standard) { 'A' }
@@ -1017,6 +1017,169 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
     end
 
+    context 'when estimated anual cost is not known' do
+      context 'when service is C.14' do
+        let(:code) { 'C.14' }
+        let(:service_standard) { 'A' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 488.55
+        end
+      end
+
+      context 'when service is C.9' do
+        let(:code) { 'C.9' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 2655.73
+        end
+      end
+
+      context 'when service is C.15' do
+        let(:code) { 'C.15' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 162.85
+        end
+      end
+
+      context 'when service is C.17' do
+        let(:code) { 'C.17' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 62.64
+        end
+      end
+
+      context 'when service is C.20' do
+        let(:code) { 'C.20' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 275.59
+        end
+      end
+
+      context 'when service is D.4' do
+        let(:code) { 'D.4' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 162.85
+        end
+      end
+
+      context 'when service is D.6' do
+        let(:code) { 'D.6' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 626.35
+        end
+      end
+
+      context 'when service is F.1' do
+        let(:code) { 'F.1' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 162.85
+        end
+      end
+
+      context 'when service is G.9' do
+        let(:code) { 'G.9' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 538.66
+        end
+      end
+
+      context 'when service is G.11' do
+        let(:code) { 'G.11' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 112.74
+        end
+      end
+
+      context 'when service is G.16' do
+        let(:code) { 'G.16' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 3845.8
+        end
+      end
+
+      context 'when service is H.7' do
+        let(:code) { 'H.7' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 112.74
+        end
+      end
+
+      context 'when service is H.2' do
+        let(:code) { 'H.2' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 2693.31
+        end
+      end
+
+      context 'when service is H.6' do
+        let(:code) { 'H.6' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 1390.5
+        end
+      end
+
+      context 'when service is H.10' do
+        let(:code) { 'H.10' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 238.01
+        end
+      end
+
+      context 'when service is H.13' do
+        let(:code) { 'H.13' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 7190.52
+        end
+      end
+
+      context 'when service is J.7' do
+        let(:code) { 'J.7' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 175.38
+        end
+      end
+
+      context 'when service is J.10' do
+        let(:code) { 'J.10' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 726.57
+        end
+      end
+
+      context 'when service is L.2' do
+        let(:code) { 'L.2' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 263.07
+        end
+      end
+
+      context 'when service is L.4' do
+        let(:code) { 'L.4' }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 313.18
+        end
+      end
+    end
+
     context 'when tupe is true' do
       let(:code) { nil }
       let(:procurement_building_service) do
@@ -1166,6 +1329,51 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       it 'returns the right assessed value' do
         expect(report.assessed_value.round(2)).to eq 29924.12
+      end
+    end
+
+    context 'when multiple services with benchmark cost but no buyer input' do
+      let(:procurement_building_service_c11) do
+        create(:facilities_management_procurement_building_service,
+               code: 'C.11',
+               service_standard: 'A',
+               procurement_building: create(:facilities_management_procurement_building_no_services,
+                                            building_id: create(:facilities_management_building_london).id,
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+      end
+      let(:procurement_building_service_c4) do
+        create(:facilities_management_procurement_building_service,
+               code: 'C.4',
+               service_standard: 'A',
+               procurement_building: procurement_building_service_c11.procurement_building)
+      end
+      let(:procurement_building_service_l2) do
+        create(:facilities_management_procurement_building_service,
+               code: 'L.2',
+               service_standard: 'A',
+               procurement_building: procurement_building_service_c4.procurement_building)
+      end
+
+      context 'when the variance is over 30%' do
+        let(:procurement_building_service_d1) do
+          create(:facilities_management_procurement_building_service,
+                 code: 'D.1',
+                 procurement_building: procurement_building_service_l2.procurement_building)
+        end
+
+        let(:procurement) { procurement_building_service_d1.procurement_building.procurement }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 7813.77
+        end
+      end
+
+      context 'when the variance is under 30%' do
+        let(:procurement) { procurement_building_service_l2.procurement_building.procurement }
+
+        it 'returns the right assessed value' do
+          expect(report.assessed_value.round(2)).to eq 2286.2
+        end
       end
     end
   end
