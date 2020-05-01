@@ -13,15 +13,16 @@ namespace :db do
     OrdnanceSurvey.import_postcodes args[:access_key], args[:secret_access_key], args[:bucket], args[:region]
   end
 
-  task :local_postcode, [:folder] => :environment do
+  task :local_postcode, [:folder] => :environment do |_, args|
     options = {}
 
     o = OptionParser.new do |opts|
       opts.banner = 'Usage: rake db:local_postcode [option]'
       opts.on('-f', '--folder ARG', String) { |folder| options[:folder] = folder }
     end
-    args = o.order!(ARGV){}
-    o.parse!(args)
+    nargs = o.order!(ARGV) {}
+    o.parse!(nargs)
+    options[:folder] = args[:folder] if options.empty?  # support debugging
 
     p "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
     Rails.logger.info "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"

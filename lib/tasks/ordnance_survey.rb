@@ -43,73 +43,79 @@ module OrdnanceSurvey
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
     query = <<~SQL
-CREATE VIEW os_address_view_2
-(building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
- sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
- class)
-AS
-SELECT CASE
-WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL AND
-NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL AND NULLIF(adds.pao_text::TEXT, ''::TEXT) IS NOT NULL
-THEN adds.pao_text::TEXT || ''::TEXT
-WHEN btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) =
-COALESCE(adds.building_name, adds.sub_building_name)::TEXT THEN NULL::TEXT
-WHEN NULLIF(
-            CASE
-            WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL THEN adds.building_name::TEXT
-            ELSE
-            CASE
-            WHEN NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL THEN adds.sub_building_name::TEXT
-            ELSE adds.sub_building_name::TEXT || ', '::TEXT
-            END || COALESCE(adds.building_name, ''::TEXT::CHARACTER VARYING)::TEXT
-            END, ''::TEXT) IS NULL THEN NULL::TEXT
-ELSE
-CASE
-WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL THEN adds.building_name::TEXT
-ELSE
-CASE
-WHEN NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL THEN adds.sub_building_name::TEXT
-ELSE adds.sub_building_name::TEXT || ', '::TEXT
-END || COALESCE(adds.building_name, ''::TEXT::CHARACTER VARYING)::TEXT
-END
-END                                                                                  AS building
-, CASE
-WHEN NULLIF(btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) || ' '::TEXT,
-            ''::TEXT) IS NULL THEN ''::TEXT
-ELSE btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) || ' '::TEXT
-END || adds.street_description::TEXT                                          AS street_address
-, CASE
-WHEN NULLIF(adds.dependent_locality::TEXT, ''::TEXT) IS NULL THEN ''::TEXT
-ELSE adds.dependent_locality::TEXT || ', '::TEXT
-END ||
-CASE
-WHEN NULLIF(adds.post_town::TEXT, ''::TEXT) IS NULL THEN adds.town_name
-ELSE adds.post_town
-END::TEXT                                                                     AS postal_town
-, adds.postcode_locator
-, NULLIF(adds.sub_building_name::TEXT, ''::TEXT)                                    AS sub_building_name
-, NULLIF(adds.building_name::TEXT, ''::TEXT)                                        AS building_name
-, NULLIF(adds.pao_text::TEXT, ''::TEXT)                                             AS pao_name
-, NULLIF(adds.sao_text::TEXT, ''::TEXT)                                             AS sao_name
-, btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT)   AS house_number
-, adds.street_description
-, NULLIF(adds.dependent_locality::TEXT, ''::TEXT)                                   AS village
-, CASE
-WHEN NULLIF(adds.post_town::TEXT, ''::TEXT) IS NULL THEN adds.town_name
-ELSE adds.post_town
-END                                                                                  AS post_town
-, replace(adds.postcode_locator::TEXT, ' '::TEXT, ''::TEXT)                         AS formatted_postcode
-, replace(adds.postcode_locator::TEXT, ' '::TEXT, adds.delivery_point_suffix::TEXT) AS building_ref
-, adds.uprn
-, adds.class
-    FROM os_address adds
-    WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT OR adds.class::TEXT ~~ 'OH%'::TEXT OR
-    adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT)
-    AND adds.class::TEXT !~~ 'U%'::TEXT
-    AND adds.class::TEXT !~~ 'CH%'::TEXT
-    AND adds.class::TEXT !~~ 'CZ%'::TEXT
-    AND adds.class::TEXT !~~ 'P%'::TEXT
-    AND adds.class::TEXT !~~ 'CU11%'::TEXT;
+        DO $$
+        BEGIN
+        CREATE VIEW os_address_view_2
+        (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
+         sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
+         class)
+        AS
+        SELECT CASE
+        WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL AND
+        NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL AND NULLIF(adds.pao_text::TEXT, ''::TEXT) IS NOT NULL
+        THEN adds.pao_text::TEXT || ''::TEXT
+        WHEN btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) =
+        COALESCE(adds.building_name, adds.sub_building_name)::TEXT THEN NULL::TEXT
+        WHEN NULLIF(
+                    CASE
+                    WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL THEN adds.building_name::TEXT
+                    ELSE
+                    CASE
+                    WHEN NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL THEN adds.sub_building_name::TEXT
+                    ELSE adds.sub_building_name::TEXT || ', '::TEXT
+                    END || COALESCE(adds.building_name, ''::TEXT::CHARACTER VARYING)::TEXT
+                    END, ''::TEXT) IS NULL THEN NULL::TEXT
+        ELSE
+        CASE
+        WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL THEN adds.building_name::TEXT
+        ELSE
+        CASE
+        WHEN NULLIF(adds.building_name::TEXT, ''::TEXT) IS NULL THEN adds.sub_building_name::TEXT
+        ELSE adds.sub_building_name::TEXT || ', '::TEXT
+        END || COALESCE(adds.building_name, ''::TEXT::CHARACTER VARYING)::TEXT
+        END
+        END                                                                                  AS building
+        , CASE
+        WHEN NULLIF(btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) || ' '::TEXT,
+                    ''::TEXT) IS NULL THEN ''::TEXT
+        ELSE btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT) || ' '::TEXT
+        END || adds.street_description::TEXT                                          AS street_address
+        , CASE
+        WHEN NULLIF(adds.dependent_locality::TEXT, ''::TEXT) IS NULL THEN ''::TEXT
+        ELSE adds.dependent_locality::TEXT || ', '::TEXT
+        END ||
+        CASE
+        WHEN NULLIF(adds.post_town::TEXT, ''::TEXT) IS NULL THEN adds.town_name
+        ELSE adds.post_town
+        END::TEXT                                                                     AS postal_town
+        , adds.postcode_locator
+        , NULLIF(adds.sub_building_name::TEXT, ''::TEXT)                                    AS sub_building_name
+        , NULLIF(adds.building_name::TEXT, ''::TEXT)                                        AS building_name
+        , NULLIF(adds.pao_text::TEXT, ''::TEXT)                                             AS pao_name
+        , NULLIF(adds.sao_text::TEXT, ''::TEXT)                                             AS sao_name
+        , btrim((adds.pao_start_number::TEXT || ''::TEXT) || adds.pao_start_suffix::TEXT)   AS house_number
+        , adds.street_description
+        , NULLIF(adds.dependent_locality::TEXT, ''::TEXT)                                   AS village
+        , CASE
+        WHEN NULLIF(adds.post_town::TEXT, ''::TEXT) IS NULL THEN adds.town_name
+        ELSE adds.post_town
+        END                                                                                  AS post_town
+        , replace(adds.postcode_locator::TEXT, ' '::TEXT, ''::TEXT)                         AS formatted_postcode
+        , replace(adds.postcode_locator::TEXT, ' '::TEXT, adds.delivery_point_suffix::TEXT) AS building_ref
+        , adds.uprn
+        , adds.class
+            FROM os_address adds
+            WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT OR adds.class::TEXT ~~ 'OH%'::TEXT OR
+            adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT)
+            AND adds.class::TEXT !~~ 'U%'::TEXT
+            AND adds.class::TEXT !~~ 'CH%'::TEXT
+            AND adds.class::TEXT !~~ 'CZ%'::TEXT
+            AND adds.class::TEXT !~~ 'P%'::TEXT
+            AND adds.class::TEXT !~~ 'CU11%'::TEXT;
+      EXCEPTION
+          WHEN SQLSTATE '42P07' THEN
+            NULL;
+        END; $$
     SQL
     p 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
@@ -131,38 +137,42 @@ END                                                                             
     p 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-    CREATE VIEW postcode_lookup
-    (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
-    address_region_code) AS
-    SELECT DISTINCT ((
-    CASE
-    WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::TEXT
-    ELSE ''::TEXT
-    END ||
-    CASE
-    WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::TEXT
-    ELSE initcap(addresses.street_description::TEXT) || ', '::TEXT
-    END) || initcap(addresses.postal_town)) || ''::TEXT AS summary_line
-    , CASE
-    WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
-    WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::TEXT
-    ELSE initcap(addresses.street_description::TEXT) || ''::TEXT
-    END                                                                          AS address_line_1
-    , CASE
-    WHEN addresses.building IS NOT NULL AND addresses.street_address IS NOT NULL
-    THEN initcap(addresses.street_address) || ''::TEXT
-    WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
-    ELSE NULL::TEXT
-    END                                                                          AS address_line_2
-    , initcap(addresses.postal_town)                                   AS address_town
-    , addresses.postcode_locator                                       AS address_postcode
-    , initcap(regions.region::TEXT)                                    AS address_region
-    , regions.region_code                                              AS address_region_code
-    FROM os_address_view_2              addresses
-    LEFT JOIN postcode_region_view regions
-    ON regions.postcode::TEXT = replace(addresses.postcode_locator::TEXT, ' '::TEXT, ''::TEXT);
-    
-
+        DO $$
+        BEGIN
+        CREATE VIEW postcode_lookup
+        (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
+        address_region_code) AS
+        SELECT DISTINCT ((
+        CASE
+        WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::TEXT
+        ELSE ''::TEXT
+        END ||
+        CASE
+        WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::TEXT
+        ELSE initcap(addresses.street_description::TEXT) || ', '::TEXT
+        END) || initcap(addresses.postal_town)) || ''::TEXT AS summary_line
+        , CASE
+        WHEN addresses.building IS NOT NULL THEN initcap(addresses.building)
+        WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::TEXT
+        ELSE initcap(addresses.street_description::TEXT) || ''::TEXT
+        END                                                                          AS address_line_1
+        , CASE
+        WHEN addresses.building IS NOT NULL AND addresses.street_address IS NOT NULL
+        THEN initcap(addresses.street_address) || ''::TEXT
+        WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
+        ELSE NULL::TEXT
+        END                                                                          AS address_line_2
+        , initcap(addresses.postal_town)                                   AS address_town
+        , addresses.postcode_locator                                       AS address_postcode
+        , initcap(regions.region::TEXT)                                    AS address_region
+        , regions.region_code                                              AS address_region_code
+        FROM os_address_view_2              addresses
+        LEFT JOIN postcode_region_view regions
+        ON regions.postcode::TEXT = replace(addresses.postcode_locator::TEXT, ' '::TEXT, ''::TEXT);
+      EXCEPTION
+          WHEN SQLSTATE '42P07' THEN
+            NULL;
+        END; $$
     SQL
     p 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
@@ -174,14 +184,14 @@ END                                                                             
 
   def self.create_upload_log
     query = "
-CREATE TABLE IF NOT EXISTS os_address_admin_uploads (
-    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-    filename character varying(255),
-    size integer,
-    etag character varying(255),
-    fail_reason text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL);"
+      CREATE TABLE IF NOT EXISTS os_address_admin_uploads (
+          id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+          filename character varying(255),
+          size integer,
+          etag character varying(255),
+          fail_reason text,
+          created_at timestamp without time zone NOT NULL,
+          updated_at timestamp without time zone NOT NULL);"
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
 
     # -- Indices -------------------------------------------------------
@@ -192,9 +202,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     puts e.message
   end
 
-  def self.postcode_file_already_loaded(key)
+  def self.postcode_file_already_loaded(filename)
     p "Checking file #{key}"
-    query = "select count(*) from os_address_admin_uploads where filename = '#{key}' or filename = '#{extract_metadata(key)}'"
+    query = "select count(*) from os_address_admin_uploads where fail_reason is null and filename = '#{filename}' or filename = '#{extract_metadata(filename)}'"
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
@@ -207,27 +217,48 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>[\w]{1,2}))/.freeze
-  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)(?>.csv-)(?<outcode>\w{1,2}))/.freeze
+  MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/.freeze
+
   def self.extract_metadata(filename)
     [MATCH_1, MATCH_2].each do |m|
       match_data = filename.match(m)
       next if match_data.nil?
 
-      return "#{match_data[:date]}_#{match_data[:seq]}_#{match_data[:outcode].upcase}"
+      result = "#{match_data[:date]}_#{match_data[:seq]}"
+      result += "_#{match_data[:outcode].upcase}" unless match_data[:outcode].nil?
+
+      return result
     end
 
     filename
   end
 
-  def self.log_postcode_file_loaded(key, size, etag, created_at, updated_at)
+  def self.log_postcode_file_failed(filename, reason)
+    metadata = extract_metadata(filename)
+    query = "INSERT INTO os_address_admin_uploads (filename, fail_reason, updated_at) VALUES('#{metadata}', '#{reason}', '#{DateTime.now.utc}');"
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      result = db.exec_query(query)
+      puts result
+    end
+    true
+  rescue PG::Error => e
+    puts e.message
+    Rails.logger.error(e.message)
+    false
+  end
+
+  def self.log_postcode_file_loaded(filename, size, etag, created_at, updated_at)
+    key = extract_metadata(filename)
     query = "
     INSERT INTO os_address_admin_uploads (filename, size, etag, created_at, updated_at) VALUES('#{key}', #{size}, '#{etag}', '#{created_at}', '#{updated_at}');"
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
       puts result
     end
+    true
   rescue PG::Error => e
     puts e.message
+    Rails.logger.error(e.message)
     false
   end
 
@@ -245,7 +276,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   def self.os_address_headers
-    File.read(Rails.root.join('data', 'postcode', 'os_address_headers.csv'))
+    @@os_address_headers ||= File.read(Rails.root.join('data', 'postcode', 'os_address_headers.csv'))
   end
 
   def self.file_type(filename)
@@ -254,10 +285,16 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     :csv if filename.include? '.csv'
   end
 
-  def self.untar_file(filename, &block)
+  def self.untar_file(filename, summary, &block)
+    summary[:updated_time] = File.mtime(filename)
     Gem::Package::TarReader.new(Zlib::GzipReader.open(filename)) do |tar|
       tar.each do |entry|
-        block.call(file_type(entry.full_name), StringIO.new(entry.read)) if entry.file?
+        next if entry.file?
+
+        file_stream = StringIO.new(entry.read)
+        summary[:length] = file_stream.string.length
+        summary[:md5] = Digest::MD5.hexdigest(file_stream.string)
+        block.call(file_type(entry.name), file_stream)
       end
     end
   end
@@ -270,6 +307,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
+  def self.unzip_file(filename, summary, &block)
+    summary[:updated_time] = File.mtime(filename)
+    Zip::File.open(filename) do |zip_file|
+      zip_file.each do |entry|
+        next if entry.name_is_directory?
+
+        summary[:length] = entry.size
+        summary[:md5] = Digest::MD5.hexdigest(entry.crc)
+        block.call(file_type(entry.name), entry.get_input_stream)
+      end
+    end
+  end
+
   def self.unzip_stream(bytes, &block)
     Zip::File.new(IO.new(bytes)) do |zip_file|
       zip_file.each do |entry|
@@ -278,97 +328,108 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
-  def self.unzip_file(filename, &block)
-    Zip::File.open(filename) do |zip_file|
-      zip_file.each do |entry|
-        block.call(file_type(entry.name), entry.get_input_stream)
-      end
+  CHUNK_SIZE = 100000
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def self.stream_file(filename, data_summary, &block)
+    counter = 0
+    chunk = ''
+    md5 = Digest::MD5.new
+    data_summary[:updated_time] = File.mtime(filename)
+    data_summary[:length] = File.size(filename)
+
+    file_io = File.new(filename, 'r')
+    header_line = file_io.readline
+    (file_type = (if header_line.include?('uprn')
+                    :csv
+                  else
+                    :dat
+                  end)) and file_io.rewind
+
+    file_io.each do |line|
+      (counter = 0) and (chunk = '') if counter == CHUNK_SIZE
+      chunk << line
+      counter += 1
+      md5 << chunk if counter == CHUNK_SIZE
+      block.call(file_type, StringIO.new(chunk)) and next if counter == CHUNK_SIZE
     end
+    data_summary[:md5] = md5.to_s
+  rescue StandardError => e
+    data_summary[:fail] = e.message
+    raise e
+  ensure
+    file_io&.try(&:close)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
-  def self.stream_file(filename, &block)
-    block.call(File.open(filename, 'r'))
-  end
-
-  MAX_LINE_BUFFER = -1
-
-  def self.chunk_file(type, stream, &block)
-    lines = ''
-    line_counter = 0
-
-    if MAX_LINE_BUFFER.positive?
-      until stream.eof?
-        lines << stream.readline
-        line_counter += 1
-        next if MAX_LINE_BUFFER == line_counter
-
-        block.call(type, lines)
-        lines = ''
-        line_counter = 0
-      end
-    else
-      lines = stream.read
-    end
-
-    block.call(type, lines) if lines.present?
-  end
-
-  def self.read_file(filename, &block)
+  def self.read_file(filename, fn_process, &block)
+    data_summary = {}
+    #file_io = IO.new(filename)
     case File.extname(filename)
     when '.zip'
-      unzip_file(filename) do |type, stream|
-        chunk_file(type, stream, &block)
+      unzip_file(filename, data_summary) do |type, stream|
+        fn_process.call(type, stream)
       end
+      block.call(data_summary)
     when '.gz'
-      untar_file(filename) do |type, stream|
-        chunk_file(type, stream, &block)
+      untar_file(filename, data_summary) do |type, stream|
+        fn_process.call(type, stream)
       end
+      block.call(data_summary)
     when '.dat', '.csv'
-      stream_file filename do |stream|
-        chunk_file(:dat, stream, &block)
+      stream_file(filename, data_summary) do |type, stream|
+        fn_process.call(type, stream)
       end
+      block.call(data_summary)
     else
       Rails.logger.info "Postcode processing ignoring: #{filename}"
     end
   end
 
+  def self.process_csv_data(type, csv_stream)
+    return inject_data(csv_stream.read) if type == :dat
+
+    return upsert_csv_data(csv_stream) unless type == :dat
+  end
+
   # rubocop:disable Metrics/AbcSize
   def self.import_postcodes_locally(directory)
     if Dir.exist?(directory)
+      beginning_time = Time.current
       Dir.entries(directory).reject { |f| File.directory? f }.sort.each do |filename|
         next if filename.starts_with?('.')
 
         next if postcode_file_already_loaded(File.basename(filename, File.extname(filename)))
-        p "Processing #{filename}"
-        read_file("#{directory}/#{filename}") do |type, csv_lines|
-          if process_csv_data(type, csv_lines)
-            log_postcode_file_loaded(extract_metadata(filename), csv_lines.length,
-                                     Digest::MD5.hexdigest(csv_lines),
-                                     File.mtime("#{directory}/#{filename}"),
-                                     DateTime.now.utc)
-          end
-        rescue StandardError => e
-          Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
+
+        p "Processing    #{filename}"
+        file_time = Time.current
+        read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
+          p "Duration for #{filename}, of #{summation[:length]/1024}kB is #{Time.current - file_time}"
+          log_postcode_file_loaded(filename, summation[:length],
+                                   summation[:md5],
+                                   summation[:updated_time],
+                                   DateTime.now.utc)
         end
+      rescue StandardError => e
+        p e.message
+        log_postcode_file_failed(filename, e.message)
+        Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
       end
+      p "Duration: #{Time.current - beginning_time}"
+      Rails.logger.info("POSTCODE: Duration #{Time.current - beginning_time}")
     else
       Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
       p "POSTCODE: No folder for local postcode import found (#{directory})"
     end
   end
+
   # rubocop:enable Metrics/AbcSize
 
-  def self.process_csv_data(type, csv_lines)
-    return inject_data(csv_lines) if type == :dat
-
-    return upsert_csv_data(csv_lines) unless type == :dat
-  end
-
-  def self.upsert_csv_data(csv)
-    csv_headers = []
-    csv_headers = os_address_headers.split(',') unless csv.include? os_address_headers
+  # rubocop:disable Metrics/AbcSize
+  def self.upsert_csv_data(csv_stream)
+    csv_headers     = []
+    csv_headers     = os_address_headers.split(',') unless csv_stream.include? os_address_headers
     fully_processed = true
-    SmarterCSV.process(StringIO.new(csv), user_provided_headers: csv_headers, chunk_size: 1000, remove_blank_values: false) do |chunk|
+    SmarterCSV.process(csv_stream, user_provided_headers: csv_headers, chunk_size: 1000, remove_blank_values: false) do |chunk|
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.begin_db_transaction
         chunk.each do |row|
@@ -383,11 +444,13 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
     fully_processed
   rescue StandardError => e
+    p e.message
     Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
     false
   end
+  # rubocop:enable Metrics/AbcSize
 
-  INSERT_COLUMNS = %i[uprn udprn class parent_uprn last_update_date rm_organisation_name sub_building_name building_name building_number
+  INSERT_COLUMNS  = %i[uprn udprn class parent_uprn last_update_date rm_organisation_name sub_building_name building_name building_number
                       sao_start_number sao_start_suffix sao_end_number sao_end_suffix sao_text
                       pao_start_number pao_start_suffix pao_end_number pao_end_suffix pao_text street_description dependent_thoroughfare
                       thoroughfare dependent_locality locality town_name administrative_area post_town postcode postcode_locator po_box_number ward_code].freeze
@@ -396,11 +459,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   # rubocop:disable Metrics/CyclomaticComplexity
   def self.upsert_row(db, row)
     new_date = DateTime.parse(row[:last_update_date])
-    result = db.exec_query(os_address_select(row))
-    db_date = result.empty? ? new_date : DateTime.parse(result[0]['last_update_date'])
+    result   = db.exec_query(os_address_select(row))
+    db_date  = result.empty? ? new_date : DateTime.parse(result[0]['last_update_date'])
     db.execute(os_address_delete(row)) if db_date < new_date || result.length > 1
     db.execute(os_address_insert(row)) if result.empty? || new_date >= db_date || result.length > 1
   end
+
   # rubocop:enable Metrics/CyclomaticComplexity
 
   def self.os_address_select(row)
@@ -430,8 +494,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       rc.put_copy_data lines
       rc.put_copy_end
     end
-    rescue StandardError => e
-      Rails.logger.error e.message
+  rescue StandardError => e
+    Rails.logger.error e.message
   end
 
   # rubocop:disable CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
@@ -455,18 +519,18 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       end
       result = false
       case File.extname(filename)
-      when '.zip'
-        unzip_stream(chunks) do |type, stream|
-          result = process_csv_data(type, stream)
-        end
-      when '.gz'
-        untar_stream(chunks) do |type, stream|
-          result = process_csv_data(type, stream)
-        end
-      when '.dat', '.csv'
-        result = process_csv_data(:dat, chunks)
-      else
-        Rails.logger.info "Postcode processing ignoring: #{filename}"
+        when '.zip'
+          unzip_stream(chunks) do |type, stream|
+            result = process_csv_data(type, stream)
+          end
+        when '.gz'
+          untar_stream(chunks) do |type, stream|
+            result = process_csv_data(type, stream)
+          end
+        when '.dat', '.csv'
+          result = process_csv_data(:dat, chunks)
+        else
+          Rails.logger.info "Postcode processing ignoring: #{filename}"
       end
 
       log_postcode_file_loaded(extract_metadata(obj.key), obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc) if result
