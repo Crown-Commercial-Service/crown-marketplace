@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_30_131751) do
-=======
-ActiveRecord::Schema.define(version: 2020_04_29_132059) do
->>>>>>> changed volumes on fm building services table from integers to bigInt
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,12 +39,12 @@ ActiveRecord::Schema.define(version: 2020_04_29_132059) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "user_email", null: false
-    t.jsonb "building_json"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
     t.text "updated_by"
+    t.text "user_email"
+    t.jsonb "building_json"
     t.text "building_name"
     t.text "description"
     t.integer "gia"
