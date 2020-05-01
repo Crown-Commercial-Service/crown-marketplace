@@ -7,10 +7,16 @@
     "@babel/plugin-transform-modules-umd": "^7.9.0",
     "@hmcts/frontend": "0.0.29-alpha",
     "govuk-frontend": "^2.13.0",
-    "html5shiv": "^3.7.3"
+    "html5shiv": "^3.7.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.4",
     "juice": "^5.0.1"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
