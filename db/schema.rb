@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_131751) do
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.string "contract_name", limit: 100
-    t.money "estimated_annual_cost", scale: 2
+    t.integer "estimated_annual_cost"
     t.boolean "tupe"
     t.integer "initial_call_off_period"
     t.date "initial_call_off_start_date"
