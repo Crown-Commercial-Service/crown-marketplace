@@ -142,7 +142,7 @@ module ProcurementValidator
         errors.add(:optional_call_off_extensions_2, :blank) if optional_call_off_extensions_2.nil?
       end
 
-      errors.add(:optional_call_off_extensions_2, :blank) if !optional_call_off_extensions_3.nil? && !optional_call_off_extensions_4.nil? && optional_call_off_extensions_2.nil?
+      errors.add(:optional_call_off_extensions_2, :blank) if (!optional_call_off_extensions_3.nil? || !optional_call_off_extensions_4.nil?) && optional_call_off_extensions_2.nil?
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
