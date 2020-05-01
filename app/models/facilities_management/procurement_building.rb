@@ -42,7 +42,7 @@ module FacilitiesManagement
     def services_valid?
       false if procurement_building_services.empty?
       result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
-      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result && answers_present?
+      errors.add(:procurement_building_services, :invalid) unless result && answers_present?
       result
     end
 
