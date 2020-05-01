@@ -143,7 +143,7 @@ module OrdnanceSurvey
                           WHEN addresses.building IS NOT NULL AND addresses.street_address IS NOT NULL
                               THEN initcap(addresses.street_address) || ''::TEXT
                           WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
-                          ELSE NULL::TEXT
+                          ELSE ''::TEXT
           END                                                                          AS address_line_2
                     , initcap(addresses.postal_town)                                   AS address_town
                     , addresses.postcode_locator                                       AS address_postcode
