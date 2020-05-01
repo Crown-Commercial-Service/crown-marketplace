@@ -8,8 +8,8 @@
         <div class="govuk_radios">
           <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
             <div class="govuk-radios__item">
-              <%= ff.radio_button :building_type, building_type[:title], class: 'govuk-radios__input' %>
-              <%= ff.label :building_type, value: building_type[:title], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
+              <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
+              <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                 <%= building_type[:title] %>
               <% end %>
               <span class="govuk-hint govuk-radios__hint"><%= building_type[:caption] %></span>
