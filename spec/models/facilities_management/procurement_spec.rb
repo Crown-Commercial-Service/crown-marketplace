@@ -510,7 +510,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.set_state_to_results_if_possible!
       end
 
-      context 'when customer has all services unpriced' do
+      context 'when customer has all services unpriced and no buyer input' do
         let(:codes) { %w[L.6 L.7 L.8] }
         let(:services_standard) { [nil, nil, nil] }
 
@@ -526,12 +526,20 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
         end
 
+        it 'procurement_building_services_not_used_in_calculation returns a list with L.6, L.7 and L.8' do
+          expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 3
+        end
+
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
         end
+
+        it 'does not save lot number' do
+          expect(procurement.lot_number).to be nil
+        end
       end
 
-      context 'when customer has some services unpriced' do
+      context 'when customer has some services unpriced and no buyer input' do
         let(:codes) { %w[G.1 L.7 L.8] }
         let(:services_standard) { ['A', nil, nil] }
 
@@ -555,10 +563,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
         end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
+        end
       end
 
       context 'when customer has some services unpriced and when buyer input present' do
-        let(:codes) { %w[G.1 L.7 L.8] }
+        let(:codes) { %w[G.1 J.7 L.8] }
         let(:services_standard) { ['A', nil, nil] }
         let(:estimated_cost_known) { true }
 
@@ -566,8 +578,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
         end
 
+        it 'procurement_building_services_not_used_in_calculation returns a list with L.8 only' do
+          expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 1
+        end
+
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
         end
       end
 
@@ -587,6 +607,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'eligible_for_da returns true' do
           expect(procurement.eligible_for_da).to be true
         end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
+        end
       end
 
       context 'when customer has some services unpriced and when buyer input present' do
@@ -596,6 +620,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'some_services_unpriced_and_no_buyer_input? returns false' do
           expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
         end
       end
     end
@@ -608,6 +636,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       before do
         allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
         allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
         # rubocop:disable RSpec/AnyInstance

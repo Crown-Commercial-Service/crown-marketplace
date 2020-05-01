@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
   <div class="govuk-!-width-two-thirds">
     <%= form_for @page_data[:model_object], url: facilities_management_beta_building_path(@page_data[:model_object].id), html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
       <input type="hidden" name="step" value="type"/>
@@ -35,7 +36,7 @@
               </div>
             <% end %>
             <div class="govuk-radios__divider govuk-!-margin-top-4 govuk-!-margin-bottom-4">or</div>
-            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object)) do %>
+            <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object), true) do %>
               <div class="govuk-radios__item" data-module="other-expando">
                 <div class="other_container">
                   <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
@@ -45,6 +46,7 @@
                   <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].building_type != 'other'%>govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
                     <div class="other_input ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150" style="margin-left: 1.5ex">
                       <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></label>
+                      <%= display_potential_errors(@page_data[:model_object], :other_building_type, f.object_name) %>
                       <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex') %>
                     </div>
                   </div>

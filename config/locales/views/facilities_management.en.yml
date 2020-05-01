@@ -12,13 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a  To date
-              invalid: Enter a valid To date
+              blank: You must enter a 'To' date
+              invalid: Enter a valid 'To' date
               less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
               not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a From date
-              invalid: Enter a valid  From date
+              blank: You must enter a 'From' date
+              invalid: Enter a valid 'From' date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -83,8 +83,8 @@ en:
             building_type:
               blank: You must select a buiding type or describe your own
             gia:
-              blank: Enter a whole number for the size of internal area of this building
-              greater_than: Enter a whole number for the size of internal area of this building
+              blank: Building size must be a number between 1 and 999,999,999
+              greater_than: Building size must be a number between 1 and 999,999,999
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -193,16 +193,20 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
               too_long: Call-off contract period, including extensions must not be more than 10 years
             optional_call_off_extensions_2:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_3:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             optional_call_off_extensions_4:
               blank: Enter extension period
+              greater_than_or_equal_to: Extension period must be greater than or equal to 1
               not_an_integer: Extension period must be a whole number
             payment_method:
               inclusion: Select one payment method
@@ -482,7 +486,7 @@ en:
         add_address:
           add_address_header: Address
           description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-          line_1_of_2: Building and street line 1 or 2
+          line_1_of_2: Building and street line 1 of 2
           line_2_of_2: Building and street line 2 of 2 (optional)
           postcode: Postcode
           town_or_city: Town or city
@@ -518,8 +522,8 @@ en:
           link_to_building_summary: View details for building
           my_buildings_header: My buildings
           no_buildings_text: You have no saved buildings
-          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
-          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+          start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
+          start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
         page_definitions:
           add_building_address: Add building address
           building_size: Building size
@@ -530,7 +534,7 @@ en:
           manage_building_title: Manage buildings
           return_to_manage_buildings: Return to manage buildings
           save_and_continue: Save and continue
-          save_and_return_to_detailed_summary: Save and continue to building details summary
+          save_and_return_to_detailed_summary: Save and return to building details summary
           security_clearance: Security clearance
           skip_this_step: Skip this step
         security:
@@ -538,7 +542,7 @@ en:
           describe_security: Describe security level
           next_step: 'Next:'
           other: Other
-          security_description_html: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff.
+          security_description_html: Select the level of security clearance a supplier's staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
         show:
           add_address_text: Add address
@@ -708,7 +712,7 @@ en:
           can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
           contract_value_heading: When calculating your total contract value, we have not been been able to estimate the costs of some of your services, for which pricing is very customer specific.
           description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you have selected.
-          following_services_are_not_included: The following services aren’t included within the above value
+          following_services_are_not_included: The following services are not included within the above value
           heading: Looking at the options below, can you select the correct value range based on your budget, and expected cost of the contract?
           help_place_sublot_html: This will help us place your requirement in the correct sub-lot.<br/>NB. The value ranges are total contract values for the full term of the contract for the services you have selected.
           lot_number_1a_description: Total contract value up to £7 million
@@ -747,6 +751,10 @@ en:
             you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
             you_sign_2: this will happen offline (outside this portal)
             you_sign_3: usually within 2 working days
+          call_off_contract_documents:
+            call_out_leading: Download Call-off contract
+            colating: COLLATING DOCUMENTS
+            colating_message: Call-off contract will be available for download shortly
           closed:
             contract_closed:
               info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
@@ -797,12 +805,16 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          edit:
+            page_title: Close this procurement
           next_supplier:
             about_the_price: About the price
             about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
             close: You can close this procurement
             close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
             close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
+            download_docs_description: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to a supplier.
+            download_documents: Download all contract documents
             next_lowest: The next lowest supplier who can deliver the services to your buildings is
             next_steps: Available next steps
             offer: You can offer your contract to this supplier
@@ -888,6 +900,12 @@ en:
             notices_contact_details: Notices contact details
             payment_method: Payment method
             security_policy_document: Security policy
+          contract_summary:
+            call_off_contract_documents:
+              call_out_leading: Download Call-off contract
+              call_out_leading_main: Call-off contract documents
+              colating: COLLATING DOCUMENTS
+              colating_message: Call-off contract will be available for download shortly
           did_you_know:
             contract_documents:
               call_off_schedule_5:
@@ -1347,6 +1365,7 @@ en:
             list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
             list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
             list04_title: 4. Withdraw before signing
+            title: You have accepted this contract offer
             what_happens_next: What happens next
           declined_offer:
             contract_name: 'Contract name:'

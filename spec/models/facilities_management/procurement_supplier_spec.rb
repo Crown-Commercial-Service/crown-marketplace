@@ -82,6 +82,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
+      allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
       allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
       allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
       allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
@@ -149,6 +150,10 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
       describe '.sent' do
         context 'when the offer gets sent' do
+          it 'will call the GenerateContractZip' do
+            expect(FacilitiesManagement::GenerateContractZip).to have_received(:perform_in)
+          end
+
           it 'will call the ChangeStateWorker' do
             expect(FacilitiesManagement::ChangeStateWorker).to have_received(:perform_at)
           end

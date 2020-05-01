@@ -386,7 +386,7 @@ module FacilitiesManagement
     end
 
     def procurement_building_services_not_used_in_calculation
-      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code).nil? || CCS::FM::Rate.benchmark_rate_for(service.code).nil? }.map(&:name).uniq
+      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code, service.service_standard).nil? && CCS::FM::Rate.benchmark_rate_for(service.code, service.service_standard).nil? }.map(&:name).uniq
     end
 
     def some_services_unpriced_and_no_buyer_input?
@@ -405,10 +405,14 @@ module FacilitiesManagement
       all_services_missing_framework_price? && all_services_missing_benchmark_price? && !estimated_cost_known?
     end
 
+    def all_services_missing_framework_price?
+      procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+    end
+
     private
 
     def save_data_for_procurement
-      self.lot_number = assessed_value_calculator.lot_number
+      self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
       self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
 
@@ -454,10 +458,6 @@ module FacilitiesManagement
 
     def more_than_max_pensions?
       procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
-    end
-
-    def all_services_missing_framework_price?
-      procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
     end
 
     def all_services_missing_benchmark_price?

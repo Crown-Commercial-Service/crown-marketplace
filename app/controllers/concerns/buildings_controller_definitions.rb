@@ -49,13 +49,14 @@ module BuildingsControllerDefinitions
       },
       new: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
-        caption3: step_title,
-        page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building')
+        caption3: step_title('new'),
+        page_title: I18n.t('facilities_management.beta.buildings.page_definitions.create_single_building'),
+        secondary_name: 'save_and_return'
       },
       add_address: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        caption3: step_title,
+        caption3: step_title('add_address'),
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.add_building_address'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
         back_url: 'javascript:history.back()'
@@ -63,7 +64,7 @@ module BuildingsControllerDefinitions
       edit: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        caption3: step_title,
+        caption3: step_title('edit'),
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.change_building_details'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
         secondary_name: 'save_and_return',
@@ -79,7 +80,7 @@ module BuildingsControllerDefinitions
       gia: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        caption3: step_title,
+        caption3: step_title('gia'),
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.building_size'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
         secondary_name: 'save_and_return',
@@ -91,7 +92,7 @@ module BuildingsControllerDefinitions
       type: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        caption3: step_title,
+        caption3: step_title('type'),
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.building_type'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_continue'),
         secondary_name: 'save_and_return',
@@ -103,7 +104,7 @@ module BuildingsControllerDefinitions
       security: {
         caption1: I18n.t('facilities_management.beta.buildings.page_definitions.manage_building_title'),
         caption2: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        caption3: step_title,
+        caption3: step_title('security'),
         page_title: I18n.t('facilities_management.beta.buildings.page_definitions.security_clearance'),
         continuation_text: I18n.t('facilities_management.beta.buildings.page_definitions.save_and_return_to_detailed_summary'),
         continuation_name: 'save_and_return',

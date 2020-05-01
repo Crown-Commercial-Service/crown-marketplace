@@ -226,6 +226,41 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
             expect(procurement.valid?(:contract_dates)).to eq false
           end
         end
+
+        context 'when optional_call_off_extensions are present even when not selected' do
+          it 'will not be valid even though call_off_extension are false' do
+            procurement.call_off_extension_2 = 'false'
+            procurement.call_off_extension_3 = 'false'
+            procurement.call_off_extension_4 = 'false'
+            procurement.optional_call_off_extensions_1 = 1
+            procurement.optional_call_off_extensions_2 = 'a'
+            procurement.optional_call_off_extensions_3 = 'a'
+            procurement.optional_call_off_extensions_4 = 'a'
+            expect(procurement.valid?(:contract_dates)).to eq false
+          end
+        end
+
+        context 'when the second extension is nil but the third is not' do
+          it 'will not be valid' do
+            procurement.call_off_extension_2 = 'false'
+            procurement.call_off_extension_3 = 'true'
+            procurement.call_off_extension_4 = 'false'
+            procurement.optional_call_off_extensions_1 = 1
+            procurement.optional_call_off_extensions_3 = 1
+            expect(procurement.valid?(:contract_dates)).to eq false
+          end
+        end
+
+        context 'when the third extension is nil but the forth is not' do
+          it 'will not be valid' do
+            procurement.call_off_extension_2 = 'false'
+            procurement.call_off_extension_3 = 'false'
+            procurement.call_off_extension_4 = 'true'
+            procurement.optional_call_off_extensions_1 = 1
+            procurement.optional_call_off_extensions_4 = 1
+            expect(procurement.valid?(:contract_dates)).to eq false
+          end
+        end
       end
       # rubocop:enable RSpec/NestedGroups
     end

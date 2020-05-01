@@ -133,6 +133,8 @@ Rails.application.routes.draw do
         get 'results'
         get 'further_competition_spreadsheet'
         post 'da_spreadsheets'
+        get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
+        get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
         resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
           resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
           resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
@@ -148,9 +150,6 @@ Rails.application.routes.draw do
       end
       namespace :supplier do
         get '/', to: 'home#index'
-        get 'offer-declined', to: 'offer#declined'
-        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
-        get 'offer-accepted', to: 'offer#accepted'
         resources :dashboard, only: :index
         resources :contracts, only: %i[show edit update], controller: 'contracts' do
           resources :sent, only: %i[index], controller: 'sent'

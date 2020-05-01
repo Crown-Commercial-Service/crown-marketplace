@@ -6,6 +6,8 @@ module FacilitiesManagement
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
+    has_one_attached :contract_documents_zip
+
     attribute :contract_response
     attribute :contract_signed
     attribute :reason_for_not_signing
@@ -54,9 +56,11 @@ module FacilitiesManagement
       event :offer_to_supplier do
         before do
           assign_contract_number
+          unset_contract_documents_zip_generated
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
           begin
+            FacilitiesManagement::GenerateContractZip.perform_in(1.minute, id)
             FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
             FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
           rescue StandardError
@@ -123,8 +127,8 @@ module FacilitiesManagement
         transitions from: :sent, to: :expired
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
+    # rubocop:enable Metrics/BlockLength
     def self.used_direct_award_contract_numbers_for_current_year
       where('contract_number like ?', 'RM3860-DA%')
         .where('contract_number like ?', "%-#{Date.current.year}")
@@ -176,6 +180,10 @@ module FacilitiesManagement
 
     def set_contract_closed_date
       self.contract_closed_date = DateTime.now.in_time_zone('London')
+    end
+
+    def unset_contract_documents_zip_generated
+      self.contract_documents_zip_generated = false
     end
 
     def last_offer?

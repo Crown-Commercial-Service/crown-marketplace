@@ -107,6 +107,7 @@ module FacilitiesManagement
         continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
         update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+
         update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
         update_procurement && return if params['facilities_management_procurement'].present?
@@ -358,7 +359,12 @@ module FacilitiesManagement
 
       def update_service_codes
         @procurement.update(service_codes: procurement_params[:service_codes])
-        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+        if @procurement.quick_search?
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+        else
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :building_services) if params['commit'] == 'Save and continue'
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        end
       end
 
       def update_region_codes

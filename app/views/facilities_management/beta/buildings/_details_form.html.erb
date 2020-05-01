@@ -96,7 +96,7 @@
           <% valid_addresses.each do |addr| %>
             <option <%= 'selected' if @page_data[:model_object].address_line_1 == addr['address_line_1'] %>
                     data-address_line_1="<%= addr['address_line_1'] %>"
-                    data-address_line_2="<%= addr['address_line_1'] %>"
+                    data-address_line_2="<%= addr['address_line_2'] %>"
                     data-address_town="<%= addr['address_town'] %>"
                     data-address_postcode="<%= addr['address_postcode'] %>"
                     data-address_region="<%= addr['address_region'] %>"
