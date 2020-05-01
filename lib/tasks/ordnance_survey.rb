@@ -203,14 +203,15 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   def self.postcode_file_already_loaded(filename)
-    p "Checking file #{key}"
-    query = "select count(*) from os_address_admin_uploads where fail_reason is null and filename = '#{filename}' or filename = '#{extract_metadata(filename)}'"
+    query = "select count(*) from os_address_admin_uploads where fail_reason is null and (filename = '#{filename}' or filename = '#{extract_metadata(filename)}')"
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
       count  = result[0]['count']
-      count.positive?
+      p "Skipping file #{filename}"
+      return true if count.positive?
     end
+    false
   rescue PG::Error => e
     puts e.message
     false
@@ -235,10 +236,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
   def self.log_postcode_file_failed(filename, reason)
     metadata = extract_metadata(filename)
-    query = "INSERT INTO os_address_admin_uploads (filename, fail_reason, updated_at) VALUES('#{metadata}', '#{reason}', '#{DateTime.now.utc}');"
+    reason = reason.sub('`', '').sub('\'', '').sub('/', '/')
+    query = "INSERT INTO os_address_admin_uploads (filename, fail_reason, created_at, updated_at) VALUES('#{metadata}', '#{reason}', '#{DateTime.now.utc}', '#{DateTime.now.utc}')
+    on conflict (filename)
+    do update set fail_reason = EXCLUDED.fail_reason, updated_at = EXCLUDED.updated_at;"
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query(query)
-      puts result
+      db.exec_query(query)
     end
     true
   rescue PG::Error => e
@@ -250,10 +253,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.log_postcode_file_loaded(filename, size, etag, created_at, updated_at)
     key = extract_metadata(filename)
     query = "
-    INSERT INTO os_address_admin_uploads (filename, size, etag, created_at, updated_at) VALUES('#{key}', #{size}, '#{etag}', '#{created_at}', '#{updated_at}');"
+    INSERT INTO os_address_admin_uploads (filename, size, etag, created_at, updated_at) VALUES('#{key}', #{size}, '#{etag}', '#{created_at}', '#{updated_at}')
+    on conflict (filename)
+    do update set fail_reason = null, size= EXCLUDED.size, etag = EXCLUDED.etag, created_at = EXCLUDED.created_at, updated_at = EXCLUDED.updated_at;"
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      result = db.exec_query(query)
-      puts result
+      db.exec_query(query)
     end
     true
   rescue PG::Error => e
@@ -289,12 +293,17 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     summary[:updated_time] = File.mtime(filename)
     Gem::Package::TarReader.new(Zlib::GzipReader.open(filename)) do |tar|
       tar.each do |entry|
-        next if entry.file?
+        next unless entry.file?
 
+        summary[:length] = entry.size
         file_stream = StringIO.new(entry.read)
-        summary[:length] = file_stream.string.length
-        summary[:md5] = Digest::MD5.hexdigest(file_stream.string)
-        block.call(file_type(entry.name), file_stream)
+        header_line = file_stream.readline
+        (meta_type = (if header_line.downcase.include?('uprn')
+                        :csv
+                      else
+                        :dat
+                      end)) and file_stream.rewind
+        summary[:md5] = chunk_file_data(file_stream, meta_type, &block)
       end
     end
   end
@@ -309,13 +318,18 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
   def self.unzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
-    Zip::File.open(filename) do |zip_file|
-      zip_file.each do |entry|
+    Zip::InputStream.open(filename) do |io|
+      while (entry = io.get_next_entry)
         next if entry.name_is_directory?
 
+        header_line = io.readline
+        (meta_type = (if header_line.downcase.include?('uprn')
+                        :csv
+                      else
+                        :dat
+                      end)) and io.rewind
         summary[:length] = entry.size
-        summary[:md5] = Digest::MD5.hexdigest(entry.crc)
-        block.call(file_type(entry.name), entry.get_input_stream)
+        summary[:md5] = chunk_file_data(io, meta_type, &block)
       end
     end
   end
@@ -328,42 +342,45 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
-  CHUNK_SIZE = 100000
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.stream_file(filename, data_summary, &block)
-    counter = 0
-    chunk = ''
-    md5 = Digest::MD5.new
     data_summary[:updated_time] = File.mtime(filename)
     data_summary[:length] = File.size(filename)
-
     file_io = File.new(filename, 'r')
     header_line = file_io.readline
-    (file_type = (if header_line.include?('uprn')
+    (meta_type = (if header_line.downcase.include?('uprn')
                     :csv
                   else
                     :dat
                   end)) and file_io.rewind
-
-    file_io.each do |line|
-      (counter = 0) and (chunk = '') if counter == CHUNK_SIZE
-      chunk << line
-      counter += 1
-      md5 << chunk if counter == CHUNK_SIZE
-      block.call(file_type, StringIO.new(chunk)) and next if counter == CHUNK_SIZE
-    end
-    data_summary[:md5] = md5.to_s
+    data_summary[:md5] = chunk_file_data(file_io, meta_type, &block)
   rescue StandardError => e
     data_summary[:fail] = e.message
     raise e
   ensure
     file_io&.try(&:close)
   end
+
+  CHUNK_SIZE = 100000
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def self.chunk_file_data(io, meta_type, &block)
+    counter = 0
+    chunk = ''
+    md5 = Digest::MD5.new
+    io.each do |line|
+      (counter = 0) and (chunk = '') if counter == CHUNK_SIZE
+      chunk << line
+      counter += 1
+      md5 << chunk if counter == CHUNK_SIZE
+      block.call(meta_type, StringIO.new(chunk)) and next if counter == CHUNK_SIZE
+    end
+    block.call(meta_type, StringIO.new(chunk)) unless chunk.empty?
+    md5.to_s
+  end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def self.read_file(filename, fn_process, &block)
     data_summary = {}
-    #file_io = IO.new(filename)
+
     case File.extname(filename)
     when '.zip'
       unzip_file(filename, data_summary) do |type, stream|
@@ -395,6 +412,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.import_postcodes_locally(directory)
     if Dir.exist?(directory)
       beginning_time = Time.current
+
       Dir.entries(directory).reject { |f| File.directory? f }.sort.each do |filename|
         next if filename.starts_with?('.')
 
@@ -403,16 +421,16 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         p "Processing    #{filename}"
         file_time = Time.current
         read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
-          p "Duration for #{filename}, of #{summation[:length]/1024}kB is #{Time.current - file_time}"
-          log_postcode_file_loaded(filename, summation[:length],
+          p "Duration for #{filename}, of #{summation[:length] / 1024}kB is #{Time.current - file_time}"
+          log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
                                    summation[:md5],
                                    summation[:updated_time],
                                    DateTime.now.utc)
         end
       rescue StandardError => e
-        p e.message
-        log_postcode_file_failed(filename, e.message)
-        Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
+        p "Error with    #{File.basename(filename, File.extname(filename))}: \n\t#{e.message}"
+        log_postcode_file_failed(File.basename(filename, File.extname(filename)), e.message)
+        Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       end
       p "Duration: #{Time.current - beginning_time}"
       Rails.logger.info("POSTCODE: Duration #{Time.current - beginning_time}")
@@ -422,14 +440,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
-  # rubocop:enable Metrics/AbcSize
-
-  # rubocop:disable Metrics/AbcSize
   def self.upsert_csv_data(csv_stream)
-    csv_headers     = []
-    csv_headers     = os_address_headers.split(',') unless csv_stream.include? os_address_headers
     fully_processed = true
-    SmarterCSV.process(csv_stream, user_provided_headers: csv_headers, chunk_size: 1000, remove_blank_values: false) do |chunk|
+    SmarterCSV.process(csv_stream, user_provided_headers: [], chunk_size: 1000, remove_blank_values: false) do |chunk|
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.begin_db_transaction
         chunk.each do |row|
@@ -438,15 +451,13 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         db.commit_db_transaction
       rescue StandardError => e
         db.rollback_db_transaction
-        Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
+        p "\tError with upsert: #{e.message}"
+        Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
         fully_processed = false
+        raise e
       end
     end
     fully_processed
-  rescue StandardError => e
-    p e.message
-    Rails.logger.error(["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
-    false
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -462,7 +473,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     result   = db.exec_query(os_address_select(row))
     db_date  = result.empty? ? new_date : DateTime.parse(result[0]['last_update_date'])
     db.execute(os_address_delete(row)) if db_date < new_date || result.length > 1
-    db.execute(os_address_insert(row)) if result.empty? || new_date >= db_date || result.length > 1
+    db.execute(os_address_insert(row)) if result.empty? || new_date > db_date || result.length > 1
   end
 
   # rubocop:enable Metrics/CyclomaticComplexity
@@ -482,17 +493,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.db_value(row, col)
     return 'null' if row[col].nil?
 
-    return "'#{row[col]}'" unless INTEGER_COLUMNS.include?(col)
+    return "'#{row[col].gsub("'", "''")}'" unless INTEGER_COLUMNS.include?(col)
 
     row[col].to_s
   end
 
   def self.inject_data(lines)
-    ActiveRecord::Base.connection_pool.with_connection do |conn|
-      rc = conn.raw_connection
-      rc.exec('COPY os_address FROM STDIN WITH CSV')
-      rc.put_copy_data lines
-      rc.put_copy_end
+    unless lines.nil?
+      ActiveRecord::Base.connection_pool.with_connection do |conn|
+        rc = conn.raw_connection
+        rc.exec('COPY os_address FROM STDIN WITH CSV')
+        rc.put_copy_data lines
+        rc.put_copy_end
+      end
     end
   rescue StandardError => e
     Rails.logger.error e.message
