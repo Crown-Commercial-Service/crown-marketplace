@@ -1,8 +1,13 @@
 class Fixpostcodeviews < ActiveRecord::Migration[5.2]
-# rubocop:disable Metrics/MethodLength, BlockLength
+  # rubocop:disable Metrics/MethodLength, BlockLength
   def change
     reversible do |dir|
       dir.up do
+        execute <<~SQL
+          DROP VIEW IF EXISTS public.postcode_lookup;
+          DROP VIEW IF EXISTS public.os_address_view_2;
+        SQL
+
         execute <<~SQL
            CREATE or replace VIEW os_address_view_2
                       (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
@@ -64,8 +69,10 @@ class Fixpostcodeviews < ActiveRecord::Migration[5.2]
                , adds.uprn
                , adds.class
               FROM os_address adds
-              WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT OR adds.class::TEXT ~~ 'OH%'::TEXT OR
-                     adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT)
+              WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OT%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT
+                     OR adds.class::TEXT ~~ 'OH%'::TEXT OR adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT
+                     OR adds.class::TEXT ~~ 'OO%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT OR adds.class::TEXT ~~ 'OI02%'::TEXT
+                     OR adds.class::TEXT ~~ 'OI06%'::TEXT)
                 AND adds.class::TEXT !~~ 'U%'::TEXT
                 AND adds.class::TEXT !~~ 'CH%'::TEXT
                 AND adds.class::TEXT !~~ 'CZ%'::TEXT
@@ -108,6 +115,11 @@ class Fixpostcodeviews < ActiveRecord::Migration[5.2]
       end
 
       dir.down do
+        execute <<~SQL
+          DROP VIEW IF EXISTS public.postcode_lookup;
+          DROP VIEW IF EXISTS public.os_address_view_2;
+        SQL
+
         execute <<~SQL
             CREATE OR replace VIEW public.os_address_view_2 AS
                  SELECT
@@ -182,58 +194,58 @@ class Fixpostcodeviews < ActiveRecord::Migration[5.2]
         SQL
 
         execute <<~SQL
-               CREATE OR REPLACE VIEW public.postcode_lookup
-               AS
-               SELECT ((((
-                  CASE
-                      WHEN addresses.organisation IS NOT NULL AND NULLIF("position"(addresses.addressable_object, addresses.organisation::text), 0) IS NULL THEN initcap(addresses.organisation::text) || ', '::text
-                      ELSE ''::text
-                  END ||
-                  CASE
-                      WHEN addresses.addressable_object IS NOT NULL THEN initcap(addresses.addressable_object) || ', '::text
-                      WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
-                      ELSE ''::text
-                  END) ||
-                  CASE
-                      WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
-                      ELSE initcap(addresses.street_description::text) || ', '::text
-                  END) || initcap(addresses.postal_town)) || ''::text) AS summary_line,
-                 CASE
-               WHEN addresses.organisation IS NOT NULL THEN
-                 case when addresses.addressable_object is not null then
-                   initcap(addresses.organisation::text) || ', '::text || initcap(addresses.addressable_object)
-                 else
-                   initcap(addresses.organisation::text) || ''::text
-                 end
-                     WHEN addresses.addressable_object is not null then initcap(addresses.addressable_object) || ''::text
-                     ELSE
-                 CASE
-                   WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
-                   ELSE ''::text
-                 END ||
-                 CASE
-                   WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
-                   ELSE initcap(addresses.street_description::text) || ''::text
-                 END
-                 END AS address_line_1,
-                 CASE
-               WHEN addresses.addressable_object is not null or addresses.organisation IS NOT NULL then
-                 CASE
-                   WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
-                   ELSE initcap(addresses.street_description::text) || ''::text
-                 END
-               ELSE
-                 ''::text
-                 END AS address_line_2,
-             initcap(addresses.postal_town) AS address_town,
-             addresses.postcode_locator AS address_postcode,
-             initcap(regions.region::text) AS address_region,
-             regions.region_code AS address_region_code
-            FROM os_address_view_2 addresses
+           CREATE OR REPLACE VIEW public.postcode_lookup
+           AS
+             SELECT ((((
+                CASE
+                    WHEN addresses.organisation IS NOT NULL AND NULLIF("position"(addresses.addressable_object, addresses.organisation::text), 0) IS NULL THEN initcap(addresses.organisation::text) || ', '::text
+                    ELSE ''::text
+                END ||
+                CASE
+                    WHEN addresses.addressable_object IS NOT NULL THEN initcap(addresses.addressable_object) || ', '::text
+                    WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
+                    ELSE ''::text
+                END) ||
+                CASE
+                    WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ', '::text
+                    ELSE initcap(addresses.street_description::text) || ', '::text
+                END) || initcap(addresses.postal_town)) || ''::text) AS summary_line,
+               CASE
+             WHEN addresses.organisation IS NOT NULL THEN
+               case when addresses.addressable_object is not null then
+                 initcap(addresses.organisation::text) || ', '::text || initcap(addresses.addressable_object)
+               else
+                 initcap(addresses.organisation::text) || ''::text
+               end
+                   WHEN addresses.addressable_object is not null then initcap(addresses.addressable_object) || ''::text
+                   ELSE
+               CASE
+                 WHEN addresses.building IS NOT NULL THEN initcap(addresses.building) || ', '::text
+                 ELSE ''::text
+               END ||
+               CASE
+                 WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
+                 ELSE initcap(addresses.street_description::text) || ''::text
+               END
+               END AS address_line_1,
+               CASE
+             WHEN addresses.addressable_object is not null or addresses.organisation IS NOT NULL then
+               CASE
+                 WHEN addresses.street_address IS NOT NULL THEN initcap(addresses.street_address) || ''::text
+                 ELSE initcap(addresses.street_description::text) || ''::text
+               END
+             ELSE
+               ''::text
+               END AS address_line_2,
+           initcap(addresses.postal_town) AS address_town,
+           addresses.postcode_locator AS address_postcode,
+           initcap(regions.region::text) AS address_region,
+           regions.region_code AS address_region_code
+          FROM os_address_view_2 addresses
           LEFT outer JOIN postcode_region_view regions ON regions.postcode::text = replace(addresses.postcode_locator::text, ' '::text, ''::text);
         SQL
       end
     end
   end
-# rubocop:enable Metrics/MethodLength, BlockLength
+  # rubocop:enable Metrics/MethodLength, BlockLength
 end

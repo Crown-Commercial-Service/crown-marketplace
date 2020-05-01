@@ -40,10 +40,12 @@ module OrdnanceSurvey
   # rubocop:disable Metrics/MethodLength
   def self.create_new_postcode_views
     query = <<~SQL
-       CREATE VIEW os_address_view_2
-                  (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
-                   sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
-                   class)
+      DO $$
+      BEGIN
+      CREATE VIEW os_address_view_2
+                (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
+                 sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
+                 class)
       AS
       SELECT CASE
                  WHEN NULLIF(adds.sub_building_name::TEXT, ''::TEXT) IS NULL AND
@@ -100,28 +102,42 @@ module OrdnanceSurvey
            , adds.uprn
            , adds.class
           FROM os_address adds
-          WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT OR adds.class::TEXT ~~ 'OH%'::TEXT OR
-                 adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT)
-            AND adds.class::TEXT !~~ 'U%'::TEXT
-            AND adds.class::TEXT !~~ 'CH%'::TEXT
-            AND adds.class::TEXT !~~ 'CZ%'::TEXT
-            AND adds.class::TEXT !~~ 'P%'::TEXT
-            AND adds.class::TEXT !~~ 'CU11%'::TEXT;
+          WHERE (adds.class::TEXT !~~ 'O%'::TEXT OR adds.class::TEXT ~~ 'OT%'::TEXT OR adds.class::TEXT ~~ 'OE%'::TEXT
+                     OR adds.class::TEXT ~~ 'OH%'::TEXT OR adds.class::TEXT ~~ 'ON%'::TEXT OR adds.class::TEXT ~~ 'OP%'::TEXT
+                     OR adds.class::TEXT ~~ 'OO%'::TEXT OR adds.class::TEXT ~~ 'OS%'::TEXT OR adds.class::TEXT ~~ 'OI02%'::TEXT
+                     OR adds.class::TEXT ~~ 'OI06%'::TEXT)
+                AND adds.class::TEXT !~~ 'U%'::TEXT
+                AND adds.class::TEXT !~~ 'CH%'::TEXT
+                AND adds.class::TEXT !~~ 'CZ%'::TEXT
+                AND adds.class::TEXT !~~ 'P%'::TEXT
+                AND adds.class::TEXT !~~ 'CU11%'::TEXT;
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating os_address_view_2'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
-      CREATE OR REPLACE VIEW public.postcode_region_view
+      DO $$
+      BEGIN
+      CREATE VIEW public.postcode_region_view
                 AS
                 SELECT nuts.code AS region_code,
                    nuts3.name AS region,
                    nuts.postcode
                   FROM postcodes_nuts_regions nuts
                     JOIN nuts_regions nuts3 ON nuts3.code::text = nuts.code::text;
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating postcode_region_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }
     query = <<~SQL
+      DO $$
+      BEGIN
       CREATE VIEW postcode_lookup
                   (summary_line, address_line_1, address_line_2, address_town, address_postcode, address_region,
                    address_region_code) AS
@@ -152,7 +168,10 @@ module OrdnanceSurvey
           FROM os_address_view_2              addresses
                LEFT JOIN postcode_region_view regions
                          ON regions.postcode::TEXT = replace(addresses.postcode_locator::TEXT, ' '::TEXT, ''::TEXT);
-
+      EXCEPTION
+        WHEN SQLSTATE '42P07' THEN
+          NULL;
+      END; $$
     SQL
     p 'creating postcode_lookup_view'
     ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query query }

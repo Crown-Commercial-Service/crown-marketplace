@@ -44,16 +44,16 @@ gem 'jquery-rails', '~> 4.3.5'
 
 gem 'rollbar', '~> 2.24.0'
 
-# for cognito authentication
+# for dfe sign in
 gem 'omniauth', '~> 1.9.0'
 gem 'omniauth-oauth2', '~> 1.6.0'
-# updating to the latest gem version causes an error when response_type is :code. A fix is coming but has not been merged in yet, so will be using this forked repo until then
-gem 'omniauth_openid_connect', git: 'https://github.com/iceraluk/omniauth_openid_connect.git'
+gem 'omniauth_openid_connect', '~> 0.3.3'
+gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 gem 'json-jwt', '>= 1.11.0'
 
 # for authentication
 gem 'devise', '~> 4.7.1'
-
+# for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
 # for pagination

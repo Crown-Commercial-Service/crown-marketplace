@@ -1,7 +1,7 @@
 class UpdateBuildingTypesInTheDb < ActiveRecord::Migration[5.2]
   def up
     FacilitiesManagement::Building.all.each do |building|
-      updated_building_type = BUILDING_TYPE_KEY[building.building_type.to_sym]
+      updated_building_type = BUILDING_TYPE_KEY[building.building_type&.to_sym]
       building.building_type = updated_building_type unless updated_building_type.nil?
       building.building_json[:'building-type'] = updated_building_type unless updated_building_type.nil?
       building.save

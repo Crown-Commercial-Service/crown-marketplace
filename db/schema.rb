@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_01_001023) do
+ActiveRecord::Schema.define(version: 2020_05_01_135708) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,12 +39,12 @@ ActiveRecord::Schema.define(version: 2020_05_01_001023) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "user_email", null: false
-    t.jsonb "building_json"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
     t.text "updated_by"
+    t.text "user_email"
+    t.jsonb "building_json"
     t.text "building_name"
     t.text "description"
     t.integer "gia"

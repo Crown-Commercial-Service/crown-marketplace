@@ -4,6 +4,11 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
     reversible do |dir|
       dir.up do
         execute <<~SQL
+          DROP VIEW IF EXISTS public.postcode_lookup;
+          DROP VIEW IF EXISTS public.os_address_view_2;
+        SQL
+
+        execute <<~SQL
            CREATE or replace VIEW os_address_view_2
                       (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
                        sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
@@ -108,6 +113,11 @@ class Updatepostcodeviews < ActiveRecord::Migration[5.2]
       end
 
       dir.down do
+        execute <<~SQL
+          DROP VIEW IF EXISTS public.postcode_lookup;
+          DROP VIEW IF EXISTS public.os_address_view_2;
+        SQL
+
         execute <<~SQL
             CREATE OR replace VIEW public.os_address_view_2 AS
                  SELECT
