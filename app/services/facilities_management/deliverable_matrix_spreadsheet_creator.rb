@@ -31,7 +31,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard
+          service_standard: procurement_building_service.service_standard,
+          service_hours: procurement_building_service.service_hours
         }
       end
     end
@@ -295,7 +296,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       Date::DAYNAMES.rotate(1).each do |day|
         row_values = [service['code'], service['name'], day]
         buildings_data.each do |building|
-          service_measure = units_of_measure_values.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+          service_measure = units_of_measure_values.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+
           row_values << add_service_measure_row_value(service_measure, day)
         end
 
@@ -313,10 +315,10 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_service_measure_row_value(service_measure, day)
-    return nil if service_measure.nil? || service_measure[:uom_value].instance_of?(String)
+    return nil if service_measure.nil? || service_measure[:service_hours].nil?
 
     day_symbol = day.downcase.to_sym
-    case service_measure[:uom_value][day_symbol]['service_choice']
+    case service_measure[:service_hours][day_symbol]['service_choice']
     when 'not_required'
       'Not required'
     when 'all_day'
@@ -328,17 +330,24 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  def service_measure_invalid_type?(service_measure)
+    invalid = false
+    invalid = true if service_measure.nil? || service_measure[:uom_value].instance_of?(String) || service_measure[:uom_value].instance_of?(Integer)
+
+    invalid
+  end
+
   def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%02d', service_measure[:uom_value][day_symbol]['start_hour'])
-    start_minute = format('%02d', service_measure[:uom_value][day_symbol]['start_minute'])
-    start_ampm = service_measure[:uom_value][day_symbol]['start_ampm'].downcase
+    start_hour = format('%02d', service_measure[:service_hours][day_symbol]['start_hour'])
+    start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
+    start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
     start_hour + ':' + start_minute + start_ampm
   end
 
   def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%02d', service_measure[:uom_value][day_symbol]['end_hour'])
-    end_minute = format('%02d', service_measure[:uom_value][day_symbol]['end_minute'])
-    end_ampm = service_measure[:uom_value][day_symbol]['end_ampm'].downcase
+    end_hour = format('%02d', service_measure[:service_hours][day_symbol]['end_hour'])
+    end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
+    end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm
   end
 
