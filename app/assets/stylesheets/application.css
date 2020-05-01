@@ -2577,7 +2577,8 @@
 .govuk-details__text {
     padding: 15px;
     padding-left: 20px;
-    border-left: 5px solid #bfc1c3
+    border-left: 5px solid #bfc1c3;
+    word-break: break-word;
 }
 
 .govuk-details__text p {
@@ -4383,7 +4384,8 @@
 .govuk-table__header, .govuk-table__cell {
     padding: 10px 20px 10px 0;
     border-bottom: 1px solid #bfc1c3;
-    text-align: left
+    text-align: left;
+    word-break: break-word;
 }
 
 .govuk-table__cell--numeric {
