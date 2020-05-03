@@ -1,6 +1,7 @@
 #! /bin/sh
 echo Chunking postcode files
 zip=0
+gzip=0
 tar=0
 csv=0
 keep=0
@@ -11,10 +12,17 @@ if [[ -n "$1" ]]; then
     -zip)
       zip=1
       tar=0
+      gzip=0
       ;;
     -tar)
       tar=1
       zip=0
+      gzip=0
+      ;;
+    -gz)
+      tar=0
+      zip=0
+      gzip=1
       ;;
     -csv)
       csv=1
@@ -27,7 +35,8 @@ if [[ -n "$1" ]]; then
   done
 else
   echo "You can pass in -zip|tar [-keep] and -csv options."
-  echo "\t-csv will add the OS_ADDRESS headers to each file"
+  echo "\t-csv will add the OS_ADDRESS headers to each file.  Use this to data-cleanse the os_address table"
+  echo "\t-gz will compress each output file using gzip"
   echo "\t-zip will compress each output file using zip"
   echo "\t-tar will compress to produce .tar.gz files"
   echo "\t-keep will produce zip and dat/csv outputs"
@@ -38,6 +47,7 @@ if [ $csv = 1 ]; then
 else
   echo Creating DAT files
 fi
+
 if [ $zip = 1 ]; then
   echo Creating zips
   if [ $keep = 1 ]; then
@@ -47,8 +57,7 @@ if [ $zip = 1 ]; then
       echo "Keeping DAT files as well as the zip file"
     fi
   fi
-else
-  if [ $tar = 1 ]; then
+elif [ $tar = 1 ]; then
     echo Creating tars
     if [ $keep = 1 ]; then
       if [ $csv = 1 ]; then
@@ -57,9 +66,17 @@ else
         echo "Keeping DAT files as well as the tar.gz file"
       fi
     fi
-  else
-    echo Creating uncompressed files
+elif [ $gzip = 1 ]; then
+  echo Creating tars
+  if [ $keep = 1 ]; then
+    if [ $csv = 1 ]; then
+      echo "Keeping CSV files as well as the tar.gz file"
+    else
+      echo "Keeping DAT files as well as the tar.gz file"
+    fi
   fi
+else
+  echo Creating uncompressed files
 fi
 
 for file in AddressBasePlus_FULL*.csv; do
@@ -91,10 +108,13 @@ for file in AddressBasePlus_FULL*.csv; do
         if [[ $zip = 1 ]]; then
           zip "${finished_name}_${awksuffix}.${ext}.zip" "${finished_name}_${awksuffix}.${ext}";
         fi
+        if [[ $gzip = 1 ]]; then
+          gzip -k -9 -f "${finished_name}_${awksuffix}.${ext}";
+        fi
         if [[ $tar = 1 ]]; then
           tar -zc --options "gzip:compression-level=9" -f "${finished_name}_${awksuffix}.${ext}.tar.gz" "${finished_name}_${awksuffix}.${ext}";
         fi
-        [[ $keep -ne 1 && ($tar = 1 || $zip = 1) ]] && rm "${finished_name}_${awksuffix}.${ext}"
+        [[ $keep -ne 1 && ($tar = 1 || $zip = 1 || $gzip = 1) ]] && rm "${finished_name}_${awksuffix}.${ext}"
       done
 
       rm $pname.csv

@@ -1,12 +1,15 @@
 require 'smarter_csv'
 require 'rubygems/package'
 require 'digest/md5'
+require 'active_support'
+
 # rubocop:disable Metrics/ModuleLength, Rails/Output
 module OrdnanceSurvey
   require 'csv'
   require 'aws-sdk-s3'
   require 'json'
   require Rails.root.join('lib', 'tasks', 'distributed_locks')
+  include ActiveSupport::NumberHelper
 
   def self.create_postcode_table
     str   = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
@@ -208,7 +211,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     ActiveRecord::Base.connection_pool.with_connection do |db|
       result = db.exec_query(query)
       count  = result[0]['count']
-      p "Skipping file #{filename}"
+      p "Skipping file #{filename}" if count.positive?
       return true if count.positive?
     end
     false
@@ -220,13 +223,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>[\w]{1,2}))/.freeze
   MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/.freeze
 
-  def self.extract_metadata(filename)
+  def self.extract_metadata(filename, outcode = nil)
     [MATCH_1, MATCH_2].each do |m|
       match_data = filename.match(m)
       next if match_data.nil?
 
       result = "#{match_data[:date]}_#{match_data[:seq]}"
       result += "_#{match_data[:outcode].upcase}" unless match_data[:outcode].nil?
+      outcode << match_data[:outcode] unless match_data[:outcode].nil? || outcode.nil?
 
       return result
     end
@@ -316,6 +320,20 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
+  def self.gunzip_file(filename, summary, &block)
+    summary[:updated_time] = File.mtime(filename)
+    Zlib::GzipReader.open(filename) do |gz|
+      header_line = gz.readline
+      (meta_type = (if header_line.downcase.include?('uprn')
+                      :csv
+                    else
+                      :dat
+                    end)) and gz.rewind
+      summary[:md5] = chunk_file_data(gz, meta_type, &block)
+      summary[:length] = gz.pos
+    end
+  end
+
   def self.unzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Zip::InputStream.open(filename) do |io|
@@ -388,8 +406,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       end
       block.call(data_summary)
     when '.gz'
-      untar_file(filename, data_summary) do |type, stream|
-        fn_process.call(type, stream)
+      if filename.include? 'tar'
+        untar_file(filename, data_summary) do |type, stream|
+          fn_process.call(type, stream)
+        end
+      else
+        gunzip_file(filename, data_summary) do |type, stream|
+          fn_process.call(type, stream)
+        end
       end
       block.call(data_summary)
     when '.dat', '.csv'
@@ -412,23 +436,24 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.import_postcodes_locally(directory)
     if Dir.exist?(directory)
       beginning_time = Time.current
-
       Dir.entries(directory).reject { |f| File.directory? f }.sort.each do |filename|
         next if filename.starts_with?('.')
 
         next if postcode_file_already_loaded(File.basename(filename, File.extname(filename)))
 
+        next if File.extname(filename) == '.sh'
+
         p "Processing    #{filename}"
         file_time = Time.current
         read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
-          p "Duration for #{filename}, of #{summation[:length] / 1024}kB is #{Time.current - file_time}"
+          p "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
           log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
                                    summation[:md5],
                                    summation[:updated_time],
                                    DateTime.now.utc)
         end
       rescue StandardError => e
-        p "Error with    #{File.basename(filename, File.extname(filename))}: \n\t#{e.message}"
+        p "Error with    #{File.basename(filename, File.extname(filename))}: #{([e.message] + e.backtrace).join($INPUT_RECORD_SEPARATOR)}"
         log_postcode_file_failed(File.basename(filename, File.extname(filename)), e.message)
         Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       end
@@ -442,7 +467,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
   def self.upsert_csv_data(csv_stream)
     fully_processed = true
-    SmarterCSV.process(csv_stream, user_provided_headers: [], chunk_size: 1000, remove_blank_values: false) do |chunk|
+    csv_headers = os_address_headers.downcase.split(',')
+    SmarterCSV.process(csv_stream, user_provided_headers: csv_headers, chunk_size: 1000, remove_blank_values: false) do |chunk|
       ActiveRecord::Base.connection_pool.with_connection do |db|
         db.begin_db_transaction
         chunk.each do |row|
@@ -493,9 +519,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.db_value(row, col)
     return 'null' if row[col].nil?
 
-    return "'#{row[col].gsub("'", "''")}'" unless INTEGER_COLUMNS.include?(col)
+    return "'#{row[col].to_s.gsub("'", "''")}'" unless INTEGER_COLUMNS.include?(col)
 
     row[col].to_s
+  rescue StandardError => e
+    p (["dbValue Error processing column [:#{col}] in #{row}: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR)
   end
 
   def self.inject_data(lines)
@@ -523,9 +551,16 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
       next if postcode_file_already_loaded(extract_metadata(obj.key))
 
-      # rc.put_copy_data(obj.get.body)
-      # obj.get.body.each_line { |line| rc.put_copy_data(line) }
-      puts "*** Loading file #{obj.key}"
+      p "Processing    #{obj.key} (#{obj.presigned_url(:get)})"
+      
+      file_time = Time.current
+      read_file_from_S3(obj.key, obj, method(:process_csv_data)) do |summation|
+        p "Duration for #{obj.key}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
+        log_postcode_file_loaded(obj.key, summation[:length],
+                                 summation[:md5],
+                                 summation[:updated_time],
+                                 DateTime.now.utc)
+      end
       chunks = ''
       obj.get do |chunk|
         chunks << chunk
@@ -545,8 +580,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         else
           Rails.logger.info "Postcode processing ignoring: #{filename}"
       end
-
-      log_postcode_file_loaded(extract_metadata(obj.key), obj.data.size, obj.data.etag, obj.data.last_modified, DateTime.now.utc) if result
     rescue Aws::S3::Errors::AccessDenied => _e
       Rails.logger.warn "Access denied on #{obj.key}"
       puts "*** Access denied on #{obj.key}"
