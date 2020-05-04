@@ -1,10 +1,12 @@
 class FacilitiesManagement::DirectAwardSpreadsheet
-  def initialize(procurement_id)
-    @procurement = FacilitiesManagement::Procurement.find procurement_id
-    @active_procurement_buildings = @procurement.active_procurement_buildings
-    @supplier_name = @procurement.procurement_suppliers.first.supplier.data['supplier_name']
+  def initialize(contract_id)
+    @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
+    @procurement = @contract.procurement
 
-    frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement_id)
+    @active_procurement_buildings = @procurement.active_procurement_buildings
+    @supplier_name = @contract.supplier.data['supplier_name']
+
+    frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
     @rate_card_data = CCS::FM::RateCard.latest.data unless frozen_rate_card.exists?
 

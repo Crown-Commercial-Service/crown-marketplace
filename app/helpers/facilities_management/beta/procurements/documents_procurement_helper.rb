@@ -37,8 +37,8 @@ module FacilitiesManagement
           @procurement = @contract.procurement
           file_policy = @procurement.security_policy_document_file
           files_path = 'app/assets/files/'
-          direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.id
-          deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.id
+          direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new contract_id
+          deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new contract_id
           deliverable_matrix_spreadsheet_built = deliverable_matrix_spreadsheet.build
           @review_your_contract_static_files = FacilitiesManagement::Beta::Procurements::DocumentsProcurementHelper.review_docs
 
@@ -81,7 +81,7 @@ module FacilitiesManagement
           @buyer_detail = @procurement.user.buyer_detail
           @supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @supplier.data['contact_email'])
           @invoice_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.invoice_contact_detail
-          @authorised_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.authorised_contact_detail
+          @authorised_contact_detail = @procurement.using_buyer_detail_for_authorised_detail? ? @buyer_detail : @procurement.authorised_contact_detail
           @notice_contact_detail = @procurement.using_buyer_detail_for_notices_detail? ? @buyer_detail : @procurement.notices_contact_detail
 
           view_assignement = {

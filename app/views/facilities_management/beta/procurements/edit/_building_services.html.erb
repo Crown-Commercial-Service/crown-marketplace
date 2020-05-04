@@ -26,8 +26,11 @@
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
           <div id="<%= 'building-services-' + procurement_building.object.id %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.object.id != f.object.active_procurement_buildings.first.id %>">
             <div class="govuk-form-group <%= 'govuk-form-group--error' if procurement_building.object.errors.any? %>">
+              <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend">
               <h2 tabindex="-1" class="govuk-heading-m govuk-!-margin-top-7">Choose from <%= @services.count %>
                 services</h2>
+              </legend>
               <%= display_error_no_attr(procurement_building.object, :service_codes) %>
               <div class="govuk-checkboxes ccs-govuk-checkboxes--s govuk-checkboxes--small">
                 <ul>
@@ -51,10 +54,11 @@
                     </label>
                   </li>
                   <li class="govuk-checkboxes__item govuk-!-margin-top-5 govuk-!-padding-left-0">
-                    <%= link_to '+ Update services', edit_facilities_management_beta_procurement_path(@procurement.id, step: 'services'), class: 'govuk-link govuk-!-font-size-19' %>
+                    <%= link_to '+ Update services', edit_facilities_management_beta_procurement_path(@procurement.id, step: 'services'), class: 'govuk-link govuk-!-font-size-19 update-services' %>
                   </li>
                 </ul>
               </div>
+              </fieldset>
             </div>
           </div>
         <% end %>

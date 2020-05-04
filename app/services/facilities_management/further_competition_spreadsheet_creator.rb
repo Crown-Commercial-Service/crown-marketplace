@@ -156,10 +156,25 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def partial_estimated_text
-    if @procurement.all_services_missing_framework_price? && !@procurement.estimated_cost_known?
+    if some_services_without_price_outside_variance?
       '(Estimated cost not calculated)'
+    elsif @procurement.all_services_missing_framework_price?
+      estimation_text_for_all_services_missing
     elsif (@procurement.any_services_missing_framework_price? || @procurement.any_services_missing_benchmark_price?) && !@procurement.estimated_cost_known?
       '(Partial estimated cost)'
+    else
+      ''
+    end
+  end
+
+  def some_services_without_price_outside_variance?
+    # variance is NOT within -30% and +30%
+    @procurement.estimated_cost_known? && !@procurement.all_services_missing_framework_price? && @report.values_to_average.size < 2
+  end
+
+  def estimation_text_for_all_services_missing
+    if @procurement.estimated_cost_known?
+      '(Estimated cost not calculated)'
     else
       ''
     end

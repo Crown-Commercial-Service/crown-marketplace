@@ -10,8 +10,12 @@
           <%= t('.estimated_cost_how') %>
         </span>
       </summary>
-      <div class="govuk-details__text govuk-!-width-two-thirds">
-        <%= t('.estimated_cost_calc_html') %>
+      <div class="govuk-details__text">
+        <% if @procurement.any_services_missing_framework_price? && !@procurement.any_services_missing_benchmark_price?  %>
+          <%= t('.estimated_cost_calc_logic_4_html') %>
+        <% else %>
+          <%= t('.estimated_cost_calc_html') %>
+        <% end %>
       </div>
     </details>
   <% else %>

@@ -465,7 +465,7 @@ module FacilitiesManagement
     end
 
     def contract_value_needed?
-      (all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?) && !lot_number_selected_by_customer
+      all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?
     end
   end
 end

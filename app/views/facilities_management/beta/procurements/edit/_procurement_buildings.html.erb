@@ -25,7 +25,9 @@
                 <div class="govuk-checkboxes__item">
                   <%= procurement_building.check_box :active, class: 'govuk-checkboxes__input', title: procurement_building.object.name, sectionid: procurement_building.object.name %>
                   <%= procurement_building.label :active, class: "govuk-label govuk-checkboxes__label", style: "padding-top:0" do %>
-                    <%= procurement_building.object.name %>
+                    <legend class="govuk-fieldset__legend">
+                      <%= procurement_building.object.name %>
+                    </legend>
                     <br />
                     <span class="govuk-hint govuk-!-margin-bottom-0"><%= procurement_building.object.full_address %></span>
                   <% end %>
