@@ -91,7 +91,7 @@ class ProcurementCsvExport
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
           call_off_extensions(contract.procurement),
-          contract.procurement.active_procurement_buildings.size,
+          blank_if_zero(contract.procurement.active_procurement_buildings.size),
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
           delimited_with_pence(contract.procurement.assessed_value),
@@ -133,7 +133,7 @@ class ProcurementCsvExport
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
           call_off_extensions(procurement),
-          procurement.active_procurement_buildings.size,
+          blank_if_zero(procurement.active_procurement_buildings.size),
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
           delimited_with_pence(procurement.assessed_value),
@@ -286,5 +286,9 @@ class ProcurementCsvExport
     return STATE_DESCRIPTIONS['da_draft'] if %w[da_draft direct_award closed].include?(procurement.aasm_state)
 
     nil
+  end
+
+  def self.blank_if_zero(val)
+    val.to_i > 0 ? val : ''
   end
 end
