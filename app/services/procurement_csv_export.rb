@@ -1,6 +1,7 @@
 class ProcurementCsvExport
   TIME_FORMAT = '%e %B %Y, %l:%M%P'.freeze
   DATE_FORMAT = '%e %B %Y'.freeze
+  TIME_ZONE = 'London'.freeze
 
   # TODO: These should probably be under I18n in en.yml
   STATE_DESCRIPTIONS = {
@@ -60,7 +61,7 @@ class ProcurementCsvExport
     'DA Supplier decline reason',
     'DA Buyer withdraw reason',
     'DA Buyer not-sign reason',
-    'DA Buyer contract signed date',
+    'DA Buyer contract signed/not-signed date',
     'DA Buyer confirmed contract dates'
   ].freeze
 
@@ -91,7 +92,7 @@ class ProcurementCsvExport
           format_period_start_end(contract.procurement),
           format_mobilisation_start_end(contract.procurement),
           call_off_extensions(contract.procurement),
-          contract.procurement.active_procurement_buildings.size,
+          blank_if_zero(contract.procurement.active_procurement_buildings.size),
           expand_services(contract.procurement.procurement_building_service_codes),
           expand_regions(contract.procurement.active_procurement_building_region_codes),
           delimited_with_pence(contract.procurement.assessed_value),
@@ -109,7 +110,7 @@ class ProcurementCsvExport
           contract.reason_for_closing,
           contract.reason_for_not_signing,
           localised_date(contract.contract_signed_date),
-          ["#{localised_date(contract.contract_start_date)}, #{localised_date(contract.contract_end_date)}"].compact.join(' - ')
+          [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
         ]
       end
 
@@ -133,7 +134,7 @@ class ProcurementCsvExport
           format_period_start_end(procurement),
           format_mobilisation_start_end(procurement),
           call_off_extensions(procurement),
-          procurement.active_procurement_buildings.size,
+          blank_if_zero(procurement.active_procurement_buildings.size),
           expand_services(procurement.procurement_building_service_codes),
           expand_regions(procurement.active_procurement_building_region_codes),
           delimited_with_pence(procurement.assessed_value),
@@ -182,13 +183,16 @@ class ProcurementCsvExport
   end
 
   def self.procurement_status(procurement, contract = nil)
+    return STATE_DESCRIPTIONS[procurement.aasm_state] if procurement.closed?
+
     contract ? STATE_DESCRIPTIONS[contract.aasm_state] : STATE_DESCRIPTIONS[procurement.aasm_state]
   end
 
   def self.yes_no(flag)
-    return '' if flag.blank?
+    return 'Yes' if flag.class == TrueClass
+    return 'No' if flag.class == FalseClass
 
-    flag ? 'Yes' : 'No'
+    ''
   end
 
   def self.helpers
@@ -252,13 +256,13 @@ class ProcurementCsvExport
   def self.localised_datetime(datetime)
     return '' if datetime.blank?
 
-    datetime.getlocal.strftime(TIME_FORMAT)
+    datetime.in_time_zone(TIME_ZONE).strftime(TIME_FORMAT)
   end
 
   def self.localised_date(datetime)
     return '' if datetime.blank?
 
-    datetime.getlocal.strftime(DATE_FORMAT)
+    datetime.in_time_zone(TIME_ZONE).strftime(DATE_FORMAT)
   end
 
   # This is a hack to force spreadsheet programs to import the string as a formula.
@@ -281,9 +285,13 @@ class ProcurementCsvExport
   end
 
   def self.route_to_market(procurement)
-    return STATE_DESCRIPTIONS['further_competition'] if procurement.further_competition?
-    return STATE_DESCRIPTIONS['da_draft'] if %w[da_draft direct_award closed].include?(procurement.aasm_state)
+    return 'Further Competition' if procurement.further_competition?
+    return 'Direct Award' if %w[da_draft direct_award closed].include?(procurement.aasm_state)
 
     nil
+  end
+
+  def self.blank_if_zero(val)
+    val.to_i.positive? ? val : ''
   end
 end
