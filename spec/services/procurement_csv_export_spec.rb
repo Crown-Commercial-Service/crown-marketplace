@@ -93,4 +93,11 @@ RSpec.describe ProcurementCsvExport do
       end
     end
   end
+
+  describe '.localised_datetime' do
+    it 'applies DST correctly' do
+      expect(described_class.localised_datetime(DateTime.new(2005,6,7,8,9))).to eq ' 7 June 2005,  9:09am'
+      expect(described_class.localised_datetime(DateTime.new(2005,1,7,8,9))).to eq ' 7 January 2005,  8:09am'
+    end
+  end
 end
