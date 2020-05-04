@@ -115,16 +115,6 @@ module ApplicationHelper
   end
   # rubocop:enable Metrics/ParameterLists
 
-  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    error = model_object.errors[attribute].first
-    return if error.blank?
-
-    error_type = model_object.errors.details[attribute].first[:error]
-    error_message = model_object.errors[attribute]&.first
-
-    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
-  end
-
   def model_attribute_has_error(model_object, *attributes)
     result = false
     attributes.any? { |a| result |= model_object.errors[a]&.any? }
