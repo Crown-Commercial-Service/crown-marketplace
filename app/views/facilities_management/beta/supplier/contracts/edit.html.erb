@@ -38,8 +38,8 @@
             </div>
         </div>
         <div class= 'govuk-!-margin-top-5'>
-            <%= f.submit(pd.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [pd.navigation_details.primary_name, 'commit'].find(&:present?)) %>
-            <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary' %>
+            <%= f.submit(pd.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', 'aria-label': "#{pd.navigation_details.primary_text}", data: { disable_with: false }, name: [pd.navigation_details.primary_name, 'commit'].find(&:present?)) %>
+            <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary', 'aria-label': "#{pd.navigation_details.secondary_text}" %>
         </div>
     <% end %>
 <% end %>

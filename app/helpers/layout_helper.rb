@@ -125,12 +125,12 @@ module LayoutHelper
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false, primary_btn_as_link = false, secondary_btn_as_link = false)
     buttons = ActiveSupport::SafeBuffer.new
 
-    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button && !primary_btn_as_link
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.primary_text }) if primary_button && !primary_btn_as_link
     buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.secondary_text }) if secondary_button && !secondary_btn_as_link
     buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
     if secondary_button || primary_button
-      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before') if return_link
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before', aria: { label: page_description.navigation_details.return_text }) if return_link
     end
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
@@ -270,6 +270,7 @@ module LayoutHelper
   def govuk_button(builder, text, options = { submit: true, class: '' })
     css_classes = ['govuk-button']
     css_classes << options[:class]
+    css_classes += text == ['aria-label']
     css_classes += ['govuk-button--secondary'] if options[:button] == :secondary
     css_classes += ['govuk-button--warning'] if options[:button] == :warning
 

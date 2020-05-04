@@ -109,7 +109,7 @@
       <%= hidden_field_tag :user_email_reset_by_CSC, params[:username] %>
       <%= hidden_field_tag :user_email_reset_by_themself, @response.email %>
 
-      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.reset_password')}" %>
 
     <% end %>
 
