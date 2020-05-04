@@ -1,6 +1,7 @@
 class ProcurementCsvExport
   TIME_FORMAT = '%e %B %Y, %l:%M%P'.freeze
   DATE_FORMAT = '%e %B %Y'.freeze
+  TIME_ZONE = 'London'.freeze
 
   # TODO: These should probably be under I18n in en.yml
   STATE_DESCRIPTIONS = {
@@ -255,13 +256,13 @@ class ProcurementCsvExport
   def self.localised_datetime(datetime)
     return '' if datetime.blank?
 
-    datetime.getlocal.strftime(TIME_FORMAT)
+    datetime.in_time_zone(TIME_ZONE).strftime(TIME_FORMAT)
   end
 
   def self.localised_date(datetime)
     return '' if datetime.blank?
 
-    datetime.getlocal.strftime(DATE_FORMAT)
+    datetime.in_time_zone(TIME_ZONE).strftime(DATE_FORMAT)
   end
 
   # This is a hack to force spreadsheet programs to import the string as a formula.
