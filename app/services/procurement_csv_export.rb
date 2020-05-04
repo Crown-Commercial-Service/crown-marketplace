@@ -60,7 +60,7 @@ class ProcurementCsvExport
     'DA Supplier decline reason',
     'DA Buyer withdraw reason',
     'DA Buyer not-sign reason',
-    'DA Buyer contract signed date',
+    'DA Buyer contract signed/not-signed date',
     'DA Buyer confirmed contract dates'
   ].freeze
 
