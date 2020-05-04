@@ -109,7 +109,7 @@ class ProcurementCsvExport
           contract.reason_for_closing,
           contract.reason_for_not_signing,
           localised_date(contract.contract_signed_date),
-          ["#{localised_date(contract.contract_start_date)}, #{localised_date(contract.contract_end_date)}"].compact.join(' - ')
+          [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
         ]
       end
 
