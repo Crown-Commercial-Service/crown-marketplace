@@ -96,10 +96,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
-      add_contract_number(sheet)
+      add_contract_number(sheet) if any_contracts_offered?
       add_customer_details(sheet)
       add_contract_requirements(sheet)
     end
+  end
+
+  def any_contracts_offered?
+    @procurement.procurement_suppliers.any? { |contract| !contract.unsent? }
   end
 
   def add_service_details_sheet(package)

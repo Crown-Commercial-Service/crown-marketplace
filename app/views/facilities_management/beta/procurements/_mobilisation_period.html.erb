@@ -1,6 +1,9 @@
 <div class="govuk-!-margin-top-5">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_period_required].any? %>" data-propertyname="Mobilisation period choice">
-    <span class='govuk-heading-m govuk-!-margin-bottom-0'> Do you need a mobilisation period? </span>
+    <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend">
+      <span class='govuk-heading-m govuk-!-margin-bottom-0'> Do you need a mobilisation period? </span>
+    </legend>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
     <span id="mobilisation-required-warning"></span>
     <div class="govuk-form-group" data-propertyname="Mobilisation period choice">
@@ -18,9 +21,11 @@
               <span class='govuk-label--s govuk-!-margin-left-2'> weeks </span>
             </div>
             <div class="govuk-!-margin-left-3">
-              <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3" id="mobilisation_period_start_date_label">Mobilisation start date</span>
               <div class=" <%= 'govuk-form-group--error' if @procurement.errors[:mobilisation_start_date].any? %>" data-propertyname="Mobilisation start date">
                 <fieldset class="govuk-fieldset" role="group" aria-describedby="mobilisation_period_start_date_label">
+                <legend class="govuk-fieldset__legend">
+                  <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3" id="mobilisation_period_start_date_label">Mobilisation start date</span>
+                </legend>  
                   <%= display_error_label(@procurement, :mobilisation_start_date, '', "#{f.object_name}_mobilisation_start_date") %>
                   <div class="govuk-date-input">
                     <div class="govuk-date-input__item">
@@ -53,9 +58,11 @@
             </div>
 
             <div class="govuk-!-margin-left-3">
-              <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3" id="mobilisation_period_end_date_label">Mobilisation end date</span>
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset" role="group" aria-describedby="mobilisation_period_end_date_label">
+                  <legend class="govuk-fieldset__legend">
+                    <span class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-3" id="mobilisation_period_end_date_label">Mobilisation end date</span>
+                  </legend>
                   <div class="govuk-date-input">
                     <div class="govuk-date-input__item">
                       <div class="govuk-form-group">
@@ -95,3 +102,4 @@
     </div>
   </div>
 </div>
+</fieldset>

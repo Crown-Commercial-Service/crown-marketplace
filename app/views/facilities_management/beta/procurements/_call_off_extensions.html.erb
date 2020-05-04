@@ -1,6 +1,9 @@
 <div class="govuk-!-margin-top-5">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:optional_call_off_extensions_1].any? || @procurement.errors[:extensions_required].any?%>" data-propertyname="Extensions choice">
+    <fieldset class="govuk-fieldset" role="group" aria-describedby="initial_call_off_end_date_label">
+    <legend class="govuk-fieldset__legend">
     <span class="govuk-heading-m govuk-!-margin-bottom-0"> Do you want the option to extend your call-off contract? </span>
+    </legend>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
     <span id="extensions-required-warning"/>
     <div class="govuk-radios govuk-!-margin-top-3" data-propertyname="Extensions choice">
@@ -62,5 +65,6 @@
         <%= f.label :extensions_required, 'No', value: false, class: 'govuk-label govuk-radios__label' %>
       </div>
     </div>
+    </fieldset>
   </div>
 </div>
