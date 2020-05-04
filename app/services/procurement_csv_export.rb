@@ -291,6 +291,6 @@ class ProcurementCsvExport
   end
 
   def self.blank_if_zero(val)
-    val.to_i > 0 ? val : ''
+    val.to_i.positive? ? val : ''
   end
 end
