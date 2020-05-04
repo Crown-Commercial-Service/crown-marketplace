@@ -375,20 +375,25 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     end
   end
 
-  def self.stream_url(url, data_summary, &block)
-    io = URI.open(url)
-    header_line = io.readline
-    (meta_type = (if header_line.downcase.include?('uprn')
-                    :csv
-                  else
-                    :dat
-                  end)) and io.rewind
-    data_summary[:md5] = chunk_file_data(io, meta_type, &block)
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def self.stream_url(obj, data_summary, &_block)
+    meta_type = :dat
+    chunk_count = -1
+    chunks = ''
+
+    obj.get do |chunk|
+      chunks << chunk
+      if chunk_count == -1
+        chunk_count = 0
+        meta_type = (chunk.downcase.include?('uprn') ? :csv : :dat) if chunk_count.zero?
+      end
+    end
+
+    inject_data(chunks) if meta_type == :dat
+    upsert_csv_data(StringIO.new(chunks)) if meta_type == :csv
   rescue StandardError => e
     data_summary[:fail] = e.message
     raise e
-  ensure
-    io&.try(&:close)
   end
 
   def self.stream_file(filename, data_summary, &block)
@@ -410,7 +415,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
 
   CHUNK_SIZE = 100000
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.chunk_file_data(io, meta_type, &block)
     counter = 0
     chunk = ''
@@ -449,7 +453,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         end
       end
     when '.dat', '.csv'
-      stream_url(object_summary.presigned_url(:get), data_summary) do |type, stream|
+      stream_url(object_summary, data_summary) do |type, stream|
         fn_process.call(type, stream)
       end
     else
@@ -506,7 +510,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
         p "Processing    #{filename}"
         file_time = Time.current
         read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
-          p "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
+          p "Duration for #{filename}, of #{ActiveSupport::NumberHelper.number_to_human_size summation[:length]} is #{Time.current - file_time}"
           log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
                                    summation[:md5],
                                    summation[:updated_time],
@@ -601,16 +605,22 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
   def self.truncate_os_addresses
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.execute('truncate table os_address; vacuum os_address;')
-    rescue StandardError => e
-      p "\tError with truncate: #{e.message}"
-      Rails.logger.error((["POSTCODE truncate: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
-      raise e
+      db.execute('truncate table os_address;')
     end
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      db.execute('vacuum os_address;')
+    end
+  rescue StandardError => e
+    p "\tError with truncate: #{e.message}"
+    Rails.logger.error((["POSTCODE truncate: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
+    raise e
   end
 
   # rubocop:disable CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
   def self.import_postcodes(folder_root, access_key, secret_key, bucket, region)
+    OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+    OpenURI::Buffer.const_set 'StringMax', 0
+
     awd_credentials access_key, secret_key, bucket, region
 
     object = Aws::S3::Resource.new(region: region)
@@ -621,12 +631,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
 
       next if postcode_file_already_loaded(extract_metadata(File.basename(obj.key, File.extname(obj.key))))
 
-      p "Processing    #{obj.key} (#{obj.presigned_url(:get)})"
-      truncate_os_addresses if folder_root == 'dataPostcode2files'
+      p "Processing    #{obj.key}"
 
       file_time = Time.current
       read_file_from_s3(obj, method(:process_csv_data)) do |summation|
-        p "Duration for #{obj.key}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
+        p "Duration for #{obj.key}, of #{ActiveSupport::NumberHelper.number_to_human_size(summation[:length])} is #{Time.current - file_time}"
         log_postcode_file_loaded(obj.key, summation[:length],
                                  summation[:md5],
                                  summation[:updated_time],
