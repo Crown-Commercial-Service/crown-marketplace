@@ -179,6 +179,18 @@ module FacilitiesManagement
     end
     # rubocop:enable Metrics/AbcSize
 
+    def values_to_average
+      if any_services_missing_framework_price?
+        if any_services_missing_benchmark_price?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
+        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
+          return [sum_benchmark]
+        end
+      end
+
+      [sum_uom, sum_benchmark]
+    end
+
     private
 
     # rubocop:disable Rails/FindEach
@@ -261,18 +273,6 @@ module FacilitiesManagement
 
       values << buyer_input unless buyer_input.zero?
       (values.sum / values.size).to_f
-    end
-
-    def values_to_average
-      if any_services_missing_framework_price?
-        if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
-        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
-          return [sum_benchmark]
-        end
-      end
-
-      [sum_uom, sum_benchmark]
     end
 
     def values_if_no_buyer_input
