@@ -182,6 +182,8 @@ class ProcurementCsvExport
   end
 
   def self.procurement_status(procurement, contract = nil)
+    return STATE_DESCRIPTIONS[procurement.aasm_state] if procurement.closed?
+
     contract ? STATE_DESCRIPTIONS[contract.aasm_state] : STATE_DESCRIPTIONS[procurement.aasm_state]
   end
 
