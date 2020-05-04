@@ -186,9 +186,10 @@ class ProcurementCsvExport
   end
 
   def self.yes_no(flag)
-    return '' if flag.blank?
+    return 'Yes' if flag.class == TrueClass
+    return 'No' if flag.class == FalseClass
 
-    flag ? 'Yes' : 'No'
+    ''
   end
 
   def self.helpers
