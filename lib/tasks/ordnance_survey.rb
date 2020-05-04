@@ -2,6 +2,7 @@ require 'smarter_csv'
 require 'rubygems/package'
 require 'digest/md5'
 require 'active_support'
+require 'open-uri'
 
 # rubocop:disable Metrics/ModuleLength, Rails/Output
 module OrdnanceSurvey
@@ -296,68 +297,98 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   def self.untar_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Gem::Package::TarReader.new(Zlib::GzipReader.open(filename)) do |tar|
-      tar.each do |entry|
-        next unless entry.file?
-
-        summary[:length] = entry.size
-        file_stream = StringIO.new(entry.read)
-        header_line = file_stream.readline
-        (meta_type = (if header_line.downcase.include?('uprn')
-                        :csv
-                      else
-                        :dat
-                      end)) and file_stream.rewind
-        summary[:md5] = chunk_file_data(file_stream, meta_type, &block)
-      end
+      handle_tar_contents(tar, summary, &block)
     end
   end
 
-  def self.untar_stream(bytes, &block)
-    Gem::Package::TarReader.new(Zlib::GzipReader.new(IO.new(bytes))) do |tar|
-      tar.each do |entry|
-        block.call(file_type(entry.full_name), StringIO.new(entry.read)) if entry.file?
-      end
+  def self.untar_stream(url, summary, &block)
+    Gem::Package::TarReader.new(Zlib::GzipReader.new(URI.open(url))) do |tar|
+      handle_tar_contents(tar, summary, &block)
+    end
+  end
+
+  def self.handle_tar_contents(tar, summary, &block)
+    tar.each do |entry|
+      next unless entry.file?
+
+      summary[:length] = entry.size
+      file_stream = StringIO.new(entry.read)
+      header_line = file_stream.readline
+      (meta_type = (if header_line.downcase.include?('uprn')
+                      :csv
+                    else
+                      :dat
+                    end)) and file_stream.rewind
+      summary[:md5] = chunk_file_data(file_stream, meta_type, &block)
     end
   end
 
   def self.gunzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Zlib::GzipReader.open(filename) do |gz|
-      header_line = gz.readline
-      (meta_type = (if header_line.downcase.include?('uprn')
-                      :csv
-                    else
-                      :dat
-                    end)) and gz.rewind
-      summary[:md5] = chunk_file_data(gz, meta_type, &block)
-      summary[:length] = gz.pos
+      handle_gzip_contents(gz, summary, &block)
     end
+  end
+
+  def self.gunzip_url(url, summary, &block)
+    Zlib::GzipReader.open(URI.open(url)) do |gz|
+      handle_gzip_contents(gz, summary, &block)
+    end
+  end
+
+  def self.handle_gzip_contents(gz, summary, &block)
+    header_line = gz.readline
+    (meta_type = (if header_line.downcase.include?('uprn')
+                    :csv
+                  else
+                    :dat
+                  end)) and gz.rewind
+    summary[:md5] = chunk_file_data(gz, meta_type, &block)
+    summary[:length] = gz.pos
   end
 
   def self.unzip_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)
     Zip::InputStream.open(filename) do |io|
-      while (entry = io.get_next_entry)
-        next if entry.name_is_directory?
-
-        header_line = io.readline
-        (meta_type = (if header_line.downcase.include?('uprn')
-                        :csv
-                      else
-                        :dat
-                      end)) and io.rewind
-        summary[:length] = entry.size
-        summary[:md5] = chunk_file_data(io, meta_type, &block)
-      end
+      handle_zip_contents( io, summary, &block)
     end
   end
 
-  def self.unzip_stream(bytes, &block)
-    Zip::File.new(IO.new(bytes)) do |zip_file|
-      zip_file.each do |entry|
-        block.call(file_type(entry.name), entry.get_input_stream)
-      end
+  def self.unzip_url(url, summary, &block)
+    Zip::InputStream.open(IO.new(URI.open(url))) do |io|
+      handle_zip_contents( io, summary, &block)
     end
+  end
+
+  def self.handle_zip_contents(io, summary, &block)
+    while (entry = io.get_next_entry)
+      next if entry.name_is_directory?
+
+      header_line = io.readline
+      (meta_type = (if header_line.downcase.include?('uprn')
+                      :csv
+                    else
+                      :dat
+                    end)) and io.rewind
+      summary[:length] = entry.size
+      summary[:md5] = chunk_file_data(io, meta_type, &block)
+    end
+  end
+
+  def self.stream_url(url, data_summary, &block)
+    io = URI.open(url)
+    header_line = io.readline
+    (meta_type = (if header_line.downcase.include?('uprn')
+                    :csv
+                  else
+                    :dat
+                  end)) and io.rewind
+    data_summary[:md5] = chunk_file_data(io, meta_type, &block)
+  rescue StandardError => e
+    data_summary[:fail] = e.message
+    raise e
+  ensure
+    io&.try(&:close)
   end
 
   def self.stream_file(filename, data_summary, &block)
@@ -396,6 +427,37 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
+  def self.read_file_from_s3(object_summary, fn_process, &block)
+    data_summary = {}
+    data_summary[:length] = object_summary.size
+    data_summary[:md5] = object_summary.etag
+    data_summary[:updated_time] = object_summary.last_modified
+
+    case File.extname(object_summary.key)
+    when '.zip'
+      unzip_url(object_summary.presigned_url(:get), data_summary) do |type, stream|
+        fn_process.call(type, stream)
+      end
+    when '.gz'
+      if object_summary.key.include? 'tar'
+        untar_url(object_summary.presigned_url(:get), data_summary) do |type, stream|
+          fn_process.call(type, stream)
+        end
+      else
+        gunzip_url(object_summary.presigned_url(:get), data_summary) do |type, stream|
+          fn_process.call(type, stream)
+        end
+      end
+    when '.dat', '.csv'
+      stream_url(object_summary.presigned_url(:get), data_summary) do |type, stream|
+        fn_process.call(type, stream)
+      end
+    else
+      Rails.logger.info "Postcode processing ignoring: #{object_summary.key}"
+    end
+    block.call(data_summary)
+  end
+
   def self.read_file(filename, fn_process, &block)
     data_summary = {}
 
@@ -404,7 +466,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
       unzip_file(filename, data_summary) do |type, stream|
         fn_process.call(type, stream)
       end
-      block.call(data_summary)
     when '.gz'
       if filename.include? 'tar'
         untar_file(filename, data_summary) do |type, stream|
@@ -415,15 +476,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
           fn_process.call(type, stream)
         end
       end
-      block.call(data_summary)
     when '.dat', '.csv'
       stream_file(filename, data_summary) do |type, stream|
         fn_process.call(type, stream)
       end
-      block.call(data_summary)
     else
       Rails.logger.info "Postcode processing ignoring: #{filename}"
     end
+    block.call(data_summary)
   end
 
   def self.process_csv_data(type, csv_stream)
@@ -539,50 +599,46 @@ CREATE UNIQUE INDEX IF NOT EXISTS os_address_admin_uploads_filename_idx ON os_ad
     Rails.logger.error e.message
   end
 
+  def self.truncate_os_addresses
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      db.execute('truncate table os_address; vacuum os_address;')
+    rescue StandardError => e
+      p "\tError with truncate: #{e.message}"
+      Rails.logger.error((["POSTCODE truncate: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
+      raise e
+    end
+  end
+
   # rubocop:disable CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
-  def self.import_postcodes(access_key, secret_key, bucket, region)
+  def self.import_postcodes(folder_root, access_key, secret_key, bucket, region)
     awd_credentials access_key, secret_key, bucket, region
 
     object = Aws::S3::Resource.new(region: region)
     object.bucket(bucket).objects.each do |obj|
-      next unless obj.key.starts_with? 'dataPostcode2files'
+      next if obj.key == "#{folder_root}/" || !obj.key.starts_with?(folder_root)
 
-      next if %w[.sh .zip .tar .gz].select { |ext| obj.key.include? ext }.any?
+      next if %w[.sh].select { |ext| obj.key.include? ext }.any?
 
-      next if postcode_file_already_loaded(extract_metadata(obj.key))
+      next if postcode_file_already_loaded(extract_metadata(File.basename(obj.key, File.extname(obj.key))))
 
       p "Processing    #{obj.key} (#{obj.presigned_url(:get)})"
-      
+      truncate_os_addresses if folder_root == 'dataPostcode2files'
+
       file_time = Time.current
-      read_file_from_S3(obj.key, obj, method(:process_csv_data)) do |summation|
+      read_file_from_s3(obj, method(:process_csv_data)) do |summation|
         p "Duration for #{obj.key}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
         log_postcode_file_loaded(obj.key, summation[:length],
                                  summation[:md5],
                                  summation[:updated_time],
                                  DateTime.now.utc)
       end
-      chunks = ''
-      obj.get do |chunk|
-        chunks << chunk
-      end
-      result = false
-      case File.extname(filename)
-        when '.zip'
-          unzip_stream(chunks) do |type, stream|
-            result = process_csv_data(type, stream)
-          end
-        when '.gz'
-          untar_stream(chunks) do |type, stream|
-            result = process_csv_data(type, stream)
-          end
-        when '.dat', '.csv'
-          result = process_csv_data(:dat, chunks)
-        else
-          Rails.logger.info "Postcode processing ignoring: #{filename}"
-      end
     rescue Aws::S3::Errors::AccessDenied => _e
       Rails.logger.warn "Access denied on #{obj.key}"
       puts "*** Access denied on #{obj.key}"
+    rescue StandardError => e
+      p "\tError: #{e.message}"
+      Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
+      raise e
     end
   rescue PG::Error => e
     puts e.message

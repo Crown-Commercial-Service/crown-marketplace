@@ -41,6 +41,27 @@ namespace :db do
     exit
   end
 
+  task update_postcode: :environment do
+    p 'Updating postcode database'
+
+    ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    creds                     = ActiveSupport::EncryptedConfiguration.new(
+      config_path: Rails.root.join('config', 'credentials.yml.enc'),
+      key_path: 'config/master.key',
+      env_key: 'RAILS_MASTER_KEY_2',
+      raise_if_missing_key: false
+    )
+
+    access_key = creds.aws_postcodes[:access_key_id]
+    secret_key = creds.aws_postcodes[:secret_access_key]
+    bucket     = creds.aws_postcodes[:bucket]
+    region     = creds.aws_postcodes[:region]
+
+    DistributedLocks.distributed_lock(151) do
+      OrdnanceSurvey.import_postcodes 'updatePostcodeFiles', access_key, secret_key, bucket, region
+    end
+  end
+
   task postcode: :environment do
     p 'Creating postcode database and import'
     OrdnanceSurvey.create_postcode_table
@@ -63,7 +84,7 @@ namespace :db do
     region     = creds.aws_postcodes[:region]
 
     DistributedLocks.distributed_lock(151) do
-      OrdnanceSurvey.import_postcodes access_key, secret_key, bucket, region
+      OrdnanceSurvey.import_postcodes 'dataPostcode2files', access_key, secret_key, bucket, region
     end
   end
 
