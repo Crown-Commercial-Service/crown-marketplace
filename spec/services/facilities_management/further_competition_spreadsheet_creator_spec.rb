@@ -61,7 +61,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   let(:spreadsheet_builder) { described_class.new(procurement.id) }
 
-  context 'and add dummy buildings to a db' do
+  context 'and add dummy buildings to a db', skip: true do
     before do
       spreadsheet = spreadsheet_builder.build
 

@@ -148,11 +148,14 @@ module FacilitiesManagement
 
       def da_spreadsheets
         init
+        # puts 'contarct id'
+        # puts params[:contract_id]
+        # puts 'contarct id'
         if params[:spreadsheet] == 'prices_spreadsheet'
-          spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.id
+          spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new params[:contract_id]
           render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
         else
-          spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.id
+          spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new params[:contract_id]
           spreadsheet2 = spreadsheet_builder.build
           render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         end

@@ -6,8 +6,10 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include FacilitiesManagement::Beta::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
-  def initialize(procurement_id)
-    @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+  def initialize(contract_id)
+    @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
+    @procurement = @contract.procurement
+    # @procurement = FacilitiesManagement::Procurement.find(procurement_id)
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
     @active_procurement_buildings = @procurement.active_procurement_buildings
   end
@@ -356,8 +358,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_contract_number(sheet)
-    time = Time.now.getlocal
-    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"]
+    sheet.add_row ["#{@contract.contract_number} #{@contract.offer_sent_date&.in_time_zone('London')&.strftime '- %Y/%m/%d - %l:%M%P'}"]
     sheet.add_row []
   end
 
