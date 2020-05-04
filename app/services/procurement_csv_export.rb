@@ -284,8 +284,8 @@ class ProcurementCsvExport
   end
 
   def self.route_to_market(procurement)
-    return STATE_DESCRIPTIONS['further_competition'] if procurement.further_competition?
-    return STATE_DESCRIPTIONS['da_draft'] if %w[da_draft direct_award closed].include?(procurement.aasm_state)
+    return 'Further Competition' if procurement.further_competition?
+    return 'Direct Award' if %w[da_draft direct_award closed].include?(procurement.aasm_state)
 
     nil
   end
