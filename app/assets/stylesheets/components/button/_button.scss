@@ -57,7 +57,14 @@ $offset                        : 4;
     background-color : #ffdd00;
     box-shadow       : 0 2px 0 #0b0c0c
     }
+
+    @media (min-width: 300px) {
+      max-width: 80%;
+      position: absolute;
+      object-fit: scale-down;
+    }
   }
+
 
 .govuk-button--disabled,
 .govuk-button[disabled="disabled"],
