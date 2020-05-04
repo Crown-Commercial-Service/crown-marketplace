@@ -120,5 +120,5 @@ for file in AddressBasePlus_FULL*.csv; do
       rm $pname.csv
     fi
   fi
-  echo Done
 done
+echo Done
