@@ -3,7 +3,7 @@ module FacilitiesManagement
     module Admin
       class SuppliersFrameworkDataController < FacilitiesManagement::Beta::FrameworkController
         def index
-          @fm_suppliers = FacilitiesManagement::Admin::SuppliersAdmin.order("data ->'supplier_name' ASC")
+          @fm_suppliers = FacilitiesManagement::Admin::SuppliersAdmin.all.sort_by { |k| k.data['supplier_name'] }
           @supplier_lot1a_present = {}
           @supplier_lot1b_present = {}
           @supplier_lot1c_present = {}
