@@ -9,7 +9,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
-    # @procurement = FacilitiesManagement::Procurement.find(procurement_id)
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
     @active_procurement_buildings = @procurement.active_procurement_buildings
   end
