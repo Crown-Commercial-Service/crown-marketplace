@@ -33,15 +33,21 @@ module FacilitiesManagement
         private
 
         def variances
-          @variances = {
-            td_overhead: rates.find_by(code: 'M.140'),
-            td_corporate: rates.find_by(code: 'M.141'),
-            td_profit: rates.find_by(code: 'M.142'),
-            td_london: rates.find_by(code: 'M.144'),
-            td_cleaning: rates.find_by(code: 'M.146'),
-            td_tupe: rates.find_by(code: 'M.148'),
-            td_mobilisation: rates.find_by(code: 'B.1')
+          sections = {
+            td_overhead: 'M.140',
+            td_corporate: 'M.141',
+            td_profit: 'M.142',
+            td_london: 'M.144',
+            td_cleaning: 'M.146',
+            td_tupe: 'M.148',
+            td_mobilisation: 'B.1'
           }
+
+          vars = rates.where(code: sections.values)
+
+          @variances = sections.reduce({}) do |memo, (key, val)|
+            memo.merge(key => vars.find { |r| r.code == val })
+          end
         end
 
         def init_errors
@@ -69,13 +75,32 @@ module FacilitiesManagement
         end
 
         def save_updated_rates
+          values = []
+
           @full_services.each do |service|
             service['work_package'].each do |package|
-              package['rates'].each { |rate| rate.save if rate.changed? }
+              package['rates'].each { |rate| values << value_clause(rate) if rate.changed? }
             end
           end
 
-          @variances.each { |_label, rate| rate.save if rate.changed? }
+          @variances.each { |_label, rate| values << value_clause(rate) if rate.changed? }
+
+          ActiveRecord::Base.transaction { batch_update(values) }
+        end
+
+        def value_clause(rate)
+          "(#{null_if_nil(rate.benchmark)}, #{null_if_nil(rate.framework)}, UUID('#{rate.id}'))"
+        end
+
+        def null_if_nil(val)
+          val.nil? ? 'NULL' : val
+        end
+
+        def batch_update(values)
+          sql = 'UPDATE fm_rates AS r SET benchmark = v.benchmark, framework = v.framework '
+          sql << "FROM (VALUES #{values.join(', ')}) AS v(benchmark, framework, id) WHERE r.id = v.id"
+
+          ActiveRecord::Base.connection.execute(sql)
         end
       end
     end
