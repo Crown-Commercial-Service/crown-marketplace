@@ -1515,7 +1515,6 @@ en:
         heading: CCS Marketplace private beta
     passwords:
       edit:
-        confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent.
@@ -1524,6 +1523,7 @@ en:
         new_password: New password
         password: Your password must have
         text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent.
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.

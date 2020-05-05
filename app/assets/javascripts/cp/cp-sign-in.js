@@ -7,6 +7,9 @@ function pReg(){
 function uReg(){
     return new RegExp("^(?=.*?[A-Z])");//requires an uppercase letter
 }
+function numReg(){
+    return new RegExp("^(?=.*[0-9])");//requires a number
+}
 function emailReg(){
     return new RegExp("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})");//validates email
 }
@@ -15,7 +18,8 @@ function passwordStrength(t){
     var theTests = [
         [cReg(), $('#passeight')],
         [pReg(), $('#passsymbol')],
-        [uReg(), $('#passcap')]
+        [uReg(), $('#passcap')],
+        [numReg(),$('#passnum')]
     ];
     var arrayLength = theTests.length;
 
