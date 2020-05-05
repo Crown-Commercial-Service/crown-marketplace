@@ -106,7 +106,7 @@
       </select>
       <%= f.submit(t('.cant_find_address'),
                    class: 'govuk-link govuk-!-margin-right-4 button_as_link',
-                   data:  { disable_with: false }, name: 'add_address', style: 'display:block', aria-label: "#{t('.cant_find_address')}") %>
+                   data:  { disable_with: false }, name: 'add_address', style: 'display:block', 'aria-label': "#{t('.cant_find_address')}") %>
     </div>
     <div data-module-part="address-display" class="govuk-!-margin-top-3 govuk-!-margin-bottom-3 <%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>">
       <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
