@@ -90,12 +90,12 @@ ActiveRecord::Schema.define(version: 2020_05_01_135708) do
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "no_of_appliances_for_testing"
-    t.integer "no_of_building_occupants"
-    t.integer "size_of_external_area"
-    t.integer "no_of_consoles_to_be_serviced"
-    t.integer "tones_to_be_collected_and_removed"
-    t.integer "no_of_units_to_be_serviced"
+    t.bigint "no_of_appliances_for_testing"
+    t.bigint "no_of_building_occupants"
+    t.bigint "size_of_external_area"
+    t.bigint "no_of_consoles_to_be_serviced"
+    t.bigint "tones_to_be_collected_and_removed"
+    t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
     t.string "lift_data", default: [], array: true
     t.jsonb "service_hours"

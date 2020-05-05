@@ -92,10 +92,8 @@ module ApplicationHelper
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    collection.each do |key, val|
+      concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
     end
   end
 
@@ -116,16 +114,6 @@ module ApplicationHelper
     end
   end
   # rubocop:enable Metrics/ParameterLists
-
-  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    error = model_object.errors[attribute].first
-    return if error.blank?
-
-    error_type = model_object.errors.details[attribute].first[:error]
-    error_message = model_object.errors[attribute]&.first
-
-    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
-  end
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
