@@ -1515,7 +1515,7 @@ en:
         heading: CCS Marketplace private beta
     passwords:
       edit:
-        confirm_code: Confirm Code
+        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent.

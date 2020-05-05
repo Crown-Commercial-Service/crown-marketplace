@@ -10,6 +10,8 @@ module Cognito
     validates_presence_of :password_confirmation, :confirmation_code
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
+    validates_format_of :password, with: /(?=.*[0-9])/, message: :invalid_no_number
+
 
     def initialize(email, password, password_confirmation, confirmation_code)
       @email = email

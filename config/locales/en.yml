@@ -65,6 +65,7 @@ en:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
               invalid_no_symbol: Password must include a special character
+              invalid_no_number: Password must include a number
               too_short: Password must be 8 characters or more
             password_confirmation:
               blank: Enter your password
@@ -478,7 +479,7 @@ en:
     page_section: Find apprenticeship training and related services
     passwords:
       edit:
-        confirm_code: Confirm Code
+        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         lead: Reset password for
@@ -670,6 +671,7 @@ en:
     incomplete: Incomplete
     next: Next
     passcap: at least one capital letter
+    passnum: at least one number
     passeight: at least 8 characters
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
@@ -888,7 +890,7 @@ en:
         txt03: agreement provides legal advice services for central government and arms-length bodies.
     passwords:
       edit:
-        confirm_code: Confirm Code
+        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
@@ -995,7 +997,7 @@ en:
     admin:
       passwords:
         edit:
-          confirm_code: Confirm Code
+          verify_code: Verification code
           confirm_new_password: Confirm new password
           heading: Reset your password
           heading1: A reset email has been sent
@@ -1233,7 +1235,7 @@ en:
         services_selected: services selected
     passwords:
       edit:
-        confirm_code: Confirm Code
+        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
@@ -1433,7 +1435,7 @@ en:
     admin:
       passwords:
         edit:
-          confirm_code: Confirm Code
+          verify_code: Verification code
           confirm_new_password: Confirm new password
           heading: Reset your password
           heading1: A reset email has been sent
@@ -1771,7 +1773,7 @@ en:
     page_section: Find supply teachers and agency staff
     passwords:
       edit:
-        confirm_code: Confirm Code
+        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
