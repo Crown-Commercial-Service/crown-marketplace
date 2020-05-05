@@ -156,7 +156,7 @@ module LayoutHelper
     content_tag :div, options do
       capture do
         concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
-        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors && !hide_error_text
+        concat(display_error(builder.object, attribute)) if show_errors && !hide_error_text
         block.call(attribute) if block_given?
       end
     end
