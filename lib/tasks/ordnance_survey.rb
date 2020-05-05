@@ -271,6 +271,8 @@ module OrdnanceSurvey
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
 
+    truncate_os_addresses if folder_root == 'dataPostcode2files' # dataPostcode2files is used for originating data
+                                                                 # updatePostcodeFiles is used to updating the data
     awd_credentials access_key, secret_key, bucket, region
 
     object = Aws::S3::Resource.new(region: region)

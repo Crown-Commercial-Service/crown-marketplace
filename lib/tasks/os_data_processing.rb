@@ -75,6 +75,7 @@ module OrdnanceSurvey
   def self.truncate_os_addresses
     ActiveRecord::Base.connection_pool.with_connection do |db|
       db.execute('truncate table os_address;')
+      db.execute('truncate table os_address_admin_uploads;')
     end
     ActiveRecord::Base.connection_pool.with_connection do |db|
       db.execute('vacuum os_address;')
