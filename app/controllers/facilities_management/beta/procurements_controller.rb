@@ -1027,7 +1027,7 @@ module FacilitiesManagement
             back_url: facilities_management_beta_procurements_path
           },
           choose_contract_value: {
-            page_title: 'Contract Value',
+            page_title: 'Contract value',
             primary_name: 'continue_from_change_contract_value'
           },
           results: set_results_page_definitions,
