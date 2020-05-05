@@ -1,0 +1,60 @@
+<% content_for :page_title, t('.buyer_account_dashboard') %>
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t('.buyer_account_title') %> </span>
+      <h1 class="govuk-heading-xl"><%= @current_login_email %></h1>
+      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.procurements') %> </span>
+    </div>
+  </div>
+  <hr class="govuk-!-margin-bottom-5">
+  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-one-third">
+      <div class="fm-buyer-account-panel">
+        <%= link_to 'Start a new procurement', '/facilities-management/choose-services', class: 'fm-buyer-account-panel__title' %>
+        <p class="fm-buyer-account-panel__body">
+         <%= t('.new_procurement_desc') %>
+        </p>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="fm-buyer-account-panel">
+        <%= link_to(t('.manage_procurements_link'), facilities_management_procurements_path, class: 'fm-buyer-account-panel__title') %>
+
+        <p class="fm-buyer-account-panel__body">
+          <%= t('.procurement_dashboard_desc') %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.buildings_title') %> </span>
+    </div>
+  </div>
+  <hr class="govuk-!-margin-bottom-5">
+  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-one-third">
+      <div class="fm-buyer-account-panel">
+        <%= link_to t(".manage_buildings"), facilities_management_buildings_path, class: "fm-buyer-account-panel__title"%>
+        <p class="fm-buyer-account-panel__body">
+          <%= t('.manage_buildings_desc') %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.about_the_buyer_title') %></span>
+    </div>
+  </div>
+  <hr class="govuk-!-margin-bottom-5">
+  <div class="govuk-grid-row govuk-!-margin-bottom-6">
+    <div class="govuk-grid-column-one-third">
+      <div class="fm-buyer-account-panel">
+        <%= link_to t('.link_text'), edit_facilities_management_buyer_detail_path(@buyer_detail), class: 'fm-buyer-account-panel__title' %>
+        <p class="fm-buyer-account-panel__body"><%= t('.about_the_buyer_description') %></p>
+      </div>
+    </div>
+  </div>
+</div>

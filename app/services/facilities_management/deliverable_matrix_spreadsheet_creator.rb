@@ -3,7 +3,7 @@ require 'axlsx_rails'
 require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  include FacilitiesManagement::Beta::SummaryHelper
+  include FacilitiesManagement::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
   def initialize(procurement_id)

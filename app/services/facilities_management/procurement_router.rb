@@ -56,18 +56,18 @@ class FacilitiesManagement::ProcurementRouter
 
   def route
     if @procurement_state == 'quick_search'
-      return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_beta_procurement_path(id: @id) : facilities_management_beta_procurements_path
+      return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_procurement_path(id: @id) : facilities_management_procurements_path
     end
-    return edit_facilities_management_beta_procurement_path(id: @id, step: previous_step) if @step == 'services'
-    return facilities_management_beta_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
+    return edit_facilities_management_procurement_path(id: @id, step: previous_step) if @step == 'services'
+    return facilities_management_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
-    next_step.nil? ? facilities_management_beta_procurement_path(id: @id) : edit_facilities_management_beta_procurement_path(id: @id, step: next_step)
+    next_step.nil? ? facilities_management_procurement_path(id: @id) : edit_facilities_management_procurement_path(id: @id, step: next_step)
   end
 
   def back_link
-    return facilities_management_beta_procurement_path(id: @id) if previous_step.nil?
+    return facilities_management_procurement_path(id: @id) if previous_step.nil?
 
-    edit_facilities_management_beta_procurement_path(id: @id, step: previous_step)
+    edit_facilities_management_procurement_path(id: @id, step: previous_step)
   end
 
   private

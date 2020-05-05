@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    include FacilitiesManagement::Beta::SummaryHelper
+    include FacilitiesManagement::SummaryHelper
 
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :results
 

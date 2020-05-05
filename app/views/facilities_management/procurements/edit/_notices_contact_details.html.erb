@@ -1,0 +1,45 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+    <%=form_for @page_data[:model_object], url: facilities_management_procurements_path do |f|%>
+        <div class="govuk-!-width-three-quarters">
+            <h1 class="govuk-heading-m"> <%= t('.notices_contact_detail_description_header') %> </h1>
+            <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_notices_detail].empty? %>">
+                <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_notices_detail].empty? %>"><%= t('.notices_contact_detail_description')%></p>
+                <%= display_errors(f.object, :using_buyer_detail_for_notices_detail)%>
+                <div class="govuk-radios">
+                    <div class="govuk-radios__item govuk-!-margin-bottom-6">
+                        <%= f.radio_button :using_buyer_detail_for_notices_detail, true, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_notices_detail, value: true, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= (@current_user.buyer_detail.full_name + ', ' + @current_user.buyer_detail.job_title) if @current_user.buyer_detail.full_name.present? && @current_user.buyer_detail.job_title.present?%>
+                        <span class="govuk-caption-m govuk-!-margin-top-2 ">
+                            <%= @current_user.buyer_detail.full_organisation_address %>
+                        </span>
+                        <% end %>
+                    </div>
+                    <% if @procurement.notices_contact_detail.blank? %>
+                    <div class="govuk-radios__item">
+                        <%= f.radio_button :using_buyer_detail_for_notices_detail, false, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_notices_detail, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= t('.new') %>
+                        <% end %>
+                    </div>
+                    <% else %>
+                     <div class="govuk-radios__item">
+                        <%= f.radio_button :using_buyer_detail_for_notices_detail, false, class: 'govuk-radios__input' %>
+                        <%= f.label :using_buyer_detail_for_notices_detail, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
+                        <%= @procurement.notices_contact_detail.name + ", " +  @procurement.notices_contact_detail.job_title %>
+                        <span class="govuk-caption-m govuk-!-margin-top-2 ">
+                            <%= @procurement.notices_contact_detail.contact_address %>
+                            </br>
+                            <div class="govuk-!-margin-top-2" >
+                            <%= link_to t('.change'), edit_facilities_management_procurement_path(:step => 'new_notices_contact_details') %>
+                            </div>
+                        </span>
+                        <% end %>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <%= govuk_continuation_buttons(pd, f, false) %>
+    <% end %>
+<% end %>
