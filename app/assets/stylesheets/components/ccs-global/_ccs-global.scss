@@ -340,7 +340,6 @@ ul.ccs-checklist {
           }
 
         a {
-          width      : 33%;
           text-align : right;
           font-size  : 14px;
           font-size  : 0.9rem;
@@ -351,10 +350,13 @@ ul.ccs-checklist {
 
           &:hover {
             color : $govuk-link-hover-colour;
-            }
           }
 
+          &:focus {
+            color: #000000;
+          }
         }
+      }
 
       li:first-child {
         border-bottom : none;
@@ -374,9 +376,9 @@ ul.ccs-checklist {
   @media (max-width : 641px) { //mobile
     & > .govuk-button {
       display : inline-block;
-      }
     }
   }
+}
 
 body.js-enabled #ccs-dynamic-accordian {
   .basket,

@@ -98,6 +98,8 @@ $(function () {
       var buttonNumber = parseInt(this.id[6]);
       $("#facilities_management_procurement_optional_call_off_extensions_" + buttonNumber).val("");
       $("#facilities_management_procurement_call_off_extension_" + buttonNumber).val("false");
+      $("#facilities_management_procurement_optional_call_off_extensions_" + buttonNumber).removeClass('govuk-input--error');
+      $("#optional_call_off_extensions_" + buttonNumber + "-error").addClass('govuk-visually-hidden');
       $("#ext" + buttonNumber + "-container").addClass("govuk-visually-hidden");
       if (buttonNumber !== 2) {
         $("#fm-ext" + (buttonNumber - 1) + "-remove-btn").removeClass("govuk-visually-hidden");
@@ -119,7 +121,11 @@ $(function () {
       $("#ext" + i + "-container").addClass("govuk-visually-hidden");
       $("#facilities_management_procurement_call_off_extension_" + i).val("false");
     }
-
+    for (var i = 1; i <= 4; i ++) {
+      $("#facilities_management_procurement_optional_call_off_extensions_" + i).removeClass('govuk-input--error');
+      $("#optional_call_off_extensions_" + i + "-error").addClass('govuk-visually-hidden');
+    }
+    console.log($(this.parentElement.parentElement.parentElement.parentElement.parentElement).removeClass('govuk-form-group--error'));
     $("#facilities_management_procurement_optional_call_off_extensions_1").val("");
     $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
     updateButtonText();

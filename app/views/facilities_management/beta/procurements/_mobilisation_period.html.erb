@@ -17,7 +17,7 @@
               <%= f.label :mobilisation_period, 'Enter mobilisation length', class: 'govuk-heading-s' %>
               <span class='govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-2'> A minimum of 4 weeks required if TUPE is involved. </span>
               <%= display_error(f.object, :mobilisation_period)%>
-              <%= f.number_field :mobilisation_period, class: 'govuk-input govuk-input--width-4', maxlength: 3, min: '1', max: '312', step: 1 %>
+              <%= f.number_field :mobilisation_period, class: "govuk-input govuk-input--width-4 #{'govuk-input--error' if @procurement.errors[:mobilisation_period].any?}", maxlength: 3, min: '1', max: '312', step: 1 %>
               <span class='govuk-label--s govuk-!-margin-left-2'> weeks </span>
             </div>
             <div class="govuk-!-margin-left-3">
