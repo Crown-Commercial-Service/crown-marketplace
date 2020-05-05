@@ -1,0 +1,61 @@
+<%= content_for :page_title, t('.heading') %>
+<div class="govuk-body building-services govuk-grid-row">
+  <div class="govuk-!-width-three-quarters">
+    <%= render('facilities_management/procurements/shared/backlink_header') %>
+    <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
+      - <%= @procurement_building.name %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+    <table class="govuk-table govuk-!-margin-bottom-6 govuk-!-font-size-16">
+      <thead>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 22%; overflow: hidden"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 18%"></td>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.gia') %></th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.gia-summary') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building.gia %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.service') %></th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.volume_required_html') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+        </tr>
+        <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
+          <% service.answer_store[:questions].each_with_index do |qa_h, i| %>
+            <tr class="govuk-table__row">
+              <% if i == 0 %>
+                <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= "#{index + 1}. #{service.name}" %> </th>
+              <% else %>
+                <td class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"></td>
+              <% end %>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".#{qa_h[:question].to_s}") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2">
+                <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:question] == :service_hours && qa_h[:answer].valid? %>
+                <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
+                <%= 'Standard ' if qa_h[:answer].present? && qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
+              </td>
+              <td class="govuk-table__cell govuk-!-padding-right-2">
+                <% link_text = 'Change' %>
+                <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].try(:invalid?) %>
+                <% if %i[service_hours lift_data].include?(qa_h[:question])%>
+                  <%= link_to link_text, facilities_management_procurement_buildings_service_path(service) %>
+                <% else %>
+                  <%= link_to link_text, edit_facilities_management_procurement_building_path(@procurement_building, service_question: question_type(service, qa_h[:question])) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-0">
+      <%= link_to t('.back_to_detailed_summary'), facilities_management_procurement_path(@procurement_building.procurement), class: 'govuk-link--no-visited-state' %>
+    </div>
+  </div>
+</div>

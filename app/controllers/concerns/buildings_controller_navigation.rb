@@ -12,11 +12,11 @@ module BuildingsControllerNavigation
   }.freeze
 
   def step_title(action_name)
-    t('facilities_management.beta.buildings.step_title.step_title', position: STEPS.dig(action_name.to_sym, :position), total: maximum_step_number)
+    t('facilities_management.buildings.step_title.step_title', position: STEPS.dig(action_name.to_sym, :position), total: maximum_step_number)
   end
 
   def step_footer
-    t('facilities_management.beta.buildings.step_footer.step_footer', description: next_step[1][:desc]) if STEPS.dig(action_name.to_sym, :position).to_i < maximum_step_number
+    t('facilities_management.buildings.step_footer.step_footer', description: next_step[1][:desc]) if STEPS.dig(action_name.to_sym, :position).to_i < maximum_step_number
   end
 
   def maximum_step_number

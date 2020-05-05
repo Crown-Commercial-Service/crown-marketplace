@@ -681,13 +681,11 @@ en:
     sign_in: Sign in
     start_now: Start now
     submit: Continue
-    therewasaproblem: There was a problem
     type_csv: text/csv
     type_doc: application/msword
     type_pdf: application/pdf
     type_xlsx: application/msexcel
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
-    youmustselect: You must select at least one service before clicking the continue button
   companies:
     unit:
       one: company
@@ -712,13 +710,12 @@ en:
       extension_whitelist_error: The selected file must be a DOC, DOCX or PDF
       max_size_error: The selected file must be smaller than %{max_size}
   facilities_management:
-    beta:
-      admin:
-        supplier_rates:
-          supplier_benchmark_rates:
-            not_a_number: The rate must be a number, like 2.60 or 8
-          supplier_framework_rates:
-            not_a_number: The rate must be a number, like 2.60 or 8
+    admin:
+      supplier_rates:
+        supplier_benchmark_rates:
+          not_a_number: The rate must be a number, like 2.60 or 8
+        supplier_framework_rates:
+          not_a_number: The rate must be a number, like 2.60 or 8
   faker:
     company:
       name:

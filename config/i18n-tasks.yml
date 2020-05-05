@@ -120,15 +120,15 @@ ignore_unused:
   - supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months
   - supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months
   - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
-  - facilities_management.beta.procurement_buildings.volume.question.*
-  - facilities_management.beta.procurements.da_buyer.review_contract.contract_documents.*
+  - facilities_management.procurement_buildings.volume.question.*
+  - facilities_management.procurements.da_buyer.review_contract.contract_documents.*
   - home.index.supply_teachers_link
   - home.index.management_consultancy_link
   - home.index.legal_services_link
   - home.index.facilities_management_link
-  - facilities_management.beta.admin.supplier_rates.supplier_framework_rates.*
-  - facilities_management.beta.procurements.results.hint-text-unpriced*
-  - facilities_management.beta.procurements.results.sub-lot-1*
+  - facilities_management.admin.supplier_rates.supplier_framework_rates.*
+  - facilities_management.procurements.results.hint-text-unpriced*
+  - facilities_management.procurements.results.sub-lot-1*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

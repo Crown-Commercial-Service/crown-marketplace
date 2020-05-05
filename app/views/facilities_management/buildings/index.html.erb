@@ -1,0 +1,55 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
+  <div id="buildings-container">
+    <%= link_to t('.create_new_button'), new_facilities_management_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
+    <div class="govuk-!-width-two-thirds">
+      <p class="govuk-!-margin-bottom-2">
+        <%= t('.start_paragraph') %>
+      </p>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            How it works
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <%= t('.start_warning_html') %>
+        </div>
+      </details>
+
+
+    </div>
+    <h2 class="govuk-heading-m govuk-!-margin-top-6"><%= t('.my_buildings_header') %></h2>
+    <% if @page_data[:model_object].count.zero? %>
+      <div class="govuk-!-width-two-thirds govuk-!-padding-2" style="border-top: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC">
+        <span class="govuk-caption-m"><%= t('.no_buildings_text') %></span></th>
+      </div>
+    <% else %>
+      <div class="govuk-table govuk-!-width-full-width" data-module="table">
+        <table style="" class="ccs-at-govuk-table--3070">
+          <thead>
+          <tr>
+            <th><%= t('.column_name_header') %></th>
+            <th><%= t('.column_desc_header') %></th>
+            <th style="min-width: 10em"><%= t('.column_lstup_header') %></th>
+            <th><%= t('.column_status_header') %></th>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <% @page_data[:model_object].each do |building| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_building_path(building.id), class: 'govuk-link', 'aria-label' => t('.link_to_building_summary') %>
+              </td>
+              <td class="govuk-table__cell"><%= building.description.to_s.length > 0 ? building['description'].to_s : '-' %></td>
+              <td class="govuk-table__cell" style="word-wrap: break-spaces;"><span style="display: inline-block; word-break: keep-all">&#32;
+                <%= building.updated_at.to_datetime.strftime("%-d %B %Y,")%>&nbsp;</span><span style="display: inline-block; word-break:keep-all">
+                <%= building.updated_at.to_datetime.strftime("%-I:%M%#p") %></span></td>
+              <td class="govuk-table__cell"><strong style="word-break: normal" class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+<% end %>

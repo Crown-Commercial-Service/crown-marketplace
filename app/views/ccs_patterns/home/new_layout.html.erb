@@ -24,7 +24,7 @@
 %>
 <%= govuk_page_content(page_description,
                        demo_model_object) do %>
-  <%= form_for demo_model_object, url: edit_facilities_management_beta_buyer_detail_path(demo_model_object), method: :patch, html: {specialvalidation: false, multipart: true} do |f| %>
+  <%= form_for demo_model_object, url: edit_facilities_management_buyer_detail_path(demo_model_object), method: :patch, html: {specialvalidation: false, multipart: true} do |f| %>
     <dl>
       <dt>Run validations</dt>
       <dd><%= govuk_prevent_submission(f, true) %>

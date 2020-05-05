@@ -13,13 +13,13 @@ module FacilitiesManagement
     end
 
     def start_path
-      facilities_management_beta_path
+      facilities_management_path
     end
 
     def next_step_path
       case next_slug
       when 'procurement'
-        new_facilities_management_beta_procurement_path(journey: self.class.journey_name, params: params)
+        new_facilities_management_procurement_path(journey: self.class.journey_name, params: params)
       else
         super
       end

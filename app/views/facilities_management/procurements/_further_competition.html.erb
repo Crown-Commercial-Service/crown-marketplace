@@ -1,0 +1,7 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
+  <%= render :partial => 'facilities_management/procurements/further_competition/further_competition_partial', locals: { post: pd } %>
+  <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+    <%= link_to(pd.navigation_details.primary_text, new_facilities_management_procurement_copy_procurement_path(procurement_id: @page_data[:model_object].id), role: 'button', class: 'govuk-button') %> <br/>
+    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
+  <% end %>
+<% end %>

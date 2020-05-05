@@ -1,23 +1,19 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+<h2>Confirm token</h2>
 
+<%= form_tag facilities_management_users_confirm_path, method: :post do %>
 
-
-
-    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @result.errors.any? %>  ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('common.error_summary_title') %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <% @result.errors.keys.each do |attribute| %>
-            <li>
-              <%= link_to @result.errors[attribute].first, "##{error_id(attribute)}" %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+  <div class="field">
+    <%= label_tag :confirmation_code %><br />
+    <%= text_field_tag :confirmation_code %>
+  </div>
+  <% if params[:email] %>
+    <%= hidden_field_tag :email, params[:email] %>
+  <% else %>
+    <div class="field">
+      <%= label_tag :email %><br />
+      <%= text_field_tag :email %>
     </div>
+  <% end %>
 
 
 
@@ -73,4 +69,4 @@
       </p>
     <% end %>
   </div>
-</div>
+<% end %>
