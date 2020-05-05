@@ -102,7 +102,7 @@ class ProcurementCsvExport
           expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
           route_to_market(contract.procurement),
           contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
-          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| helpers.delimited_with_pence(s.direct_award_value) } .join("\n"),
+          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
           contract.supplier.data['supplier_name'],
           delimited_with_pence(contract.direct_award_value),
           contract.contract_number,
