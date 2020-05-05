@@ -47,7 +47,7 @@
                     <div class="other_input ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150" style="margin-left: 1.5ex">
                       <p class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_building') %></p>
                       <%= display_potential_errors(@page_data[:model_object], :other_building_type, f.object_name) %>
-                      <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex', "aria-describedby": "facilities_management_building_other_building_type"  ) %>
+                      <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex', "aria-describedby": "facilities_management_building_other_building_type", 'tabindex': "#{@page_data[:model_object].other_building_type.blank? ? -1 : 0}" ) %>
                     </div>
                   </div>
                 </div>
