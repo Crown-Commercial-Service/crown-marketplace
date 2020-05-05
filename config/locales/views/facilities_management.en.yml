@@ -1285,17 +1285,17 @@ en:
           available_routes_to_market: Available route to market
           building_services_summary: Buildings and services summary
           da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
-          direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
+          direct_award_label_html: "<b>Direct award</b>"
           estimated_cost: Estimated cost
-          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
+          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework/benchmark pricing, and your current cost, or direct award pricing (if eligible).  <br/>This cost has been used to place you in the correct sub-lot.
           estimated_cost_calc_logic_4_html: Your estimated cost has been calculated using a combination of available framework and benchmark pricing. <br/>This cost has been used to place you in the correct sub-lot.
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
+          full-sub-lot: Sub-lot
           further_competition_html: "<b>Further competition</b>"
           hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
           hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
           hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
-          sub-lot: Lot
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
           sub-lot-1c: Sub-lot 1c
