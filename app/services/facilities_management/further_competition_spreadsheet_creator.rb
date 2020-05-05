@@ -1,6 +1,12 @@
 class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   attr_accessor :session_data
 
+  def initialize(procurement_id)
+    @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+    @active_procurement_buildings = @procurement.active_procurement_buildings
+  end
+
   def units_of_measure_values
     @units_of_measure_values ||= @active_procurement_buildings.map do |building|
       @report.fc_procurement_building_services(building).map do |procurement_building_service|
