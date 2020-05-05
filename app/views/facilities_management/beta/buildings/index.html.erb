@@ -1,7 +1,7 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
 <%= content_for :page_title, pd.heading_details.text %>
   <div id="buildings-container">
-    <%= link_to t('.create_new_button'), new_facilities_management_beta_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button" %>
+    <%= link_to t('.create_new_button'), new_facilities_management_beta_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
     <div class="govuk-!-width-two-thirds">
       <p class="govuk-!-margin-bottom-2">
         <%= t('.start_paragraph') %>

@@ -106,7 +106,7 @@
             </ul>
           <% end %>
 
-          <%= link_to t('.download_documents.title'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
+          <%= link_to t('.download_documents.title'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary', 'aria-label': "#{t('.download_documents.title')}"  %>
         </div>
 
 
@@ -117,7 +117,7 @@
 
         <strong><p><%= t('.change_requirements.guidance') %></strong>
         <div>
-          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate) %>
+          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
         </div>
         <strong><p><%= t('.change_schedule.guidance') %></strong>
 

@@ -14,7 +14,7 @@
         <%= t('facilities_management.home.startlist').html_safe %>
       </ul>
       <p>
-        <%= link_to t('facilities_management.home.startnow'), '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+        <%= link_to t('facilities_management.home.startnow'), '/facilities-management/select-services', role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': "#{t('facilities_management.home.startnow')}" %>
       </p>
     </div>
   </div>

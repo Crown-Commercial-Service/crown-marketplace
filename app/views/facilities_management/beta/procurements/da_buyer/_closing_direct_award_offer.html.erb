@@ -16,8 +16,8 @@
             <div class="govuk-body">
                 Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.    
             </div>
-            <%= govuk_button(f, pd.navigation_details.primary_text, options = { submit: true, button: :warning, class: 'govuk-!-margin-right-4'}) %>
-            <%= govuk_button(f, pd.navigation_details.secondary_text, options = { submit: true, button: :secondary }) %>
+            <%= govuk_button(f, pd.navigation_details.primary_text, options = { submit: true, button: :warning, class: 'govuk-!-margin-right-4', 'aria-label': "#{pd.navigation_details.primary_text}"}) %>
+            <%= govuk_button(f, pd.navigation_details.secondary_text, options = { submit: true, button: :secondary, 'aria-label': "#{pd.navigation_details.secondary_text}" }) %>
         </div>
     <% end %>
 <% end %>

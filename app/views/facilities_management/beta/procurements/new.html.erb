@@ -13,10 +13,10 @@
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full"
-        <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button' %>
-        <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary' %>
+        <%= f.submit t('.save_your_search'), data: {disable_with:false}, class: 'govuk-button', 'aria-label': t('.save_your_search') %>
+        <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary', 'aria-label': t('.save_for_later') %>
         <br />
-        <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state' %>
+        <%= link_to t('.cancel_text'), facilities_management_beta_procurements_path, class: 'govuk-link govuk-link--no-visited-state', 'aria-label': t('.cancel_text') %>
       </div>
     </div>
   </div>
