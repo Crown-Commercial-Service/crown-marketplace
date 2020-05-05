@@ -12,7 +12,6 @@ module Cognito
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
     validates_format_of :password, with: /(?=.*[0-9])/, message: :invalid_no_number
 
-
     def initialize(email, password, password_confirmation, confirmation_code)
       @email = email
       @password = password

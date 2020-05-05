@@ -64,8 +64,8 @@ en:
             password:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
-              invalid_no_symbol: Password must include a special character
               invalid_no_number: Password must include a number
+              invalid_no_symbol: Password must include a special character
               too_short: Password must be 8 characters or more
             password_confirmation:
               blank: Enter your password
@@ -479,12 +479,12 @@ en:
     page_section: Find apprenticeship training and related services
     passwords:
       edit:
-        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         lead: Reset password for
         new_password: New password
         password: Your password must have
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -671,8 +671,8 @@ en:
     incomplete: Incomplete
     next: Next
     passcap: at least one capital letter
-    passnum: at least one number
     passeight: at least 8 characters
+    passnum: at least one number
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
     reset_password: Reset password
@@ -890,7 +890,6 @@ en:
         txt03: agreement provides legal advice services for central government and arms-length bodies.
     passwords:
       edit:
-        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
@@ -899,6 +898,7 @@ en:
         new_password: New password
         password: Your password must have
         text01: If you don't receive this, contact CCS customer services team.
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -997,7 +997,6 @@ en:
     admin:
       passwords:
         edit:
-          verify_code: Verification code
           confirm_new_password: Confirm new password
           heading: Reset your password
           heading1: A reset email has been sent
@@ -1006,6 +1005,7 @@ en:
           new_password: New password
           password: Your password must have
           text01: If you don't receive this, contact CCS customer services team.
+          verify_code: Verification code
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1235,7 +1235,6 @@ en:
         services_selected: services selected
     passwords:
       edit:
-        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
@@ -1244,6 +1243,7 @@ en:
         new_password: New password
         password: Your password must have
         text01: If you don't receive this, contact CCS customer services team.
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1435,7 +1435,6 @@ en:
     admin:
       passwords:
         edit:
-          verify_code: Verification code
           confirm_new_password: Confirm new password
           heading: Reset your password
           heading1: A reset email has been sent
@@ -1444,6 +1443,7 @@ en:
           new_password: New password
           password: Your password must have
           text01: If you don't receive this, contact CCS customer services team.
+          verify_code: Verification code
         forgot_password_confirmation:
           heading: A reset email has been sent
           lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
@@ -1773,7 +1773,6 @@ en:
     page_section: Find supply teachers and agency staff
     passwords:
       edit:
-        verify_code: Verification code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent
@@ -1782,6 +1781,7 @@ en:
         new_password: New password
         password: Your password must have
         text01: If you don't receive this, contact CCS customer services team.
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
