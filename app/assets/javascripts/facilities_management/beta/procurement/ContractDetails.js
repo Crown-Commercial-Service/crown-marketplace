@@ -88,4 +88,22 @@ $(function () {
 
         return [nameElem, jobTitleElem, emailElem, telephoneNumberElem];
     }
+
+    function makeElementFocusableOnExpand(index) {
+      var contractDetails = [$($('#invoice-detail-summary').children().get(0)), $($('#notice-detail-summary').children().get(0)), $($('#authorised-detail-summary').children().get(0))]
+
+      $(contractDetails[index].children().get(0)).on('click', function(e) {
+        var email = $(contractDetails[index].children().get(1)).children().get(0);
+        var currentTabindex = email.getAttribute('tabindex');
+        if (currentTabindex === null) {
+          email.setAttribute('tabindex', '-1');
+        } else {
+          email.removeAttribute('tabindex');
+        }
+      });
+    }
+
+    for (var i = 0; i < 3; i++) {
+      makeElementFocusableOnExpand(i);
+    }
 });

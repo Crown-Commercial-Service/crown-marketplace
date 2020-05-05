@@ -1,4 +1,4 @@
-<div class="govuk-!-font-size-19">
+<div class="govuk-!-font-size-19" id='contract-details-summary'>
   <table class="govuk-table govuk-!-width-three-quarters">
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
@@ -30,16 +30,16 @@
 
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>">
         <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>"><%= t('.invoicing_contact_details') %></th>
-        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
+        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state" id='invoice-detail-summary'>
           <% case @procurement.using_buyer_detail_for_invoice_details %>
           <% when true %>
             <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
-              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br>
               <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
             <% end %>
           <% when false %>
             <%= govuk_details("#{@procurement.invoice_contact_detail.name}, #{@procurement.invoice_contact_detail.job_title}", true) do %>
-              <%= mail_to @procurement.invoice_contact_detail.email, @procurement.invoice_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+              <%= mail_to @procurement.invoice_contact_detail.email, @procurement.invoice_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br>
               <%= "Address: #{@procurement.invoice_contact_detail.contact_address}"%>
             <% end %>
           <% else %>
@@ -58,17 +58,17 @@
 
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>">
         <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>"><%= t('.authorised_representative') %></th>
-        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
+        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state" id='authorised-detail-summary'>
           <% case @procurement.using_buyer_detail_for_authorised_detail %>
           <% when true %>
             <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
-              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br/>
               <%= "Telephone: #{@current_user.buyer_detail.telephone_number}" %>  <br/>
               <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
             <% end %>
           <% when false %>
             <%= govuk_details("#{@procurement.authorised_contact_detail.name}, #{@procurement.authorised_contact_detail.job_title}", true) do %>
-              <%= mail_to @procurement.authorised_contact_detail.email, @procurement.authorised_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+              <%= mail_to @procurement.authorised_contact_detail.email, @procurement.authorised_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br/>
               <%= "Telephone: #{@procurement.authorised_contact_detail.telephone_number}"%> <br/>
               <%= "Address: #{@procurement.authorised_contact_detail.contact_address}"%>
             <% end %>
@@ -88,16 +88,16 @@
 
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>">
         <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>"><%= t('.notices_contact_details') %></th>
-        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state">
+        <td class="govuk-link govuk-table__cell govuk-link--no-visited-state" id='notice-detail-summary'>
           <% case @procurement.using_buyer_detail_for_notices_detail %>
           <% when true %>
             <%= govuk_details("#{@current_user.buyer_detail.full_name}, #{@current_user.buyer_detail.job_title}", true) do %>
-              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+              <%= mail_to @current_user.email, @current_user.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br/>
               <%= "Address: #{@current_user.buyer_detail.full_organisation_address}"%>
             <% end %>
           <% when false %>
             <%= govuk_details("#{@procurement.notices_contact_detail.name}, #{@procurement.notices_contact_detail.job_title}", true) do %>
-              <%= mail_to @procurement.notices_contact_detail.email, @procurement.notices_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state' %>  <br/>
+              <%= mail_to @procurement.notices_contact_detail.email, @procurement.notices_contact_detail.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br/>
               <%= "Address: #{@procurement.notices_contact_detail.contact_address}"%>
             <% end %>
           <% else %>
