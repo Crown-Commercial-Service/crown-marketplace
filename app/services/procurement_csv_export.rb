@@ -65,101 +65,99 @@ class ProcurementCsvExport
     'DA Buyer confirmed contract dates'
   ].freeze
 
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def self.call(start_date, end_date)
-    # rubocop:disable Metrics/BlockLength
     CSV.generate do |csv|
       csv << COLUMN_LABELS
-
-      find_contracts(start_date, end_date).each do |contract|
-        csv << [
-          contract.procurement.contract_name,
-          localised_datetime(contract.procurement.created_at),
-          contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
-          procurement_status(contract.procurement, contract),
-          contract.procurement.user.buyer_detail.organisation_name,
-          [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
-          contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
-          contract.procurement.user.buyer_detail.full_name,
-          contract.procurement.user.buyer_detail.job_title,
-          contract.procurement.user.email,
-          string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
-          expand_services(contract.procurement.service_codes),
-          expand_regions(contract.procurement.region_codes),
-          delimited_with_pence(contract.procurement.estimated_annual_cost),
-          yes_no(contract.procurement.tupe),
-          format_period_start_end(contract.procurement),
-          format_mobilisation_start_end(contract.procurement),
-          call_off_extensions(contract.procurement),
-          blank_if_zero(contract.procurement.active_procurement_buildings.size),
-          expand_services(contract.procurement.procurement_building_service_codes),
-          expand_regions(contract.procurement.active_procurement_building_region_codes),
-          delimited_with_pence(contract.procurement.assessed_value),
-          format_lot_number(contract.procurement.lot_number),
-          yes_no(contract.procurement.eligible_for_da),
-          contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
-          expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
-          route_to_market(contract.procurement),
-          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
-          contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
-          contract.supplier.data['supplier_name'],
-          delimited_with_pence(contract.direct_award_value),
-          contract.contract_number,
-          contract.reason_for_declining,
-          contract.reason_for_closing,
-          contract.reason_for_not_signing,
-          localised_date(contract.contract_signed_date),
-          [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
-        ]
-      end
-
-      find_procurements(start_date, end_date).each do |procurement|
-        csv << [
-          procurement.contract_name,
-          localised_datetime(procurement.created_at),
-          localised_datetime(procurement.updated_at),
-          procurement_status(procurement, nil),
-          procurement.user.buyer_detail.organisation_name,
-          [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
-          procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
-          procurement.user.buyer_detail.full_name,
-          procurement.user.buyer_detail.job_title,
-          procurement.user.email,
-          string_as_formula(procurement.user.buyer_detail.telephone_number),
-          expand_services(procurement.service_codes),
-          expand_regions(procurement.region_codes),
-          delimited_with_pence(procurement.estimated_annual_cost),
-          yes_no(procurement.tupe),
-          format_period_start_end(procurement),
-          format_mobilisation_start_end(procurement),
-          call_off_extensions(procurement),
-          blank_if_zero(procurement.active_procurement_buildings.size),
-          expand_services(procurement.procurement_building_service_codes),
-          expand_regions(procurement.active_procurement_building_region_codes),
-          delimited_with_pence(procurement.assessed_value),
-          format_lot_number(procurement.lot_number),
-          yes_no(procurement.eligible_for_da),
-          nil,
-          expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-          route_to_market(procurement),
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil
-        ]
-      end
+      find_contracts(start_date, end_date).each { |contract| csv << create_contract_row(contract) }
+      find_procurements(start_date, end_date).each { |procurement| csv << create_procurement_row(procurement) }
     end
-    # rubocop:enable Metrics/BlockLength
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def self.create_contract_row(contract)
+    [
+      contract.procurement.contract_name,
+      localised_datetime(contract.procurement.created_at),
+      contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
+      procurement_status(contract.procurement, contract),
+      contract.procurement.user.buyer_detail.organisation_name,
+      [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
+      contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+      contract.procurement.user.buyer_detail.full_name,
+      contract.procurement.user.buyer_detail.job_title,
+      contract.procurement.user.email,
+      string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
+      expand_services(contract.procurement.service_codes),
+      expand_regions(contract.procurement.region_codes),
+      delimited_with_pence(contract.procurement.estimated_annual_cost),
+      yes_no(contract.procurement.tupe),
+      format_period_start_end(contract.procurement),
+      format_mobilisation_start_end(contract.procurement),
+      call_off_extensions(contract.procurement),
+      blank_if_zero(contract.procurement.active_procurement_buildings.size),
+      expand_services(contract.procurement.procurement_building_service_codes),
+      expand_regions(contract.procurement.active_procurement_building_region_codes),
+      delimited_with_pence(contract.procurement.assessed_value),
+      format_lot_number(contract.procurement.lot_number),
+      yes_no(contract.procurement.eligible_for_da),
+      contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"),
+      expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
+      route_to_market(contract.procurement),
+      contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
+      contract.procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
+      contract.supplier.data['supplier_name'],
+      delimited_with_pence(contract.direct_award_value),
+      contract.contract_number,
+      contract.reason_for_declining,
+      contract.reason_for_closing,
+      contract.reason_for_not_signing,
+      localised_date(contract.contract_signed_date),
+      [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
+    ]
+  end
+
+  def self.create_procurement_row(procurement)
+    [
+      procurement.contract_name,
+      localised_datetime(procurement.created_at),
+      localised_datetime(procurement.updated_at),
+      procurement_status(procurement, nil),
+      procurement.user.buyer_detail.organisation_name,
+      [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
+      procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+      procurement.user.buyer_detail.full_name,
+      procurement.user.buyer_detail.job_title,
+      procurement.user.email,
+      string_as_formula(procurement.user.buyer_detail.telephone_number),
+      expand_services(procurement.service_codes),
+      expand_regions(procurement.region_codes),
+      delimited_with_pence(procurement.estimated_annual_cost),
+      yes_no(procurement.tupe),
+      format_period_start_end(procurement),
+      format_mobilisation_start_end(procurement),
+      call_off_extensions(procurement),
+      blank_if_zero(procurement.active_procurement_buildings.size),
+      expand_services(procurement.procurement_building_service_codes),
+      expand_regions(procurement.active_procurement_building_region_codes),
+      delimited_with_pence(procurement.assessed_value),
+      format_lot_number(procurement.lot_number),
+      yes_no(procurement.eligible_for_da),
+      nil,
+      expand_services(unpriced_services(procurement.procurement_building_service_codes)),
+      route_to_market(procurement),
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
   end
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   CONTRACT_BEARING_STATES = %w[direct_award closed].freeze
 

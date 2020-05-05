@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ProcurementCsvExport do
-  let!(:procurement_in_search) { create(:facilities_management_procurement) }
+  let!(:procurement_in_search) do
+    proc = create(:facilities_management_procurement)
+    proc.user.buyer_detail = build(:buyer_detail)
+    proc.reload
+  end
+
   let!(:procurement_in_results) { create(:facilities_management_procurement_direct_award, aasm_state: 'results') }
 
   let(:start_date) { Time.zone.today - 1 }
@@ -10,7 +15,13 @@ RSpec.describe ProcurementCsvExport do
   # rubocop:disable Rails/SkipsModelValidations
   let!(:procurement_in_da) do
     proc = create(:facilities_management_procurement_with_contact_details)
-    proc.procurement_suppliers.first.update_attribute(:aasm_state, 'sent')
+
+    proc.procurement_suppliers.each do |contract|
+      supplier = create(:ccs_fm_supplier)
+      contract.update(aasm_state: 'sent', supplier_id: supplier.id)
+    end
+
+    proc.user.buyer_detail = build(:buyer_detail)
     proc.reload
   end
 
@@ -91,6 +102,18 @@ RSpec.describe ProcurementCsvExport do
       it 'finds no contracts' do
         expect(found_contracts).to be_none
       end
+    end
+  end
+
+  describe '.create_contract_row' do
+    it 'produces correct number of elements' do
+      expect(described_class.create_contract_row(procurement_in_da.procurement_suppliers.first).size).to eq 37
+    end
+  end
+
+  describe '.create_procurement_row' do
+    it 'produces correct number of elements' do
+      expect(described_class.create_procurement_row(procurement_in_search).size).to eq 37
     end
   end
 
