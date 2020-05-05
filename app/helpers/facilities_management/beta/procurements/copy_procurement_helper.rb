@@ -11,7 +11,7 @@ module FacilitiesManagement::Beta::Procurements::CopyProcurementHelper
       new: {
         page_title: 'Create a copy',
         caption1: @procurement.contract_name,
-        continuation_text: 'Save and contiue',
+        continuation_text: 'Save and continue',
         secondary_text: 'Cancel',
         secondary_url: page_back_url,
         back_text: 'Back',
