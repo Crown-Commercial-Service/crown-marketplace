@@ -467,8 +467,10 @@ nodeListForEach($other_expandos, function (expandoItem) {
 		$("input[name=\"" + radioName + "\"]").change ( function (e) {
 		    if ( $(innerRadio).is(":checked")) {
 		        $(innerContent).removeClass('govuk-visually-hidden');
+                document.getElementById("facilities_management_building_other_building_type").tabIndex = "0";
 			} else {
 				$(innerContent).addClass('govuk-visually-hidden');
+                document.getElementById("facilities_management_building_other_building_type").tabIndex = "-1";
 			}
 		});
 	}
