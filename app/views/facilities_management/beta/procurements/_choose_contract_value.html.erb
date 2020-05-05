@@ -2,9 +2,11 @@
   <%= form_for @procurement, url: facilities_management_beta_procurement_path(@procurement.id, step: :continue_to_change_contract_value), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= f.hidden_field :lot_number_selected_by_customer, value: true %>
     <% if @procurement.all_services_unpriced_and_no_buyer_input? %>
-      <h2 class="govuk-heading govuk-heading-m govuk-!-width-three-quarters"><%= t('.heading') %></h2>
-      <h2 class="govuk-caption-m govuk-!-width-three-quarters"><%= t('.description_html') %></h2>
       <%= govuk_grouped_field(f, nil, :lot_number) do |ff, attr| %>
+      <legend class="govuk-fieldset__legend govuk-!-margin-bottom-0">
+        <h2 class="govuk-heading govuk-heading-m govuk-!-width-three-quarters govuk-!-margin-bottom-0"><%= t('.heading') %></h2>
+      </legend>
+      <h2 class="govuk-caption-m govuk-!-width-three-quarters"><%= t('.description_html') %></h2>
         <%= govuk_start_individual_field(ff, attr.first, {}, false, false) do |a| %>
           <div class="govuk-radios">
             <div class="govuk-radios__item">
