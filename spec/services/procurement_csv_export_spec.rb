@@ -106,14 +106,97 @@ RSpec.describe ProcurementCsvExport do
   end
 
   describe '.create_contract_row' do
+    subject(:row) { described_class.create_contract_row(procurement_in_da.procurement_suppliers.first) }
+
     it 'produces correct number of elements' do
-      expect(described_class.create_contract_row(procurement_in_da.procurement_suppliers.first).size).to eq 37
+      expect(row.size).to eq described_class::COLUMN_LABELS.size
     end
   end
 
   describe '.create_procurement_row' do
+    subject(:row) { described_class.create_procurement_row(procurement_in_search) }
+
     it 'produces correct number of elements' do
-      expect(described_class.create_procurement_row(procurement_in_search).size).to eq 37
+      expect(row.size).to eq described_class::COLUMN_LABELS.size
+    end
+  end
+
+  describe '.estimated_annual_cost' do
+    before do
+      procurement_in_search.update(estimated_cost_known: known, estimated_annual_cost: 100)
+    end
+
+    context 'when known' do
+      let(:known) { true }
+
+      it 'show value' do
+        expect(described_class.estimated_annual_cost(procurement_in_search)).to eq '100.00'
+      end
+    end
+
+    context 'when not known' do
+      let(:known) { false }
+
+      it 'show "None"' do
+        expect(described_class.estimated_annual_cost(procurement_in_search)).to eq 'None'
+      end
+    end
+  end
+
+  describe '.mobilisation_period' do
+    let(:period) { 10 }
+    let(:initial_call_off_start_date) { Date.new(2019, 6, 6) }
+
+    before do
+      procurement_in_search.update(
+        mobilisation_period_required: required,
+        mobilisation_period: period,
+        initial_call_off_start_date: initial_call_off_start_date
+      )
+    end
+
+    context 'when required' do
+      let(:required) { true }
+
+      it 'show period and date range' do
+        expect(described_class.mobilisation_period(procurement_in_search)).to eq '10 weeks, 27 March 2019 -  5 June 2019'
+      end
+    end
+
+    context 'when not required' do
+      let(:required) { false }
+
+      it 'show "None"' do
+        expect(described_class.mobilisation_period(procurement_in_search)).to eq 'None'
+      end
+    end
+  end
+
+  describe '.call_off_extensions' do
+    before do
+      procurement_in_search.update(
+        extensions_required: required,
+        optional_call_off_extensions_1: 1,
+        optional_call_off_extensions_2: 2,
+        optional_call_off_extensions_3: 3,
+        optional_call_off_extensions_4: 4
+      )
+    end
+
+    context 'when required' do
+      let(:required) { true }
+
+      it 'show extensions' do
+        expect(described_class.call_off_extensions(procurement_in_search)).to eq '4 extensions, 1 year, 2 years, 3 years, 4 years'
+      end
+    end
+
+    context 'when not required' do
+      let(:required) { false }
+
+      it 'show "None"' do
+        expect(described_class.call_off_extensions(procurement_in_search)).to eq 'None'
+      end
     end
   end
 
