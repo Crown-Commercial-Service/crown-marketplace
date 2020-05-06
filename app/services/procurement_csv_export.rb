@@ -35,7 +35,7 @@ class ProcurementCsvExport
     'Buyer sector',
     'Buyer contact name',
     'Buyer contact job title',
-    'Buyer contact email address', # 10
+    'Buyer contact email address', # 10
     'Buyer contact telephone number',
     'Quick search services',
     'Quick search regions',
@@ -145,8 +145,8 @@ class ProcurementCsvExport
       nil, # 25
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
       route_to_market(procurement),
-      nil,
-      nil,
+      procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
+      procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
       nil, # 30
       nil,
       nil,
