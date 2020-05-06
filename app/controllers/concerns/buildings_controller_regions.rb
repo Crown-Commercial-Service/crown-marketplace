@@ -1,7 +1,17 @@
 module BuildingsControllerRegions
   extend ActiveSupport::Concern
 
+  def ensure_postcode_is_valid(postcode)
+    if [' '].exclude?(postcode)
+      postcode_reg = /^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i
+      matches = postcode.match(postcode_reg)
+      return "#{matches[1]} #{matches[4]}"
+    end
+    postcode
+  end
+
   def find_addresses_by_postcode(postcode)
+    postcode = ensure_postcode_is_valid(postcode)
     Rails.logger.info "Postcode lookup: #{postcode}"
     Postcode::PostcodeChecker_V2.location_info(postcode)
   rescue StandardError => e

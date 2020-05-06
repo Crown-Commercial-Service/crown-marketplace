@@ -15,10 +15,10 @@
             </strong>
         </div>
         <div>
-            <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--warning govuk-!-margin-top-6' %>
+            <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--warning govuk-!-margin-top-6', 'aria-label': "#{pd.navigation_details.secondary_text}" %>
         </div>
         <div>
-            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state') %>
+            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state', 'aria-label': "#{pd.navigation_details.return_text}") %>
         </div>
     <% end %>
 

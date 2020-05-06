@@ -18,7 +18,7 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-             <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+             <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet", contract_id: @procurement.first_unsent_contract.id) %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
               <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
             </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
@@ -34,7 +34,7 @@
           <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h3>
           <ul class="govuk-list documents">
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-              <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet") %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+              <a href="<%= facilities_management_beta_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet", contract_id: @procurement.first_unsent_contract.id) %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
                 <%= t('.attachment_3.price_matrix.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
@@ -106,7 +106,7 @@
             </ul>
           <% end %>
 
-          <%= link_to t('.download_documents.title'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
+          <%= link_to t('.download_documents.title'), facilities_management_beta_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary', 'aria-label': "#{t('.download_documents.title')}"  %>
         </div>
 
 
@@ -117,7 +117,7 @@
 
         <strong><p><%= t('.change_requirements.guidance') %></strong>
         <div>
-          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate) %>
+          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
         </div>
         <strong><p><%= t('.change_schedule.guidance') %></strong>
 

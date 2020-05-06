@@ -1,3 +1,4 @@
+<%= content_for :page_title, @lot_name %>
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -46,6 +47,6 @@
     </table>
   <% end %>
 
-  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
-  <a href="<%= facilities_management_beta_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.return_button') %></a>
+  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" aria-label="<%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <a href="<%= facilities_management_beta_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard" ><%= t('facilities_management.beta.admin.supplier_framework_data.sublot_data.return_button') %></a>
 <% end %>

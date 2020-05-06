@@ -7,6 +7,10 @@ strong {
 	font-weight: $govuk-font-weight-light;
 	margin-bottom: 36px;
 	line-height: 1.15;
+	
+	@media (min-width: 300px) and (max-width: 640px){
+		word-break: break-all;
+	}
 }
 .govuk-heading-l,
 .govuk-heading-m,

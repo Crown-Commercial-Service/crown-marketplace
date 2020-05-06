@@ -125,12 +125,12 @@ module LayoutHelper
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false, primary_btn_as_link = false, secondary_btn_as_link = false)
     buttons = ActiveSupport::SafeBuffer.new
 
-    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?)) if primary_button && !primary_btn_as_link
+    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.primary_text }) if primary_button && !primary_btn_as_link
     buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?)) if secondary_button && !secondary_btn_as_link
+    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", data: { disable_with: false }, name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.secondary_text }) if secondary_button && !secondary_btn_as_link
     buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
     if secondary_button || primary_button
-      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before') if return_link
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before', aria: { label: page_description.navigation_details.return_text }) if return_link
     end
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
@@ -143,8 +143,8 @@ module LayoutHelper
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/ParameterLists
-  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, &block)
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity,Metrics/ParameterLists
+  def govuk_start_individual_field(builder, attribute, label_text = {}, require_label = true, show_errors = true, options = {}, hide_error_text = false, &block)
     attribute_errors = builder&.object&.errors&.key?(attribute)
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attribute_errors && show_errors
@@ -156,13 +156,12 @@ module LayoutHelper
     content_tag :div, options do
       capture do
         concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
-        concat(display_potential_errors(builder.object, attribute, builder.object_name, nil, nil, nil)) if show_errors
+        concat(display_error(builder.object, attribute)) if show_errors && !hide_error_text
         block.call(attribute) if block_given?
       end
     end
   end
-
-  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/ParameterLists
+  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity,Metrics/ParameterLists
 
   def govuk_grouped_fields(form, caption, *attributes)
     attributes_with_errors      = attributes.flatten.select { |a| form.object.errors[a].any? }
@@ -212,9 +211,11 @@ module LayoutHelper
   def fieldset_structure(form, caption, options, header_text, *attributes, &block)
     content_tag :fieldset, options do
       capture do
-        concat(content_tag(:legend,
-                           content_tag(:h2, caption, class: 'govuk-fieldset__heading'),
-                           class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
+        unless caption.nil?
+          concat(content_tag(:legend,
+                             content_tag(:h2, caption, class: 'govuk-fieldset__heading'),
+                             class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
+        end
         concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
         attributes.flatten.each do |attr|
           concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array
@@ -271,6 +272,7 @@ module LayoutHelper
   def govuk_button(builder, text, options = { submit: true, class: '' })
     css_classes = ['govuk-button']
     css_classes << options[:class]
+    css_classes += text == ['aria-label']
     css_classes += ['govuk-button--secondary'] if options[:button] == :secondary
     css_classes += ['govuk-button--warning'] if options[:button] == :warning
 

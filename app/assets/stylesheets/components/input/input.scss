@@ -1,6 +1,6 @@
 @import "govuk-frontend/components/input/input";
 
-.govuk-input:focus {
+.govuk-input:focus, .govuk-textarea:focus, .govuk-select:focus {
 	outline: 3px solid #fd0;
 	outline-offset: 0;
 	box-shadow: inset 0 0 0 2px

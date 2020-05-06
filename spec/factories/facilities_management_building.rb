@@ -11,7 +11,7 @@ FactoryBot.define do
     building_name { 'asa' }
     description { 'non-json description' }
     region { 'Essex' }
-    building_type { 'General office - customer facing' }
+    building_type { 'General office - Customer Facing' }
     security_type { 'Baseline personnel security standard (BPSS)' }
     address_town { 'Southend-On-Sea' }
     address_line_1 { '10 Mariners Court' }

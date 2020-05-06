@@ -12,13 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a  To date
-              invalid: Enter a valid To date
+              blank: You must enter a 'To' date
+              invalid: Enter a valid 'To' date
               less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
               not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a From date
-              invalid: Enter a valid  From date
+              blank: You must enter a 'From' date
+              invalid: Enter a valid 'From' date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -83,8 +83,8 @@ en:
             building_type:
               blank: You must select a buiding type or describe your own
             gia:
-              blank: Enter a whole number for the size of internal area of this building
-              greater_than: Enter a whole number for the size of internal area of this building
+              blank: Building size must be a number between 1 and 999,999,999
+              greater_than: Building size must be a number between 1 and 999,999,999
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -155,7 +155,7 @@ en:
             initial_call_off_period:
               blank: Enter initial call-off period
               greater_than_or_equal_to: Enter initial call-off period
-              less_than_or_equal_to: Initial call-off period can be a maximum of 7 years
+              less_than_or_equal_to: Initial call-off period must be between 1 and 7 years
               not_a_number: Enter initial call-off period
               not_an_integer: Initial call-off period must be a whole number
               not_present: You must answer all questions about 'Contract period'
@@ -271,7 +271,7 @@ en:
               less_than: Enter a whole number between 1 and 999, like 100.
               not_an_integer: The number of floors accessed must be a whole number greater than 0.
               required: The number of floors accessed must be a whole number greater than 0.
-              too_long: The number of floors accessed must be a whole number greater than 0.
+              too_long: Enter a whole number between 1 and 999, like 100.
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
               invalid: The number of appliances to be tested must be a whole number and greater than 0, like 450.
@@ -486,7 +486,7 @@ en:
         add_address:
           add_address_header: Address
           description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-          line_1_of_2: Building and street line 1 or 2
+          line_1_of_2: Building and street line 1 of 2
           line_2_of_2: Building and street line 2 of 2 (optional)
           postcode: Postcode
           town_or_city: Town or city
@@ -522,8 +522,8 @@ en:
           link_to_building_summary: View details for building
           my_buildings_header: My buildings
           no_buildings_text: You have no saved buildings
-          start_paragraph: Set up the buildings in which you want FM services to be delivered to.
-          start_warning_html: <p class="govuk-caption-m govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may to choose to set up just a floor or a specific area within a building.</p><p class="govuk-caption-m govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p class="govuk-caption-m">If you have a site, campus, group of buildings, these should be set up individually and not grouped together in one site.</p>
+          start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
+          start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
         page_definitions:
           add_building_address: Add building address
           building_size: Building size
@@ -534,7 +534,7 @@ en:
           manage_building_title: Manage buildings
           return_to_manage_buildings: Return to manage buildings
           save_and_continue: Save and continue
-          save_and_return_to_detailed_summary: Save and continue to building details summary
+          save_and_return_to_detailed_summary: Save and return to building details summary
           security_clearance: Security clearance
           skip_this_step: Skip this step
         security:
@@ -542,7 +542,7 @@ en:
           describe_security: Describe security level
           next_step: 'Next:'
           other: Other
-          security_description_html: Select the level of security clearance a suppliers staff will need to access this building. This is the security level of the contractor's staff.
+          security_description_html: Select the level of security clearance a supplier's staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
         show:
           add_address_text: Add address
@@ -805,21 +805,23 @@ en:
             or: or
             reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
             withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          edit:
+            page_title: Close this procurement
           next_supplier:
             about_the_price: About the price
             about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
-            close: You can close this procurement
+            close: 2. You can close this procurement
             close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
             close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
             download_docs_description: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to a supplier.
             download_documents: Download all contract documents
             next_lowest: The next lowest supplier who can deliver the services to your buildings is
             next_steps: Available next steps
-            offer: You can offer your contract to this supplier
+            offer: 1. You can offer your contract to this supplier
             offer_list_1: we have generated your contract documents using this supplier's details and pricing
             offer_list_2: the supplier will have 2 working days to respond to your offer
             price: The contract price with this supplier is
-            return_to_dashboard: You can return to your procurements dashboard
+            return_to_dashboard: 3. You can return to your procurements dashboard
             return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
           procurement_closed:
             closed_1: The
@@ -1283,16 +1285,17 @@ en:
           available_routes_to_market: Available route to market
           building_services_summary: Buildings and services summary
           da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
-          direct_award_label_html: "<b>Direct award</b> (the most competitive direct award price is %{price})"
+          direct_award_label_html: "<b>Direct award</b>"
           estimated_cost: Estimated cost
-          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
+          estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework/benchmark pricing, and your current cost, or direct award pricing (if eligible).  <br/>This cost has been used to place you in the correct sub-lot.
+          estimated_cost_calc_logic_4_html: Your estimated cost has been calculated using a combination of available framework and benchmark pricing. <br/>This cost has been used to place you in the correct sub-lot.
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
+          full-sub-lot: Sub-lot
           further_competition_html: "<b>Further competition</b>"
           hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
           hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
           hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
-          sub-lot: Lot
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
           sub-lot-1c: Sub-lot 1c
@@ -1363,6 +1366,7 @@ en:
             list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
             list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
             list04_title: 4. Withdraw before signing
+            title: You have accepted this contract offer
             what_happens_next: What happens next
           declined_offer:
             contract_name: 'Contract name:'
@@ -1511,7 +1515,6 @@ en:
         heading: CCS Marketplace private beta
     passwords:
       edit:
-        confirm_code: Confirm Code
         confirm_new_password: Confirm new password
         heading: Reset your password
         heading1: A reset email has been sent.
@@ -1520,6 +1523,7 @@ en:
         new_password: New password
         password: Your password must have
         text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent.
         lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.

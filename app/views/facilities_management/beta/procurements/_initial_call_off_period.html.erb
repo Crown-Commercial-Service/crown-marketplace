@@ -6,7 +6,7 @@
       The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
     </p>
     <%= display_errors(f.object, :initial_call_off_period)%>
-    <%= f.number_field :initial_call_off_period, class: 'govuk-input govuk-input--width-4', min:1, maxlength:2, max: 7 %>
+    <%= f.number_field :initial_call_off_period, class: "govuk-input govuk-input--width-4 #{'govuk-input--error' if @procurement.errors[:initial_call_off_period].any?}", min:1, maxlength:2, max: 7 %>
     <span class="govuk-label--s govuk-!-margin-left-2"> years </span>
   </div>
 </div>
@@ -22,9 +22,11 @@
   
   <div class="govuk-form-group initial_call_off_end_date <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_end_date].any?%>"
        data-propertyname="Initial call-off end date">
-    <%= f.label :initial_call_off_end_date, 'Initial call-off end date', class: "govuk-heading-s govuk-!-margin-bottom-0", id: 'initial_call_off_end_date_label'%>
-    <%= display_error_label(@procurement, :initial_call_off_end_date, '', "#{f.object_name}_initial_call_off_end_date_dd") %>
     <fieldset class="govuk-fieldset" role="group" aria-describedby="initial_call_off_end_date_label">
+    <legend class="govuk-fieldset__legend">
+      <%= f.label :initial_call_off_end_date, 'Initial call-off end date', class: "govuk-heading-s govuk-!-margin-bottom-0", id: 'initial_call_off_end_date_label'%>
+    </legend>
+    <%= display_error_label(@procurement, :initial_call_off_end_date, '', "#{f.object_name}_initial_call_off_end_date_dd") %>
       <div class="govuk-date-input" id="date-input">
         <div class="govuk-date-input__item">
           <div class="govuk-form-group">

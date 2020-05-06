@@ -1,3 +1,4 @@
+<%= content_for :page_title, t(".heading") %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -45,7 +46,7 @@
         <input class="govuk-input govuk-!-width-three-quarters" id="email" name="email" type="email" aria-describedby="email-hint" autocomplete="off" spellcheck="false">
       </div>
 
-      <%= submit_tag t('common.send_reset_email'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.send_reset_email'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.send_reset_email')}" %>
 
     <% end %>
 

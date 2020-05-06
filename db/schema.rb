@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_142805) do
+ActiveRecord::Schema.define(version: 2020_05_01_135708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_142805) do
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
-  
+
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
@@ -90,12 +90,12 @@ ActiveRecord::Schema.define(version: 2020_04_24_142805) do
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "no_of_appliances_for_testing"
-    t.integer "no_of_building_occupants"
-    t.integer "size_of_external_area"
-    t.integer "no_of_consoles_to_be_serviced"
-    t.integer "tones_to_be_collected_and_removed"
-    t.integer "no_of_units_to_be_serviced"
+    t.bigint "no_of_appliances_for_testing"
+    t.bigint "no_of_building_occupants"
+    t.bigint "size_of_external_area"
+    t.bigint "no_of_consoles_to_be_serviced"
+    t.bigint "tones_to_be_collected_and_removed"
+    t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
     t.string "lift_data", default: [], array: true
     t.jsonb "service_hours"
@@ -505,7 +505,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_142805) do
     t.string "nuts2_code", limit: 255
     t.index ["code"], name: "nuts_regions_code_key", unique: true
   end
-  
+
   create_table "os_address", id: false, force: :cascade do |t|
     t.bigint "uprn", null: false
     t.bigint "udprn"
@@ -601,8 +601,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_142805) do
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "postcode", limit: 20
     t.string "code", limit: 20
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
