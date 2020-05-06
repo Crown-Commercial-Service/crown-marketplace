@@ -21,8 +21,8 @@ module FacilitiesManagement
     before_validation proc { convert_to_boolean('contract_response') }, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
 
-    validates :reason_for_declining, presence: true, if: -> { !contract_response }, on: :contract_response
-    validate :reason_for_declining_length, if: -> { !contract_response }, on: :contract_response
+    validates :reason_for_declining, presence: true, if: -> { contract_response == false }, on: :contract_response
+    validate :reason_for_declining_length, if: -> { contract_response == false }, on: :contract_response
 
     validates :reason_for_closing, presence: true, on: :reason_for_closing
     validate :reason_for_closing_length, on: :reason_for_closing
@@ -32,8 +32,8 @@ module FacilitiesManagement
     before_validation proc { convert_to_boolean('contract_signed') }, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
 
-    validates :reason_for_not_signing, presence: true, if: -> { !contract_signed }, on: :confirmation_of_signed_contract
-    validate :reason_for_not_signing_length, if: -> { !contract_signed }, on: :confirmation_of_signed_contract
+    validates :reason_for_not_signing, presence: true, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
+    validate :reason_for_not_signing_length, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
 
     validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
