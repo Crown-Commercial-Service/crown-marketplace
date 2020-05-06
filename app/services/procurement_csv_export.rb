@@ -149,7 +149,7 @@ class ProcurementCsvExport
       procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
       nil, # 30
       nil,
-      nil,
+      procurement.further_competition? ? procurement.contract_number : nil,
       nil,
       nil,
       nil, # 35
