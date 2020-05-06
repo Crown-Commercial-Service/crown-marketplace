@@ -28,7 +28,7 @@
           <div class="govuk-details__text" style="padding-bottom:0; margin-left:0.5ex">
             <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
               <div class="govuk-radios__item">
-                <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
+                <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details(ff.object) %>
                 <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                   <%= building_type[:title] %>
                   <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
@@ -39,7 +39,7 @@
             <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object), true) do %>
               <div class="govuk-radios__item" data-module="other-expando">
                 <div class="other_container">
-                  <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input' %>
+                  <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input', disabled: !open_state_of_building_details(ff.object) %>
                   <%= ff.label :building_type, value: 'other', class: 'govuk-label govuk-radios__label govuk-label--s' do
                     t('.other')
                   end %>
