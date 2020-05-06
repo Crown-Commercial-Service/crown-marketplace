@@ -106,14 +106,18 @@ RSpec.describe ProcurementCsvExport do
   end
 
   describe '.create_contract_row' do
+    subject(:row) { described_class.create_contract_row(procurement_in_da.procurement_suppliers.first) }
+
     it 'produces correct number of elements' do
-      expect(described_class.create_contract_row(procurement_in_da.procurement_suppliers.first).size).to eq 37
+      expect(row.size).to eq described_class::COLUMN_LABELS.size
     end
   end
 
   describe '.create_procurement_row' do
+    subject(:row) { described_class.create_procurement_row(procurement_in_search) }
+
     it 'produces correct number of elements' do
-      expect(described_class.create_procurement_row(procurement_in_search).size).to eq 37
+      expect(row.size).to eq described_class::COLUMN_LABELS.size
     end
   end
 
