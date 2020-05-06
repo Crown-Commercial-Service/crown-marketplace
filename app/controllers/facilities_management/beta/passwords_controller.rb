@@ -3,7 +3,9 @@ module FacilitiesManagement
     class PasswordsController < Base::PasswordsController
       protected
 
-      def new_password_path
+      def new_password_path(supplier = false)
+        return facilities_management_beta_new_user_password_path(supplier: 'true') if supplier == true
+
         facilities_management_beta_new_user_password_path
       end
 
@@ -11,11 +13,15 @@ module FacilitiesManagement
         facilities_management_beta_edit_user_password_path
       end
 
-      def after_password_reset_path
+      def after_password_reset_path(supplier = false)
+        return facilities_management_beta_password_reset_success_path(supplier: 'true') if supplier == true
+
         facilities_management_beta_password_reset_success_path
       end
 
-      def after_request_password_path
+      def after_request_password_path(supplier = false)
+        return facilities_management_beta_edit_user_password_path(email: params[:email], supplier: 'true') if supplier == true
+
         facilities_management_beta_edit_user_password_path(email: params[:email])
       end
     end

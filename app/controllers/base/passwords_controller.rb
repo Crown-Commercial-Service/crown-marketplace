@@ -10,11 +10,12 @@ module Base
     def create
       @response = Cognito::ForgotPassword.call(params[:email])
       if @response.success?
-        redirect_to after_request_password_path
+        return_path = params.dig('supplier').present? ? after_request_password_path(true) : after_request_password_path
       else
         flash[:error] = @response.error
-        redirect_to new_password_path
+        return_path = params.dig('supplier').present? ? new_password_path(true) : new_password_path
       end
+      redirect_to return_path
     end
 
     def edit
@@ -26,7 +27,9 @@ module Base
 
       @response = Cognito::ConfirmPasswordReset.call(email, params[:password], params[:password_confirmation], params[:confirmation_code])
       if @response.success?
-        redirect_to after_password_reset_path
+        return_path = params.dig('supplier').present? ? after_password_reset_path(true) : after_password_reset_path
+
+        redirect_to return_path
       else
         render :edit, erorr: @response.error
       end
