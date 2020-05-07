@@ -161,6 +161,14 @@ RSpec.describe ProcurementCsvExport do
       it 'show period and date range' do
         expect(described_class.mobilisation_period(procurement_in_search)).to eq '10 weeks, 27 March 2019 -  5 June 2019'
       end
+
+      context 'with no mobilisation period' do
+        let(:period) { nil }
+
+        it 'show "None"' do
+          expect(described_class.mobilisation_period(procurement_in_search)).to eq 'None'
+        end
+      end
     end
 
     context 'when not required' do
