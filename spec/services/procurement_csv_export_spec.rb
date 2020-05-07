@@ -126,6 +126,14 @@ RSpec.describe ProcurementCsvExport do
       procurement_in_search.update(estimated_cost_known: known, estimated_annual_cost: 100)
     end
 
+    context 'when not filled in yet' do
+      let(:known) { nil }
+
+      it 'show blank' do
+        expect(described_class.estimated_annual_cost(procurement_in_search)).to be_blank
+      end
+    end
+
     context 'when known' do
       let(:known) { true }
 
@@ -153,6 +161,14 @@ RSpec.describe ProcurementCsvExport do
         mobilisation_period: period,
         initial_call_off_start_date: initial_call_off_start_date
       )
+    end
+
+    context 'when not filled in yet' do
+      let(:required) { nil }
+
+      it 'show blank' do
+        expect(described_class.mobilisation_period(procurement_in_search)).to be_blank
+      end
     end
 
     context 'when required' do
@@ -189,6 +205,14 @@ RSpec.describe ProcurementCsvExport do
         optional_call_off_extensions_3: 3,
         optional_call_off_extensions_4: 4
       )
+    end
+
+    context 'when not filled in yet' do
+      let(:required) { nil }
+
+      it 'show blank' do
+        expect(described_class.call_off_extensions(procurement_in_search)).to be_blank
+      end
     end
 
     context 'when required' do

@@ -224,6 +224,7 @@ class ProcurementCsvExport
   end
 
   def self.call_off_extensions(procurement)
+    return '' if procurement.extensions_required.nil?
     return 'None' unless procurement.extensions_required
 
     extensions = [
@@ -288,10 +289,13 @@ class ProcurementCsvExport
   end
 
   def self.estimated_annual_cost(procurement)
+    return '' if procurement.estimated_cost_known.nil?
+
     procurement.estimated_cost_known ? delimited_with_pence(procurement.estimated_annual_cost) : 'None'
   end
 
   def self.mobilisation_period(procurement)
+    return '' if procurement.mobilisation_period_required.nil?
     return 'None' if !procurement.mobilisation_period_required || procurement.mobilisation_period.nil?
 
     "#{procurement.mobilisation_period} weeks, " +
