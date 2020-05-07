@@ -121,7 +121,6 @@ Rails.application.routes.draw do
     match '/summary', to: 'summary#index', via: %i[get post]
     post '/summary/guidance', to: 'summary#guidance'
     post '/summary/suppliers', to: 'summary#sorted_suppliers'
-    get '/start', to: 'journey#start', as: 'journey_start'
     get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
     get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
 
@@ -170,6 +169,9 @@ Rails.application.routes.draw do
       put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
     end
 
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
