@@ -283,7 +283,7 @@ module FacilitiesManagement
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-decline-reason': reason_for_declining,
         'da-offer-1-accept-date': format_date_time_numeric(supplier_response_date),
-        'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
+        'da-offer-1-link': host + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -302,7 +302,7 @@ module FacilitiesManagement
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
-        'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
+        'da-offer-1-link': host + '/facilities-management/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,

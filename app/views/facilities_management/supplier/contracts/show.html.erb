@@ -9,7 +9,7 @@
   </h1>
   <div class="govuk-!-font-size-19">
     <%= render partial: 'procurement_requirements_head' %>
-    <%= render partial: 'facilities_management/beta/procurements/contracts/procurement_requirements' %>
+    <%= render partial: 'facilities_management/procurements/contracts/procurement_requirements' %>
 
     <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
       <%= t('.buyer_contact_details') %>
@@ -19,7 +19,7 @@
     <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
       <%= t('.call_off_contract_documents') %>
     </h1>
-    <%= render partial: 'facilities_management/beta/procurements/contracts/call_off_contract_documents' %>
+    <%= render partial: 'facilities_management/procurements/contracts/call_off_contract_documents' %>
 
     <%= render partial: 'received_contract_offer' if @contract.aasm_state == 'sent' %>
     <%= render partial: 'accepted_contract_offer' if @contract.aasm_state == 'accepted' %>
