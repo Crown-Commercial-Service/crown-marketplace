@@ -142,14 +142,14 @@ class ProcurementCsvExport
       delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
-      nil, # 25
+      procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"), # 25
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
       route_to_market(procurement),
       procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n"),
       procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n"),
       nil, # 30
       nil,
-      nil,
+      procurement.further_competition? ? procurement.contract_number : nil,
       nil,
       nil,
       nil, # 35
