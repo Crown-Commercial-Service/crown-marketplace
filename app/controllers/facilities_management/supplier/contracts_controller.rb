@@ -36,11 +36,11 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
   end
 
   def set_contract
-    @contract = ProcurementSupplier.find(params[:id])
+    @contract = FacilitiesManagement::ProcurementSupplier.find(params[:id])
   end
 
   def set_procurement
-    @procurement = Procurement.find(@contract.procurement.id)
+    @procurement = FacilitiesManagement::Procurement.find(@contract.procurement.id)
   end
 
   def authorize_user
