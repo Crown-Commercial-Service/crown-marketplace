@@ -1,11 +1,8 @@
-<% if @procurement.optional_call_off_extensions_1.nil? and
-    @procurement.optional_call_off_extensions_2.nil? and
-    @procurement.optional_call_off_extensions_3.nil? and
-    @procurement.optional_call_off_extensions_4.nil? %>
+<% unless @procurement.extensions_required %>
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Optional call-off extensions</th>
     <td class="govuk-table__cell">
-      <%= 'None' if @procurement.extensions_required == false %>
+      None
     </td>
     <td class="govuk-table__cell">
     </td>

@@ -7,8 +7,7 @@ $(function () {
     }
 
     // Check if on a procurement supplier page
-    if ($("#facilities_management_contract").length) {
-        console.log('im on');
+    if ($("#facilities_management_copy_contract").length) {
         let textField = document.getElementById("facilities_management_procurement_contract_name");
         let maxLength = parseInt($(textField).attr("maxLength"), 10);
 

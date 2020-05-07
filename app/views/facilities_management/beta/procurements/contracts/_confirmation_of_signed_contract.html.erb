@@ -44,7 +44,7 @@
       <%= t('.contract_will_not_be_signed_reason') %>
       </div>
       <%= display_error_label(f.object, :reason_for_not_signing, '', "#{f.object_name}_reason_for_not_signing") %>
-      <%= govuk_text_area_input_contracts(f, :reason_for_not_signing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
+      <%= govuk_text_area_input_contracts(f, :reason_for_not_signing, true, ['rows', 5], ['maxlength', 100], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4'], [:tabindex, @contract.contract_signed ? -1 : nil]) %>
       <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
           <%= t('.input_remaining') %>
       </span>
