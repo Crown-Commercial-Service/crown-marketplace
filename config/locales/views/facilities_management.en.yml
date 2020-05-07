@@ -146,7 +146,7 @@ en:
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about 'Estimated annual cost'
+              not_present: You must answer the question about 'Estimated cost'
             extensions_required:
               inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:

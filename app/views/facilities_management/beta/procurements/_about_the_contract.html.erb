@@ -1,60 +1,76 @@
+<h3 class="govuk-heading-m govuk-!-margin-bottom-1">About the contract</h3>
 <table class="govuk-table">
   <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">About the contract</th>
-      <td class="govuk-table__cell" width="45%"></td>
-      <td class="govuk-table__cell" width="25%"></td>
-    </tr>
-    <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:contract_name].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:contract_name].any? %>">Contract name</th>
-      <td class="govuk-table__cell">
-        <% unless @procurement.contract_name.nil? %>
-          <%= @procurement.contract_name %>
-        <% else %>
-          <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link"%>
+  <tr class="govuk-table__row" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc;">
+    <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+      <table style="width:100%; border-collapse: collapse">
+        <tr>
+          <th style="width:30%" scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2 govuk-form-group--error govuk-border-bottom_none' if @procurement.errors[:contract_name].any? %>">Contract
+            name
+          </th>
+          <td style="width:45%" class="govuk-table__cell <%= 'govuk-border-bottom_none' if @procurement.errors[:contract_name].any? %>">
+            <% if @procurement.contract_name.nil? %>
+              <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" %>
+            <% else %>
+              <%= @procurement.contract_name %>
+            <% end %>
+          </td>
+          <td class="govuk-table__cell <%= 'govuk-border-bottom_none' if @procurement.errors[:contract_name].any? %>"><%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" unless @procurement.contract_name.nil? %></td>
+        </tr>
+        <% if @procurement.errors[:contract_name].any? %>
+          <tr>
+            <td class="govuk-!-padding-left-2 govuk-form-group--error" colspan="3"><%= display_error(@procurement, :contract_name, false) %></td>
+          </tr>
         <% end %>
-      </td>
-      <td class="govuk-table__cell"><%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'contract_name'), :class => "govuk-link" unless @procurement.contract_name.nil? %></td>
-    </tr>
-    <% if @procurement.errors[:contract_name].any? %>
-      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
-        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :contract_name, false) %></td>
-      </tr>
-    <% end %>
-    <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:estimated_cost_known].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:estimated_cost_known].any? %>">Estimated annual cost</th>
-      <td class="govuk-table__cell">
-        <% unless @procurement.estimated_cost_known.nil? %>
-          <%= "£#{number_with_delimiter(@procurement.estimated_annual_cost, :delimiter => ',')}" if @procurement.estimated_cost_known? %>
-          <%= t('.no_cost_provided') if !@procurement.estimated_cost_known? %>
-        <% else %>
-          <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link"%>
+      </table>
+    </td>
+  </tr>
+  <tr class="govuk-table__row" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc;">
+    <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+      <table style="width:100%; border-collapse: collapse">
+        <tr>
+          <th style="width: 30%" scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2 govuk-form-group--error govuk-border-bottom_none' if @procurement.errors[:estimated_cost_known].any? %>">Estimated
+            annual cost
+          </th>
+          <td style="width: 45%" class="govuk-table__cell <%= 'govuk-border-bottom_none' if @procurement.errors[:estimated_cost_known].any? %>">
+            <% if @procurement.estimated_cost_known.nil? %>
+              <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" %>
+            <% else %>
+              <%= "£#{number_with_delimiter(@procurement.estimated_annual_cost, :delimiter => ',')}" if @procurement.estimated_cost_known? %>
+              <%= t('.no_cost_provided') if !@procurement.estimated_cost_known? %>
+            <% end %>
+          </td>
+          <td class="<%= 'govuk-border-bottom_none' if @procurement.errors[:estimated_cost_known].any? %>"><%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_cost_known.nil? %></td>
+        </tr>
+        <% if @procurement.errors[:estimated_cost_known].any? %>
+          <tr>
+            <td class="govuk-!-padding-left-2 govuk-form-group--error" colspan="3"><%= display_error(@procurement, :estimated_cost_known, false) %></td>
+          </tr>
         <% end %>
-      </td>
-      <td class="govuk-table__cell"><%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'estimated_annual_cost'), :class => "govuk-link" unless @procurement.estimated_cost_known.nil? %></td>
-    </tr>
-    <% if @procurement.errors[:estimated_cost_known].any? %>
-      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
-        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :estimated_cost_known, false) %></td>
-      </tr>
-    <% end %>
-    <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:tupe].any? %>">
-      <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:tupe].any? %>">TUPE</th>
-      <td class="govuk-table__cell">
-        <% unless @procurement.tupe.nil? %>
-          <%= @procurement.tupe? ? 'Yes' : 'No' %>
-        <% else %>
-          <%= link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link"%>
+      </table>
+    </td>
+  </tr>
+  <tr class="govuk-table__row" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc;">
+    <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
+      <table style="width:100%; border-collapse: collapse">
+        <tr>
+          <th style="width:30%" scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2 govuk-form-group--error govuk-border-bottom_none' if @procurement.errors[:contract_name].any? %>">TUPE</th>
+          <td style="width:45%" class="govuk-table__cell <%= 'govuk-border-bottom_none' if @procurement.errors[:tupe].any? %>">
+            <% if @procurement.tupe.nil? %>
+            <%=  link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" %>
+            <% else %>
+            <%=  @procurement.tupe? ? 'Yes' : 'No'  %>
+            <% end %>
+          </td>
+          <td class="govuk-table__cell <%= 'govuk-border-bottom_none' if @procurement.errors[:tupe].any? %>"><%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" unless @procurement.tupe.nil? %></td>
+        </tr>
+        <% if @procurement.errors[:tupe].any? %>
+          <tr>
+            <td class="govuk-!-padding-left-2 govuk-form-group--error" colspan="3"><%= display_error(@procurement, :tupe, false) %></td>
+          </tr>
         <% end %>
-      </td>
-      <td class="govuk-table__cell">
-        <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" unless @procurement.tupe.nil? %>
-      </td>
-    </tr>
-    <% if @procurement.errors[:tupe].any? %>
-      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
-        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :tupe, false) %></td>
-      </tr>
-    <% end %>
+      </table>
+    </td>
+  </tr>
   </tbody>
 </table>
