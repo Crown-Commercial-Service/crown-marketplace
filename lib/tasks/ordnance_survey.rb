@@ -53,6 +53,8 @@ module OrdnanceSurvey
     query = <<~SQL
         DO $$
         BEGIN
+        drop view postcode_lookup;
+        drop view os_address_view_2;
         CREATE VIEW os_address_view_2
         (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
          sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
