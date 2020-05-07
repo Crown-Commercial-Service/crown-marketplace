@@ -261,7 +261,11 @@ module ApplicationHelper
   end
 
   def fm_supplier_landing_page
-    request.path_info.include? 'supplier-account'
+    request.path_info.include? 'supplier'
+  end
+
+  def fm_supplier_login_page
+    controller.controller_name == 'sessions' && controller.action_name == 'new'
   end
 
   def not_permitted_page
