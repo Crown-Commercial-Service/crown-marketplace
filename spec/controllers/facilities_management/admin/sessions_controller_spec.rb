@@ -14,13 +14,13 @@ RSpec.describe FacilitiesManagement::Admin::SessionsController do
   end
 
   describe 'After sign-up' do
-    it 'redirects to the /facilities-management/beta/admin page' do
+    it 'redirects to the /facilities-management/admin page' do
       expect(controller.after_sign_in_path_for(user)).to eq facilities_management_admin_path
     end
   end
 
   describe 'After sign-out' do
-    it 'redirects to the /facilities-management/beta/admin/start page' do
+    it 'redirects to the /facilities-management/admin/start page' do
       expect(controller.after_sign_out_path_for(user)).to eq facilities_management_admin_start_path
     end
   end
