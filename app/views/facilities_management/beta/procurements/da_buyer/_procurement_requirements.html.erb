@@ -33,7 +33,7 @@
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.mobilisation_period') %></th>
                 <td class="govuk-table__cell">
-                <% if !@procurement.mobilisation_period.nil? %>
+                <% if @procurement.mobilisation_period_required %>
                     <%= govuk_details(pluralize(@procurement.mobilisation_period, 'week'), true) { mobilisation_period_description } %>
                 <% else %>
                     None
