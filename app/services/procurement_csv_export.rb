@@ -292,7 +292,7 @@ class ProcurementCsvExport
   end
 
   def self.mobilisation_period(procurement)
-    return 'None' unless procurement.mobilisation_period_required
+    return 'None' if !procurement.mobilisation_period_required || procurement.mobilisation_period.nil?
 
     "#{procurement.mobilisation_period} weeks, " +
       [procurement.mobilisation_period_start_date.strftime(DATE_FORMAT),
