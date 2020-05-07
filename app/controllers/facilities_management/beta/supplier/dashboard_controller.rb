@@ -5,6 +5,7 @@ module FacilitiesManagement
         include FacilitiesManagement::ControllerLayoutHelper
         include FacilitiesManagement::Beta::Supplier::DashboardHelper
 
+        before_action :authorize_user
         before_action :set_supplier
         before_action :set_page_detail
 

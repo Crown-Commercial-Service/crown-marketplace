@@ -24,6 +24,7 @@ class Ability
     end
     can :manage, FacilitiesManagement::Procurement, user_id: user.id if user.has_role? :fm_access
     can :read, SupplyTeachers if user.has_role? :st_access
+    cannot :read, FacilitiesManagement::Supplier
   end
 
   def admin_tool_specific_auth(user)
