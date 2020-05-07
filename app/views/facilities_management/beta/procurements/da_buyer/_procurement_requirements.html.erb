@@ -40,37 +40,39 @@
                 <% end %>
                 </td>
             </tr>
-            <% if !@procurement.optional_call_off_extensions_1.nil? %>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_1') %></th>
-                    <td class="govuk-table__cell">
-                        <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_1, 'year'), true) { format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date } %>
-                    </td>
-                </tr>
-            <% end %>
-            <% if !@procurement.optional_call_off_extensions_2.nil? %>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_2') %></th>
-                    <td class="govuk-table__cell">
-                        <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_2, 'year'), true) { format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date } %>
-                    </td>
-                </tr>
-            <% end %>
-            <% if !@procurement.optional_call_off_extensions_3.nil? %>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_3') %></th>
-                    <td class="govuk-table__cell">
-                        <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_3, 'year'), true) { format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date } %>
-                    </td>
-                </tr>
-            <% end %>
-            <% if !@procurement.optional_call_off_extensions_4.nil? %>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_4') %></th>
-                    <td class="govuk-table__cell">
-                        <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_4, 'year'), true) { format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date } %>
-                    </td>
-                </tr>
+            <% if @procurement.extensions_required %>
+              <% unless @procurement.optional_call_off_extensions_1.nil? %>
+                  <tr class="govuk-table__row">
+                      <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_1') %></th>
+                      <td class="govuk-table__cell">
+                          <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_1, 'year'), true) { format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date } %>
+                      </td>
+                  </tr>
+              <% end %>
+              <% unless @procurement.optional_call_off_extensions_2.nil? %>
+                  <tr class="govuk-table__row">
+                      <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_2') %></th>
+                      <td class="govuk-table__cell">
+                          <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_2, 'year'), true) { format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date } %>
+                      </td>
+                  </tr>
+              <% end %>
+              <% unless @procurement.optional_call_off_extensions_3.nil? %>
+                  <tr class="govuk-table__row">
+                      <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_3') %></th>
+                      <td class="govuk-table__cell">
+                          <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_3, 'year'), true) { format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date } %>
+                      </td>
+                  </tr>
+              <% end %>
+              <% unless @procurement.optional_call_off_extensions_4.nil? %>
+                  <tr class="govuk-table__row">
+                      <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extensions_4') %></th>
+                      <td class="govuk-table__cell">
+                          <%= govuk_details(pluralize(@procurement.optional_call_off_extensions_4, 'year'), true) { format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date } %>
+                      </td>
+                  </tr>
+              <% end %>
             <% end %>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.date_of_first_indexation') %></th>
