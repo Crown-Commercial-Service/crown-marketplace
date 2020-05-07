@@ -100,7 +100,7 @@ class ProcurementCsvExport
       delimited_with_pence(contract.procurement.assessed_value),
       format_lot_number(contract.procurement.lot_number),
       yes_no(contract.procurement.eligible_for_da),
-      contract.procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"), # 25
+      shortlisted_suppliers(contract.procurement), # 25
       expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
       route_to_market(contract.procurement),
       da_suppliers(contract.procurement),
@@ -142,7 +142,7 @@ class ProcurementCsvExport
       delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
-      procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(",\n"), # 25
+      shortlisted_suppliers(procurement), # 25
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
       route_to_market(procurement),
       procurement.further_competition? ? nil : da_suppliers(procurement),
@@ -224,6 +224,7 @@ class ProcurementCsvExport
   end
 
   def self.call_off_extensions(procurement)
+    return '' if procurement.extensions_required.nil?
     return 'None' unless procurement.extensions_required
 
     extensions = [
@@ -288,10 +289,13 @@ class ProcurementCsvExport
   end
 
   def self.estimated_annual_cost(procurement)
+    return '' if procurement.estimated_cost_known.nil?
+
     procurement.estimated_cost_known ? delimited_with_pence(procurement.estimated_annual_cost) : 'None'
   end
 
   def self.mobilisation_period(procurement)
+    return '' if procurement.mobilisation_period_required.nil?
     return 'None' if !procurement.mobilisation_period_required || procurement.mobilisation_period.nil?
 
     "#{procurement.mobilisation_period} weeks, " +
@@ -300,10 +304,14 @@ class ProcurementCsvExport
   end
 
   def self.da_suppliers(procurement)
-    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join("\n")
+    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join(";\n")
   end
 
   def self.da_suppliers_costs(procurement)
-    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join("\n")
+    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join(";\n")
+  end
+
+  def self.shortlisted_suppliers(procurement)
+    procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(";\n")
   end
 end
