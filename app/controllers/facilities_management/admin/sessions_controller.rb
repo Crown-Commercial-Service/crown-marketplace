@@ -18,7 +18,7 @@ module FacilitiesManagement
       # rubocop:enable Lint/UnusedMethodArgument
 
       def after_sign_out_path_for(_resource)
-        facilities_management_admin_start_path
+        facilities_management_admin_gateway_path
       end
 
       def new_session_path

@@ -152,7 +152,6 @@ Rails.application.routes.draw do
     end
     namespace :admin, path: 'admin' do
       get '/', to: 'admin_account#admin_account'
-      get '/start', to: 'dashboard#index'
       get '/gateway', to: 'gateway#index'
       get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
       put 'update-call-off-benchmark-rates', to: 'supplier_rates#update_supplier_benchmark_rates'

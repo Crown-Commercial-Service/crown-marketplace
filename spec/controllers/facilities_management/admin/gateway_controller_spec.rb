@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::Admin::GatewayController, type: :controller
       login_admin_buyer
       it 'redirects to the framework admin start page' do
         get :index
-        expect(response).to redirect_to(facilities_management_admin_start_path)
+        expect(response).to redirect_to(facilities_management_admin_path)
       end
     end
   end

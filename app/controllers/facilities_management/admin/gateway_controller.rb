@@ -5,7 +5,7 @@ module FacilitiesManagement
       before_action :authorize_user, except: :index
 
       def index
-        redirect_to facilities_management_admin_start_path if user_signed_in?
+        redirect_to facilities_management_admin_path if user_signed_in?
       end
     end
   end

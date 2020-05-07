@@ -12,7 +12,7 @@ module FacilitiesManagement
       private
 
       def redirect_if_needed
-        redirect_to facilities_management_admin_start_path unless user_signed_in?
+        redirect_to facilities_management_admin_gateway_path unless user_signed_in?
       end
     end
   end
