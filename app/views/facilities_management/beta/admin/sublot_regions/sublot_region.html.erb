@@ -16,7 +16,7 @@
 <h1 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.data['supplier_name'] %></h1>
 <h2 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
 
-<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey ">
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('facilities_management.beta.admin.supplier_framework_data.sublot_1a_regions.leading_text') %>
 </p>
 
@@ -27,7 +27,7 @@
     <% @subregions.each do |key2, value2| %>
       <% if key2.start_with?(key) %>
         <div class="govuk-form-group">
-          <div id="location-checkboxes" class="govuk-checkboxes">
+          <div id="<%=key2%>-checkbox" class="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
               <%= check_box_tag(
                       "regions[]",
