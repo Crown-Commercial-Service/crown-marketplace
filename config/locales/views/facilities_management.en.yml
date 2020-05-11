@@ -604,7 +604,7 @@ en:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
-        postcode: Post code
+        postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
         your_details: Your details
@@ -1168,7 +1168,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I cant find my address in the list
+          missing_address: I can’t find my address in the list
           name: Name
         new_notices_address:
           building_and_street: Building and street
@@ -1181,7 +1181,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I cant find my address in the list
+          missing_address: I can’t find my address in the list
           name: Name
         next_step:
           contract_dates: 'Next: Buildings'
