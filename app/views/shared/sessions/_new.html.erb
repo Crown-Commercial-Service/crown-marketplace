@@ -4,20 +4,22 @@
 </h1>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div id="ccs-error-sum" class="govuk-error-summary <%= 'govuk-visually-hidden' unless @result.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('common.error_summary_title') if @result.errors.any?%>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
-          <% @result.errors.keys.each do |attribute| %>
-            <li>
-              <%= link_to @result.errors[attribute].first, "##{error_id(attribute)}" %>
-            </li>
-          <% end %>
-        </ul>
+    <% if @result.errors.any? %>
+      <div id="ccs-error-sum" class="govuk-error-summary <%= 'govuk-visually-hidden' unless @result.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          <%= t('common.error_summary_title') %>
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+            <% @result.errors.keys.each do |attribute| %>
+              <li>
+                <%= link_to @result.errors[attribute].first, "##{error_id(attribute)}" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
-    </div>
+    <% end %>
     <%= form_for resource, as: resource_name, url: local_new_user_session_path, method: :post, html: { specialvalidation: true, novalidate: true, class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">

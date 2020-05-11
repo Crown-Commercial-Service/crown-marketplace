@@ -22,6 +22,9 @@ module FacilitiesManagement
 
       def index
         @list_service_types = ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
+        @variance_names = ['td_overhead_html', 'td_corporate', 'td_profit', 'td_london', 'td_cleaning_html', 'td_tupe', 'td_mobilisation']
+        @variance_values = ['Management Overhead %', 'Corporate Overhead %', 'Profit %', 'London Location Variance Rate (%)', 'Cleaning Consumables per Building User (£)', 'TUPE Risk Premium (DA %)', 'Mobilisation Cost (DA %)']
+        @variances = ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
         supplier_services = setup_supplier_data
         setup_supplier_data_ratecard
         setup_variance_supplier_data(CCS::FM::RateCard.latest)

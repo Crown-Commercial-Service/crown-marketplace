@@ -446,11 +446,11 @@ en:
           rate_percentage_a: Rate (%)
           rate_pound_a: Rate (£)
           rtrn_link: Return to admin dashboard
-          td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+          td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
           td_corporate: Corporate overhead (%)
           td_london: London location percentage variance (%)
           td_mobilisation: Mobilisation (%)
-          td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+          td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
           td_profit: Profit (%)
           td_tupe: TUPE risk premium (%)
           update_button: Save and return to dashboard
