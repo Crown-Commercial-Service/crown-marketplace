@@ -48,7 +48,7 @@ module FacilitiesManagement
           zip.print deliverable_matrix_spreadsheet_built.to_stream.read
 
           if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?
-            zip.put_next_entry file_policy.filename.to_s
+            zip.put_next_entry file_policy.name + '.' + Mime::Type.lookup(@procurement.security_policy_document_file.content_type).symbol.to_s
             zip.print file_policy.download
           end
 
@@ -80,7 +80,7 @@ module FacilitiesManagement
         @buyer_detail = @procurement.user.buyer_detail
         @supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @supplier.data['contact_email'])
         @invoice_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.invoice_contact_detail
-        @authorised_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.authorised_contact_detail
+        @authorised_contact_detail = @procurement.using_buyer_detail_for_authorised_detail? ? @buyer_detail : @procurement.authorised_contact_detail
         @notice_contact_detail = @procurement.using_buyer_detail_for_notices_detail? ? @buyer_detail : @procurement.notices_contact_detail
 
         view_assignement = {
