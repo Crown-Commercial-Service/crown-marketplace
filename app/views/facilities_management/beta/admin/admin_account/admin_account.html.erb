@@ -13,14 +13,14 @@
   <div class="govuk-grid-row govuk-!-padding-left-3">
     <span class="govuk-caption-l"><%= @current_login_email %></span>
     <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
-    <span class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></span>
+    <h1 class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></h1>
   </div>
 
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" href="<%= facilities_management_beta_admin_average_framework_rates_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
+        <a id="average-framework-rates-link" href="<%= facilities_management_beta_admin_average_framework_rates_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_average_rate') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_manage_rate') %>
         </p>
@@ -28,7 +28,7 @@
     </div>
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-procurements-link" href="<%= facilities_management_beta_admin_call_off_benchmark_rates_path %>" class="fm-buyer-account-panel__title" disabled="true"><%= t('.dashboard_calloff_rate') %></a>
+        <a id="call-off-benchmark-rates-link" href="<%= facilities_management_beta_admin_call_off_benchmark_rates_path %>" class="fm-buyer-account-panel__title" disabled="true"><%= t('.dashboard_calloff_rate') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_manage_calloff_rate') %>
         </p>
@@ -44,7 +44,7 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" href="<%= facilities_management_beta_admin_supplier_framework_data_path %>" class="fm-buyer-account-panel__title" href="?"><%= t('.dashboard_supplier_framework_data') %></a>
+        <a id="supplier-framework-data-link" href="<%= facilities_management_beta_admin_supplier_framework_data_path %>" class="fm-buyer-account-panel__title" href="?"><%= t('.dashboard_supplier_framework_data') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_supplier_prices') %>
         </p>
@@ -61,7 +61,7 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-start-new-procurement-link" href="<%= facilities_management_beta_admin_management_report_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_management_report_header') %></a>
+        <a id="management-report-link" href="<%= facilities_management_beta_admin_management_report_path %>" class="fm-buyer-account-panel__title"><%= t('.dashboard_management_report_header') %></a>
         <p class="fm-buyer-account-panel__body">
           <%= t('.dashboard_management_report_detail') %>
         </p>
