@@ -36,8 +36,8 @@ module FacilitiesManagement
         @procurement = @contract.procurement
         file_policy = @procurement.security_policy_document_file
         files_path = 'app/assets/files/'
-        direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.id
-        deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.id
+        direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new @contract.id
+        deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @contract.id
         deliverable_matrix_spreadsheet_built = deliverable_matrix_spreadsheet.build
         @review_your_contract_static_files = FacilitiesManagement::Procurements::DocumentsProcurementHelper.review_docs
 
@@ -47,8 +47,8 @@ module FacilitiesManagement
           zip.put_next_entry 'deliverable_matrix.xlsx'
           zip.print deliverable_matrix_spreadsheet_built.to_stream.read
 
-          if @procurement.security_policy_document_file.attached?
-            zip.put_next_entry file_policy.name + '.' + Mime::Type.lookup(@procurement.security_policy_document_file.content_type).symbol.to_s
+          if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?
+            zip.put_next_entry file_policy.filename.to_s
             zip.print file_policy.download
           end
 
