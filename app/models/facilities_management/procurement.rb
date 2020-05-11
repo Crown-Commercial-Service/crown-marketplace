@@ -258,11 +258,11 @@ module FacilitiesManagement
     end
 
     def valid_on_continue?
-      valid?(:all) && valid_services?
+      valid?(:all) && valid?(:contract_dates) && valid_services?
     end
 
     def valid_services?
-      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) }
+      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
     end
 
     def buildings_standard

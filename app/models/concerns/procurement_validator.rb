@@ -194,7 +194,7 @@ module ProcurementValidator
 
     def all_services_valid
       active_procurement_buildings.each do |pb|
-        pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services)
+        pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services) && pb.valid?(:building_services)
       end
     end
 
