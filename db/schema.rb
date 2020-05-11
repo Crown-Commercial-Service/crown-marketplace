@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_085015) do
+ActiveRecord::Schema.define(version: 2020_05_11_145915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_085015) do
   create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.string "name", limit: 150
-    t.integer "percentage"
+    t.float "percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
