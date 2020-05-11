@@ -11,7 +11,7 @@
 <%= render partial: 'shared/error_summary', locals: { errors: @errors } %>
 
 <h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></h1>
-<p class="govuk-body govuk-!-font-weight-regular govuk-brand-light-grey">
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.leading_text') %>
 </p>
 <p class="govuk-body govuk-body govuk-!-font-weight-bold">
@@ -46,7 +46,7 @@
       <tbody class="govuk-table__body">
         <% service['work_package'].each do |work_pckg| %>
           <tr class="govuk-table__row">
-            <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+            <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
               <%- invalid_rate = work_pckg['rates'].select(&:invalid?).first %>
               <div class="<%= 'govuk-form-group--error' if invalid_rate %>">
                 <% if invalid_rate %>
@@ -68,7 +68,7 @@
               <td class="govuk-table__cell supplier-rates-td">
                 <%- rate = work_pckg['rates'].select(&selector).first %>
                 <% if rate %>
-                  <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.invalid?}" %>
+                  <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.invalid?}", 'aria-label': "#{work_pckg['name']} #{rate.standard.blank? ? 'normal price' : "standard #{rate.standard}"}"  %>
                 <% end %>
               </td>
             <% end %>
@@ -78,7 +78,7 @@
     </table>
   <% end %>
 
-  <h3 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h3>
+  <h2 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h2>
   <p class="govuk-body govuk-brand-light-grey-benchmark">
     <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.benchmark_text') %>
   </p>
@@ -97,12 +97,14 @@
     <tbody class="govuk-table__body">
       <% @variances.each do |rate_label, rate| %>
         <tr class="govuk-table__row">
-          <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
             <div class="<%= 'govuk-form-group--error' if rate.invalid? %>">
               <% if rate.invalid? %>
                 <a name="benchmark-error"></a>
               <% end %>
-              <%= raw t("facilities_management.admin.supplier_rates.supplier_benchmark_rates.#{rate_label}") %>
+              <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
+                <%= raw t("facilities_management.admin.supplier_rates.supplier_benchmark_rates.#{rate_label}") %>
+              </label>
               <% if rate.invalid? %>
                 <span id="event-name-error" class="govuk-error-message">
                   <span class="govuk-visually-hidden">Error:</span><%= t(".#{rate.errors.details[:benchmark].first[:error]}") %>
