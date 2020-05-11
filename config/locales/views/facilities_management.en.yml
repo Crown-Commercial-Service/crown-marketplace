@@ -141,8 +141,8 @@ en:
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
             estimated_annual_cost:
-              blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
-              greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200.45
+              blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
+              greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
@@ -727,12 +727,12 @@ en:
         contracts:
           awaiting_response:
             else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
-            if_accepted_header: If the supplier accepts the offer
+            if_accepted_header: 1. If the supplier accepts the offer
             if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
             if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
             if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
             if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
-            if_declined_header: If the supplier declines the offer
+            if_declined_header: 2. If the supplier declines the offer
             if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
             if_declined_list_2: "- switch to a further competition"
             if_declined_list_3: "- change your requirements"

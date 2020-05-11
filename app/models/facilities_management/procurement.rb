@@ -63,6 +63,9 @@ module FacilitiesManagement
       procurement_copy.contract_name = nil
       procurement_copy.aasm_state = 'detailed_search'
       procurement_copy.da_journey_state = 'pricing'
+      procurement_copy.contract_number = nil
+      procurement_copy.lot_number = nil
+      procurement_copy.lot_number_selected_by_customer = nil
       if security_policy_document_required
         procurement_copy.security_policy_document_file = nil
         procurement_copy.security_policy_document_file.attach(security_policy_document_file.blob)

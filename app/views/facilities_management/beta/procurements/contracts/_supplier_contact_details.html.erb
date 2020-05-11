@@ -1,5 +1,5 @@
 <div class="govuk-!-width-three-quarters govuk-!-font-size-19">
-    <dl class="govuk-summary-list govuk-body">
+    <div class="govuk-summary-list govuk-body">
         <table class="govuk-table govuk-!-margin-bottom-6">
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
@@ -8,16 +8,16 @@
                 </tr>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header"><%= @contract.supplier.data["supplier_name"] %></th>
-                    <td class="govuk-table__cell">
+                    <td class="govuk-table__cell" id="contact-details-drop-down">
                         <%= govuk_details('Contact details') do %>
                             <%= "Name: #{@contract.supplier.data["contact_name"]}"%> <br>
                             <%= "Telephone: #{@contract.supplier.data["contact_phone"]}"%> <br>
-                            <%= mail_to @contract.supplier.data["contact_email"], @contract.supplier.data["contact_email"], class: 'govuk-link govuk-link--no-visited-state' %>  <br>
+                            <%= mail_to @contract.supplier.data["contact_email"], @contract.supplier.data["contact_email"], class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br>
                             <%= "Address: #{FacilitiesManagement::SupplierDetail.find_by(contact_email: @contract.supplier.data["contact_email"])&.full_organisation_address}"%> 
                         <% end %>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </dl>
+    </div>
 </div>

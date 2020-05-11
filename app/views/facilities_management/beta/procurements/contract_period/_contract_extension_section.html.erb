@@ -1,57 +1,54 @@
-<% if @procurement.optional_call_off_extensions_1.nil? and
-    @procurement.optional_call_off_extensions_2.nil? and
-    @procurement.optional_call_off_extensions_3.nil? and
-    @procurement.optional_call_off_extensions_4.nil? %>
+<% unless @procurement.extensions_required %>
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>" width="30%">Optional call-off extensions</th>
     <td class="govuk-table__cell">
-      <%= 'None' if @procurement.extensions_required == false %>
+      <%= "None" unless @procurement.extensions_required.nil? %>
     </td>
     <td class="govuk-table__cell">
     </td>
   </tr>
-<% end %>
+<% else %>
+  <% unless @procurement.optional_call_off_extensions_1.nil? %>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 1</th>
+      <td class="govuk-table__cell">
+        <%= format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date %>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
+    </tr>
+  <% end %>
 
-<% unless @procurement.optional_call_off_extensions_1.nil? %>
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 1</th>
-    <td class="govuk-table__cell">
-      <%= format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date %>
-    </td>
-    <td class="govuk-table__cell">
-    </td>
-  </tr>
-<% end %>
+  <% unless @procurement.optional_call_off_extensions_2.nil? %>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 2</th>
+      <td class="govuk-table__cell">
+        <%= format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date %>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
+    </tr>
+  <% end %>
 
-<% unless @procurement.optional_call_off_extensions_2.nil? %>
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 2</th>
-    <td class="govuk-table__cell">
-      <%= format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date %>
-    </td>
-    <td class="govuk-table__cell">
-    </td>
-  </tr>
-<% end %>
+  <% unless @procurement.optional_call_off_extensions_3.nil? %>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 3</th>
+      <td class="govuk-table__cell">
+        <%= format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date %>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
+    </tr>
+  <% end %>
 
-<% unless @procurement.optional_call_off_extensions_3.nil? %>
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 3</th>
-    <td class="govuk-table__cell">
-      <%= format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date %>
-    </td>
-    <td class="govuk-table__cell">
-    </td>
-  </tr>
-<% end %>
-
-<% unless @procurement.optional_call_off_extensions_4.nil? %>
-  <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 4</th>
-    <td class="govuk-table__cell">
-      <%= format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date %>
-    </td>
-    <td class="govuk-table__cell">
-    </td>
-  </tr>
+  <% unless @procurement.optional_call_off_extensions_4.nil? %>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Optional call-off extension 4</th>
+      <td class="govuk-table__cell">
+        <%= format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date %>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
+    </tr>
+  <% end %>
 <% end %>

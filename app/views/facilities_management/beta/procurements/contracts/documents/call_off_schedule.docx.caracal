@@ -228,9 +228,9 @@ docx.p 'KEY DATES:', bold: true, font: 'Calibri'
 
 docx.p 'EFFECTIVE DATE & DATE THE CONTRACT PERIOD / TERM COMMENCES:  [Day Month Year]', font: 'Calibri'
 
-docx.p 'MOBILISATION PERIOD: None', font: 'Calibri' if @procurement.mobilisation_period.nil?
+docx.p 'MOBILISATION PERIOD: None', font: 'Calibri' unless @procurement.mobilisation_period_required
 
-docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d-%m-%Y')}", font: 'Calibri' unless @procurement.mobilisation_period.nil?
+docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d-%m-%Y')}", font: 'Calibri' if @procurement.mobilisation_period_required
 
 docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
@@ -238,12 +238,12 @@ docx.p "DATE CALL-OFF INITIAL PERIOD ENDS: #{@procurement.initial_call_off_end_d
 
 docx.p "CALL-OFF INITIAL PERIOD: #{@procurement.initial_call_off_period} years", font: 'Calibri'
 
-docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.optional_call_off_extensions_1? ? 'Yes' : 'None'}", font: 'Calibri'
+docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.extensions_required ? 'Yes' : 'None'}", font: 'Calibri'
 
 (1..4).each do |call_off_period|
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: Not used", font: 'Calibri' unless @procurement.send("optional_call_off_extensions_#{call_off_period}?")
+  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: Not used", font: 'Calibri' if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
 
-  next unless @procurement.send("optional_call_off_extensions_#{call_off_period}?")
+  next if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
 
   start_date_method = "extension_period_#{call_off_period}_start_date"
   end_date_method = "extension_period_#{call_off_period}_end_date"

@@ -4,34 +4,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
   let(:user) { create(:user, :without_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-  let(:supplier_names) do
-    [:"Wolf-Wiza",
-     :"Bogan-Koch",
-     :"O'Keefe LLC",
-     :"Treutel LLC",
-     :"Hirthe-Mills",
-     :"Kemmer Group",
-     :"Mayer-Russel",
-     :"Bode and Sons",
-     :"Collier Group",
-     :"Hickle-Schinner",
-     :"Leffler-Strosin",
-     :"Dickinson-Abbott",
-     :"O'Keefe-Mitchell",
-     :"Schmeler-Leuschke",
-     :"Abernathy and Sons",
-     :"Cartwright and Sons",
-     :"Dare, Heaney and Kozey",
-     :"Rowe, Hessel and Heller",
-     :"Kulas, Schultz and Moore",
-     :"Walsh, Murphy and Gaylord",
-     :"Shields, Ratke and Parisian",
-     :"Ullrich, Ratke and Botsford",
-     :"Lebsack, Vandervort and Veum",
-     :"Marvin, Kunde and Cartwright",
-     :"Kunze, Langworth and Parisian",
-     :"Halvorson, Corwin and O'Connell"]
-  end
+
+  let(:supplier) { create(:ccs_fm_supplier) }
+  let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+  include_context 'with list of suppliers'
 
   context 'and dummy buildings to a db', skip: true do
     let(:services_data) do
@@ -184,13 +161,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                  service_standard: 'A')
         end
       end
-      procurement.set_state_to_results_if_possible
+      # procurement.set_state_to_results_if_possible
     end
 
     # rubocop:disable RSpec/ExampleLength
     it 'create a direct-award report check service price cell position' do
       # facilities_management_building_london building gia is 1002
-      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new procurement.id
+      #   spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new procurement.id
+      spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new contract.id
 
       IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
 

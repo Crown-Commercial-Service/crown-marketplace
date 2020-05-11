@@ -60,6 +60,16 @@ FactoryBot.define do
     procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
   end
 
+  factory :facilities_management_procurement_with_contact_details_with_buildings, parent: :facilities_management_procurement_with_contact_details do
+    tupe { true }
+    procurement_buildings { build_list :facilities_management_procurement_building, 2 }
+  end
+
+  factory :facilities_management_procurement_with_contact_details_with_buildings_no_tupe_london, parent: :facilities_management_procurement_with_contact_details do
+    tupe { false }
+    procurement_buildings { build_list :facilities_management_procurement_building_london, 2 }
+  end
+
   factory :facilities_management_procurement_for_further_competition, class: FacilitiesManagement::Procurement do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { false }
