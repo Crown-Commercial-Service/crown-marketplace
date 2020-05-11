@@ -1,0 +1,131 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd|  %>
+  <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+      <div class= "govuk-body govuk-!-width-three-quarters">
+        <h2 class="govuk-heading-m"><%= t('.documents.heading') %></h2>
+        <p class="govuk-body govuk-!-margin-left-6 govuk-!-font-size-28"><%= t('.documents.text') %></p>
+
+        <div class="govuk-!-margin-top-6 govuk-body">
+          <h3 class="govuk-heading-s"><%= t('.attachment_1.heading') %></h3>
+          <ul class="govuk-list documents">
+            <li class="govuk-!-margin-left-2">
+              <a href="<%= asset_path(t('.attachment_1.document_name')) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t('.attachment_1.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_1.guidance') %></p>
+            </li>
+          </ul>
+
+          <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h3>
+          <ul class="govuk-list documents">
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+             <a href="<%= facilities_management_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "matrix_spreadsheet", contract_id: @procurement.first_unsent_contract.id) %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+              <%= t('.attachment_2.statement_of_requirements.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+            </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
+            </li>
+            <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+              <a href="<%= asset_path('Statement of Requirements - Annex A - Standards and Processes.docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+                <%= t('.attachment_2.annex_a.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+              </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.annex_a.guidance') %></p>
+            </li>
+          </ul>
+
+          <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h3>
+          <ul class="govuk-list documents">
+            <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+              <a href="<%= facilities_management_procurement_da_spreadsheets_path(@procurement.id, spreadsheet: "prices_spreadsheet", contract_id: @procurement.first_unsent_contract.id) %>&format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" data-method="post">
+                <%= t('.attachment_3.price_matrix.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+              </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
+            </li>
+          </ul>
+
+          <h3 class="govuk-heading-s"><%= t('.attachment_4.heading') %></h3>
+          <ul class="govuk-list documents">
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+              <a href="<%= facilities_management_procurement_contract_documents_call_off_schedule_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>">
+                <%= t('.attachment_4.order_form.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.order_form.guidance') %></p>
+            </li>
+            <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+              <a href="<%= asset_path('Core Terms v3.0.2 (DA).docx')%>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t('.attachment_4.core_terms.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+              <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_4.core_terms.guidance') %></p>
+            </li>
+          </ul>
+
+          <ul class="govuk-list govuk-!-margin-top-6 documents">
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+              <a href="<%= asset_path(t(".contract_documents.call_off_schedule_1.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t(".contract_documents.call_off_schedule_1.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+            </li>
+            <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+              <a href="<%= facilities_management_procurement_contract_documents_call_off_schedule_2_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t(".contract_documents.call_off_schedule_2.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+            </li>
+            <% [[3, 4, '4A'], (5..10).to_a, [13]].flatten.each do |document_number| %>
+              <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+                <a href="<%= asset_path(t(".contract_documents.call_off_schedule_#{document_number}.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                  <%= t(".contract_documents.call_off_schedule_#{document_number}.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                </a>
+              </li>
+            <% end %>
+            <% [(1..3).to_a, (5..7).to_a, [10]].flatten.each do |document_number| %>
+              <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
+                <a href="<%= asset_path(t(".contract_documents.joint_schedule_#{document_number}.document_name")) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                  <%= t(".contract_documents.joint_schedule_#{document_number}.title") %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                </a>
+              </li>
+            <% end %>
+            <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+              <a href="<%= asset_path('Joint Schedule 11 - Processing Data (DA).docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                <%= t('.contract_documents.joint_schedule_11.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+              </a>
+            </li>
+          </ul>
+
+          <% if @procurement.security_policy_document_required? %>
+            <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h3>
+            <ul class="govuk-list govuk-!-margin-top-6 documents">
+              <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
+                <% if @procurement.security_policy_document_file.content_type == 'application/pdf' %>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
+                    <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
+                <% else %>
+                  <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+                    <%= t('.security_policy.title') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+                <% end %>
+                </a>
+                <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
+              </li>
+            </ul>
+          <% end %>
+
+          <%= link_to t('.download_documents.title'), facilities_management_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary', 'aria-label': "#{t('.download_documents.title')}" %>
+        </div>
+
+
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text"><%= t('.download_documents.guidance') %></strong>
+        </div>
+
+        <strong><p><%= t('.change_requirements.guidance') %></strong>
+        <div>
+          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
+        </div>
+        <strong><p><%= t('.change_schedule.guidance') %></strong>
+
+        <h2 class="govuk-heading-m"><%= t('.sending_contract.heading') %></h2>
+        <p class="govuk-body govuk-!-padding-bottom-4"><%= t('.sending_contract.guidance') %></p>
+
+        <%= govuk_continuation_buttons(pd, f) %>
+
+      </div>
+   <%end %>
+<% end %>

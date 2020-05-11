@@ -1,0 +1,28 @@
+<table class="govuk-table">
+  <% if !@in_draft.empty? %>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="25%">Contract name</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%">Supplier</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="15%">Saved</th>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="40%"></td>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% @in_draft.each do |in_draft| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
+            <%= link_to in_draft.contract_name, facilities_management_procurement_path(in_draft) %>
+          </th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= in_draft.procurement_suppliers.first.supplier.data['supplier_name'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(in_draft.updated_at.in_time_zone('London')) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+        </tr>
+      <% end %>
+  </tbody>
+  <% else %>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+      <span class="govuk-body"> <%= t('.no_drafts') %></span>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-3">
+  <% end %>
+</table>

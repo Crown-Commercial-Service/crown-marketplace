@@ -1,0 +1,25 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+    <%= render partial: 'contract_summary_head' %>
+
+    <%= render partial: '/facilities_management/procurements/da_buyer/contract_summary/contract_offer_dates' %>
+
+    <%= render partial: '/facilities_management/procurements/da_buyer/contract_summary/procurement_requirements' %>
+    <%= render partial: '/facilities_management/procurements/da_buyer/contract_summary/call_off_contract_documents' %>
+    
+    <%= render partial: '/facilities_management/procurements/da_buyer/contract_summary/when_awaiting_response' if @page_data[:procurement_data][:status] == 'awaiting response' %>
+    
+    <% if @page_data[:procurement_data][:status] == 'awaiting response' %>
+        <div class ="govuk-body govuk-!-margin-top-7 govuk-!-margin-bottom-0 govuk-!-width-three-quarters">
+            <strong>
+                You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+            </strong>
+        </div>
+        <div>
+            <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--warning govuk-!-margin-top-6', 'aria-label': "#{pd.navigation_details.secondary_text}" %>
+        </div>
+        <div>
+            <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state', 'aria-label': "#{pd.navigation_details.return_text}") %>
+        </div>
+    <% end %>
+
+<% end %>

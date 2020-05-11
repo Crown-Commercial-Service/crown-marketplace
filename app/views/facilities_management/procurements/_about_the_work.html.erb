@@ -1,0 +1,147 @@
+
+<table class="govuk-table">
+  <tbody class="govuk-table__body">
+  <tr class="govuk-table__row">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-24" width="30%">About the work</th>
+    <td class="govuk-table__cell" width="45%">
+    </td>
+    <td class="govuk-table__cell" width="25%">
+    </td>
+  </tr>
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:procurement_buildings].any? %>">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-18 <%= 'govuk-!-padding-left-2' if @procurement.errors[:procurement_buildings].any? %>"> 1. Buildings</th>
+    <% if @active_procurement_buildings.any? %>
+
+      <td class="govuk-table__cell">
+        <ul class="buildings-list govuk-!-margin-0 govuk-!-padding-top-2">
+          <% @active_procurement_buildings.each do |procurement_building| %>
+            <li><%= procurement_building.name %></li>
+          <% end %>
+        </ul>
+      </td>
+      <td class="govuk-table__cell">
+        <%= link_to "Change", edit_facilities_management_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+      </td>
+    <% else %>
+
+      <td class="govuk-table__cell">
+        <%= link_to "Select buildings", edit_facilities_management_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+      </td>
+      <td class="govuk-table__cell">
+      </td>
+    <% end %>
+    <% if @procurement.errors[:procurement_buildings].any? %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :procurement_buildings, false) %></td>
+      </tr>
+    <% end %>
+  </tr>
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:base].any? %>">
+    <th scope="row" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:base].any? %>" width="30%">2. Services</th>
+
+    <% if @active_procurement_buildings.any? %>
+      <% if any_service_codes(@active_procurement_buildings) %>
+        <td class="govuk-table__cell">
+          <% @active_procurement_buildings.each do |procurement_building| %>
+            <%= render 'procurement_building_services', procurement_building: procurement_building %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell">
+          <%= link_to "Change", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+        </td>
+      <% else %>
+        <td class="govuk-table__cell">
+          <%= link_to "Select services", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+        </td>
+        <td class="govuk-table__cell">
+        </td>
+      <% end %>
+    <% else %>
+      <td class="govuk-table__cell">
+        You must select buildings first
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag">
+          CAN'T START YET
+        </strong>
+      </td>
+    <% end %>
+    <% if @procurement.errors[:base].any? %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3"><%= display_error(@procurement, :base, false) %></td>
+      </tr>
+    <% end %>
+  </tr>
+  <tr class="govuk-table__row">
+    <th scope="row" class=" govuk-table__header govuk-table__header govuk-!-font-size-19" <%= 'colspan=3 style=border:0 width=30%' if (@active_procurement_buildings.requires_service_information.length > 0) %>>
+      3. Services information
+      <% if any_service_codes(@active_procurement_buildings) %>
+        <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
+          <span id="event-name-hint" class="govuk-hint">
+              We need additional information. You only need to answer questions related to the buildings listed below.
+          </span>
+        <% end %>
+      <% end %>
+    </th>
+    <% if any_service_codes(@active_procurement_buildings) %>
+      <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+
+        </td>
+        <td class="govuk-table__cell">
+          <strong>Buildings</strong>
+        </td>
+        <td class="govuk-table__cell">
+          <strong>Status</strong>
+        </td>
+      </tr>
+      <% else %>
+        <td class="govuk-table__cell">
+          No additional information needed
+        </td>
+        <td class="govuk-table__cell">
+
+        </td>
+      <% end %>
+    <% else %>
+      <td class="govuk-table__cell">
+        <% if @active_procurement_buildings.any? %>
+          You must select services first
+        <% else %>
+          You must select buildings first
+        <% end %>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag">
+          CAN'T START YET
+        </strong>
+      </td>
+    <% end %>
+  </tr>
+
+
+  <% if any_service_codes(@active_procurement_buildings) %>
+      <% @active_procurement_buildings.requires_service_information.each do |procurement_building| %>
+        <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if !procurement_building.valid?(:procurement_building_services) && params[:validate] %>">
+          <td class="govuk-table__cell">
+          </td>
+          <td class="govuk-table__cell">
+            <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%= link_to procurement_building.name, facilities_management_procurement_building_path(procurement_building) %></p>
+          </td>
+          <td class="govuk-table__cell">
+            <p class="govuk-!-padding-0 govuk-!-margin-0 govuk-!-margin-top-3 govuk-!-margin-bottom-3"><%=building_services_status? procurement_building.valid?(:procurement_building_services) %></p>
+          </td>
+        </tr>
+        <% if procurement_building.errors.any? && params[:validate] %>
+          <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error govuk-no-border">
+            <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 " colspan="3">
+              <span id="<%= procurement_building.id %>" class="govuk-error-message govuk-!-margin-bottom-0"><%= t('activerecord.errors.models.facilities_management/procurement.attributes.procurement_building_services.invalid_html', building_name: procurement_building.name) %></span>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+  <% end %>
+
+  </tbody>
+</table>

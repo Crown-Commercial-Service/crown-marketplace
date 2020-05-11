@@ -1,19 +1,14 @@
 module FacilitiesManagement::SummaryHelper
   def title
-    case @current_lot
-    when nil
-      "You have #{@report.list_of_services.count} services selected"
-    else
-      'Shortlist of suppliers'
-    end
+    return "You have #{@report.list_of_services.count} services selected" if @current_lot.nil?
+
+    'Shortlist of suppliers'
   end
 
   def services_and_suppliers_title
-    if @current_lot.nil?
-      services_title
-    else
-      suppliers_title
-    end
+    return services_title if @current_lot.nil?
+
+    suppliers_title
   end
 
   def lot_title
@@ -102,5 +97,19 @@ module FacilitiesManagement::SummaryHelper
 
   def no_price_message
     "Suggested sub-lot <span style='display:inline-block; position: relative; left: 270px;'><strong>Lot #{@report.current_lot}</strong></span>"
+  end
+
+  def calculate_uom_value(val)
+    uom_value = nil
+    if val[:uom_value].is_a? Numeric
+      uom_value = val[:uom_value].to_f
+    elsif val[:uom_value].is_a? String # rspec cases use string for the value
+      uom_value = val[:uom_value].to_f
+    elsif val[:uom_value][:monday][:uom].is_a? Numeric
+      uom_value = 0
+      Date::DAYNAMES.each { |day| uom_value += val[:uom_value][day.downcase.to_sym][:uom] }
+      uom_value = (uom_value * 52).round(2) # for each week in the year
+    end
+    uom_value
   end
 end

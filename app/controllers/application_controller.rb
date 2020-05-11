@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def gateway_url
-    return facilities_management_beta_admin_gateway_url if controller_path.include? 'facilities_management/beta/admin/'
-
     determine_non_admin_gateway_url
   end
 
@@ -21,8 +19,6 @@ class ApplicationController < ActionController::Base
       st_gateway_path
     when 'management_consultancy'
       management_consultancy_gateway_url
-    when 'facilities_management/beta'
-      facilities_management_beta_gateway_url
     when 'facilities_management'
       facilities_management_gateway_url
     when 'legal_services'
