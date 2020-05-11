@@ -161,7 +161,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                  service_standard: 'A')
         end
       end
-        # procurement.set_state_to_results_if_possible
+      # procurement.set_state_to_results_if_possible
     end
 
     # rubocop:disable RSpec/ExampleLength
