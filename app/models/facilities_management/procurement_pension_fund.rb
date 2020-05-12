@@ -6,7 +6,8 @@ module FacilitiesManagement
     validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :procurement }
     validates :name, length: { maximum: 150 }
     validates :percentage, presence: true
-    validates :percentage, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }
+    validates :percentage, format: { with: /\A\d+\.*\d{0,4}\z/ }
+    validates :percentage, numericality: { greater_than: 0, less_than_or_equal_to: 100 }
 
     attribute :case_sensitive_error, :boolean, default: false
     validates_each :name do |record, attr|
