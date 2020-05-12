@@ -3,7 +3,7 @@ require 'axlsx_rails'
 require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  include FacilitiesManagement::Beta::SummaryHelper
+  include FacilitiesManagement::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
   def initialize(contract_id)
@@ -65,7 +65,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
         unless units_of_measure_values.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
             add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
-            number_volume_services = add_volumes_information(sheet)
+            number_volume_services = add_volumes_information(sheet, @units_of_measure_values)
             style_volume_sheet(sheet, standard_column_style, number_volume_services)
           end
         end
@@ -264,7 +264,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
-  def add_volumes_information(sheet)
+  def add_volumes_information(sheet, units)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
     allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
@@ -272,7 +272,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     allowed_volume_services.each do |s|
       new_row = [s['code'], s['name'], s['metric']]
       @active_procurement_buildings.each do |b|
-        uvs = @units_of_measure_values.flatten.select { |u| b.building_id == u[:building_id] }
+        uvs = units.flatten.select { |u| b.building_id == u[:building_id] }
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
         new_row << calculate_uom_value(suv) if suv
@@ -393,9 +393,9 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_mobilisation_period(sheet)
-    sheet.add_row ['Mobilisation Period', ("#{@procurement.mobilisation_period} weeks" unless @procurement.mobilisation_period.nil?)]
-    sheet.add_row ['Mobilisation Start Date', ((@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day).strftime('%d/%m/%Y') unless @procurement.mobilisation_period.nil?)]
-    sheet.add_row ['Mobilisation End Date', ((@procurement.initial_call_off_start_date - 1.day).strftime('%d/%m/%Y') unless @procurement.mobilisation_period.nil?)]
+    sheet.add_row ['Mobilisation Period', ("#{@procurement.mobilisation_period} weeks" if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation Start Date', ((@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation End Date', ((@procurement.initial_call_off_start_date - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
   end
 
   def add_initial_call_off_period(sheet)
@@ -411,7 +411,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def extension_period(period)
-    return nil if @procurement.try("optional_call_off_extensions_#{period}").nil?
+    return nil if !@procurement.extensions_required || @procurement.try("optional_call_off_extensions_#{period}").nil?
 
     @procurement.try("extension_period_#{period}_start_date").strftime('%d/%m/%Y') + ' - ' + @procurement.try("extension_period_#{period}_end_date").strftime('%d/%m/%Y')
   end

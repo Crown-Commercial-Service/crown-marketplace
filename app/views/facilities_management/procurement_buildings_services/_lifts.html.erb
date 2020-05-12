@@ -1,0 +1,29 @@
+<%= form_for @building_service, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {novalidate: true, multipart: true} do |f| %>
+  <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+  <%= f.hidden_field :step, value: @partial_prefix %>
+  <h3 class="govuk-heading-m">How many floors does each lift access?</h3>
+  <p class="govuk-caption-m">For example, a lift starting at the ground floor, giving access up to the 10th floor, is a
+    total of 11 floors.</p>
+  <div class=" liftdatacontainer">
+    <div class="liftdata">
+      <%= hidden_field_tag "#{f.object_name}[lift_data][]", '' %>
+      <% index = 0 %>
+      <% until index == @lift_count do %>
+        <div class="govuk-form-group <%= 'govuk-form-group--error' if any_lift_error?(@building_service, index)%>" data-propertyname="Lift Data"
+             data-liftcount="<%= index + 1 %>">
+          <label for="<%= "liftdata_#{index + 1}" %>" class="govuk-label"><%= "Lift #{index + 1}." %></label>
+          <span class="govuk-caption-m">Number of floors</span>
+          <% list_potential_errors @building_service, :lift_data, f.object_name, method(:specific_lift_error?), index %>
+          <%= f.number_field :lift_data, multiple: true, value: @building_service[:lift_data]&.dig(index), id: "liftdata_#{index + 1}", class: 'govuk-input govuk-input--width-2', type: 'number', min: 1, max: 1000, step: 1, required: true, maxlength: 3 %>
+          <%= f.button('Remove', action: 'removelift', value: index, class: "govuk-!-margin-left-2 govuk-button govuk-button--secondary #{'govuk-visually-hidden' if index < (@lift_count - 1)} removelift", data: {liftcount: index + 1}, tabindex: (index == (@lift_count - 1) ? nil : -1))  if index > 0 %>
+        </div>
+        <% index += 1 %>
+      <% end %>
+    </div>
+    <%= button_to "Add new lift (#{99 - index} remaining)", 'addnewlift', class: 'govuk-button govuk-button--secondary addliftbtn' %>
+    <div class="govuk-grid-row govuk-!-margin-top-5">
+      <%= f.submit t('.save_and_return_to_service_information'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4', data: {disable_with: false}, 'aria-label': t('.save_and_return_to_service_information') %>
+    </div>
+    <%= link_to t('.back_to_service_information'), facilities_management_procurement_building_path(@procurement_building), class: 'govuk-link--no-visited-state' %>
+  </div>
+<% end %>

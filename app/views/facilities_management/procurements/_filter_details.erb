@@ -1,0 +1,33 @@
+<div class="filter-panel">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <a id="" href="" style="width:100%" class="filter-toggle govuk-button govuk-button--secondary ccs-no-print govuk-!-margin-top-6" role="button" alt-text="<%= t('.show_requirements') %>">
+        <%= t('.hide_requirements')%>
+      </a><br/>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="filter-pane govuk-grid-column-one-third">
+      <div class="filter-component-container">
+        <div class="govuk-!-padding-2">
+          <div class="govuk-heading-m govuk-!-margin-left-1">
+            <strong><%=t('.requirements') %></strong>
+          </div>
+          
+          <%  selected_service = @procurement.errors.any? ? @procurement.service_codes : params[:service_codes]  %>
+          <%  selected_region = @procurement.errors.any? ? @procurement.region_codes : params[:region_codes]  %>
+
+          <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.services'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', region_codes: selected_region, service_codes: selected_service), collection: @services, superset: @procurement.service_codes} %>
+          <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.regions'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', region_codes: selected_region, service_codes: selected_service),collection: @regions, superset: @procurement.region_codes} %>
+        </div>
+      </div>
+    </div>
+    <!-- Start of main list section -->
+    <div id="proc-CCS-fm-suppliers-long-list" class="filter-pane-target govuk-grid-column-two-thirds">
+    <span class="govuk-heading-l govuk-!-margin-left-2" scope="col">Total contract value</span>
+      <%= render partial:'facilities_management/procurements/long_list/lot1a'%>
+      <%= render('facilities_management/procurements/long_list/lot1b') %>
+      <%= render('facilities_management/procurements/long_list/lot1c') %>
+    </div>
+  </div>
+</div>

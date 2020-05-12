@@ -1,0 +1,43 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+  <div class="govuk-!-width-two-thirds">
+    <p class="govuk-body-l">
+      <%= t('.intro-text') %>
+    </p>
+
+    <div>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <h2 class="govuk-heading-s"><%=t('.insurance_heading') %></h2>
+      <p>
+        <%=t('.insurance_body_html') %>
+        <a href="<%= asset_path(t(".contract_documents.joint_schedule_3.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.joint_schedule_3.title") %> </a>
+      </p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <h2 class="govuk-heading-s"><%=t('.indexation_heading') %></h2>
+      <p>
+        <%=t('.indexation_body_html') %>
+        <a href="<%= asset_path(t(".contract_documents.call_off_schedule_5.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.call_off_schedule_5.title") %> </a>
+      </p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <h2 class="govuk-heading-s"><%= t('.services_heading') %></h2>
+      <p>
+        <%= t('.services_body_html_1') %>
+        <a href="<%= asset_path(t(".contract_documents.service_requirements_and_standards.document_name")) %>?format=doc" type="<%= t('common.type_doc') %>" download> <%= t(".contract_documents.service_requirements_and_standards.title") %> </a>
+        <%= t('.services_body_html_2') %>
+      </p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+      <h2 class="govuk-heading-s"><%=t('.price_heading') %></h2>
+      <p><%=t('.price_body_html') %></p>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    </div>
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        If you wish to change any of the above criteria, you will need to consider switching to a further competition.
+      </strong>
+    </div>
+    <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+      <%= govuk_continuation_buttons(pd, f) %>
+    <% end %>
+<% end %>

@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'regions' }
 
         it 'returns a route for the edit page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit')
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit')
         end
       end
 
@@ -20,7 +20,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'services' }
 
         it 'returns a route for the edit page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit')
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit')
         end
       end
 
@@ -28,13 +28,13 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'fake-step' }
 
         it 'redirects the user to the procurement index page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements')
+          expect(procurement_router.route).to eq('/facilities-management/procurements')
         end
       end
 
       context 'when no step has been set' do
         it 'redirects the user to the procurement index page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements')
+          expect(procurement_router.route).to eq('/facilities-management/procurements')
         end
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'contract_name' }
 
         it 'returns a route for the next edit step' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=estimated_annual_cost')
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit?step=estimated_annual_cost')
         end
       end
 
@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'procurement_buildings' }
 
         it 'returns a route for the next step' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1/edit?step=building_services')
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit?step=building_services')
         end
       end
 
@@ -64,13 +64,13 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'building_services' }
 
         it 'returns a route for the show procurement_building page' do
-          expect(procurement_router.route).to eq("/facilities-management/beta/procurement_buildings/#{procurement_building.id}")
+          expect(procurement_router.route).to eq("/facilities-management/procurement_buildings/#{procurement_building.id}")
         end
       end
 
       context 'when there is no current step' do
         it 'returns a route for the show page' do
-          expect(procurement_router.route).to eq('/facilities-management/beta/procurements/1')
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1')
         end
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'security_policy_document' }
 
         it 'returns a route for the show page' do
-          expect(procurement_router.back_link).to eq('/facilities-management/beta/procurements/1')
+          expect(procurement_router.back_link).to eq('/facilities-management/procurements/1')
         end
       end
 
@@ -92,13 +92,13 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         let(:step) { 'building_services' }
 
         it 'returns a route for the edit page of the previous step' do
-          expect(procurement_router.back_link).to eq('/facilities-management/beta/procurements/1/edit?step=procurement_buildings')
+          expect(procurement_router.back_link).to eq('/facilities-management/procurements/1/edit?step=procurement_buildings')
         end
       end
 
       context 'when there is no current step' do
         it 'returns a route for the show page' do
-          expect(procurement_router.back_link).to eq('/facilities-management/beta/procurements/1')
+          expect(procurement_router.back_link).to eq('/facilities-management/procurements/1')
         end
       end
     end

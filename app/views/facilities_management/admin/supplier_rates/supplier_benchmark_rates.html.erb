@@ -1,0 +1,125 @@
+<%= content_for :page_title, t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title') %>
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></li>
+  </ol>
+</div>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @errors } %>
+
+<h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title') %></h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.leading_text') %>
+</p>
+<p class="govuk-body govuk-body govuk-!-font-weight-bold">
+  <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.note') %>
+</p>
+
+<%= form_tag facilities_management_admin_update_call_off_benchmark_rates_path, class: 'ccs-form', method: :put, specialvalidation: true, novalidate: true, local: false do %>
+  <% @full_services.each do |service| %>
+    <table class="govuk-table ccs-errors">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+            <% if(service['value_type'] == 'money') %>
+              <% if(service['standard_b'].length > 0 || service['standard_c'].length > 0) %>
+                <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate_a') %>
+              <% else %>
+                <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate_pound_a') %>
+              <% end %>
+            <% else %>
+              <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate_percentage_a') %>
+            <% end %>
+          </th>
+          <% if(service['standard_b'].length > 0) %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate_b') %> </th>
+          <% end %>
+          <% if(service['standard_c'].length > 0) %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"> <%= raw t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate_c') %> </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% service['work_package'].each do |work_pckg| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+              <%- invalid_rate = work_pckg['rates'].select(&:invalid?).first %>
+              <div class="<%= 'govuk-form-group--error' if invalid_rate %>">
+                <% if invalid_rate %>
+                  <a name="benchmark-error"></a>
+                <% end %>
+                <%= work_pckg['code'] %>
+                <%= work_pckg['name'] %>
+                <% if invalid_rate %>
+                  <span id="event-name-error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span><%= t(".#{invalid_rate.errors.details[:benchmark].first[:error]}") %>
+                  </span>
+                <% end %>
+              </div>
+            </td>
+
+            <% [Proc.new {|rate| rate.standard.blank? || rate.standard == 'A'},
+                Proc.new {|rate| rate.standard == 'B'},
+                Proc.new {|rate| rate.standard == 'C'}].each do |selector| %>
+              <td class="govuk-table__cell supplier-rates-td">
+                <%- rate = work_pckg['rates'].select(&selector).first %>
+                <% if rate %>
+                  <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.invalid?}", 'aria-label': "#{work_pckg['name']} #{rate.standard.blank? ? 'normal price' : "standard #{rate.standard}"}"  %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <h2 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.heading_title_two') %></h2>
+  <p class="govuk-body govuk-brand-light-grey-benchmark">
+    <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.benchmark_text') %>
+  </p>
+
+  <table class="govuk-table ccs-errors">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
+          <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.item') %>
+        </th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+          <%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rate') %>
+        </th>
+      <tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @variances.each do |rate_label, rate| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+            <div class="<%= 'govuk-form-group--error' if rate.invalid? %>">
+              <% if rate.invalid? %>
+                <a name="benchmark-error"></a>
+              <% end %>
+              <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
+                <%= raw t("facilities_management.admin.supplier_rates.supplier_benchmark_rates.#{rate_label}") %>
+              </label>
+              <% if rate.invalid? %>
+                <span id="event-name-error" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span><%= t(".#{rate.errors.details[:benchmark].first[:error]}") %>
+                </span>
+              <% end %>
+            </div>
+          </td>
+          <td class="govuk-table__cell supplier-rates-td">
+            <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.invalid?}" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <a href="<%= facilities_management_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rtrn_link') %></a>
+<% end %>

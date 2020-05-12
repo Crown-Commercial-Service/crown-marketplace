@@ -1,0 +1,13 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
+  <p class="govuk-body govuk-!-width-three-quarters govuk-!-font-size-24"><%= t('.contract_details_description') %></p>
+  <%= render partial: 'facilities_management/procurements/da_buyer/contract_details_summary' %>
+
+  <div class="govuk-!-margin-top-5">
+    <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
+      <%= f.submit @page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', data: { disable_with: false }, name: 'continue_to_review_and_generate', 'aria-label': "#{@page_description.navigation_details.primary_text}" %>
+      <%= f.submit @page_description.navigation_details.secondary_text, class: ' govuk-button govuk-button--secondary', data: {disable_with: false }, name: 'continue_to_results', 'aria-label': "#{@page_description.navigation_details.secondary_text}" %>
+      </br>
+      <%= link_to @page_description.navigation_details.return_text, facilities_management_procurements_path, role: 'button', class: 'govuk-link govuk-!-font-size-19', 'aria-label': "#{@page_description.navigation_details.return_text}" %>
+  </div>
+  <%end %>
+<%end %>

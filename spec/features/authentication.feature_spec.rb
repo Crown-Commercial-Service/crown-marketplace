@@ -144,7 +144,7 @@ RSpec.feature 'Authentication', type: :feature do
     scenario 'can sign into the admin tool using AWS Cognito' do
       OmniAuth.config.test_mode = false
       user = create(:user, :without_detail, roles: %i[ccs_employee fm_access])
-      visit '/facilities-management/beta/admin/gateway'
+      visit '/facilities-management/admin/gateway'
       click_on 'Sign in with Cognito'
       fill_in 'Email', with: user.email
       fill_in 'Password', with: 'ValidPassword!'
@@ -165,7 +165,7 @@ RSpec.feature 'Authentication', type: :feature do
     scenario 'cannot sign into the admin tool using AWS Cognito' do
       OmniAuth.config.test_mode = false
       user = create(:user, :without_detail, roles: %i[ccs_employee mc_access])
-      visit '/facilities-management/beta/admin/gateway'
+      visit '/facilities-management/admin/gateway'
       click_on 'Sign in with Cognito'
       fill_in 'Email', with: user.email
       fill_in 'Password', with: 'ValidPassword!'

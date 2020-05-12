@@ -125,7 +125,9 @@ $(function () {
       $("#facilities_management_procurement_optional_call_off_extensions_" + i).removeClass('govuk-input--error');
       $("#optional_call_off_extensions_" + i + "-error").addClass('govuk-visually-hidden');
     }
-    console.log($(this.parentElement.parentElement.parentElement.parentElement.parentElement).removeClass('govuk-form-group--error'));
+    if ($("#extensions_required-error").length < 1) {
+      $(this.parentElement.parentElement.parentElement.parentElement.parentElement).removeClass('govuk-form-group--error');
+    }
     $("#facilities_management_procurement_optional_call_off_extensions_1").val("");
     $("#fm-ext2-remove-btn").removeClass("govuk-visually-hidden");
     updateButtonText();

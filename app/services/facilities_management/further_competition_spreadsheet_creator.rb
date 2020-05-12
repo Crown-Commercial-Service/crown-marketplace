@@ -20,6 +20,19 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     end.flatten
   end
 
+  def units_of_measure_values_for_volume
+    @units_of_measure_values_for_volume ||= @active_procurement_buildings.map do |building|
+      building.procurement_building_services.map do |procurement_building_service|
+        {
+          building_id: building.building_id,
+          service_code: procurement_building_service.code,
+          uom_value: procurement_building_service.uval,
+          service_standard: procurement_building_service.service_standard
+        }
+      end
+    end.flatten
+  end
+
   def assessed_value
     return if @assessed_value
 
@@ -50,10 +63,12 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
         end
 
-        unless units_of_measure_values.nil?
+        units_of_measure_values
+        units_of_measure_values_for_volume
+        unless @units_of_measure_values_for_volume.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
             add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
-            number_volume_services = add_volumes_information(sheet)
+            number_volume_services = add_volumes_information(sheet, @units_of_measure_values_for_volume)
             style_volume_sheet(sheet, standard_column_style, number_volume_services)
           end
         end

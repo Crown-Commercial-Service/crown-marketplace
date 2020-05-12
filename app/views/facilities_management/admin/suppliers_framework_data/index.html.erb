@@ -1,0 +1,84 @@
+<%= content_for :page_title, t('facilities_management.admin.supplier_framework_data.heading_title') %>
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><%= t('facilities_management.admin.supplier_framework_data.heading_title') %></li>
+  </ol>
+</div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <% if flash[:error] %>
+        <div class="govuk-inset-text cmp-inset-text--success">
+          <p class="govuk-body govuk-body-s"><%= flash[:error] %></p>
+        </div>
+      <% end %>
+      <% if flash[:success] %>
+        <div class="govuk-inset-text cmp-inset-text--success">
+          <p class="govuk-heading-s">Your changes have been saved</p>
+          <p class="govuk-body govuk-body-s"><%= flash[:success] %></pp>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+<h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_framework_data.heading_title') %></h1>
+<div class="govuk-accordion govuk-!-width-two-thirds" data-module="accordion" id="accordion-default">
+  <% @fm_suppliers.each do | suppliers | %>
+
+    <div class="govuk-accordion__section ">
+      <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading framework-data-accordion">
+          <span class="govuk-accordion__section-button" id="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-').tr("',", '') %>-framework-data-label" aria-controls="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-').tr("',", '') %>-framework-data">
+            <%= suppliers.data['supplier_name'] %>
+          </span>
+        </h2>
+      </div>
+      <div id="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-').tr("',", '') %>-framework-data" class="govuk-accordion__section-content" aria-labelledby="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-').tr("',", '') %>-framework-data-label">
+        <% if (@supplier_lot1a_present[suppliers.data['supplier_name']]) %>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1a</span>
+          <br />
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_admin_get_sublot_data_path(suppliers.data['supplier_id']) %>">Services, prices and variances</a>
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1a' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="<%= facilities_management_admin_get_sublot_regions_path(suppliers.supplier_id,'1a') %>">Regions</a>
+          <% end %>
+        </div>
+        <% end %>
+          <% if (@supplier_lot1b_present[suppliers.data['supplier_name']]) %>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1b</span>
+          <br />
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_admin_get_sublot_services_path(suppliers.supplier_id,'1b') %>">Services</a>
+
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1b' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="<%= facilities_management_admin_get_sublot_regions_path(suppliers.supplier_id,'1b') %>">Regions</a>
+          <% end %>
+        </div>
+        <% end %>
+          <% if (@supplier_lot1c_present[suppliers.data['supplier_name']]) %>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1c</span>
+          <br />
+          <a class="govuk-link govuk-!-font-size-19 govuk-!-margin-right-3" href="<%= facilities_management_admin_get_sublot_services_path(suppliers.supplier_id,'1c') %>">Services</a>
+
+          <% lot_a = suppliers.data['lots'].select { |lot| lot['lot_number'] == '1c' } %>
+          <% if !lot_a.blank? %>
+            <a class="govuk-link govuk-!-font-size-19" href="<%= facilities_management_admin_get_sublot_regions_path(suppliers.supplier_id,'1c') %>">Regions</a>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+
+
+</div>
+
+<a href="<%= facilities_management_admin_path %>" class="govuk-button govuk-button--secondary govuk-!-margin-top-5" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.admin.supplier_framework_data.rtrn_link') %></a>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 module FacilitiesManagement
-  RSpec.describe Beta::BuyerAccountController, type: :controller do
+  RSpec.describe BuyerAccountController, type: :controller do
     describe 'GET #buyer_account' do
       it 'returns http success' do
         get :buyer_account
