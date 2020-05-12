@@ -49,7 +49,7 @@
       <tbody class="govuk-table__body">
       <% service['work_package'].each do |work_pckg| %>
         <tr class="govuk-table__row">
-          <td scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
             <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? work_pckg['code'] %>">
               <div class="govuk-checkboxes__item">
               <%= check_box_tag(
@@ -104,7 +104,7 @@
     <tbody class="govuk-table__body">
     <% @variances.each.with_index do |variance, i| %>
       <tr class="govuk-table__row <%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? variance %>">
-      <td scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td  <%= 'govuk-!-padding-left-2' if flash[:error] and flash[:error].include? variance %>">
+      <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td  <%= 'govuk-!-padding-left-2' if flash[:error] and flash[:error].include? variance %>">
         <label id=<%=variance + '_label'%> for="rate[<%=variance%>]">
           <%= t("facilities_management.admin.supplier_rates.supplier_benchmark_rates.#{@variance_names[i]}") %>
         </label>
