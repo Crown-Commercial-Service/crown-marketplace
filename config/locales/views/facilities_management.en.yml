@@ -133,6 +133,7 @@ en:
         facilities_management/procurement:
           attributes:
             base:
+              at_least_one_service_required: You must select at least one service for '%{building_name}' building
               services_not_present: You must select at least one service
             contract_name:
               blank: Enter your contract name
@@ -262,6 +263,7 @@ en:
         facilities_management/procurement_building:
           attributes:
             service_codes:
+              at_least_one: You must select at least one service for '%{building_name}' building
               invalid: Select at least one service for each building
         facilities_management/procurement_building_service:
           attributes:

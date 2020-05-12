@@ -258,7 +258,7 @@ module FacilitiesManagement
     end
 
     def valid_on_continue?
-      valid?(:all) && valid?(:contract_dates) && valid_services?
+      valid?(:all) && valid_services?
     end
 
     def valid_services?
