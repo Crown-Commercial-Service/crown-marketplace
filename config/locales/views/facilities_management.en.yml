@@ -341,8 +341,8 @@ en:
             percentage:
               blank: Enter a percentage of pensionable pay
               greater_than: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
-              invalid: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
               inclusion: Enter a percentage of pensionable pay
+              invalid: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
               less_than_or_equal_to: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
               not_a_number: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
               not_an_integer: Percentage of pensionable pay must be a number between 0.0001 to 100 inclusive, like 99.9999 or 34
