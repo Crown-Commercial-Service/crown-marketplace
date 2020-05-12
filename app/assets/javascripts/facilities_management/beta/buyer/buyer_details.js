@@ -162,22 +162,24 @@ $(function () {
 	}
 
 	function tabIndex(toggle) {
-		if (toggle) {
-			document.getElementById("buyer-details-postcode").tabIndex = "-1";
-			document.getElementById("add-buyer-address-link-1").tabIndex = "-1";
-			document.getElementById("buyer-details-find-address-btn").tabIndex = "-1";
-
-			document.getElementById("buyer-details-change-postcode").tabIndex = "0";
-			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "0";
-			document.getElementById("add-buyer-address-link-2").tabIndex = "0";
-		}else{
-			document.getElementById("buyer-details-postcode").tabIndex = "0";
-			document.getElementById("add-buyer-address-link-1").tabIndex = "0";
-			document.getElementById("buyer-details-find-address-btn").tabIndex = "0";
-
-			document.getElementById("buyer-details-change-postcode").tabIndex = "-1";
-			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "-1";
-			document.getElementById("add-buyer-address-link-2").tabIndex = "-1";
+    if ($('#buyer-details-form').length) {
+      if (toggle) {
+        document.getElementById("buyer-details-postcode").tabIndex = "-1";
+        document.getElementById("add-buyer-address-link-1").tabIndex = "-1";
+        document.getElementById("buyer-details-find-address-btn").tabIndex = "-1";
+  
+        document.getElementById("buyer-details-change-postcode").tabIndex = "0";
+        document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "0";
+        document.getElementById("add-buyer-address-link-2").tabIndex = "0";
+      }else{
+        document.getElementById("buyer-details-postcode").tabIndex = "0";
+        document.getElementById("add-buyer-address-link-1").tabIndex = "0";
+        document.getElementById("buyer-details-find-address-btn").tabIndex = "0";
+  
+        document.getElementById("buyer-details-change-postcode").tabIndex = "-1";
+        document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "-1";
+        document.getElementById("add-buyer-address-link-2").tabIndex = "-1";
+    }
 		}
 	}
 });
