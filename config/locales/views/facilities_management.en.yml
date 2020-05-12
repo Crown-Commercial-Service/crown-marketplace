@@ -279,7 +279,7 @@ en:
               invalid: The number of building occupants must be a whole number between 1 and 999,999,999.
             no_of_consoles_to_be_serviced:
               invalid: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
-              invalid_k1: The number of tonnes of classified waste must be a whole number between 1 and 999,999,999.
+              invalid_k1: The number of consoles of classified waste must be a whole number between 1 and 999,999,999.
             no_of_units_to_be_serviced:
               invalid: The number of units to be serviced must be a whole number between 1 and 999,999,999.
               invalid_k7: The number of units of feminine hygiene waste must be a whole number between 1 and 999,999,999.
