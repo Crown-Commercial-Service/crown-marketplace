@@ -25,7 +25,9 @@
                 <div class="govuk-checkboxes__item">
                   <%= procurement_building.check_box :active, class: 'govuk-checkboxes__input', title: procurement_building.object.name, sectionid: procurement_building.object.name %>
                   <%= procurement_building.label :active, class: "govuk-label govuk-checkboxes__label", style: "padding-top:0" do %>
-                    <%= procurement_building.object.name %>
+                    <legend class="govuk-fieldset__legend">
+                      <%= procurement_building.object.name %>
+                    </legend>
                     <br />
                     <span class="govuk-hint govuk-!-margin-bottom-0"><%= procurement_building.object.full_address %></span>
                   <% end %>
@@ -36,7 +38,7 @@
         <% end %>
       </div>
       <div class="govuk-!-margin-top-9">
-        <%= link_to '+ Add more buildings', facilities_management_beta_buildings_management_path, class:"govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0" %>
+        <%= link_to '+ Add more buildings', facilities_management_beta_buildings_path, class:"govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0" %>
       </div>
     </div>
     <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
@@ -44,7 +46,7 @@
         <div>
           <h3 class="govuk-heading-m" data-txt01="<%= t('.buildings_selected') %>" data-txt02="<%= t('.no_buildings_selected') %>">
             <span id="selected-buildings-count">0</span> <span><%= t('.buildings_selected') %></span></h3>
-          <a class="govuk-!-padding-left-2 remove-link" role="button" href="#"><%= t('.remove_all') %></a><br />
+          <a class="govuk-!-padding-left-2 remove-link" role="button" href="#" aria-label="<%= t('.remove_all') %>"><%= t('.remove_all') %></a><br />
           <ul style="margin-top:10px;" class="govuk-list"></ul>
         </div>
       </div>

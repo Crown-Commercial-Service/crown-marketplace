@@ -59,4 +59,24 @@
 
 .css-fm-lot-headings {
   white-space: nowrap;
+
+  @media (max-width: 90em) {
+    white-space: normal;
+  }
+}
+
+.lot-list {
+  @media (max-width: 90em) {
+    margin-bottom: 50px;
+  }
+
+  @media (max-width: 1000px) {
+    margin-bottom: 20px;
+  }
+}
+
+#proc-CCS-fm-suppliers-long-list, .filter-pane{
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 }

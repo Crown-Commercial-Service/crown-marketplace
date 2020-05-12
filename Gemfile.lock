@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/iceraluk/omniauth_openid_connect.git
-  revision: 8e7d15e6216b1de980203c0eadfd036a309bf49c
-  specs:
-    omniauth_openid_connect (0.3.2)
-      addressable (~> 2.5)
-      omniauth (~> 1.9)
-      openid_connect (~> 1.1)
-
-GIT
   remote: https://github.com/randym/axlsx.git
   revision: 73d9477fc33706f4a186e92794134248fb389183
   branch: release-3.0.0
@@ -283,6 +274,13 @@ GEM
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    omniauth-rails_csrf_protection (0.1.2)
+      actionpack (>= 4.2)
+      omniauth (>= 1.3.1)
+    omniauth_openid_connect (0.3.3)
+      addressable (~> 2.5)
+      omniauth (~> 1.9)
+      openid_connect (~> 1.1)
     openid_connect (1.1.8)
       activemodel
       attr_required (>= 1.0.0)
@@ -313,12 +311,12 @@ GEM
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
-    rack-oauth2 (1.10.1)
+    rack-oauth2 (1.11.0)
       activesupport
       attr_required
       httpclient
       json-jwt (>= 1.11.0)
-      rack
+      rack (>= 2.1.0)
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
@@ -374,6 +372,7 @@ GEM
       activerecord (>= 5.0)
       rgeo (>= 1.0.0)
     role_model (0.8.2)
+    rollbar (2.24.0)
     roo (2.8.2)
       nokogiri (~> 1)
       rubyzip (>= 1.2.1, < 2.0.0)
@@ -446,6 +445,7 @@ GEM
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
+    smarter_csv (1.2.6)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -545,7 +545,8 @@ DEPENDENCIES
   notifications-ruby-client
   omniauth (~> 1.9.0)
   omniauth-oauth2 (~> 1.6.0)
-  omniauth_openid_connect!
+  omniauth-rails_csrf_protection (~> 0.1.2)
+  omniauth_openid_connect (~> 0.3.3)
   pg (>= 0.18, < 2.0)
   phonejack
   poltergeist (>= 1.18.1)
@@ -556,6 +557,7 @@ DEPENDENCIES
   ratonvirus
   ratonvirus-clamby
   role_model (~> 0.8.2)
+  rollbar (~> 2.24.0)
   roo (~> 2.8.2)
   rspec-rails (>= 3.9.0)
   rubocop
@@ -570,6 +572,7 @@ DEPENDENCIES
   simplecov (>= 0.16.1)
   sinatra (~> 2.0.5)
   slim (~> 4.0.1)
+  smarter_csv
   sprockets
   sprockets-bumble_d (>= 2.2.0)
   tzinfo-data

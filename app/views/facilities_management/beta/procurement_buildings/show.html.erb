@@ -1,22 +1,23 @@
+<%= content_for :page_title, t('.heading') %>
 <div class="govuk-body building-services govuk-grid-row">
   <div class="govuk-!-width-three-quarters">
     <%= render('facilities_management/beta/procurements/shared/backlink_header') %>
     <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
       - <%= @procurement_building.name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-    
+
     <table class="govuk-table govuk-!-margin-bottom-6 govuk-!-font-size-16">
       <thead>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 22%; overflow: hidden"></th>
-        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 18%"></th>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 22%; overflow: hidden"></td>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 18%"></td>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"><%= t('.gia') %></th>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.gia-summary') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building_data['gia'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= @building.gia %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
         </tr>
         <tr class="govuk-table__row">
@@ -28,7 +29,11 @@
         <% @procurement_building.procurement_building_services.has_service_questions.each_with_index do |service, index| %>
           <% service.answer_store[:questions].each_with_index do |qa_h, i| %>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= "#{index + 1}. #{service.name}" if i == 0 %> </th>
+              <% if i == 0 %>
+                <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= "#{index + 1}. #{service.name}" %> </th>
+              <% else %>
+                <td class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"></td>
+              <% end %>
               <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".#{qa_h[:question].to_s}") %></td>
               <td class="govuk-table__cell govuk-!-padding-right-2">
                 <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:question] == :service_hours && qa_h[:answer].valid? %>

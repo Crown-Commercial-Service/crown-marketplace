@@ -5,7 +5,7 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-top-0">All services</h1>
         <% content_for :page_title, 'All services' %>
-        <fieldset class="govuk-fieldset" aria-describedby="">
+        <fieldset class="govuk-fieldset">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
             Select the facilities management services you need
           </h2>
@@ -27,10 +27,10 @@
                       <span class="govuk-accordion__section-button" id="<%= service['code'] %>"><%= service['name'] %></span>
                     </h2>
                   </div>
-                  <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['name'] %>">
+                  <div id="<%= service['code'] %>-content" class="govuk-accordion__section-content" aria-labelledby="<%= service['code'] %>">
                     <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
                       <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
-                        <fieldset class="govuk-fieldset" aria-describedby="<%= work_package['name'] %>">
+                        <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
                           <div id="services-checkboxes" class="govuk-checkboxes">
                             <div class="govuk-checkboxes__item">
                               <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes.include?(work_package['code']),
@@ -43,7 +43,7 @@
                                      for="<%= "service_#{work_package['code'].gsub('.', '-')}" %>">
                                 <%= work_package['name'] %>
                                 <br/>
-                                <span style="font-weight:lighter;"><%= work_package['description'] %></span>
+                                <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
                               </label>
                             </div>
                           </div>
@@ -81,7 +81,7 @@
           <div>
             <h3 class="govuk-heading-m" data-txt01="services selected" data-txt02="no services selected">
               <span id="selected-services-count">0</span> <span>services selected</span></h3>
-            <a class="govuk-!-padding-left-2 remove-link" role="button" href="#">Remove all</a><br/>
+            <a class="govuk-!-padding-left-2 remove-link" role="button" href="#" aria-label="Remove all">Remove all</a><br/>
             <ul style="margin-top:10px;" class="govuk-list"></ul>
           </div>
         </div>

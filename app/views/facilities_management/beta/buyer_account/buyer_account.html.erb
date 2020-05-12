@@ -1,9 +1,10 @@
+<% content_for :page_title, t('.buyer_account_dashboard') %>
 <div class="govuk-body">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">Buyer account</span>
+      <span class="govuk-caption-l"><%= t('.buyer_account_title') %> </span>
       <h1 class="govuk-heading-xl"><%= @current_login_email %></h1>
-      <span class="govuk-heading-m govuk-!-margin-0">Procurements</span>
+      <span class="govuk-heading-m govuk-!-margin-0"><%= t('.procurements') %> </span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
@@ -12,7 +13,7 @@
       <div class="fm-buyer-account-panel">
         <%= link_to 'Start a new procurement', '/facilities-management/choose-services', class: 'fm-buyer-account-panel__title' %>
         <p class="fm-buyer-account-panel__body">
-          Quick search for suppliers or create a new procurement
+         <%= t('.new_procurement_desc') %> 
         </p>
       </div>
     </div>
@@ -21,23 +22,23 @@
         <%= link_to(t('.facilities_management.beta.index.manage_procurements_link'), facilities_management_beta_procurements_path, class: 'fm-buyer-account-panel__title') %>
 
         <p class="fm-buyer-account-panel__body">
-          See a list of your search results and procurements
+          <%= t('.procurement_dashboard_desc') %> 
         </p>
       </div>
     </div>
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1">Buildings</span>
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.buildings_title') %> </span>
     </div>
   </div>
   <hr class="govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <a id="fm-manage-buildings-link" class="fm-buyer-account-panel__title" href="/facilities-management/beta/buildings-management">Manage buildings</a>
+        <%= link_to t(".manage_buildings"), facilities_management_beta_buildings_path, class: "fm-buyer-account-panel__title"%>
         <p class="fm-buyer-account-panel__body">
-          Create and manage your buildings used in your procurements
+          <%= t('.manage_buildings_desc') %> 
         </p>
       </div>
     </div>

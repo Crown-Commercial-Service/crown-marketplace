@@ -1,4 +1,7 @@
-<h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= t('.tupe_title') %></h1>
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend">
+    <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= t('.tupe_title') %></h1>
+  </legend>
 <% content_for :page_title, t('.tupe_title') %>
 <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:tupe].any? %>" data-propertyname="TUPE"
     style="<%= 'padding-left:1em' if @procurement.errors[:tupe].any?%>">
@@ -12,16 +15,9 @@
   </div>
 
   <div class="govuk-!-margin-top-3">
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      <%= t('.what_you_need_to_know_title') %>
-    </span>
-      </summary>
-      <div class="govuk-details__text" tabindex="-1">
-        <%= t('.what_you_need_to_know_html') %>
-      </div>
-    </details>
+    <%= govuk_details(t('.what_you_need_to_know_title'), true) do %>
+      <%= t('.what_you_need_to_know_html') %>
+    <% end %>
   </div>
 
   <div class="govuk-!-margin-top-3">
@@ -38,3 +34,4 @@
     </div>
   </div>
 </div>
+</fieldset>

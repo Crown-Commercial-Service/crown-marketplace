@@ -1,3 +1,4 @@
+<%= content_for :page_title, t('.sign_in_header') %>
 <h1 class="govuk-heading-xl">
   <%= t('.sign_in_header') %>
 </h1>
@@ -46,7 +47,7 @@
 
       </div>
 
-      <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.sign_in')}" %>
 
     <% end %>
 
@@ -56,7 +57,7 @@
 
     <ul class="govuk-list">
       <li>
-        <%= link_to t('.forgotten_password_html'), facilities_management_beta_new_user_password_path, class: 'govuk-link' %>
+        <%= link_to t('.forgotten_password_html'), facilities_management_beta_supplier_new_user_password_path, class: 'govuk-link' %>
       </li>
     </ul>
   </div>

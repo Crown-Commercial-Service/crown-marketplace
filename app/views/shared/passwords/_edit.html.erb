@@ -1,3 +1,4 @@
+<%= content_for :page_title, t(".heading") %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
@@ -89,7 +90,7 @@
 
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @response.errors[:confirmation_code].any? %>">
           <label class="govuk-label" for="password02">
-            <%= t('.confirm_code') %>
+            <%= t('.verify_code') %>
           </label>
 
           <span id="confirmation-code-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
@@ -105,9 +106,10 @@
 
       </fieldset>
 
-      <%= hidden_field_tag :username, @response.email %>
+      <%= hidden_field_tag :user_email_reset_by_CSC, params[:username] %>
+      <%= hidden_field_tag :user_email_reset_by_themself, @response.email %>
 
-      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= submit_tag t('common.reset_password'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.reset_password')}" %>
 
     <% end %>
 

@@ -9,10 +9,12 @@
         <%= t('.form_title') %>
     </h1>
     <div id="pension-funds" class='fields'>
+        <% error_index = 0 %>
         <%= f.fields_for :procurement_pension_funds, sort_by_pension_fund_created_at do |builder| %>
-            <%= render("facilities_management/beta/procurements/edit/procurement_pension_fund", ff: builder) %>
+            <%= render partial: "facilities_management/beta/procurements/edit/procurement_pension_fund", locals: {ff: builder, error_index: error_index} %>
+            <% error_index += 1 %>
         <% end %>
     </div>
-    <%= link_to_add_row("Add another pension fund (#{FacilitiesManagement::Procurement::MAX_NUMBER_OF_PENSIONS - @procurement.procurement_pension_funds.size} remaining)", f, :procurement_pension_funds, class: 'add-pension-button govuk-button govuk-button--secondary govuk-!-margin-bottom-2') %>
+    <%= link_to_add_row("Add another pension fund (#{FacilitiesManagement::Procurement::MAX_NUMBER_OF_PENSIONS - @procurement.procurement_pension_funds.size} remaining)", f, :procurement_pension_funds, class: 'add-pension-button govuk-button govuk-button--secondary govuk-!-margin-bottom-2', 'aria-label': "Add another pension fund" ) %>
     <%= govuk_continuation_buttons(pd, f, false) %>
 <% end %>

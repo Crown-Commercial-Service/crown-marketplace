@@ -97,7 +97,7 @@
           </div>
         </fieldset>
       </div>
-      <%= submit_tag t('common.submit'), class: "govuk-button" %>
+      <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-label': "#{t('common.submit')}" %>
 
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
     </form>
@@ -106,7 +106,7 @@
 
   <div class="govuk-grid-row ccs-no-print">
     <p>
-      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="">Print this
+      <a id="FM-print-supplier-list" role="button" class="supplier-record__print-option ccs-no-print" href="" aria-label="Print this">Print this
         page</a>
     </p>
   </div>

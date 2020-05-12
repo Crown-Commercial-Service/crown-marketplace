@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_111958) do
+ActiveRecord::Schema.define(version: 2020_05_08_085015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,11 +20,10 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.uuid "record_id"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -38,22 +37,20 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "facilities_management_buildings", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
-    t.string "updated_by", null: false
+    t.text "updated_by"
     t.text "user_email"
     t.jsonb "building_json"
-    t.text "building_ref"
     t.text "building_name"
     t.text "description"
-    t.decimal "gia"
+    t.integer "gia"
     t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
-    t.text "address_county"
     t.text "address_line_1"
     t.text "address_line_2"
     t.text "address_postcode"
@@ -92,12 +89,12 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "no_of_appliances_for_testing"
-    t.integer "no_of_building_occupants"
-    t.integer "size_of_external_area"
-    t.integer "no_of_consoles_to_be_serviced"
-    t.integer "tones_to_be_collected_and_removed"
-    t.integer "no_of_units_to_be_serviced"
+    t.bigint "no_of_appliances_for_testing"
+    t.bigint "no_of_building_occupants"
+    t.bigint "size_of_external_area"
+    t.bigint "no_of_consoles_to_be_serviced"
+    t.bigint "tones_to_be_collected_and_removed"
+    t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
     t.string "lift_data", default: [], array: true
     t.jsonb "service_hours"
@@ -165,6 +162,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.text "reason_for_closing"
     t.text "reason_for_declining"
     t.text "reason_for_not_signing"
+    t.boolean "contract_documents_zip_generated"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_supplier_on_fm_procurement_id"
   end
 
@@ -205,6 +203,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.boolean "local_government_pension_scheme"
     t.string "contract_number"
     t.string "contract_datetime"
+    t.boolean "lot_number_selected_by_customer", default: false
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -272,6 +271,29 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
+  end
+
+  create_table "fm_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.jsonb "data"
+    t.text "source_file", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_gin", using: :gin
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rate_cards_procurement"
+  end
+
+  create_table "fm_frozen_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.string "code", limit: 5
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rates_procurement"
   end
 
   create_table "fm_lifts", id: false, force: :cascade do |t|
@@ -562,6 +584,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
     t.string "voa_ndr_scat_code"
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
+    t.index ["postcode_locator"], name: "index_os_address_on_postcode_locator"
   end
 
   create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -684,6 +707,8 @@ ActiveRecord::Schema.define(version: 2020_04_09_111958) do
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
   add_foreign_key "facilities_management_supplier_details", "users"
+  add_foreign_key "fm_frozen_rate_cards", "facilities_management_procurements"
+  add_foreign_key "fm_frozen_rates", "facilities_management_procurements"
   add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
   add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
   add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"

@@ -25,8 +25,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'will have the same attributes as the procurement' do
-          procurement_attributes = procurement.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state')
-          procurement_copy_attributes = procurement_copy.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state')
+          procurement_attributes = procurement.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state', 'lot_number', 'lot_number_selected_by_customer')
+          procurement_copy_attributes = procurement_copy.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state', 'lot_number', 'lot_number_selected_by_customer')
           expect(procurement_copy_attributes).to eq procurement_attributes
         end
       end
@@ -101,8 +101,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       let(:second_procurement_copy) { second_procurement.create_procurement_copy }
 
       it 'will have the same attributes as the procurement' do
-        procurement_attributes = second_procurement.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state')
-        procurement_copy_attributes = second_procurement_copy.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state')
+        procurement_attributes = second_procurement.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state', 'lot_number', 'lot_number_selected_by_customer')
+        procurement_copy_attributes = second_procurement_copy.attributes.except('id', 'aasm_state', 'created_at', 'updated_at', 'contract_name', 'da_journey_state', 'lot_number', 'lot_number_selected_by_customer')
         expect(procurement_copy_attributes).to eq procurement_attributes
       end
 

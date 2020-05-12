@@ -2,7 +2,7 @@ module FacilitiesManagement::Beta::Supplier::ContractsHelper
   include FacilitiesManagement::Beta::ProcurementsHelper
 
   def warning_message
-    warning_messages = { sent: "This contract offer expires on #{format_date_time(@contract.contract_expiry_date)}.",
+    warning_messages = { sent: "This contract offer expires on #{format_date_time(@contract.contract_expiry_date)}. <br/> The buyer is waiting for a response before the offer expiry deadline shown above.",
                          accepted: 'Awaiting buyer confirmation of signed contract.',
                          signed: "The buyer confirmed that the contract period is between #{format_date(@contract.contract_start_date)} and #{format_date(@contract.contract_end_date)}.",
                          declined: "You declined this contract offer on #{format_date_time(@contract.supplier_response_date)}.",

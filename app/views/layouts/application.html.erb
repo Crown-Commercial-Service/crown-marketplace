@@ -33,7 +33,7 @@
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    
+
     <div id="wrapper">
 
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
@@ -46,14 +46,13 @@
         <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
       </header>
 
-
       <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main">
         <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
           <% if @back_path.present? %>
             <%= render partial: '/layouts/back-link' %>
           <% end %>
         </div>
-        
+
         <%= yield %>
       </main>
 

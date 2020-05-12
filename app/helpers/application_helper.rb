@@ -48,20 +48,23 @@ module ApplicationHelper
   def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
+    label_for_id = form_object_name
+    id_for_label = "#{form_object_name}_#{attribute}-info"
+    label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
+        concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
         concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
-        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
-        concat yield
+        yield
       end
     end
   end
   # rubocop:enable Metrics/ParameterLists
 
-  def display_label(attribute, text, form_object_name)
-    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  def display_label(_attribute, text, form_object_name, _id_for_label)
+    content_tag :label, text, class: 'govuk-label', for: form_object_name
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
@@ -89,10 +92,8 @@ module ApplicationHelper
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    collection.each do |key, val|
+      concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
     end
   end
 
@@ -113,16 +114,6 @@ module ApplicationHelper
     end
   end
   # rubocop:enable Metrics/ParameterLists
-
-  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    error = model_object.errors[attribute].first
-    return if error.blank?
-
-    error_type = model_object.errors.details[attribute].first[:error]
-    error_message = model_object.errors[attribute]&.first
-
-    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
-  end
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
@@ -270,7 +261,11 @@ module ApplicationHelper
   end
 
   def fm_supplier_landing_page
-    request.path_info.include? 'supplier-account'
+    request.path_info.include? 'supplier'
+  end
+
+  def fm_supplier_login_page
+    controller.controller_name == 'sessions' && controller.action_name == 'new'
   end
 
   def not_permitted_page
@@ -286,11 +281,11 @@ module ApplicationHelper
   end
 
   def format_date_time_day(date_object)
-    date_object&.in_time_zone('London')&.strftime '%A %e %B %Y at %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y, %l:%M%P'
   end
 
-  def format_money(cost)
-    number_to_currency(cost, precision: 2, unit: '£')
+  def format_money(cost, precision = 2)
+    number_to_currency(cost, precision: precision, unit: '£')
   end
 
   def link_to_add_row(name, form, association, **args)

@@ -1,3 +1,4 @@
+<%= content_for :page_title, t('facilities_management.beta.admin.supplier_framework_data.heading_title') %>
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -31,12 +32,12 @@
     <div class="govuk-accordion__section ">
       <div class="govuk-accordion__section-header">
         <h2 class="govuk-accordion__section-heading framework-data-accordion">
-          <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+          <span class="govuk-accordion__section-button" id="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-') %>-framework-data-label">
             <%= suppliers.data['supplier_name'] %>
           </span>
         </h2>
       </div>
-      <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+      <div id="<%= suppliers.data['supplier_name'].downcase.gsub(' ', '-') %>-framework-data" class="govuk-accordion__section-content" aria-labelledby="<%= suppliers.data['supplier_name'].downcase %>-framework-data">
         <% if (@supplier_lot1a_present[suppliers.data['supplier_name']]) %>
         <div class="govuk-!-margin-bottom-5">
           <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">Sub-lot 1a</span>
@@ -80,4 +81,4 @@
   
 </div>
 
-<a href="<%= facilities_management_beta_admin_path %>" class="govuk-button govuk-button--secondary govuk-!-margin-top-5" alt="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_framework_data.rtrn_link') %></a>
+<a href="<%= facilities_management_beta_admin_path %>" class="govuk-button govuk-button--secondary govuk-!-margin-top-5" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.beta.admin.supplier_framework_data.rtrn_link') %></a>

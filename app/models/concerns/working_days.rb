@@ -9,7 +9,8 @@ module WorkingDays
     dates.each do |date|
       dates << (dates.last + 1.day) if weekend?(date) || bank_holiday?(date)
     end
-    dates.last
+
+    first_working_day == start_date ? dates.last : dates.last - (first_working_day.in_time_zone('London').utc_offset / 3600).hour
   end
 
   def self.weekend?(date)

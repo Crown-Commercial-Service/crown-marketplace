@@ -23,6 +23,7 @@
           <%= f.text_field :organisation_address_line_1, class: 'govuk-input', maxlength: 255 %>
         </div>
         <div class="govuk-form-group">
+          <%= f.label :organisation_address_line_2, class: 'govuk-visually-hidden' %>
           <%= f.text_field :organisation_address_line_2, class: 'govuk-input', maxlength: 255 %>
         </div>
         <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_town].any? %>">
@@ -42,7 +43,7 @@
         </div>
       </fieldset>
       <div class="govuk-!-margin-top-4">
-        <%= f.submit t('.submit'), class: "govuk-button" %>
+        <%= f.submit t('.submit'), class: "govuk-button", 'aria-label': t('.submit') %>
       </div>
     <% end %>
     </div>

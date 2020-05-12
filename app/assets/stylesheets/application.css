@@ -20,8 +20,11 @@
 
 
 @media print {
-    .govuk-link, .app-prose-scope a {
-        font-family: sans-serif
+    .govuk-link {
+        font-size: 1em;
+        border:0;
+        text-decoration: underline;
+        padding: 0;
     }
 }
 
@@ -1126,36 +1129,17 @@
     }
 }
 
-.js-enabled .govuk-accordion__open-all:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0;
-    background-color: #ffbf47
-}
-
-.js-enabled .govuk-accordion__open-all:focus {
-    background: none
-}
-
 .js-enabled .govuk-accordion__section-header {
     position: relative;
     padding-right: 40px;
     cursor: pointer
 }
 
-.js-enabled .govuk-accordion__section-header:hover {
-    background-color: #f8f8f8
-}
-
-.js-enabled .govuk-accordion__section-header--focused {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0
-}
 
 .js-enabled .govuk-accordion__section-button {
     font-family: "nta", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    width: 100%;
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
@@ -1173,12 +1157,6 @@
     .js-enabled .govuk-accordion__section-button {
         font-family: sans-serif
     }
-}
-
-.js-enabled .govuk-accordion__section-button:focus {
-    outline: 3px solid #ffbf47;
-    outline-offset: 0;
-    background-color: #ffbf47
 }
 
 .js-enabled .govuk-accordion__section-button:focus {
@@ -1833,7 +1811,6 @@
     font-size: 1rem;
     line-height: 1.25;
     display: block;
-    margin-bottom: 15px;
     color: #6f777b
 }
 
@@ -2140,7 +2117,7 @@
 }
 
 .govuk-checkboxes__input:focus + .govuk-checkboxes__label::before {
-    border-width: 4px;
+  border-width: 4px;
 	box-shadow: 0 0 0 3px #ffbf47
 }
 
@@ -2575,7 +2552,8 @@
 .govuk-details__text {
     padding: 15px;
     padding-left: 20px;
-    border-left: 5px solid #bfc1c3
+    border-left: 5px solid #bfc1c3;
+    word-break: break-word;
 }
 
 .govuk-details__text p {
@@ -4381,7 +4359,8 @@
 .govuk-table__header, .govuk-table__cell {
     padding: 10px 20px 10px 0;
     border-bottom: 1px solid #bfc1c3;
-    text-align: left
+    text-align: left;
+    word-break: break-word;
 }
 
 .govuk-table__cell--numeric {
@@ -7962,4 +7941,16 @@ li code, td code, p code {
 }
 .govuk-header_muted {
     color: #6F777B;
+}
+.bg_gov-mssg {
+    background-color: #6F777B;
+    color: #FFFFFF;
+    padding: 5px;
+}
+.govuk-tag--grey {
+    background-color: #6F777B !important;
+    color: #FFFFFF !important;
+}
+.govuk-border-bottom_none {
+    border-bottom: 0px !important;
 }

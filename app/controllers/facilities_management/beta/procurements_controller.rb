@@ -68,9 +68,13 @@ module FacilitiesManagement
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
+        change_the_contract_value && return if params['change_the_contract_value'].present?
+
         continue_to_summary && return if params['change_requirements'].present?
 
         continue_to_results && return if params['continue_to_results'].present?
+
+        continue_from_change_contract_value && return if params['continue_from_change_contract_value'].present?
 
         set_route_to_market && return if params['set_route_to_market'].present?
 
@@ -101,6 +105,10 @@ module FacilitiesManagement
         continue_to_new_notices_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_address'
 
         continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
+
+        update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+
+        update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
         update_procurement && return if params['facilities_management_procurement'].present?
 
@@ -140,11 +148,14 @@ module FacilitiesManagement
 
       def da_spreadsheets
         init
+        # puts 'contarct id'
+        # puts params[:contract_id]
+        # puts 'contarct id'
         if params[:spreadsheet] == 'prices_spreadsheet'
-          spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.id
+          spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new params[:contract_id]
           render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
         else
-          spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.id
+          spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new params[:contract_id]
           spreadsheet2 = spreadsheet_builder.build
           render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
         end
@@ -187,6 +198,8 @@ module FacilitiesManagement
           @procurement_reference = @procurement.contract_number
           @page_data[:model_object] = @procurement
         end
+
+        contract_value_page_details if @procurement.aasm_state == 'choose_contract_value'
 
         view_name
       end
@@ -251,6 +264,11 @@ module FacilitiesManagement
         @procurement.aasm_state.to_sym == status.to_sym
       end
 
+      def change_the_contract_value
+        @procurement.set_state_to_choose_contract_value!
+        redirect_to facilities_management_beta_procurement_path(@procurement)
+      end
+
       def continue_to_summary
         @procurement.set_state_to_detailed_search
         @procurement.save
@@ -259,10 +277,21 @@ module FacilitiesManagement
 
       def continue_to_results
         if procurement_valid?
-          @procurement.save_eligible_suppliers_and_set_state
+          @procurement.set_state_to_results_if_possible!
           redirect_to facilities_management_beta_procurement_path(@procurement)
         else
           redirect_to facilities_management_beta_procurement_path(@procurement, validate: true)
+        end
+      end
+
+      def continue_from_change_contract_value
+        @procurement.assign_attributes(procurement_params)
+        if @procurement.valid?(:choose_contract_value)
+          @procurement.set_state_to_results!
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        else
+          @view_name = set_view_data
+          render :show
         end
       end
 
@@ -331,8 +360,34 @@ module FacilitiesManagement
         end
       end
 
+      def update_service_codes
+        @procurement.update(service_codes: procurement_params[:service_codes])
+        if @procurement.quick_search?
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+        else
+          redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
+          redirect_to facilities_management_beta_procurement_path(@procurement)
+        end
+      end
+
+      def update_region_codes
+        @procurement.update(region_codes: procurement_params[:region_codes])
+        redirect_to edit_facilities_management_beta_procurement_path(id: @procurement.id)
+      end
+
       def update_pension_funds
-        if @procurement.update(procurement_params)
+        pension_funds = procurement_params[:procurement_pension_funds_attributes]
+        updated_pension_funds = {}
+        pension_funds.each do |pf|
+          if pf[1]['_destroy'] == 'true' && !pf[1]['id'].nil?
+            @procurement.update(procurement_pension_funds_attributes: pf[1])
+          else
+            updated_pension_funds[pf[0]] = pf[1]
+          end
+        end
+
+        @procurement.reload
+        if @procurement.update(procurement_pension_funds_attributes: updated_pension_funds)
           redirect_to facilities_management_beta_procurement_path(id: @procurement.id)
         else
           set_step_param
@@ -434,6 +489,10 @@ module FacilitiesManagement
         end
       end
 
+      def contract_value_page_details
+        @page_details[:unpriced_services] = @procurement.procurement_building_services_not_used_in_calculation
+      end
+
       # sets the state of the procurement depending on the submission from the results view
       def set_route_to_market
         if params[:commit] == page_details(:results)[:secondary_text]
@@ -477,7 +536,7 @@ module FacilitiesManagement
         build_da_journey_page_details(view_name)
         @page_data[:model_object] = @procurement
         @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: 0..1.15e6).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
+        @page_data[:sorted_supplier_list] = @procurement.procurement_suppliers.where(direct_award_value: FacilitiesManagement::Procurement::DIRECT_AWARD_VALUE_RANGE).map { |i| { price: i[:direct_award_value], name: i.supplier['data']['supplier_name'] } }
         contact_details_data_setup(params[:step])
         verify_completed_contact_details(params[:step])
       end
@@ -575,7 +634,7 @@ module FacilitiesManagement
       end
 
       def sent_offers
-        current_user.procurements.direct_award.map(&:sent_offers)&.flatten&.sort_by(&:offer_sent_date)&.sort_by { |each| FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state) }
+        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts
@@ -590,6 +649,7 @@ module FacilitiesManagement
         params.require(:facilities_management_procurement).permit(:route_to_market)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def procurement_params
         params.require(:facilities_management_procurement)
               .permit(
@@ -607,6 +667,9 @@ module FacilitiesManagement
                 :optional_call_off_extensions_2,
                 :optional_call_off_extensions_3,
                 :optional_call_off_extensions_4,
+                :call_off_extension_2,
+                :call_off_extension_3,
+                :call_off_extension_4,
                 :mobilisation_period_required,
                 :extensions_required,
                 :security_policy_document_required,
@@ -621,6 +684,8 @@ module FacilitiesManagement
                 :using_buyer_detail_for_authorised_detail,
                 :using_buyer_detail_for_notices_detail,
                 :local_government_pension_scheme,
+                :lot_number,
+                :lot_number_selected_by_customer,
                 service_codes: [],
                 region_codes: [],
                 procurement_buildings_attributes: [:id,
@@ -638,6 +703,7 @@ module FacilitiesManagement
                 notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
               )
       end
+      # rubocop:enable Metrics/MethodLength
 
       def set_current_step
         @current_step = nil
@@ -672,10 +738,9 @@ module FacilitiesManagement
       end
 
       def set_buildings
-        @buildings_data = FMBuildingData.new(current_user).get_building_data(current_user.email.to_s)
+        @buildings_data = current_user.buildings.where(status: 'Ready')
         @buildings_data.each do |building|
-          building_data = JSON.parse(building['building_json'])
-          @procurement.find_or_build_procurement_building(building_data, building_data['id']) if building['status'] == 'Ready'
+          @procurement.find_or_build_procurement_building(building['building_json'], building.id)
         end
       end
 
@@ -707,6 +772,28 @@ module FacilitiesManagement
 
       def procurement_valid?
         @procurement.valid_on_continue?
+      end
+
+      def set_results_page_definitions
+        page_definitions = {
+          caption1: @procurement[:contract_name],
+          continuation_text: 'Continue',
+          return_url: facilities_management_beta_procurements_path,
+          return_text: 'Return to procurement dashboard',
+          back_text: 'Back',
+          back_url: facilities_management_beta_procurements_path,
+          page_title: 'Results',
+          primary_name: 'set_route_to_market',
+          secondary_name: 'change_requirements',
+          secondary_text: 'Change requirements',
+          secondary_url: facilities_management_beta_procurements_path
+        }
+        if @procurement.lot_number_selected_by_customer
+          page_definitions[:secondary_name] = 'change_the_contract_value'
+          page_definitions[:secondary_url] = facilities_management_beta_procurements_path
+          page_definitions[:secondary_text] = 'Change contract value'
+        end
+        page_definitions
       end
 
       # used to control page navigation and headers
@@ -939,10 +1026,11 @@ module FacilitiesManagement
             back_text: 'Back',
             back_url: facilities_management_beta_procurements_path
           },
-          results: {
-            page_title: 'Results',
-            primary_name: 'set_route_to_market'
+          choose_contract_value: {
+            page_title: 'Contract value',
+            primary_name: 'continue_from_change_contract_value'
           },
+          results: set_results_page_definitions,
           direct_award: {
             page_title: 'Direct Award Pricing',
             back_url: facilities_management_beta_procurement_results_path(@procurement),

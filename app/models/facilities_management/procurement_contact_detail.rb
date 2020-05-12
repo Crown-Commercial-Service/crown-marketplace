@@ -18,6 +18,14 @@ module FacilitiesManagement
       organisation_address_line_1&.present? && organisation_address_town&.present? && organisation_address_postcode&.present?
     end
 
+    def full_name
+      name
+    end
+
+    def full_organisation_address
+      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county, organisation_address_postcode].reject(&:nil?).reject(&:empty?).join(', ')
+    end
+
     private
 
     def address_entered_when_postcode_provided

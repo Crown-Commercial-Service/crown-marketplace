@@ -1,0 +1,24 @@
+@import "../../settings";
+
+@import "../error-message/error-message";
+@import "../label/label";
+
+@include govuk-exports("govuk/component/character-count") {
+  .ccs-character-count {
+    .ccs-character-count__message {
+      @include govuk-responsive-margin(1, "top");
+      @include govuk-responsive-margin(3, "bottom");
+      margin-bottom:0 !important;
+      }
+
+    .ccs-character-count__message--disabled {
+      visibility : hidden;
+      }
+
+    .ccs-character-count-message {
+      display    : block;
+      clear      : both;
+      padding-top : 5px;
+      }
+    }
+  }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
-  subject(:procurement_building_service) { build(:facilities_management_procurement_building_service, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement))) }
+  subject(:procurement_building_service) { build(:facilities_management_procurement_building_service, service_standard: nil, code: nil, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement))) }
 
   describe '#validations' do
     context 'when code = C.1' do
@@ -201,6 +201,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.no_of_appliances_for_testing = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
+
+      it 'validates no_of_appliances_for_testing less than 10000000000 if value is present' do
+        procurement_building_service.code = 'E.4'
+        procurement_building_service.no_of_appliances_for_testing = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
+      end
     end
 
     context 'when code = G.1' do
@@ -219,6 +225,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.code = 'G.1'
         procurement_building_service.no_of_building_occupants = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
+      end
+
+      it 'validates no_of_building_occupants less than 10000000000 if value is present' do
+        procurement_building_service.code = 'G.1'
+        procurement_building_service.no_of_building_occupants = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
     end
 
@@ -258,6 +270,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.size_of_external_area = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
+
+      it 'validates size_of_external_area less than 10000000000 if value is present' do
+        procurement_building_service.code = 'G.5'
+        procurement_building_service.size_of_external_area = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
+      end
     end
 
     context 'when code = K.1' do
@@ -277,6 +295,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.no_of_consoles_to_be_serviced = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
+
+      it 'validates no_of_consoles_to_be_serviced less than 10000000000 if value is present' do
+        procurement_building_service.code = 'K.1'
+        procurement_building_service.no_of_consoles_to_be_serviced = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
+      end
     end
 
     context 'when code = K.2' do
@@ -295,6 +319,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.code = 'K.2'
         procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
+      end
+
+      it 'validates tones_to_be_collected_and_removed less than 10000000000 if value is present' do
+        procurement_building_service.code = 'K.2'
+        procurement_building_service.tones_to_be_collected_and_removed = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
     end
 
@@ -333,6 +363,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         procurement_building_service.code = 'K.7'
         procurement_building_service.no_of_units_to_be_serviced = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
+      end
+
+      it 'validates no_of_units_to_be_serviced less than 10000000000 if value is present' do
+        procurement_building_service.code = 'K.7'
+        procurement_building_service.no_of_units_to_be_serviced = 10000000000
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
     end
 

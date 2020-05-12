@@ -6,8 +6,9 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include FacilitiesManagement::Beta::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
-  def initialize(procurement_id)
-    @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+  def initialize(contract_id)
+    @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
+    @procurement = @contract.procurement
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
     @active_procurement_buildings = @procurement.active_procurement_buildings
   end
@@ -31,7 +32,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard
+          service_standard: procurement_building_service.service_standard,
+          service_hours: procurement_building_service.service_hours
         }
       end
     end
@@ -41,6 +43,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @package.to_stream.read
   end
 
+  # rubocop:disable Metrics/AbcSize
   def build
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
@@ -59,7 +62,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           style_service_matrix_sheet(sheet, standard_column_style)
         end
 
-        unless @units_of_measure_values.nil?
+        unless units_of_measure_values.nil?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
             add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
             number_volume_services = add_volumes_information(sheet)
@@ -75,10 +78,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def list_of_allowed_volume_services
     # FM-736 requirement
-    @list_of_allowed_volume_services ||= FacilitiesManagement::ServicesAndQuestions.new.code.uniq
+    @list_of_allowed_volume_services ||= FacilitiesManagement::ServicesAndQuestions.new.codes.uniq
   end
 
   private
@@ -93,10 +97,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
-      add_contract_number(sheet)
+      add_contract_number(sheet) if any_contracts_offered?
       add_customer_details(sheet)
       add_contract_requirements(sheet)
     end
+  end
+
+  def any_contracts_offered?
+    @procurement.procurement_suppliers.any? { |contract| !contract.unsent? }
   end
 
   def add_service_details_sheet(package)
@@ -165,7 +173,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:description]
+      row << building.building.description
     end
 
     row
@@ -205,7 +213,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @active_procurement_buildings.each do |building|
-      row << building.county
+      row << building.building.address_region
     end
 
     row
@@ -215,7 +223,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:gia]
+      row << building.building.gia
     end
 
     row
@@ -225,7 +233,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:'building-type']
+      row << building.building.building_type
     end
 
     row
@@ -235,7 +243,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_json[:'security-type']
+      row << building.building.security_type
     end
 
     row
@@ -264,8 +272,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     allowed_volume_services.each do |s|
       new_row = [s['code'], s['name'], s['metric']]
       @active_procurement_buildings.each do |b|
-        uvs = @units_of_measure_values.select { |u| b.building_id == u[:building_id] }
-
+        uvs = @units_of_measure_values.flatten.select { |u| b.building_id == u[:building_id] }
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
         new_row << calculate_uom_value(suv) if suv
@@ -295,7 +302,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       Date::DAYNAMES.rotate(1).each do |day|
         row_values = [service['code'], service['name'], day]
         buildings_data.each do |building|
-          service_measure = units_of_measure_values.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+          service_measure = units_of_measure_values.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+
           row_values << add_service_measure_row_value(service_measure, day)
         end
 
@@ -313,10 +321,10 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_service_measure_row_value(service_measure, day)
-    return nil if service_measure.nil? || service_measure[:uom_value].instance_of?(String)
+    return nil if service_measure.nil? || service_measure[:service_hours].nil?
 
     day_symbol = day.downcase.to_sym
-    case service_measure[:uom_value][day_symbol]['service_choice']
+    case service_measure[:service_hours][day_symbol]['service_choice']
     when 'not_required'
       'Not required'
     when 'all_day'
@@ -328,23 +336,29 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  def service_measure_invalid_type?(service_measure)
+    invalid = false
+    invalid = true if service_measure.nil? || service_measure[:uom_value].instance_of?(String) || service_measure[:uom_value].instance_of?(Integer)
+
+    invalid
+  end
+
   def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%02d', service_measure[:uom_value][day_symbol]['start_hour'])
-    start_minute = format('%02d', service_measure[:uom_value][day_symbol]['start_minute'])
-    start_ampm = service_measure[:uom_value][day_symbol]['start_ampm'].downcase
+    start_hour = format('%02d', service_measure[:service_hours][day_symbol]['start_hour'])
+    start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
+    start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
     start_hour + ':' + start_minute + start_ampm
   end
 
   def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%02d', service_measure[:uom_value][day_symbol]['end_hour'])
-    end_minute = format('%02d', service_measure[:uom_value][day_symbol]['end_minute'])
-    end_ampm = service_measure[:uom_value][day_symbol]['end_ampm'].downcase
+    end_hour = format('%02d', service_measure[:service_hours][day_symbol]['end_hour'])
+    end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
+    end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm
   end
 
   def add_contract_number(sheet)
-    time = Time.now.getlocal
-    sheet.add_row ["#{calculate_contract_number} - #{time.strftime('%Y/%m/%d')} - #{time.strftime('%l:%M%P')}"]
+    sheet.add_row ["#{@contract.contract_number} #{@contract.offer_sent_date&.in_time_zone('London')&.strftime '- %Y/%m/%d - %l:%M%P'}"]
     sheet.add_row []
   end
 

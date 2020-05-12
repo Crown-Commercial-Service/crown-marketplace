@@ -8,6 +8,10 @@ FactoryBot.define do
     association :procurement, factory: :facilities_management_procurement_direct_award
   end
 
+  factory :facilities_management_procurement_supplier_da_with_supplier, parent: :facilities_management_procurement_supplier_da do
+    association :supplier, class: CCS::FM::Supplier
+  end
+
   factory :facilities_management_procurement_supplier_fc, parent: :facilities_management_procurement_supplier do
     association :procurement, factory: :facilities_management_procurement_further_competition
   end

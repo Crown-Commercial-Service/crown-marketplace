@@ -6,16 +6,19 @@
     <div class="govuk-body">
         <%= t('.two_working_days') %>
     </div>
-    <ol class="govuk-list govuk-list--number">
-        <strong><li> <%= t('.if_accepted_header') %></li></strong>
-        <ul class="govuk-list govuk-list--bullet">
+    <div class="govuk-body">
+      <span><strong> <%= t('.if_accepted_header') %></strong></span>
+      <div class="govuk-!-padding-left-4">
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-2">
             <li><%= t('.if_accepted_list_1') %></li>
             <li><%= t('.if_accepted_list_2') %></li>
             <li><%= t('.if_accepted_list_3') %></li>
             <li><%= t('.if_accepted_list_4') %></li>
         </ul>
-        <strong><li> <%= t('.if_declined_header') %> </li></strong>
-        <ul class="govuk-list govuk-list--bullet">
+      </div>
+      <span><strong> <%= t('.if_declined_header') %> </strong></span>
+      <div class="govuk-!-padding-left-4">
+        <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-2">
             <li><%= t('.if_declined_list_header_1') %></li>
             <li> <%= t('.if_declined_list_header_2') %>
                 <ul class="govuk-list">
@@ -26,7 +29,8 @@
                 </ul>
             </li>
         </ul>
-    </ol>
+      </div>
+    </div>
     <div class="govuk-body">
         <%= t('.else_declined') %>
     </div>
