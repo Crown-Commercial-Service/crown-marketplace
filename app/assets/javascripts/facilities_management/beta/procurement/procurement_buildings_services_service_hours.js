@@ -26,6 +26,15 @@ SvcHoursDataUI.prototype.findMondaysToFridays = function() {
 SvcHoursDataUI.prototype.validateForm = function(_formElements) {
     let isValid;
 
+
+    document.querySelectorAll('[id=error_start_time]').forEach(function(eachEle,index) {
+        eachEle.remove();
+    });
+
+    document.querySelectorAll('[id=error_end_time]').forEach(function(eachEle,index) {
+        eachEle.remove();
+    });
+
     this.clearBannerErrorList();
     this.clearAllFieldErrors();
     this.toggleBannerError(false);
