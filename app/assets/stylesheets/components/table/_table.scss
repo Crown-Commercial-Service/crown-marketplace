@@ -1,11 +1,17 @@
 @import "govuk-frontend/components/table/table";
-
+.govuk-table {
+  font-size: inherit;
+  &.small {
+    @include govuk-font($size : 16);
+    }
+  }
 .govuk-table__caption {
   font-weight: $govuk-font-weight-semi-bold;
-  margin-bottom: 10px;	
+  margin-bottom: 10px;
 }
 
 .govuk-table__header {
+  font-size: inherit;
   font-weight: $govuk-font-weight-semi-bold;
 }
 

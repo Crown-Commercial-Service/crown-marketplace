@@ -2,10 +2,10 @@
   <td colspan="3" class="govuk-!-padding-top-2 govuk-no-border govuk-!-padding-bottom-2 govuk-table__cell">
     <table style="border-collapse: collapse; width:100%">
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
-        <th style="width:30%" class="govuk-table__header govuk-!-font-size-19  <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any? %>" width="30%">Mobilisation
+        <th style="width:50%" class="govuk-table__header  <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any? %>" width="30%">Mobilisation
           period
         </th>
-        <td style="width:45%" class="govuk-table__cell">
+        <td style="width:40%" class="govuk-table__cell">
           <%= mobilisation_period %>
         </td>
         <td class="govuk-table__cell">
@@ -24,10 +24,10 @@
     <td colspan="3" class="govuk-!-padding-top-2 govuk-no-border govuk-!-padding-bottom-2 govuk-table__cell">
       <table style="border-collapse: collapse; width:100%">
         <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_start_date].any? %>">
-          <th  style="width:30%" class="govuk-table__header govuk-!-font-size-19 <%= 'govuk-!-padding-left-2' if @procurement.errors[:mobilisation_start_date].any? %>" width="30%">Mobilisation
+          <th  style="width:50%" class="govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:mobilisation_start_date].any? %>" width="30%">Mobilisation
             start date
           </th>
-          <td  style="width:45%" class="govuk-table__cell">
+          <td  style="width:40%" class="govuk-table__cell">
             <%= format_date mobilisation_start_date unless @procurement.initial_call_off_start_date.blank? %>
           </td>
           <td class="govuk-table__cell">
@@ -42,7 +42,7 @@
     </td>
   </tr>
   <tr class="govuk-table__row">
-    <th scope="row" class="govuk-table__header govuk-!-font-size-19" width="30%">Mobilisation end date</th>
+    <th scope="row" class="govuk-table__header" width="30%">Mobilisation end date</th>
     <td class="govuk-table__cell">
       <%= format_date mobilisation_end_date unless @procurement.initial_call_off_start_date.blank? %>
     </td>
