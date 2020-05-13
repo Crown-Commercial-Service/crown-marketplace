@@ -64,9 +64,9 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
 
     describe '#valid_percentage?' do
       # Validating the percentage
-      context 'when the percentage is less than 1' do
+      context 'when the percentage is less than 0' do
         it 'is expected to not be valid' do
-          pension_fund.percentage = 0
+          pension_fund.percentage = -1
           expect(pension_fund.valid?).to eq false
           pension_fund.percentage = rand(-100..-1)
           expect(pension_fund.valid?).to eq false
@@ -96,9 +96,9 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
         end
       end
 
-      context 'when the percentage is not a whole number' do
+      context 'when the percentage has more than 4 decimal places' do
         it 'is expected to not be valid' do
-          pension_fund.percentage = (100 * rand(2..100) / 101.0)
+          pension_fund.percentage = rand(0.0...100.0).round(5)
           expect(pension_fund.valid?).to eq false
         end
       end
@@ -125,9 +125,9 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
 
       context 'when the percentage is between 1 and 100 percent inclusive' do
         it 'is expected to be false' do
-          pension_fund.percentage = 1
+          pension_fund.percentage = 1.0
           expect(pension_fund.valid?).to eq true
-          pension_fund.percentage = rand(1..100)
+          pension_fund.percentage = rand(1..100).round(4)
           expect(pension_fund.valid?).to eq true
           pension_fund.percentage = 100
           expect(pension_fund.valid?).to eq true

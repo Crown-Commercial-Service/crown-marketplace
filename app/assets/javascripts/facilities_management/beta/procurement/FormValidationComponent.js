@@ -220,7 +220,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         $(this.form).find(".govuk-select--error").removeClass("govuk-select--error");
         $(this.form).find(".govuk-form-group--error").removeClass("govuk-form-group--error");
         $(this.form).find(".govuk-error-message").addClass("govuk-visually-hidden");
+        $(this.form).find(".govuk-error-message").css("display", "none");
         $(this.form).find("label[class=govuk-error-message]").addClass("govuk-visually-hidden");
+        $(this.form).find("label[class=govuk-error-message]").css("display", "none");
     };
 
     this.clearFieldErrors = function (jElem) {
@@ -469,7 +471,9 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             }
             this.removeErrorClass(jQueryElement);
             jqueryElementForRequiredMessage.addClass("govuk-visually-hidden");
+            jqueryElementForRequiredMessage.css("display", "none");
         } else {
+            jqueryElementForRequiredMessage.css("display", "block");
             this.addErrorClass(jQueryElement);
             this.addErrorClass(jqueryElementForInputGroup);
             jqueryElementForRequiredMessage.removeClass("govuk-visually-hidden");

@@ -52,15 +52,6 @@ function PensionFundFund() {
       }
       return e.preventDefault();
     });
-  
-    $("#pension-funds").on("keypress", ".pension-percentage", (function (e) {
-      var ev = e || window.event;
-      if(ev.charCode < 48 || ev.charCode > 57) {
-        return false; // not a digit
-      } else {
-        return true;
-      }
-    }));
     
     // Functions to run on load
     checkIfOneRow();

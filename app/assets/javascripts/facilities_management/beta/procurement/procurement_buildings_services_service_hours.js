@@ -26,6 +26,15 @@ SvcHoursDataUI.prototype.findMondaysToFridays = function() {
 SvcHoursDataUI.prototype.validateForm = function(_formElements) {
     let isValid;
 
+
+    document.querySelectorAll('[id=error_start_time]').forEach(function(eachEle,index) {
+        eachEle.remove();
+    });
+
+    document.querySelectorAll('[id=error_end_time]').forEach(function(eachEle,index) {
+        eachEle.remove();
+    });
+
     this.clearBannerErrorList();
     this.clearAllFieldErrors();
     this.toggleBannerError(false);
@@ -120,8 +129,8 @@ SvcHoursDataUI.prototype.validateForm = function(_formElements) {
         let startTime = (parseInt(choices[day]["start"]["hour"].value) + (afternoonStart ? 12 : 0)) + choices[day]["start"]["minute"].value.padStart(2, '0');
         let afternoonEnd = choices[day]["end"]["ampmElem"].val() === 'PM';
         let endTime = (parseInt(choices[day]["end"]["hour"].value) + (afternoonEnd ? 12 : 0)) + choices[day]["end"]["minute"].value.padStart(2, '0');
-        let startTimeFirstDigits = startTime.substring(0, 2);
-        let endTimeFirstDigits = endTime.substring(0, 2);
+        let startTimeFirstDigits = choices[day]["start"]["hour"].value;
+        let endTimeFirstDigits = choices[day]["end"]["hour"].value;
         startTime = this.validateTwelveHourTime(startTime, startTimeFirstDigits);
         endTime = this.validateTwelveHourTime(endTime, endTimeFirstDigits);
 
