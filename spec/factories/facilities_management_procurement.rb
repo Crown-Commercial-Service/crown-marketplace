@@ -24,6 +24,17 @@ FactoryBot.define do
     aasm_state { 'detailed_search' }
   end
 
+  factory :facilities_management_procurement_detailed_search_contract_dates, parent: :facilities_management_procurement_detailed_search do
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    mobilisation_period_required { true }
+    mobilisation_period { 4 }
+    extensions_required { true }
+    optional_call_off_extensions_1 { 1 }
+    optional_call_off_extensions_2 { 1 }
+    optional_call_off_extensions_3 { 1 }
+    optional_call_off_extensions_4 { 1 }
+  end
+
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
     aasm_state { 'da_draft' }
     procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }

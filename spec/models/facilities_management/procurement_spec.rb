@@ -379,8 +379,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '#valid_on_continue?' do
     context 'when valid on all' do
+      it 'is expected to return false' do
+        expect(procurement.valid_on_continue?).to eq false
+      end
+    end
+  end
+
+  describe '#valid_on_continue' do
+    context 'when valid on all' do
       it 'is expected to return true' do
-        expect(procurement.valid_on_continue?).to eq true
+        procurement.save
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
