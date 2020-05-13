@@ -268,13 +268,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_volumes_information_da(sheet)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
+    added_rows = 0
     allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
 
     allowed_volume_services.each do |s|
+      next if CCS::FM::Service.gia_services.include? s['code']
+
       new_row = [s['code'], s['name'], s['metric']]
       @active_procurement_buildings.each do |b|
-        next if CCS::FM::Service.gia_services.include? s['code']
-
         uvs = units_of_measure_values.flatten.select { |u| b.building_id == u[:building_id] }
         suv = uvs.find { |u| s['code'] == u[:service_code] }
 
@@ -282,10 +283,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
         new_row << nil unless suv
       end
 
+      added_rows += 1
       sheet.add_row new_row, style: number_column_style
     end
 
-    allowed_volume_services.count
+    added_rows
   end
   # rubocop:enable Metrics/AbcSize
 
