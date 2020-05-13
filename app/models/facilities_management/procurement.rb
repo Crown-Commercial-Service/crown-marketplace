@@ -453,7 +453,7 @@ module FacilitiesManagement
 
     def update_procurement_building_services
       procurement_buildings.each do |building|
-        building.service_codes.select! { |service_code| service_codes.include? service_code }
+        building.service_codes.select! { |service_code| service_codes&.include? service_code }
       end
 
       procurement_building_services.where.not(code: service_codes).destroy_all
