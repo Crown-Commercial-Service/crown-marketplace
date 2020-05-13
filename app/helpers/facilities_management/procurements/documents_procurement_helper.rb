@@ -48,7 +48,7 @@ module FacilitiesManagement
           zip.print deliverable_matrix_spreadsheet_built.to_stream.read
 
           if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?
-            zip.put_next_entry file_policy.name + '.' + Mime::Type.lookup(@procurement.security_policy_document_file.content_type).symbol.to_s
+            zip.put_next_entry 'SEC_POLICY-' + file_policy.blob.filename.to_s
             zip.print file_policy.download
           end
 
