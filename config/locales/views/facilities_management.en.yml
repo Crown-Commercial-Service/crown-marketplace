@@ -455,7 +455,7 @@ en:
             rate_percentage_a: Rate (%)
             rate_pound_a: Rate (£)
             rtrn_link: Return to admin dashboard
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
             td_corporate: Corporate overhead (%)
             td_london: London location percentage variance (%)
             td_mobilisation: Mobilisation (%)
@@ -476,7 +476,7 @@ en:
             rate_percentage_a: Rate (%)
             rate_pound_a: Rate (£)
             rtrn_link: Return to admin dashboard
-            td_cleaning: "Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)"
+            td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
             td_corporate: Corporate overhead (%)
             td_london: London location percentage variance (%)
             td_mobilisation: Direct award mobilisation (%)
@@ -542,7 +542,7 @@ en:
         security:
           building_details_summary: Building details summary
           describe_security: Describe security level
-          next_step: "Next:"
+          next_step: 'Next:'
           other: Other
           security_description_html: Select the level of security clearance a supplier's staff will need to access this building. This is the security level of the contractor's staff.
           select_security: Select the level of security clearance needed
@@ -564,7 +564,7 @@ en:
           section-header: Building details summary
           select_one_option_text: Please select one option
         step_footer:
-          step_footer: "Next: %{description}"
+          step_footer: 'Next: %{description}'
         step_title:
           step_title: Step %{position} of %{total}
         type:
@@ -740,7 +740,7 @@ en:
             if_declined_list_3: "- change your requirements"
             if_declined_list_4: "- stop the process"
             if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
-            if_declined_list_header_2: "you have the choice to:"
+            if_declined_list_header_2: 'you have the choice to:'
             title: What happens next
             two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
           awaiting_signature:
@@ -853,7 +853,7 @@ en:
               description: Unfortunately, there are no further suppliers available who can meet your requirements.
               footer_description_1: This procurement will automatically be closed, and can be viewed in the closed section of your procurements dashboard.
               footer_description_2: If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
-              next_steps: "Depending on the reasons given for the suppliers declining your contract offer, your next steps could be:"
+              next_steps: 'Depending on the reasons given for the suppliers declining your contract offer, your next steps could be:'
               next_steps_list_1: to amend your requirements
               next_steps_list_2: to run a further competition to allow suppliers more flexibility in their solution
               title: Supplier shortlist
@@ -865,7 +865,7 @@ en:
               accepts_list_4: you will confirm on this portal that the contract has been signed by both parties
               declines_header: 2. If the supplier declines the offer
               declines_list_1: you will be notified that they have declined your offer, and provided a reason why
-              declines_list_2: "you have the choice to:"
+              declines_list_2: 'you have the choice to:'
               declines_list_2_sub_1: "- offer the contract to the next placed supplier (after reviewing their price)"
               declines_list_2_sub_2: "- switch to a further competition"
               declines_list_2_sub_3: "- change your requirements"
@@ -1141,12 +1141,12 @@ en:
             missing_address: I cant find my address in the list
             name: Name
           next_step:
-            contract_dates: "Next: Buildings"
-            contract_name: "Next: Estimated annual cost"
-            estimated_annual_cost: "Next: TUPE"
-            procurement_buildings: "Next: Services"
-            services: "Next: Select services for detailed search"
-            tupe: "Next: Contract period"
+            contract_dates: 'Next: Buildings'
+            contract_name: 'Next: Estimated annual cost'
+            estimated_annual_cost: 'Next: TUPE'
+            procurement_buildings: 'Next: Services'
+            services: 'Next: Select services for detailed search'
+            tupe: 'Next: Contract period'
           notices_contact_details:
             change: Change
             new: Enter a new contact for notices
@@ -1221,7 +1221,7 @@ en:
             description_list_3: recommended sub-lot
             description_list_4: supplier shortlist
             description_list_5: contract requirements and key dates
-            description_text: "The summary contains all the information that you have entered into this portal, all of which you can transfer into the relevant documents when running your further competition, including:"
+            description_text: 'The summary contains all the information that you have entered into this portal, all of which you can transfer into the relevant documents when running your further competition, including:'
             esourcing: eSourcing tool
             esourcing_description: Crown Commercial Service offer a free eSourcing tool, to help you run your further competition online, or you can use your own organisation’s sourcing tool if you have one.
             help: Need help?
@@ -1250,7 +1250,7 @@ en:
             tender_period_1: answer clarification questions
             tender_period_2: receiving suppliers tenders (bids)
             tender_period_3: evaluate suppliers' responses
-            what_happens_next_description: "Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:"
+            what_happens_next_description: 'Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:'
             what_happens_next_title: What happens next
         index:
           closed_title: Closed
@@ -1301,8 +1301,8 @@ en:
           sub-lot-1a: Sub-lot 1a
           sub-lot-1b: Sub-lot 1b
           sub-lot-1c: Sub-lot 1c
-          sub-text: "Based on information provided, this procurement is eligible for the following sub-lot:"
-          sub-text-FC-unpriced: "Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:"
+          sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          sub-text-FC-unpriced: 'Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
           what_is_da: What is a direct award?
           what_is_fc: What is further competition?
@@ -1339,8 +1339,8 @@ en:
           contract_summary_foot:
             respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
           edit:
-            contract_name: "Contract name:"
-            contract_number: "Contract number:"
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
             form_title: Do you accept the contract offer from
             reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
           procurement_requirements_head:
@@ -1371,8 +1371,8 @@ en:
             title: You have accepted this contract offer
             what_happens_next: What happens next
           declined_offer:
-            contract_name: "Contract name:"
-            contract_number: "Contract number:"
+            contract_name: 'Contract name:'
+            contract_number: 'Contract number:'
             description: For reference, this contract offer will be be viewable only in the closed section of your dashboard.
             title: You have declined this contract offer
           index:
@@ -1394,7 +1394,7 @@ en:
             access_code: Access code
             content: It may take a few minutes to arrive.
             heading: Enter your access code
-            lead: "We just sent a 6 digit access code by text to:"
+            lead: 'We just sent a 6 digit access code by text to:'
             resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
       users:
         new_password_required:
@@ -1406,7 +1406,7 @@ en:
           access_code: Access code
           content: It may take a few minutes to arrive.
           heading: Enter your access code
-          lead: "We just sent a 6 digit access code by text to:"
+          lead: 'We just sent a 6 digit access code by text to:'
           resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
@@ -1437,14 +1437,14 @@ en:
         <li>your building locations and information</li>
         <li>your basic contract requirements</li>
       startnow: Start now
-      subheading: "Use this service to:"
+      subheading: 'Use this service to:'
       usagelist: |
         <li>quickly view suppliers who can provide services to your locations</li>
         <li>see an estimated contract cost</li>
         <li>create and offer a direct award contract</li>
         <li>shortlist suppliers ready for further competition</li>
         <li>compliantly place a contract with a supplier</li>
-      youneedtoknow: "You need to know:"
+      youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
         locations_selected: Locations selected
@@ -1507,7 +1507,7 @@ en:
         access_code: Access code
         content: It may take a few minutes to arrive.
         heading: Enter your access code
-        lead: "We just sent a 6 digit access code by text to:"
+        lead: 'We just sent a 6 digit access code by text to:'
         resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   shared:
     gateway:
