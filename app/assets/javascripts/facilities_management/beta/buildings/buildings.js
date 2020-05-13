@@ -102,7 +102,10 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 		var displayRegionResults = this.displayRegionLookupResults.bind(this);
 		var noResults = this.noRegionResults.bind(this);
 		$.get(encodeURI("/api/v2/find-region-postcode/" + postcode)).done(function (data, status, jq) {
-			if (data && data.result && data.result.length > 0) {
+            if (data && data.result && data.result.length == 1) {
+                this.lookupHandler.showRegionSingleResult(data.result[0]);
+            }            
+			else if (data && data.result && data.result.length > 0) {
 				displayRegionResults(data.result);
 			} else {
 				noResults(data.result);
@@ -448,7 +451,14 @@ LookupHandler.prototype.changeRegionLookupResultsVisibility = function (bShow) {
         $(this.lookupRegionResultsContainer).removeClass(classname);
     }
 };
-
+LookupHandler.prototype.showRegionSingleResult = function (regionResults) {
+    $("#address-region").val(regionResults.region);
+    $("#address-region-code").val(regionResults.code);
+    var data = this.parent.querySelector('[data-module-part="lookup-container"]');
+    $(this.regionResultsText).text(regionResults.region);
+    this.showRegionText(true);
+    $(this.btnChangeRegion).addClass('govuk-visually-hidden');
+};
 function nodeListForEach(nodes, callback) {
     if (window.NodeList.prototype.forEach) {
         return nodes.forEach(callback)
