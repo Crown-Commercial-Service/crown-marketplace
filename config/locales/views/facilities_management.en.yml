@@ -12,13 +12,13 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a 'To' date
-              invalid: Enter a valid 'To' date
-              less_than_or_equal_to: The 'To' date must be the same or after the 'From' date
+              blank: You must enter a ‘To’ date
+              invalid: Enter a valid ‘To’ date
+              less_than_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
               not_a_date: Enter a valid date
             start_date:
-              blank: You must enter a 'From' date
-              invalid: Enter a valid 'From' date
+              blank: You must enter a ‘From’ date
+              invalid: Enter a valid ‘From’ date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -30,31 +30,31 @@ en:
         facilities_management/service_hours:
           attributes:
             friday:
-              invalid: Select not required if you don't need the service on Friday
+              invalid: Select not required if you don’t need the service on Friday
               not_a_date: Enter a real start time or end time for Friday
               required: You must provide hours required for at least one of the days
             monday:
-              invalid: Select not required if you don't need the service on Monday
+              invalid: Select not required if you don’t need the service on Monday
               not_a_date: Enter a real start time or end time for Monday
               required: You must provide hours required for at least one of the days
             saturday:
-              invalid: Select not required if you don't need the service on Saturday
+              invalid: Select not required if you don’t need the service on Saturday
               not_a_date: Enter a real start time or end time for Saturday
               required: You must provide hours required for at least one of the days
             sunday:
-              invalid: Select not required if you don't need the service on Sunday
+              invalid: Select not required if you don’t need the service on Sunday
               not_a_date: Enter a real start time or end time for Sunday
               required: You must provide hours required for at least one of the days
             thursday:
-              invalid: Select not required if you don't need the service on Thursday
+              invalid: Select not required if you don’t need the service on Thursday
               not_a_date: Enter a real start time or end time for Thursday
               required: You must provide hours required for at least one of the days
             tuesday:
-              invalid: Select not required if you don't need the service on Tuesday
+              invalid: Select not required if you don’t need the service on Tuesday
               not_a_date: Enter a real start time or end time for Tuesday
               required: You must provide hours required for at least one of the days
             wednesday:
-              invalid: Select not required if you don't need the service on Wednesday
+              invalid: Select not required if you don’t need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
               required: You must provide hours required for at least one of the days
         user:
@@ -98,8 +98,8 @@ en:
         facilities_management/buyer_detail:
           attributes:
             central_government:
-              blank: Select the type of public sector organisation you're buying for
-              inclusion: Select the type of public sector organisation you're buying for
+              blank: Select the type of public sector organisation you’re buying for
+              inclusion: Select the type of public sector organisation you’re buying for
             full_name:
               blank: Enter your full name
               invalid: Enter your full name
@@ -291,7 +291,7 @@ en:
                 invalid: Enter a real end time
                 less_than: The start time must be before the end time of your specified hours
               service_choice:
-                inclusion: Select not required if you don't need the service on this day
+                inclusion: Select not required if you don’t need the service on this day
               start_time:
                 greater_than: The end time must be after the start time of your specified hours
                 invalid: Enter a real start time
@@ -379,7 +379,7 @@ en:
               less_than: The start time must be before the end time of your specified hours
               not_a_date: Enter a real end time
             service_choice:
-              inclusion: Select "Not required" if you don't need the service on this day
+              inclusion: Select "Not required" if you don’t need the service on this day
             start_time:
               greater_than: The end time must be after the start time of your specified hours
               invalid: Enter a real start time
@@ -441,7 +441,7 @@ en:
           heading_title_two: Benchmark variances
           item: Item
           leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-          note: "*Use this column for normal price if Standard A isn't applicable"
+          note: "*Use this column for normal price if Standard A isn’t applicable"
           rate: Rate
           rate_a: Rate (£) *Standard A
           rate_b: Rate (£) Standard B
@@ -462,7 +462,7 @@ en:
           heading_title_two: Average framework variances
           item: Item
           leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-          note: "*Use this column for normal price if Standard A isn't applicable"
+          note: "*Use this column for normal price if Standard A isn’t applicable"
           rate: Rate
           rate_a: Rate (£) *Standard A
           rate_b: Rate (£) Standard B
@@ -484,16 +484,16 @@ en:
     buildings:
       add_address:
         add_address_header: Address
-        description: We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+        description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
         line_1_of_2: Building and street line 1 of 2
         line_2_of_2: Building and street line 2 of 2 (optional)
         postcode: Postcode
         town_or_city: Town or city
       details_form:
         address: Address
-        address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We'll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+        address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
         building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
-        cant_find_address: I can't find my building's address in the list
+        cant_find_address: I can’t find my building’s address in the list
         change: Change
         description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</span> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
         find_address: Find address
@@ -511,7 +511,7 @@ en:
       gia:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
         further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
-        gia_header: What's the size of internal area of this building?
+        gia_header: What’s the size of internal area of this building?
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -541,7 +541,7 @@ en:
         describe_security: Describe security level
         next_step: 'Next:'
         other: Other
-        security_description_html: Select the level of security clearance a supplier's staff will need to access this building. This is the security level of the contractor's staff.
+        security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
         select_security: Select the level of security clearance needed
       show:
         add_address_text: Add address
@@ -586,7 +586,7 @@ en:
     buyer_details:
       edit:
         buyer_details: Buyer details
-        cant_find_addr_in_list: I can't find my address in the list
+        cant_find_addr_in_list: I can’t find my address in the list
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -596,7 +596,7 @@ en:
         organisation_address: Organisation address
         organisation_details: Organisation details
         postcode: Postcode
-        search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you're unsure.
+        search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
         select_an_addr: Select an address
         selected_addr: Selected address
         submit: Save and continue
@@ -654,7 +654,7 @@ en:
         no_locations_selected: No locations selected
         question: Where are your buildings located?
         remove_all: Remove all
-        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+        subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       choose_services:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
@@ -774,7 +774,7 @@ en:
         sub_lot_1c_hint: Total contract value over £50 million
       contracts:
         awaiting_response:
-          else_declined: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+          else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
           if_accepted_header: If the supplier accepts the offer
           if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
           if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
@@ -842,14 +842,14 @@ en:
           sent_accepted: The supplier accepted the contract offer on
           signed_confirmed_1: You confirmed on the
           signed_confirmed_2: that the contract has been signed by both parties.
-          supplier_declined_reason: The supplier's reason for declining was
+          supplier_declined_reason: The supplier’s reason for declining was
         contract_summary_foot:
           close: You can close this procurement by clicking on the ‘Close this procurement’ button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
           confirm: Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed.
           confirm_and_close: You can still withdraw this contract offer; if you need to, use the ‘Close this procurement’ button below, which will withdraw the offer from the supplier, and close the procurement.
           expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with ‘no response’ as the reason.
           next_steps: Available next steps
-          next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the ‘View next supplier's price’ button below.
+          next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the ‘View next supplier’s price’ button below.
           or: or
           reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
           withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
@@ -866,7 +866,7 @@ en:
           next_lowest: The next lowest supplier who can deliver the services to your buildings is
           next_steps: Available next steps
           offer: You can offer your contract to this supplier
-          offer_list_1: we have generated your contract documents using this supplier's details and pricing
+          offer_list_1: we have generated your contract documents using this supplier’s details and pricing
           offer_list_2: the supplier will have 2 working days to respond to your offer
           price: The contract price with this supplier is
           return_to_dashboard: You can return to your procurements dashboard
@@ -916,7 +916,7 @@ en:
             declines_list_2_sub_2: "- switch to a further competition"
             declines_list_2_sub_3: "- change your requirements"
             declines_list_2_sub_4: "- stop the process"
-            further_information: If the supplier doesn't respond within 2 working days (48 hours), they are deemed to have declined the offer.
+            further_information: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
             header: Your contract was sent
             what_happens_next: What happens next
             what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
@@ -973,7 +973,7 @@ en:
           price_body_html: Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award.
           price_heading: Price
           services_body_html_1: The service specifications and service standards cannot be amended within a direct award. Please check within the
-          services_body_html_2: that you're happy with the details for the services you are buying.
+          services_body_html_2: that you’re happy with the details for the services you are buying.
           services_heading: Services
         pricing:
           description_html: "<p>Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.</p> <p>If there is more than one supplier that can meet your requirements, and the lowest priced supplier declines the opportunity, then the details of the second place supplier will be presented to you, with the option to proceed with them.</p> <p>Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.</p> <p class='ccs-font-weight-semi-bold'>You can switch to a further competition at any time. You may wish to consider a further competition if:</p> <ul class='govuk-list govuk-list--bullet'> <li>you feel you could achieve a more competitive price if suppliers had the opportunity to submit bespoke prices for your requirements </li> <li>you wish to further test quality</li> <li>you wish to alter any of the service standards, service specification, or terms and conditions</li> <li>you have sufficient time in your procurement schedule</li> </ul>"
@@ -1017,7 +1017,7 @@ en:
               title: Price matrix
           attachment_4:
             core_terms:
-              guidance: The Core Terms are based on CCS's standard commercial terms under The Public Sector Contract.
+              guidance: The Core Terms are based on CCS’s standard commercial terms under The Public Sector Contract.
               title: Core terms
             heading: Attachment 4 - Contract (Order form and Schedules)
             order_form:
@@ -1096,7 +1096,7 @@ en:
             guidance: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to the supplier.
             title: Download all contract documents
           security_policy:
-            guidance: The buyer's security policy document.
+            guidance: The buyer’s security policy document.
             heading: Security policy
             title: Security policy
           sending_contract:
@@ -1128,7 +1128,7 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         building_services:
           change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
+          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
           heading: What facilities management services do you need for each building?
           your_buildings: Your buildings
         cancel: Cancel
@@ -1157,7 +1157,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I can't find my address in the list
+          missing_address: I can’t find my address in the list
           name: Name
           telephone_number: Telephone number
         new_invoicing_address:
@@ -1240,7 +1240,7 @@ en:
         services:
           service_specification_doc: Read the service specification document
         tupe:
-          body_text_html: When a supplier changes, the original service provider's workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
           tupe_title: TUPE
           what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state hidden-link" tabindex='-1'>Find out when TUPE applies</a>
@@ -1278,7 +1278,7 @@ en:
           invitation_to_tender_2: setting your evaluation criteria – price and quality
           invitation_to_tender_3: creating your Terms and Conditions, and order form
           invitation_to_tender_4: detailing your pricing model, key performance indicators, and other contract tools
-          make_a_copy: If you wish to make a copy of your requirements and re-run your results, click on the 'Make a copy of your requirements' button below.
+          make_a_copy: If you wish to make a copy of your requirements and re-run your results, click on the ‘Make a copy of your requirements’ button below.
           more_information: Where to find more information
           more_information_1: buyer guides
           more_information_2: supplier brief template
@@ -1289,13 +1289,13 @@ en:
           publishing_invitation_1: inviting your shortlisted suppliers to bid by issuing the ITT, requirements document and draft contract
           summary_header: Download your procurement summary
           supplier_brief: Supplier brief
-          supplier_brief_1: used to communicate to the supplier's high level details of your requirements, timescales etc, and receive feedback
+          supplier_brief_1: used to communicate to the supplier’s high level details of your requirements, timescales etc, and receive feedback
           supplier_brief_2: allows creation of further shortlisted suppliers (based on suppliers interest), who wish to progress to the next stage.
           supplier_brief_3: dependent on the level of interest, also allows you to make an initial decision on whether to proceed to the next stage, or alter your requirements
           tender_period: Tender period
           tender_period_1: answer clarification questions
           tender_period_2: receiving suppliers tenders (bids)
-          tender_period_3: evaluate suppliers' responses
+          tender_period_3: evaluate suppliers’ responses
           what_happens_next_description: 'Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:'
           what_happens_next_title: What happens next
       index:
@@ -1327,7 +1327,7 @@ en:
         no_locations_selected: No locations selected
         question: Where are your buildings located?
         remove_all: Remove all
-        subtitle: Choose one or more regions, based on building's location where you require facilities management services.
+        subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       results:
         any_changes: Any changes to the information provided may result in a different outcome.
         available_routes_to_market: Available route to market
@@ -1364,13 +1364,13 @@ en:
       domain_not_on_whitelist:
         heading: You must use a public sector email address
         lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
-        line_01: The email you used doesn't belong to a recognised public sector domain.
+        line_01: The email you used doesn’t belong to a recognised public sector domain.
         line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
         list_01: you think your domain should be recognised
-        list_02: you still can't create an account
+        list_02: you still can’t create an account
       new:
         confirm_password: Confirm your password
-        create_password: Create a password you'll remember
+        create_password: Create a password you’ll remember
         email: Email address
         email_hint: We will send a confirmation code to this address.
         heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
@@ -1381,7 +1381,7 @@ en:
       new:
         email_address: Email address
         email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
-        forgotten_password_html: I've forgotten my password
+        forgotten_password_html: I’ve forgotten my password
         password: Password
         sign_in_header: Sign in to your account
     supplier:
@@ -1401,7 +1401,7 @@ en:
           contract_received_on: This contract offer was received on
           reason_for_declining: Your reason for declining was
           reason_for_not_signing: The buyer’s reason for not signing this contract was
-          reason_for_withdrawing: The buyer's reason for withdrawing this contract offer was
+          reason_for_withdrawing: The buyer’s reason for withdrawing this contract offer was
         contract_summary_foot:
           respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
         edit:
@@ -1447,15 +1447,15 @@ en:
         new:
           email_address: Email address
           email_hint_html: Enter the email address you used to register
-          forgotten_password_html: I've forgotten my password
+          forgotten_password_html: I’ve forgotten my password
           password: Password
           sign_in_header: Sign in to your account
       users:
         new_password_required:
           confirm_your_password: Confirm your password
-          create_your_password: Create a password you'll remember
+          create_your_password: Create a password you’ll remember
           heading: Change your password
-          intro: This is the first time you've signed in to your account. You need to reset your password.
+          intro: This is the first time you’ve signed in to your account. You need to reset your password.
         sms_mfa:
           access_code: Access code
           content: It may take a few minutes to arrive.
@@ -1472,9 +1472,9 @@ en:
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
         confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
+        create_your_password: Create a password you’ll remember
         heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
+        intro: This is the first time you’ve signed in to your account. You need to reset your password.
       sms_mfa:
         access_code: Access code
         content: It may take a few minutes to arrive.
@@ -1493,26 +1493,26 @@ en:
         heading: Reset your password
         heading1: A reset email has been sent.
         lead: Reset password for
-        lead1: If the email address you've entered belongs to a Crown Commercial Service account, we'll send instructions to reset the password.
+        lead1: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
         new_password: New password
         password: Your password must have
-        text_html: If you don't receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        text_html: If you don’t receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
         verify_code: Verification code
       forgot_password_confirmation:
         heading: A reset email has been sent.
-        lead: If the email address you've entered belongs to a Crown Commercial Service account, we'll send a link to reset the password.
-        text01: If you don't receive this, email
+        lead: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send a link to reset the password.
+        text01: If you don’t receive this, email
         text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
       new:
         email: Email address
         email_hint_html: This is the email address you used to set up the <abbr title="Crown Commercial Service">CCS</abbr> account.
         heading: Reset password
-        lead: Enter your email address and we'll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+        lead: Enter your email address and we’ll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
       password_reset_success:
         heading: You have successfully changed your password
         lead: You can now sign in to your Crown Commercial Service account
     sessions:
       new:
         email_address: Email address
-        forgotten_password_html: I've forgotten my password
+        forgotten_password_html: I’ve forgotten my password
         password: Password
