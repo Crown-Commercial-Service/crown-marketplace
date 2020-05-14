@@ -256,36 +256,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
         expect(procurement_building.name).to eq building_data['name']
       end
-
-      it 'updates its address line 1' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.address_line_1).to eq building_data['address']['fm-address-line-1']
-      end
-
-      it 'updates its address line 2' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.address_line_2).to eq building_data['address']['fm-address-line-2']
-      end
-
-      it 'updates its town' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.town).to eq building_data['address']['fm-address-town']
-      end
-
-      it 'updates its county' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.county).to eq building_data['address']['fm-address-county']
-      end
-
-      it 'updates its postcode' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.postcode).to eq building_data['address']['fm-address-postcode']
-      end
     end
 
     context 'when procurement building does not exist' do

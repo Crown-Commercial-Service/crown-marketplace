@@ -13,11 +13,6 @@
         <%= display_error_no_attr(f.object, :procurement_buildings) %>
         <%= f.fields_for :procurement_buildings do |procurement_building|%>
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
-          <%= procurement_building.hidden_field :address_line_1, value: procurement_building.object.address_line_1 %>
-          <%= procurement_building.hidden_field :address_line_2, value: procurement_building.object.address_line_2 %>
-          <%= procurement_building.hidden_field :town, value: procurement_building.object.town %>
-          <%= procurement_building.hidden_field :county, value: procurement_building.object.county %>
-          <%= procurement_building.hidden_field :postcode, value: procurement_building.object.postcode %>
           <div class="chooser-input govuk-form-group <%= 'govuk-form-group--error' if f.object.errors.any? %>" sectionname="buildings" section="buildings">
 
             <fieldset class="govuk-fieldset">

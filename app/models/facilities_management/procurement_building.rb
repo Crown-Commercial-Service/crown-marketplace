@@ -8,6 +8,7 @@ module FacilitiesManagement
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
     belongs_to :building, class_name: 'FacilitiesManagement::Building', optional: true
+    delegate :full_address, to: :building
 
     validate :service_codes_not_empty, on: :building_services
     validate :services_valid?, on: :procurement_building_services
@@ -17,14 +18,6 @@ module FacilitiesManagement
 
     amoeba do
       include_association :procurement_building_services
-    end
-
-    def full_address
-      "#{address_line_1 + ', ' if address_line_1.present?}
-      #{address_line_2 + ', ' if address_line_2.present?}
-      #{town + ', ' if town.present?}
-      #{county + ', ' if county.present?}
-      #{postcode}"
     end
 
     def set_gia
