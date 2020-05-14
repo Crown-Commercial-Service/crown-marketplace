@@ -189,7 +189,7 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
-    this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
+    this.resultsDropDown.addEventListener('click', this.selectResult.bind(this));
 
     $(this.btnChangeRegion).on('click', function (e) {
         e.preventDefault();

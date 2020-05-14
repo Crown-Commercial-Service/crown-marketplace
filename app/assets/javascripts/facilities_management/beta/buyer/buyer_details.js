@@ -46,7 +46,7 @@ $(function () {
 		tabIndex(false);
 	});
 	
-	$('#buyer-details-postcode-lookup-results').on('change', function (e) {
+	$('#buyer-details-postcode-lookup-results').on('click', function (e) {
 		let selectedOption = $("select#buyer-details-postcode-lookup-results > option:selected");
 		selectedAddress = void 0;
 		selectedAddress = selectedOption.val();
