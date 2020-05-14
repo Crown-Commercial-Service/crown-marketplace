@@ -133,7 +133,6 @@ en:
         facilities_management/procurement:
           attributes:
             base:
-              at_least_one_service_required: You must select at least one service for ‘%{building_name}’ building
               services_not_present: You must select at least one service
             contract_name:
               blank: Enter your contract name
@@ -147,7 +146,7 @@ en:
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
-              not_present: You must answer the question about ‘Estimated cost’
+              not_present: You must answer the question about ‘Estimated annual cost’
             extensions_required:
               inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:
@@ -213,7 +212,7 @@ en:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about ‘Payment method’
             procurement_building_services:
-              invalid_html: You have to answer one or more questions on ‘%{building_name}’ building.<br />Service information status must be ‘Complete’
+              invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be ‘Complete’
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
               not_present: You must select at least one building
@@ -263,7 +262,6 @@ en:
         facilities_management/procurement_building:
           attributes:
             service_codes:
-              at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
         facilities_management/procurement_building_service:
           attributes:
@@ -790,7 +788,7 @@ en:
           title: What happens next
           two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
         awaiting_signature:
-          confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the ‘effective date’, and the term of the contract is calculated forwards from this date
+          confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the ‘effective date’ , and the term of the contract is calculated forwards from this date
           confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
           supplier_signs_1: the supplier will sign the contract and send it back to you
           supplier_signs_2: this will happen offline (outside this portal)
@@ -1128,8 +1126,8 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         building_services:
           change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
-          heading: What facilities management services do you need for each building?
+          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don’t already appear on your shortlist. <br> For each building in the left hand column, select the services required from the right hand column.
+          heading: Which facilities management services do you need for each building?
           your_buildings: Your buildings
         cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page
@@ -1208,7 +1206,7 @@ en:
           heading: How many pension funds are involved?
         procurement_buildings:
           buildings_selected: Buildings selected
-          content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
+          content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.
           heading: Buildings
           no_buildings_selected: No buildings selected
           remove_all: Remove all
@@ -1243,7 +1241,7 @@ en:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
           tupe_title: TUPE
-          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state hidden-link" tabindex='-1'>Find out when TUPE applies</a>
+          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" class="govuk-link--no-visited-state hidden-link" tabindex="-1">Find out when TUPE applies</a>
           what_you_need_to_know_title: What you need to know about TUPE
       edit_procurement:
         cancel_and_return: Cancel and return to Procurements
