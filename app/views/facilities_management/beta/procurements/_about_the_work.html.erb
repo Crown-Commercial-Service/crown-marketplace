@@ -37,7 +37,7 @@
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse;">
         <tr>
-          <td style="width:50%; vertical-align: top;" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:base].any? && @active_procurement_buildings.first.service_codes.empty?%>">
+          <td style="width:50%; vertical-align: top;" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:base].any? && @active_procurement_buildings.first&.service_codes&.empty?%>">
             2. Services
           </td>
           <% if @active_procurement_buildings.any? %>
