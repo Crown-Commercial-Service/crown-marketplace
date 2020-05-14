@@ -46,8 +46,7 @@
 
 @media (min-width:40.0625em) {
 	.govuk-error-message {
-		font-size: 19px;
-		font-size: 1.1875rem;
+        font-size:inherit;
 		line-height: 1.31579
 	}
 }
@@ -146,7 +145,7 @@
 }
 
 .govuk-error-summary__list a {
-	font-weight: $govuk-font-weight-semi-bold;	
+	font-weight: $govuk-font-weight-semi-bold;
 }
 
 .govuk-error-summary__list a:active,

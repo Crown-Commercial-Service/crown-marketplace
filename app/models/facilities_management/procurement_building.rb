@@ -12,6 +12,7 @@ module FacilitiesManagement
 
     validate :service_codes_not_empty, on: :building_services
     validate :services_valid?, on: :procurement_building_services
+    validate :services_present?, on: :procurement_building_services_present
 
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
@@ -35,6 +36,10 @@ module FacilitiesManagement
 
     def cleanup_service_codes
       self.service_codes = service_codes.reject(&:blank?)
+    end
+
+    def services_present?
+      errors.add(:service_codes, :at_least_one, building_name: name) if service_codes.empty?
     end
 
     def services_valid?
