@@ -297,6 +297,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe 'validations on :all' do
+    before { procurement.initial_call_off_start_date = DateTime.now.in_time_zone('London') + 1.day }
+
     context 'when the contract name is blank' do
       it 'is expected to not be valid' do
         procurement.contract_name = ''
