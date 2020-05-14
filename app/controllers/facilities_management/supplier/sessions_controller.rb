@@ -6,6 +6,8 @@ class FacilitiesManagement::Supplier::SessionsController < Base::SessionsControl
   end
 
   def after_sign_in_path_for(resource)
+    return session[:return_to] unless session[:return_to].nil?
+
     stored_location_for(resource) || facilities_management_supplier_path
   end
 
