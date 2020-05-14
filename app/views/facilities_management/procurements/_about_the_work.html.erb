@@ -17,11 +17,11 @@
               </ul>
             </td>
             <td class="govuk-table__cell govuk-border-bottom_none" style="vertical-align: top; text-align: right">
-              <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+              <%= link_to "Change", edit_facilities_management_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
             </td>
           <% else %>
             <td class="govuk-table__cell govuk-border-bottom_none">
-              <%= link_to "Select buildings", edit_facilities_management_beta_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
+              <%= link_to "Select buildings", edit_facilities_management_procurement_path(:step => 'procurement_buildings'), :class => "govuk-link" %>
             </td>
           <% end %>
         </tr>
@@ -53,11 +53,11 @@
                   </td>
                   <% if any_service_codes(@active_procurement_buildings) %>
                     <td style="text-align: right; vertical-align: top;" class="govuk-table__cell govuk-border-bottom_none">
-                      <%= link_to "Change", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+                      <%= link_to "Change", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
                     </td>
                   <% else %>
                     <td style="text-align: right; vertical-align: top" class="govuk-table__cell govuk-border-bottom_none">
-                      <%= link_to "Select services", edit_facilities_management_beta_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
+                      <%= link_to "Select services", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
                     </td>
                   <% end %>
                 <% else %>
@@ -166,7 +166,7 @@
                     <td style="width:40%" class="govuk-table__cell">
                     </td>
                     <td style="width:48%" class="govuk-table__cell">
-                      <%= link_to procurement_building.name, facilities_management_beta_procurement_building_path(procurement_building) %>
+                      <%= link_to procurement_building.name, facilities_management_procurement_building_path(procurement_building) %>
                     </td>
                     <td class="govuk-table__cell">
                       <%= building_services_status? procurement_building.valid?(:procurement_building_services) %>
