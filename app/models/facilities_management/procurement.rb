@@ -116,6 +116,7 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
+          copy_procurement_buildings_gia
           copy_fm_rates_to_frozen
           copy_fm_rate_cards_to_frozen
           calculate_initial_assesed_value
@@ -413,6 +414,10 @@ module FacilitiesManagement
     end
 
     private
+
+    def copy_procurement_buildings_gia
+      procurement_buildings.each(&:set_gia)
+    end
 
     def save_data_for_procurement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?

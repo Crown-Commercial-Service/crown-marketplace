@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_145915) do
+ActiveRecord::Schema.define(version: 2020_05_13_080506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_05_11_145915) do
     t.string "postcode", limit: 20
     t.boolean "active"
     t.uuid "building_id"
+    t.integer "gia"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
