@@ -27,6 +27,11 @@ module FacilitiesManagement
       #{postcode}"
     end
 
+    def set_gia
+      # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
+      update(gia: building.gia)
+    end
+
     private
 
     def service_codes_not_empty

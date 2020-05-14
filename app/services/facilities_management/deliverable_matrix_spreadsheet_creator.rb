@@ -223,7 +223,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Gross Internal Area (GIA) (sqm)']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.gia
+      row << building.gia
     end
 
     row
