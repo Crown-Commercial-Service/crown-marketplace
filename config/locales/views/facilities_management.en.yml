@@ -1126,8 +1126,8 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         building_services:
           change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist.
-          heading: What facilities management services do you need for each building?
+          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don't already appear on your shortlist. <br> For each building in the left hand column, select the services required from the right hand column.
+          heading: Which facilities management services do you need for each building?
           your_buildings: Your buildings
         cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page
@@ -1206,7 +1206,7 @@ en:
           heading: How many pension funds are involved?
         procurement_buildings:
           buildings_selected: Buildings selected
-          content: Only buildings with completed information will appear in the list below. You can add more buildings by clicking on the link at the end of the page.
+          content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.
           heading: Buildings
           no_buildings_selected: No buildings selected
           remove_all: Remove all
