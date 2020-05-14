@@ -7,11 +7,13 @@ module FacilitiesManagement
     end
 
     def after_sign_in_path_for(resource)
+      return session[:return_to] unless session[:return_to].nil?
+
       stored_location_for(resource) || facilities_management_path
     end
 
     def after_sign_out_path_for(_resource)
-      facilities_management_path
+      facilities_management_new_user_session_path
     end
 
     def new_session_path
