@@ -70,7 +70,7 @@
                   </span>
               <% end %>
             </div>
-          </td>
+          </th>
           <% @list_service_types.each do |service_type|   %>
             <td class="govuk-table__cell supplier-rates-td">
             <% if flash[:error]  and flash[:error].include? work_pckg['code'] and flash[:error].include? work_pckg['code']+service_type
@@ -113,7 +113,7 @@
             <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.admin.supplier_framework_data.sublot_data.rate_error') %>
           </span>
         <% end %>
-      </td>
+      </th>
       <td class="govuk-table__cell supplier-rates-td">
         <% if flash[:error]  and flash[:error].include? variance %>
           <input class="govuk-input govuk-input--width-3 govuk-input--error" id="rate[<%= variance %>]" name="rate[<%= variance %>]" type="text" value="<%= flash[:error][flash[:error].index(variance) + 1] %>">

@@ -13,7 +13,7 @@
         <div class="govuk-grid-column-one-half govuk-!-margin-right-2 govuk-!-padding-left-0">
             <p class="govuk-!-margin-bottom-2">
                 <legend class="govuk-fieldset__legend">
-                    <%= ff.label :name, t('.name_text'), class: 'pension-number', id: "#{"procurement_pension_funds[#{error_index}].name-error" if ff.object.errors[:name].any?}" %>
+                    <%= ff.label :name, t('.name_text'), class: 'pension-number', id: "#{ff.object.errors[:name].any? ? "procurement_pension_funds[#{error_index}].name-error" : "procurement_pension_funds[#{ff.index}].name-label" }" %>
                 </legend>
                 <%= ff.hidden_field :case_sensitive_error %>
             </p>
@@ -23,7 +23,7 @@
         </div>
         <div>
             <p class="govuk-!-margin-bottom-2">
-                <%= ff.label :percentage, t('.percentage_text'), id: "#{"procurement_pension_funds[#{error_index}].percentage-error" if ff.object.errors[:percentage].any?}" %>
+                <%= ff.label :percentage, t('.percentage_text'), id: "#{ff.object.errors[:percentage].any? ? "procurement_pension_funds[#{error_index}].percentage-error" : "procurement_pension_funds[#{ff.index}].percentage-label" }" %>
             </p>
             <p class="govuk-!-margin-bottom-0">
                 <%= ff.number_field :percentage, min: 0, max: 100, class: "pension-percentage govuk-input govuk-input--width-4 #{'govuk-input--error' if !ff.object.errors[:percentage].empty?}" %> %

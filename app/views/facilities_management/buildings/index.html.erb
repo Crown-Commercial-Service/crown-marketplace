@@ -44,7 +44,7 @@
               <td class="govuk-table__cell" style="word-wrap: break-spaces;"><span style="display: inline-block; word-break: keep-all">&#32;
                 <%= building.updated_at.to_datetime.strftime("%-d %B %Y,")%>&nbsp;</span><span style="display: inline-block; word-break:keep-all">
                 <%= building.updated_at.to_datetime.strftime("%-I:%M%#p") %></span></td>
-              <td class="govuk-table__cell"><strong style="word-break: normal" class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></td>
+              <td class="govuk-table__cell"><strong style="word-break: normal" class="govuk-tag ccs-tag-<%= building.status == 'Ready' ? 'approved' : 'rejected' %>"><%= building.status %></strong></td>
             </tr>
           <% end %>
           </tbody>
