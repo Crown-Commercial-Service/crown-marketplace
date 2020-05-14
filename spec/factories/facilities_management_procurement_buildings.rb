@@ -4,6 +4,7 @@ FactoryBot.define do
     active { true }
     procurement_building_services { build_list :facilities_management_procurement_building_service, 2 }
     building { create :facilities_management_building }
+    gia { 1002 }
   end
   factory :facilities_management_procurement_building_london, parent: :facilities_management_procurement_building do
     building { create :facilities_management_building_london }
