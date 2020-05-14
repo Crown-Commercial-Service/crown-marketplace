@@ -115,11 +115,11 @@
           <strong class="govuk-warning-text__text"><%= t('.download_documents.guidance') %></strong>
         </div>
 
-        <strong><p><%= t('.change_requirements.guidance') %></strong>
+        <p><strong><%= t('.change_requirements.guidance') %></strong></p>
         <div>
           <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
         </div>
-        <strong><p><%= t('.change_schedule.guidance') %></strong>
+        <p><strong><%= t('.change_schedule.guidance') %></strong></p>
 
         <h2 class="govuk-heading-m"><%= t('.sending_contract.heading') %></h2>
         <p class="govuk-body govuk-!-padding-bottom-4"><%= t('.sending_contract.guidance') %></p>
