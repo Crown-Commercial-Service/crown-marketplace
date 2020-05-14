@@ -268,6 +268,10 @@ module ApplicationHelper
     controller.controller_name == 'sessions' && controller.action_name == 'new'
   end
 
+  def fm_back_to_start_page
+    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
+  end
+
   def not_permitted_page
     controller.action_name == 'not_permitted'
   end
