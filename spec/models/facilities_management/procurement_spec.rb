@@ -297,6 +297,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe 'validations on :all' do
+    before { procurement.initial_call_off_start_date = DateTime.now.in_time_zone('London') + 1.day }
+
     context 'when the contract name is blank' do
       it 'is expected to not be valid' do
         procurement.contract_name = ''
@@ -379,8 +381,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '#valid_on_continue?' do
     context 'when valid on all' do
+      it 'is expected to return false' do
+        expect(procurement.valid_on_continue?).to eq false
+      end
+    end
+  end
+
+  describe '#valid_on_continue' do
+    context 'when valid on all' do
       it 'is expected to return true' do
-        expect(procurement.valid_on_continue?).to eq true
+        procurement.save
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
