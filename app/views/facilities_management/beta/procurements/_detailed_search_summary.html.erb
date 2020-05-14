@@ -28,7 +28,7 @@
           <table class="govuk-table small">
             <thead>
             <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any? %>">
-              <th style="width:50%" scope="row" class="govuk-table__header govuk-!-font-size-24 <%= 'govuk-!-padding-left-2' if @procurement.errors[:initial_call_off_period].any? %>">Contract
+              <th style="width:40%" scope="row" class="govuk-table__header govuk-!-font-size-24 <%= 'govuk-!-padding-left-2' if @procurement.errors[:initial_call_off_period].any? %>">Contract
                 period
               </th>
               <td class="govuk-table__cell"><%= link_to('Answer all questions', edit_facilities_management_beta_procurement_path(:step => 'contract_dates'), :class => "govuk-link") if @procurement.unanswered_contract_date_questions? %></td>

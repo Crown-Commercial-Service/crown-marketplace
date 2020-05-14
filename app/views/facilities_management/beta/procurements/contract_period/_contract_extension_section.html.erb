@@ -2,7 +2,7 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? %>">Optional call-off extensions</th>
     <td class="govuk-table__cell" colspan="2">
-      None
+      <%= 'None' unless @procurement.extensions_required.nil?%>
     </td>
   </tr>
 <% end %>

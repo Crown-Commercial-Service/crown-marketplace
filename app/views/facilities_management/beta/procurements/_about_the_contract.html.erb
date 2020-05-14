@@ -5,7 +5,7 @@
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse">
         <tr>
-          <th style="width:50%" scope="row" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:contract_name].any? %>">Contract
+          <th style="width:40%" scope="row" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:contract_name].any? %>">Contract
             name
           </th>
           <td style="width:40%" class="govuk-table__cell govuk-border-bottom_none">
@@ -29,7 +29,7 @@
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse">
         <tr>
-          <th style="width: 50%" scope="row" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:estimated_cost_known].any? %>">Estimated
+          <th style="width: 40%" scope="row" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:estimated_cost_known].any? %>">Estimated
             annual cost
           </th>
           <td style="width: 40%" class="govuk-table__cell govuk-border-bottom_none">
@@ -54,7 +54,7 @@
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse">
         <tr>
-          <th style="width:50%" scope="row" class="govuk-border-bottom_none govuk-table__header <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:tupe].any? %>">TUPE</th>
+          <th style="width:40%" scope="row" class="govuk-border-bottom_none govuk-table__header <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:tupe].any? %>">TUPE</th>
           <td style="width:40%" class="govuk-table__cell govuk-border-bottom_none">
             <% if @procurement.tupe.nil? %>
             <%=  link_to "Answer question", edit_facilities_management_beta_procurement_path(:step => 'tupe'), :class => "govuk-link" %>

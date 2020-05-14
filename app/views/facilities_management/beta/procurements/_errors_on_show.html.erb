@@ -6,11 +6,12 @@
   <div class="govuk-error-summary__body">
     <ul class="govuk-list govuk-error-summary__list">
       <% procurement.errors.keys.each do |attribute| %>
+        <% next if attribute == :base && @active_procurement_buildings&.any? { |ab| ab.invalid?(:procurement_building_services_present) }%>
         <li>
           <%= link_to("#{procurement.errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(procurement.errors, attribute).to_s })  unless attribute == :active_procurement_buildings  %>
         </li>
       <% end %>
-      <% @active_procurement_buildings.each do |procurement_building| %>
+      <% @active_procurement_buildings&.each do |procurement_building| %>
         <% procurement_building.valid?(:procurement_building_services) %>
         <% if procurement_building.errors.any? && params[:validate] && procurement_building.service_codes %>
           <li>
