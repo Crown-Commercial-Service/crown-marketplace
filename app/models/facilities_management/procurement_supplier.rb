@@ -265,9 +265,9 @@ module FacilitiesManagement
     def host
       case ENV['RAILS_ENV']
       when 'production'
-        'https://cmp.cmpdev.crowncommercial.gov.uk'
+        'https://marketplace.preview.crowncommercial.gov.uk'
       when 'development'
-        'http://localhost:3000'
+        'https://marketplace.preview.crowncommercial.gov.uk'
       end
     end
 
