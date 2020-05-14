@@ -183,7 +183,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Street']
 
     @active_procurement_buildings.each do |building|
-      row << building.address_line_1
+      row << building.building.address_line_1
     end
 
     row
@@ -193,7 +193,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Town']
 
     @active_procurement_buildings.each do |building|
-      row << building.town
+      row << building.building.address_town
     end
 
     row
@@ -203,7 +203,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Postcode']
 
     @active_procurement_buildings.each do |building|
-      row << building.postcode
+      row << building.building.address_postcode
     end
 
     row

@@ -40,7 +40,7 @@
                                                 id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
                               <label style="padding-top:0"
                                      class="govuk-label govuk-checkboxes__label"
-                                     for="<%= "service_#{work_package['code'].gsub('.', '-')}" %>">
+                                     for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
                                 <%= work_package['name'] %>
                                 <br/>
                                 <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>

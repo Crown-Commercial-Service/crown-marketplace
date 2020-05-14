@@ -53,6 +53,14 @@ module FacilitiesManagement
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
 
+    def full_address
+      "#{address_line_1 + ', ' if address_line_1.present?}
+      #{address_line_2 + ', ' if address_line_2.present?}
+      #{address_town + ', ' if address_town.present?}
+      #{address_region + ', ' if address_region.present?}
+      #{address_postcode}"
+    end
+
     private
 
     def populate_other_data
