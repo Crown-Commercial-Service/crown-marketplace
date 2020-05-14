@@ -522,7 +522,7 @@ en:
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
         start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
-        start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per 'building', allowing you to manage your contract effectively. You should therefore create 'buildings' dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
+        start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
       page_definitions:
         add_building_address: Add building address
         building_size: Building size
@@ -790,13 +790,13 @@ en:
           title: What happens next
           two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
         awaiting_signature:
-          confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the 'effective date', and the term of the contract is calculated forwards from this date
+          confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the ‘effective date’, and the term of the contract is calculated forwards from this date
           confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
           supplier_signs_1: the supplier will sign the contract and send it back to you
           supplier_signs_2: this will happen offline (outside this portal)
           supplier_signs_3: usually within 5 working days
           title: What happens next
-          you_sign_1: you can then complete the 'effective date' on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
+          you_sign_1: you can then complete the ‘effective date’ on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
           you_sign_2: this will happen offline (outside this portal)
           you_sign_3: usually within 2 working days
         call_off_contract_documents:
@@ -826,7 +826,7 @@ en:
           contract_end_date: Enter contract end date
           contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
           contract_start_date: Enter contract start date
-          contract_start_date_caption: The contract start date is the 'effective date' - this is the date the final party signed the contract. For example, 01 11 2030.
+          contract_start_date_caption: The contract start date is the ‘effective date’ - this is the date the final party signed the contract. For example, 01 11 2030.
           contract_will_not_be_signed: This contract will not be signed.
           contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
           description: Please confirm if both parties have signed and exchanged the contract
@@ -844,12 +844,12 @@ en:
           signed_confirmed_2: that the contract has been signed by both parties.
           supplier_declined_reason: The supplier's reason for declining was
         contract_summary_foot:
-          close: You can close this procurement by clicking on the 'Close this procurement' button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
+          close: You can close this procurement by clicking on the ‘Close this procurement’ button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
           confirm: Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed.
-          confirm_and_close: You can still withdraw this contract offer; if you need to, use the 'Close this procurement' button below, which will withdraw the offer from the supplier, and close the procurement.
-          expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with 'no response' as the reason.
+          confirm_and_close: You can still withdraw this contract offer; if you need to, use the ‘Close this procurement’ button below, which will withdraw the offer from the supplier, and close the procurement.
+          expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with ‘no response’ as the reason.
           next_steps: Available next steps
-          next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the 'View next supplier's price’ button below.
+          next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the ‘View next supplier's price’ button below.
           or: or
           reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
           withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
@@ -1024,7 +1024,7 @@ en:
               guidance: The Order Form is the overarching contract document where key contractual decisions are highlighted, the Core Terms, Joint Schedules and Call-off Schedules are listed and contract signatures from both parties are captured.
               title: Order form
           change_requirements:
-            guidance: If you wish to make changes to your requirements, click on the 'Change requirements' button below.
+            guidance: If you wish to make changes to your requirements, click on the ‘Change requirements’ button below.
             title: Change requirements
           change_schedule:
             guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
@@ -1416,7 +1416,7 @@ en:
           list01_2: please ensure you download and review all the contract documents
           list02_1: you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
           list02_2: the deadline for your response is shown at the top of this page
-          list03_1: if you do not respond within 48 hours it will be recorded as 'no response' and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
+          list03_1: if you do not respond within 48 hours it will be recorded as ‘no response’ and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
           what_happens_next: What happens next
         show:
           buyer_contact_details: Buyer contact details
