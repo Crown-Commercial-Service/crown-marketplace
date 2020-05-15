@@ -1203,7 +1203,6 @@ en:
         pension_funds:
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
-          heading: How many pension funds are involved?
         procurement_buildings:
           buildings_selected: Buildings selected
           content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.
