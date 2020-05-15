@@ -8,12 +8,13 @@
           <%= t('.sub_heading') %>
         </h2>
         <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
-          <%= t('.content') %>
+          <%= t('.content') %> </br>
         </span>
+        <%= link_to 'Add or change buildings', facilities_management_buildings_path, class:"govuk-link--no-visited-state govuk-!-font-size-19" %>
         <%= display_error_no_attr(f.object, :procurement_buildings) %>
         <%= f.fields_for :procurement_buildings do |procurement_building|%>
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
-          <div class="chooser-input govuk-form-group <%= 'govuk-form-group--error' if f.object.errors.any? %>" sectionname="buildings" section="buildings">
+          <div class="chooser-input govuk-form-group govuk-!-padding-top-4 <%= 'govuk-form-group--error' if f.object.errors.any? %>" sectionname="buildings" section="buildings">
 
             <fieldset class="govuk-fieldset">
               <div id="buildings-checkboxes" class="govuk-checkboxes">
@@ -32,7 +33,6 @@
         <% end %>
       </div>
       <div class="govuk-!-margin-top-6">
-        <%= link_to 'Add or change buildings', facilities_management_buildings_path, class:"govuk-link--no-visited-state govuk-!-font-size-19 govuk-!-padding-left-0" %>
       </div>
     </div>
     <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
