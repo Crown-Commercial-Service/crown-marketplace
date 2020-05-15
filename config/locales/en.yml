@@ -969,10 +969,10 @@ en:
         supplier_prospectus_headline: Supplier prospectus
     users:
       confirm_new:
-        confirmation_code: Confirmation code
+        confirmation_code: Verification code
         email: Email address
         heading: Activate your account
-        lead_end: containing your confirmation code.
+        lead_end: containing your verification code.
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
@@ -1310,10 +1310,10 @@ en:
         max_day_rate: Max day rate
     users:
       confirm_new:
-        confirmation_code: Confirmation code
+        confirmation_code: Verification code
         email: Email address
         heading: Activate your account
-        lead_end: containing your confirmation code.
+        lead_end: containing your verification code.
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
       new_password_required:
