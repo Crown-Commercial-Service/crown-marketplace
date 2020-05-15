@@ -219,7 +219,7 @@ en:
             region_codes:
               invalid: Select at least one region you need to include in your procurement
             route_to_market:
-              inclusion: Select direct award if you want to award a contract directly to the supplier with the best price
+              inclusion: Select one option
             security_policy_document_date:
               not_a_date: The selected date is not valid
             security_policy_document_file:
@@ -319,7 +319,7 @@ en:
         facilities_management/procurement_invoice_contact_detail:
           attributes:
             email:
-              blank: Enter the new invoicing contact email address
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new invoicing contact job title
             name:
@@ -327,7 +327,7 @@ en:
         facilities_management/procurement_notices_contact_detail:
           attributes:
             email:
-              blank: Enter the new notices contact email address
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new notices contact job title
             name:
@@ -585,7 +585,7 @@ en:
     buyer_details:
       edit:
         buyer_details: Buyer details
-        cant_find_addr_in_list: I can’t find my address in the list
+        cant_find_addr_in_list: Can’t find address/enter address manually
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -1127,7 +1127,7 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         building_services:
           change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don’t already appear on your shortlist. <br> For each building in the left hand column, select the services required from the right hand column.
+          content_html: Click on each building below and selected services you need from the shortlist. <br> For each building in the left hand column, select the services required from the right hand column. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
           heading: Which facilities management services do you need for each building?
           your_buildings: Your buildings
         cancel: Cancel
@@ -1156,7 +1156,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I can’t find my address in the list
+          missing_address: Can’t find address/enter address manually
           name: Name
           telephone_number: Telephone number
         new_invoicing_address:
@@ -1170,7 +1170,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I can’t find my address in the list
+          missing_address: Can’t find address/enter address manually
           name: Name
         new_notices_address:
           building_and_street: Building and street
@@ -1183,7 +1183,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: I can’t find my address in the list
+          missing_address: Can’t find address/enter address manually
           name: Name
         next_step:
           contract_dates: 'Next: Buildings'
@@ -1204,7 +1204,6 @@ en:
         pension_funds:
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
-          heading: How many pension funds are involved?
         procurement_buildings:
           buildings_selected: Buildings selected
           content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.

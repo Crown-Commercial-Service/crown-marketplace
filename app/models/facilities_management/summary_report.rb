@@ -167,7 +167,7 @@ module FacilitiesManagement
 
           uvals << { user_id: @procurement.user.id,
                      service_code: s.code.gsub('-', '.'),
-                     uom_value: b.building.gia.to_f,
+                     uom_value: b.gia.to_f,
                      building_id: b.building_id,
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
@@ -205,6 +205,7 @@ module FacilitiesManagement
     def copy_params(building_data, _uvals)
       @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
       procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
+      @gia = procurement_building.gia
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
       @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
     end
@@ -230,7 +231,7 @@ module FacilitiesManagement
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
-          uom_value = (building_data[:gia] || building_data['gia']).to_f
+          uom_value = @gia.to_f
         else
           occupants = 0
         end
