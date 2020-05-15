@@ -598,7 +598,6 @@ ActiveRecord::Schema.define(version: 2020_05_14_100420) do
     t.string "code", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "nuts_code_postcode_nuts_regions"
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
