@@ -1126,7 +1126,7 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         building_services:
           change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> You can also add new buildings and services if they don’t already appear on your shortlist. <br> For each building in the left hand column, select the services required from the right hand column.
+          content_html: Click on each building below and selected services you need from the shortlist. <br> For each building in the left hand column, select the services required from the right hand column. <br> You can also add new buildings and services if they don’t already appear on your shortlist. 
           heading: Which facilities management services do you need for each building?
           your_buildings: Your buildings
         cancel: Cancel
