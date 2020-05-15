@@ -3,7 +3,10 @@
         <div class="govuk-!-width-two-thirds">
             <h1 class="govuk-heading-m"> <%= t('.invoicing_contact_detail_description_header') %> </h1>
             <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_invoice_details].empty? %>">
-                <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_invoice_details].empty? %>"><%= t('.invoicing_contact_detail_description')%></p>
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend">
+                    <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_invoice_details].empty? %>"><%= t('.invoicing_contact_detail_description')%></p>
+                </legend>
                 <%= display_errors(f.object, :using_buyer_detail_for_invoice_details)%>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
@@ -38,6 +41,7 @@
                     </div>
                     <% end %>
                 </div>
+            </fieldset>
             </div>
         </div>
         <%= govuk_continuation_buttons(pd, f, false) %>
