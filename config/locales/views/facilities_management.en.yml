@@ -318,7 +318,7 @@ en:
         facilities_management/procurement_invoice_contact_detail:
           attributes:
             email:
-              blank: Enter the new invoicing contact email address
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new invoicing contact job title
             name:
@@ -326,7 +326,7 @@ en:
         facilities_management/procurement_notices_contact_detail:
           attributes:
             email:
-              blank: Enter the new notices contact email address
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
             job_title:
               blank: Enter the new notices contact job title
             name:
