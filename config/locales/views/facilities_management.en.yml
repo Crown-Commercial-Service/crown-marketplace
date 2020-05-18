@@ -4,7 +4,7 @@ en:
     attributes:
       facilities_management/service_hour_choice/service_choice:
         all_day: All day <br/> (24 hours)
-        hourly: Specified Hours
+        hourly: Specified hours
         not_required: Not required
         time_to: to
     errors:
@@ -742,7 +742,7 @@ en:
         back_to_service_information: Back to service information
         save_and_return_to_service_information: Save and return to service information
       service_hours:
-        back_to_service_information: Back to service information
+        back_to_service_information: Return to service information
         save_and_return_to_service_information: Save and return to service information
         service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
         service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
