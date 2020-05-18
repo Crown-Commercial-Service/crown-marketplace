@@ -116,8 +116,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+      bold_style = sheet.styles.add_style sz: 12, b: true
 
-      sheet.add_row [@supplier_name]
+      sheet.add_row [@supplier_name], style: bold_style
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']

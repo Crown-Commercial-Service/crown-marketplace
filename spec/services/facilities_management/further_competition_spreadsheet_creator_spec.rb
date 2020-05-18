@@ -6,6 +6,8 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   context 'and verify FX excel' do
     before do
+      first_building = procurement_with_buildings.active_procurement_buildings.first
+      create(:facilities_management_procurement_building_service_with_service_hours, procurement_building: first_building)
       spreadsheet = spreadsheet_builder.build
 
       IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read)
@@ -35,7 +37,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     it 'verify service matrix worksheet' do
       wb = Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
 
-      expect(wb.sheet('Service Matrix').row(2)).to eq ['C.1', 'Mechanical and electrical engineering maintenance - Standard A', 'Yes', 'Yes']
+      expect(wb.sheet('Service Matrix').row(3)).to eq ['C.1', 'Mechanical and electrical engineering maintenance - Standard A', 'Yes', 'Yes']
     end
   end
 end
