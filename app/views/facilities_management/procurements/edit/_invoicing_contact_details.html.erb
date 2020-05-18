@@ -1,7 +1,7 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
     <%=form_for @page_data[:model_object], url: facilities_management_procurements_path do |f|%>
         <div class="govuk-!-width-two-thirds">
-            <h1 class="govuk-heading-m"> <%= t('.invoicing_contact_detail_description_header') %> </h1>
+            <h2 class="govuk-heading-m"> <%= t('.invoicing_contact_detail_description_header') %> </h2>
             <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_invoice_details].empty? %>">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend">

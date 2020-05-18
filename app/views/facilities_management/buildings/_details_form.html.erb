@@ -1,12 +1,12 @@
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="25">
   <%= govuk_form_field(@page_data[:model_object], :building_name, f.object_name, t('.building_name_label_html'), "building_name", {}) do |gf| %>
-    <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25 %>
+    <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25, "aria-describedby": "facilities_management_building_building_name-info"%>
   <% end %>
 </div>
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="50">
   <%= govuk_form_field(@page_data[:model_object], :description, f.object_name, t('.description_label_html'), "", {}) do |gf| %>
     <%= f.text_field :description, class: "govuk-input govuk-input--width-20 js-character-count",
-                     maxlength:           50, required: false %>
+                     maxlength:           50, required: false, "aria-describedby": "facilities_management_building_description-info" %>
   <% end %>
 </div>
 <div class="govuk-!-width-two-thirds" data-module="find-address" data-element_prefix="postcode">
