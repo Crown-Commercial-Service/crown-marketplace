@@ -160,9 +160,9 @@ en:
               not_an_integer: Initial call-off period must be a whole number
               not_present: You must answer all questions about ‘Contract period’
             initial_call_off_start_date:
-              after: Initial call-off period start date must be in the future
+              after: Initial call-off period start date must be today or in the future
               after_2100: Initial call-off period start date cannot be later than 31 December 2100
-              after_or_equal_to: Initial call-off period start date must be in the future
+              after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
@@ -184,7 +184,7 @@ en:
               inclusion: Select yes if you need a mobilisation period
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
-              greater_than: Mobilisation start date must be in the future
+              greater_than: Mobilisation start date must be today or in the future
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
