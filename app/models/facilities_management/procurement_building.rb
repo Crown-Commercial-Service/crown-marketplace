@@ -1,7 +1,6 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
-    # default_scope { includes(:building).order('facilities_management_buildings.building_name') }
     scope :active, -> { where(active: true) }
     scope :order_by_building_name, -> { includes(:building).order('facilities_management_buildings.building_name') }
     scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.new.codes.include?(code) } } }
