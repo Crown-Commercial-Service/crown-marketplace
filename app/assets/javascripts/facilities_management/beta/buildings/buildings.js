@@ -200,13 +200,38 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
-    this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
+
+    var selectResult = this.selectResult.bind(this)
+	var selectRegion = this.selectRegionResult.bind(this);
+    
+    if ( /MSIE 11/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+	    $(this.resultsDropDown).on('blur', selectResult);
+    } else {
+        $(this.resultsDropDown).on('change', selectResult);
+	}
+	this.resultsDropDown.addEventListener('keypress', function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			selectResult();
+		}
+	});
 
     $(this.btnChangeRegion).on('click', function (e) {
         e.preventDefault();
         lookupRegion(e);
     });
-    this.regionDropDown.addEventListener('change', this.selectRegionResult.bind(this));
+	
+	if ( /MSIE 11/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+		$(this.regionDropDown).on('blur', selectRegion);
+	} else {
+		$(this.regionDropDown).on('change', selectRegion);
+	}
+	this.regionDropDown.addEventListener('keypress', function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			selectRegion();
+		}
+	});
 };
 
 LookupHandler.prototype.reset = function () {
