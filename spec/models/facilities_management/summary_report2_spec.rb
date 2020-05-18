@@ -714,6 +714,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], {}, uvals
 
+      # TODO : FM-1171 rename: direct_award_prices.xlsx,to, Attachment 3 - Price Matrix (DA).xlsx
       IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
       # create deliverable matrix spreadsheet
@@ -727,6 +728,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes2, uvals)
       spreadsheet = spreadsheet_builder.build
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+
+      # TODO : FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix.xlsx', spreadsheet.to_stream.read)
     end
     # rubocop:enable RSpec/ExampleLength
@@ -751,6 +754,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       supplier_name = 'Hirthe-Mills'.to_sym
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new supplier_name, report_results[supplier_name], report_results_no_cafmhelp_removed[supplier_name], uvals
 
+      # TODO : FM-1171 rename: direct_award_prices.xlsx,to, Attachment 3 - Price Matrix (DA).xlsx
       IO.write('/tmp/direct_award_prices.xlsx', spreadsheet.to_xlsx)
 
       # check CAFM,Help are added to table 1 in contract Rate Card worksheet, direct_award_prices.xlsx

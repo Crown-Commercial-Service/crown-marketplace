@@ -142,6 +142,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
       spreadsheet_builder = described_class.new(procurement.id)
       spreadsheet = spreadsheet_builder.build
 
+      # TODO :  FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
 
       wb = Roo::Excelx.new('/tmp/deliverable_matrix_3_1year.xlsx')
@@ -154,6 +155,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
       spreadsheet_builder = described_class.new(procurement.id)
       spreadsheet = spreadsheet_builder.build
 
+      # TODO : FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
       wb = Roo::Excelx.new('/tmp/deliverable_matrix_3_1year.xlsx')
       expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
