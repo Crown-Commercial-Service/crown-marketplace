@@ -262,6 +262,7 @@ en:
         facilities_management/procurement_building:
           attributes:
             service_codes:
+              at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
         facilities_management/procurement_building_service:
           attributes:
@@ -584,7 +585,7 @@ en:
     buyer_details:
       edit:
         buyer_details: Buyer details
-        cant_find_addr_in_list: Can't find address/enter address manually
+        cant_find_addr_in_list: Can’t find address/enter address manually
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -1155,7 +1156,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can't find address/enter address manually
+          missing_address: Can’t find address/enter address manually
           name: Name
           telephone_number: Telephone number
         new_invoicing_address:
@@ -1169,7 +1170,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can't find address/enter address manually
+          missing_address: Can’t find address/enter address manually
           name: Name
         new_notices_address:
           building_and_street: Building and street
@@ -1182,7 +1183,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can't find address/enter address manually
+          missing_address: Can’t find address/enter address manually
           name: Name
         next_step:
           contract_dates: 'Next: Buildings'
