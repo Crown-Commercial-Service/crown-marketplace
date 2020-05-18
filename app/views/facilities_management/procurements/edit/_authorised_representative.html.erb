@@ -1,13 +1,11 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
-    <%=form_for @page_data[:model_object], url: facilities_management_procurements_path do |f|%>
-        <div class="govuk-!-width-two-thirds">
-            <h2 class="govuk-heading-m"> <%= t('.authorised_representative_detail_description_header') %> </h2>
-            <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>">
+    <div class="govuk-!-width-two-thirds">
+        <h2 class="govuk-heading-m"> <%= t('.authorised_representative_detail_description_header') %> </h2>
+        <div class="govuk-form-group <%= 'govuk-form-group--error' unless @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>">
             <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend">
-                    <p class="govuk-body <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>"><%= t('.authorised_representative_detail_description')%></p>
-                </legend>
-                <%= display_errors(f.object, :using_buyer_detail_for_authorised_detail)%>
+                <legend class="govuk-fieldset__legend <%= 'govuk-!-margin-bottom-6' if @procurement.errors[:using_buyer_detail_for_authorised_detail].empty? %>">
+                    <%= t('.authorised_representative_detail_description')%>
+                </legend><%= display_errors(f.object, :using_buyer_detail_for_authorised_detail)%>
                 <div class="govuk-radios">
                     <div class="govuk-radios__item govuk-!-margin-bottom-6">
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, true, class: 'govuk-radios__input' %>
@@ -26,7 +24,7 @@
                         <% end %>
                     </div>
                     <% else %>
-                     <div class="govuk-radios__item">
+                      <div class="govuk-radios__item">
                         <%= f.radio_button :using_buyer_detail_for_authorised_detail, false, class: 'govuk-radios__input' %>
                         <%= f.label :using_buyer_detail_for_authorised_detail, value: false, class: 'govuk-label govuk-radios__label ccs-font-weight-semi-bold' do %>
                         <%= @procurement.authorised_contact_detail.name + ", " +  @procurement.authorised_contact_detail.job_title %>
@@ -42,8 +40,7 @@
                     <% end %>
                 </div>
             </fieldset>
-            </div>
         </div>
-        <%= govuk_continuation_buttons(pd, f, false) %>
-    <% end %>
+    </div>
+    <%= govuk_continuation_buttons(pd, f, false) %>
 <% end %>

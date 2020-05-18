@@ -2,7 +2,7 @@
   <table class="govuk-table govuk-!-width-three-quarters">
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th class="govuk-table__cell" scope="row" width="45%"></th>
+        <td class="govuk-table__cell" width="45%"></td>
         <td class="govuk-table__cell" width="45%"></td>
         <td class="govuk-table__cell" width="10%"></td>
       </tr>
@@ -116,7 +116,7 @@
 
       <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:security_policy_document_required].any? %>">
         <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:security_policy_document_required].any? %>"><%= t('.security_policy_document') %></th>
-        <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.security_policy_document_required %>", style="overflow-wrap: anywhere">
+        <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.security_policy_document_required %>" style="overflow-wrap: anywhere">
           <% case @procurement.security_policy_document_required %>
           <% when true %>
             <!--<a href="<%#= asset_path() %>?format=doc" download> <%#= @procurement.security_policy_document_file.to_s.split('/').last %> </a> -->

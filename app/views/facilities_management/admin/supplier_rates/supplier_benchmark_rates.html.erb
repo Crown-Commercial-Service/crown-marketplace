@@ -60,7 +60,7 @@
                   </span>
                 <% end %>
               </div>
-            </td>
+            </th>
 
             <% [Proc.new {|rate| rate.standard.blank? || rate.standard == 'A'},
                 Proc.new {|rate| rate.standard == 'B'},
@@ -111,7 +111,7 @@
                 </span>
               <% end %>
             </div>
-          </td>
+          </th>
           <td class="govuk-table__cell supplier-rates-td">
             <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:benchmark), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate.invalid?}" %>
           </td>

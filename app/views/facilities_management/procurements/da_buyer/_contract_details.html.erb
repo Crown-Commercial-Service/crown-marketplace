@@ -8,6 +8,6 @@
       <%= f.submit @page_description.navigation_details.secondary_text, class: ' govuk-button govuk-button--secondary', data: {disable_with: false }, name: 'continue_to_results', 'aria-label': "#{@page_description.navigation_details.secondary_text}" %>
       </br>
       <%= link_to @page_description.navigation_details.return_text, facilities_management_procurements_path, role: 'button', class: 'govuk-link govuk-!-font-size-19', 'aria-label': "#{@page_description.navigation_details.return_text}" %>
+    <% end %>
   </div>
-  <%end %>
 <%end %>
