@@ -348,7 +348,9 @@ LookupHandler.prototype.selectResult = function (e) {
     var selectedOption = null;
     
     this.resultsContainer.tabIndex = -1;
+    this.resultsDropDown.tabIndex = -1;
     this.btnCantFindAddress.tabIndex = -1;
+    this.findAddressComponent.btnChangeInput[0].tabIndex = -1;
     
     if (this.resultsDropDown.selectedIndex <= 0) return;
     anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.resultsDropDown));
