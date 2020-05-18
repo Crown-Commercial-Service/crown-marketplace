@@ -490,11 +490,11 @@ en:
         town_or_city: Town or city
       details_form:
         address: Address
-        address_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</span><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
-        building_name_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</span><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
+        address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+        building_name_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</h2><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
         cant_find_address: I can’t find my building’s address in the list
         change: Change
-        description_label_html: <span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</span> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
+        description_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</h2> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
         find_address: Find address
         option_with_data_plural: "{%} addresses found"
         option_with_data_single: 1 address found
