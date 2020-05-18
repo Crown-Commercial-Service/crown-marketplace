@@ -104,7 +104,7 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 		$.get(encodeURI("/api/v2/find-region-postcode/" + postcode)).done(function (data, status, jq) {
             if (data && data.result && data.result.length == 1) {
                 this.lookupHandler.showRegionSingleResult(data.result[0]);
-            }
+            }            
 			else if (data && data.result && data.result.length > 0) {
 				displayRegionResults(data.result);
 			} else {
@@ -116,16 +116,10 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 
 FindAddressComponent.prototype.displayPostcodeLookupResults = function (postcode, data) {
     if (data.length > 0) {
-    	this.btnChangeInput[0].tabIndex = 0;
-    	this.sourceInput.tabIndex = -1;
-    	this.btnTrigger.tabIndex = -1;
         this.lookupHandler.clearResultsList();
         this.lookupHandler.showResults(postcode, data);
     } else {
         this.noPostcodeResults(postcode, data);
-	    this.btnChangeInput[0].tabIndex = 0;
-	    this.sourceInput.tabIndex = 0;
-	    this.btnTrigger.tabIndex = 0;
     }
 };
 
@@ -142,11 +136,6 @@ FindAddressComponent.prototype.restartPostcodeLookup = function () {
     $(this.sourceContainer).removeClass("govuk-visually-hidden");
     this.lookupHandler.hideResults();
     this.sourceInput.focus();
-    this.sourceInput.tabIndex = 0;
-    this.btnTrigger.tabIndex = 0;
-    this.btnChangeInput.tabIndex = -1;
-    this.lookupHandler.resultsContainer.tabIndex = -1;
-    this.lookupHandler.btnCantFindAddress.tabIndex = -1;
 };
 
 FindAddressComponent.prototype.noPostcodeResults = function (postcode, data) {
@@ -200,7 +189,7 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
-    this.resultsDropDown.addEventListener('change', this.selectResult.bind(this));
+    this.resultsDropDown.addEventListener('click', this.selectResult.bind(this));
 
     $(this.btnChangeRegion).on('click', function (e) {
         e.preventDefault();
@@ -214,7 +203,7 @@ LookupHandler.prototype.reset = function () {
     this.clearRegionResultsList();
     this.adjustIndicatorOption(this.resultsDropDown, 0);
     this.adjustIndicatorOption(this.regionDropDown, 0);
-    //this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
+    this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
 };
 
 LookupHandler.prototype.clearResultsList = function () {
@@ -260,9 +249,6 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
     $(this.addressDisplay).addClass('govuk-visually-hidden');
     this.populateDropDown(addresses);
     this.changeAddressContainerVisibility(true);
-    this.btnCantFindAddress.tabIndex = 0;
-    this.resultsDropDown.tabIndex = 0;
-    this.resultsDropDown.focus();
 };
 
 LookupHandler.prototype.hideResults = function (postcode, addresses) {
@@ -321,10 +307,6 @@ LookupHandler.prototype.showRegionDecision = function () {
 
 LookupHandler.prototype.selectResult = function (e) {
     var selectedOption = null;
-    
-    this.resultsContainer.tabIndex = -1;
-    this.btnCantFindAddress.tabIndex = -1;
-    
     if (this.resultsDropDown.selectedIndex <= 0) return;
     anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.resultsDropDown));
     anyArbitraryName.global_formValidators[0].clearBannerErrorList($(this.regionDropDown));
