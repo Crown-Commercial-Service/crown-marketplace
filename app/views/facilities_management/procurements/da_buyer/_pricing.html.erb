@@ -1,5 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <h1 class="govuk-!-width-two-thirds govuk-body">
+  <h2 class="govuk-!-width-two-thirds govuk-body">
     <% if @page_data[:sorted_supplier_list].count > 1 %>
       <%= "There are <b>#{@page_data[:sorted_supplier_list].count} suppliers </b>".html_safe %>
       <%= t('.supplier_description_plural') %>
@@ -7,7 +7,7 @@
       <%= "There is <b>#{@page_data[:sorted_supplier_list].count} supplier </b>".html_safe %>
       <%= t('.supplier_description_singular') %>
     <% end %>
-  </h1>
+  </h2>
   <blockquote class="cmp-inset-text cmp-inset-text--neutral govuk-!-width-two-thirds govuk-!-font-size-27 govuk-heading-l">
     <span><%= @page_data[:sorted_supplier_list].first[:name] %></span>
     <span style="float:right"><%= number_to_currency(@page_data[:sorted_supplier_list].first[:price]) %></span><br/>
