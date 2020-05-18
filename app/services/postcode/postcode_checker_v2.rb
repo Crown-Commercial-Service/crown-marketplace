@@ -25,7 +25,7 @@ module Postcode
     end
 
     def self.location_info(postcode)
-      postcode_structure = destructure_postcode postcode
+      postcode_structure = destructure_postcode(postcode)
       query = <<~HEREDOC
          SELECT distinct summary_line,
            COALESCE (address_line_1, '') as address_line_1,
@@ -46,7 +46,7 @@ module Postcode
     end
 
     def self.find_region(postcode)
-      postcode_structure = destructure_postcode postcode
+      postcode_structure = destructure_postcode(postcode)
       query = <<~HEREDOC
         SELECT DISTINCT PUBLIC.postcodes_nuts_regions.code,
                         initcap(PUBLIC.nuts_regions.NAME) AS region
