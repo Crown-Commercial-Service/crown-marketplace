@@ -413,7 +413,18 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         if (jqueryElementForRequiredMessage.length === 0) {
             var errorCollectionForPropertyAndType = this.findErrorCollection(jQueryElement, errorType, property_name);
             if (errorCollectionForPropertyAndType.length > 0) {
-                jqueryElementForRequiredMessage = errorCollectionForPropertyAndType.find("label[data-validation='" + errorType + "']");
+                if (errorCollectionForPropertyAndType.hasClass('potenital-error')) {
+                  var errorLabel = errorCollectionForPropertyAndType.find("label").get(0);
+                  jqueryElementForRequiredMessage = errorLabel.cloneNode();
+                  jqueryElementForRequiredMessage.setAttribute('data-validation', errorType);
+                  var errorMessage = $(errorLabel).find("span[data-validation='" + errorType + "']").get(0).innerText
+                  var errorMessageElement = document.createElement("span");
+                  errorMessageElement.innerText = errorMessage;
+                  jqueryElementForRequiredMessage.append(errorMessageElement);
+                  jqueryElementForRequiredMessage = $(jqueryElementForRequiredMessage);
+                } else {
+                  jqueryElementForRequiredMessage = errorCollectionForPropertyAndType.find("label[data-validation='" + errorType + "']");
+                }
             }
         }
 

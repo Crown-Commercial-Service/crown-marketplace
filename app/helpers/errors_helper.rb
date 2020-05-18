@@ -48,6 +48,21 @@ module ErrorsHelper
                                                                data: { propertyname: model_data[:attribute].to_s, validation: tag_validation_type }
   end
 
+  def multiple_validation_errors(model_object, attribute, form_object_name, error_collection)
+    content_tag :label, class: "govuk-error-message #{'govuk-visually-hidden' unless model_object.errors.any?}",
+                        for: "#{form_object_name}_#{attribute}",
+                        id: "#{attribute}-error" do
+      error_collection.each do |key, val|
+        tag_validation_type = ERROR_TYPE.include?(key) ? ERROR_TYPE[key] : key
+        concat(content_tag(:span, val, class: "govuk-error-message #{'govuk-visually-hidden' unless attribute_has_errors(model_object, attribute, key)}", data: { propertyname: attribute.to_s, validation: tag_validation_type }))
+      end
+    end
+  end
+
+  def attribute_has_errors(model_object, attribute, error_type)
+    model_object.errors.details[attribute][0]&.dig(:error) == error_type
+  end
+
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
     translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"

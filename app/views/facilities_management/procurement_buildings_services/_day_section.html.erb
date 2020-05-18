@@ -2,7 +2,7 @@
   <%= govuk_fieldset_with_optional_error service_hours, :service_hours, day.to_sym do %>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m"><%= day.to_s.humanize %></legend>
     <div class="govuk-form-group <%= 'govuk-form-group--error' if service_choice.errors.any? %>" data-propertyname="<%= day %>_service_choice">
-      <%= display_potential_errors service_choice, :service_choice, f.object_name, nil, nil, day %>
+      <%= display_potential_errors service_choice, :service_choice, f.object_name, day %>
       <div class="govuk-radios govuk-radios--conditional" data-module="radios">
         <%= display_error(f.object, day.to_sym) %>
         <div class="govuk-radios__item">
@@ -21,7 +21,7 @@
           <%= govuk_fieldset_with_optional_error service_choice, :start_time do %>
             <legend style="padding-left: 0 !important">Start</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :start_time) %>" data-propertyname="<%= day %>_start_time">
-              <%= display_potential_errors service_choice, :start_time, f.object_name, nil, nil, day %>
+              <%= display_potential_errors service_choice, :start_time, f.object_name, day %>
               <div class="govuk-date-input">
                 <%= f.hidden_field :start_time, class: "#{day}_start_time govuk-visually-hidden", id: "start_time"  %>
                 <div class="govuk-date-input__item">
@@ -43,7 +43,7 @@
           <%= govuk_fieldset_with_optional_error service_choice, :end_time do %>
             <legend style="padding-left: 0 !important">End</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :end_time) %>" data-propertyname="<%= day %>_end_time">
-              <%= display_potential_errors service_choice, :end_time, f.object_name, nil, nil, day %>
+              <%= display_potential_errors service_choice, :end_time, f.object_name, day %>
               <div class="govuk-date-input">
                 <%= f.hidden_field :end_time, class: "#{day}_end_time govuk-visually-hidden", id: "end_time" %>
                 <div class="govuk-date-input__item">
