@@ -109,6 +109,18 @@ module FacilitiesManagement
       end
     end
 
+    def service_missing_framework_price?(rate_model)
+      rate_model.framework_rate_for(code, service_standard).nil?
+    end
+
+    def service_missing_benchmark_price?(rate_model)
+      rate_model.benchmark_rate_for(code, service_standard).nil?
+    end
+
+    def special_da_service?
+      FacilitiesManagement::Service.special_da_service?(code)
+    end
+
     private
 
     def service_hours_complete?
