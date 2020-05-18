@@ -1,8 +1,9 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
-    default_scope { order(name: :asc) }
+    # default_scope { includes(:building).order('facilities_management_buildings.building_name') }
     scope :active, -> { where(active: true) }
+    scope :order_by_building_name, -> { includes(:building).order('facilities_management_buildings.building_name') }
     scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.new.codes.include?(code) } } }
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
@@ -24,6 +25,10 @@ module FacilitiesManagement
     def set_gia
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
       update(gia: building.gia)
+    end
+
+    def name
+      building.building_name
     end
 
     private
