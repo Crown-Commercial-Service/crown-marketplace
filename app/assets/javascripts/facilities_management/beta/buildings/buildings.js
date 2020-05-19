@@ -104,7 +104,7 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 		$.get(encodeURI("/api/v2/find-region-postcode/" + postcode)).done(function (data, status, jq) {
             if (data && data.result && data.result.length == 1) {
                 this.lookupHandler.showRegionSingleResult(data.result[0]);
-            }            
+            }
 			else if (data && data.result && data.result.length > 0) {
 				displayRegionResults(data.result);
 			} else {
@@ -116,10 +116,16 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 
 FindAddressComponent.prototype.displayPostcodeLookupResults = function (postcode, data) {
     if (data.length > 0) {
+    	this.btnChangeInput[0].tabIndex = 0;
+    	this.sourceInput.tabIndex = -1;
+    	this.btnTrigger.tabIndex = -1;
         this.lookupHandler.clearResultsList();
         this.lookupHandler.showResults(postcode, data);
     } else {
         this.noPostcodeResults(postcode, data);
+	    this.btnChangeInput[0].tabIndex = 0;
+	    this.sourceInput.tabIndex = 0;
+	    this.btnTrigger.tabIndex = 0;
     }
 };
 
@@ -136,6 +142,11 @@ FindAddressComponent.prototype.restartPostcodeLookup = function () {
     $(this.sourceContainer).removeClass("govuk-visually-hidden");
     this.lookupHandler.hideResults();
     this.sourceInput.focus();
+    this.sourceInput.tabIndex = 0;
+    this.btnTrigger.tabIndex = 0;
+    this.btnChangeInput.tabIndex = -1;
+    this.lookupHandler.resultsContainer.tabIndex = -1;
+    this.lookupHandler.btnCantFindAddress.tabIndex = -1;
 };
 
 FindAddressComponent.prototype.noPostcodeResults = function (postcode, data) {
@@ -189,13 +200,35 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
-    this.resultsDropDown.addEventListener('click', this.selectResult.bind(this));
+    var selectResult = this.selectResult.bind(this)
+  	var selectRegion = this.selectRegionResult.bind(this);
+    
+    if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+	    $(this.resultsDropDown).on('blur', selectResult);
+	    $(this.regionDropDown).on('blur', selectRegion);
+    } else {
+        $(this.resultsDropDown).on('change', selectResult);
+	      $(this.regionDropDown).on('change', selectRegion);
+    }
+
+    this.resultsDropDown.addEventListener('keypress', function (e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        selectResult();
+      }
+    });
+
+    this.regionDropDown.addEventListener('keypress', function (e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        selectRegion();
+      }
+    });
 
     $(this.btnChangeRegion).on('click', function (e) {
-        e.preventDefault();
-        lookupRegion(e);
+      e.preventDefault();
+      lookupRegion(e);
     });
-    this.regionDropDown.addEventListener('change', this.selectRegionResult.bind(this));
 };
 
 LookupHandler.prototype.reset = function () {
@@ -203,7 +236,7 @@ LookupHandler.prototype.reset = function () {
     this.clearRegionResultsList();
     this.adjustIndicatorOption(this.resultsDropDown, 0);
     this.adjustIndicatorOption(this.regionDropDown, 0);
-    this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
+    //this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
 };
 
 LookupHandler.prototype.clearResultsList = function () {
@@ -249,6 +282,9 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
     $(this.addressDisplay).addClass('govuk-visually-hidden');
     this.populateDropDown(addresses);
     this.changeAddressContainerVisibility(true);
+    this.btnCantFindAddress.tabIndex = 0;
+    this.resultsDropDown.tabIndex = 0;
+    this.resultsDropDown.focus();
 };
 
 LookupHandler.prototype.hideResults = function (postcode, addresses) {
@@ -307,20 +343,26 @@ LookupHandler.prototype.showRegionDecision = function () {
 
 LookupHandler.prototype.selectResult = function (e) {
     var selectedOption = null;
+    
+    this.resultsContainer.tabIndex = -1;
+    this.resultsDropDown.tabIndex = -1;
+    this.btnCantFindAddress.tabIndex = -1;
+    this.findAddressComponent.btnChangeInput[0].tabIndex = -1;
+    
     if (this.resultsDropDown.selectedIndex <= 0) return;
     anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.resultsDropDown));
     anyArbitraryName.global_formValidators[0].clearBannerErrorList($(this.regionDropDown));
-	anyArbitraryName.global_formValidators[0].toggleBannerError();
+  	anyArbitraryName.global_formValidators[0].toggleBannerError();
 	
-	selectedOption = this.resultsDropDown.selectedOptions[0];
+	  selectedOption = this.resultsDropDown.options[this.resultsDropDown.selectedIndex];
 
     $("#address-line-1").val(selectedOption.dataset.address_line_1);
     $("#address-line-2").val(selectedOption.dataset.address_line_2);
     $("#address-town").val(selectedOption.dataset.address_town);
     $("#address-postcode").val(selectedOption.dataset.address_postcode);
-	$(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
+	  $(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
 	
-	if (selectedOption.dataset.address_region !== "null" && selectedOption.dataset.address_region !== "") {
+	  if (selectedOption.dataset.address_region !== "null" && selectedOption.dataset.address_region !== "") {
         $("#address-region").val(selectedOption.dataset.address_region);
         $("#address-region-code").val(selectedOption.dataset.address_region_code);
         $(this.regionResultsText).text(selectedOption.dataset.address_region);
@@ -341,7 +383,8 @@ LookupHandler.prototype.selectResult = function (e) {
 LookupHandler.prototype.selectRegionResult = function (e) {
     var selectedOption = null;
     if (this.regionDropDown.selectedIndex <= 0) return;
-    selectedOption = this.regionDropDown.selectedOptions[0];
+    selectedOption = this.regionDropDown.options[this.regionDropDown.selectedIndex];
+    
     $("#address-region").val(selectedOption.dataset.address_region);
     $("#address-region-code").val(selectedOption.dataset.address_region_code);
     $(this.regionResultsText).text(selectedOption.dataset.address_region);

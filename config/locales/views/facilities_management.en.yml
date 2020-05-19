@@ -160,9 +160,9 @@ en:
               not_an_integer: Initial call-off period must be a whole number
               not_present: You must answer all questions about ‘Contract period’
             initial_call_off_start_date:
-              after: Initial call-off period start date must be in the future
+              after: Initial call-off period start date must be today or in the future
               after_2100: Initial call-off period start date cannot be later than 31 December 2100
-              after_or_equal_to: Initial call-off period start date must be in the future
+              after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
@@ -184,7 +184,7 @@ en:
               inclusion: Select yes if you need a mobilisation period
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
-              greater_than: Mobilisation start date must be in the future
+              greater_than: Mobilisation start date must be today or in the future
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
@@ -286,15 +286,15 @@ en:
               invalid_k7: The number of units of feminine hygiene waste must be a whole number between 1 and 999,999,999.
             service_hours:
               end_time:
-                greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real end time
-                less_than: The start time must be before the end time of your specified hours
+                greater_than: The end time must be after the start time
+                invalid: Select end time
+                less_than: The start time must be before the end time
               service_choice:
                 inclusion: Select not required if you don’t need the service on this day
               start_time:
-                greater_than: The end time must be after the start time of your specified hours
-                invalid: Enter a real start time
-                less_than: The start time must be before the end time of your specified hours
+                greater_than: The end time must be after the start time
+                invalid: Select start time
+                less_than: The start time must be before the end time
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -373,17 +373,17 @@ en:
         facilities_management/service_hour_choice:
           attributes:
             end_time:
-              greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real end time
-              less_than: The start time must be before the end time of your specified hours
-              not_a_date: Enter a real end time
+              greater_than: The end time must be after the start time
+              invalid: Select end time
+              less_than: The start time must be before the end time
+              not_a_date: Select end time
             service_choice:
-              inclusion: Select "Not required" if you don’t need the service on this day
+              inclusion: Select one option
             start_time:
-              greater_than: The end time must be after the start time of your specified hours
-              invalid: Enter a real start time
-              less_than: The start time must be before the end time of your specified hours
-              not_a_date: Enter a real start time
+              greater_than: The end time must be after the start time
+              invalid: Select start time
+              less_than: The start time must be before the end time
+              not_a_date: Select start time
   dashboard:
     index:
       admin_link: Managing framework and supplier data
