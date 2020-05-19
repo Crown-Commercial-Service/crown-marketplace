@@ -19,21 +19,21 @@
         </div>
         <div class="govuk-radios__conditional <%= 'govuk-radios__conditional--hidden' if service_choice[:service_choice] != 'hourly' %>" id="<%= day %>-conditional-specified">
           <%= govuk_fieldset_with_optional_error service_choice, :start_time do %>
-            <legend style="padding-left: 0 !important">Start</legend>
+            <legend style="padding-left: 0 !important govuk-heading-s">Start time</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :start_time) %>" data-propertyname="<%= day %>_start_time">
               <%= display_potential_errors service_choice, :start_time, f.object_name, day %>
               <div class="govuk-date-input">
                 <%= f.hidden_field :start_time, class: "#{day}_start_time govuk-visually-hidden", id: "start_time"  %>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_hour"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_hour">Hour </label>
                   <%= f.select :start_hour, %w[ 1 2 3 4 5 6 7 8 9 10 11 12], { :include_blank => true }, class: "govuk-select govuk-date-input__input #{'govuk-select--error' if model_attribute_has_error(service_choice, :start_time)} govuk-input--width-2", id: "#{day}_start_hour", maxlength: "2", type: "text" %>
                 </div>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_minute"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_minute">Minute </label>
                     <%= f.select :start_minute, %w[00 15 30 45], { :include_blank => true, :selected => f.object.start_minute == 0 ? "00" : f.object.start_minute }, class: "govuk-select govuk-date-input__input #{'govuk-select--error' if model_attribute_has_error(service_choice, :start_time)} govuk-input--width-2", id: "#{day}_start_minute", maxlength: "2", type: "text" %>
                 </div>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_ampm"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_start_ampm">AM or PM</label>
                   <%= f.select :start_ampm, %w[AM PM], { :include_blank => true }, class: "govuk-select  #{'govuk-select--error' if model_attribute_has_error(service_choice, :start_time)} govuk-input--width-2", id: "#{day}_start_ampm" %>
                 </div>
               </div>
@@ -41,21 +41,21 @@
             <br/>
           <% end %>
           <%= govuk_fieldset_with_optional_error service_choice, :end_time do %>
-            <legend style="padding-left: 0 !important">End</legend>
+            <legend style="padding-left: 0 !important govuk-heading-s">End time</legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(service_choice, :end_time) %>" data-propertyname="<%= day %>_end_time">
               <%= display_potential_errors service_choice, :end_time, f.object_name, day %>
               <div class="govuk-date-input">
                 <%= f.hidden_field :end_time, class: "#{day}_end_time govuk-visually-hidden", id: "end_time" %>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_hour"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_hour">Hour </label>
                   <%= f.select :end_hour, %w[1 2 3 4 5 6 7 8 9 10 11 12], { :include_blank => true }, class: "govuk-select govuk-date-input__input #{'govuk-select--error' if model_attribute_has_error(service_choice, :end_time)} govuk-input--width-2", id: "#{day}_end_hour", maxlength: "2", type: "text" %>
                 </div>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_minute"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_minute">Minute </label>
                   <%= f.select :end_minute, %w[00 15 30 45], { :include_blank => true, :selected => f.object.end_minute == 0 ? "00" : f.object.end_minute }, class: "govuk-select govuk-date-input__input #{'govuk-select--error' if model_attribute_has_error(service_choice, :end_time)} govuk-input--width-2", id: "#{day}_end_minute", maxlength: "2", type: "text" %>
                 </div>
                 <div class="govuk-date-input__item">
-                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_ampm"></label>
+                  <label class="govuk-label govuk-date-input__label" for="<%= day %>_end_ampm">AM or PM</label>
                   <%= f.select :end_ampm, %w[AM PM], { :include_blank => true }, class: "govuk-select #{'govuk-select--error' if model_attribute_has_error(service_choice, :end_time)} govuk-input--width-2", id: "#{day}_end_ampm" %>
                 </div>
               </div>
