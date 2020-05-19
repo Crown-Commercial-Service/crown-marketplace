@@ -645,7 +645,6 @@ module FacilitiesManagement
       params.require(:facilities_management_procurement).permit(:route_to_market)
     end
 
-    # rubocop:disable Metrics/MethodLength
     def procurement_params
       params.require(:facilities_management_procurement)
             .permit(
@@ -685,12 +684,6 @@ module FacilitiesManagement
               service_codes: [],
               region_codes: [],
               procurement_buildings_attributes: [:id,
-                                                 :name,
-                                                 :address_line_1,
-                                                 :address_line_2,
-                                                 :town,
-                                                 :county,
-                                                 :postcode,
                                                  :active,
                                                  service_codes: []],
               procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error],
@@ -699,7 +692,6 @@ module FacilitiesManagement
               notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
             )
     end
-    # rubocop:enable Metrics/MethodLength
 
     def set_current_step
       @current_step = nil
