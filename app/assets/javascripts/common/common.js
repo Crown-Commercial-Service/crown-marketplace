@@ -48,10 +48,9 @@ const pageUtils = {
                                 let add1 = address.address_line_1 ? address.address_line_1 + ', ' : '';
                                 let add2 = address.address_line_2 ? address.address_line_2 + ', ' : '';
                                 let postTown = address.address_town ? address.address_town + ', ' : '';
-                                let county = address.address_region ? address.address_region + ', ' : '';
                                 let postCode = address.address_postcode ? address.address_postcode : '';
-                                let newOptionData = add1 + add2 + postTown + county + postCode;
-                                let newOption = '<option value="' + newOptionData + '" data-add1="' + add1 +'"  data-add2="' + add2 +'"  data-town="' + postTown +'" data-county="' + county +'" data-postcode="' + postCode +'">' + newOptionData + '</option>';
+                                let newOptionData = add1 + add2 + postTown + postCode;
+                                let newOption = '<option value="' + newOptionData + '" data-add1="' + add1 +'"  data-add2="' + add2 +'"  data-town="' + postTown +'" data-county="" data-postcode="' + postCode +'">' + newOptionData + '</option>';
                                 lookupResultsElem.append(newOption);
                                 $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
                                 $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
