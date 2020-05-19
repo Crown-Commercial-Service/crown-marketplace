@@ -707,7 +707,7 @@ en:
         back_to_detailed_summary: Back to detailed search summary
         gia: Gross internal area (GIA)
         gia-summary: The gross internal area of the building (in square meters)
-        heading: Service information
+        heading: Service requirements
         lift_data: The sum total of number of floors
         no_of_appliances_for_testing: The number of appliances to be tested per annum
         no_of_building_occupants: The number of building occupants
