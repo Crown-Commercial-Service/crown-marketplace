@@ -105,7 +105,7 @@ module FacilitiesManagement
 
       continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
-      update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+      copy_service_codes && update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
@@ -199,7 +199,6 @@ module FacilitiesManagement
 
       view_name
     end
-    # rubocop:enable Metrics/AbcSize
 
     def update_procurement
       assign_procurement_parameters
@@ -217,8 +216,10 @@ module FacilitiesManagement
 
         set_da_journey_render
         render :edit
+        past_service_codes if params.dig('facilities_management_procurement', 'step') == 'services'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def remove_invalid_security_policy_document_file
       # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
@@ -354,6 +355,15 @@ module FacilitiesManagement
         create_da_buyer_page_data('local_government_pension_scheme')
         render :edit
       end
+    end
+
+    def copy_service_codes
+      @service_codes_copy = @procurement.service_codes
+    end
+
+    def past_service_codes
+      @procurement.service_codes = @service_codes_copy
+      @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
     end
 
     def update_service_codes
@@ -709,13 +719,15 @@ module FacilitiesManagement
     end
 
     def set_procurement_data
+      @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
+      set_buildings if params['step'] == 'procurement_buildings'
+      return if @procurement.service_codes.nil? || @procurement.region_codes.nil?
+
       region_codes = @procurement.region_codes
       service_codes = @procurement.service_codes
       set_suppliers(region_codes, service_codes)
       find_regions(region_codes)
       find_services(service_codes)
-      @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
-      set_buildings if params['step'] == 'procurement_buildings'
     end
 
     def set_suppliers(region_codes, service_codes)
