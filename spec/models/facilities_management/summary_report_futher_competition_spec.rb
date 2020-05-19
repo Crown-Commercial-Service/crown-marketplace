@@ -80,6 +80,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   context 'when testing FC report methods' do
     # rubocop:disable RSpec/ExampleLength
     it 'create a further competition excel,very worksheets are there' do
+      first_building = procurement_with_buildings.active_procurement_buildings.first
+      create(:facilities_management_procurement_building_service_with_service_hours, procurement_building: first_building)
+
       report = described_class.new(procurement_with_buildings.id)
 
       supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
