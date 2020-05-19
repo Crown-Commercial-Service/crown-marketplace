@@ -103,17 +103,14 @@ module ApplicationHelper
     (attributes.is_a?(Array) ? attributes.last : attributes).to_s
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
+  def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+    return if collection.empty?
 
-    content_tag :div, class: 'error-collection', property_name: property_name(section_name, attributes) do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    content_tag :div, class: 'error-collection potenital-error', property_name: property_name(section_name, attributes) do
+      multiple_validation_errors(model_object, attributes, form_object_name, collection)
     end
   end
-  # rubocop:enable Metrics/ParameterLists
 
   def model_attribute_has_error(model_object, *attributes)
     result = false

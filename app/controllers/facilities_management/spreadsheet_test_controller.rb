@@ -19,7 +19,7 @@ module FacilitiesManagement
         format.xlsx do
           spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(building_ids_with_service_codes)
           spreadsheet = spreadsheet_builder.build
-          render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+          render xlsx: spreadsheet.to_stream.read, filename: 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA)', format: 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
         end
       end
     end

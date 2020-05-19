@@ -200,36 +200,35 @@ LookupHandler.prototype.init = function () {
     this.postcodeDisplay = this.resultsContainer.querySelector('[data-module-element="postcode-entry-text"]')
     this.btnChangeRegion = this.resultsContainer.querySelector('[data-module-element="change-region-button"]');
     var lookupRegion = this.showRegionChoices.bind(this);
-
     var selectResult = this.selectResult.bind(this)
-	var selectRegion = this.selectRegionResult.bind(this);
+  	var selectRegion = this.selectRegionResult.bind(this);
     
     if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
 	    $(this.resultsDropDown).on('blur', selectResult);
 	    $(this.regionDropDown).on('blur', selectRegion);
     } else {
         $(this.resultsDropDown).on('change', selectResult);
-	    $(this.regionDropDown).on('change', selectRegion);
-	}
-	
+	      $(this.regionDropDown).on('change', selectRegion);
+    }
+
     this.resultsDropDown.addEventListener('keypress', function (e) {
-		if (e.keyCode === 13) {
-			e.preventDefault();
-			selectResult();
-		}
-	});
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        selectResult();
+      }
+    });
 
-	this.regionDropDown.addEventListener('keypress', function (e) {
-		if (e.keyCode === 13) {
-			e.preventDefault();
-			selectRegion();
-		}
-	});
+    this.regionDropDown.addEventListener('keypress', function (e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        selectRegion();
+      }
+    });
 
-	$(this.btnChangeRegion).on('click', function (e) {
-		e.preventDefault();
-		lookupRegion(e);
-	});
+    $(this.btnChangeRegion).on('click', function (e) {
+      e.preventDefault();
+      lookupRegion(e);
+    });
 };
 
 LookupHandler.prototype.reset = function () {
@@ -353,17 +352,17 @@ LookupHandler.prototype.selectResult = function (e) {
     if (this.resultsDropDown.selectedIndex <= 0) return;
     anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.resultsDropDown));
     anyArbitraryName.global_formValidators[0].clearBannerErrorList($(this.regionDropDown));
-	anyArbitraryName.global_formValidators[0].toggleBannerError();
+  	anyArbitraryName.global_formValidators[0].toggleBannerError();
 	
-	selectedOption = this.resultsDropDown.options[this.resultsDropDown.selectedIndex];
+	  selectedOption = this.resultsDropDown.options[this.resultsDropDown.selectedIndex];
 
     $("#address-line-1").val(selectedOption.dataset.address_line_1);
     $("#address-line-2").val(selectedOption.dataset.address_line_2);
     $("#address-town").val(selectedOption.dataset.address_town);
     $("#address-postcode").val(selectedOption.dataset.address_postcode);
-	$(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
+	  $(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
 	
-	if (selectedOption.dataset.address_region !== "null" && selectedOption.dataset.address_region !== "") {
+	  if (selectedOption.dataset.address_region !== "null" && selectedOption.dataset.address_region !== "") {
         $("#address-region").val(selectedOption.dataset.address_region);
         $("#address-region-code").val(selectedOption.dataset.address_region_code);
         $(this.regionResultsText).text(selectedOption.dataset.address_region);

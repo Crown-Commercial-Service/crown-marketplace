@@ -4,8 +4,8 @@ module FacilitiesManagement
       class DocumentsProcurementHelper
         def self.review_docs
           @review_your_contract_static_files = [
-            'About the Direct Award.docx',
-            'Statement of Requirements - Annex A - Standards and Processes.docx',
+            'Attachment 1 - About the Direct Award.docx',
+            'Attachment 2 - Statement of Requirements - Annex A - Standards and Processes (DA).docx',
             'Core Terms v3.0.2 (DA).docx',
             'Call-Off Schedule 1 Transparency Reports (DA).docx',
             'Call-Off Schedule 3 - Continuous Improvement (DA).docx',
@@ -43,9 +43,9 @@ module FacilitiesManagement
           @review_your_contract_static_files = FacilitiesManagement::Beta::Procurements::DocumentsProcurementHelper.review_docs
 
           file_stream = Zip::OutputStream.write_buffer do |zip|
-            zip.put_next_entry 'direct_award_prices.xlsx'
+            zip.put_next_entry 'Attachment 3 - Price Matrix (DA).xlsx'
             zip.print direct_award_spreadsheet.to_xlsx
-            zip.put_next_entry 'deliverable_matrix.xlsx'
+            zip.put_next_entry 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx'
             zip.print deliverable_matrix_spreadsheet_built.to_stream.read
 
             if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?

@@ -170,9 +170,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       #   spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new procurement.id
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new contract.id
 
+      # TODO:  FM-1171 rename: direct_award_prices.xlsx,to, Attachment 3 - Price Matrix (DA).xlsx
       IO.write('/tmp/direct_award_prices_3.xlsx', spreadsheet.to_xlsx)
 
       # one building does not contain K.7, verify service cells are in correct position
+
+      # TODO:  FM-1171 rename: direct_award_prices.xlsx,to, Attachment 3 - Price Matrix (DA).xlsx
       wb = Roo::Excelx.new('/tmp/direct_award_prices_3.xlsx')
       # wb.sheet('Contract Price Matrix').row(24)[0]).to eq 'K.7'
       expect(wb.sheet('Contract Price Matrix').row(24)[2]).to eq 190.38
@@ -184,18 +187,22 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new procurement.id
       spreadsheet = spreadsheet_builder.build
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+
+      # TODO:  FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix_3.xlsx', spreadsheet.to_stream.read)
     end
 
     it 'create a direct-award report with contract length of 1 year' do
       spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new procurement.id
 
+      # TODO:  FM-1171 rename: direct_award_prices.xlsx,to, Attachment 3 - Price Matrix (DA).xlsx
       IO.write('/tmp/direct_award_prices_3_1year.xlsx', spreadsheet.to_xlsx)
 
       spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new procurement.id
       spreadsheet = spreadsheet_builder.build
 
       # render xlsx: spreadsheet.to_stream.read, filename: 'deliverable_matrix', format: # 'application/vnd.openxmlformates-officedocument.spreadsheetml.sheet'
+      # TODO:  FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
     end
 
@@ -203,8 +210,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new procurement.id
       spreadsheet = spreadsheet_builder.build
 
+      # TODO:  FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       IO.write('/tmp/deliverable_matrix_3_1year.xlsx', spreadsheet.to_stream.read)
 
+      # TODO:  FM-1171 rename: deliverable_matrix.xlsx to,Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx
       wb = Roo::Excelx.new('/tmp/deliverable_matrix_3_1year.xlsx')
       number_rows = wb.sheet('Volume').last_row
 
