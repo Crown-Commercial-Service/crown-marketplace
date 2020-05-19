@@ -79,9 +79,10 @@ else
   echo Creating uncompressed files
 fi
 
-for file in AddressBasePlus_FULL*.csv; do
-  # shellcheck disable=SC2039
-  if [[ -f "$file" ]]; then
+process_file()
+{
+  if [[ -f "$1" ]]; then
+    file=$1
     # process the file with name in "$file" here
     if [[ "$file" == *".csv"* ]]; then
       pname="p_${file%.*}"
@@ -120,5 +121,14 @@ for file in AddressBasePlus_FULL*.csv; do
       rm $pname.csv
     fi
   fi
+}
+
+for file in AddressBasePlus_FULL*.csv; do
+  # shellcheck disable=SC2039
+  process_file $file
+done
+for file in AddressBasePISL_FULL*.csv; do
+  # shellcheck disable=SC2039
+  process_file $file
 done
 echo Done
