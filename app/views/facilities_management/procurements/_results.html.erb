@@ -5,9 +5,9 @@
     <h2 class="govuk-heading govuk-heading-m"><%= t('.estimated_cost') %>
     <br/><span class="govuk-heading govuk-heading-l">
       <% if @page_data[:model_object].eligible_for_da %>
-        <%= number_to_currency(@page_data[:supplier_prices].min, precision: 0) %>
+        <%= number_to_currency(@page_data[:supplier_prices].min, precision: 2) %>
       <% else %>
-        <%= number_to_currency(@page_data[:estimated_cost], precision: 0) %>
+        <%= number_to_currency(@page_data[:estimated_cost], precision: 2) %>
       <% end %>
     </span></h2>
     <details class="govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6" data-module="govuk-details">
