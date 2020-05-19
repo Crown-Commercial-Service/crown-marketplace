@@ -10,7 +10,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
-    @active_procurement_buildings = @procurement.active_procurement_buildings
+    @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
   end
 
   def buildings_data
