@@ -204,33 +204,31 @@ LookupHandler.prototype.init = function () {
     var selectResult = this.selectResult.bind(this)
 	var selectRegion = this.selectRegionResult.bind(this);
     
-    if ( /MSIE 11/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+    if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
 	    $(this.resultsDropDown).on('blur', selectResult);
+	    $(this.regionDropDown).on('blur', selectRegion);
     } else {
         $(this.resultsDropDown).on('change', selectResult);
+	    $(this.regionDropDown).on('change', selectRegion);
 	}
-	this.resultsDropDown.addEventListener('keypress', function (e) {
+	
+    this.resultsDropDown.addEventListener('keypress', function (e) {
 		if (e.keyCode === 13) {
 			e.preventDefault();
 			selectResult();
 		}
 	});
 
-    $(this.btnChangeRegion).on('click', function (e) {
-        e.preventDefault();
-        lookupRegion(e);
-    });
-	
-	if ( /MSIE 11/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
-		$(this.regionDropDown).on('blur', selectRegion);
-	} else {
-		$(this.regionDropDown).on('change', selectRegion);
-	}
 	this.regionDropDown.addEventListener('keypress', function (e) {
 		if (e.keyCode === 13) {
 			e.preventDefault();
 			selectRegion();
 		}
+	});
+
+	$(this.btnChangeRegion).on('click', function (e) {
+		e.preventDefault();
+		lookupRegion(e);
 	});
 };
 
@@ -357,7 +355,7 @@ LookupHandler.prototype.selectResult = function (e) {
     anyArbitraryName.global_formValidators[0].clearBannerErrorList($(this.regionDropDown));
 	anyArbitraryName.global_formValidators[0].toggleBannerError();
 	
-	selectedOption = this.resultsDropDown.selectedOptions[0];
+	selectedOption = this.resultsDropDown.options[this.resultsDropDown.selectedIndex];
 
     $("#address-line-1").val(selectedOption.dataset.address_line_1);
     $("#address-line-2").val(selectedOption.dataset.address_line_2);
@@ -386,7 +384,8 @@ LookupHandler.prototype.selectResult = function (e) {
 LookupHandler.prototype.selectRegionResult = function (e) {
     var selectedOption = null;
     if (this.regionDropDown.selectedIndex <= 0) return;
-    selectedOption = this.regionDropDown.selectedOptions[0];
+    selectedOption = this.regionDropDown.options[this.regionDropDown.selectedIndex];
+    
     $("#address-region").val(selectedOption.dataset.address_region);
     $("#address-region-code").val(selectedOption.dataset.address_region_code);
     $(this.regionResultsText).text(selectedOption.dataset.address_region);
