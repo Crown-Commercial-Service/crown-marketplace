@@ -116,8 +116,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+      bold_style = sheet.styles.add_style sz: 12, b: true
 
-      sheet.add_row [@supplier_name]
+      sheet.add_row [@supplier_name], style: bold_style
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
@@ -214,6 +215,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         new_row << 'Building ' + (idx + 1).to_s
       end
       sheet.add_row new_row, style: header_row_style
+
+      building_name_row = ['', '', '']
+      @active_procurement_buildings.each { |building| building_name_row << building.name }
+      sheet.add_row building_name_row, style: header_row_style
 
       sorted_building_keys = @data.keys
       sumsum = 0
@@ -349,23 +354,23 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       service_count = @data.keys.collect { |k| @data[k].keys }.flatten.uniq.count
       # Service costs
-      sheet["A#{service_count + 4}:C#{service_count + 4}"].each { |c| c.style = total_style }
-      sheet["A4:B#{service_count + 4}"].each { |c| c.style = standard_column_style }
-      sheet["A#{service_count + 6}:C#{service_count + 7}"].each { |c| c.style = variance_style }
-      sheet["A#{service_count + 8}:C#{service_count + 8}"].each { |c| c.style = total_style }
-      sheet["A#{service_count + 6}:B#{service_count + 8}"].each { |c| c.style = standard_column_style }
-      sheet["A#{service_count + 10}:C#{service_count + 10}"].each { |c| c.style = variance_style }
-      sheet["A#{service_count + 11}:C#{service_count + 11}"].each { |c| c.style = total_style }
-      sheet["A#{service_count + 10}:B#{service_count + 11}"].each { |c| c.style = standard_column_style }
-      sheet["A#{service_count + 13}:C#{service_count + 14}"].each { |c| c.style = variance_style }
-      sheet["A#{service_count + 15}:C#{service_count + 15}"].each { |c| c.style = total_style }
-      sheet["A#{service_count + 13}:B#{service_count + 15}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 5}:C#{service_count + 5}"].each { |c| c.style = total_style }
+      sheet["A4:B#{service_count + 5}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 7}:C#{service_count + 8}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 9}:C#{service_count + 9}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 7}:B#{service_count + 9}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 11}:C#{service_count + 11}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 12}:C#{service_count + 12}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 11}:B#{service_count + 12}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 14}:C#{service_count + 15}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 16}:C#{service_count + 16}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 14}:B#{service_count + 16}"].each { |c| c.style = standard_column_style }
       # Year 1 charges
-      sheet["A#{service_count + 17}:C#{service_count + 18}"].each { |c| c.style = variance_style }
-      sheet["A#{service_count + 19}:C#{service_count + 19}"].each { |c| c.style = total_style }
-      sheet["A#{service_count + 20}:C#{service_count + 20}"].each { |c| c.style = variance_style }
-      sheet["A#{service_count + 21}:C#{service_count + 21}"].each { |c| c.style = year_total_style }
-      sheet["A#{service_count + 17}:B#{service_count + 21}"].each { |c| c.style = standard_column_style }
+      sheet["A#{service_count + 18}:C#{service_count + 19}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 20}:C#{service_count + 20}"].each { |c| c.style = total_style }
+      sheet["A#{service_count + 21}:C#{service_count + 21}"].each { |c| c.style = variance_style }
+      sheet["A#{service_count + 22}:C#{service_count + 22}"].each { |c| c.style = year_total_style }
+      sheet["A#{service_count + 18}:B#{service_count + 22}"].each { |c| c.style = standard_column_style }
     end
   end
   # rubocop:enable Metrics/MethodLength

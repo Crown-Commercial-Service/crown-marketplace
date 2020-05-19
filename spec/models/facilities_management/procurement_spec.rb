@@ -239,29 +239,23 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       }
     end
 
-    let(:building_id) { 'test-building-uuid' }
+    let(:building_id) { SecureRandom.uuid }
 
     context 'when procurement building already exists' do
       before do
         procurement.save
-        procurement.procurement_buildings.create(name: 'test')
+        procurement.procurement_buildings.create(building_id: building_id)
       end
 
       it 'does not create a new one' do
-        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
-      end
-
-      it 'keeps the name' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.name).to eq building_data['name']
+        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
       end
     end
 
     context 'when procurement building does not exist' do
       it 'creates one' do
         procurement.save
-        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+        expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
     end
   end
