@@ -105,6 +105,7 @@ module ApplicationHelper
 
   def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+    return if collection.empty?
 
     content_tag :div, class: 'error-collection potenital-error', property_name: property_name(section_name, attributes) do
       multiple_validation_errors(model_object, attributes, form_object_name, collection)
