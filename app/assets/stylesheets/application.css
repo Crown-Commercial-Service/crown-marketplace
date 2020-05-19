@@ -5803,7 +5803,8 @@
 
 @media (min-width: 40.0625em) {
     .govuk-\!-width-two-thirds {
-        width: 66.66% !important
+        width: 50% !important;
+        height: 100% !important
     }
 }
 
