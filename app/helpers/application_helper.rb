@@ -269,6 +269,14 @@ module ApplicationHelper
     [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
   end
 
+  def passwords_page
+    controller.controller_name == 'passwords'
+  end
+
+  def cookies_page
+    controller.action_name == 'cookies'
+  end
+
   def not_permitted_page
     controller.action_name == 'not_permitted'
   end

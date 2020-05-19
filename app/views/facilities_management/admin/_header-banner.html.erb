@@ -1,14 +1,14 @@
 <%= render 'layouts/logo' %>
 <div class="govuk-header__content">
-  <%= render 'layouts/header-title', service: 'facilities_management', path: facilities_management_path %>
+  <%= render 'layouts/admin/header-title', service: 'facilities_management', path: facilities_management_path %>
   <nav role="navigation" aria-label="Top Level Navigation">
     <ul id="navigation" class="govuk-header__navigation ">
       <% unless landing_or_admin_page || fm_buyer_landing_page || fm_supplier_landing_page || not_permitted_page || fm_landing_page %>
         <li class="govuk-header__navigation-item">
           <% if fm_back_to_start_page || cookies_page %>
-            <%= link_to 'Back to start', facilities_management_start_path, class: 'govuk-header__link' %>
+            <%= link_to 'Back to start', facilities_management_admin_path, class: 'govuk-header__link' %>
           <% else %>
-            <%= link_to 'My account', facilities_management_path, class: 'govuk-header__link' %>
+            <%= link_to 'My account', facilities_management_admin_path, class: 'govuk-header__link' %>
           <% end %>
         </li>
       <% end %>
