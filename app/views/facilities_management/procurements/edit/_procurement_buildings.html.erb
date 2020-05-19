@@ -13,6 +13,7 @@
         <%= link_to 'Add or change buildings', facilities_management_buildings_path, class:"govuk-link--no-visited-state govuk-!-font-size-19" %>
         <%= display_error_no_attr(f.object, :procurement_buildings) %>
         <%= f.fields_for :procurement_buildings do |procurement_building|%>
+          <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
           <div class="chooser-input govuk-form-group govuk-!-padding-top-4 <%= 'govuk-form-group--error' if f.object.errors.any? %>" sectionname="buildings" section="buildings">
 
             <fieldset class="govuk-fieldset">

@@ -247,8 +247,9 @@ module FacilitiesManagement
       end
     end
 
-    def find_or_build_procurement_building(building_id)
-      procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
+    def find_or_build_procurement_building(building_data, building_id)
+      procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
+      procurement_building.building_id = building_id
       procurement_building.save
     end
 
