@@ -89,6 +89,7 @@ SvcHoursDataUI.prototype.validateForm = function(_formElements) {
 
         isValid = this.fnCheckTimeUnit(jqHour, "hour") && isValid;
         isValid = this.fnCheckTimeUnit(jqMinute, "minute") && isValid;
+        isValid = this.fnCheckTimeUnit(jqAmPm, "ampm") && isValid;
         choices[part]["ampmElem"] = jqAmPm;
         choices[part]["status"] = isValid;
 
