@@ -3,7 +3,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
 
-    @active_procurement_buildings = @procurement.active_procurement_buildings
+    @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
     @supplier_name = @contract.supplier.data['supplier_name']
 
     frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: @procurement.id)
