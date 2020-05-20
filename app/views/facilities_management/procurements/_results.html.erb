@@ -53,7 +53,7 @@
     <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})", true do %>
       <ul class="govuk-list govuk-list--bullet">
         <% @page_data[:buildings].each do |b| %>
-          <li><%= b %></li>
+          <li><%= b.name %></li>
         <% end %>
       </ul>
     <% end %>
