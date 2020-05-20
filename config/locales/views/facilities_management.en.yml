@@ -1146,46 +1146,21 @@ en:
           new: Enter a new invoicing contact
         local_government_pension_scheme:
           description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
-        new_authorised_representative_address:
-          building_and_street: Building and street
-          county: County (optional)
-          postcode: Postcode
-          town_or_city: Town or city
-        new_authorised_representative_details:
+        new_contact_details:
           address: Address
           change: Change
           choose_address: Select an address
           email: Email address
+          find_address: Find address
           job_title: Job title
           missing_address: Enter address manually, if you can't find address
           name: Name
           telephone_number: Telephone number
-        new_invoicing_address:
+        new_contact_details_address:
           building_and_street: Building and street
           county: County (optional)
           postcode: Postcode
           town_or_city: Town or city
-        new_invoicing_contact_details:
-          address: Address
-          change: Change
-          choose_address: Select an address
-          email: Email address
-          job_title: Job title
-          missing_address: Enter address manually, if you can't find address
-          name: Name
-        new_notices_address:
-          building_and_street: Building and street
-          county: County (optional)
-          postcode: Postcode
-          town_or_city: Town or city
-        new_notices_contact_details:
-          address: Address
-          change: Change
-          choose_address: Select an address
-          email: Email address
-          job_title: Job title
-          missing_address: Enter address manually, if you can't find address
-          name: Name
         next_step:
           contract_dates: 'Next: Buildings'
           contract_name: 'Next: Estimated annual cost'
