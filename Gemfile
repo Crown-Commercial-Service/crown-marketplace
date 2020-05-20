@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -31,12 +31,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter'
+gem 'activerecord-postgis-adapter', '>= 5.2.2'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.0.1'
-gem 'caxlsx_rails', '>= 0.6.0'
+gem 'caxlsx_rails', '>= 0.6.2'
 gem 'phonejack'
 gem 'holidays'
 gem 'virtus'
@@ -60,13 +60,13 @@ gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 gem 'kaminari', '~> 1.1.1'
 
 # for pretty urls
-gem 'friendly_id', '~> 5.2.4'
+gem 'friendly_id', '~> 5.2.5'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
 
 # for file uploads
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 
 # handles spreadsheets
 gem 'roo', '~> 2.8.2'
@@ -106,13 +106,13 @@ gem 'smarter_csv'
 
 # for date layout and validation
 gem 'gov_uk_date_fields', '>= 4.1.0'
-gem 'date_validator'
+gem 'date_validator', '>= 0.9.0'
 
 # for clamav
-gem 'ratonvirus'
-gem 'ratonvirus-clamby'
+gem 'ratonvirus', '>= 0.1.1'
+gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.8.7'
+gem 'active_storage_validations', '>= 0.8.8'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -121,7 +121,7 @@ gem 'notifications-ruby-client'
 gem 'caracal-rails', '>= 1.0.1'
 
 # duplicating procurements
-gem 'amoeba'
+gem 'amoeba', '>= 3.1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -131,12 +131,12 @@ group :development, :test do
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.4'
-  gem 'rspec-rails', '>= 3.9.0'
+  gem 'rspec-rails', '>= 3.9.1'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'rubyXL', '>= 3.4.6'
-  gem 'i18n-tasks', '>= 0.9.29'
+  gem 'i18n-tasks', '>= 0.9.31'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
