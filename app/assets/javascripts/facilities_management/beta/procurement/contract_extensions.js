@@ -19,7 +19,6 @@ $(function () {
       }
     }
     updateButtonText();
-    pluralizeButtonText();
     hideAndUnhideElements();
   })
   
