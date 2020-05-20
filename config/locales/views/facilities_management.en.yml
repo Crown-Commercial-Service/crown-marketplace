@@ -144,6 +144,7 @@ en:
               blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
+              not_an_integer: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
               inclusion: Select yes if you know your estimated annual cost, if you do not please select no
               not_present: You must answer the question about ‘Estimated annual cost’
