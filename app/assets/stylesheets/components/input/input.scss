@@ -5,3 +5,9 @@
 	outline-offset: 0;
 	box-shadow: inset 0 0 0 2px
 }
+
+@media (max-width: 40.0825em) {
+    .govuk-select {
+      height: 60px;
+    }
+}
