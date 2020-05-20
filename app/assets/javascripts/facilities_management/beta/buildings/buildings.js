@@ -514,22 +514,22 @@ function nodeListForEach(nodes, callback) {
 $other_expandos = document.querySelectorAll('[data-module="other-expando"]') ;
 nodeListForEach($other_expandos, function (expandoItem) {
 	var innerRadio = expandoItem.querySelector('input[type="radio"]');
-	var innerContent = expandoItem.querySelector('[data-element="other-expando--content"');
+	var innerContent = expandoItem.querySelector('[data-element="other-expando--content"]');
 	if (null !== innerRadio && null !== innerContent) {
 		var radioName = innerRadio.name;
 		$("input[name=\"" + radioName + "\"]").change ( function (e) {
 		    if ( $(innerRadio).is(":checked")) {
 		        $(innerContent).removeClass('govuk-visually-hidden');
-                document.getElementById("facilities_management_building_other_building_type").tabIndex = "0";
+                document.getElementById("facilities_management_building_other_building_type").tabIndex = 0;
 			} else {
 				$(innerContent).addClass('govuk-visually-hidden');
-                document.getElementById("facilities_management_building_other_building_type").tabIndex = "-1";
+                document.getElementById("facilities_management_building_other_building_type").tabIndex = -1;
 			}
 		});
 	}
 });
 
-$changeAddress = document.querySelectorAll('[data-module="find-address"');
+$changeAddress = document.querySelectorAll('[data-module="find-address"]');
 nodeListForEach($changeAddress, function ($changeAddressModule) {
     new FindAddressComponent($changeAddressModule);
 });
