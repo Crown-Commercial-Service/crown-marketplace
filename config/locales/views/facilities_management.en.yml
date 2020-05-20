@@ -649,6 +649,7 @@ en:
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
+        heading: Regions
         locations_selected: Locations selected
         no_locations_selected: No locations selected
         question: Where are your buildings located?
@@ -660,7 +661,7 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
-        start_a_new_procurement_header: Start a new procurement
+        start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
       building_standards:
