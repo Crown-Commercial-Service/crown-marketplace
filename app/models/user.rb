@@ -29,6 +29,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable
 
+  def authenticatable_salt
+    "#{id}#{session_token}"
+  end
+
+  def invalidate_session!
+    self.session_token = SecureRandom.hex
+  end
+
   roles_attribute :roles_mask
 
   # declare the valid roles -- do not change the order if you add more
