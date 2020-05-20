@@ -25,15 +25,19 @@
         <% content_for(:page_title, @page_description.heading_details.text) %>
       <% end %>
     <% end %>
+    <% site_title = { "services" => t('facilities_management.journey.choose_services.heading'), 
+                      "regions" => t('facilities_management.journey.choose_locations.heading'), 
+    } %>
     <div class="govuk-clearfix">
       <% if !@procurement.persisted? || @procurement.quick_search?%>
-        <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.contract_name}" if @procurement.detailed_search? %></span>
+        <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.contract_name}" if @procurement.contract_name? %></span>
         <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
-          <%= @procurement.contract_name if @procurement.quick_search? %>
-          <%= 'Search Results' unless @procurement.persisted? %>
-          <% content_for :page_title, 'Search Results' %>
+          <%= site_title[params[:step]] if params[:step] && site_title[params[:step]] %>
+          <%= t('.heading') if !params[:step] && !site_title[params[:step]] %>
         </h1>
-        <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+        <p class="govuk-caption-m govuk-!-margin-bottom-5">
+          <%= t('.search_result_body_html') if !params[:step] %>
+        </p>
       <% end %>
     </div>
     <div class="procurement">
