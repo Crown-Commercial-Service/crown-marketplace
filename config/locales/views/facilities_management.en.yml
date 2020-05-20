@@ -154,7 +154,7 @@ en:
               not_a_date: Initial call-off period end date is not a valid date
             initial_call_off_period:
               blank: Enter initial call-off period
-              greater_than_or_equal_to: Enter initial call-off period
+              greater_than_or_equal_to: Initial call-off period must be between 1 and 7 years
               less_than_or_equal_to: Initial call-off period must be between 1 and 7 years
               not_a_number: Enter initial call-off period
               not_an_integer: Initial call-off period must be a whole number

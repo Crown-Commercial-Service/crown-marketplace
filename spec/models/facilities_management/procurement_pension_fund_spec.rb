@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
 
       context 'when the percentage has more than 4 decimal places' do
         it 'is expected to not be valid' do
-          pension_fund.percentage = rand(0.0...100.0).round(5)
+          pension_fund.percentage = "#{rand(99)}.#{(0...5).map { rand(49..57).chr }.join}".to_f
           expect(pension_fund.valid?).to eq false
         end
       end
