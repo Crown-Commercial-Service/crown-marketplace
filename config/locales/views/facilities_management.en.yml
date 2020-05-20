@@ -1156,7 +1156,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can’t find address/enter address manually
+          missing_address: Enter address manually, if you can't find address
           name: Name
           telephone_number: Telephone number
         new_invoicing_address:
@@ -1170,7 +1170,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can’t find address/enter address manually
+          missing_address: Enter address manually, if you can't find address
           name: Name
         new_notices_address:
           building_and_street: Building and street
@@ -1183,7 +1183,7 @@ en:
           choose_address: Select an address
           email: Email address
           job_title: Job title
-          missing_address: Can’t find address/enter address manually
+          missing_address: Enter address manually, if you can't find address
           name: Name
         next_step:
           contract_dates: 'Next: Buildings'

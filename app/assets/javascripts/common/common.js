@@ -56,7 +56,7 @@ const pageUtils = {
                                 $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
                             }
                         }else{
-                            pageUtils.showPostCodeError(true, "Add missing address manually");
+                            pageUtils.showPostCodeError(true, "Address not found, please enter manually");
                         }
                     })
                     .fail(function (data) {
