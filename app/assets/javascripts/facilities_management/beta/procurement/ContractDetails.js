@@ -39,6 +39,12 @@ $(function () {
         } else if (!(formContactDetailsAddress || formAuthorisedRepAddress || formNoticeDetailsAddress)) {
             removeDetails();
         }
+
+        if (formContactDetails || formAuthorisedRep || formNoticeDetails) {
+          $(document.querySelector('input[type="submit"]')).on('click', function() {
+            removeDetails();
+          });
+        }    
     }
 
     function fillInDetails(form){
