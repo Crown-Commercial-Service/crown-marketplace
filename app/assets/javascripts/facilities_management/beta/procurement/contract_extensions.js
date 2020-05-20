@@ -19,6 +19,7 @@ $(function () {
       }
     }
     updateButtonText();
+    pluralizeButtonText();
     hideAndUnhideElements();
   })
   
@@ -48,6 +49,9 @@ $(function () {
       if ((10 - count) > 0 && $("#facilities_management_procurement_call_off_extension_4").val() !== 'true') {
           $("#fm-add-contract-ext-btn").removeClass("govuk-visually-hidden");
           $("#fm-add-contract-ext-btn").text("Add another extension period (" + (10 - count) + " years remaining)");
+          if ((10 - count) == 1) {
+            $("#fm-add-contract-ext-btn").text("Add another extension period (1 year remaining)");
+          }
           $("#fm-add-contract-ext-btn").get(0).removeAttribute('aria-hidden');
           $("#fm-add-contract-ext-btn").get(0).removeAttribute('tabindex');
       } else {
