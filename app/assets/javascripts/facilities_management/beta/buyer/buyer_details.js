@@ -70,6 +70,8 @@ $(function () {
 			$("#selected-address-label").text(selectedAddress);
 			$("#selected-address-postcode").text(postcode);
 			$("#organisation_address").text(selectedAddress);
+			
+			contactDetails.tabIndex(3);
 		}
 	}
 	
