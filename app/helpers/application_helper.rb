@@ -257,6 +257,10 @@ module ApplicationHelper
     request.path_info.include? 'buyer-account'
   end
 
+  def fm_activate_account_landing_page
+    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
+  end
+
   def fm_supplier_landing_page
     request.path_info.include? 'supplier'
   end
