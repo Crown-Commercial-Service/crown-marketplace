@@ -80,7 +80,7 @@
     <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>" class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
       <span id="postcode-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.postcode') %></span>
       <span class="govuk-body govuk-!-margin-right-4" data-module-element="postcode-entry-text"><%= @page_data[:model_object].postcode_entry %></span>
-      <a href="#postcode_header" class="govuk-link" data-module-element="change-input" tabindex="-1"><%= t('.change') %></a>
+      <a href="#postcode_header" id="change-input-1" class="govuk-link" data-module-element="change-input" tabindex="-1"><%= t('.change') %></a>
       <label for="results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_an_address') %></label>
       <%= display_potential_errors(@page_data[:model_object], :address, "#{f.object_name}_address") %>
       <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected %>"
@@ -123,7 +123,8 @@
           <%= address_in_a_line @page_data[:model_object] %>
         <% end %>
       </div>
-      <a href="#postcode-header" class="govuk-link" data-module-element="change-input"><%= t('.change') %></a>
+      <% change_2_index = @page_data[:model_object].address_line_1.present? ? 0 : -1 %>
+      <a href="#postcode-header" class="govuk-link" id="change-input-2" data-module-element="change-input" tabindex=<%= change_2_index %>><%= t('.change') %></a>  
     </div>
     <div data-module-part="region-area" class="govuk-form-group <%= 'govuk-visually-hidden' if hide_region_section? %>">
       <div class="govuk-!-margin-top-3" data-propertyname="address_region">
@@ -136,8 +137,9 @@
             </div>
             <label for="region-results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1" tabindex="-1"><%= t('.select_a_region') %></label>
             <%= display_potential_errors(@page_data[:model_object], :address_region, "") %>
+            <% region_select = @page_data[:model_object].address_line_1.present? && !@page_data[:model_object].address_region.present? ? 0 : -1 %>
             <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address_region, 0)&.dig(:error).present? %>"
-                    tabindex="-1" data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>"
+                    tabindex=<%= region_select.to_s %> data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>"
                     data-withdata-text-single="<%= t('.region_option_with_data_single') %>" data-withdata-text-plural="<%= t('.region_option_with_data_plural') %>"
                     id="region-results-container">
               <optgroup label="<%= multiple_regions? ? t('.region_option_with_data_plural').sub('{%}', valid_regions.length.to_s) : t('.region_option_with_data_single') %>"></optgroup>
@@ -153,8 +155,9 @@
           <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
             <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.region') %></span>
             <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
-            <a href="#region-header" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
-               data-module-element="change-region-button" aria-label="<%= t('.change') %>" tabindex="-1"><%= t('.change') %></a>
+            <% change_3_index = @page_data[:model_object].address_region.present? && valid_regions.length > 1 ? 0 : -1 %>
+            <a href="#region-header" id="change-input-3" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
+               data-module-element="change-region-button" aria-label="<%= t('.change') %>" tabindex=<%=change_3_index.to_s%>><%= t('.change') %></a>
           </div>
         </div>
       </div>
