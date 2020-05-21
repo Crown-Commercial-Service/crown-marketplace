@@ -5,7 +5,7 @@ en:
       facilities_management/service_hour_choice/service_choice:
         all_day: all day (24 hours)
         hourly: Specified hours
-        not_required: not required
+        not_required: Not required
         time_to: to
     errors:
       models:
