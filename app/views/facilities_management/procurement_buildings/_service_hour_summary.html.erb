@@ -5,7 +5,7 @@
     <% concat(content_tag(:div, class: "govuk-details__text govuk-!-padding-bottom-0 govuk-!-padding-right-0 govuk-!-padding-top-0") do %>
       <ul class="govuk-list">
         <% service_hours.attributes.reject{|k| k == :uom}.each do |k, v| %>
-          <li class="govuk-!-font-size-14"> <%= "#{k.to_s.capitalize}, #{v.to_summary}".html_safe %> </li>
+          <li class="govuk-!-font-size-14"> <%= "#{k.to_s.capitalize[0..2]}, #{v.to_summary}".html_safe %> </li>
         <% end %>
       </ul>
     <% end) %>
