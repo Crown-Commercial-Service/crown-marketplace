@@ -2,7 +2,8 @@ module FacilitiesManagement
   class SummaryReport
     include FacilitiesManagement::SummaryHelper
 
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :results
+    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag,
+                :posted_services, :posted_locations, :subregions, :results
 
     def initialize(procurement_id)
       @sum_uom = 0
