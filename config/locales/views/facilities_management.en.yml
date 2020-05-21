@@ -651,8 +651,9 @@ en:
     journey:
       choose_locations:
         heading: Regions
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        locations_selected: Regions selected
+        location_selected: Region selected
+        no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -663,6 +664,7 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
+        service_selected: Service selected
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
@@ -1301,8 +1303,9 @@ en:
         save_headline: Save a new search
         save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
       regions:
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        locations_selected: Regions selected
+        location_selected: Region selected
+        no_locations_selected: No Regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -1337,6 +1340,7 @@ en:
         remove_all: Remove all
         service_specification_doc: Read the service specification document
         services_selected: Services selected
+        service_selected: Service selected
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     registrations:
       domain_not_on_whitelist:
