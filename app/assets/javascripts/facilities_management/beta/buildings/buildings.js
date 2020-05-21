@@ -116,16 +116,10 @@ FindAddressComponent.prototype.lookupRegion = function (e) {
 
 FindAddressComponent.prototype.displayPostcodeLookupResults = function (postcode, data) {
     if (data.length > 0) {
-    	this.btnChangeInput[0].tabIndex = 0;
-    	this.sourceInput.tabIndex = -1;
-    	this.btnTrigger.tabIndex = -1;
         this.lookupHandler.clearResultsList();
         this.lookupHandler.showResults(postcode, data);
     } else {
         this.noPostcodeResults(postcode, data);
-	    this.btnChangeInput[0].tabIndex = 0;
-	    this.sourceInput.tabIndex = 0;
-	    this.btnTrigger.tabIndex = 0;
     }
 };
 
@@ -142,11 +136,7 @@ FindAddressComponent.prototype.restartPostcodeLookup = function () {
     $(this.sourceContainer).removeClass("govuk-visually-hidden");
     this.lookupHandler.hideResults();
     this.sourceInput.focus();
-    this.sourceInput.tabIndex = 0;
-    this.btnTrigger.tabIndex = 0;
-    this.btnChangeInput.tabIndex = -1;
-    this.lookupHandler.resultsContainer.tabIndex = -1;
-    this.lookupHandler.btnCantFindAddress.tabIndex = -1;
+    this.lookupHandler.changeTabbingState(1);
 };
 
 FindAddressComponent.prototype.noPostcodeResults = function (postcode, data) {
@@ -225,9 +215,12 @@ LookupHandler.prototype.init = function () {
       }
     });
 
+    self = this
+
     $(this.btnChangeRegion).on('click', function (e) {
       e.preventDefault();
       lookupRegion(e);
+      self.changeTabbingState(4);
     });
 };
 
@@ -282,9 +275,8 @@ LookupHandler.prototype.showResults = function (postcode, addresses) {
     $(this.addressDisplay).addClass('govuk-visually-hidden');
     this.populateDropDown(addresses);
     this.changeAddressContainerVisibility(true);
-    this.btnCantFindAddress.tabIndex = 0;
-    this.resultsDropDown.tabIndex = 0;
     this.resultsDropDown.focus();
+    this.changeTabbingState(2);
 };
 
 LookupHandler.prototype.hideResults = function (postcode, addresses) {
@@ -344,11 +336,6 @@ LookupHandler.prototype.showRegionDecision = function () {
 LookupHandler.prototype.selectResult = function (e) {
     var selectedOption = null;
     
-    this.resultsContainer.tabIndex = -1;
-    this.resultsDropDown.tabIndex = -1;
-    this.btnCantFindAddress.tabIndex = -1;
-    this.findAddressComponent.btnChangeInput[0].tabIndex = -1;
-    
     if (this.resultsDropDown.selectedIndex <= 0) return;
     anyArbitraryName.global_formValidators[0].clearFieldErrors($(this.resultsDropDown));
     anyArbitraryName.global_formValidators[0].clearBannerErrorList($(this.regionDropDown));
@@ -369,12 +356,14 @@ LookupHandler.prototype.selectResult = function (e) {
         this.showRegionText(true);
         this.showRegionDecision();
         $(this.btnChangeRegion).addClass('govuk-visually-hidden');
+        this.changeTabbingState(3);
     } else {
-		$("#address-region").val("");
-		$("#address-region-code").val("");
-		if ( this.regionDropDown.options.length < 2 ) {
-			this.findAddressComponent.lookupRegion();
-		}
+        $("#address-region").val("");
+        $("#address-region-code").val("");
+        if ( this.regionDropDown.options.length < 2 ) {
+            this.findAddressComponent.lookupRegion();
+            this.changeTabbingState(4);
+        }
 	}
 
     this.showDecision();
@@ -391,8 +380,10 @@ LookupHandler.prototype.selectRegionResult = function (e) {
     this.showRegionText(true);
     if (this.regionDropDown.options.length > 2) {
         $(this.btnChangeRegion).removeClass('govuk-visually-hidden');
+        this.changeTabbingState(5);
     } else {
         $(this.btnChangeRegion).addClass('govuk-visually-hidden');
+        this.changeTabbingState(3);
     }
     this.showRegionDecision();
 };
@@ -511,6 +502,75 @@ function nodeListForEach(nodes, callback) {
     }
 }
 
+LookupHandler.prototype.changeTabbingState = function(state) {
+  postcodeInput = document.getElementById('postcode_entry');
+  findAddressButton = document.querySelector('button[data-module-element="trigger"]');
+  changeInput1 = document.getElementById('change-input-1');
+  addressSelect = document.querySelector('[data-module-element="results-container"]');;
+  cantFindAddress = document.querySelector('[data-module-element="cant-find"]');
+  changeInput2 = document.getElementById('change-input-2');
+  regionSelect = document.querySelector('[data-module-element="region-results-container"]');;
+  changeInput3 = document.getElementById('change-input-3');
+
+  switch(state) {
+    case 1:
+      // Default for when no postcode entered
+      postcodeInput.tabIndex = 0;
+      findAddressButton.tabIndex = 0;
+      changeInput1.tabIndex = -1;
+      addressSelect.tabIndex = -1;
+      cantFindAddress.tabIndex = -1;
+      changeInput2.tabIndex = -1;
+      regionSelect.tabIndex = -1;
+      changeInput3.tabIndex = -1;
+      break;
+    case 2:
+      // When The user has entered a postcode and selection box is present
+      postcodeInput.tabIndex = -1;
+      findAddressButton.tabIndex = -1;
+      changeInput1.tabIndex = 0;
+      addressSelect.tabIndex = 0;
+      cantFindAddress.tabIndex = 0;
+      changeInput2.tabIndex = -1;
+      regionSelect.tabIndex = -1;
+      changeInput3.tabIndex = -1;
+      break;
+    case 3:
+      // User selected address and only one region
+      postcodeInput.tabIndex = -1;
+      findAddressButton.tabIndex = -1;
+      changeInput1.tabIndex = -1;
+      addressSelect.tabIndex = -1;
+      cantFindAddress.tabIndex = -1;
+      changeInput2.tabIndex = 0;
+      regionSelect.tabIndex = -1;
+      changeInput3.tabIndex = -1;
+      break;
+    case 4:
+      // User selected address and multiple region
+      postcodeInput.tabIndex = -1;
+      findAddressButton.tabIndex = -1;
+      changeInput1.tabIndex = -1;
+      addressSelect.tabIndex = -1;
+      cantFindAddress.tabIndex = -1;
+      changeInput2.tabIndex = 0;
+      regionSelect.tabIndex = 0;
+      changeInput3.tabIndex = -1;
+      break;
+    case 5:
+      // User selected address and has selected a region
+      postcodeInput.tabIndex = -1;
+      findAddressButton.tabIndex = -1;
+      changeInput1.tabIndex = -1;
+      addressSelect.tabIndex = -1;
+      cantFindAddress.tabIndex = -1;
+      changeInput2.tabIndex = 0;
+      regionSelect.tabIndex = -1;
+      changeInput3.tabIndex = 0;
+      break;
+  }
+}
+
 $other_expandos = document.querySelectorAll('[data-module="other-expando"]') ;
 nodeListForEach($other_expandos, function (expandoItem) {
 	var innerRadio = expandoItem.querySelector('input[type="radio"]');
@@ -518,12 +578,20 @@ nodeListForEach($other_expandos, function (expandoItem) {
 	if (null !== innerRadio && null !== innerContent) {
 		var radioName = innerRadio.name;
 		$("input[name=\"" + radioName + "\"]").change ( function (e) {
-		    if ( $(innerRadio).is(":checked")) {
-		        $(innerContent).removeClass('govuk-visually-hidden');
-                document.getElementById("facilities_management_building_other_building_type").tabIndex = 0;
+      if ( $(innerRadio).is(":checked")) {
+        $(innerContent).removeClass('govuk-visually-hidden');
+        if ($('#facilities_management_building_other_building_type').length) {
+          document.getElementById("facilities_management_building_other_building_type").tabIndex = "0";
+        } else if ($('#facilities_management_building_other_security_type').length) {
+          document.getElementById("facilities_management_building_other_security_type").tabIndex = "0";
+        }
 			} else {
-				$(innerContent).addClass('govuk-visually-hidden');
-                document.getElementById("facilities_management_building_other_building_type").tabIndex = -1;
+        $(innerContent).addClass('govuk-visually-hidden');
+        if ($('#facilities_management_building_other_building_type').length) {
+          document.getElementById("facilities_management_building_other_building_type").tabIndex = "-1";
+        } else if ($('#facilities_management_building_other_security_type').length) {
+          document.getElementById("facilities_management_building_other_security_type").tabIndex = "-1";
+        }
 			}
 		});
 	}
