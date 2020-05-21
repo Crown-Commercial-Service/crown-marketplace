@@ -1,9 +1,7 @@
-require 'facilities_management/fm_buildings_data'
-require 'rubygems'
-
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
     before_action :set_procurement, only: %i[show edit update destroy results]
+    before_action :authorize_user
     before_action :set_deleted_action_occurred, only: %i[index]
     before_action :set_edit_state, only: %i[index show edit update destroy]
     before_action :ready_buildings, only: %i[show edit update]
@@ -1051,6 +1049,12 @@ module FacilitiesManagement
           return_url: facilities_management_procurements_path(@procurement)
         }
       }.freeze
+    end
+
+    protected
+
+    def authorize_user
+      @procurement ? (authorize! :manage, @procurement) : (authorize! :read, FacilitiesManagement)
     end
   end
 end

@@ -3,9 +3,8 @@
 module Api
   # return json
   module V2
-    class PostcodesController < ApplicationController
+    class PostcodesController < FacilitiesManagement::FrameworkController
       protect_from_forgery with: :exception
-      before_action :authenticate_user!, except: :show
 
       # GET /postcodes/SW1A 2AA
       # GET /postcodes/SW1A 2AA.json

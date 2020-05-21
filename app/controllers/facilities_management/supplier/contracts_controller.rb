@@ -43,6 +43,8 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
     @procurement = FacilitiesManagement::Procurement.find(@contract.procurement.id)
   end
 
+  protected
+
   def authorize_user
     authorize! :manage, @contract
   end

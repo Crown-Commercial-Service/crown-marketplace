@@ -41,4 +41,27 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    context 'when logging in as the fm buyer that created the building' do
+      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+
+      login_fm_buyer_with_details
+      it 'returns http success' do
+        get :show, params: { id: building.id }
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when logging in a different fm buyer' do
+      let(:building) { create(:facilities_management_building, user_id: create(:user).id) }
+
+      login_fm_buyer_with_details
+      it 'redirects to the not permitted page' do
+        get :show, params: { id: building.id }
+
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
+  end
 end

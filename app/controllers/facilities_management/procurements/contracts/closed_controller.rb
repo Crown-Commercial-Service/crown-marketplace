@@ -6,6 +6,12 @@ module FacilitiesManagement
           @procurement = @current_user.procurements.find_by(id: params[:procurement_id])
           @contract = @procurement.procurement_suppliers.find_by(id: params[:contract_id])
         end
+
+        protected
+
+        def authorize_user
+          authorize! :manage, @contract.procurement
+        end
       end
     end
   end

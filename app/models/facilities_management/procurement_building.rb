@@ -1,4 +1,3 @@
-require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
     scope :active, -> { where(active: true) }

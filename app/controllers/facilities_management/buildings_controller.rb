@@ -7,6 +7,7 @@ module FacilitiesManagement
     include BuildingsControllerRegions
 
     before_action :build_page_data, only: %i[index show new create edit update gia type security add_address]
+    before_action :authorize_user
 
     def index; end
 
@@ -189,6 +190,12 @@ module FacilitiesManagement
 
     def id_present?
       @page_data[:model_object].respond_to?(:id) && @page_data[:model_object][:id].present?
+    end
+
+    protected
+
+    def authorize_user
+      @page_data[:model_object] ? (authorize! :manage, @page_data[:model_object]) : (authorize! :read, FacilitiesManagement)
     end
   end
 end
