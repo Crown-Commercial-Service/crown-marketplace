@@ -77,7 +77,8 @@
             <%= ' tabindex="-1"'.html_safe if hide_postcode_source? %>> <%= t('.find_address') %></button>
   </div>
   <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-0" data-module-part="lookup-container">
-    <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>" class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
+    <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>"
+         class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
       <span id="postcode-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.postcode') %></span>
       <span class="govuk-body govuk-!-margin-right-4" data-module-element="postcode-entry-text"><%= @page_data[:model_object].postcode_entry %></span>
       <a href="#postcode_header" id="change-input-1" class="govuk-link" data-module-element="change-input" tabindex="-1"><%= t('.change') %></a>
