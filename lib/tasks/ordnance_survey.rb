@@ -120,7 +120,6 @@ module OrdnanceSurvey
             AND adds.class::TEXT !~~ 'U%'::TEXT
             AND adds.class::TEXT !~~ 'CH%'::TEXT
             AND adds.class::TEXT !~~ 'CZ%'::TEXT
-            AND adds.class::TEXT !~~ 'P%'::TEXT
             AND adds.class::TEXT !~~ 'CU11%'::TEXT;
       EXCEPTION
           WHEN SQLSTATE '42P07' THEN
