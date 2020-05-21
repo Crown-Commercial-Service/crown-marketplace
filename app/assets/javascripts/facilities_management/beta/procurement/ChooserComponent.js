@@ -311,10 +311,12 @@ BasketComponent.prototype.UpdateBasketNumber = function (count) {
     }
 
     if (selectedParent && selectedParent.data("txt01")) {
-        if (count == 0) {
+        if (count === 0) {
             selectedCount.text("");
             selectedCount.next().text(selectedParent.data("txt02"));
-        } else {
+        } else if (count === 1) { 
+            $('#selected-' + this._classification + '-count').next().text(selectedParent.data("txt03"));
+        }else {
             $('#selected-' + this._classification + '-count').next().text(selectedParent.data("txt01"));
         }
     }
