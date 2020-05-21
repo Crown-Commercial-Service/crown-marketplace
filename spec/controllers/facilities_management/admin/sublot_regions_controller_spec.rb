@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SublotRegionsController do
-  login_admin_buyer
+  login_fm_admin
   supplier_id = 'ca57bf4c-e8a5-468a-95f4-39fcf730c567'
   supplier_data = {
     'lots': [
@@ -84,6 +84,15 @@ RSpec.describe FacilitiesManagement::Admin::SublotRegionsController do
       it 'returns http success' do
         put :update_sublot_regions, params: { id: supplier_id, lot_type: '1a', regions: ['UKC1', 'UKC2'] }
         expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+      end
+    end
+
+    context 'when not an fm admin' do
+      login_mc_admin
+
+      it 'redirects to not permitted page' do
+        get :sublot_region, params: { id: supplier_id, lot_type: '1a' }
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
   end

@@ -5,6 +5,7 @@ module FacilitiesManagement
       include FacilitiesManagement::Procurements::CopyProcurementHelper
 
       before_action :set_procurement_data
+      before_action :authorize_user
       before_action :set_contract_data
       before_action :duplicate_procurement
       before_action :set_page_detail
@@ -42,6 +43,12 @@ module FacilitiesManagement
 
       def procurement_params
         params.require(:facilities_management_procurement).permit(:contract_name)
+      end
+
+      protected
+
+      def authorize_user
+        authorize! :manage, @procurement
       end
     end
   end

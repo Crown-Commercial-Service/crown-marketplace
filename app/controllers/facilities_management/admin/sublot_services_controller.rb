@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Admin
-    class SublotServicesController < FacilitiesManagement::FrameworkController
+    class SublotServicesController < FacilitiesManagement::Admin::FrameworkController
       rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
       rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
       rescue_from NoMethodError, with: :render_no_method_error_response

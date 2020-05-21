@@ -1,7 +1,7 @@
-require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuildingsController < FacilitiesManagement::FrameworkController
     before_action :set_procurement_building
+    before_action :authorize_user
     before_action :set_building_data
     before_action :set_back_path
     before_action :set_service_question, only: %i[edit update]
@@ -41,11 +41,11 @@ module FacilitiesManagement
     end
 
     def set_procurement_building
-      @procurement_building = current_user.procurements.map(&:procurement_buildings).flatten.select { |pb| pb.id == params[:id] } .first
+      @procurement_building = ProcurementBuilding.find(params[:id])
     end
 
     def set_building_data
-      @building = current_user.buildings.find(@procurement_building.building_id)
+      @building = @procurement_building.building
     end
 
     def set_back_path
@@ -54,6 +54,12 @@ module FacilitiesManagement
 
     def set_service_question
       @service_question = params[:service_question]
+    end
+
+    protected
+
+    def authorize_user
+      authorize! :manage, @procurement_building.procurement
     end
   end
 end

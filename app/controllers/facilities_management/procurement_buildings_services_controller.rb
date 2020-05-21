@@ -1,5 +1,6 @@
-class FacilitiesManagement::ProcurementBuildingsServicesController < ApplicationController
+class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesManagement::FrameworkController
   before_action :set_building_and_service_data
+  before_action :authorize_user
   before_action :set_back_path
   before_action :set_partial
   before_action :set_lift_count
@@ -77,28 +78,19 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < Application
   end
 
   def set_building_and_service_data
-    bs_from_db = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
-    @procurement_building = procurement_building_from_bs(bs_from_db) if bs_from_db.present?
-
-    @building = building_from_pb(@procurement_building) if @procurement_building.present?
-
-    @building_data = @building.building_json if @building.present?
-
-    @building_service = bs_from_db if @building.present?
-  end
-
-  def procurement_building_from_bs(bs_from_db)
-    current_user.procurements.map(&:procurement_buildings).flatten.select do |pb|
-      pb[:id] == bs_from_db[:facilities_management_procurement_building_id]
-    end&.first
-  end
-
-  def building_from_pb(proc_building)
-    building_id = proc_building.building_id if proc_building.present?
-    FacilitiesManagement::Building.find(building_id) if proc_building.present?
+    @building_service = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
+    @procurement_building = @building_service.procurement_building
+    @building = @procurement_building.building
+    @building_data = @building.building_json
   end
 
   def set_back_path
     @back_link = :back
+  end
+
+  protected
+
+  def authorize_user
+    authorize! :manage, @procurement_building.procurement
   end
 end

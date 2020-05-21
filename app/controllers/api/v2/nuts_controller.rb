@@ -3,9 +3,8 @@
 module Api
   module V2
     # return json
-    class NutsController < ApplicationController
+    class NutsController < FacilitiesManagement::FrameworkController
       protect_from_forgery with: :exception
-      before_action :authenticate_user!
 
       def show_post_code
         result = PostcodesNutsRegion.select(:id, :code, :postcode).find_by(postcode: params[:postcode].delete(' '))

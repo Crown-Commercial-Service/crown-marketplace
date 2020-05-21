@@ -13,10 +13,19 @@ RSpec.describe FacilitiesManagement::Admin::SupplierRatesController do
       get :supplier_framework_rates
       expect(response).to have_http_status(:found)
     end
+
+    context 'when not an fm admin' do
+      login_mc_admin
+
+      it 'redirects to not permitted page' do
+        get :supplier_framework_rates
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
   end
 
   describe 'PUT update_supplier_framework_rates' do
-    login_admin_buyer
+    login_fm_admin
     let(:rates) { FacilitiesManagement::Admin::Rates.limit(3) }
 
     before do
@@ -77,7 +86,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierRatesController do
   end
 
   describe 'PUT update_supplier_benchmark_rates' do
-    login_admin_buyer
+    login_fm_admin
     let(:rates) { FacilitiesManagement::Admin::Rates.limit(3) }
 
     before do
@@ -134,6 +143,15 @@ RSpec.describe FacilitiesManagement::Admin::SupplierRatesController do
       it 'displays no success message' do
         expect(flash[:success]).not_to be_present
       end
+    end
+  end
+
+  context 'when not an fm admin' do
+    login_fm_buyer
+
+    it 'redirects to not permitted page' do
+      put :update_supplier_benchmark_rates, params: { rates: { FacilitiesManagement::Admin::Rates.all[0].id => 0.1 } }
+      expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
     end
   end
 end
