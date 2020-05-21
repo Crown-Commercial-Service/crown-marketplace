@@ -8,8 +8,10 @@ function PensionFundFund() {
     function checkIfOneRow() {
       if (getNumberOfPensions() === 1) {
         $(".remove-pension-record").addClass("govuk-visually-hidden");
-      } else {
+        $($('.pension-row').get(0)).find('.remove-pension-record').get(0).setAttribute('tabindex', -1);
+      } else if(getNumberOfPensions() > 1) {
         $(".remove-pension-record").removeClass("govuk-visually-hidden");
+        $($('.pension-row').get(0)).find('.remove-pension-record').get(0).removeAttribute('tabindex');
       }
     }
   

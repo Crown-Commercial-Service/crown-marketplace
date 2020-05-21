@@ -332,6 +332,7 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
             function setIsShown (isShown) {
                 $stepElement.toggleClass("step-is-shown", isShown);
                 $stepContent.toggleClass("js-hidden", !isShown);
+                isShown ? $stepContent.get(0).removeAttribute('hidden') : $stepContent.get(0).setAttribute('hidden', '');
                 $titleLink.attr("aria-expanded", isShown);
                 $stepElement.find(".js-toggle-link").html(isShown ? actions.hideText : actions.showText);
             }
