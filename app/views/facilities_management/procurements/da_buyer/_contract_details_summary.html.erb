@@ -152,7 +152,7 @@
                   <li> <%= "#{pension_fund.name}, #{pension_fund.percentage}%" %> </li>
                 <% end %>
               </ul>
-              <%= link_to 'Add or remove pension funds', edit_facilities_management_procurement_path(id: @procurement.id, step: 'pension_funds'), class: "govuk-link--no-visited-state govuk-!-padding-left-0" unless @procurement.da_journey_state == 'review_and_generate' %>
+              <%= link_to 'Add or remove pension funds', edit_facilities_management_procurement_path(id: @procurement.id, step: 'pension_funds'), 'tabindex': -1, class: "govuk-link--no-visited-state govuk-!-padding-left-0" unless @procurement.da_journey_state == 'review_and_generate' %>
             <% end %>
           <% when false %>
             Not applicable

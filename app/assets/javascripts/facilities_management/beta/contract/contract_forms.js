@@ -25,6 +25,7 @@ $(function () {
         if (e.target.checked) {
             $("#contract-accepted-yes-container").removeClass("govuk-visually-hidden");
             $("#contract-accepted-no-container").addClass("govuk-visually-hidden");
+            document.getElementById('facilities_management_procurement_supplier_reason_for_declining').setAttribute('tabindex', -1);
         }
     });
 
@@ -32,6 +33,7 @@ $(function () {
         if (e.target.checked) {
             $("#contract-accepted-no-container").removeClass("govuk-visually-hidden");
             $("#contract-accepted-yes-container").addClass("govuk-visually-hidden");
+            document.getElementById('facilities_management_procurement_supplier_reason_for_declining').removeAttribute('tabindex');
         }
     });
 });
