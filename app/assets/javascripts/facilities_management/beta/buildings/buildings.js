@@ -360,7 +360,7 @@ LookupHandler.prototype.selectResult = function (e) {
     $("#address-line-2").val(selectedOption.dataset.address_line_2);
     $("#address-town").val(selectedOption.dataset.address_town);
     $("#address-postcode").val(selectedOption.dataset.address_postcode);
-	  $(this.addressDisplayText).text(selectedOption.innerText + ", " + selectedOption.dataset.address_postcode);
+	  $(this.addressDisplayText).text(selectedOption.innerText + " " + selectedOption.dataset.address_postcode);
 	
 	  if (selectedOption.dataset.address_region !== "null" && selectedOption.dataset.address_region !== "") {
         $("#address-region").val(selectedOption.dataset.address_region);

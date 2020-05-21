@@ -11,7 +11,7 @@ module FacilitiesManagement
     validates :organisation_address_postcode, presence: true, format: { with: /\A([a-zA-Z (0-9)]*)\z/ }, on: %i[new_invoicing_address new_authorised_representative_address new_notices_address]
 
     def contact_address
-      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county, organisation_address_postcode].reject(&:nil?).reject(&:empty?).join(', ')
+      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county].reject(&:nil?).reject(&:empty?).join(', ') + " #{organisation_address_postcode}"
     end
 
     def valid_contact_address?
@@ -23,7 +23,7 @@ module FacilitiesManagement
     end
 
     def full_organisation_address
-      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county, organisation_address_postcode].reject(&:nil?).reject(&:empty?).join(', ')
+      [organisation_address_line_1, organisation_address_line_2, organisation_address_town, organisation_address_county].reject(&:nil?).reject(&:empty?).join(', ') + " #{organisation_address_postcode}"
     end
 
     private

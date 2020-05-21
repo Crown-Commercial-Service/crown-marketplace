@@ -46,29 +46,46 @@ $(function () {
 		tabIndex(false);
 	});
 	
-	$('#buyer-details-postcode-lookup-results').on('click', function (e) {
-    let selectedOption = $("select#buyer-details-postcode-lookup-results > option:selected");
+	function chooseAddress(selectElementId) {
+		let selectedOption = $("select#" + selectElementId + " > option:selected");
 		selectedAddress = void 0;
-    selectedAddress = selectedOption.val();
-
-    if (selectedAddress !== 'status-option') {
-      let add1 = selectedOption.data("add1").slice(0, -2);
-      let add2 = selectedOption.data("add2").slice(0, -2);
-      let town = selectedOption.data("town").slice(0, -2);
-      let county = selectedOption.data("county").slice(0, -2);
-      let postcode = selectedOption.data("postcode");
-      
-      $("#organisation-address-line-1").val(add1);
-      $("#organisation-address-line-2").val(add2);
-      $("#organisation-address-town").val(town);
-      $("#organisation-address-county").val(county);
-      $("#organisation-address-postcode").val(postcode);
-      $("#fm-post-code-results-container").addClass('govuk-visually-hidden');
-      $("#selected-address-container").removeClass('govuk-visually-hidden');
-      $("#selected-address-label").text(selectedAddress);
-      $("#selected-address-postcode").text(postcode);
-      $("#organisation_address").text(selectedAddress);
-    }
+		selectedAddress = selectedOption.val();
+		
+		if (selectedAddress !== 'status-option') {
+			let add1 = selectedOption.data("add1");
+			let add2 = selectedOption.data("add2");
+			let town = selectedOption.data("town");
+			let county = selectedOption.data("county");
+			let postcode = selectedOption.data("postcode");
+			
+			$("#organisation-address-line-1").val(add1);
+			$("#organisation-address-line-2").val(add2);
+			$("#organisation-address-town").val(town);
+			$("#organisation-address-county").val(county);
+			$("#organisation-address-postcode").val(postcode);
+			$("#fm-post-code-results-container").addClass('govuk-visually-hidden');
+			$("#selected-address-container").removeClass('govuk-visually-hidden');
+			$("#selected-address-label").text(selectedAddress);
+			$("#selected-address-postcode").text(postcode);
+			$("#organisation_address").text(selectedAddress);
+		}
+	}
+	
+	if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+		$('#buyer-details-postcode-lookup-results').on('blur', function (e) {
+			chooseAddress(e.target.id) ;
+		});
+	} else {
+		$('#buyer-details-postcode-lookup-results').on('change', function (e) {
+			chooseAddress(e.target.id) ;
+		});
+	}
+	
+	$('#buyer-details-po        stcode-lookup-results').on('keypress', function (e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			chooseAddress(e.target.id);
+		}
 	});
 	
 	let postcodeDetails = document.getElementById("buyer-details-postcode");

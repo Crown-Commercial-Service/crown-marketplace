@@ -686,9 +686,9 @@ ActiveRecord::Schema.define(version: 2020_05_20_124804) do
     t.datetime "confirmed_at"
     t.string "cognito_uuid", limit: 255
     t.integer "roles_mask"
-    t.string "session_token", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "session_token", limit: 255
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["session_token"], name: "index_users_on_session_token"
   end
