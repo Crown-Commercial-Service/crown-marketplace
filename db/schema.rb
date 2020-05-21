@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_123647) do
+ActiveRecord::Schema.define(version: 2020_05_20_124804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -686,9 +686,11 @@ ActiveRecord::Schema.define(version: 2020_05_18_123647) do
     t.datetime "confirmed_at"
     t.string "cognito_uuid", limit: 255
     t.integer "roles_mask"
+    t.string "session_token", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["session_token"], name: "index_users_on_session_token"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
