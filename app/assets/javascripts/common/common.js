@@ -55,6 +55,8 @@ const pageUtils = {
                                 $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
                                 $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
                             }
+
+                            contactDetails.tabIndex(2);
                         }else{
                             pageUtils.showPostCodeError(true, "Address not found, please enter manually");
                         }
@@ -310,6 +312,7 @@ const pageUtils = {
                 $('#fm-postcode-error').text(errorMsg);
                 $('#fm-postcode-error').removeClass('govuk-visually-hidden');
                 $('#fm-postcode-error-form-group').addClass('govuk-form-group--error');
+                contactDetails.tabIndex(1);
             } else {
                 $('#fm-postcode-error').addClass('govuk-visually-hidden');
                 $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');

@@ -934,7 +934,7 @@ module FacilitiesManagement
         new_authorised_representative_details: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
           page_title: 'New authorised representative details',
-          continuation_text: 'Continue',
+          continuation_text: 'Save and return',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
           return_text: 'Return to authorised representative details',
         },
