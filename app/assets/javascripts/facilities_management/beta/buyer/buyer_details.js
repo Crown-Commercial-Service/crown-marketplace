@@ -18,13 +18,14 @@ $(function () {
 	$('#buyer-details-find-address-btn').on('click', function (e) {
 		e.preventDefault();
 		
+		$('#fm-postcode-error').addClass('govuk-visually-hidden');
+		$('#organisation_address_postcode-error').addClass('govuk-visually-hidden');
+		$('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
+		$('#fm-post-code-results-container').find('.govuk-form-group--error').removeClass('govuk-form-group--error');
+		$('#buyer-details-postcode').removeClass('govuk-input--error');
+		
 		let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
 		pageUtils.addressLookUp(postCode, false);
-
-		if ($('#fm-postcode-error').hasClass('govuk-visually-hidden')){
-			tabIndex(true);
-		}
-		
 	});
 	
 	$('#change-selected-address-link').on('click', function (e) {
@@ -32,18 +33,19 @@ $(function () {
 		$('#fm-post-code-results-container').addClass('govuk-visually-hidden');
 		$('#selected-address-container').addClass('govuk-visually-hidden');
 		$('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+		$('#buyer-details-postcode').removeClass('govuk-input--error');
 		focusElem($('#buyer-details-postcode'));
-		tabIndex(false);
-		document.getElementById("change-selected-address-link").tabIndex = "-1";
+		contactDetails.tabIndex(1);
 	});
 	
 	$('#buyer-details-change-postcode').on('click', function (e) {
 		e.preventDefault();
 		$('#fm-post-code-results-container').addClass('govuk-visually-hidden');
 		$('#fm-postcode-lookup-container').removeClass('govuk-visually-hidden');
+		$('#buyer-details-postcode').removeClass('govuk-input--error');
 		focusElem($('#buyer-details-postcode'));
-
-		tabIndex(false);
+		
+		contactDetails.tabIndex(1);
 	});
 	
 	function chooseAddress(selectElementId) {
@@ -71,13 +73,13 @@ $(function () {
 		}
 	}
 	
-	if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
+	if (/Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent)) {
 		$('#buyer-details-postcode-lookup-results').on('blur', function (e) {
-			chooseAddress(e.target.id) ;
+			chooseAddress(e.target.id);
 		});
 	} else {
 		$('#buyer-details-postcode-lookup-results').on('change', function (e) {
-			chooseAddress(e.target.id) ;
+			chooseAddress(e.target.id);
 		});
 	}
 	
@@ -126,7 +128,7 @@ $(function () {
 			removeDetails();
 		}
 	}
-
+	
 	function fillInDetails(formBuyerDetails) {
 		var buyerDetailsFormElements = makeElementName();
 		var nameElem = buyerDetailsFormElements[0];
@@ -180,26 +182,92 @@ $(function () {
 			$('#facilities_management_buyer_detail_central_government_false').get(0).setAttribute('checked', 'checked');
 		}
 	}
+});
 
-	function tabIndex(toggle) {
-    if ($('#buyer-details-form').length) {
-      if (toggle) {
-        document.getElementById("buyer-details-postcode").tabIndex = "-1";
-        document.getElementById("add-buyer-address-link-1").tabIndex = "-1";
-        document.getElementById("buyer-details-find-address-btn").tabIndex = "-1";
-  
-        document.getElementById("buyer-details-change-postcode").tabIndex = "0";
-        document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "0";
-        document.getElementById("add-buyer-address-link-2").tabIndex = "0";
-      }else{
-        document.getElementById("buyer-details-postcode").tabIndex = "0";
-        document.getElementById("add-buyer-address-link-1").tabIndex = "0";
-        document.getElementById("buyer-details-find-address-btn").tabIndex = "0";
-  
-        document.getElementById("buyer-details-change-postcode").tabIndex = "-1";
-        document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "-1";
-        document.getElementById("add-buyer-address-link-2").tabIndex = "-1";
-    }
+const contactDetails = {
+	tabIndex: function (state) {
+		if ($('#buyer-details-form').length || $('#new_invoice_contact_details').length || $('#new_authorised_contact_details').length || $('#new_notices_contact_details').length) {
+			switch (state) {
+				case 1:
+					this.toggleSet1(false);
+					this.toggleSet2(false);
+					document.getElementById("change-selected-address-link").tabIndex = "-1";
+					$('#buyer-details-postcode').focus();
+					break;
+				case 2:
+					this.toggleSet1(true);
+					this.toggleSet2(true);
+					document.getElementById("change-selected-address-link").tabIndex = "-1";
+					$('#buyer-details-postcode-lookup-results').focus();
+					break;
+				case 3:
+					this.toggleSet1(true);
+					this.toggleSet2(false);
+					document.getElementById("change-selected-address-link").tabIndex = "0";
+					$('#change-selected-address-link').focus();
+					break;
+			}
+		}
+	},
+	
+	toggleSet1: function (toggle) {
+		if (toggle) {
+			
+			document.getElementById("buyer-details-postcode").tabIndex = "-1";
+			document.getElementById("buyer-details-find-address-btn").tabIndex = "-1";
+			
+			if ($('#new_invoice_contact_details').length) {
+				document.getElementById("add_new_invoice_contact_details_address_1").tabIndex = "-1";
+			} else if ($('#new_authorised_contact_details').length) {
+				document.getElementById("add_new_authorised_contact_details_address_1").tabIndex = "-1";
+			} else if ($('#new_notices_contact_details').length) {
+				document.getElementById("add_new_notices_contact_details_address_1").tabIndex = "-1";
+			} else {
+				document.getElementById("add-buyer-address-link-1").tabIndex = "-1";
+			}
+		} else {
+			document.getElementById("buyer-details-postcode").tabIndex = "0";
+			document.getElementById("buyer-details-find-address-btn").tabIndex = "0";
+			
+			if ($('#new_invoice_contact_details').length) {
+				document.getElementById("add_new_invoice_contact_details_address_1").tabIndex = "0";
+			} else if ($('#new_authorised_contact_details').length) {
+				document.getElementById("add_new_authorised_contact_details_address_1").tabIndex = "0";
+			} else if ($('#new_notices_contact_details').length) {
+				document.getElementById("add_new_notices_contact_details_address_1").tabIndex = "0";
+			} else {
+				document.getElementById("add-buyer-address-link-1").tabIndex = "0";
+			}
+		}
+	},
+	
+	toggleSet2: function (toggle) {
+		if (toggle) {
+			document.getElementById("buyer-details-change-postcode").tabIndex = "0";
+			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "0";
+			
+			if ($('#new_invoice_contact_details').length) {
+				document.getElementById("add_new_invoice_contact_details_address_2").tabIndex = "0";
+			} else if ($('#new_authorised_contact_details').length) {
+				document.getElementById("add_new_authorised_contact_details_address_2").tabIndex = "0";
+			} else if ($('#new_notices_contact_details').length) {
+				document.getElementById("add_new_notices_contact_details_address_2").tabIndex = "0";
+			} else {
+				document.getElementById("add-buyer-address-link-2").tabIndex = "0";
+			}
+		} else {
+			document.getElementById("buyer-details-change-postcode").tabIndex = "-1";
+			document.getElementById("buyer-details-postcode-lookup-results").tabIndex = "-1";
+			
+			if ($('#new_invoice_contact_details').length) {
+				document.getElementById("add_new_invoice_contact_details_address_2").tabIndex = "-1";
+			} else if ($('#new_authorised_contact_details').length) {
+				document.getElementById("add_new_authorised_contact_details_address_2").tabIndex = "-1";
+			} else if ($('#new_notices_contact_details').length) {
+				document.getElementById("add_new_notices_contact_details_address_2").tabIndex = "-1";
+			} else {
+				document.getElementById("add-buyer-address-link-2").tabIndex = "-1";
+			}
 		}
 	}
-});
+};

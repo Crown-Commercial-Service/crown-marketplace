@@ -29,7 +29,7 @@
                 <div class="other_input ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150" style="margin-left: 1.5ex">
                   <label class="govuk-label" for="<%= "#{f.object_name}[other_security_type]".gsub(/(\])?\[/, "_").chop %>"> <%= t('.describe_security') %></label>
                   <%= display_potential_errors(@page_data[:model_object], :other_security_type, f.object_name) %>
-                  <%= govuk_text_area_input(f, :other_security_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex') %>
+                  <%= govuk_text_area_input(f, :other_security_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex', tabindex: "#{@page_data[:model_object].other_security_type.blank? ? -1 : 0}") %>
                 </div>
               </div>
             </div>
