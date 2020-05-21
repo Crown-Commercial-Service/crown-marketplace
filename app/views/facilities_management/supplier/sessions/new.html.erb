@@ -31,7 +31,7 @@
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
         </span>
         <%= display_error(@result, :email) %>
-        <%=  f.email_field :email, class:"govuk-input govuk-!-width-two-thirds", id:"email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
+        <%=  f.email_field :email, value: "#{ @result.email unless @result.email.nil? }", class:"govuk-input govuk-!-width-two-thirds", id:"email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
       </div>
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
