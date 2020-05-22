@@ -82,7 +82,7 @@
                   <p id="fm-postcode-label" class="govuk-body"><%= f.object.organisation_address_postcode %></p>
                 </div>
                 <div class="govuk-grid-column-one-quarter">
-                  <% postcode_index = f.object.organisation_address_postcode.present? && !f.object.organisation_address_line_1.present? ? 0 : -1 %>
+                  <% postcode_index = f.object.organisation_address_postcode.present? && !f.object.valid_postcode? ? 0 : -1 %>
                   <a id="buyer-details-change-postcode" href="" tabindex=<%= postcode_index %> class="govuk-link--no-visited-state"><%= t('.change') %></a>
                 </div>
               </div>
@@ -111,7 +111,7 @@
               <div id="selected-address-label" class="govuk-!-margin-bottom-6">
                 <%= f.object.full_organisation_address if f.object.organisation_address_postcode.present? %>
               </div>
-              <% change_index = f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? ? 0 : -1 %>
+              <% change_index = f.object.organisation_address_line_1.present? && f.object.valid_postcode? ? 0 : -1 %>
               <a id="change-selected-address-link" tabindex=<%="#{change_index}"%> href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
