@@ -102,7 +102,7 @@ module LayoutHelper
       if heading_details.caption?
         concat(content_tag(:span, class: 'govuk-caption-xl') do
           concat(heading_details.caption)
-          concat("&nbsp;&mdash;&nbsp;#{heading_details.caption2}".html_safe) if heading_details.caption2.present?
+          concat(" — #{heading_details.caption2}") if heading_details.caption2.present?
         end).html_safe
       end
       concat(heading_details.text)

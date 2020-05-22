@@ -3,7 +3,7 @@
 <div class="procurement">
   <div class="services chooser-component">
     <div id="ccs-dynamic-accordian" class="govuk-grid-row">
-      <div>
+      <div class="govuk-grid-column-two-thirds">
         <fieldset class="govuk-fieldset" aria-describedby="">
           <h2 class="govuk-heading-m">
             <%= t('.question') %>
@@ -13,8 +13,6 @@
         <p>
           <a href="<%= Marketplace.service_information_doc %>" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
         </p>
-      </div>
-      <div class="govuk-grid-column-two-thirds">
         <div class="govuk-grid-column-full" style="padding-left:0">
           <div class="chooser-input">
             <div class="govuk-accordion" data-module="accordion" id="procurement-services-accordion">

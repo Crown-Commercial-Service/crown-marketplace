@@ -43,8 +43,8 @@ $(function () {
     }
   }
 
-  // if ($("#contract-signed-yes-container").length) {
-  //   toggleYesElements(document.getElementById('contract-signed-yes').getAttribute('checked') === "checked");
-  //   toggleNoElements(document.getElementById('contract-signed-no').getAttribute('checked') === "checked");
-  // }
+  if ($("#contract-signed-yes-container").length) {
+    toggleYesElements(document.getElementById('contract-signed-yes').getAttribute('checked') === "checked");
+    toggleNoElements(document.getElementById('contract-signed-no').getAttribute('checked') === "checked");
+  }
 });

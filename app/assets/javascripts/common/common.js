@@ -4,7 +4,7 @@ const pageUtils = {
 
             pageUtils.clearCashedData('fm-postcode-is-in-london');
 
-            $.get(encodeURI("/api/v1/postcodes/in_london?postcode=" + postcode))
+            $.get(encodeURI("/api/v2/postcodes/in_london?postcode=" + postcode))
                 .done(function (data) {
                     if (data.status === 200) {
                         pageUtils.setCachedData('fm-postcode-is-in-london', data.result);
@@ -32,7 +32,7 @@ const pageUtils = {
                 pageUtils.showPostCodeError(false);
                 pageUtils.isPostCodeInLondon(postCode);
 
-                $.get(encodeURI("/api/v1/postcodes/" + postCode.toUpperCase()))
+                $.get(encodeURI("/api/v2/postcodes/" + postCode.toUpperCase()))
                     .done(function (data) {
                         if (data && data.result && data.result.length > 0) {
                             $('#fm-postcode-label').text(postCode);
@@ -45,19 +45,16 @@ const pageUtils = {
 
                             for (let x = 0; x < addresses.length; x++) {
                                 let address = addresses[x];
-                                let add1 = address['add1'] ? address['add1'] + ', ' : '';
-                                let add2 = address['village'] ? address['village'] + ', ' : '';
-                                let postTown = address['post_town'] ? address['post_town'] + ', ' : '';
-                                let county = address['county'] ? address['county'] + ', ' : '';
-                                let postCode = address['postcode'] ? address['postcode'] : '';
-                                let newOptionData = add1 + add2 + postTown + county + postCode;
-                                let newOption = '<option value="' + newOptionData + '" data-add1="' + add1 +'"  data-add2="' + add2 +'"  data-town="' + postTown +'" data-county="' + county +'" data-postcode="' + postCode +'">' + newOptionData + '</option>';
+                                let newOptionData = address.summary_line + " " + address.address_postcode;
+                                let newOption = '<option value="' + newOptionData + '" data-add1="' + address.address_line_1 +'"  data-add2="' + address.address_line_2 +'"  data-town="' + address.address_town +'" data-county="" data-postcode="' + address.address_postcode +'">' + newOptionData + '</option>';
                                 lookupResultsElem.append(newOption);
                                 $('#fm-post-code-results-container').removeClass('govuk-visually-hidden');
                                 $('#fm-postcode-lookup-container').addClass('govuk-visually-hidden');
                             }
+
+                            contactDetails.tabIndex(2);
                         }else{
-                            pageUtils.showPostCodeError(true, "Add missing address manually");
+                            pageUtils.showPostCodeError(true, "Address not found, please enter manually");
                         }
                     })
                     .fail(function (data) {
@@ -311,6 +308,7 @@ const pageUtils = {
                 $('#fm-postcode-error').text(errorMsg);
                 $('#fm-postcode-error').removeClass('govuk-visually-hidden');
                 $('#fm-postcode-error-form-group').addClass('govuk-form-group--error');
+                contactDetails.tabIndex(1);
             } else {
                 $('#fm-postcode-error').addClass('govuk-visually-hidden');
                 $('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');

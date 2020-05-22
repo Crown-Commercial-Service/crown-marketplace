@@ -4,9 +4,10 @@
     <div class="procurement govuk-row">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <h1 class="govuk-heading-xl"><%= t('.search_results') %></h1>
+          <span class="govuk-caption-xl"><%= t('.quick_search') %></span>
+          <h1 class="govuk-heading-xl govuk-!-padding-top-5 govuk-!-margin-bottom-5"><%= t('.search_results') %></h1>
           <% content_for :page_title, t('.search_results') %>
-          <p class="govuk-caption-l govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
+          <p class="govuk-caption-m govuk-!-margin-bottom-5"><%= t('.search_result_body_html') %></p>
         </div>
       </div>
       <%= render partial: 'quick_search_form', locals: { f: f, step: nil } %>

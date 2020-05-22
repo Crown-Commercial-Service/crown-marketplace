@@ -4,7 +4,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   def initialize(procurement_id)
     @procurement = FacilitiesManagement::Procurement.find(procurement_id)
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
-    @active_procurement_buildings = @procurement.active_procurement_buildings
+    @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
   end
 
   def units_of_measure_values
@@ -14,7 +14,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard
+          service_standard: procurement_building_service.service_standard,
+          service_hours: procurement_building_service.service_hours
         }
       end
     end.flatten
@@ -27,7 +28,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard
+          service_standard: procurement_building_service.service_standard,
+          service_hours: procurement_building_service.service_hours
         }
       end
     end.flatten
@@ -53,22 +55,25 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
         p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
           add_header_row(sheet, ['Buildings information'])
+          add_building_name_row(sheet, ['Building name'], :left)
           add_buildings_information(sheet)
           style_buildings_information_sheet(sheet, first_column_style)
         end
 
         p.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
           add_header_row(sheet, ['Service Reference', 'Service Name'])
+          add_building_name_row(sheet, ['', ''], :center)
           number_rows_added = add_service_matrix(sheet)
           style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
         end
 
         units_of_measure_values
         units_of_measure_values_for_volume
-        unless @units_of_measure_values_for_volume.nil?
+        if volume_services_included?
           p.workbook.add_worksheet(name: 'Volume') do |sheet|
             add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
-            number_volume_services = add_volumes_information(sheet, @units_of_measure_values_for_volume)
+            add_building_name_row(sheet, ['', '', ''], :center)
+            number_volume_services = add_volumes_information_fc(sheet)
             style_volume_sheet(sheet, standard_column_style, number_volume_services)
           end
         end
@@ -79,8 +84,29 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
   # rubocop:enable Metrics/AbcSize
 
+  def add_volumes_information_fc(sheet)
+    number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
+
+    allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
+
+    allowed_volume_services.each do |s|
+      new_row = [s['code'], s['name'], s['metric']]
+      @active_procurement_buildings.each do |b|
+        uvs = @units_of_measure_values_for_volume.flatten.select { |u| b.building_id == u[:building_id] }
+        suv = uvs.find { |u| s['code'] == u[:service_code] }
+
+        new_row << calculate_uom_value(suv) if suv
+        new_row << nil unless suv
+      end
+
+      sheet.add_row new_row, style: number_column_style
+    end
+
+    allowed_volume_services.count
+  end
+
   def add_other_competition_worksheets(package, standard_column_style, standard_bold_style, start_date, current_user)
-    add_service_periods_worksheet(package, standard_column_style)
+    add_service_periods_worksheet(package, standard_column_style, @units_of_measure_values_for_volume) if services_require_service_periods?
 
     add_shortlist_details(package, standard_column_style, standard_bold_style, start_date, current_user)
 
@@ -133,7 +159,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     buildings_data.count.times { column_widths << 50 }
 
     last_column_name = ('A'..'ZZ').to_a[1 + buildings_data.count]
-    sheet["A2:#{last_column_name}#{number_rows_added + 1}"].each { |c| c.style = style } if number_rows_added.positive?
+    sheet["A3:#{last_column_name}#{number_rows_added + 2}"].each { |c| c.style = style } if number_rows_added.positive?
 
     sheet.column_widths(*column_widths)
   end
@@ -157,7 +183,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_shortlist_contract_number(sheet, style)
-    sheet.add_row ["#{@procurement.contract_number} - #{@procurement.contract_datetime}"], style: style, height: standard_row_height
+    sheet.add_row ['Reference number & date/time production of this document', "#{@procurement.contract_number} - #{@procurement.contract_datetime}"], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
@@ -268,9 +294,5 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   def style_shortlist_sheet(sheet)
     column_widths = [50, 50, 50]
     sheet.column_widths(*column_widths)
-  end
-
-  def list_of_allowed_volume_services
-    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.4 K.5 K.6 K.7]
   end
 end

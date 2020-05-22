@@ -4360,8 +4360,14 @@
     padding: 10px 20px 10px 0;
     border-bottom: 1px solid #bfc1c3;
     text-align: left;
-    word-break: break-word;
 }
+
+@media (max-width: 10em){
+    .govuk-table__header, .govuk-table__cell {
+    word-break: break-word;
+    }
+}
+
 
 .govuk-table__cell--numeric {
     font-family: "ntatabularnumbers", "nta", Arial, sans-serif;

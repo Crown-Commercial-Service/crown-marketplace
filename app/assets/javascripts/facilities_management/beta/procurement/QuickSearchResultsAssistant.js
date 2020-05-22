@@ -29,10 +29,17 @@ const QuickSearchResultsAssistant = {
         let tableSource = filterEvent.FilterTarget.jqueryObject;
         if (tableSource) {
             let rows = tableSource.find('tbody  > tr');
-        
-            let selectedServices = filterEvent['service_checkboxes'].map ( function (x) { return { code : x.value } });
-            let selectedLocations = filterEvent['region_checkboxes'].map ( function (x) { return { code : x.value } });
-            
+            let selectedServices = [];
+            let selectedLocations = [];
+
+            if (typeof filterEvent['service_checkboxes'] !== 'undefined') {
+                selectedServices = filterEvent['service_checkboxes'].map(function (x) { return { code: x.value } });
+            }
+
+            if (typeof filterEvent['region_checkboxes'] !== 'undefined') {
+                selectedLocations = filterEvent['region_checkboxes'].map(function (x) { return { code: x.value } });
+            }
+
             this.visibleSuppliers = [];
 
             for (let x = 0; x < rows.length; x++) {

@@ -239,64 +239,30 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       }
     end
 
-    let(:building_id) { 'test-building-uuid' }
+    let(:building_id) { SecureRandom.uuid }
 
     context 'when procurement building already exists' do
       before do
         procurement.save
-        procurement.procurement_buildings.create(name: 'test')
+        procurement.procurement_buildings.create(building_id: building_id)
       end
 
       it 'does not create a new one' do
-        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
-      end
-
-      it 'keeps the name' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.name).to eq building_data['name']
-      end
-
-      it 'updates its address line 1' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.address_line_1).to eq building_data['address']['fm-address-line-1']
-      end
-
-      it 'updates its address line 2' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.address_line_2).to eq building_data['address']['fm-address-line-2']
-      end
-
-      it 'updates its town' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.town).to eq building_data['address']['fm-address-town']
-      end
-
-      it 'updates its county' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.county).to eq building_data['address']['fm-address-county']
-      end
-
-      it 'updates its postcode' do
-        procurement.find_or_build_procurement_building(building_data, building_id)
-        procurement_building = procurement.procurement_buildings.find_by(name: building_data['name'])
-        expect(procurement_building.postcode).to eq building_data['address']['fm-address-postcode']
+        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
       end
     end
 
     context 'when procurement building does not exist' do
       it 'creates one' do
         procurement.save
-        expect { procurement.find_or_build_procurement_building(building_data, building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+        expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
     end
   end
 
   describe 'validations on :all' do
+    before { procurement.initial_call_off_start_date = DateTime.now.in_time_zone('London') + 1.day }
+
     context 'when the contract name is blank' do
       it 'is expected to not be valid' do
         procurement.contract_name = ''
@@ -379,8 +345,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   describe '#valid_on_continue?' do
     context 'when valid on all' do
+      it 'is expected to return false' do
+        expect(procurement.valid_on_continue?).to eq false
+      end
+    end
+  end
+
+  describe '#valid_on_continue' do
+    context 'when valid on all' do
       it 'is expected to return true' do
-        expect(procurement.valid_on_continue?).to eq true
+        procurement.save
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 

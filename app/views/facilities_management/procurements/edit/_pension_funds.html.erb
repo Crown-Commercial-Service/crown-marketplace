@@ -1,7 +1,4 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd|%>
-    <h1 class="govuk-heading-m">
-        <%= t('.heading') %>
-    </h1>
     <div class="govuk-hint govuk-!-width-one-half">
         <%= t('.description') %>
     </div>
@@ -9,10 +6,19 @@
         <%= t('.form_title') %>
     </h1>
     <div id="pension-funds" class='fields'>
+        <% current_number_of_pensions = FacilitiesManagement::Procurement.find(@procurement.id).procurement_pension_funds.length %>
+        <% special_errors = current_number_of_pensions > 0 %>
         <% error_index = 0 %>
         <%= f.fields_for :procurement_pension_funds, sort_by_pension_fund_created_at do |builder| %>
             <%= render partial: "facilities_management/procurements/edit/procurement_pension_fund", locals: {ff: builder, error_index: error_index} %>
-            <% error_index += 1 %>
+            <% if special_errors %>
+                <% if builder.object.errors.any? || builder.index == current_number_of_pensions %>
+                    <% error_index += 1 %>
+                    <% special_errors = false %>
+                <% end %>
+            <% else %>
+                <% error_index += 1 %>
+            <% end %>
         <% end %>
     </div>
     <%= link_to_add_row("Add another pension fund (#{FacilitiesManagement::Procurement::MAX_NUMBER_OF_PENSIONS - @procurement.procurement_pension_funds.size} remaining)", f, :procurement_pension_funds, class: 'add-pension-button govuk-button govuk-button--secondary govuk-!-margin-bottom-2', 'aria-label': "Add another pension fund" ) %>

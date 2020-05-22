@@ -103,17 +103,14 @@ module ApplicationHelper
     (attributes.is_a?(Array) ? attributes.last : attributes).to_s
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
+  def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+    return if collection.empty?
 
-    content_tag :div, class: 'error-collection', property_name: property_name(section_name, attributes) do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    content_tag :div, class: 'error-collection potenital-error', property_name: property_name(section_name, attributes) do
+      multiple_validation_errors(model_object, attributes, form_object_name, collection)
     end
   end
-  # rubocop:enable Metrics/ParameterLists
 
   def model_attribute_has_error(model_object, *attributes)
     result = false
@@ -130,11 +127,11 @@ module ApplicationHelper
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
 
-  def display_error(journey, attribute, margin = true)
+  def display_error(journey, attribute, margin = true, id_prefix = '')
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
+    content_tag :span, id: "#{id_prefix}#{error_id(attribute)}", class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
       error.to_s
     end
   end
@@ -260,12 +257,28 @@ module ApplicationHelper
     request.path_info.include? 'buyer-account'
   end
 
+  def fm_activate_account_landing_page
+    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
+  end
+
   def fm_supplier_landing_page
     request.path_info.include? 'supplier'
   end
 
   def fm_supplier_login_page
     controller.controller_name == 'sessions' && controller.action_name == 'new'
+  end
+
+  def fm_back_to_start_page
+    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
+  end
+
+  def passwords_page
+    controller.controller_name == 'passwords'
+  end
+
+  def cookies_page
+    controller.action_name == 'cookies'
   end
 
   def not_permitted_page

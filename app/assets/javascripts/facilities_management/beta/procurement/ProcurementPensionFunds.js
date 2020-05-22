@@ -8,8 +8,10 @@ function PensionFundFund() {
     function checkIfOneRow() {
       if (getNumberOfPensions() === 1) {
         $(".remove-pension-record").addClass("govuk-visually-hidden");
-      } else {
+        $($('.pension-row').get(0)).find('.remove-pension-record').get(0).setAttribute('tabindex', -1);
+      } else if(getNumberOfPensions() > 1) {
         $(".remove-pension-record").removeClass("govuk-visually-hidden");
+        $($('.pension-row').get(0)).find('.remove-pension-record').get(0).removeAttribute('tabindex');
       }
     }
   
@@ -52,15 +54,6 @@ function PensionFundFund() {
       }
       return e.preventDefault();
     });
-  
-    $("#pension-funds").on("keypress", ".pension-percentage", (function (e) {
-      var ev = e || window.event;
-      if(ev.charCode < 48 || ev.charCode > 57) {
-        return false; // not a digit
-      } else {
-        return true;
-      }
-    }));
     
     // Functions to run on load
     checkIfOneRow();

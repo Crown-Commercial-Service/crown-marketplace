@@ -2,7 +2,7 @@
     <table class="govuk-table govuk-!-width-three-quarters">
         <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-                <td class="govuk-table__cell" width="45%"></th>
+                <td class="govuk-table__cell" width="45%"></td>
                 <td class="govuk-table__cell" width="55%"></td>
             </tr>
             <tr class="govuk-table__row">
@@ -13,6 +13,7 @@
                 <th class="govuk-table__cell govuk-table__header"><%= t('.contract_name') %></th>
                 <td class="govuk-table__cell"><%= @procurement.contract_name %></td>
             </tr>
+            <tr>
                 <th class="govuk-table__cell govuk-table__header" ><%= t('.contract_value') %></th>
                 <td class="govuk-table__cell"><%= format_money @procurement.procurement_suppliers.first.direct_award_value %></td>
             </tr>

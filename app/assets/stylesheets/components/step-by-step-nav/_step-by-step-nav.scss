@@ -71,6 +71,8 @@ $top-border: solid 2px govuk-colour("grey-3");
 
   &:focus {
     @include govuk-focused-text;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
     }
   }
 
@@ -319,9 +321,14 @@ $top-border: solid 2px govuk-colour("grey-3");
   .app-step-nav__button {
     &:focus {
       @include govuk-focused-text;
+      background-color: #fd0;
+      box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
 
       .app-step-nav__toggle-link {
         @include govuk-focused-text;
+        background-color: #fd0;
+        box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+
         }
       }
     }

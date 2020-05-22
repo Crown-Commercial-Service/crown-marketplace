@@ -6,7 +6,7 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def address_in_a_line(building)
-    [building.address_line_1, building.address_line_2, building.address_town, building.address_postcode].reject(&:blank?).join(', ')
+    [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
   end
 
   def margin_if_security_has_other_error(building)

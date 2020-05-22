@@ -1,12 +1,12 @@
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="25">
   <%= govuk_form_field(@page_data[:model_object], :building_name, f.object_name, t('.building_name_label_html'), "building_name", {}) do |gf| %>
-    <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25 %>
+    <%= f.text_field :building_name, class: "govuk-input govuk-input--width-20 js-character-count", required: true, maxlength: 25, "aria-describedby": "facilities_management_building_building_name-info" %>
   <% end %>
 </div>
 <div class="govuk-!-width-two-thirds" data-module="character-count" data-maxlength="50">
   <%= govuk_form_field(@page_data[:model_object], :description, f.object_name, t('.description_label_html'), "", {}) do |gf| %>
     <%= f.text_field :description, class: "govuk-input govuk-input--width-20 js-character-count",
-                     maxlength:           50, required: false %>
+                     maxlength:           50, required: false, "aria-describedby": "facilities_management_building_description-info" %>
   <% end %>
 </div>
 <div class="govuk-!-width-two-thirds" data-module="find-address" data-element_prefix="postcode">
@@ -20,10 +20,11 @@
                        "data-module-element": "postcode-source-input",
                        pattern:               '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
                        required:              true,
-                       maxlength:             8 %>
+                       maxlength:             8,
+                       tabindex:              hide_postcode_source? ? -1 : 0 %>
       <% if Rails.env.development? || Rails.env.test? %>
-        <details class="govuk-details" style="z-index: 1; margin-left:1ex; margin-top:1ex; display:inline-block; position:absolute; font-size:smaller; width:50%;" data-module="govuk-details">
-          <summary class="govuk-details__summary">
+        <details class="govuk-details" style="z-index: 1; margin-left:1ex; margin-top:1ex; display:inline-block; position:absolute; font-size:smaller; width:50%;" data-module="govuk-details" tabindex="-1">
+          <summary class="govuk-details__summary" tabindex="-1">
           <span class="govuk-details__summary-text">
             Postcode lookup helpers (visible in dev &amp; test)
           </span>
@@ -72,16 +73,23 @@
       <%= f.hidden_field :address_region_code, id: 'address-region-code' %>
       <br/>
     <% end %>
-    <button type="button" class="govuk-button" style="clear:both" data-module-element="trigger" aria-label="<%= t('.find_address') %>"><%= t('.find_address') %></button>
+    <button type="button" class="govuk-button" style="clear:both" data-module-element="trigger" aria-label="<%= t('.find_address') %>"
+            <%= ' tabindex="-1"'.html_safe if hide_postcode_source? %>> <%= t('.find_address') %></button>
   </div>
   <div class="govuk-!-margin-bottom-3 govuk-!-margin-top-0" data-module-part="lookup-container">
-    <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>" class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
+    <div data-module-part="lookup-postcode-results" data-module-action="<%= 'fetch' if @page_data[:model_object].address_line_1.blank? %>"
+         class="govuk-form-group govuk-!-margin-bottom-3 <%= 'govuk-visually-hidden' unless @page_data[:model_object].errors[:address].any? %> <%= 'govuk-form-group--error' if @page_data[:model_object].errors[:address].any? %>">
       <span id="postcode-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.postcode') %></span>
       <span class="govuk-body govuk-!-margin-right-4" data-module-element="postcode-entry-text"><%= @page_data[:model_object].postcode_entry %></span>
-      <a href="#postcode_header" class="govuk-link" data-module-element="change-input"><%= t('.change') %></a>
+      <a href="#postcode_header" id="change-input-1" class="govuk-link" data-module-element="change-input" tabindex="-1"><%= t('.change') %></a>
       <label for="results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_an_address') %></label>
       <%= display_potential_errors(@page_data[:model_object], :address, "#{f.object_name}_address") %>
-      <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected %>" data-module-element="results-container" data-nodata-text="<%= t('.zero_address_found') %>" data-withdata-text-single="<%= t('.option_with_data_single') %>" data-withdata-text-plural="<%= t('.option_with_data_plural') %>" id="results-container">
+      <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected %>"
+              data-module-element="results-container" data-nodata-text="<%= t('.zero_address_found') %>"
+              data-withdata-text-single="<%= t('.option_with_data_single') %>"
+              data-withdata-text-plural="<%= t('.option_with_data_plural') %>"
+              tabindex="-1"
+              id="results-container">
         <optgroup label="<%= if valid_addresses.length.zero?
                                t('.zero_address_found')
                              else
@@ -105,8 +113,9 @@
         <% end %>
       </select>
       <%= f.submit(t('.cant_find_address'),
+                   tabindex:-1,
                    class: 'govuk-link govuk-!-margin-right-4 button_as_link',
-                   data:  { disable_with: false }, name: 'add_address', style: 'display:block', 'aria-label': "#{t('.cant_find_address')}") %>
+                   data:  { module_element: "cant-find", disable_with: false }, name: 'add_address', style: 'display:block', tabindex:-1, 'aria-label': "#{t('.cant_find_address')}") %>
     </div>
     <div data-module-part="address-display" class="govuk-!-margin-top-3 govuk-!-margin-bottom-3 <%= ' govuk-visually-hidden' unless @page_data[:model_object].address_line_1.present? %>">
       <span class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.address') %></span>
@@ -115,7 +124,8 @@
           <%= address_in_a_line @page_data[:model_object] %>
         <% end %>
       </div>
-      <a href="#postcode-header" class="govuk-link" data-module-element="change-input"><%= t('.change') %></a>
+      <% change_2_index = @page_data[:model_object].address_line_1.present? ? 0 : -1 %>
+      <a href="#postcode-header" class="govuk-link" id="change-input-2" data-module-element="change-input" tabindex=<%= change_2_index %>><%= t('.change') %></a>  
     </div>
     <div data-module-part="region-area" class="govuk-form-group <%= 'govuk-visually-hidden' if hide_region_section? %>">
       <div class="govuk-!-margin-top-3" data-propertyname="address_region">
@@ -126,10 +136,13 @@
               <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1" style="margin-top:-1.7ex"><%= t('.region') %></span>
               <span class="govuk-caption-m"><%= t('.region_desc') %></span>
             </div>
-            <label for="region-results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1"><%= t('.select_a_region') %></label>
+            <label for="region-results-container" class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-1" tabindex="-1"><%= t('.select_a_region') %></label>
             <%= display_potential_errors(@page_data[:model_object], :address_region, "") %>
+            <% region_select = @page_data[:model_object].address_line_1.present? && !@page_data[:model_object].address_region.present? ? 0 : -1 %>
             <select class="govuk-select govuk-!-width-two-thirds <%= 'govuk-select--error' if @page_data[:model_object].errors.details.dig(:address_region, 0)&.dig(:error).present? %>"
-                    data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>" data-withdata-text-single="<%= t('.region_option_with_data_single') %>" data-withdata-text-plural="<%= t('.region_option_with_data_plural') %>" id="region-results-container">
+                    tabindex=<%= region_select.to_s %> data-module-element="region-results-container" data-nodata-text="<%= t('.zero_regions_found') %>"
+                    data-withdata-text-single="<%= t('.region_option_with_data_single') %>" data-withdata-text-plural="<%= t('.region_option_with_data_plural') %>"
+                    id="region-results-container">
               <optgroup label="<%= multiple_regions? ? t('.region_option_with_data_plural').sub('{%}', valid_regions.length.to_s) : t('.region_option_with_data_single') %>"></optgroup>
               <% if valid_regions.length > 0 %>
                 <option value="">Please select a region</option>
@@ -143,8 +156,9 @@
           <div data-module-part="region-results" class="govuk-!-margin-bottom-3<%= ' govuk-visually-hidden' unless @page_data[:model_object].address_region_code.present? %>">
             <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.region') %></span>
             <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
-            <a href="#region-header" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
-               data-module-element="change-region-button" aria-label="<%= t('.change') %>"><%= t('.change') %></a>
+            <% change_3_index = @page_data[:model_object].address_region.present? && valid_regions.length > 1 ? 0 : -1 %>
+            <a href="#region-header" id="change-input-3" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
+               data-module-element="change-region-button" aria-label="<%= t('.change') %>" tabindex=<%=change_3_index.to_s%>><%= t('.change') %></a>
           </div>
         </div>
       </div>

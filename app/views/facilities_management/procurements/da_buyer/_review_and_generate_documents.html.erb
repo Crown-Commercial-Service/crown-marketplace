@@ -5,27 +5,27 @@
             Once you are satisfied that all the information is correct please use the generate documents button in section 3 to generate your call off documents. You will then be asked to review the generated contract and associated documents.
         </div>
         <div>
-            <h1 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-9">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-9">
                 1. Requirements
-            </h1>
+            </h2>
             <%= render partial: 'facilities_management/procurements/da_buyer/procurement_requirements' %>
 
-            <%= f.submit('Change requirements', class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :change_requirements, 'aria-label': "Change requirements") %>
+            <%= f.submit('Change requirements', class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :change_requirements, 'aria-label': "Change requirements") %>
         </div>
 
         <div>
-            <h1 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">
                 2. Contract details
-            </h1>
+            </h2>
             <%= render partial: 'facilities_management/procurements/da_buyer/contract_details_summary' %>
 
             <%= f.submit('Change contract details', class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :change_contract_details, 'aria-label': "Change contract details") %>
         </div>
 
         <div>
-            <h1 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">
                 3. Generate your direct award documents
-            </h1>
+            </h2>
             <div class="govuk-hint govuk-!-width-three-quarters govuk-!-padding-left-5">
                 Click the 'Generate documents' button below to proceed and create all the documents that will form your direct award call-off contract.
             </div>

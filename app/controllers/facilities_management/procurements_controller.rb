@@ -105,7 +105,7 @@ module FacilitiesManagement
 
       continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
 
-      update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+      copy_service_codes && update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
@@ -149,11 +149,11 @@ module FacilitiesManagement
       init
       if params[:spreadsheet] == 'prices_spreadsheet'
         spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.first_unsent_contract.id
-        render xlsx: spreadsheet1.to_xlsx, filename: 'direct_award_prices'
+        render xlsx: spreadsheet1.to_xlsx, filename: 'Attachment 3 - Price Matrix (DA)'
       else
         spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.first_unsent_contract.id
         spreadsheet2 = spreadsheet_builder.build
-        render xlsx: spreadsheet2.to_stream.read, filename: 'deliverable_matrix'
+        render xlsx: spreadsheet2.to_stream.read, filename: 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA)'
       end
     end
 
@@ -199,7 +199,6 @@ module FacilitiesManagement
 
       view_name
     end
-    # rubocop:enable Metrics/AbcSize
 
     def update_procurement
       assign_procurement_parameters
@@ -217,8 +216,10 @@ module FacilitiesManagement
 
         set_da_journey_render
         render :edit
+        past_service_codes if params.dig('facilities_management_procurement', 'step') == 'services'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def remove_invalid_security_policy_document_file
       # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
@@ -354,6 +355,15 @@ module FacilitiesManagement
         create_da_buyer_page_data('local_government_pension_scheme')
         render :edit
       end
+    end
+
+    def copy_service_codes
+      @service_codes_copy = @procurement.service_codes
+    end
+
+    def past_service_codes
+      @procurement.service_codes = @service_codes_copy
+      @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
     end
 
     def update_service_codes
@@ -522,7 +532,7 @@ module FacilitiesManagement
       @page_data[:supplier_collection] = @procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] }.shuffle
       @page_data[:estimated_cost] = @procurement.assessed_value
       @page_data[:selected_sublot] = @procurement.lot_number
-      @page_data[:buildings] = @active_procurement_buildings.map { |b| b[:name] }
+      @page_data[:buildings] = @active_procurement_buildings.order_by_building_name
       @page_data[:services] = @procurement.procurement_building_services.map { |s| s[:name] }
       @page_data[:supplier_prices] = @procurement.procurement_suppliers.map(&:direct_award_value)
     end
@@ -645,7 +655,6 @@ module FacilitiesManagement
       params.require(:facilities_management_procurement).permit(:route_to_market)
     end
 
-    # rubocop:disable Metrics/MethodLength
     def procurement_params
       params.require(:facilities_management_procurement)
             .permit(
@@ -685,12 +694,6 @@ module FacilitiesManagement
               service_codes: [],
               region_codes: [],
               procurement_buildings_attributes: [:id,
-                                                 :name,
-                                                 :address_line_1,
-                                                 :address_line_2,
-                                                 :town,
-                                                 :county,
-                                                 :postcode,
                                                  :active,
                                                  service_codes: []],
               procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error],
@@ -699,7 +702,6 @@ module FacilitiesManagement
               notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
             )
     end
-    # rubocop:enable Metrics/MethodLength
 
     def set_current_step
       @current_step = nil
@@ -717,13 +719,15 @@ module FacilitiesManagement
     end
 
     def set_procurement_data
+      @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
+      set_buildings if params['step'] == 'procurement_buildings'
+      return if @procurement.service_codes.nil? || @procurement.region_codes.nil?
+
       region_codes = @procurement.region_codes
       service_codes = @procurement.service_codes
       set_suppliers(region_codes, service_codes)
       find_regions(region_codes)
       find_services(service_codes)
-      @active_procurement_buildings = @procurement.procurement_buildings.try(:active)
-      set_buildings if params['step'] == 'procurement_buildings'
     end
 
     def set_suppliers(region_codes, service_codes)
@@ -736,7 +740,7 @@ module FacilitiesManagement
     def set_buildings
       @buildings_data = current_user.buildings.where(status: 'Ready')
       @buildings_data.each do |building|
-        @procurement.find_or_build_procurement_building(building['building_json'], building.id)
+        @procurement.find_or_build_procurement_building(building.id)
       end
     end
 
@@ -930,7 +934,7 @@ module FacilitiesManagement
         new_authorised_representative_details: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
           page_title: 'New authorised representative details',
-          continuation_text: 'Continue',
+          continuation_text: 'Save and return',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
           return_text: 'Return to authorised representative details',
         },

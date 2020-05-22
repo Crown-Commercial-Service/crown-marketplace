@@ -116,6 +116,7 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
+          copy_procurement_buildings_gia
           copy_fm_rates_to_frozen
           copy_fm_rate_cards_to_frozen
           calculate_initial_assesed_value
@@ -246,14 +247,8 @@ module FacilitiesManagement
       end
     end
 
-    def find_or_build_procurement_building(building_data, building_id)
-      procurement_building = procurement_buildings.find_or_initialize_by(name: building_data['name'])
-      procurement_building.address_line_1 = building_data['address']['fm-address-line-1']
-      procurement_building.address_line_2 = building_data['address']['fm-address-line-2']
-      procurement_building.town = building_data['address']['fm-address-town']
-      procurement_building.county = building_data['address']['fm-address-county']
-      procurement_building.postcode = building_data['address']['fm-address-postcode']
-      procurement_building.building_id = building_id
+    def find_or_build_procurement_building(building_id)
+      procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
       procurement_building.save
     end
 
@@ -262,7 +257,7 @@ module FacilitiesManagement
     end
 
     def valid_services?
-      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) }
+      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
     end
 
     def buildings_standard
@@ -414,6 +409,10 @@ module FacilitiesManagement
 
     private
 
+    def copy_procurement_buildings_gia
+      procurement_buildings.each(&:set_gia)
+    end
+
     def save_data_for_procurement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
@@ -453,7 +452,7 @@ module FacilitiesManagement
 
     def update_procurement_building_services
       procurement_buildings.each do |building|
-        building.service_codes.select! { |service_code| service_codes.include? service_code }
+        building.service_codes.select! { |service_code| service_codes&.include? service_code }
       end
 
       procurement_building_services.where.not(code: service_codes).destroy_all

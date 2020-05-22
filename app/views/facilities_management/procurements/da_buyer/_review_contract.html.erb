@@ -24,7 +24,7 @@
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
             </li>
             <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-              <a href="<%= asset_path('Statement of Requirements - Annex A - Standards and Processes.docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+              <a href="<%= asset_path('Attachment 2 - Statement of Requirements - Annex A - Standards and Processes (DA).docx') %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
                 <%= t('.attachment_2.annex_a.title') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
               </a>
               <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.annex_a.guidance') %></p>
@@ -115,11 +115,11 @@
           <strong class="govuk-warning-text__text"><%= t('.download_documents.guidance') %></strong>
         </div>
 
-        <strong><p><%= t('.change_requirements.guidance') %></strong>
+        <p><strong><%= t('.change_requirements.guidance') %></strong></p>
         <div>
-          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--warning', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
+          <%= f.submit(t('.change_requirements.title'), class: 'govuk-button govuk-button--secondary', data: { disable_with: false }, name: :continue_to_review_and_generate, 'aria-label': "#{t('.change_requirements.title')}") %>
         </div>
-        <strong><p><%= t('.change_schedule.guidance') %></strong>
+        <p><strong><%= t('.change_schedule.guidance') %></strong></p>
 
         <h2 class="govuk-heading-m"><%= t('.sending_contract.heading') %></h2>
         <p class="govuk-body govuk-!-padding-bottom-4"><%= t('.sending_contract.guidance') %></p>

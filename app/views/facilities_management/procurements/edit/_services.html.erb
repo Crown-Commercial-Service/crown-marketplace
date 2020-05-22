@@ -1,6 +1,6 @@
 <%= render('errors/inline_error_summary') %>
 <div class="procurement">
-  <div class="services chooser-component">
+  <div class="services chooser-component <%= "govuk-form-group--error" if @procurement.errors[:service_codes].any? %>">
     <div id="ccs-dynamic-accordian" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-top-0">All services</h1>
@@ -40,7 +40,7 @@
                                                 id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
                               <label style="padding-top:0"
                                      class="govuk-label govuk-checkboxes__label"
-                                     for="<%= "service_#{work_package['code'].gsub('.', '-')}" %>">
+                                     for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
                                 <%= work_package['name'] %>
                                 <br/>
                                 <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>

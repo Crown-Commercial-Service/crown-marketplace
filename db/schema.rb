@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_085015) do
+ActiveRecord::Schema.define(version: 2020_05_20_124804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -104,16 +104,11 @@ ActiveRecord::Schema.define(version: 2020_05_08_085015) do
   create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.text "service_codes", default: [], array: true
-    t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "address_line_1", limit: 255
-    t.string "address_line_2", limit: 255
-    t.string "town", limit: 255
-    t.string "county", limit: 255
-    t.string "postcode", limit: 20
     t.boolean "active"
     t.uuid "building_id"
+    t.integer "gia"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 
@@ -139,7 +134,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_085015) do
   create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.string "name", limit: 150
-    t.integer "percentage"
+    t.float "percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
@@ -693,7 +688,9 @@ ActiveRecord::Schema.define(version: 2020_05_08_085015) do
     t.integer "roles_mask"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "session_token", limit: 255
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["session_token"], name: "index_users_on_session_token"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
