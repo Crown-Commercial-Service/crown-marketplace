@@ -198,12 +198,16 @@ class ProcurementCsvExport
   end
 
   def self.expand_services(service_codes)
+    return if service_codes.nil?
+
     service_codes.compact.map do |code|
       "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'};\n"
     end.join
   end
 
   def self.expand_regions(region_codes)
+    return if region_codes.nil?
+
     region_codes.compact.map do |code|
       "#{code} #{FacilitiesManagement::Region.find_by(code: code)&.name || 'region description not found'};\n"
     end.join
