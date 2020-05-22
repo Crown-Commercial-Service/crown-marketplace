@@ -149,11 +149,11 @@ module FacilitiesManagement
       init
       if params[:spreadsheet] == 'prices_spreadsheet'
         spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.first_unsent_contract.id
-        render xlsx: spreadsheet1.to_xlsx, filename: 'Attachment 3 - Price Matrix (DA)'
+        render xlsx: spreadsheet1.to_xlsx, filename: 'Attachment_3_-_Price_Matrix_(DA).xlsx'
       else
         spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.first_unsent_contract.id
         spreadsheet2 = spreadsheet_builder.build
-        render xlsx: spreadsheet2.to_stream.read, filename: 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA)'
+        render xlsx: spreadsheet2.to_stream.read, filename: 'Attachment_2_-_Statement_of_Requirements_-_Deliverables_Matrix_(DA).xlsx'
       end
     end
 
