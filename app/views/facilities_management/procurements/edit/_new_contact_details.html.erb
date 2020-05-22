@@ -35,12 +35,12 @@
             <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{page_contact}.organisation_address_postcode#{'-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
             <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
             <%= display_error(ff.object, :organisation_address_postcode) if ff.object.organisation_address_postcode.blank? || !ff.object.valid_postcode? %>
-            <% input_index = ff.object.organisation_address_postcode.present? ? -1 : 0 %>
+            <% input_index = ff.object.valid_postcode? ? -1 : 0 %>
             <%= ff.text_field :organisation_address_postcode, 'aria-label' =>'postcode', class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10, tabindex: input_index %>
           </div>
         </div>
         <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
-          <a role="button" class="govuk-button govuk-!-margin-bottom-2" tabindex=<%=input_index %> id="buyer-details-find-address-btn" aria-label="<%= t('.find_address') %>"><%= t('.find_address') %></a>
+          <a role="button" href="" class="govuk-button govuk-!-margin-bottom-2" tabindex=<%=input_index %> id="buyer-details-find-address-btn" aria-label="<%= t('.find_address') %>"><%= t('.find_address') %></a>
         </div>
         <div class="govuk-!-margin-top-0">
           <%= link_to t('.missing_address'), edit_facilities_management_procurement_path(step: address_step), class: "govuk-link--no-visited-state govuk-caption-m", id: "add_new_#{page_contact}s_address_1", tabindex: input_index %>
@@ -74,7 +74,7 @@
         <div id="selected-address-label" class=" govuk-body govuk-!-margin-bottom-4">
           <%= ff.object.contact_address if ff.object.valid_contact_address? %>
         </div>
-        <% change_index = ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? ? 0 : -1 %>
+        <% change_index = ff.object.organisation_address_line_1.present? && ff.object.valid_postcode? ? 0 : -1 %>
         <a id="change-selected-address-link" href="" tabindex=<%="#{change_index}"%> class="govuk-link--no-visited-state"><%= t('.change') %></a>
         <%= ff.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
         <%= ff.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
