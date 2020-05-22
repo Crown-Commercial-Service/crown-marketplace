@@ -217,7 +217,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row, style: header_row_style
 
       building_name_row = ['', '', '']
-      @active_procurement_buildings.each { |building| building_name_row << building.name }
+      @active_procurement_buildings.each { |building| building_name_row << sanitize_string_for_excel(building.name) }
       sheet.add_row building_name_row, style: header_row_style
 
       sorted_building_keys = @data.keys
@@ -376,4 +376,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/AbcSize
+
+  def sanitize_string_for_excel(string)
+    return "'#{string}" if string.match?(/\A(@|=|\+|\-)/)
+
+    string
+  end
 end
