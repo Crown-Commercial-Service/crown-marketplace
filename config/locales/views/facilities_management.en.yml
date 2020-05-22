@@ -572,12 +572,12 @@ en:
         view_more: View more building types
     buyer_account:
       buyer_account:
-        about_the_buyer_description: Edit buyer account details such as contact name, organisation name
-        about_the_buyer_title: About the buyer
+        about_the_buyer_description: Edit your account details such as your name or organisation name
+        about_the_buyer_title: About your account
         buildings_title: Buildings
         buyer_account_dashboard: Buyer account dashboard
-        buyer_account_title: Buyer account
-        link_text: Update buyer details
+        buyer_account_title: Your account
+        link_text: Manage your details
         manage_buildings: Manage buildings
         manage_buildings_desc: Create and manage your buildings used in your procurements
         manage_procurements_link: Procurements dashboard
@@ -586,7 +586,7 @@ en:
         procurements: Procurements
     buyer_details:
       edit:
-        buyer_details: Buyer details
+        buyer_details: Manage your details
         cant_find_addr_in_list: Can’t find address/enter address manually
         central_gov: Central government
         change: Change
@@ -603,15 +603,16 @@ en:
         submit: Save and continue
         which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
         wider_public_sector: Wider public sector
-        your_details: Your details
+        your_details: Personal details
       edit_address:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
+        manage_details: Manage your details
         postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
-        your_details: Your details
+        your_details: Organisation address
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
       1_you_will_tell_us_html: |
