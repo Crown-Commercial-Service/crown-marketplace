@@ -239,10 +239,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
     sheet.add_row ['1. Customer details'], style: bold_style
     sheet.add_row ['Contract Name', sanitize_string_for_excel(@procurement.contract_name)]
-    add_samitized_customer_details(sheet)
+    add_sanitized_customer_details(sheet)
   end
 
-  def add_samitized_customer_details(sheet)
+  def add_sanitized_customer_details(sheet)
     telephone_number_style = sheet.styles.add_style format_code: '0##########', alignment: { horizontal: :left }
     buyer_detail = @procurement.user.buyer_detail
     sheet.add_row ['Buyer Organisation Name', sanitize_string_for_excel(buyer_detail.organisation_name)]
