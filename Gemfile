@@ -40,7 +40,7 @@ gem 'caxlsx_rails', '>= 0.6.0'
 gem 'phonejack'
 gem 'holidays'
 gem 'virtus'
-gem 'jquery-rails', '~> 4.3.5'
+gem 'jquery-rails', '~> 4.4.0'
 
 gem 'rollbar', '~> 2.24.0'
 
