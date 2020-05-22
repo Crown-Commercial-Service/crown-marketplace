@@ -112,7 +112,7 @@ en:
             organisation_address_postcode:
               address_not_complete: Address not provided
               blank: Enter your postcode
-              invalid: Enter a valid postcode
+              invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter your town or city
               invalid: Enter your town or city

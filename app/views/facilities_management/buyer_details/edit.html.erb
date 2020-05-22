@@ -57,12 +57,12 @@
 
         <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>" data-propertyname="organisation_address_postcode">
           <div class="">
-            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? %>">
+            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1', for: 'buyer-details-postcode' %>
-                  <div class="govuk-error-message" id="fm-postcode-error"></div>
-                  <%= display_errors(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? %>
+                  <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
+                  <%= display_errors(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                   <% input_index = f.object.organisation_address_line_1.present? ? -1 : 0 %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true, tabindex: "#{input_index}"  %>
                 </div>
@@ -88,7 +88,7 @@
               </div>
               <div class= <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>>
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4" for="buyer-details-postcode-lookup-results"><%= t('.select_an_addr') %></label>
-                <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? %>
+                <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
                     <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
                       <%= t('.no_addr_selected') %>
@@ -102,7 +102,7 @@
                 </div>
               </div>
             </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? %>" id="selected-address-container">
+            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>" id="selected-address-container">
               <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.postcode') %></label>
               <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
                 <%= f.object.organisation_address_postcode %>
