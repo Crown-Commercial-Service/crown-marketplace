@@ -145,7 +145,6 @@ $(function () {
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 pageUtils.setCachedData('fm-current-building', building);
-                // location.href = whereNext
                 $('#fm-new-building-continue-form').submit()
             },
             error: function (jqXhr, textStatus, errorThrown) {

@@ -5,7 +5,6 @@ $(function () {
     let extensions = [];
     const max_contract_years = 10;
 
-    /* validate and cache contract length */
     const init = (function () {
 
         contractLength = pageUtils.getCachedData('fm-contractlength');

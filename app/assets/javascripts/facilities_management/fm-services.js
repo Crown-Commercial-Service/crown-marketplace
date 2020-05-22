@@ -1,9 +1,4 @@
-/*
-* filename: fm-services.js
-* Description: Click handlers for the select services page
-* */
 $(function () {
-    /* govuk-accordion__controls event handlers */
     if ( $('#fm-buildings-selected-services').length == 0 ) {
         return;
     }
@@ -12,7 +7,6 @@ $(function () {
     let currentBuilding = pageUtils.getCachedData('fm-current-building');
 
     const initialize = (function () {
-        /* Load and display cached values */
         if (selectedServices) {
             for (let x = 0; x < selectedServices.length; x++) {
                 let value = selectedServices[x];
@@ -20,7 +14,6 @@ $(function () {
             }
         }
 
-        /* set the initial count */
         updateServiceCount();
         renderSelectedServices();
     });
@@ -36,14 +29,12 @@ $(function () {
 
             $('#fm-buildings-selected-services').prepend(newCheckBoxItem);
 
-            /* add a change handler for the new check box item */
             $('#' + service.code).on('change', function (e) {
                 let isChecked = e.target.checked;
 
                 if (isChecked === true) {
                     selectedServicesForThisBuilding.push(service);
                 } else {
-                    /* remove the item */
                     selectedServicesForThisBuilding = selectedServicesForThisBuilding.filter(function (currentService) {
                         if (currentService && currentService.code !== service.code) {
                             return true;
@@ -81,7 +72,6 @@ $(function () {
     });
 
 
-    /* remove a service from the selected list */
     const removeSelectedItem = (function (id) {
         $('li#' + id).remove();
         if (!id.includes("_selected")) {
@@ -90,7 +80,6 @@ $(function () {
         id = id.replace('_selected', '');
         $("input#" + id).prop('checked', false);
 
-        /* remove from the array that is saved */
         let filtered = selectedServices.filter(function (value, index, arr) {
             if (value.code !== id) {
                 return true;
@@ -105,7 +94,6 @@ $(function () {
         updateServiceCount();
     });
 
-    // add a selected service from the selected list
     const addSelectedItem = (function (serviceId, workItemId, title) {
         let val = title;
 
@@ -135,7 +123,6 @@ $(function () {
     const synchroniseServiceSelectAllCheckBox = (function (serviceId, bAllIsChecked) {
         let allServiceWorkItems = $("input[serviceid='" + serviceId + "']");
 
-        //correctly toggle select-all state for the service sub-set
         if (!bAllIsChecked) {
             $("input[forserviceid='" + serviceId + "']").prop("checked", false);
         } else {
@@ -159,7 +146,6 @@ $(function () {
         }
     });
 
-    /* uncheck all check boxes and clear list */
     const clearAll = (function () {
         $("#selected-fm-services li").remove();
         $("#services-accordion input:checkbox").prop('checked', false);
@@ -177,17 +163,15 @@ $(function () {
         });
     });
 
-    /* Click handler to remove all services */
     $('#remove-all-services-link').on('click', function (e) {
         e.preventDefault();
         clearAll();
     });
 
-    /* click handler for check boxes */
     $('#services-accordion .govuk-checkboxes__input').on('click', function (e) {
         let serviceId = e.target.getAttribute("serviceid");
 
-        if (serviceId !== null) {   // only !select-all checkboxes
+        if (serviceId !== null) {
             if (e.target.checked === true) {
                 addSelectedItem(serviceId, e.target.id, e.target.title);
             } else {
@@ -202,7 +186,6 @@ $(function () {
 
     });
 
-    /* Check for at least one service has been selected */
     const isValid = (function () {
 
         let result = selectedServices && selectedServices.length > 0 ? true : false;
@@ -215,7 +198,6 @@ $(function () {
 
     });
 
-    /* Save and continue click handler */
     $('#save-services-link').on('click', function (e) {
 
         pageUtils.toggleInlineErrorMessage(false);
@@ -228,7 +210,7 @@ $(function () {
 
             if (ref.indexOf('buildings/select-services') > -1) {
                 e.preventDefault();
-                // location.href = document.referrer;
+
                 $('#save-services-link-form').attr('action', document.referrer).submit()
             } else {
                 $('#save-services-link-form').attr('action', "/facilities-management/select-locations").submit()
@@ -259,13 +241,11 @@ $(function () {
         e.preventDefault();
 
         if (selectedServicesForThisBuilding && selectedServicesForThisBuilding.length > 0) {
-            /* save services with building information */
             pageUtils.toggleInlineErrorMessage(false);
             currentBuilding['services'] = selectedServicesForThisBuilding;
             let url = ('/facilities-management/buildings/units-of-measurement?building_id=' + escape(currentBuilding['id']));
             fm.services.updateBuilding(currentBuilding, true, url);
         } else {
-            /* show error message */
             pageUtils.toggleInlineErrorMessage(true);
         }
     });

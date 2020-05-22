@@ -1,17 +1,17 @@
 function cReg(){
-    return new RegExp ("^.{8,}");//requires 8 characters
+    return new RegExp ("^.{8,}");
 }
 function pReg(){
-    return new RegExp("^(?=.*?[#?!@£$%^&*-])");//requires a special character
+    return new RegExp("^(?=.*?[#?!@£$%^&*-])");
 }
 function uReg(){
-    return new RegExp("^(?=.*?[A-Z])");//requires an uppercase letter
+    return new RegExp("^(?=.*?[A-Z])");
 }
 function numReg(){
-    return new RegExp("^(?=.*[0-9])");//requires a number
+    return new RegExp("^(?=.*[0-9])");
 }
 function emailReg(){
-    return new RegExp("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})");//validates email
+    return new RegExp("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})");
 }
 
 function passwordStrength(t){
@@ -23,8 +23,8 @@ function passwordStrength(t){
     ];
     var arrayLength = theTests.length;
 
-    t.on('keyup', function(){//the dynamic password strength list
-        for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i][0]);
+    t.on('keyup', function(){
+        for (var i = 0; i < arrayLength; i++) {
             if(theTests[i][0].test($(this).val())){
                 theTests[i][1].removeClass('wrong').addClass('correct');
             }else{
@@ -47,11 +47,9 @@ jQuery(document).ready(function(){
       var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code','cog_forgot_password_request_form','cog_forgot_password_reset_form'];
 
       $.each(formIDs, function(i, val){
-        if(f.is('#'+val)){//the form has this id
-            var pass01 = 'password01'; //password 1 field name & id        
+        if(f.is('#'+val)){
+            var pass01 = 'password01';   
             passwordStrength($('#'+pass01));
-
-            //window[val](f);//call the function reusing the id as its name
         }
       });
     }
