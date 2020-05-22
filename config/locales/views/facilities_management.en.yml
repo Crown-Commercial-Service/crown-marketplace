@@ -608,11 +608,11 @@ en:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
+        manage_details: Manage your details
         postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
         your_details: Organisation address
-        manage_details: Manage your details
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
       1_you_will_tell_us_html: |
