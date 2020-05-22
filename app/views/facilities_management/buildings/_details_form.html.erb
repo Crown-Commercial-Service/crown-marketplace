@@ -150,6 +150,8 @@
                                    end %>"></optgroup>
               <% if valid_regions.length > 0 %>
                 <option value="">Please select a region</option>
+              <%else %>
+                <option value=""><%=t('.zero_regions_found') %></option>
               <% end %>
               <% valid_regions.each do |region| %>
                 <option value="<%= region[:code] %>" <%= 'selected' if @page_data[:model_object].address_region_code == region[:code] %>
