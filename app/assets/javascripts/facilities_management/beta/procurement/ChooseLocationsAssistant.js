@@ -13,19 +13,11 @@ $(function () {
         }
     }
     function initialiseChooseLocations() {
-        let obj = new ChooserComponent("procurement", "locations", locationCheckboxCallback, pageUtils.getCachedData('fm-locations'));
+        let obj = new ChooserComponent("procurement", "locations", pageUtils.getCachedData('fm-locations'));
         if (obj.validate()) {
             return obj;
         } else {
             return null;
         }
     }
-    function locationCheckboxCallback(sectionEvent) {
-        if (sectionEvent.isValid) {
-            //pageUtils.toggleInlineErrorMessage(false);
-        } else {
-            //pageUtils.toggleInlineErrorMessage(true);
-        }
-    }
-
 });

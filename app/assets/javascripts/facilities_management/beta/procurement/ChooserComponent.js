@@ -1,10 +1,6 @@
-// this component will engage when it finds a div element with a class of .<.baseClass> and child with a class of .<.classification>.chooser-component
-// beneath that, it will need to find a set of checkboxes inside a  div with a class of .chooser-input and targeting a div of class .basket
-// what of these wishes is implemented:
-function ChooserComponent(baseClass, classification, checkboxCallback, selectedItems) {
+function ChooserComponent(baseClass, classification, selectedItems) {
     this._baseClass = baseClass;
     this._classification = classification;
-    this._checkboxCallback = checkboxCallback.bind(this);
     this._parentElementName = "div." + this._baseClass;
     this._chooserElementName = this._parentElementName + " .chooser-component." + this._classification;
     this._checkboxSourceDivName = this._chooserElementName + " div.chooser-input";
@@ -50,8 +46,6 @@ ChooserComponent.prototype.checkboxHandler = function (sectionEvent) {
     chooserEvent.total_count = this.GetTotalCount();
     chooserEvent.selected_count = this.GetSelectedCount();
 
-    this._checkboxCallback(chooserEvent);
-
     let basketItem = {
         groupId: chooserEvent.sectionCode,
         captionText: chooserEvent.target.title,
@@ -95,7 +89,6 @@ ChooserComponent.prototype.handleBasketRemove = function (groupID, value) {
     };
 
     this._basketContainer.UpdateBasketNumber ( chooserEvent.selected_count );
-    this._checkboxCallback(chooserEvent);
 };
 ChooserComponent.prototype.GetValidStatus = function () {
     let status = false;

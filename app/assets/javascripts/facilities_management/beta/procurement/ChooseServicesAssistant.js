@@ -20,7 +20,7 @@ $(function () {
         }
     }
     function initialiseChooseServices() {
-        let obj = new ChooserComponent("procurement", "services", serviceCheckboxCallback, pageUtils.getCachedData('fm-locations'));
+        let obj = new ChooserComponent("procurement", "services", pageUtils.getCachedData('fm-locations'));
         if (obj.validate()) {
             return obj;
         } else {
@@ -28,19 +28,11 @@ $(function () {
         }
     }
     function initialiseChooseBuildings() {
-        let obj = new ChooserComponent("procurement", "buildings", serviceCheckboxCallback, null);
+        let obj = new ChooserComponent("procurement", "buildings", null);
         if (obj.validate()) {
             return obj;
         } else {
             return null;
         }
     }
-    function serviceCheckboxCallback(sectionEvent) {
-        if (sectionEvent.isValid) {
-            //pageUtils.toggleInlineErrorMessage(false);
-        } else {
-            //pageUtils.toggleInlineErrorMessage(true);
-        }
-    }
-
 });

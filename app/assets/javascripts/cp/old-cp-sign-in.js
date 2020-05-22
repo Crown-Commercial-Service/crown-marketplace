@@ -74,17 +74,17 @@ function cop_confirmation_code(form){
         var inputName = 'confirmation';
         var inputVal = form.find('input[name="'+inputName+'"]').val();
 
-        if(inputVal === ''){//empty value
-            e.preventDefault();//stop the form.submit()
+        if(inputVal === ''){
+            e.preventDefault();
             fireErrorSummary(inputName);
             fireInlineError(inputName);
-        }else{//has a value
-            removeErrorSummary(inputName);//clean up ...
+        }else{
+            removeErrorSummary(inputName);
             removeInlineError(inputName, form);
 
             var characterReg = /^([a-zA-Z0-9]{0,5})$/;
             if(characterReg.test(inputVal)) {
-                e.preventDefault();//stop the form.submit()
+                e.preventDefault();
                 fireErrorSummary(inputName,'six');
                 fireInlineError(inputName,'six');
             }
@@ -98,12 +98,12 @@ function cop_register(form){
     var firstPassword;
 
     $('#submit').on('click', function(e){
-        var pass01 = 'password01'; //password 1 field name & id
-        var pass02 = 'password02';//password 2 field name & id
-        var fname = 'firstname';//firstname field name & id, ... etc
+        var pass01 = 'password01';
+        var pass02 = 'password02';
+        var fname = 'firstname';
         var lname = 'lastname';
         var orgname = 'organisationname';
-        var emailF = 'email';//job title is optional
+        var emailF = 'email';
 
         var val01 = form.find('input[name="'+pass01+'"]').val();
         var val02 = form.find('input[name="'+pass02+'"]').val();
@@ -116,31 +116,31 @@ function cop_register(form){
         var arrayLength = inputs.length;
         refreshErrorSummary();
 
-        for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i]);
+        for (var i = 0; i < arrayLength; i++) {
 
-            if(inputs[i][0] === ''){// = empty inputs
+            if(inputs[i][0] === ''){
 
-                e.preventDefault();//stop the form.submit()
+                e.preventDefault();
                 fireErrorSummary(inputs[i][1]);
                 wipeInlineError(inputs[i][1]);
                 fireInlineError(inputs[i][1]);
 
-            }else{//has a value
-                removeErrorSummary(inputs[i][1]);//clean up ...
+            }else{
+                removeErrorSummary(inputs[i][1]);
                 removeInlineError(inputs[i][1], form);
 
-                if(inputs[i][1] == pass01){//run on the first/main password input
+                if(inputs[i][1] == pass01){
 
                     var characterReg = /^([a-zA-Z0-9]{0,7})$/;
-                    var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");//requires a number or special character
+                    var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");
                     firstPassword = inputs[i][0];
 
                     if(characterReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1],'eight');
                         fireInlineError(inputs[i][1],'eight');
                     }else if(!passwordReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1],'strength');
                         fireInlineError(inputs[i][1],'strength');
                     }
@@ -148,7 +148,7 @@ function cop_register(form){
                 }else if(inputs[i][1] == pass02){
 
                     if(firstPassword != inputs[i][0]){
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1],'match');
                         fireInlineError(inputs[i][1],'match');
                     }
@@ -157,7 +157,7 @@ function cop_register(form){
 
                     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
                     if(!emailReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1]);
                         fireInlineError(inputs[i][1]);
                     }
@@ -175,8 +175,8 @@ function cop_change_password_form(form){
     var firstPassword;
 
     $('#submit').on('click', function(e){
-        var pass01 = 'password01'; //password 1 field name & id
-        var pass02 = 'password02';//password 2 field name & id
+        var pass01 = 'password01'; 
+        var pass02 = 'password02';
 
         var val01 = form.find('input[name="'+pass01+'"]').val();
         var val02 = form.find('input[name="'+pass02+'"]').val();
@@ -185,36 +185,36 @@ function cop_change_password_form(form){
         var arrayLength = inputs.length;
         refreshErrorSummary();
 
-        for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i]);
+        for (var i = 0; i < arrayLength; i++) {
 
-            if(inputs[i][0] === ''){// = empty inputs
-                e.preventDefault();//stop the form.submit()
+            if(inputs[i][0] === ''){
+                e.preventDefault();
                 fireErrorSummary(inputs[i][1]);
                 wipeInlineError(inputs[i][1]);
                 fireInlineError(inputs[i][1]);
-            }else{//has a value
-                removeErrorSummary(inputs[i][1]);//clean up ...
+            }else{
+                removeErrorSummary(inputs[i][1]);
                 removeInlineError(inputs[i][1], form);
 
-                if(inputs[i][1] == pass01){//run on the first/main password input
+                if(inputs[i][1] == pass01){
 
                     var characterReg = /^([a-zA-Z0-9]{0,7})$/;
-                    var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");//requires a number or special character
+                    var passwordReg = new RegExp("^(?=.*[0-9])|(?=.[!@#\$%\^&])");
                     firstPassword = inputs[i][0];
 
                     if(characterReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1],'eight');
                         fireInlineError(inputs[i][1],'eight');
                     }else if(!passwordReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1],'strength');
                         fireInlineError(inputs[i][1],'strength');
                     }
 
                 }else if(firstPassword != inputs[i][0]){
 
-                    e.preventDefault();//stop the form.submit()
+                    e.preventDefault();
                     fireErrorSummary(inputs[i][1],'match');
                     fireInlineError(inputs[i][1],'match');
 
@@ -231,8 +231,8 @@ function cop_sign_in_form(form){
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
     $('#submit').on('click', function(e){
-        var emailF = 'email'; //email field name & id
-        var passwordF = 'password';//password field name & id
+        var emailF = 'email'; 
+        var passwordF = 'password';
 
         var val01 = form.find('input[name="'+emailF+'"]').val();
         var val02 = form.find('input[name="'+passwordF+'"]').val();
@@ -241,19 +241,19 @@ function cop_sign_in_form(form){
         var arrayLength = inputs.length;
         refreshErrorSummary();
 
-        for (var i = 0; i < arrayLength; i++) {//console.log(inputs[i]);
+        for (var i = 0; i < arrayLength; i++) {
 
-            if(inputs[i][0] === ''){//empty value
-                e.preventDefault();//stop the form.submit()
+            if(inputs[i][0] === ''){
+                e.preventDefault();
                 fireErrorSummary(inputs[i][1]);
                 fireInlineError(inputs[i][1]);
-            }else{//has a value
-                removeErrorSummary(inputs[i][1]);//clean up ...
+            }else{
+                removeErrorSummary(inputs[i][1]);
                 removeInlineError(inputs[i][1], form);
 
-                if(inputs[i][1] == emailF){//test the email address
+                if(inputs[i][1] == emailF){
                     if(!emailReg.test(inputs[i][0])) {
-                        e.preventDefault();//stop the form.submit()
+                        e.preventDefault();
                         fireErrorSummary(inputs[i][1]);
                         fireInlineError(inputs[i][1]);
                     }
@@ -275,8 +275,8 @@ jQuery(document).ready(function(){
       var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code'];
 
       $.each(formIDs, function(i, val){
-        if(f.is('#'+val)){//the form has this id
-          window[val](f);//call the function reusing the id as its name
+        if(f.is('#'+val)){
+          window[val](f);
         }
       });
     }

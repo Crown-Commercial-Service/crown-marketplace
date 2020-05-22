@@ -21,28 +21,22 @@ CCSCharacterCount.prototype.numberFormats = {
 	}
 };
 
-// Initialize component
 CCSCharacterCount.prototype.init = function () {
-	// Check for module
 	var $module = this.$module;
 	var $textarea = this.$textarea;
 	if (!$textarea) {
 		return;
 	}
 	
-	// Read options set using dataset ('data-' values)
 	this.options = this.getDataset($module);
 	
-	// Determine the limit attribute (characters or words)
 	var countAttribute = this.defaults.characterCountAttribute;
 	if (this.options.maxwords) {
 		countAttribute = this.defaults.wordCountAttribute;
 	}
 	
-	// Save the element limit
 	this.maxLength = $module.getAttribute(countAttribute);
 	
-	// Check for limit
 	if (!this.maxLength) {
 		return;
 	}
@@ -55,8 +49,6 @@ CCSCharacterCount.prototype.init = function () {
 		}
 	}
 	
-	// adjust input if it is numeric to ensure maxlength is honoured and bind
-	// key event to prevent non-numeric input
 	if ($textarea.getAttribute("type") === "number") {
 		$textarea.setAttribute("type", "text");
 		if (!this.options.maxwords) {
@@ -64,26 +56,20 @@ CCSCharacterCount.prototype.init = function () {
 		}
 	}
 	
-	// Generate and reference message
 	var boundCreateCountMessage = this.createCountMessage.bind(this);
 	this.countMessage = boundCreateCountMessage();
 	
-	// If there's a maximum length defined and the count message exists
 	if (this.countMessage) {
-		// Remove hard limit if set
 		$module.removeAttribute('maxlength');
 		
-		// Bind event changes to the textarea
 		var boundChangeEvents = this.bindChangeEvents.bind(this);
 		boundChangeEvents();
 		
-		// Update count message
 		var boundUpdateCountMessage = this.updateCountMessage.bind(this);
 		boundUpdateCountMessage();
 	}
 };
 
-// Read data attributes
 CCSCharacterCount.prototype.getDataset = function (element) {
 	var dataset = {};
 	var attributes = element.attributes;
@@ -99,11 +85,10 @@ CCSCharacterCount.prototype.getDataset = function (element) {
 	return dataset;
 };
 
-// Counts characters or words in text
 CCSCharacterCount.prototype.count = function (text) {
 	var length;
 	if (this.options.maxwords) {
-		var tokens = text.match(/\S+/g) || []; // Matches consecutive non-whitespace chars
+		var tokens = text.match(/\S+/g) || [];
 		length = tokens.length;
 	} else {
 		length = text.length;
@@ -111,16 +96,12 @@ CCSCharacterCount.prototype.count = function (text) {
 	return length;
 };
 
-// Generate count message and bind it to the input
-// returns reference to the generated element
 CCSCharacterCount.prototype.createCountMessage = function () {
 	var countElement = this.$textarea;
 	var elementId = countElement.id;
-	// Check for existing info count message
 	var countMessage = document.getElementById(elementId + '-info');
 	
 	if (elementId && !countMessage) {
-		// If there is no existing info count message we add one right after the field
 		if (!this.$countContainer) {
 			countElement.insertAdjacentHTML('afterend', '<span id="' + elementId + '-info" class="ccs-character-count-message govuk-hint" style="order:99" aria-live="polite"></span>');
 			
@@ -144,7 +125,6 @@ CCSCharacterCount.prototype.createCountMessage = function () {
 	return countMessage;
 };
 
-// Bind input propertychange to the elements and update based on the change
 CCSCharacterCount.prototype.bindChangeEvents = function () {
 	var $textarea = this.$textarea;
 	if (null !== this.numberFormat) {
@@ -152,7 +132,6 @@ CCSCharacterCount.prototype.bindChangeEvents = function () {
 	}
 	$textarea.addEventListener('keyup', this.checkIfValueChanged.bind(this));
 	
-	// Bind focus/blur events to start/stop polling
 	$textarea.addEventListener('focus', this.handleFocus.bind(this));
 	$textarea.addEventListener('blur', this.handleBlur.bind(this));
 };
@@ -171,9 +150,6 @@ CCSCharacterCount.prototype.restrictToNumberFormat = function (e) {
 	}
 };
 
-// Speech recognition software such as Dragon NaturallySpeaking will modify the
-// fields by directly changing its `value`. These changes don't trigger events
-// in JavaScript, so we need to poll to handle when and if they occur.
 CCSCharacterCount.prototype.checkIfValueChanged = function () {
 	if (!this.$textarea.oldValue) this.$textarea.oldValue = '';
 	if (this.$textarea.value !== this.$textarea.oldValue) {
@@ -193,18 +169,15 @@ CCSCharacterCount.prototype.checkIfValueChanged = function () {
 	}
 };
 
-// Update message box
 CCSCharacterCount.prototype.updateCountMessage = function () {
 	var countElement = this.$textarea;
 	var options = this.options;
 	var countMessage = this.countMessage;
 	
-	// Determine the remaining number of characters/words
 	var currentLength = this.count(countElement.value);
 	var maxLength = this.maxLength;
 	var remainingNumber = maxLength - currentLength;
 	
-	// Set threshold if presented in options
 	var thresholdPercent = options.threshold ? options.threshold : 0;
 	var thresholdValue = maxLength * thresholdPercent / 100;
 	if (thresholdValue > currentLength) {
@@ -213,7 +186,6 @@ CCSCharacterCount.prototype.updateCountMessage = function () {
 		countMessage.classList.remove('govuk-character-count__message--disabled');
 	}
 	
-	// Update styles
 	if (remainingNumber < 0) {
 		countElement.classList.add('govuk-textarea--error');
 		countMessage.classList.remove('govuk-hint');
@@ -224,7 +196,6 @@ CCSCharacterCount.prototype.updateCountMessage = function () {
 		countMessage.classList.add('govuk-hint');
 	}
 	
-	// Update message
 	var charVerb = 'remaining';
 	var charNoun = 'character';
 	var displayNumber = remainingNumber;
@@ -240,12 +211,10 @@ CCSCharacterCount.prototype.updateCountMessage = function () {
 };
 
 CCSCharacterCount.prototype.handleFocus = function () {
-	// Check if value changed on focus
 	this.valueChecker = setInterval(this.checkIfValueChanged.bind(this), 1000);
 };
 
 CCSCharacterCount.prototype.handleBlur = function () {
-	// Cancel value checking on blur
 	clearInterval(this.valueChecker);
 };
 
