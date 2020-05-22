@@ -391,6 +391,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             if (bShow) {
                 $('#error-summary-title').text("There is a problem")
                 this.bannerErrorContainer.removeClass("govuk-visually-hidden");
+                this.bannerErrorContainer.get(0).removeAttribute('style');
                 $("html, body").animate({
                     scrollTop: this.bannerErrorContainer.offset().top
                 }, 500);
