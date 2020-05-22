@@ -29,12 +29,12 @@
   </div>
   <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>">
     <div class="">
-      <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? %>">
+      <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? && ff.object.valid_postcode? %>">
         <div class="govuk-grid-row ">
           <div class="govuk-grid-column-one-half">
             <%= ff.label :organisation_address_postcode, 'Postcode', class: 'govuk-label govuk-!-margin-bottom-1', id: "#{page_contact}.organisation_address_postcode#{'-error' if ff.object.errors[:organisation_address_postcode].any?}" %>
-            <div class="govuk-error-message" id="fm-postcode-error"></div>
-            <%= display_error(ff.object, :organisation_address_postcode) if ff.object.organisation_address_postcode.blank? %>
+            <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
+            <%= display_error(ff.object, :organisation_address_postcode) if ff.object.organisation_address_postcode.blank? || !ff.object.valid_postcode? %>
             <% input_index = ff.object.organisation_address_postcode.present? ? -1 : 0 %>
             <%= ff.text_field :organisation_address_postcode, 'aria-label' =>'postcode', class: "govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full #{'govuk-input--error' if ff.object.errors[:organisation_address_postcode].any? }", id: 'buyer-details-postcode', maxlength: 10, tabindex: input_index %>
           </div>
@@ -60,7 +60,7 @@
         </div>
         <div class= <%= "govuk-form-group--error" if ff.object.errors[:organisation_address_postcode].any? %>>
           <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4"><%= t('.choose_address') %></label>
-          <%= display_error(ff.object, :organisation_address_postcode) unless ff.object.organisation_address_postcode.blank? %>
+          <%= display_error(ff.object, :organisation_address_postcode) unless ff.object.organisation_address_postcode.blank? || ! ff.object.valid_postcode? %>
           <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
             <select class="govuk-select govuk-!-width-full" tabindex=<%= postcode_index %> aria-label="postcode-lookup-results" id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
             </select>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? %>" id="selected-address-container">
+      <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless ff.object.organisation_address_line_1.present? && ff.object.organisation_address_postcode.present? && ff.object.valid_postcode? %>" id="selected-address-container">
         <div id="selected-address-label" class=" govuk-body govuk-!-margin-bottom-4">
           <%= ff.object.contact_address if ff.object.valid_contact_address? %>
         </div>
