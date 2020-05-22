@@ -73,14 +73,12 @@ module OrdnanceSurvey
   end
 
   def self.purge_excluded_areas
+    query = %{DELETE
+              FROM os_address oa
+              WHERE postcode_locator IN
+              (#{EXCLUDED_POSTCODE_AREAS.map { |e| "SELECT oa.postcode_locator FROM os_address oa WHERE postcode_locator LIKE '#{e}%'" }.join(' UNION ')});}
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = %{DELETE
-                FROM os_address oa
-                WHERE postcode_locator IN
-                (#{EXCLUDED_POSTCODE_AREAS.map { |e| "SELECT oa.postcode_locator FROM os_address oa WHERE postcode_locator LIKE '#{e}%'" }.join(' UNION ')});}
-      ActiveRecord::Base.connection_pool.with_connection do |db|
-        db.execute(query)
-      end
+      db.execute(query)
     end
     ActiveRecord::Base.connection_pool.with_connection do |db|
       db.execute('vacuum os_address;')
