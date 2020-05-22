@@ -72,6 +72,25 @@ module OrdnanceSurvey
     Rails.logger.error e.message
   end
 
+  def self.purge_excluded_areas
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      query = %{DELETE
+                FROM os_address oa
+                WHERE postcode_locator IN
+                (#{EXCLUDED_POSTCODE_AREAS.map { |e| "SELECT oa.postcode_locator FROM os_address oa WHERE postcode_locator LIKE '#{e}%'" }.join(' UNION ')});}
+      ActiveRecord::Base.connection_pool.with_connection do |db|
+        db.execute(query)
+      end
+    end
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      db.execute('vacuum os_address;')
+    end
+  rescue StandardError => e
+    p "\tError with purge_excluded_areas: #{e.message}"
+    Rails.logger.error((["POSTCODE purge_excluded_areas: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
+    raise e
+  end
+
   def self.truncate_os_addresses
     ActiveRecord::Base.connection_pool.with_connection do |db|
       db.execute('truncate table os_address;')

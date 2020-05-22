@@ -20,24 +20,17 @@ module BuildingsControllerRegions
   end
 
   def find_region_query_by_postcode(postcode)
-    result = get_region_postcode(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
-    if result.length.positive?
-    else
-      result = get_region_by_prefix(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
-    end
-    result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
-
-    result
+    get_region_postcode(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
   rescue StandardError => e
     Rails.logger.error("Region lookup error:\n#{e.message}")
     []
   end
 
   def get_region_by_prefix(postcode)
-    Postcode::PostcodeChecker.find_region postcode[0, 3].delete(' ')
+    Postcode::PostcodeChecker_V2.find_region postcode[0, 3].delete(' ')
   end
 
   def get_region_postcode(postcode)
-    Postcode::PostcodeChecker.find_region postcode.delete(' ')
+    Postcode::PostcodeChecker_V2.find_region postcode.delete(' ')
   end
 end
