@@ -2,8 +2,7 @@
 
 module Postcode
   # post code retrieval
-  # rubocop:disable Naming/ClassAndModuleCamelCase
-  class PostcodeChecker_V2
+  class PostcodeCheckerV2
     def self.destructure_postcode(postcode)
       result = { valid: false, input: postcode }
       input  = ('' + postcode).strip
@@ -122,5 +121,4 @@ module Postcode
       uploader(access_key, secret_access_key, bucket, region)
     end
   end
-  # rubocop:enable Naming/ClassAndModuleCamelCase
 end

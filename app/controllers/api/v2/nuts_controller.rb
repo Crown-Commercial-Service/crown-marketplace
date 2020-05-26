@@ -25,7 +25,7 @@ module Api
         postcode_to_str = params['postcode'].to_s
         postcode_to_region = postcode_to_str[0, 3]
 
-        result = Postcode::PostcodeChecker_V2.find_region postcode_to_region.delete(' ')
+        result = Postcode::PostcodeCheckerV2.find_region postcode_to_region.delete(' ')
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
@@ -42,11 +42,11 @@ module Api
 
       def get_region_by_outcode(postcode)
         original_postcode_to_region = postcode[0, 3]
-        Postcode::PostcodeChecker_V2.find_region original_postcode_to_region.delete(' ')
+        Postcode::PostcodeCheckerV2.find_region original_postcode_to_region.delete(' ')
       end
 
       def get_region_postcode(postcode)
-        Postcode::PostcodeChecker_V2.find_region postcode
+        Postcode::PostcodeCheckerV2.find_region postcode
       end
     end
   end

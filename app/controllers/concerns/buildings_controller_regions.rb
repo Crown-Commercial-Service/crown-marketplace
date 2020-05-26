@@ -13,7 +13,7 @@ module BuildingsControllerRegions
   def find_addresses_by_postcode(postcode)
     postcode = ensure_postcode_is_valid(postcode)
     Rails.logger.info "Postcode lookup: #{postcode}"
-    Postcode::PostcodeChecker_V2.location_info(postcode)
+    Postcode::PostcodeCheckerV2.location_info(postcode)
   rescue StandardError => e
     Rails.logger.error("Postcode lookup error:\n#{e.message}")
     []
@@ -27,10 +27,10 @@ module BuildingsControllerRegions
   end
 
   def get_region_by_prefix(postcode)
-    Postcode::PostcodeChecker_V2.find_region postcode[0, 3].delete(' ')
+    Postcode::PostcodeCheckerV2.find_region postcode[0, 3].delete(' ')
   end
 
   def get_region_postcode(postcode)
-    Postcode::PostcodeChecker_V2.find_region postcode.delete(' ')
+    Postcode::PostcodeCheckerV2.find_region postcode.delete(' ')
   end
 end
