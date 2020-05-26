@@ -9,8 +9,6 @@ $(function () {
 
         const regionCheckBoxes = $('#fm-region-check-boxes');
         const serviceCheckBoxes = $('#fm-service-check-boxes');
-
-        /* Load selected locations to the filters */
         selectedLocations = pageUtils.sortByName(selectedLocations);
 
         for (let x = 0; x < selectedLocations.length; x++) {
@@ -46,7 +44,6 @@ $(function () {
 
         }
 
-        /* Load selected services to the filters */
         selectedServices = pageUtils.sortByName(selectedServices);
 
         for (let x = 0; x < selectedServices.length; x++) {
@@ -106,7 +103,6 @@ $(function () {
 
     });
 
-    /* Click handler for the filter toggle button */
     $('#filter-toggle-btn').on('click', function (e) {
         e.preventDefault();
 
@@ -144,7 +140,6 @@ $(function () {
         updateCounts();
     });
 
-    /* Click handler for Print button */
     $('#FM-print-supplier-list').on('click', function (e) {
         e.preventDefault();
         window.print();
@@ -199,7 +194,7 @@ $(function () {
 
         if (regionCount > 0 && serviceCount > 0) {
             pageUtils.toggleInlineErrorMessage(false);
-            // location.href = '/facilities-management/standard-contract/questions';
+
             $('#fm-long-list-form').submit()
         } else {
             pageUtils.toggleInlineErrorMessage(true);

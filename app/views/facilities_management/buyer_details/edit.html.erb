@@ -12,11 +12,11 @@
         <%= current_user.email %>
       </div>
       <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend">
-          <h1 class="govuk-heading-xl">
-            <%= t('.buyer_details') %>
-          </h1>
-        </legend>
+        <h1 class='govuk-!-margin-0'>
+          <legend class="govuk-heading-xl">
+              <%= t('.buyer_details') %>
+          </legend>
+        </h1>
 
         <h2 class="govuk-heading-m">
           <%= t('.your_details') %>
@@ -50,19 +50,19 @@
         </div>
 
         <div class="govuk-!-margin-top-7">
-          <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-0">
             <%= t('.organisation_address') %>
           </h2>
         </div>
 
         <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>" data-propertyname="organisation_address_postcode">
           <div class="">
-            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? %>">
+            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>">
               <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-one-half">
                   <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1', for: 'buyer-details-postcode' %>
-                  <div class="govuk-error-message" id="fm-postcode-error"></div>
-                  <%= display_errors(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? %>
+                  <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
+                  <%= display_errors(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                   <% input_index = f.object.organisation_address_line_1.present? ? -1 : 0 %>
                   <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true, tabindex: "#{input_index}"  %>
                 </div>
@@ -82,13 +82,13 @@
                   <p id="fm-postcode-label" class="govuk-body"><%= f.object.organisation_address_postcode %></p>
                 </div>
                 <div class="govuk-grid-column-one-quarter">
-                  <% postcode_index = f.object.organisation_address_postcode.present? && !f.object.organisation_address_line_1.present? ? 0 : -1 %>
+                  <% postcode_index = f.object.organisation_address_postcode.present? && !f.object.valid_postcode? ? 0 : -1 %>
                   <a id="buyer-details-change-postcode" href="" tabindex=<%= postcode_index %> class="govuk-link--no-visited-state"><%= t('.change') %></a>
                 </div>
               </div>
               <div class= <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>>
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4" for="buyer-details-postcode-lookup-results"><%= t('.select_an_addr') %></label>
-                <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? %>
+                <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
                     <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
                       <%= t('.no_addr_selected') %>
@@ -102,16 +102,11 @@
                 </div>
               </div>
             </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? %>" id="selected-address-container">
-              <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.postcode') %></label>
-              <div id="selected-address-postcode" class="govuk-!-margin-bottom-6">
-                <%= f.object.organisation_address_postcode %>
-              </div>
-              <label class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.selected_addr') %></label>
-              <div id="selected-address-label" class="govuk-!-margin-bottom-6">
+            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>" id="selected-address-container">
+              <div id="selected-address-label" class="govuk-!-margin-bottom-2">
                 <%= f.object.full_organisation_address if f.object.organisation_address_postcode.present? %>
               </div>
-              <% change_index = f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? ? 0 : -1 %>
+              <% change_index = f.object.organisation_address_line_1.present? && f.object.valid_postcode? ? 0 : -1 %>
               <a id="change-selected-address-link" tabindex=<%="#{change_index}"%> href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
               <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>

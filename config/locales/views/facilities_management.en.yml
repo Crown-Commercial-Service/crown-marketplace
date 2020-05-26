@@ -112,7 +112,7 @@ en:
             organisation_address_postcode:
               address_not_complete: Address not provided
               blank: Enter your postcode
-              invalid: Enter a valid postcode
+              invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter your town or city
               invalid: Enter your town or city
@@ -315,6 +315,7 @@ en:
             organisation_address_postcode:
               address_not_complete: Select an address from the list or add a missing address
               blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
         facilities_management/procurement_invoice_contact_detail:
@@ -571,12 +572,12 @@ en:
         view_more: View more building types
     buyer_account:
       buyer_account:
-        about_the_buyer_description: Edit buyer account details such as contact name, organisation name
-        about_the_buyer_title: About the buyer
+        about_the_buyer_description: Edit your account details such as your name or organisation name
+        about_the_buyer_title: About your account
         buildings_title: Buildings
         buyer_account_dashboard: Buyer account dashboard
-        buyer_account_title: Buyer account
-        link_text: Update buyer details
+        buyer_account_title: Your account
+        link_text: Manage your details
         manage_buildings: Manage buildings
         manage_buildings_desc: Create and manage your buildings used in your procurements
         manage_procurements_link: Procurements dashboard
@@ -585,8 +586,8 @@ en:
         procurements: Procurements
     buyer_details:
       edit:
-        buyer_details: Buyer details
-        cant_find_addr_in_list: Can’t find address/enter address manually
+        buyer_details: Manage your details
+        cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -598,19 +599,19 @@ en:
         postcode: Postcode
         search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
         select_an_addr: Select an address
-        selected_addr: Selected address
         submit: Save and continue
         which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
         wider_public_sector: Wider public sector
-        your_details: Your details
+        your_details: Personal details
       edit_address:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
+        manage_details: Manage your details
         postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
-        your_details: Your details
+        your_details: Organisation address
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
       1_you_will_tell_us_html: |
@@ -651,8 +652,9 @@ en:
     journey:
       choose_locations:
         heading: Regions
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        location_selected: Region selected
+        locations_selected: Regions selected
+        no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -661,6 +663,7 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        service_selected: Service selected
         service_specification_doc: Read the service specification document
         services_selected: Services selected
         start_a_new_procurement_header: Services
@@ -1301,8 +1304,9 @@ en:
         save_headline: Save a new search
         save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
       regions:
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        location_selected: Region selected
+        locations_selected: Regions selected
+        no_locations_selected: No Regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -1335,6 +1339,7 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        service_selected: Service selected
         service_specification_doc: Read the service specification document
         services_selected: Services selected
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
@@ -1453,6 +1458,7 @@ en:
         create_your_password: Create a password you’ll remember
         heading: Change your password
         intro: This is the first time you’ve signed in to your account. You need to reset your password.
+      sign_in_error: You must provide a correct username or password
       sms_mfa:
         access_code: Access code
         content: It may take a few minutes to arrive.

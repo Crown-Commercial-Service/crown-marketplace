@@ -133,10 +133,6 @@
     <div>
       <%= form_tag '/facilities-management/buildings/new-building', id: 'fm-new-building-form', method: :post do %>
         <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
-        <!--
-                <a id="fm-buildings-add-building" href="buildings/new-building" class="govuk-link--no-visited-state ccs-no-print" role="button">+
-        -->
-
       <% end %>
     </div>
   </div>

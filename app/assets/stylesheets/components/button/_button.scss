@@ -17,13 +17,12 @@ $offset                        : 4;
   background-color   : $govuk-button-colour;
   font-weight        : $govuk-font-weight-semi-bold;
   -webkit-box-shadow : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
-  box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
+  box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
   min-width          : 115px;
 
-  padding-top        : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
-  padding-bottom     : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
+  padding-top        : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset);
+  padding-bottom     : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1);
 
-  // Ensure that any global link styles are overridden
   &:link,
   &:visited,
   &:active,
@@ -76,9 +75,9 @@ $offset                        : 4;
   &:active {
     top                : 0;
     -webkit-box-shadow : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
-    box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour; // s0
+    box-shadow         : 0 $button-shadow-size 0 $govuk-button-shadow-colour;
     @include govuk-if-ie8 {
-      border-bottom : $button-shadow-size solid $govuk-button-shadow-colour; // s0
+      border-bottom : $button-shadow-size solid $govuk-button-shadow-colour;
       }
     }
   }
@@ -88,8 +87,8 @@ $offset                        : 4;
   background-repeat   : no-repeat;
   background-size     : 30px 19px;
   background-position : 100% 56%;
-  padding-top         : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset); // s1
-  padding-bottom      : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1); // s1
+  padding-top         : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset);
+  padding-bottom      : (govuk-spacing(2) - $govuk-border-width-form-element - ($button-shadow-size) + $offset - 1);
 
   @include govuk-device-pixel-ratio {
     background-image : image-url("icon-pointer-2x.png");

@@ -8,7 +8,7 @@ FactoryBot.define do
     organisation_address_line_2 { 'MyString' }
     organisation_address_town { 'MyString' }
     organisation_address_county { 'MyString' }
-    organisation_address_postcode { 'MyString' }
+    organisation_address_postcode { 'SW1W 9SZ' }
     central_government { true }
   end
 end

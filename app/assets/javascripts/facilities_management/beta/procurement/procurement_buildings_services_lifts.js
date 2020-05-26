@@ -1,11 +1,8 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
 function LiftDataUI(jqContainer) {
     this.containerDiv = jqContainer;
     this.liftDataContainer = jqContainer.find(".liftdata");
 }
 LiftDataUI.prototype.addNewLift = function() {
-    // get the current number of lifts
     let currentCount = Number(this.liftDataContainer.find("div[data-propertyname='Lift Data']").length);
     let newInputElement = $("<div>", {
         "class": "govuk-form-group",
@@ -26,7 +23,6 @@ LiftDataUI.prototype.addNewLift = function() {
         let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
         this.removeLift(targetLift);
     }.bind(this));
-    //this.restrictInput(newInputElement.find("input")[0]);
     this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
     this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").prop("tabindex", -1);
     this.liftDataContainer.append(newInputElement);
@@ -86,7 +82,6 @@ LiftDataUI.prototype.restrictInput = function(jqElem) {
 LiftDataUI.prototype.connectButtons = function() {
     this.connectAddLiftButton();
     this.connectRemoveLiftButtons();
-    // this.restrictInputKeys();
 };
 LiftDataUI.prototype.getErrorLabels = function() {
   let errorMessages = $(this.liftDataContainer.find("div[data-liftcount=1]")).get(0).cloneNode(true);
