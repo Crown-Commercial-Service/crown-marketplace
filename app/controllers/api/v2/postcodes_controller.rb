@@ -24,7 +24,7 @@ module Api
       private
 
       def query(param)
-        Postcode::PostcodeChecker_V2.location_info(param.to_s.upcase)
+        Postcode::PostcodeCheckerV2.location_info(param.to_s.upcase)
       end
     end
   end
