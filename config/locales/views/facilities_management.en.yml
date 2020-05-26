@@ -430,7 +430,7 @@ en:
           heading_title_three: Services and prices
           heading_title_two: Variances
           leading_text: Sub-lot 1a services, prices, and variances
-          note: The tick boxes in the first column indicate the services this suppler can provide.
+          note: The tick boxes in the first column indicate the services this supplier can provide.
           rate_error: The rate must be a number, like 2.60 or 8
           return_button: Return to supplier framework data
           there_is_a_problem: There is a problem
