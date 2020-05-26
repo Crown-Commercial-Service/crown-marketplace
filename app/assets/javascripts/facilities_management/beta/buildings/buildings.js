@@ -193,21 +193,15 @@ LookupHandler.prototype.init = function () {
     var selectResult = this.selectResult.bind(this)
   	var selectRegion = this.selectRegionResult.bind(this);
     
-    if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
-	    $(this.resultsDropDown).on('blur', selectResult);
-	    $(this.regionDropDown).on('blur', selectRegion);
-    } else {
-        $(this.resultsDropDown).on('change', selectResult);
-	      $(this.regionDropDown).on('change', selectRegion);
-    }
-
-    this.resultsDropDown.addEventListener('keypress', function (e) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        selectResult();
-      }
+    this.resultsDropDown.addEventListener('blur', function(e){
+    	e.preventDefault();
+    	selectResult();
     });
-
+	this.regionDropDown.addEventListener('blur', function(e){
+		e.preventDefault();
+		selectRegion();
+	});
+ 
     this.regionDropDown.addEventListener('keypress', function (e) {
       if (e.keyCode === 13) {
         e.preventDefault();
@@ -215,7 +209,7 @@ LookupHandler.prototype.init = function () {
       }
     });
 
-    self = this
+    self = this;
 
     $(this.btnChangeRegion).on('click', function (e) {
       e.preventDefault();
