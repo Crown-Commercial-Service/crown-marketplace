@@ -15,8 +15,10 @@
 
 <h1 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.data['supplier_name'] %></h1>
 <h2 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
-
-<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+<fieldset class="govuk-fieldset">
+<legend class="govuk-fieldset__legend">
+  <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+</legend>
   <%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %>
 </p>
 
@@ -46,7 +48,7 @@
     <% end %>
   </div>
 <% end %>
-
+</fieldset>
 
 <input type="submit" name="update_supplier_regions" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>" class="govuk-button" data-disable-with="Continue">
 <% end %>
