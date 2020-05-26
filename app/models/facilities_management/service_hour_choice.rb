@@ -75,10 +75,34 @@ module FacilitiesManagement
     def self.time_range(service_hours_hash)
       return 0 if service_hours_hash.nil?
 
-      start_time = Time.parse("#{service_hours_hash[:start_hour]}:#{service_hours_hash[:start_minute]} #{service_hours_hash[:start_ampm]}").utc
-      end_time = Time.parse("#{service_hours_hash[:end_hour]}:#{service_hours_hash[:end_minute]} #{service_hours_hash[:end_ampm]}").utc
+      start_time = convert_start_time_to_24(service_hours_hash[:start_hour].to_i, service_hours_hash[:start_minute].to_i, service_hours_hash[:start_ampm])
+      end_time = convert_end_time_to_24(service_hours_hash[:end_hour].to_i, service_hours_hash[:end_minute].to_i, service_hours_hash[:end_ampm], service_hours_hash[:start_hour].to_i, service_hours_hash[:start_ampm])
 
       (end_time - start_time).abs / 3600
+    end
+
+    def self.convert_start_time_to_24(hour, minute, am_or_pm)
+      if am_or_pm == 'AM'
+        hour = 0 if hour == 12
+      else
+        hour += 12 unless hour == 12
+      end
+      Time.parse("#{hour}:#{minute}").utc
+    end
+
+    def self.convert_end_time_to_24(hour, minute, am_or_pm, start_hour, start_am_or_pm)
+      if am_or_pm == 'AM'
+        hour = 24 if hour == 12
+      else
+        hour += 12 unless hour == 12
+      end
+      time = Time.parse("#{hour}:#{minute}").utc
+      time += 1.day if add_extra_day(start_am_or_pm, am_or_pm, start_hour, hour)
+      time
+    end
+
+    def self.add_extra_day(start_ampm, end_ampm, start_hour, end_hour)
+      start_ampm == 'PM' && end_ampm == 'AM' && start_hour != 12 && end_hour != 24
     end
 
     def total_hours
@@ -195,13 +219,9 @@ module FacilitiesManagement
       errors.add(error_symbol.to_sym, :not_a_date) unless attributes[attribute_symbol].between?(0, 59)
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
     def validate_time_sequence
-      errors.add(:end_time, :after) if end_ampm != start_ampm && end_ampm == 'pm' && end_time_value <= start_time_value
-
-      errors.add(:start_time, :before) if end_ampm != start_ampm && end_ampm == 'am' && end_time_value >= start_time_value
+      errors.add(:end_time, :after, date: start_time) if end_time_value <= start_time_value
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
 
     def start_time_value
       time_value(format('%02d', start_hour_inc_meridian), format('%02d', start_minute))
@@ -212,15 +232,25 @@ module FacilitiesManagement
     end
 
     def start_hour_inc_meridian
-      return start_hour if start_ampm == 'AM'
+      hour = start_hour
 
-      start_hour + 12
+      if start_ampm == 'AM'
+        hour = 0 if hour == 12
+      else
+        hour += 12 unless hour == 12
+      end
+      hour
     end
 
     def end_hour_inc_meridian
-      return end_hour if end_ampm == 'AM'
-
-      end_hour + 12
+      hour = end_hour
+      if end_ampm == 'AM'
+        hour = 24 if hour == 12
+      else
+        hour += 12 unless hour == 12
+      end
+      hour += 24 if self.class.add_extra_day(start_ampm, end_ampm, start_hour, end_hour)
+      hour
     end
 
     def time_value(first, second)
