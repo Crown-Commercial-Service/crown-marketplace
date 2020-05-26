@@ -23,19 +23,17 @@
   </div>
 <% end %>
 
-<fieldset class="govuk-fieldset">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-  <legend class="govuk-fieldset__legend">
     <span class="govuk-caption-l"><%= @supplier_name %></span>
-  </legend>
   </div>
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
 <h1 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title_three') %></h1>
-<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %>
-</p>
+<fieldset class="govuk-fieldset">
+<legend class="govuk-fieldset__legend">
+  <p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %></p>
+</legend>
 
 <div style="width: 3000px !important;">
   <%= form_with(url: "", method: "put", local: "false") do %>
@@ -90,7 +88,7 @@
       </tbody>
     </table>
   <% end %>
-
+</fieldset>
   <h2 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title_two') %></h2>
 
   <table class="govuk-table" style="width: 1100px !important;">
@@ -128,7 +126,7 @@
     <% end %>
     </tbody>
   </table>
-</fieldset>
+
   <input type="submit" name="update_sublot_data_services_prices" aria-label="update_sublot_data_services_prices" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue"><br/>
   <%= link_to t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rtrn_link'), facilities_management_admin_path, class: 'govuk-link govuk-!-font-size-19' %>
   <% end %>

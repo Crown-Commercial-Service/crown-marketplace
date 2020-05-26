@@ -17,10 +17,8 @@
 <h2 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
 <fieldset class="govuk-fieldset">
 <legend class="govuk-fieldset__legend">
-  <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %></p>
 </legend>
-  <%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %>
-</p>
 
 <%= form_with(url: "", method: "put", local: "false") do %>
 <% @regions.each do |key, value| %>
