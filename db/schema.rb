@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 2020_05_26_215825) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "user_email", null: false
-    t.jsonb "building_json"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
     t.text "updated_by"
+    t.text "user_email"
+    t.jsonb "building_json"
     t.text "building_name"
     t.text "description"
     t.integer "gia"
