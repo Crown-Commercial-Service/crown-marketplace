@@ -1034,7 +1034,7 @@ en:
             guidance: If you wish to make changes to your requirements, click on the ‘Change requirements’ button below.
             title: Change requirements
           change_schedule:
-            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
+            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended.
           contract_documents:
             call_off_schedule_1:
               document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
@@ -1068,7 +1068,7 @@ en:
               title: Call-off Schedule 7 - Key Staff
             call_off_schedule_8:
               document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
-              title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
+              title: Call-off Schedule 8 - Business Continuity and Disaster Recovery
             call_off_schedule_9:
               document_name: Call-Off Schedule 9 - Security (DA).docx
               title: Call-off Schedule 9 - Security
