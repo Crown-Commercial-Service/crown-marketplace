@@ -5,19 +5,19 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   let(:source) do
     { 'monday': { service_choice: :not_required },
       'tuesday': { service_choice: :all_day },
-      'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'pm' },
+      'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'PM', end_hour: 6, end_minute: 30, end_ampm: 'PM' },
       'thursday': { service_choice: :all_day }, friday: { service_choice: :not_required },
-      'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' },
-      'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm' } }
+      'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' },
+      'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' } }
   end
 
   before do
     service_hours[:monday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
     service_hours[:tuesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day)
-    service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'pm')
+    service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'AM', end_hour: '05', end_minute: '30', end_ampm: 'PM')
     service_hours[:thursday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
     service_hours[:friday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day)
-    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'pm')
+    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: '05', end_minute: '30', end_ampm: 'PM')
     service_hours[:sunday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
   end
 
@@ -83,10 +83,10 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         service_hours[:monday][:service_choice] = :hourly
         service_hours[:monday][:start_hour] = '10'
         service_hours[:monday][:start_minute] = '00'
-        service_hours[:monday][:start_ampm] = 'pm'
+        service_hours[:monday][:start_ampm] = 'AM'
         service_hours[:monday][:end_hour] = '6'
         service_hours[:monday][:end_minute] = '30'
-        service_hours[:monday][:end_ampm] = 'pm'
+        service_hours[:monday][:end_ampm] = 'PM'
         service_hours[:tuesday][:service_choice] = :not_required
         service_hours[:wednesday][:service_choice] = :not_required
         service_hours[:thursday][:service_choice] = :not_required
@@ -127,6 +127,406 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         source = nil
         target = described_class.load(source)
         expect(target[:tuesday][:service_choice]).to eq nil
+      end
+    end
+  end
+
+  def add_times_to_service_hours(start__time, end_time, day = :monday)
+    service_hours[day][:service_choice] = :hourly
+    service_hours[day][:start_hour] = start__time[0]
+    service_hours[day][:start_minute] = start__time[1]
+    service_hours[day][:start_ampm] = start__time[2]
+    service_hours[day][:end_hour] = end_time[0]
+    service_hours[day][:end_minute] = end_time[1]
+    service_hours[day][:end_ampm] = end_time[2]
+  end
+
+  describe '#midnight and other times' do
+    let(:service_hours) { described_class.load(source) }
+
+    context 'when it is not midday or midnight' do
+      before do
+        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'AM'])
+      end
+
+      it 'is valid when starting and ending in the morning' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['11', '30', 'AM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 1.5 hours when starting and ending in the morning' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['11', '30', 'AM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 1.5
+      end
+
+      it 'is valid when starting and ending in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'PM'])
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 1.5 hours when starting and ending in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 1.5
+      end
+
+      it 'is valid when starting in the morning and ending in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['11', '30', 'PM'])
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 13.5 hours when starting in the morning and ending in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['11', '30', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 13.5
+      end
+
+      it 'is valid when starting in the afternoon and ending in the morning' do
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 13.5 hours when starting in the afternoon and ending in the morning' do
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 13.5
+      end
+
+      it 'is invalid when the start time is after the end time with both times in the morning' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['09', '30', 'AM'])
+
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'is invalid when the start time is after the end time with both times in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['08', '30', 'PM'])
+
+        expect(service_hours.valid?).to eq false
+      end
+    end
+
+    context 'when it is midday' do
+      it 'is valid when starting in the morning and ending at midday' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['12', '00', 'PM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 2 hours when starting in the morning and ending at midday' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['12', '00', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 2
+      end
+
+      it 'is valid when starting at midday and ending in the afternoon' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['06', '30', 'PM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 6.5 hours when starting at midday and ending at 6.30pm' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['06', '30', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 6.5
+      end
+
+      it 'is valid when starting at midday and ending at midnight' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['12', '00', 'AM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 12 hours when starting at midday and ending at midnight' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['12', '00', 'AM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 12
+      end
+    end
+
+    context 'when it is midnight' do
+      before do
+        add_times_to_service_hours(['06', '00', 'AM'], ['12', '00', 'AM'])
+      end
+
+      it 'is valid when starting in the morning and ending at midnight' do
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 18 hours when starting in the morning and ending at midnight' do
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 18
+      end
+
+      it 'is valid when starting in the afternoon and ending at midnight' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['12', '00', 'AM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 2 hours when starting in the afternoon and ending at midnight' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['12', '00', 'AM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 2
+      end
+
+      it 'is valid when starting at midnight and ending in the afternoon' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['06', '30', 'PM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 18.5 hours when starting at midnight and ending in the afternoon' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['06', '30', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 18.5
+      end
+
+      it 'is valid when starting at midnight and ending at midday' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '00', 'PM'])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 12 hours when starting at midnight and ending in the afternoon' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '00', 'PM'])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 12
+      end
+    end
+  end
+
+  describe '#total hour calculations' do
+    let(:service_hours) { described_class.load(source) }
+
+    before do
+      service_hours[:tuesday][:service_choice] = :not_required
+      service_hours[:wednesday][:service_choice] = :not_required
+      service_hours[:thursday][:service_choice] = :not_required
+      service_hours[:friday][:service_choice] = :not_required
+      service_hours[:saturday][:service_choice] = :not_required
+      service_hours[:sunday][:service_choice] = :not_required
+    end
+
+    context 'with small hours differences' do
+      it 'will return 52 hours when one hour is chosen for a service in the morning' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['11', '00', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 52
+      end
+
+      it 'will return 104 hours when two hours are chosen for a service in the morning' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['12', '00', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 104
+      end
+
+      it 'will return 52 hours when one hour is chosen for a service in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['11', '00', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 52
+      end
+
+      it 'will return 104 hours when two hours are chosen for a service in the afternoon' do
+        add_times_to_service_hours(['10', '00', 'PM'], ['12', '00', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 104
+      end
+    end
+
+    context 'with intermediate hour differences' do
+      it 'will return 65 hours when one and a quarter hours are chosen for a service' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '15', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 65
+      end
+
+      it 'will return 78 hours when one and a half hours are chosen for a service' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '30', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 78
+      end
+
+      it 'will return 91 hours when one and three quarter hours are chosen for a service' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '45', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 91
+      end
+
+      it 'will return 117 hours when two and a quarter hours are chosen for a service' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['11', '15', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 117
+      end
+    end
+
+    context 'with large hour differences' do
+      it 'will return 260 hours when five hours are chosen for a service spanning the morning' do
+        add_times_to_service_hours(['04', '00', 'AM'], ['09', '00', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 260
+      end
+
+      it 'will return 416 hours when eight hours are chosen for a service spanning the afternoon' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['08', '00', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 416
+      end
+
+      it 'will return 260 hours when five hours are chosen for a service from the morning to the afternoon' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['02', '00', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 260
+      end
+
+      it 'will return 416 hours when eight hours are chosen for a service from the night into the morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 416
+      end
+    end
+
+    context 'with large hour differences with intermediate times' do
+      it 'will return 273 hours when five and a quarter hours are chosen for a service spanning the morning' do
+        add_times_to_service_hours(['04', '00', 'AM'], ['09', '15', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 273
+      end
+
+      it 'will return 442 hours when eight and a half hours are chosen for a service spanning the afternoon' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['08', '30', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 442
+      end
+
+      it 'will return 455 hours when eight and a three quarter hours are chosen for a service spanning the afternoon' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['08', '45', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 455
+      end
+
+      it 'will return 273 hours when five and a quarter hours are chosen for a service from the morning to the afternoon' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['02', '15', 'PM'])
+
+        expect(service_hours.total_hours_annually).to eq 273
+      end
+
+      it 'will return 442 hours when eight and a half hours are chosen for a service from the night into the morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 442
+      end
+
+      it 'will return 455 hours when eight and three quarter hours are chosen for a service from the night into the morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 455
+      end
+    end
+
+    context 'when service hours are over multiple days' do
+      it 'will return 104 hours when there is a service requiring one hour for two days' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 104
+      end
+
+      it 'will return 117 hours when there is a service requiring one and a quarter hours for one of two days' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '15', 'AM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 117
+      end
+
+      it 'will return 130 hours when there is a service requiring one and a quarter hours for two days' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '15', 'AM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '15', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 130
+      end
+
+      it 'will return 143 hours when there is a service requiring one and three quarter hours for one of two days' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '45', 'AM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 143
+      end
+
+      it 'will return 182 hours when there is a service requiring one and three quarter hours for two days' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '45', 'AM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['10', '45', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 182
+      end
+
+      it 'will return 832 hours when there is a service requiring 8 hours for two days morning to afternoon' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 832
+      end
+
+      it 'will return 832 hours when there is a service requiring 8 hours for two days afternoon to morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 832
+      end
+
+      it 'will return 858 hours when there is a service requiring 8.25 hours for two days morning to afternoon' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '15', 'PM'])
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '15', 'PM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 858
+      end
+
+      it 'will return 884 hours when there is a service requiring 8.5 hours for two days afternoon to morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 884
+      end
+
+      it 'will return 910 hours when there is a service requiring 8.75 hours for two days afternoon to morning' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'], :tuesday)
+
+        expect(service_hours.total_hours_annually).to eq 910
+      end
+    end
+
+    context 'when every day has service hours' do
+      it 'will return 3744 hours when all the times are different' do
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'], :monday)
+        add_times_to_service_hours(['12', '00', 'AM'], ['05', '30', 'AM'], :tuesday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '15', 'AM'], :wednesday)
+        add_times_to_service_hours(['06', '00', 'AM'], ['05', '00', 'PM'], :thursday)
+        add_times_to_service_hours(['03', '00', 'PM'], ['04', '45', 'AM'], :friday)
+        add_times_to_service_hours(['01', '00', 'AM'], ['04', '30', 'PM'], :saturday)
+        add_times_to_service_hours(['07', '00', 'PM'], ['04', '15', 'AM'], :sunday)
+
+        expect(service_hours.total_hours_annually).to eq 3744
+      end
+
+      it 'will return 2912 hours when all the times are the same' do
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :monday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :tuesday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :wednesday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :thursday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :friday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :saturday)
+        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :sunday)
+
+        expect(service_hours.total_hours_annually).to eq 2912
       end
     end
   end

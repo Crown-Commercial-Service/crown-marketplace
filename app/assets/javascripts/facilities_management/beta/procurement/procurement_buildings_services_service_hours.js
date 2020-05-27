@@ -133,11 +133,15 @@ SvcHoursDataUI.prototype.validateForm = function(_formElements) {
 			}
 
 			if (morningEnd && endTimeHour === 1200) {
-				endTimeHour = 0;
+				endTimeHour = 2400;
 			}
 			else if (!morningEnd && endTimeHour !== 1200) {
 				endTimeHour += 1200;
-			}
+      }
+
+      if (!morningStart && morningEnd && startTimeHour !== 0) {
+        endTimeHour += 2400;
+      }
 
 			let startTime = startTimeHour + startTimeMinute;
 			let endTime = endTimeHour + endTimeMinute;
