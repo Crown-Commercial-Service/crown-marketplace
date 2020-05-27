@@ -350,10 +350,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     when 'all_day'
       'All day (24 hours)'
     when 'hourly'
-      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol)
+      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol) + next_day(service_measure[:service_hours][day_symbol])
     else
       'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
     end
+  end
+
+  def next_day(service_hour_choice)
+    service_hour_choice[:next_day] ? ' (next day)' : ''
   end
 
   def service_measure_invalid_type?(service_measure)

@@ -11,6 +11,17 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' } }
   end
 
+  def add_times_to_service_hours(start__time, end_time, day = :monday)
+    service_hours[day][:service_choice] = :hourly
+    service_hours[day][:start_hour] = start__time[0]
+    service_hours[day][:start_minute] = start__time[1]
+    service_hours[day][:start_ampm] = start__time[2]
+    service_hours[day][:end_hour] = end_time[0]
+    service_hours[day][:end_minute] = end_time[1]
+    service_hours[day][:end_ampm] = end_time[2]
+    service_hours[day][:next_day] = end_time[3]
+  end
+
   before do
     service_hours[:monday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required)
     service_hours[:tuesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day)
@@ -32,7 +43,11 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
 
       it 'will contain an error message for each day' do
         nil_sh.valid?
-        expect(nil_sh.errors.messages.length).to eq 7
+        day_errors = []
+        nil_sh.attributes.reject { |k, _v| k == :uom }.each do |_k, v|
+          day_errors << v.errors.any?
+        end
+        expect(day_errors.length).to eq 7
       end
     end
 
@@ -96,6 +111,39 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(service_hours.valid?).to eq true
       end
       # rubocop:enable RSpec/ExampleLength:
+
+      it 'will not be valid when some values are missing' do
+        add_times_to_service_hours(['10', nil, 'AM'], [nil, '30', 'PM'], :monday)
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'will not be valid when all values are missing' do
+        add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :monday)
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'will not be valid when some values are missing at the weekend' do
+        service_hours[:monday][:service_choice] = :not_required
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        add_times_to_service_hours(['08', '00', 'AM'], [nil, nil, nil], :saturday)
+        add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :sunday)
+        expect(service_hours.valid?).to eq false
+      end
     end
   end
 
@@ -131,22 +179,18 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
     end
   end
 
-  def add_times_to_service_hours(start__time, end_time, day = :monday)
-    service_hours[day][:service_choice] = :hourly
-    service_hours[day][:start_hour] = start__time[0]
-    service_hours[day][:start_minute] = start__time[1]
-    service_hours[day][:start_ampm] = start__time[2]
-    service_hours[day][:end_hour] = end_time[0]
-    service_hours[day][:end_minute] = end_time[1]
-    service_hours[day][:end_ampm] = end_time[2]
-  end
-
   describe '#midnight and other times' do
     let(:service_hours) { described_class.load(source) }
 
     context 'when it is not midday or midnight' do
       before do
-        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'AM'])
+        service_hours[:tuesday][:service_choice] = :not_required
+        service_hours[:wednesday][:service_choice] = :not_required
+        service_hours[:thursday][:service_choice] = :not_required
+        service_hours[:friday][:service_choice] = :not_required
+        service_hours[:saturday][:service_choice] = :not_required
+        service_hours[:sunday][:service_choice] = :not_required
+        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'AM', true])
       end
 
       it 'is valid when starting and ending in the morning' do
@@ -308,6 +352,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
     let(:service_hours) { described_class.load(source) }
 
     before do
+      service_hours[:monday][:service_choice] = :not_required
       service_hours[:tuesday][:service_choice] = :not_required
       service_hours[:wednesday][:service_choice] = :not_required
       service_hours[:thursday][:service_choice] = :not_required
@@ -388,7 +433,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       end
 
       it 'will return 416 hours when eight hours are chosen for a service from the night into the morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM', true])
 
         expect(service_hours.total_hours_annually).to eq 416
       end
@@ -420,13 +465,13 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       end
 
       it 'will return 442 hours when eight and a half hours are chosen for a service from the night into the morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM', true])
 
         expect(service_hours.total_hours_annually).to eq 442
       end
 
       it 'will return 455 hours when eight and three quarter hours are chosen for a service from the night into the morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM', true])
 
         expect(service_hours.total_hours_annually).to eq 455
       end
@@ -476,8 +521,8 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       end
 
       it 'will return 832 hours when there is a service requiring 8 hours for two days afternoon to morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'])
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM'], :tuesday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM', true])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '00', 'AM', true], :tuesday)
 
         expect(service_hours.total_hours_annually).to eq 832
       end
@@ -490,15 +535,15 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       end
 
       it 'will return 884 hours when there is a service requiring 8.5 hours for two days afternoon to morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'])
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM'], :tuesday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM', true])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '30', 'AM', true], :tuesday)
 
         expect(service_hours.total_hours_annually).to eq 884
       end
 
       it 'will return 910 hours when there is a service requiring 8.75 hours for two days afternoon to morning' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'])
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'], :tuesday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM', true])
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM', true], :tuesday)
 
         expect(service_hours.total_hours_annually).to eq 910
       end
@@ -506,13 +551,13 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
 
     context 'when every day has service hours' do
       it 'will return 3744 hours when all the times are different' do
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM'], :monday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM', true], :monday)
         add_times_to_service_hours(['12', '00', 'AM'], ['05', '30', 'AM'], :tuesday)
-        add_times_to_service_hours(['09', '00', 'PM'], ['05', '15', 'AM'], :wednesday)
+        add_times_to_service_hours(['09', '00', 'PM'], ['05', '15', 'AM', true], :wednesday)
         add_times_to_service_hours(['06', '00', 'AM'], ['05', '00', 'PM'], :thursday)
-        add_times_to_service_hours(['03', '00', 'PM'], ['04', '45', 'AM'], :friday)
+        add_times_to_service_hours(['03', '00', 'PM'], ['04', '45', 'AM', true], :friday)
         add_times_to_service_hours(['01', '00', 'AM'], ['04', '30', 'PM'], :saturday)
-        add_times_to_service_hours(['07', '00', 'PM'], ['04', '15', 'AM'], :sunday)
+        add_times_to_service_hours(['07', '00', 'PM'], ['04', '15', 'AM', true], :sunday)
 
         expect(service_hours.total_hours_annually).to eq 3744
       end
@@ -527,6 +572,77 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :sunday)
 
         expect(service_hours.total_hours_annually).to eq 2912
+      end
+    end
+  end
+
+  describe 'service hour validation' do
+    context 'when the times of consecutive days overlap' do
+      context 'when Mon end time is 8 am next day and Tues start time is 6 am' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['09', '00', 'AM'], ['08', '00', 'AM', true], :monday)
+          add_times_to_service_hours(['06', '00', 'AM'], ['05', '00', 'PM'], :tuesday)
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+
+      context 'when Wed end time is 6 pm next day and Thurs start time is 8 am' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['11', '00', 'PM'], ['06', '00', 'PM', true], :wednesday)
+          add_times_to_service_hours(['08', '00', 'AM'], ['05', '00', 'PM'], :thursday)
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+
+      context 'when Fri end time is 1 am next day and Sat is all day' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['11', '00', 'PM'], ['06', '00', 'PM', true], :friday)
+          service_hours[:saturday][:service_choice] = :all_day
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+    end
+
+    context 'when the time of a day is more than 24 hours' do
+      context 'when Tues start time is 8 am and end time is 8:15 am next day' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['08', '00', 'AM'], ['08', '15', 'AM', true], :tuesday)
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+
+      context 'when Thurs start time is 8 am and end time is 10 pm next day' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['08', '00', 'AM'], ['10', '00', 'PM', true], :thursday)
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+
+      context 'when Sat start time is 12 am and end time is 1 am next day' do
+        it 'is expected to not be valid' do
+          add_times_to_service_hours(['12', '00', 'AM'], ['1', '00', 'AM', true], :saturday)
+
+          expect(service_hours.valid?).to eq false
+        end
+      end
+    end
+
+    context 'when Sat start time is 12 am and end time is 12 am' do
+      it 'is expected to be valid when next day true' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '00', 'AM', true], :saturday)
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'is expected to be valid when next day false' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '00', 'AM', false], :saturday)
+
+        expect(service_hours.valid?).to eq true
       end
     end
   end
