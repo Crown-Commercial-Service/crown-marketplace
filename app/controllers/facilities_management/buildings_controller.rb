@@ -139,6 +139,10 @@ module FacilitiesManagement
       valid_regions.length > 1
     end
 
+    def no_regions?
+      valid_regions.length.zero?
+    end
+
     def multiple_addresses?
       valid_addresses.length > 1
     end
@@ -156,7 +160,7 @@ module FacilitiesManagement
     end
 
     helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?,
-                  :multiple_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
+                  :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
 
     def resolve_region
       return if @page_data[:model_object].blank?

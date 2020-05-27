@@ -23,6 +23,8 @@ module FacilitiesManagement
     end
 
     def valid_postcode?
+      return false if organisation_address_postcode.blank?
+
       pc = UKPostcode.parse(organisation_address_postcode)
       return true if pc.full_valid?
 

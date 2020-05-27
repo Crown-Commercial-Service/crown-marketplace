@@ -16,7 +16,7 @@
           <div class="chooser-input govuk-form-group govuk-!-padding-top-4 <%= 'govuk-form-group--error' if f.object.errors.any? %>" sectionname="buildings" section="buildings">
 
             <fieldset class="govuk-fieldset">
-              <div id="buildings-checkboxes" class="govuk-checkboxes">
+              <div class="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
                   <%= procurement_building.check_box :active, class: 'govuk-checkboxes__input', title: procurement_building.object.name, sectionid: procurement_building.object.name %>
                   <%= procurement_building.label :active, class: "govuk-label govuk-checkboxes__label", style: "padding-top:0" do %>

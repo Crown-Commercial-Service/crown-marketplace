@@ -16,6 +16,7 @@ AllCops:
         - 'lib/tasks/management_consultancy/**/*'
         - 'lib/tasks/legal_services/**/*'
         - 'config/initializers/carrierwave.rb'
+        - 'node_modules/**/*'
 
 Rails:
     Enabled: true

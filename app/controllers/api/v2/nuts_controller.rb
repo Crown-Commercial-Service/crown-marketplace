@@ -24,9 +24,8 @@ module Api
       def find_region_query
         postcode_to_str = params['postcode'].to_s
         postcode_to_region = postcode_to_str[0, 3]
-        postcode_to_region_rm_white_space = postcode_to_region.delete(' ')
 
-        result = Postcode::PostcodeChecker.find_region postcode_to_region_rm_white_space
+        result = Postcode::PostcodeCheckerV2.find_region postcode_to_region.delete(' ')
         render json: { status: 200, result: result }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
@@ -35,9 +34,6 @@ module Api
       def find_region_query_by_postcode
         postcode = params['postcode'].sub(' ', '')
         result = get_region_postcode postcode
-        result = get_region_by_outcode postcode unless result.length.positive?
-
-        result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
 
         render json: { status: 200, result: result }
       rescue StandardError => e
@@ -46,14 +42,11 @@ module Api
 
       def get_region_by_outcode(postcode)
         original_postcode_to_region = postcode[0, 3]
-        original_postcode_rm_white_space = original_postcode_to_region.delete(' ')
-        Postcode::PostcodeChecker.find_region original_postcode_rm_white_space
+        Postcode::PostcodeCheckerV2.find_region original_postcode_to_region.delete(' ')
       end
 
       def get_region_postcode(postcode)
-        postcode_to_str = postcode.to_s
-        postcode_to_region_rm_white_space = postcode_to_str.delete(' ')
-        Postcode::PostcodeChecker.find_region postcode_to_region_rm_white_space
+        Postcode::PostcodeCheckerV2.find_region postcode
       end
     end
   end

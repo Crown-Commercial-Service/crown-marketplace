@@ -430,7 +430,7 @@ en:
           heading_title_three: Services and prices
           heading_title_two: Variances
           leading_text: Sub-lot 1a services, prices, and variances
-          note: The tick boxes in the first column indicate the services this suppler can provide.
+          note: The tick boxes in the first column indicate the services this supplier can provide.
           rate_error: The rate must be a number, like 2.60 or 8
           return_button: Return to supplier framework data
           there_is_a_problem: There is a problem
@@ -450,10 +450,12 @@ en:
           rate_percentage_a: Rate (%)
           rate_pound_a: Rate (£)
           rtrn_link: Return to admin dashboard
+          td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
           td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
           td_corporate: Corporate overhead (%)
           td_london: London location percentage variance (%)
           td_mobilisation: Mobilisation (%)
+          td_overhead: Management overhead  (%) <br /> Workpackage A - contract management
           td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
           td_profit: Profit (%)
           td_tupe: TUPE risk premium (%)
@@ -572,12 +574,12 @@ en:
         view_more: View more building types
     buyer_account:
       buyer_account:
-        about_the_buyer_description: Edit buyer account details such as contact name, organisation name
-        about_the_buyer_title: About the buyer
+        about_the_buyer_description: Edit your account details such as your name or organisation name
+        about_the_buyer_title: About your account
         buildings_title: Buildings
         buyer_account_dashboard: Buyer account dashboard
-        buyer_account_title: Buyer account
-        link_text: Update buyer details
+        buyer_account_title: Your account
+        link_text: Manage your details
         manage_buildings: Manage buildings
         manage_buildings_desc: Create and manage your buildings used in your procurements
         manage_procurements_link: Procurements dashboard
@@ -586,8 +588,8 @@ en:
         procurements: Procurements
     buyer_details:
       edit:
-        buyer_details: Buyer details
-        cant_find_addr_in_list: Can’t find address/enter address manually
+        buyer_details: Manage your details
+        cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -599,19 +601,19 @@ en:
         postcode: Postcode
         search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
         select_an_addr: Select an address
-        selected_addr: Selected address
         submit: Save and continue
         which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
         wider_public_sector: Wider public sector
-        your_details: Your details
+        your_details: Personal details
       edit_address:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
+        manage_details: Manage your details
         postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
-        your_details: Your details
+        your_details: Organisation address
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
       1_you_will_tell_us_html: |
