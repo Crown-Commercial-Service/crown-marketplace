@@ -15,38 +15,38 @@
 
 <h1 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.data['supplier_name'] %></h1>
 <h2 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
-
-<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %>
-</p>
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint"><%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %></p>
 
 <%= form_with(url: "", method: "put", local: "false") do %>
 <% @regions.each do |key, value| %>
-  <h2 class="govuk-heading-m"><%= value %></h2>
-  <div>
-    <% @subregions.each do |key2, value2| %>
-      <% if key2.start_with?(key) %>
-        <div class="govuk-form-group">
-          <div id="<%=key2%>-checkbox" class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <%= check_box_tag(
-                      "regions[]",
-                      key2,
-                      @selected_supplier_regions[key2],
-                      class: "govuk-checkboxes__input",
-                      id: "#{key2}"
-                  ) %>
-              <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key2 %>">
-                <%= value2 %>
-              </label>
+  <fieldset class="govuk-fieldset">
+    <h2 class="govuk-heading-m">
+      <legend class="govuk-!-padding-left-0"><%= value %></legend>
+    </h2>
+    <div>
+      <% @subregions.each do |key2, value2| %>
+        <% if key2.start_with?(key) %>
+          <div class="govuk-form-group">
+            <div id="<%=key2%>-checkbox" class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                        "regions[]",
+                        key2,
+                        @selected_supplier_regions[key2],
+                        class: "govuk-checkboxes__input",
+                        id: "#{key2}"
+                    ) %>
+                <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key2 %>">
+                  <%= value2 %>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  </fieldset>
 <% end %>
-
 
 <input type="submit" name="update_supplier_regions" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>" class="govuk-button" data-disable-with="Continue">
 <% end %>
