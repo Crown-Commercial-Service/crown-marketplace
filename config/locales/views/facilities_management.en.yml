@@ -530,7 +530,7 @@ en:
         add_building_address: Add building address
         building_size: Building size
         building_type: Building type
-        change_building_details: Change building details
+        change_building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
         manage_building_title: Manage buildings
