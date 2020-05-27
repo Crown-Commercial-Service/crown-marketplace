@@ -11,7 +11,9 @@ module FacilitiesManagement
     def edit_address; end
 
     def update
+      old_postcode = @buyer_detail[:organisation_address_postcode]
       @buyer_detail.assign_attributes(buyer_detail_params)
+      @buyer_detail[:organisation_address_postcode] = old_postcode if params[:'buyer-details-postcode-lookup-results'] == 'status-option'
 
       if @buyer_detail.save(context: context_from_params)
         redirect_to_return_url if params['facilities_management_buyer_detail']['return_details'].present?

@@ -15,9 +15,7 @@ $(function () {
 		elem.select();
 	};
 	
-	$('#buyer-details-find-address-btn').on('click', function (e) {
-		e.preventDefault();
-		
+	function findAddress() {
 		$('#fm-postcode-error').addClass('govuk-visually-hidden');
 		$('#organisation_address_postcode-error').addClass('govuk-visually-hidden');
 		$('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
@@ -26,6 +24,18 @@ $(function () {
 		
 		let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
 		pageUtils.addressLookUp(postCode, false);
+	}
+	
+	$('#buyer-details-find-address-btn').on('click', function (e) {
+		e.preventDefault();
+		findAddress();
+	});
+	
+	$('#buyer-details-postcode').on('keypress', function(e) {
+		if (e.keyCode === 13) {
+			e.preventDefault();
+			findAddress();
+		}
 	});
 	
 	$('#change-selected-address-link').on('click', function (e) {
