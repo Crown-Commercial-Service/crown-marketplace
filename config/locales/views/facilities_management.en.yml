@@ -120,8 +120,8 @@ en:
               blank: Enter your organisation name
               invalid: Enter your organisation name
             telephone_number:
-              blank: Enter your telephone number
-              invalid: Enter a telephone number
+              blank: Enter a UK telephone number, for example 020 7946 0000
+              invalid: Enter a UK telephone number, for example 020 7946 0000
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
