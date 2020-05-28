@@ -145,8 +145,8 @@ class ProcurementCsvExport
       shortlisted_suppliers(procurement), # 25
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
       route_to_market(procurement),
-      procurement.further_competition? ? nil : da_suppliers(procurement),
-      procurement.further_competition? ? nil : da_suppliers_costs(procurement),
+      procurement.eligible_for_da? ? da_suppliers(procurement) : nil,
+      procurement.eligible_for_da? ? da_suppliers_costs(procurement) : nil,
       nil, # 30
       nil,
       procurement.further_competition? ? procurement.contract_number : nil,
