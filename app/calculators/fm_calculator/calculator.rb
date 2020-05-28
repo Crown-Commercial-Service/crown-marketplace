@@ -53,7 +53,7 @@ module FMCalculator
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
       if @supplier_name && @rate_card_discounts[@service_ref_sym]
-        (1 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
+        (100 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) / 100 * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
       else
         @uom_vol * framework_rate_for(@service_ref.gsub('.', '')).to_f
       end
