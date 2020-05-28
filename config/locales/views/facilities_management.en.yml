@@ -120,8 +120,8 @@ en:
               blank: Enter your organisation name
               invalid: Enter your organisation name
             telephone_number:
-              blank: Enter your telephone number
-              invalid: Enter a telephone number
+              blank: Enter a UK telephone number, for example 020 7946 0000
+              invalid: Enter a UK telephone number, for example 020 7946 0000
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -430,7 +430,7 @@ en:
           heading_title_three: Services and prices
           heading_title_two: Variances
           leading_text: Sub-lot 1a services, prices, and variances
-          note: The tick boxes in the first column indicate the services this suppler can provide.
+          note: The tick boxes in the first column indicate the services this supplier can provide.
           rate_error: The rate must be a number, like 2.60 or 8
           return_button: Return to supplier framework data
           there_is_a_problem: There is a problem
@@ -530,7 +530,7 @@ en:
         add_building_address: Add building address
         building_size: Building size
         building_type: Building type
-        change_building_details: Change building details
+        change_building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
         manage_building_title: Manage buildings
@@ -1034,7 +1034,7 @@ en:
             guidance: If you wish to make changes to your requirements, click on the ‘Change requirements’ button below.
             title: Change requirements
           change_schedule:
-            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
+            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended.
           contract_documents:
             call_off_schedule_1:
               document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
@@ -1068,7 +1068,7 @@ en:
               title: Call-off Schedule 7 - Key Staff
             call_off_schedule_8:
               document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
-              title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
+              title: Call-off Schedule 8 - Business Continuity and Disaster Recovery
             call_off_schedule_9:
               document_name: Call-Off Schedule 9 - Security (DA).docx
               title: Call-off Schedule 9 - Security
