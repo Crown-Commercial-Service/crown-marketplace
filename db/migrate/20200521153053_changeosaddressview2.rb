@@ -4,8 +4,8 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
     reversible do |dir|
       dir.up do
         execute <<~SQL
-          DROP VIEW IF EXISTS public.postcode_lookup;
-          DROP VIEW IF EXISTS public.os_address_view_2;
+          DROP VIEW IF EXISTS public.postcode_lookup CASCADE;
+          DROP VIEW IF EXISTS public.os_address_view_2 CASCADE;
         SQL
 
         execute <<~SQL
