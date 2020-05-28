@@ -57,7 +57,7 @@ gem 'devise', '~> 4.7.1'
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
 # for pagination
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 # for pretty urls
 gem 'friendly_id', '~> 5.2.4'
