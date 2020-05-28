@@ -172,6 +172,7 @@ module FacilitiesManagement
       @procurement = current_user.procurements.find_by(id: params[:procurement_id])
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def check_if_only_cafm_or_help
       redirect_to_edit = false
       error_hash = {}
@@ -195,9 +196,10 @@ module FacilitiesManagement
       end
 
       flash[:error] = error_hash
-      flash[:selected_services] = selected_services_hash if error_hash.size.positive?  # used to determine if checkboxes should be checked
+      flash[:selected_services] = selected_services_hash if error_hash.size.positive?
       redirect_to_edit
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def init_further_competition
       if params[:procurement_id]
