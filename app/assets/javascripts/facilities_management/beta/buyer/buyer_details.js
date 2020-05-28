@@ -75,25 +75,47 @@ $(function () {
 		}
 	}
 
-		$('#buyer-details-postcode-lookup-results').on('blur', function (e) {
+	$('#buyer-details-postcode-lookup-results').on('blur', function (e) {
+		e.preventDefault();
 		chooseAddress(e.target.id);
 	});
+
+	if (! (/Windows/.test(navigator.userAgent) )) {
+		$('#buyer-details-postcode-lookup-results').on('change', function (e) {
+			chooseAddress(e.target.id);
+		});
+	} else {
+		$('#buyer-details-postcode-lookup-results').on('click', function (e) {
+			if (this.selectedIndex > 0) {
+				chooseAddress("buyer-details-postcode-lookup-results");
+			}
+		});
+		$('#buyer-details-postcode-lookup-results').on('keypress', function (e) {
+			if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				chooseAddress(e.target.id);
+			}
+		});
+	}
 	
 	let postcodeDetails = document.getElementById("buyer-details-postcode");
-	postcodeDetails.addEventListener('keypress', function (e) {
-		if (e.keyCode === 13) {
-			e.preventDefault();
-			$('#fm-postcode-error').addClass('govuk-visually-hidden');
-			$('#organisation_address_postcode-error').addClass('govuk-visually-hidden');
-			$('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
-			$('#fm-post-code-results-container').find('.govuk-form-group--error').removeClass('govuk-form-group--error');
-			$('#buyer-details-postcode').removeClass('govuk-input--error');
-			
-			let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
-			pageUtils.addressLookUp(postCode, false);
-		}
-	});
-	
+	if (null != postcodeDetails) {
+		postcodeDetails.addEventListener('keypress', function (e) {
+			if (e.keyCode === 13) {
+				e.preventDefault();
+				$('#fm-postcode-error').addClass('govuk-visually-hidden');
+				$('#organisation_address_postcode-error').addClass('govuk-visually-hidden');
+				$('#fm-postcode-error-form-group').removeClass('govuk-form-group--error');
+				$('#fm-post-code-results-container').find('.govuk-form-group--error').removeClass('govuk-form-group--error');
+				$('#buyer-details-postcode').removeClass('govuk-input--error');
+				
+				let postCode = pageUtils.formatPostCode($('#buyer-details-postcode').val());
+				pageUtils.addressLookUp(postCode, false);
+			}
+		});
+	}
+
 	let addressEntered = document.getElementById("organisation-address-line-1");
 	if (postcodeDetails && addressEntered) {
 		if (!!postcodeDetails.value && !addressEntered.value) {

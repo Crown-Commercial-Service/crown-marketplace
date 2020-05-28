@@ -163,7 +163,7 @@
             <span id="region-header" class="govuk-heading-s govuk-!-margin-bottom-1"><%= t('.region') %></span>
             <p class="govuk-!-margin-bottom-2" data-module-part="region-text"><%= @page_data[:model_object].address_region %></p>
             <% change_3_index = @page_data[:model_object].address_region.present? && valid_regions.length > 1 ? 0 : -1 %>
-            <a href="#region-header" id="change-input-3" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>" style="display:block;"
+            <a href="#region-header" id="change-input-3" class="govuk-link <%= 'govuk-visually-hidden' unless multiple_regions? %>"
                data-module-element="change-region-button" aria-label="<%= t('.change') %>" tabindex=<%=change_3_index.to_s%>><%= t('.change') %></a>
           </div>
         </div>
