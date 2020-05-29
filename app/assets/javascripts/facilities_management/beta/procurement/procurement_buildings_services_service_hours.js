@@ -5,8 +5,6 @@ function SvcHoursDataUI(jqContainer) {
     let formObject = jqContainer.closest("form");
     if (formObject.length > 0) {
         this.sections = this.findMondaysToFridays();
-        this.formHelper = new FormValidationComponent(formObject[0], this.validateForm, true);
-        this.formHelper.prevErrorMessage = this.formHelper.errorMessage;
     }
 }
 
@@ -23,189 +21,7 @@ SvcHoursDataUI.prototype.findMondaysToFridays = function() {
     return sections;
 };
 
-SvcHoursDataUI.prototype.validateForm = function(_formElements) {
-    let isValid;
-
-
-    document.querySelectorAll('[id=error_start_time]').forEach(function(eachEle,index) {
-        eachEle.remove();
-    });
-
-    document.querySelectorAll('[id=error_end_time]').forEach(function(eachEle,index) {
-        eachEle.remove();
-    });
-
-    this.clearBannerErrorList();
-    this.clearAllFieldErrors();
-    this.toggleBannerError(false);
-    let fnRequiredValidator = this.validationFunctions["required"];
-    let fnNumberValidator = this.validationFunctions["type"]["number"];
-    let fnMaxValidator = this.validationFunctions["max"];
-    let fnMinValidator = this.validationFunctions["min"];
-
-    this.fnCheckRadioButton = function(day, choices) {
-        let fieldValueServiceChoice = this.form["facilities_management_procurement_building_service[service_hours][" + day + "][service_choice]"];
-        if (fieldValueServiceChoice.value === "") {
-            choices[day] = {
-                field: fieldValueServiceChoice,
-                status: "none"
-            };
-            return false;
-        }
-
-        choices[day] = {
-            field: fieldValueServiceChoice,
-            status: "ok"
-        };
-        return true;
-    };
-
-    this.fnCheckTime = function(day, part, choices) {
-        let isValid = true;
-
-        let jqHour = $("#" + day + "_" + part + "_hour");
-        let jqMinute = $("#" + day + "_" + part + "_minute");
-        let jqAmPm = $("#" + day + "_" + part + "_ampm");
-
-        if (choices[part] === undefined) {
-            choices[part] = {};
-        }
-
-        this.fnCheckTimeUnit = function(jqElem, section) {
-            let isValid = !fnRequiredValidator(jqElem);
-            isValid = !fnNumberValidator(jqElem) && isValid;
-            isValid = !fnMaxValidator(jqElem) && isValid;
-            isValid = !fnMinValidator(jqElem) && isValid;
-
-            choices[part][section] = {
-                status: isValid,
-                errorType: 'invalid',
-                elem: jqElem,
-                value: jqElem.val()
-            };
-
-            return isValid;
-        };
-
-        isValid = this.fnCheckTimeUnit(jqHour, "hour") && isValid;
-        isValid = this.fnCheckTimeUnit(jqMinute, "minute") && isValid;
-        isValid = ['AM', 'PM'].includes(jqAmPm.val()) && isValid;
-        choices[part]["ampmElem"] = jqAmPm;
-        choices[part]["status"] = isValid;
-
-        return isValid;
-    };
-
-    this.checkRadioButtons = function(choices) {
-        let isValid = true;
-
-        isValid = this.fnCheckRadioButton("monday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("tuesday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("wednesday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("thursday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("friday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("saturday", choices) && isValid;
-        isValid = this.fnCheckRadioButton("sunday", choices) && isValid;
-
-        return isValid;
-    };
-
-    this.validateTimes = function(day, choices) {
-        let timeIsValid = this.fnCheckTime(day, "start", choices);
-        return this.fnCheckTime(day, "end", choices) && timeIsValid;
-    };
-
-		this.validateTwentyFourHours = function(day, choices) {
-			let isValid = true;
-
-			let morningStart = choices[day]["start"]["ampmElem"].val() === 'AM';
-			let morningEnd = choices[day]["end"]["ampmElem"].val() === 'AM';
-			let startTimeHour = (parseInt(choices[day]["start"]["hour"].value)) * 100;
-			let endTimeHour = (parseInt(choices[day]["end"]["hour"].value)) * 100;
-			let startTimeMinute = parseInt(choices[day]["start"]["minute"].value);
-			let endTimeMinute = parseInt(choices[day]["end"]["minute"].value);
-
-			if (morningStart && startTimeHour === 1200) {
-				startTimeHour = 0;
-			}
-			else if (!morningStart && startTimeHour !== 1200) {
-				startTimeHour += 1200;
-			}
-
-			if (morningEnd && endTimeHour === 1200) {
-				endTimeHour = 2400;
-			}
-			else if (!morningEnd && endTimeHour !== 1200) {
-				endTimeHour += 1200;
-      }
-
-      if (!morningStart && morningEnd && startTimeHour !== 0) {
-        endTimeHour += 2400;
-      }
-
-			let startTime = startTimeHour + startTimeMinute;
-			let endTime = endTimeHour + endTimeMinute;
-
-			if (endTime <= startTime) {
-				isValid = false;
-				choices[String(day)]["end"].status = false;
-				choices[String(day)]["end"].errorType = "min";
-			}
-			
-			return isValid;
-		}
-
-    this.displayTimeErrors = function(day, part, choices) {
-        if (choices[day][part].status === false) {
-            this.toggleError($("." + day + "_" + part + "_time"), true, choices[day][part].errorType ? choices[day][part].errorType : "invalid");
-            this.addErrorClass(choices[day][part]["hour"].elem);
-            this.addErrorClass(choices[day][part]["minute"].elem);
-            this.addErrorClass(choices[day][part]["ampmElem"]);
-        }
-    };
-
-    let dailyChoices = {};
-    isValid = this.checkRadioButtons(dailyChoices);
-
-    for (let key in dailyChoices) {
-        if (dailyChoices.hasOwnProperty(key)) {
-            if (dailyChoices[key].status === "none") {
-                this.toggleError($(dailyChoices[key].field[0]), true, "required");
-            } else if (dailyChoices[key].field.value === "hourly") {
-                let isTimeValid = this.validateTimes(key, dailyChoices[key]);
-                isValid = isTimeValid && isValid;
-
-                if (!isTimeValid) {
-                    this.displayTimeErrors(key, "start", dailyChoices);
-                    this.displayTimeErrors(key, "end", dailyChoices);
-                } else {
-                    isTimeValid = this.validateTwentyFourHours(key, dailyChoices) && isValid;
-                    isValid = isTimeValid && isValid;
-
-                    if (!isTimeValid) {
-                        this.displayTimeErrors(key, "end", dailyChoices);
-                    }
-                }
-            }
-        }
-    }
-
-    if (!isValid) {
-        this.toggleBannerError(true);
-    } else {
-        this.toggleBannerError(false);
-    }
-
-    return isValid;
-};
-
 SvcHoursDataUI.prototype.initialise = function() {
-    let inputs = this.dataContainer.find("input[type=text]");
-    let i;
-    for (i = 0; i < inputs.length; i++) {
-        this.restrictInput(inputs[i]);
-    }
-
     $("#copy_details").on("click", this.applyDetails.bind(this));
 };
 
@@ -234,6 +50,8 @@ SvcHoursDataUI.prototype.applyDetails = function() {
 
 SvcHoursDataUI.prototype.pasteElementDetails = function(day, sourceDetails, htmlSection) {
     let jqSection = $(htmlSection);
+    let modelText = 'facilities_management_procurement_building_service_service_hours_'
+
     let JElem = $("#error_" + day + "_not_required");
     if (JElem) {
         JElem.closest(".govuk-form-group .govuk-form-group--error").removeClass("govuk-form-group--error");
@@ -243,18 +61,21 @@ SvcHoursDataUI.prototype.pasteElementDetails = function(day, sourceDetails, html
         jqSection.find("#" + day + "_" + sourceDetails.choice).prop("checked", true);
         jqSection.find("div.govuk-radios.govuk-radios--conditional").click();
         if (sourceDetails.choice === "hourly") {
-            jqSection.find("#" + day + "_start_hour").val(sourceDetails.startHour);
-            jqSection.find("#" + day + "_start_minute").val(sourceDetails.startMinute);
-            jqSection.find("#" + day + "_start_ampm").val(sourceDetails.startAmPm);
-            jqSection.find("#" + day + "_end_hour").val(sourceDetails.endHour);
-            jqSection.find("#" + day + "_end_minute").val(sourceDetails.endMinute);
-            jqSection.find("#" + day + "_end_ampm").val(sourceDetails.endAmPm);
+            document.getElementById(modelText + day + "_start_hour").value = sourceDetails.startHour;
+            document.getElementById(modelText + day + "_start_minute").value = sourceDetails.startMinute;
+            document.getElementById(modelText + day + "_start_ampm").value = sourceDetails.startAmPm;
+            document.getElementById(modelText + day + "_end_hour").value = sourceDetails.endHour;
+            document.getElementById(modelText + day + "_end_minute").value = sourceDetails.endMinute;
+            document.getElementById(modelText + day + "_end_ampm").value = sourceDetails.endAmPm;
+            document.getElementById(modelText + day + "_next_day").checked = sourceDetails.nextDay
         }
     }
 };
 
 SvcHoursDataUI.prototype.copyElementDetails = function(day, htmlSection) {
     let jqSection = $(htmlSection);
+    let modelText = 'facilities_management_procurement_building_service_service_hours_'
+
     let sourceData = {
         choice: "",
         startHour: "",
@@ -262,7 +83,8 @@ SvcHoursDataUI.prototype.copyElementDetails = function(day, htmlSection) {
         startAmPm: "",
         endHour: "",
         endMinute: "",
-        endAmPm: ""
+        endAmPm: "",
+        nextDay: ""
     };
     let selectedChoice = jqSection.find("input[type=radio]:checked");
 
@@ -270,24 +92,16 @@ SvcHoursDataUI.prototype.copyElementDetails = function(day, htmlSection) {
         sourceData.choice = selectedChoice[0].value;
 
         if (sourceData.choice === "hourly") {
-            sourceData.startHour = jqSection.find("#" + day + "_start_hour").val();
-            sourceData.startMinute = jqSection.find("#" + day + "_start_minute").val();
-            sourceData.startAmPm = jqSection.find("#" + day + "_start_ampm").val();
-            sourceData.endHour = jqSection.find("#" + day + "_end_hour").val();
-            sourceData.endMinute = jqSection.find("#" + day + "_end_minute").val();
-            sourceData.endAmPm = jqSection.find("#" + day + "_end_ampm").val();
+            sourceData.startHour = document.getElementById(modelText + day + "_start_hour").value;
+            sourceData.startMinute = document.getElementById(modelText + day + "_start_minute").value;
+            sourceData.startAmPm = document.getElementById(modelText + day + "_start_ampm").value;
+            sourceData.endHour = document.getElementById(modelText + day + "_end_hour").value;
+            sourceData.endMinute = document.getElementById(modelText + day + "_end_minute").value;
+            sourceData.endAmPm = document.getElementById(modelText + day + "_end_ampm").value;
+            sourceData.nextDay = document.getElementById(modelText + day + "_next_day").checked
         }
     }
     return sourceData;
-};
-
-SvcHoursDataUI.prototype.restrictInput = function(jqElem) {
-    $(jqElem).keypress(function(e) {
-        let verified = (e.which === 8 || e.which === undefined || e.which === 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
-        if (verified) {
-            e.preventDefault();
-        }
-    });
 };
 
 $(function() {

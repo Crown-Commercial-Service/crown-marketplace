@@ -1,12 +1,6 @@
 ---
 en:
   activemodel:
-    attributes:
-      facilities_management/service_hour_choice/service_choice:
-        all_day: all day (24 hours)
-        hourly: Specified hours
-        not_required: Not required
-        time_to: to
     errors:
       models:
         facilities_management/admin/management_report:
@@ -27,36 +21,77 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/service_hour_choice:
+          attributes:
+            end_time:
+              after: The end time must be after the start time
+              invalid: Select end time
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
+            service_choice:
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select one option
+              required: You must provide hours required for at least one of the days
+            start_time:
+              after: The end time must be after the start time
+              invalid: Select start time
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
         facilities_management/service_hours:
           attributes:
             friday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Friday
               invalid: Select not required if you don’t need the service on Friday
               not_a_date: Enter a real start time or end time for Friday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             monday:
+              after: The end time must be after the start time
+              inclusion: Select not required if you don’t need the service on Monday
               invalid: Select not required if you don’t need the service on Monday
               not_a_date: Enter a real start time or end time for Monday
               required: You must provide hours required for at least one of the days
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             saturday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Saturday
               invalid: Select not required if you don’t need the service on Saturday
               not_a_date: Enter a real start time or end time for Saturday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             sunday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Sunday
               invalid: Select not required if you don’t need the service on Sunday
               not_a_date: Enter a real start time or end time for Sunday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             thursday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Thursday
               invalid: Select not required if you don’t need the service on Thursday
               not_a_date: Enter a real start time or end time for Thursday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             tuesday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Tuesday
               invalid: Select not required if you don’t need the service on Tuesday
               not_a_date: Enter a real start time or end time for Tuesday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
             wednesday:
+              after: The end time must be after the start time
+              all_day_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              inclusion: Select not required if you don’t need the service on Wednesday
               invalid: Select not required if you don’t need the service on Wednesday
               not_a_date: Enter a real start time or end time for Wednesday
-              required: You must provide hours required for at least one of the days
+              selection_overlap: The start time for this day is later than the end time of your previous day. Please change your hours
+              too_long: Total period of service hours must be under 24 hours. Please change your hours
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
@@ -290,12 +325,16 @@ en:
                 greater_than: The end time must be after the start time
                 invalid: Select end time
                 less_than: The start time must be before the end time
+                too_long: Total period of service hours must be under 24 hours. Please change your hours
               service_choice:
                 inclusion: Select not required if you don’t need the service on this day
+                required: You must provide hours required for at least one of the days
+                too_long: Total period of service hours must be under 24 hours. Please change your hours
               start_time:
                 greater_than: The end time must be after the start time
                 invalid: Select start time
                 less_than: The start time must be before the end time
+                not_a_date: Select start time
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -372,20 +411,6 @@ en:
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
               too_long: Reason for not signing must be 100 characters or less
-        facilities_management/service_hour_choice:
-          attributes:
-            end_time:
-              greater_than: The end time must be after the start time
-              invalid: Select end time
-              less_than: The start time must be before the end time
-              not_a_date: Select end time
-            service_choice:
-              inclusion: Select one option
-            start_time:
-              greater_than: The end time must be after the start time
-              invalid: Select start time
-              less_than: The start time must be before the end time
-              not_a_date: Select start time
   dashboard:
     index:
       admin_link: Managing framework and supplier data
@@ -745,7 +770,15 @@ en:
         subheading: Answer additional questions about the services
     procurement_buildings_services:
       day_section:
+        all_day: All day (24 hours)
+        am_pm: AM or PM
         copy_details: Apply to Monday through Friday
+        end_time: End time
+        hour: Hour
+        hourly: Specified hours
+        minute: Minute
+        not_required: Not required
+        start_time: Start time
       lifts:
         back_to_service_information: Back to service information
         save_and_return_to_service_information: Save and return to service information
@@ -753,7 +786,8 @@ en:
         back_to_service_information: Return to service information
         save_and_return_to_service_information: Save and return to service information
         service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
-        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
+        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
+        there_is_a_problem: There is a problem
       show:
         back_to_service_information: Back to service information
         save_and_return_to_service_information: Save and return to service information
