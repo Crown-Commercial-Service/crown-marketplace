@@ -1,7 +1,8 @@
 require 'rails_helper'
-require 'api/v1/postcodes_controller'
 
-RSpec.describe Api::V1::PostcodesController, type: :controller do
+RSpec.describe Api::V2::PostcodesController, type: :controller do
+  login_fm_buyer
+
   describe 'can retrieve a postcode' do
     it 'bad postcode' do
       postcode = 'X11 1XX'

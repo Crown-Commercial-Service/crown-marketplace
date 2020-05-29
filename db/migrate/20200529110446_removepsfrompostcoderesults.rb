@@ -1,11 +1,11 @@
-class Changeosaddressview2 < ActiveRecord::Migration[5.2]
+class Removepsfrompostcoderesults < ActiveRecord::Migration[5.2]
   # rubocop:disable Metrics/MethodLength, BlockLength
   def change
     reversible do |dir|
       dir.up do
         execute <<~SQL
-          DROP VIEW IF EXISTS public.postcode_lookup CASCADE;
-          DROP VIEW IF EXISTS public.os_address_view_2 CASCADE;
+          DROP VIEW IF EXISTS public.postcode_lookup cascade;
+          DROP VIEW IF EXISTS public.os_address_view_2 cascade;
         SQL
 
         execute <<~SQL
@@ -61,6 +61,7 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
           								and adds.class::text !~~ 'U%'::text
           								and adds.class::text !~~ 'CH%'::text
           								and adds.class::text !~~ 'CZ%'::text
+          								and adds.class::text !~~ 'PS'::text
           								and adds.class::text !~~ 'CU11%'::text;
         SQL
 

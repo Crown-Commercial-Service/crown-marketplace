@@ -47,15 +47,11 @@ module Postcode
 
     EXCLUDED_POSTCODE_AREAS = %w[GY IM JE].freeze
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
     def self.find_region(postcode)
       postcode_structure = destructure_postcode(postcode)
 
       if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
-        result = execute_find_region_query postcode_structure[:valid] ? postcode_structure[:full_postcode] : ':'
-        result = execute_find_region_query "#{postcode_structure[:out_code]}#{postcode_structure[:larger_in_code]}" unless result.length.positive?
-        result = execute_find_region_query "#{postcode_structure[:out_code]}#{postcode_structure[:postcode_sector]}" unless result.length.positive?
-        result = execute_find_region_query postcode_structure[:out_code] unless result.length.positive?
+        result = execute_find_region_query postcode_structure[:out_code]
         result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
       else
         result = execute_find_region_query(':')
@@ -65,7 +61,6 @@ module Postcode
     rescue StandardError => e
       raise e
     end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
     def self.execute_find_region_query(postcode)
       query = <<~HEREDOC

@@ -39,6 +39,13 @@ module FacilitiesManagement
             format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA).docx"' }
           end
         end
+
+        protected
+
+        def authorize_user
+          @contract ||= FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+          authorize! :manage, @contract.procurement
+        end
       end
     end
   end

@@ -141,7 +141,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     row = initial_values
 
-    @active_procurement_buildings.each { |building| row << sanitize_string_for_excel(building.name) }
+    @active_procurement_buildings.each { |building| row << sanitize_string_for_excel(building.building_name) }
 
     sheet.add_row row, style: standard_style, height: standard_row_height
   end
@@ -177,7 +177,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Name']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.name)
+      row << sanitize_string_for_excel(building.building_name)
     end
 
     row
@@ -187,7 +187,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.description)
+      row << sanitize_string_for_excel(building.description)
     end
 
     row
@@ -197,7 +197,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Street']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.address_line_1)
+      row << sanitize_string_for_excel(building.address_line_1)
     end
 
     row
@@ -207,7 +207,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Town']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.address_town)
+      row << sanitize_string_for_excel(building.address_town)
     end
 
     row
@@ -217,7 +217,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Postcode']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.address_postcode)
+      row << sanitize_string_for_excel(building.address_postcode)
     end
 
     row
@@ -227,7 +227,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.address_region)
+      row << sanitize_string_for_excel(building.address_region)
     end
 
     row
@@ -247,7 +247,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.building_type)
+      row << sanitize_string_for_excel(building.building_type)
     end
 
     row
@@ -257,7 +257,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building.security_type)
+      row << sanitize_string_for_excel(building.security_type)
     end
 
     row

@@ -1,4 +1,3 @@
-require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
     scope :active, -> { where(active: true) }
@@ -21,10 +20,26 @@ module FacilitiesManagement
       include_association :procurement_building_services
     end
 
+    # rubocop:disable Metrics/AbcSize
     def set_gia
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
-      update(gia: building.gia)
+      update(
+        gia: building.gia,
+        region: building.region,
+        building_type: building.building_type,
+        security_type: building.security_type,
+        address_town: building.address_town,
+        address_line_1: building.address_line_1,
+        address_line_2: building.address_line_2,
+        address_postcode: building.address_postcode,
+        address_region: building.address_region,
+        address_region_code: building.address_region_code,
+        building_name: building.building_name,
+        building_json: building.building_json,
+        description: building.description
+      )
     end
+    # rubocop:enable Metrics/AbcSize
 
     def name
       building.building_name
