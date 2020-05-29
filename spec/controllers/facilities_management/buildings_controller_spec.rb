@@ -1,9 +1,36 @@
 require 'rails_helper'
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   describe 'GET #index' do
+    context 'when logging in as a fm buyer with details' do
+      it 'returns http success' do
+        get :index
+        expect(response).to have_http_status(:found)
+      end
+    end
+
+    context 'when logging in as an st buyer' do
+      login_st_buyer_with_detail
+      it 'redirects to the not permitted page' do
+        get :index
+
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
+  end
+
+  describe 'GET #new' do
     it 'returns http success' do
-      get :index
+      get :new
       expect(response).to have_http_status(:found)
+    end
+
+    context 'when logging in as an mc buyer' do
+      login_mc_buyer_with_detail
+      it 'redirects to the not permitted page' do
+        get :new
+
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
     end
   end
 
