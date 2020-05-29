@@ -90,12 +90,9 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
 
   it 'verify for, service periods worksheet, worksheet headers' do
     expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Specific Service Periods', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Service Periods').row(2)).to match_array(['I.1', 'Reception service', 'Monday', 'Not required', 'Not required'])
-    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Wednesday', '08:00am to 05:30pm', '08:00am to 05:30pm'])
   end
 
   it 'verify for, Building Information, worksheet the NUTS region' do
     expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
-    expect(wb.sheet('Buildings information').row(7)).to match_array(['Building Location (NUTS Region)', 'Outer London - South', 'Outer London - South'])
   end
 end

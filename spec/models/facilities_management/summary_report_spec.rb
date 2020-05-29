@@ -4,8 +4,13 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   subject(:report) { described_class.new(procurement.id) }
 
   let(:procurement) do
-    create(:facilities_management_procurement_with_extension_periods, initial_call_off_period: 7)
+    create(:facilities_management_procurement_with_extension_periods,
+      initial_call_off_period: 7,
+      lot_number_selected_by_customer: lot_number_selected_by_customer
+    )
   end
+
+  let(:lot_number_selected_by_customer) { false }
 
   describe '#calculate_services_for_buildings' do
     let(:building_id) { procurement.procurement_buildings.first.building.id }
@@ -133,8 +138,44 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   describe '#current_lot' do
     subject(:current_lot) { report.current_lot }
 
-    it 'returns 1a' do
-      expect(current_lot).to eq('1a')
+    context 'when lot number selected by customer' do
+      let(:lot_number_selected_by_customer) { true }
+
+      it 'returns procurement lot number' do
+        expect(current_lot).to eq(procurement.lot_number)
+      end
+    end
+
+    context 'when lot number not selected by customer' do
+      context 'when assessed value under 7m' do
+        before do
+          allow(report).to receive(:assessed_value) { 6_000_000 }
+        end
+
+        it 'returns 1a' do
+          expect(current_lot).to eq('1a')
+        end
+      end
+
+      context 'when assessed between 7m - 50m' do
+        before do
+          allow(report).to receive(:assessed_value) { 8_000_000 }
+        end
+
+        it 'returns 1b' do
+          expect(current_lot).to eq('1b')
+        end
+      end
+
+      context 'when assessed over 50m' do
+        before do
+          allow(report).to receive(:assessed_value) { 51_000_000 }
+        end
+
+        it 'returns 1c' do
+          expect(current_lot).to eq('1c')
+        end
+      end
     end
   end
 end
