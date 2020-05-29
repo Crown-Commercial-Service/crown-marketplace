@@ -5,9 +5,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement) do
     create(:facilities_management_procurement_with_extension_periods,
-      initial_call_off_period: 7,
-      lot_number_selected_by_customer: lot_number_selected_by_customer
-    )
+           initial_call_off_period: 7,
+           lot_number_selected_by_customer: lot_number_selected_by_customer)
   end
 
   let(:lot_number_selected_by_customer) { false }
@@ -149,7 +148,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when lot number not selected by customer' do
       context 'when assessed value under 7m' do
         before do
-          allow(report).to receive(:assessed_value) { 6_000_000 }
+          allow(report).to receive(:assessed_value).and_return(6_000_000)
         end
 
         it 'returns 1a' do
@@ -159,7 +158,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when assessed between 7m - 50m' do
         before do
-          allow(report).to receive(:assessed_value) { 8_000_000 }
+          allow(report).to receive(:assessed_value).and_return(8_000_000)
         end
 
         it 'returns 1b' do
@@ -169,7 +168,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when assessed over 50m' do
         before do
-          allow(report).to receive(:assessed_value) { 51_000_000 }
+          allow(report).to receive(:assessed_value).and_return(51_000_000)
         end
 
         it 'returns 1c' do
