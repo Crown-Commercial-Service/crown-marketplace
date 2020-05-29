@@ -368,14 +368,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%02d', service_measure[:service_hours][day_symbol]['start_hour'])
+    start_hour = format('%01d', service_measure[:service_hours][day_symbol]['start_hour'])
     start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
     start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
     start_hour + ':' + start_minute + start_ampm
   end
 
   def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%02d', service_measure[:service_hours][day_symbol]['end_hour'])
+    end_hour = format('%01d', service_measure[:service_hours][day_symbol]['end_hour'])
     end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
     end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm

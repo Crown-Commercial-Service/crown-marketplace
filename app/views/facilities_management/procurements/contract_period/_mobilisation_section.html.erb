@@ -1,6 +1,6 @@
 
 <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
-  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any? %>">Mobilisation
+  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if (@procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any?) && params[:validate] %>">Mobilisation
     period
   </th>
   <td class="govuk-table__cell">

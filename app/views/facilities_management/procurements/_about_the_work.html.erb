@@ -10,7 +10,7 @@
           </td>
           <% if @active_procurement_buildings.any? %>
             <td style="width:40%; vertical-align: top;" class="govuk-table__cell govuk-border-bottom_none">
-              <ul class="buildings-list govuk-!-margin-0 govuk-!-padding-top-0" style="list-style:none;padding-top: 0;padding-left: 20px">
+              <ul class="buildings-list govuk-!-margin-0 govuk-!-padding-top-0 govuk-!-padding-left-4" style="list-style:none;">
                 <% @active_procurement_buildings.each do |procurement_building| %>
                   <li><%= procurement_building.name %></li>
                 <% end %>
@@ -81,7 +81,6 @@
                   </td>
                 </tr>
               <%end %>
-              </tr>
             </table>
           </td>
         </tr>
@@ -117,8 +116,11 @@
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse">
         <tr>
-          <td style="width:40%" <%= 'colspan=3 style="border:0;"' if (@active_procurement_buildings.requires_service_information.length > 0) %>
-              class="govuk-table__header govuk-border-bottom_none">
+          <% if (@active_procurement_buildings.requires_service_information.length > 0) %>
+            <td style="width:40%; border:0;" colspan=3 class="govuk-table__header govuk-border-bottom_none">
+          <% else %>
+            <td style="width:40%" class="govuk-table__header govuk-border-bottom_none">
+          <% end %>
             3. Service requirements
             <% if any_service_codes(@active_procurement_buildings) %>
               <% if @active_procurement_buildings.requires_service_information.length > 0 %>

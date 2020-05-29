@@ -21,7 +21,6 @@
             <legend class="govuk-heading-s govuk-!-padding-left-0 govuk-!-margin-bottom-2 "><%= t('.start_time')%></legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if service_choice.errors[:start_time].present? %>" data-propertyname="<%= day %>_start_time">
               <%= display_error service_choice, :start_time, true, day.to_s + '-' %>
-              <%= f.hidden_field :start_time, class: "#{day}_start_time govuk-visually-hidden", id: "start_time"  %>
               <table class="govuk-table">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
@@ -51,12 +50,12 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
           <% end %>
           <%= govuk_fieldset_with_optional_error service_choice, :end_time do %>
             <legend class="govuk-heading-s govuk-!-padding-left-0 govuk-!-margin-bottom-2"><%= t('.end_time')%></legend>
             <div class="govuk-form-group <%= 'govuk-form-group--error' if service_choice.errors[:end_time].present? %>" data-propertyname="<%= day %>_end_time">
               <%= display_error service_choice, :end_time, true, day.to_s + '-' %>
-              <%= f.hidden_field :end_time, class: "#{day}_end_time govuk-visually-hidden", id: "end_time" %>
               <table class="govuk-table">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
