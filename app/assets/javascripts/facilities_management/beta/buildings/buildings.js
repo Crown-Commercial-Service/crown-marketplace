@@ -201,6 +201,36 @@ LookupHandler.prototype.init = function () {
 		e.preventDefault();
 		selectRegion();
 	});
+	
+	if (! (/Windows/.test(navigator.userAgent)) ) {
+		$(this.resultsDropDown).on('change', selectResult);
+		$(this.regionDropDown).on('change', selectRegion);
+	} else {
+		$(this.resultsDropDown).on('click', function(e) {
+			if (this.selectedIndex > 0) {
+				selectResult();
+			}
+		});
+		$(this.resultsDropDown).on('keypress', function(e) {
+			if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				selectResult();
+			}
+		});
+		$(this.regionDropDown).on('click', function(e) {
+			if (this.selectedIndex > 0) {
+				selectRegion();
+			}
+		});
+		$(this.regionDropDown).on('keypress', function(e) {
+			if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				selectRegion();
+			}
+		});
+	}
  
     this.regionDropDown.addEventListener('keypress', function (e) {
       if (e.keyCode === 13) {

@@ -53,8 +53,8 @@ module OrdnanceSurvey
     query = <<~SQL
         DO $$
         BEGIN
-        drop view postcode_lookup;
-        drop view os_address_view_2;
+        drop view postcode_lookup cascade;
+        drop view os_address_view_2 cascade;
         CREATE VIEW os_address_view_2
         (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
          sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
@@ -120,6 +120,7 @@ module OrdnanceSurvey
             AND adds.class::TEXT !~~ 'U%'::TEXT
             AND adds.class::TEXT !~~ 'CH%'::TEXT
             AND adds.class::TEXT !~~ 'CZ%'::TEXT
+            AND adds.class::text !~~ 'PS'::text
             AND adds.class::TEXT !~~ 'CU11%'::TEXT;
       EXCEPTION
           WHEN SQLSTATE '42P07' THEN
