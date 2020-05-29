@@ -199,5 +199,5 @@ class Removepsfrompostcoderesults < ActiveRecord::Migration[5.2]
       end
     end
   end
-# rubocop:enable Metrics/MethodLength, BlockLength
+  # rubocop:enable Metrics/MethodLength, BlockLength
 end
