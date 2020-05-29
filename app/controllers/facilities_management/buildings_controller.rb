@@ -183,7 +183,7 @@ module FacilitiesManagement
       @page_data                = {}
       @page_data[:model_object] = Building.find(params[:id]) if params[:id]
       @page_data[:model_object] = current_user.buildings.order('lower(building_name)') if action_name == 'index'
-      @page_data[:model_object] = Building.new if @page_data[:model_object].nil?
+      @page_data[:model_object] = Building.new(user: current_user) if @page_data[:model_object].nil?
 
       build_page_description
     end
@@ -195,7 +195,7 @@ module FacilitiesManagement
     protected
 
     def authorize_user
-      @page_data[:model_object] ? (authorize! :manage, @page_data[:model_object]) : (authorize! :read, FacilitiesManagement)
+      @page_data[:model_object].present? && (@page_data[:model_object].is_a? Building) ? (authorize! :manage, @page_data[:model_object]) : (authorize! :read, FacilitiesManagement)
     end
   end
 end
