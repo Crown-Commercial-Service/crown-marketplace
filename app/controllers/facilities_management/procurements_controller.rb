@@ -195,7 +195,7 @@ module FacilitiesManagement
         end
       end
 
-      flash[:error] = error_hash
+      flash[:error] = error_hash if error_hash.size.positive?
       flash[:selected_services] = selected_services_hash if error_hash.size.positive?
       redirect_to_edit
     end
