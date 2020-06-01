@@ -171,6 +171,7 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/AbcSize
     def check_if_only_cafm_or_help
       redirect_to_edit = false
       error_hash = {}
@@ -181,7 +182,10 @@ module FacilitiesManagement
         building_name = val['name']
         selected_services_hash[building_name] = service_codes
 
-        if service_codes == ['M.1']
+        if service_codes.include?('G.1') && service_codes.include?('G.3')
+          error_hash[building_name] = "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{building_name}' building"
+          redirect_to_edit = true
+        elsif service_codes == ['M.1']
           error_hash[building_name] = "You must select another service to include 'CAFM system' for '#{building_name}' building"
           redirect_to_edit = true
         elsif service_codes == ['N.1']
@@ -198,6 +202,7 @@ module FacilitiesManagement
       redirect_to_edit
     end
     # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def init_further_competition
       if params[:procurement_id]

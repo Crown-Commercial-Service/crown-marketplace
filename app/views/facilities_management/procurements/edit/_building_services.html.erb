@@ -68,6 +68,7 @@
                 <ul>
                   <%
                     if flash[:selected_services] && flash[:selected_services][procurement_building.object.name]
+                       procurement_building.object.service_codes.clear
                        flash[:selected_services][procurement_building.object.name].each { |s| procurement_building.object.service_codes.append(s) }
                      end
                   %>
