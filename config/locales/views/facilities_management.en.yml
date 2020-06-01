@@ -785,7 +785,10 @@ en:
       service_hours:
         back_to_service_information: Return to service information
         save_and_return_to_service_information: Save and return to service information
-        service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
+        service_hours_description_1: 'The hours you enter will be used to:'
+        service_hours_description_2: The calculation will assume 52 weeks x 7 days in one year.
+        service_hours_description_list_1: inform the supplier the exact hours you require this service to be delivered
+        service_hours_description_list_2: calculate the cost of this service
         service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
         there_is_a_problem: There is a problem
       show:
