@@ -1,5 +1,5 @@
-require 'axlsx'
-require 'axlsx_rails'
+require 'caxlsx'
+require 'caxlsx_rails'
 require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
