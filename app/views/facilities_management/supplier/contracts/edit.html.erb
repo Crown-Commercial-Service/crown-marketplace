@@ -16,7 +16,7 @@
         <div id="facilities_management_contract" class="govuk-form-group <%= 'govuk-form-group--error' if @contract.errors.any? %>">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    <h2 class="govuk-fieldset__heading"><%= "#{t('.form_title')} #{@procurement.user.buyer_detail.organisation_name}?" %></h2>
+                    <%= "#{t('.form_title')} #{@procurement.user.buyer_detail.organisation_name}?" %>
                 </legend>
                 <%= display_error(f.object, :contract_response, false) %>
                 <div class="govuk-radios">
@@ -28,10 +28,11 @@
                         <%= f.radio_button :contract_response, false, value: false, class: 'govuk-radios__input', id: 'contract-accepted-no', 'aria-label': 'No' %>
                         <%= f.label :contract_response, "No", for: 'contract-accepted-no', value: false, class: 'govuk-label govuk-radios__label' %>
                     </div>
-                    <div id="contract-accepted-no-container" class="govuk-details__text govuk-!-padding-top-1 govuk-!-padding-bottom-1 govuk-!-margin-left-3 govuk-!-width-one-half  <%= 'govuk-visually-hidden' if @contract.contract_response || @contract.contract_response.nil? %>" data-module="character-count" data-maxlength="500">
+                    <div id="contract-accepted-no-container" class="govuk-details__text govuk-!-padding-top-1 govuk-!-padding-bottom-1 govuk-!-margin-left-3 govuk-!-width-one-half  <%= 'govuk-visually-hidden' if @contract.contract_response.nil? || @contract.errors[:reason_for_declining].empty? %>" data-module="character-count" data-maxlength="500">
                         <%= govuk_label(f, f.object, :reason_for_declining, {reason_for_declining: t('.reason_for_declining')}) %>
                         <%= display_error_label(f.object, :reason_for_declining, '', "#{f.object_name}_reason_for_declining") %>
-                        <%= govuk_text_area_input_contracts(f, :reason_for_declining, true, ['rows', 5], ['maxlength', 500], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
+                        <%=  %>
+                        <%= govuk_text_area_input_contracts(f, :reason_for_declining, true, ['rows', 5], ['maxlength', 500], ['tabindex', @contract.errors[:reason_for_declining].present? ? 0 : -1], [:class, 'govuk-!-margin-bottom-2 govuk-!-margin-top-4']) %>
                         <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
                             You have 500 characters remaining
                         </span>

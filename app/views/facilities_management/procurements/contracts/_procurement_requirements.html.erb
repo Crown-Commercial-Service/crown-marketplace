@@ -6,6 +6,7 @@
                 <th class="govuk-table__cell govuk-table__header"><%= t('.contract_number') %></th>
                 <td class="govuk-table__cell"><%= @contract.contract_number %></td>
             </tr>
+            <tr>
                 <th class="govuk-table__cell govuk-table__header"><%= t('.contract_value') %></th>
                 <td class="govuk-table__cell"><%= format_money @contract.direct_award_value %></td>
             </tr>
