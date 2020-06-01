@@ -2,6 +2,12 @@ module FacilitiesManagement
   class BuyerDetail < ApplicationRecord
     belongs_to :user, foreign_key: :user_id, inverse_of: :buyer_detail
 
+    attr_accessor :postcode_entry
+
+    after_initialize do |bd|
+      bd.postcode_entry = bd.organisation_address_postcode if bd.postcode_entry.blank?
+    end
+
     validates :full_name, presence: true, on: :update
     validates :job_title, presence: true, on: :update
     validates :telephone_number, presence: true, format: { with: /\A(\d{0,11})\z/ }, on: :update
