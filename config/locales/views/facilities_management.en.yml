@@ -229,21 +229,21 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
-              too_long: Call-off contract period, including extensions must not be more than 10 years
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
+              too_long: Call-off contract period, including extensions, must be 10 years or less
             optional_call_off_extensions_2:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             optional_call_off_extensions_3:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             optional_call_off_extensions_4:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             payment_method:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about ‘Payment method’
