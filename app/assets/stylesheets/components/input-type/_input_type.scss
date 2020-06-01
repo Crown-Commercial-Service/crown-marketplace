@@ -14,10 +14,11 @@
       }
     }
   &__type[title] {
+    font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
     display: block;
     flex: 0 0 auto;
     border: 1px solid govuk-colour("black");
-    padding: govuk-spacing(2);
+    padding: 9px;
     background-color: govuk-colour("grey-3");
     font-size: 1rem;
     font-weight: 600;
