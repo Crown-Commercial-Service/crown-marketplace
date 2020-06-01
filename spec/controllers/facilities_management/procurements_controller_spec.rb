@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller do
-  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search') }
+  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search', user: subject.current_user) }
 
   context 'without buyer details' do
     login_fm_buyer
@@ -112,6 +112,16 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.contract_name).to eq('New search')
         end
       end
+    end
+  end
+
+  context 'when logging in as a different fm buyer than the one that created the procurement' do
+    login_fm_buyer_with_details
+
+    it 'redirects to the not permitted page' do
+      procurement.update(aasm_state: 'detailed_search', user_id: create(:user).id)
+      patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { contract_name: 'Updated name' } }
+      expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
     end
   end
 end

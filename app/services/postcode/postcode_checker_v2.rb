@@ -2,8 +2,7 @@
 
 module Postcode
   # post code retrieval
-  # rubocop:disable Naming/ClassAndModuleCamelCase
-  class PostcodeChecker_V2
+  class PostcodeCheckerV2
     def self.destructure_postcode(postcode)
       result = { valid: false, input: postcode }
       input  = ('' + postcode).strip
@@ -16,6 +15,7 @@ module Postcode
           out_code: matches[1],
           postcode_district: matches[1],
           in_code: matches[4],
+          larger_in_code: matches[4][0..-1],
           postcode_sector: matches[5],
           unit_postcode: matches[6]
         }
@@ -45,15 +45,31 @@ module Postcode
       raise e
     end
 
+    EXCLUDED_POSTCODE_AREAS = %w[GY IM JE].freeze
+
     def self.find_region(postcode)
       postcode_structure = destructure_postcode(postcode)
+
+      if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
+        result = execute_find_region_query postcode_structure[:out_code]
+        result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
+      else
+        result = execute_find_region_query(':')
+      end
+
+      result
+    rescue StandardError => e
+      raise e
+    end
+
+    def self.execute_find_region_query(postcode)
       query = <<~HEREDOC
         SELECT DISTINCT PUBLIC.postcodes_nuts_regions.code,
                         initcap(PUBLIC.nuts_regions.NAME) AS region
         FROM   PUBLIC.postcodes_nuts_regions
                LEFT JOIN PUBLIC.nuts_regions
                       ON PUBLIC.nuts_regions.code = PUBLIC.postcodes_nuts_regions.code
-        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{postcode_structure[:valid] ? postcode_structure[:out_code] : '--'}'%'
+        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{postcode}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query(ActiveRecord::Base.sanitize_sql(query)) }
     rescue StandardError => e
@@ -100,5 +116,4 @@ module Postcode
       uploader(access_key, secret_access_key, bucket, region)
     end
   end
-  # rubocop:enable Naming/ClassAndModuleCamelCase
 end

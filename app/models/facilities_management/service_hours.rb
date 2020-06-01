@@ -5,15 +5,6 @@ module FacilitiesManagement
     include ActiveModel::Serialization
     include ActiveModel::Callbacks
 
-    # these are used to test
-    # attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :not_required)
-    # attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :all_day)
-    # attribute :wednesday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: 6, end_minute: 30, end_ampm: 'am')
-    # attribute :thursday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :all_day)
-    # attribute :friday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :not_required)
-    # attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'am')
-    # attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'am', end_hour: 6, end_minute: 30, end_ampm: 'pm')
-
     attribute :monday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :tuesday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :wednesday, ServiceHourChoice, default: ServiceHourChoice.new
@@ -23,8 +14,9 @@ module FacilitiesManagement
     attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :uom, Integer, default: 0
 
-    validate :all_present?
     validate :all_not_required?
+    validate :all_present_and_valid?, unless: -> { all_days_not_required? }
+    validate :no_days_overlap?, unless: -> { all_days_not_required? }
 
     def self.dump(service_hours)
       return {} if service_hours.blank?
@@ -68,39 +60,100 @@ module FacilitiesManagement
                    saturday: ServiceHourChoice::PARAMETERS,
                    sunday: ServiceHourChoice::PARAMETERS }.freeze
 
+    NEXT_DAY = { monday: :tuesday,
+                 tuesday: :wednesday,
+                 wednesday: :thursday,
+                 thursday: :friday,
+                 friday: :saturday,
+                 saturday: :sunday,
+                 sunday: :sunday }.freeze
+
+    def to_summary(day)
+      case attributes[day][:service_choice]
+      when 'not_required'
+        "#{shorten_day(day)}, #{I18n.t('facilities_management.procurement_buildings_services.day_section.not_required').downcase}"
+      when 'all_day'
+        "#{shorten_day(day)}, #{I18n.t('facilities_management.procurement_buildings_services.day_section.all_day').downcase}"
+      else
+        hourly_summary(day)
+      end
+    end
+
     private
 
-    def all_present?
+    def all_present_and_valid?
       attributes.each do |key, value|
         next if key == :uom
 
-        value.valid?
-        errors.add(key, :invalid) if value.errors.include? :service_choice
-        errors.add(key, :not_a_date) if value.errors.include?(:start_time) || value.errors.include?(:end_time)
+        errors.add(:base, :invalid) unless value.valid?
       end
     end
 
     def all_not_required?
+      add_not_required_error if all_days_not_required?
+    end
+
+    def all_days_not_required?
       count_of_not_required = 0
       attributes.each do |key, value|
         next if key == :uom
 
         count_of_not_required += 1 if value.service_choice == 'not_required'
       end
-      add_not_required_error if count_of_not_required == 7
+      count_of_not_required == 7
+    end
+
+    def no_days_overlap?
+      days = PARAMETERS.keys
+      days[1..-1].each.with_index do |day, i|
+        today = attributes[day]
+        yesterday = attributes[days[i]]
+        next unless valid_time_entries?(today, yesterday)
+
+        case today[:service_choice]
+        when 'all_day'
+          if yesterday.end_time_integer > 2400
+            today.errors.add(:service_choice, :all_day_overlap)
+            errors.add(:base, :invalid)
+          end
+        else
+          if yesterday.end_time_integer > today.start_time_integer + 2400
+            today.errors.add(:start_time, :selection_overlap)
+            errors.add(:base, :invalid)
+          end
+        end
+      end
+    end
+
+    def valid_time_entries?(today, yesterday)
+      ['all_day', 'hourly'].include?(today[:service_choice]) && yesterday[:service_choice] == 'hourly' && today.errors.none? && yesterday.errors.none?
     end
 
     def add_not_required_error
       attributes.each do |key, value|
         next if key == :uom
 
-        value.errors.add(key, I18n.t("activemodel.errors.models.facilities_management/service_hours.attributes.#{key}.required"))
+        value.errors.add(:service_choice, :required)
       end
-      errors.add(:monday, :required)
+      errors.add(:base, :required)
     end
 
     def any_values?
       attributes.any? { |k, v| k != :uom ? v.valid? : true }
+    end
+
+    def hourly_summary(day)
+      "#{shorten_day(day)}, #{attributes[day].start_time_summary} to #{shorten_day(next_day?(day) ? NEXT_DAY[day] : day)}, #{attributes[day].end_time_summary}"
+    end
+
+    def next_day?(day)
+      return true if attributes[day].end_time_summary == '12am'
+
+      attributes[day][:next_day]
+    end
+
+    def shorten_day(day)
+      day.to_s.capitalize[0..2]
     end
   end
 end

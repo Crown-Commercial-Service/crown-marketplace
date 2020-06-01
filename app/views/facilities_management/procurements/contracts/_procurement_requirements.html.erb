@@ -76,7 +76,7 @@
               <td class="govuk-table__cell">
                 <% @procurement.procurement_buildings.active.each.with_index do |bs, index| %>
                   <div class="<%= 'govuk-!-margin-bottom-2' unless index == @procurement.procurement_buildings.size - 1 %>">
-                    <%= govuk_details(bs.name, true) do %>
+                    <%= govuk_details(bs.building_name, true) do %>
                         <ul class="govuk-list govuk-list--bullet">
                           <% bs.procurement_building_services.each do |s| %>
                             <li><%= to_lower_case(FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['code'] == s.code }.first['name']) %></li>

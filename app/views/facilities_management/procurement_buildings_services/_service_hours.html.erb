@@ -1,16 +1,48 @@
 <%= form_for @building_service, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: true, novalidate: true, multipart: true} do |f| %>
-  <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+    <% if f.object.errors.any? %>
+    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title">
+        <%= t(".there_is_a_problem") %>
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+          <% f.object.service_hours.attributes.reject {|k, _| k == :uom}.each do |key, value| %>
+            <% if value.errors[:service_choice].present? %>
+              <li>
+                <%= link_to "#{value.errors[:service_choice].first}", "##{key.to_s}-#{:service_choice.to_s}-error", data: {fieldname: :service_choice, errortype: value.errors.details[:service_choice].first[:error] } %>
+              </li>
+            <% end %>
+            <% if value.errors[:start_time].present? %>
+              <li>
+                <%= link_to "#{value.errors[:start_time].first}", "##{key.to_s}-#{:start_time.to_s}-error", data: {fieldname: :start_time, errortype: value.errors.details[:start_time].first[:error] } %>
+              </li>
+            <% end %>
+            <% if value.errors[:end_time].present? %>
+              <li>
+                <%= link_to "#{value.errors[:end_time].first}", "##{key.to_s}-#{:end_time.to_s}-error", data: {fieldname: :end_time, errortype: value.errors.details[:end_time].first[:error] } %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <%= f.hidden_field :step, value: @partial_prefix %>
   <div class="servicehourscontainer">
     <div class="servicehoursdata">
-      <h3 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.service_hours_subtitle') %></h3>
-      <p class="govuk-caption-m govuk-!-margin-bottom-6"><%= t('.service_hours_description_html') %></p>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-4"><%= t('.service_hours_subtitle') %></h2>
+      <p class="govuk-!-margin-bottom-2 govuk-hint"><%= t('.service_hours_description_1') %></p>
+      <ul class="govuk-!-margin-top-2 govuk-hint">
+        <li><%= t('.service_hours_description_list_1') %></li>
+        <li><%= t('.service_hours_description_list_2') %></li>
+      </ul>
+      <p class="govuk-!-margin-bottom-6 govuk-hint"><%= t('.service_hours_description_2') %></p>
       <div class="service_hours_container">
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, _value| %>
             <% if key != :uom %>
               <%= sh.fields_for key, sh.object[key] do |day|%>
-                <%= render partial: 'day_section', locals: { day: key, f: day, service_hours:sh.object, service_choice: day.object } %>
+                <%= render partial: 'day_section', locals: { day: key, f: day, service_hours: sh.object, service_choice: day.object } %>
               <%end%>
             <%end %>
           <%end%>

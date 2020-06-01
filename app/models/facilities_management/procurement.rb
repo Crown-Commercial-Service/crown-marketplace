@@ -380,7 +380,7 @@ module FacilitiesManagement
     end
 
     def active_procurement_building_region_codes
-      active_procurement_buildings.map { |proc_building| proc_building.building.address_region_code } .uniq
+      active_procurement_buildings.map { |proc_building| proc_building&.building&.address_region_code } .uniq
     end
 
     def procurement_building_services_not_used_in_calculation

@@ -8,6 +8,7 @@ namespace :db do
       p "Starting task for: #{filename}"
       path_name = Rails.root.join('data', 'facilities_management', 'pc_uk_NUTS', filename)
       insert_statement = <<~SQL
+        delete from postcodes_nuts_regions where postcode = '$1';
         insert into postcodes_nuts_regions (postcode, code)
         values ( '$1', '$2' )
         on conflict (postcode)
@@ -17,7 +18,7 @@ namespace :db do
       row_counter = 0
       CSV.foreach(path_name) do |row|
         p "Importing #{row}, #{row_counter}" if row_counter.zero? || (row_counter % 10000).zero?
-        connection.execute(insert_statement.sub('$1', row[0].delete(' ')).sub('$2', row[1]))
+        connection.execute(insert_statement.gsub('$1', row[0].delete(' ')).sub('$2', row[1]))
         row_counter += 1
       end
     end
