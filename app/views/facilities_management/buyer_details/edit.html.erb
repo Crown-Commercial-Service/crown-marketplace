@@ -64,7 +64,7 @@
                   <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
                   <%= display_errors(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                   <% input_index = f.object.organisation_address_line_1.present? ? -1 : 0 %>
-                  <%= f.text_field :organisation_address_postcode, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true, tabindex: "#{input_index}"  %>
+                  <%= f.text_field :postcode_entry, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true, tabindex: "#{input_index}"  %>
                 </div>
               </div>
               <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
@@ -90,9 +90,9 @@
                 <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4" for="buyer-details-postcode-lookup-results"><%= t('.select_an_addr') %></label>
                 <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
                 <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
-                    <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
-                      <%= t('.no_addr_selected') %>
-                    </span>
+                  <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
+                    <%= t('.no_addr_selected') %>
+                  </span>
                   <select class="govuk-select govuk-!-width-full" tabindex=<%= postcode_index %> id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
                     <option value="status-option" selected><%= t('.no_addr_found') %></option>
                   </select>
@@ -112,6 +112,7 @@
               <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
               <%= f.hidden_field :organisation_address_town, id: 'organisation-address-town' %>
               <%= f.hidden_field :organisation_address_county, id: 'organisation-address-county' %>
+              <%= f.hidden_field :organisation_address_postcode, id: 'organisation-address-postcode' %>
             </div>
           </div>
         </div>
