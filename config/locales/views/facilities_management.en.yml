@@ -187,6 +187,7 @@ en:
               inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
             initial_call_off_period:
               blank: Enter initial call-off period
@@ -200,6 +201,7 @@ en:
               after_2100: Initial call-off period start date cannot be later than 31 December 2100
               after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
+              date_after_or_equal_to: Initial call-off period start date must be today or in the future
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
@@ -394,6 +396,7 @@ en:
             contract_end_date:
               after_or_equal_to: The contract end date must be after the contract start date
               blank: Enter contract end date
+              date_after_or_equal_to: The contract end date must be after the contract start date
               not_a_date: Enter a valid end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
