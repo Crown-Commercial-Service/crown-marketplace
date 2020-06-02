@@ -47,7 +47,7 @@ gem 'rollbar', '~> 2.24.0'
 # for dfe sign in
 gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-oauth2', '~> 1.6.0'
-gem 'omniauth_openid_connect', '~> 0.3.3'
+gem 'omniauth_openid_connect', '~> 0.3.4'
 gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 gem 'json-jwt', '>= 1.11.0'
 
@@ -81,13 +81,13 @@ gem 'down'
 gem 'aasm', '~> 5.0'
 
 # for running background jobs
-gem 'sidekiq', '~> 5.2.7'
-gem 'sinatra', '~> 2.0.5', require: false
+gem 'sidekiq', '~> 6.0.0'
+gem 'sinatra', '~> 2.0.8', '>= 2.0.8.1', require: false
 gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
-gem 'capybara', '>= 3.31.0'
-gem 'show_me_the_cookies', '>= 5.0.0'
+gem 'capybara', '>= 3.32.2'
+gem 'show_me_the_cookies', '>= 5.0.1'
 
 gem 'faker', '~> 2.10.2'
 
