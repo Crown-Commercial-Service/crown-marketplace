@@ -29,7 +29,7 @@
     <div id="root" class="pane root-pane">
       <h2 class="govuk-heading-m" tabindex="-1"><%= t('.your_buildings') %></h2>
       <ul>
-        <% f.object.active_procurement_buildings.each_with_index do |building, i|
+        <% f.object.active_procurement_buildings.order_by_building_name.each_with_index do |building, i|
             if i == 0 && flash[:error] && flash[:error][building.name]
               use_class = 'active govuk-form-group--error'
             elsif i == 0
@@ -47,7 +47,7 @@
       </ul>
     </div>
     <div id="section" class="section-pane pane with-sort">
-      <%= f.fields_for :procurement_buildings do |procurement_building| %>
+      <%= f.fields_for :procurement_buildings, @active_procurement_buildings do |procurement_building| %>
         <% if procurement_building.object.active %>
           <%= procurement_building.hidden_field :name, value: procurement_building.object.name %>
           <div id="<%= 'building-services-' + procurement_building.object.id %>" class="pane-inner services-pane <%= 'hidden-pane' if procurement_building.object.id != f.object.active_procurement_buildings.first.id %>">
