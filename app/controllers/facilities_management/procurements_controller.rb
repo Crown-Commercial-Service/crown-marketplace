@@ -177,22 +177,39 @@ module FacilitiesManagement
       error_hash = {}
       selected_services_hash = {}
 
+      cafm = 'CAFM system'
+      helpdesk = 'Helpdesk services'
+      billable = 'Management of billable works'
+      start_of_text = 'You must select another service to include'
+
       params['facilities_management_procurement']['procurement_buildings_attributes'].each do |_, val|
         service_codes = val['service_codes'].reject(&:empty?)
         building_name = val['name']
         selected_services_hash[building_name] = service_codes
 
-        if service_codes.include?('G.1') && service_codes.include?('G.3')
+        if service_codes == ['O.1']
+          error_hash[building_name] = "#{start_of_text} '#{billable}' for '#{building_name}' building"
+          redirect_to_edit = true
+        elsif service_codes.size == 2 && service_codes.include?('O.1') && service_codes.include?('M.1')
+          error_hash[building_name] = "#{start_of_text} '#{cafm}', '#{billable}' for '#{building_name}' building"
+          redirect_to_edit = true
+        elsif service_codes.size == 2 && service_codes.include?('O.1') && service_codes.include?('N.1')
+          error_hash[building_name] = "#{start_of_text} '#{helpdesk}', '#{billable}' for '#{building_name}' building"
+          redirect_to_edit = true
+        elsif service_codes.size == 3 && service_codes.include?('O.1') && service_codes.include?('N.1') && service_codes.include?('M.1')
+          error_hash[building_name] = "#{start_of_text} '#{cafm}', '#{helpdesk}', '#{billable}' for '#{building_name}' building"
+          redirect_to_edit = true
+        elsif service_codes.include?('G.1') && service_codes.include?('G.3')
           error_hash[building_name] = "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{building_name}' building"
           redirect_to_edit = true
         elsif service_codes == ['M.1']
-          error_hash[building_name] = "You must select another service to include 'CAFM system' for '#{building_name}' building"
+          error_hash[building_name] = "#{start_of_text} '#{cafm}' for '#{building_name}' building"
           redirect_to_edit = true
         elsif service_codes == ['N.1']
           redirect_to_edit = true
-          error_hash[building_name] = "You must select another service to include 'Helpdesk services' for '#{building_name}' building"
+          error_hash[building_name] = "#{start_of_text} '#{helpdesk}' for '#{building_name}' building"
         elsif service_codes.size == 2 && service_codes.include?('N.1') && service_codes.include?('M.1')
-          error_hash[building_name] = "You must select another service to include 'CAFM system' and 'Helpdesk services' for '#{building_name}' building"
+          error_hash[building_name] = "#{start_of_text} '#{cafm}' and '#{helpdesk}' for '#{building_name}' building"
           redirect_to_edit = true
         end
       end
