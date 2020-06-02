@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :facilities_management_procurement_supplier_da_with_supplier, parent: :facilities_management_procurement_supplier_da do
-    association :supplier, class: CCS::FM::Supplier
+    supplier_id { create(:ccs_fm_supplier).id }
   end
 
   factory :facilities_management_procurement_supplier_fc, parent: :facilities_management_procurement_supplier do

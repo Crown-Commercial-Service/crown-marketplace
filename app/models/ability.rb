@@ -23,6 +23,7 @@ class Ability
       can :read, Apprenticeships
     end
     can :manage, FacilitiesManagement::Procurement, user_id: user.id if user.has_role? :fm_access
+    can :manage, FacilitiesManagement::ProcurementSupplier, procurement: { user_id: user.id } if user.has_role? :fm_access
     can :manage, FacilitiesManagement::Building, user_id: user.id if user.has_role? :fm_access
     can :read, SupplyTeachers if user.has_role? :st_access
   end
