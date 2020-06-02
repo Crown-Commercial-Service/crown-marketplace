@@ -189,7 +189,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def get_building_data(selected_building_names, selected_building_info)
-    selected_buildings_data = @active_procurement_buildings.map(&:building).flatten
+    selected_buildings_data = @active_procurement_buildings
     selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
     selected_building_names.uniq!
 
