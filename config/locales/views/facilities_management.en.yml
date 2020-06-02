@@ -233,7 +233,7 @@ en:
               blank: Enter extension period
               greater_than_or_equal_to: Extension period must be a whole number and greater than 0
               not_an_integer: Extension period must be a whole number and greater than 0
-              too_long: Call-off contract period, including extensions, must be 10 years or less
+              too_long: Call-off contract period, including extensions, must not be more than 10 years in total
             optional_call_off_extensions_2:
               blank: Enter extension period
               greater_than_or_equal_to: Extension period must be a whole number and greater than 0
