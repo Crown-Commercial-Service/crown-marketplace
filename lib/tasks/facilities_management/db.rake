@@ -29,6 +29,7 @@ module CCS
         values = row.fields.map { |i| "'#{i}'" }.join(',')
         db.exec_query("DELETE FROM fm_regions where code = '" + row['code'] + "' ; ")
         db.exec_query('insert into fm_regions ( ' + column_names + ') values (' + values + ')')
+        p "FM Regions: Inserting #{values}"
       end
     end
   rescue PG::Error => e
