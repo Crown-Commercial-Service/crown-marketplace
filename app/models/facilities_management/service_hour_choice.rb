@@ -96,13 +96,19 @@ module FacilitiesManagement
 
     def self.convert_end_time_to_24(hour, minute, am_or_pm, next_day)
       if am_or_pm == 'AM'
-        hour = 24 if hour == 12
+        hour = 0 if hour == 12
       else
         hour += 12 unless hour == 12
       end
       time = Time.parse("#{hour}:#{minute}").utc
-      time += 1.day if next_day && hour != 24
+      time += days_to_add(hour, minute, next_day).days
       time
+    end
+
+    def self.days_to_add(hour, minute, next_day)
+      count = 0
+      count += 1 if (hour.zero? && minute.zero?) || next_day
+      count
     end
 
     def total_hours
@@ -205,12 +211,13 @@ module FacilitiesManagement
 
     def end_hour_inc_meridian
       hour = end_hour
+      minute = end_minute
       if end_ampm == 'AM'
-        hour = 24 if hour == 12
+        hour = 0 if hour == 12
       else
         hour += 12 unless hour == 12
       end
-      hour += 24 if next_day && hour != 24
+      hour += 24 * self.class.days_to_add(hour, minute, next_day)
       hour
     end
 
