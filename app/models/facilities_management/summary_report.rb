@@ -36,7 +36,7 @@ module FacilitiesManagement
       @sum_benchmark = 0
       @results = {}
 
-      @procurement.active_procurement_buildings.each do |building|
+      @procurement.active_procurement_buildings.order_by_building_name.each do |building|
         result = uvals_for_building(building, spreadsheet_type)
         building_data = result[1]
         # TBC filter out nil values for now
@@ -132,7 +132,7 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/AbcSize
     def uom_values(spreadsheet_type)
-      uvals = @procurement.active_procurement_buildings.map { |building| uvals_for_building(building, spreadsheet_type) }
+      uvals = @procurement.active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
 
       # add labels for spreadsheet
       uvals.each do |u|

@@ -182,17 +182,17 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   describe '#midnight and other times' do
     let(:service_hours) { described_class.load(source) }
 
-    context 'when it is not midday or midnight' do
-      before do
-        service_hours[:tuesday][:service_choice] = :not_required
-        service_hours[:wednesday][:service_choice] = :not_required
-        service_hours[:thursday][:service_choice] = :not_required
-        service_hours[:friday][:service_choice] = :not_required
-        service_hours[:saturday][:service_choice] = :not_required
-        service_hours[:sunday][:service_choice] = :not_required
-        add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'AM', true])
-      end
+    before do
+      service_hours[:tuesday][:service_choice] = :not_required
+      service_hours[:wednesday][:service_choice] = :not_required
+      service_hours[:thursday][:service_choice] = :not_required
+      service_hours[:friday][:service_choice] = :not_required
+      service_hours[:saturday][:service_choice] = :not_required
+      service_hours[:sunday][:service_choice] = :not_required
+      add_times_to_service_hours(['10', '00', 'PM'], ['11', '30', 'AM', true])
+    end
 
+    context 'when it is not midday or midnight' do
       it 'is valid when starting and ending in the morning' do
         add_times_to_service_hours(['10', '00', 'AM'], ['11', '30', 'AM'])
 
@@ -345,6 +345,39 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         target = described_class.dump(service_hours)
         expect(target[:monday][:uom]).to eq 12
       end
+
+      it 'is valid when starting at midday and ending at midnight' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['12', '00', 'AM', true])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 12 hours when starting at midday and ending at midnight' do
+        add_times_to_service_hours(['12', '00', 'PM'], ['12', '00', 'AM', true])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 12
+      end
+
+      it 'is valid when when starting at 1am and ending in at 12:45 next day' do
+        add_times_to_service_hours(['01', '00', 'AM'], ['12', '45', 'AM', true])
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'returns 23.75 hours when starting at 1am and ending in at 12:45 next day' do
+        add_times_to_service_hours(['01', '00', 'AM'], ['12', '45', 'AM', true])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 23.75
+      end
+
+      it 'returns 0.75 hours when starting at 12am and ending in at 12:45 same day' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '45', 'AM', false])
+
+        target = described_class.dump(service_hours)
+        expect(target[:monday][:uom]).to eq 0.75
+      end
     end
   end
 
@@ -384,6 +417,12 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['10', '00', 'PM'], ['12', '00', 'AM'])
 
         expect(service_hours.total_hours_annually).to eq 104
+      end
+
+      it 'will return 13 hours when two hours are early in the morning' do
+        add_times_to_service_hours(['12', '00', 'AM'], ['12', '15', 'AM'])
+
+        expect(service_hours.total_hours_annually).to eq 13
       end
     end
 
@@ -474,6 +513,12 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['09', '00', 'PM'], ['05', '45', 'AM', true])
 
         expect(service_hours.total_hours_annually).to eq 455
+      end
+
+      it 'will return 1235 hours when start time is 1AM and end time is 12:45 next day' do
+        add_times_to_service_hours(['01', '00', 'AM'], ['12', '45', 'AM', true])
+
+        expect(service_hours.total_hours_annually).to eq 1235
       end
     end
 
