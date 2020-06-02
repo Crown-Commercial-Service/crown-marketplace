@@ -14,6 +14,7 @@ module CCS
         values = row.fields.map { |i| "'#{i}'" }.join(',')
         db.exec_query("DELETE FROM nuts_regions where code = '" + row['code'] + "' ; ")
         db.exec_query('insert into nuts_regions ( ' + column_names + ') values (' + values + ')')
+        p "NUTS Regions: Inserting #{values}"
       end
     end
   rescue PG::Error => e
