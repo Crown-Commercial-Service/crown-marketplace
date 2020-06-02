@@ -5,6 +5,7 @@ module CCS
   require Rails.root.join('lib', 'tasks', 'distributed_locks')
   require Rails.root.join('lib', 'tasks', 'ordnance_survey')
 
+  # rubocop:disable Metrics/AbcSize
   def self.csv_to_nuts_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
       db.exec_query('create table IF NOT EXISTS nuts_regions (code varchar(255) UNIQUE, name varchar(255),
@@ -35,6 +36,7 @@ module CCS
   rescue PG::Error => e
     puts e.message
   end
+  # rubocop:enable Metrics/AbcSize
 
   def self.csv_to_fm_rates(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
