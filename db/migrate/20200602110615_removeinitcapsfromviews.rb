@@ -90,7 +90,7 @@ class Removeinitcapsfromviews < ActiveRecord::Migration[5.2]
           WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
           ELSE NULL::TEXT
           END                                                                AS address_line_2
-          , addresses.postal_town                                            AS address_town
+          , initcap(addresses.postal_town)                                   AS address_town
           , addresses.postcode_locator                                       AS address_postcode
           , regions.region                                                   AS address_region
           , regions.region_code                                              AS address_region_code
