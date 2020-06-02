@@ -45,7 +45,7 @@ gem 'jquery-rails', '~> 4.4.0'
 gem 'rollbar', '~> 2.24.0'
 
 # for dfe sign in
-gem 'omniauth', '~> 1.9.0'
+gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-oauth2', '~> 1.6.0'
 gem 'omniauth_openid_connect', '~> 0.3.3'
 gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
@@ -86,7 +86,7 @@ gem 'sinatra', '~> 2.0.5', require: false
 gem 'slim', '~> 4.0.1'
 
 # for rspec and ST data generation script
-gem 'capybara', '>= 3.20.2'
+gem 'capybara', '>= 3.31.0'
 gem 'show_me_the_cookies', '>= 5.0.0'
 
 gem 'faker', '~> 2.10.2'
@@ -99,7 +99,7 @@ gem 'role_model', '~> 0.8.2'
 # for S3 storage of files
 gem 'carrierwave-aws', '~> 1.3.0'
 
-gem 'sprockets'
+gem 'sprockets', '>= 3.7.2'
 gem 'sprockets-bumble_d', '>= 2.2.0'
 
 gem 'smarter_csv'
@@ -112,7 +112,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.8.8'
+gem 'active_storage_validations', '>= 0.8.9'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -127,11 +127,11 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 2.7.5'
-  gem 'factory_bot_rails', '>= 5.1.1'
+  gem 'factory_bot_rails', '>= 5.2.0'
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.4'
-  gem 'rspec-rails', '>= 3.9.1'
+  gem 'rspec-rails', '>= 4.0.1'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
