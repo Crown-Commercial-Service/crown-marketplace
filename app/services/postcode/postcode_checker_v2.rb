@@ -65,7 +65,7 @@ module Postcode
     def self.execute_find_region_query(postcode)
       query = <<~HEREDOC
         SELECT DISTINCT PUBLIC.postcodes_nuts_regions.code,
-                        initcap(PUBLIC.nuts_regions.NAME) AS region
+                        PUBLIC.nuts_regions.NAME AS region
         FROM   PUBLIC.postcodes_nuts_regions
                LEFT JOIN PUBLIC.nuts_regions
                       ON PUBLIC.nuts_regions.code = PUBLIC.postcodes_nuts_regions.code

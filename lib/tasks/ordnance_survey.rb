@@ -171,10 +171,10 @@ module OrdnanceSurvey
         THEN initcap(addresses.street_address) || ''::TEXT
         WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
         ELSE NULL::TEXT
-        END                                                                          AS address_line_2
-        , initcap(addresses.postal_town)                                   AS address_town
+        END                                                                AS address_line_2
+        , addresses.postal_town                                            AS address_town
         , addresses.postcode_locator                                       AS address_postcode
-        , initcap(regions.region::TEXT)                                    AS address_region
+        , regions.region                                                   AS address_region
         , regions.region_code                                              AS address_region_code
         FROM os_address_view_2              addresses
         LEFT JOIN postcode_region_view regions
