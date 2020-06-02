@@ -4,7 +4,8 @@ FactoryBot.define do
     data do
       {
         supplier_id: id,
-        supplier_name: Faker::Name.unique.name
+        supplier_name: Faker::Name.unique.name,
+        supplier_email: Faker::Internet.unique.email
       }
     end
   end
