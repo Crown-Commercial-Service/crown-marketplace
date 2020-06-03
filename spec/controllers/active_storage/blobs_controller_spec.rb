@@ -14,6 +14,13 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
         end
       end
 
+      context 'when signed in as the buyer that created the procurement' do
+        it 'returns the path' do
+          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
+          expect(response).to have_http_status(:found)
+        end
+      end
+
       context 'when signed in as the supplier that the procurement belongs to' do
         login_fm_supplier
         it 'returns the path' do
@@ -28,12 +35,12 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
         login_fm_buyer_with_details
         it 'redirects to not permitted page' do
           procurement.update(user: create(:user))
-          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
+          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id, procurement_id: procurement.id }
           expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
         end
       end
 
-      context 'when procurement_id is not passed through' do
+      context 'when procurement_id or contract_id is not passed through' do
         it 'raises not found exception' do
           expect { get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment' } }.to raise_error('not found')
         end
