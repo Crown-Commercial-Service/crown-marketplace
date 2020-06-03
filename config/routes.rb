@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     get '/', to: 'buyer_account#buyer_account'
     get '/start', to: 'home#index'
     get '/gateway', to: 'gateway#index'
+    get '/gateway/validate/:id', to: 'gateway#validate'
     get '/buyer_account', to: 'buyer_account#buyer_account'
     resources :buildings do
       member do
