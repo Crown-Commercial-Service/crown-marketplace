@@ -220,6 +220,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'expected to not be valid' do
         procurement.save
         procurement_building = procurement.procurement_buildings.create(active: true)
+        allow(procurement_building.building).to receive(:building_name).and_return('asa')
         expect(procurement_building.valid?(:building_services)).to eq false
       end
     end
