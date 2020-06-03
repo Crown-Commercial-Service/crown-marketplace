@@ -379,6 +379,36 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(target[:monday][:uom]).to eq 0.75
       end
     end
+
+    context 'when overlapping from sunday to monday' do
+      it 'is not valid when the days overlap due to the selected hours' do
+        add_times_to_service_hours(['01', '00', 'AM'], ['12', '45', 'AM', true])
+        add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
+
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'is not valid when the days overlap due to 24 hours selected' do
+        service_hours[:monday][:service_choice] = :all_day
+        add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
+
+        expect(service_hours.valid?).to eq false
+      end
+
+      it 'is valid when valid times are entered into sunday and not required on monday' do
+        service_hours[:monday][:service_choice] = :not_required
+        add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
+
+        expect(service_hours.valid?).to eq true
+      end
+
+      it 'is valid when valid times are entered into sunday and selected times on monday' do
+        add_times_to_service_hours(['08', '00', 'AM'], ['12', '45', 'AM', true])
+        add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
+
+        expect(service_hours.valid?).to eq true
+      end
+    end
   end
 
   describe '#total hour calculations' do
