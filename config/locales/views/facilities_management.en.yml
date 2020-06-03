@@ -300,8 +300,15 @@ en:
         facilities_management/procurement_building:
           attributes:
             service_codes:
-              at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
+              invalid_billable: You must select another service to include 'Management of billable works' to '%{building_name}' building
+              invalid_cafm: You must select another service to include 'CAFM system' to '%{building_name}' building
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works' to '%{building_name}' building
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services' to '%{building_name}' building
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '%{building_name}' building"
+              invalid_helpdesk: You must select another service to include 'Helpdesk services' to '%{building_name}' building
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
         facilities_management/procurement_building_service:
           attributes:
             lift_data:
@@ -1177,6 +1184,7 @@ en:
           change_buildings: "+ Change buildings"
           content_html: Click on each building below and selected services you need from the shortlist. <br> For each building in the left hand column, select the services required from the right hand column. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
           heading: Which facilities management services do you need for each building?
+          there_is_a_problem: There is a problem
           your_buildings: Your buildings
         cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page

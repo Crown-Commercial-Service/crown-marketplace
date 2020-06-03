@@ -9,7 +9,7 @@ module FacilitiesManagement
     belongs_to :building, class_name: 'FacilitiesManagement::Building', optional: true
     delegate :full_address, to: :building
 
-    validate :service_codes_not_empty, on: :building_services
+    validate :service_code_selection, on: :building_services
     validate :services_valid?, on: :procurement_building_services
     validate :services_present?, on: :procurement_building_services_present
 
@@ -47,10 +47,14 @@ module FacilitiesManagement
 
     private
 
-    def service_codes_not_empty
+    def service_code_selection
       return unless active
 
-      errors.add(:service_codes, :invalid) if service_codes.empty?
+      if service_codes.empty?
+        errors.add(:service_codes, :invalid, building_name: building.building_name, building_id: id)
+      else
+        service_code_selection_validation
+      end
     end
 
     def cleanup_service_codes
@@ -81,5 +85,34 @@ module FacilitiesManagement
     def answers_present?
       service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
+
+    # rubocop:disable Metrics/CyclomaticComplexity
+    def service_code_selection_validation
+      case service_codes.sort
+      when ['O.1']
+        add_selection_error(0)
+      when ['N.1']
+        add_selection_error(1)
+      when ['M.1']
+        add_selection_error(2)
+      when ['M.1', 'O.1']
+        add_selection_error(3)
+      when ['N.1', 'O.1']
+        add_selection_error(4)
+      when ['M.1', 'N.1']
+        add_selection_error(5)
+      when ['M.1', 'N.1', 'O.1']
+        add_selection_error(6)
+      else
+        add_selection_error(7) if service_codes.include?('G.1') && service_codes.include?('G.3')
+      end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+
+    def add_selection_error(index)
+      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index], building_name: building.building_name, building_id: id)
+    end
+
+    SERVICE_SELECTION_INVALID_TYPE = %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable invalid_cleaning].freeze
   end
 end
