@@ -22,6 +22,7 @@ module Base
     end
 
     def destroy
+      session.delete(current_user.id)
       current_user.invalidate_session!
       current_user.save!
       super
