@@ -33,11 +33,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     supplier_names.each do |supplier_name|
       # e.g. dummy_supplier_name = 'Hickle-Schinner'
       @results[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, true, :da
+      @report.calculate_services_for_buildings supplier_name, true, :da, false
       @results[supplier_name] = @report.results
 
       @report_results_no_cafmhelp_removed[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, false, :da
+      @report.calculate_services_for_buildings supplier_name, false, :da, false
       @report_results_no_cafmhelp_removed[supplier_name] = @report.results
     end
 
