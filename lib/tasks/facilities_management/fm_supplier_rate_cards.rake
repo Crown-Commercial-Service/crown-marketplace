@@ -23,9 +23,17 @@ module FM
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
-    spreadsheet_name = 'facilities_management/RM3830 Direct Award Data (for Dev & Test).xlsx'
-    rate_cards_workbook = Roo::Spreadsheet.open 'data/' + spreadsheet_name
+    if Rails.env.production?
+      s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+      object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['DIRECT_AWARD_DATA_KEY'])
+      object.get(response_target: 'data/facilities_management/DA_data.xlsx')
+      spreadsheet_path = 'data/facilities_management/DA_data.xlsx'
+    else
+      spreadsheet_path = Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
+    end
 
+    rate_cards_workbook = Roo::Spreadsheet.open(spreadsheet_path, extension: :xlsx)
+    spreadsheet_name = spreadsheet_path.to_s.split('/').last
     data = {}
 
     ['Prices', 'Discounts', 'Variances'].each do |sheet_name|
@@ -51,6 +59,8 @@ module FM
           data[sheet_name][rate_card['Supplier']] = rate_card
         end
       end
+
+      File.delete(spreadsheet_path) if File.exist?(spreadsheet_path) && Rails.env.production?
     end
 
     # CCS::FM::RateCard.all
