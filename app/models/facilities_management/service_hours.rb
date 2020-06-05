@@ -66,7 +66,7 @@ module FacilitiesManagement
                  thursday: :friday,
                  friday: :saturday,
                  saturday: :sunday,
-                 sunday: :sunday }.freeze
+                 sunday: :monday }.freeze
 
     def to_summary(day)
       case attributes[day][:service_choice]
@@ -105,9 +105,10 @@ module FacilitiesManagement
 
     def no_days_overlap?
       days = PARAMETERS.keys
-      days[1..-1].each.with_index do |day, i|
+      yesterdays = days.rotate(-1)
+      days.each.with_index do |day, i|
         today = attributes[day]
-        yesterday = attributes[days[i]]
+        yesterday = attributes[yesterdays[i]]
         next unless valid_time_entries?(today, yesterday)
 
         case today[:service_choice]

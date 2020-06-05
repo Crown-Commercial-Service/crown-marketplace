@@ -83,14 +83,12 @@
                       <%= f.select :end_ampm, %w[AM PM], { :include_blank => true }, class: "govuk-select #{'govuk-select--error' if model_attribute_has_error(service_choice, :end_time)} govuk-input--width-2" %>             
                     </td>
                     <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-0 govuk-!-padding-left-2">
-                      <% unless day == :sunday %>
-                        <div class="govuk-checkboxes govuk-checkboxes--small">
-                          <div class="govuk-checkboxes__item">
-                            <%= f.check_box :next_day, value: true, class: 'govuk-checkboxes__input' %>
-                            <%= f.label :next_day, 'Next day?', class: 'govuk-label govuk-checkboxes__label' %>
-                          </div>
+                      <div class="govuk-checkboxes govuk-checkboxes--small">
+                        <div class="govuk-checkboxes__item">
+                          <%= f.check_box :next_day, value: true, class: 'govuk-checkboxes__input' %>
+                          <%= f.label :next_day, 'Next day?', class: 'govuk-label govuk-checkboxes__label' %>
                         </div>
-                      <% end %>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

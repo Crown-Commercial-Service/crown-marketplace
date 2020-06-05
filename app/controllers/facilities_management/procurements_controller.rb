@@ -108,14 +108,6 @@ module FacilitiesManagement
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
-      if params['facilities_management_procurement'].present? &&
-         params['facilities_management_procurement']['step'] == 'building_services'
-        if check_if_only_cafm_or_help
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services)
-          return
-        end
-      end
-
       update_procurement && return if params['facilities_management_procurement'].present?
 
       continue_da_journey if params['continue_da'].present?
@@ -169,57 +161,6 @@ module FacilitiesManagement
     def init
       @procurement = current_user.procurements.find_by(id: params[:procurement_id])
     end
-
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/AbcSize
-    def check_if_only_cafm_or_help
-      redirect_to_edit = false
-      error_hash = {}
-      selected_services_hash = {}
-
-      cafm = 'CAFM system'
-      helpdesk = 'Helpdesk services'
-      billable = 'Management of billable works'
-      start_of_text = 'You must select another service to include'
-
-      params['facilities_management_procurement']['procurement_buildings_attributes'].each do |_, val|
-        service_codes = val['service_codes'].reject(&:empty?)
-        building_name = val['name']
-        selected_services_hash[building_name] = service_codes
-
-        if service_codes == ['O.1']
-          error_hash[building_name] = "#{start_of_text} '#{billable}' for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes.size == 2 && service_codes.include?('O.1') && service_codes.include?('M.1')
-          error_hash[building_name] = "#{start_of_text} '#{cafm}', '#{billable}' for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes.size == 2 && service_codes.include?('O.1') && service_codes.include?('N.1')
-          error_hash[building_name] = "#{start_of_text} '#{helpdesk}', '#{billable}' for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes.size == 3 && service_codes.include?('O.1') && service_codes.include?('N.1') && service_codes.include?('M.1')
-          error_hash[building_name] = "#{start_of_text} '#{cafm}', '#{helpdesk}', '#{billable}' for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes.include?('G.1') && service_codes.include?('G.3')
-          error_hash[building_name] = "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes == ['M.1']
-          error_hash[building_name] = "#{start_of_text} '#{cafm}' for '#{building_name}' building"
-          redirect_to_edit = true
-        elsif service_codes == ['N.1']
-          redirect_to_edit = true
-          error_hash[building_name] = "#{start_of_text} '#{helpdesk}' for '#{building_name}' building"
-        elsif service_codes.size == 2 && service_codes.include?('N.1') && service_codes.include?('M.1')
-          error_hash[building_name] = "#{start_of_text} '#{cafm}' and '#{helpdesk}' for '#{building_name}' building"
-          redirect_to_edit = true
-        end
-      end
-
-      flash[:error] = error_hash if error_hash.size.positive?
-      flash[:selected_services] = selected_services_hash if error_hash.size.positive?
-      redirect_to_edit
-    end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/AbcSize
 
     def init_further_competition
       if params[:procurement_id]
