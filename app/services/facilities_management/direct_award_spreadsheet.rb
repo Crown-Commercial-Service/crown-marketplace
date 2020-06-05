@@ -139,7 +139,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
             building_type_ids = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }
             building_linking_to_this_service = []
             building_type_ids.each do |building_type_id|
-              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:id] }
+              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:building_id] }
               building_linking_to_this_service << contract_building_service unless contract_building_service.empty?
             end
 
@@ -192,8 +192,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     selected_buildings_data = @active_procurement_buildings
     selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
     selected_building_names.uniq!
-
-    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type } }
+    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type, 'building_id': building_data.building_id } }
   end
 
   # rubocop:disable Metrics/AbcSize
