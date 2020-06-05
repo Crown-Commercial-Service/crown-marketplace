@@ -63,7 +63,6 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       it 'will be invalid when not in the list' do
         service_hours[:monday][:service_choice] = :all_hours
         expect(service_hours.valid?).to eq false
-        expect(service_hours.errors.messages.length).to be == 1
       end
 
       it 'will be valid when in the list' do
@@ -71,15 +70,25 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(service_hours.valid?).to eq true
       end
 
-      it 'will be invalid when no_required was selected for everyday' do
-        service_hours[:monday][:service_choice] = :not_required
-        service_hours[:tuesday][:service_choice] = :not_required
-        service_hours[:wednesday][:service_choice] = :not_required
-        service_hours[:thursday][:service_choice] = :not_required
-        service_hours[:friday][:service_choice] = :not_required
-        service_hours[:saturday][:service_choice] = :not_required
-        service_hours[:sunday][:service_choice] = :not_required
-        expect(service_hours.valid?).to eq false
+      context 'when not_required is selected for everyday' do
+        before do
+          service_hours[:monday][:service_choice] = :not_required
+          service_hours[:tuesday][:service_choice] = :not_required
+          service_hours[:wednesday][:service_choice] = :not_required
+          service_hours[:thursday][:service_choice] = :not_required
+          service_hours[:friday][:service_choice] = :not_required
+          service_hours[:saturday][:service_choice] = :not_required
+          service_hours[:sunday][:service_choice] = :not_required
+        end
+
+        it 'will be invalid' do
+          expect(service_hours.valid?).to eq false
+        end
+
+        it 'will have the correct error message' do
+          service_hours.valid?
+          expect(service_hours.errors[:base].first).to eq 'You must provide hours required for at least one of the days'
+        end
       end
 
       it 'will be valid if there are other option (all day)' do
@@ -93,15 +102,8 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(service_hours.valid?).to eq true
       end
 
-      # rubocop:disable RSpec/ExampleLength:
-      it 'will be valid if there are other option (hourly)' do
-        service_hours[:monday][:service_choice] = :hourly
-        service_hours[:monday][:start_hour] = '10'
-        service_hours[:monday][:start_minute] = '00'
-        service_hours[:monday][:start_ampm] = 'AM'
-        service_hours[:monday][:end_hour] = '6'
-        service_hours[:monday][:end_minute] = '30'
-        service_hours[:monday][:end_ampm] = 'PM'
+      it 'will be valid if there are other options (hourly)' do
+        add_times_to_service_hours(['10', '00', 'AM'], ['6', '30', 'PM', false], :monday)
         service_hours[:tuesday][:service_choice] = :not_required
         service_hours[:wednesday][:service_choice] = :not_required
         service_hours[:thursday][:service_choice] = :not_required
@@ -110,39 +112,72 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         service_hours[:sunday][:service_choice] = :not_required
         expect(service_hours.valid?).to eq true
       end
-      # rubocop:enable RSpec/ExampleLength:
 
-      it 'will not be valid when some values are missing' do
-        add_times_to_service_hours(['10', nil, 'AM'], [nil, '30', 'PM'], :monday)
-        service_hours[:tuesday][:service_choice] = :not_required
-        service_hours[:wednesday][:service_choice] = :not_required
-        service_hours[:thursday][:service_choice] = :not_required
-        service_hours[:friday][:service_choice] = :not_required
-        service_hours[:saturday][:service_choice] = :not_required
-        service_hours[:sunday][:service_choice] = :not_required
-        expect(service_hours.valid?).to eq false
+      context 'when some values are missing' do
+        before do
+          add_times_to_service_hours(['10', nil, 'AM'], [nil, '30', 'PM'], :monday)
+          service_hours[:tuesday][:service_choice] = :not_required
+          service_hours[:wednesday][:service_choice] = :not_required
+          service_hours[:thursday][:service_choice] = :not_required
+          service_hours[:friday][:service_choice] = :not_required
+          service_hours[:saturday][:service_choice] = :not_required
+          service_hours[:sunday][:service_choice] = :not_required
+        end
+
+        it 'will not be valid' do
+          expect(service_hours.valid?).to eq false
+        end
+
+        it 'will have the correct error messages' do
+          service_hours.valid?
+          expect(service_hours.attributes[:monday].errors[:end_time].first).to eq 'Select end time'
+          expect(service_hours.attributes[:monday].errors[:start_time].first).to eq 'Select start time'
+        end
       end
 
-      it 'will not be valid when all values are missing' do
-        add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :monday)
-        service_hours[:tuesday][:service_choice] = :not_required
-        service_hours[:wednesday][:service_choice] = :not_required
-        service_hours[:thursday][:service_choice] = :not_required
-        service_hours[:friday][:service_choice] = :not_required
-        service_hours[:saturday][:service_choice] = :not_required
-        service_hours[:sunday][:service_choice] = :not_required
-        expect(service_hours.valid?).to eq false
+      context 'when all values are missing' do
+        before do
+          add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :monday)
+          service_hours[:tuesday][:service_choice] = :not_required
+          service_hours[:wednesday][:service_choice] = :not_required
+          service_hours[:thursday][:service_choice] = :not_required
+          service_hours[:friday][:service_choice] = :not_required
+          service_hours[:saturday][:service_choice] = :not_required
+          service_hours[:sunday][:service_choice] = :not_required
+        end
+
+        it 'will not be valid ' do
+          expect(service_hours.valid?).to eq false
+        end
+
+        it 'will have the correct error message' do
+          service_hours.valid?
+          expect(service_hours.attributes[:monday].errors[:start_time].first).to eq 'Select start time'
+          expect(service_hours.attributes[:monday].errors[:end_time].first).to eq 'Select end time'
+        end
       end
 
-      it 'will not be valid when some values are missing at the weekend' do
-        service_hours[:monday][:service_choice] = :not_required
-        service_hours[:tuesday][:service_choice] = :not_required
-        service_hours[:wednesday][:service_choice] = :not_required
-        service_hours[:thursday][:service_choice] = :not_required
-        service_hours[:friday][:service_choice] = :not_required
-        add_times_to_service_hours(['08', '00', 'AM'], [nil, nil, nil], :saturday)
-        add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :sunday)
-        expect(service_hours.valid?).to eq false
+      context 'when some values are missing at the weekend' do
+        before do
+          service_hours[:monday][:service_choice] = :not_required
+          service_hours[:tuesday][:service_choice] = :not_required
+          service_hours[:wednesday][:service_choice] = :not_required
+          service_hours[:thursday][:service_choice] = :not_required
+          service_hours[:friday][:service_choice] = :not_required
+          add_times_to_service_hours(['08', '00', 'AM'], [nil, nil, nil], :saturday)
+          add_times_to_service_hours([nil, nil, nil], [nil, nil, nil], :sunday)
+        end
+
+        it 'will not be valid' do
+          expect(service_hours.valid?).to eq false
+        end
+
+        it 'will have the correct error messages' do
+          service_hours.valid?
+          expect(service_hours.attributes[:saturday].errors[:end_time].first).to eq 'Select end time'
+          expect(service_hours.attributes[:sunday].errors[:start_time].first).to eq 'Select start time'
+          expect(service_hours.attributes[:sunday].errors[:end_time].first).to eq 'Select end time'
+        end
       end
     end
   end
@@ -243,12 +278,14 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['10', '00', 'AM'], ['09', '30', 'AM'])
 
         expect(service_hours.valid?).to eq false
+        expect(service_hours.attributes[:monday].errors[:end_time].first).to eq 'The end time must be after the start time for Monday'
       end
 
       it 'is invalid when the start time is after the end time with both times in the afternoon' do
         add_times_to_service_hours(['10', '00', 'PM'], ['08', '30', 'PM'])
 
         expect(service_hours.valid?).to eq false
+        expect(service_hours.attributes[:monday].errors[:end_time].first).to eq 'The end time must be after the start time for Monday'
       end
     end
 
@@ -386,6 +423,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
 
         expect(service_hours.valid?).to eq false
+        expect(service_hours.attributes[:monday].errors[:start_time].first).to eq 'The start time of Monday cannot be earlier than the end time of the previous day'
       end
 
       it 'is not valid when the days overlap due to 24 hours selected' do
@@ -393,6 +431,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['05', '00', 'PM'], ['07', '00', 'AM', true], :sunday)
 
         expect(service_hours.valid?).to eq false
+        expect(service_hours.attributes[:monday].errors[:service_choice].first).to eq 'The start time of Monday cannot be earlier than the end time of the previous day'
       end
 
       it 'is valid when valid times are entered into sunday and not required on monday' do
@@ -654,55 +693,61 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
   describe 'service hour validation' do
     context 'when the times of consecutive days overlap' do
       context 'when Mon end time is 8 am next day and Tues start time is 6 am' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['09', '00', 'AM'], ['08', '00', 'AM', true], :monday)
           add_times_to_service_hours(['06', '00', 'AM'], ['05', '00', 'PM'], :tuesday)
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:tuesday].errors[:start_time].first).to eq 'The start time of Tuesday cannot be earlier than the end time of the previous day'
         end
       end
 
       context 'when Wed end time is 6 pm next day and Thurs start time is 8 am' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['11', '00', 'PM'], ['06', '00', 'PM', true], :wednesday)
           add_times_to_service_hours(['08', '00', 'AM'], ['05', '00', 'PM'], :thursday)
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:thursday].errors[:start_time].first).to eq 'The start time of Thursday cannot be earlier than the end time of the previous day'
         end
       end
 
       context 'when Fri end time is 1 am next day and Sat is all day' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['11', '00', 'PM'], ['06', '00', 'PM', true], :friday)
           service_hours[:saturday][:service_choice] = :all_day
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:saturday].errors[:service_choice].first).to eq 'The start time of Saturday cannot be earlier than the end time of the previous day'
         end
       end
     end
 
     context 'when the time of a day is more than 24 hours' do
       context 'when Tues start time is 8 am and end time is 8:15 am next day' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['08', '00', 'AM'], ['08', '15', 'AM', true], :tuesday)
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:tuesday].errors[:end_time].first).to eq 'The total service period for a day cannot be more than 24 hours'
         end
       end
 
       context 'when Thurs start time is 8 am and end time is 10 pm next day' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['08', '00', 'AM'], ['10', '00', 'PM', true], :thursday)
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:thursday].errors[:end_time].first).to eq 'The total service period for a day cannot be more than 24 hours'
         end
       end
 
       context 'when Sat start time is 12 am and end time is 1 am next day' do
-        it 'is expected to not be valid' do
+        it 'is expected to not be valid and have the correct error message' do
           add_times_to_service_hours(['12', '00', 'AM'], ['1', '00', 'AM', true], :saturday)
 
           expect(service_hours.valid?).to eq false
+          expect(service_hours.attributes[:saturday].errors[:end_time].first).to eq 'The total service period for a day cannot be more than 24 hours'
         end
       end
     end
@@ -718,6 +763,66 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         add_times_to_service_hours(['12', '00', 'AM'], ['12', '00', 'AM', false], :saturday)
 
         expect(service_hours.valid?).to eq true
+      end
+    end
+  end
+
+  describe 'service choice summary' do
+    context 'when Monday is not required' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:monday)).to eq 'Mon, not required'
+      end
+    end
+
+    context 'when Tuesday is all day' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:tuesday)).to eq 'Tue, all day (24 hours)'
+      end
+    end
+
+    context 'when Wednesday is hourly' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:wednesday)).to eq 'Wed, 8am to Wed, 5:30pm'
+      end
+    end
+
+    context 'when Thursday is not required' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:thursday)).to eq 'Thu, not required'
+      end
+    end
+
+    context 'when Friday is all day' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:friday)).to eq 'Fri, all day (24 hours)'
+      end
+    end
+
+    context 'when Saturday is hourly' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:saturday)).to eq 'Sat, 10am to Sat, 5:30pm'
+      end
+    end
+
+    context 'when Sunday is not required' do
+      it 'will have the correct summary' do
+        expect(service_hours.to_summary(:sunday)).to eq 'Sun, not required'
+      end
+    end
+
+    context 'when Sunday is hourly' do
+      it 'will have the correct summary' do
+        add_times_to_service_hours(['5', '00', 'PM'], ['7', '00', 'AM', true], :sunday)
+
+        expect(service_hours.to_summary(:sunday)).to eq 'Sun, 5pm to Mon, 7am'
+      end
+    end
+
+    context 'when Tuesday is hourly' do
+      it 'will have the correct summary' do
+        add_times_to_service_hours(['08', '00', 'PM'], ['07', '00', 'AM', true], :tuesday)
+
+        expect(service_hours.to_summary(:tuesday)).to eq 'Tue, 8pm to Wed, 7am'
       end
     end
   end
