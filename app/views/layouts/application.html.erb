@@ -40,7 +40,7 @@
       </header>
 
       <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main"
-            style="visibility:<%= 'hidden' if request.fullpath.include?('facilities-management') && !(['gateway', 'start', 'sign-in'].any? { |word| request.fullpath.include?(word) })%>">
+            style="visibility:<%= 'visible' if request.fullpath.include?('facilities-management') && !(['gateway', 'start', 'sign-in'].any? { |word| request.fullpath.include?(word) })%>">
         <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
           <% if @back_path.present? %>
             <%= render partial: '/layouts/back-link' %>

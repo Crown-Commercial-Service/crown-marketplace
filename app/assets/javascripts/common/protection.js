@@ -1,5 +1,5 @@
 window.addEventListener('popstate', function (e) {
-	alert(e.state.href);
+	preventBack();
 });
 
 function checkLoggedInState(loggedInCallback, loggedoutCallback) {
@@ -38,7 +38,7 @@ if (window.location.pathname.indexOf('facilities-management') > -1) {
 	if (!(['gateway', 'sign-in', 'start'].some(function (word) {
 		return window.location.pathname.indexOf(word) > 0;
 	}))) {
-		setTimeout(preventBack, 0);
+		//setTimeout(preventBack, 0);
 	} else {
 		showContent();
 	}
@@ -51,5 +51,6 @@ function showContent() {
 }
 
 function hideContent() {
+	$('#main-content').attr('style', 'visibility:hidden');
 	window.location.replace('<%= facilities_management_new_user_session_path %>');
 }
