@@ -9,19 +9,24 @@
           <% f.object.service_hours.attributes.reject {|k, _| k == :uom}.each do |key, value| %>
             <% if value.errors[:service_choice].present? %>
               <li>
-                <%= link_to "#{value.errors[:service_choice].first}", "##{key.to_s}-#{:service_choice.to_s}-error", data: {fieldname: :service_choice, errortype: value.errors.details[:service_choice].first[:error] } %>
+                <%= error_summary_link(key, value, :service_choice) %>
               </li>
             <% end %>
             <% if value.errors[:start_time].present? %>
               <li>
-                <%= link_to "#{value.errors[:start_time].first}", "##{key.to_s}-#{:start_time.to_s}-error", data: {fieldname: :start_time, errortype: value.errors.details[:start_time].first[:error] } %>
+                <%= error_summary_link(key, value, :start_time) %>
               </li>
             <% end %>
             <% if value.errors[:end_time].present? %>
               <li>
-                <%= link_to "#{value.errors[:end_time].first}", "##{key.to_s}-#{:end_time.to_s}-error", data: {fieldname: :end_time, errortype: value.errors.details[:end_time].first[:error] } %>
+                <%= error_summary_link(key, value, :end_time) %>
               </li>
             <% end %>
+          <% end %>
+          <% if all_not_required?(f.object) %>
+            <li>
+              <%= link_to "#{f.object.errors[:base].first}", "#base-error", data: {fieldname: :base, errortype: f.object.errors.details[:base].first[:error] } %>
+            </li>
           <% end %>
         </ul>
       </div>
@@ -37,7 +42,10 @@
         <li><%= t('.service_hours_description_list_2') %></li>
       </ul>
       <p class="govuk-!-margin-bottom-6 govuk-hint"><%= t('.service_hours_description_2') %></p>
-      <div class="service_hours_container">
+      <div class="service_hours_container <%= 'govuk-form-group--error' if all_not_required?(f.object) %>">
+        <% if all_not_required?(f.object) %>
+          <%= display_error f.object, :base %>
+        <% end %>
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, _value| %>
             <% if key != :uom %>

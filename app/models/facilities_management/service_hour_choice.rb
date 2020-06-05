@@ -23,16 +23,12 @@ module FacilitiesManagement
     attr_accessor :start_time
     attr_accessor :end_time
 
-    validates :service_choice, inclusion: { in: SERVICE_CHOICES }
-    validates :start_hour, presence: true, if: -> { service_choice&.to_sym == :hourly }
-    validates :start_minute, presence: true, if: -> { service_choice&.to_sym == :hourly }
-    validates :start_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
-    validates :end_hour, presence: true, if: -> { service_choice&.to_sym == :hourly }
-    validates :end_minute, presence: true, if: -> { service_choice&.to_sym == :hourly }
-    validates :end_ampm, inclusion: { in: %w[AM PM] }, if: -> { service_choice&.to_sym == :hourly }
-
-    # Additional errors for the hourly choices
-    validate :validate_choice, if: -> { service_choice&.to_sym == :hourly }
+    validates :start_hour, presence: true, on: :time_selection
+    validates :start_minute, presence: true, on: :time_selection
+    validates :start_ampm, inclusion: { in: %w[AM PM] }, on: :time_selection
+    validates :end_hour, presence: true, on: :time_selection
+    validates :end_minute, presence: true, on: :time_selection
+    validates :end_ampm, inclusion: { in: %w[AM PM] }, on: :time_selection
 
     # Used to serialise object to a hash
     def self.dump(service_hour_choice)
@@ -151,6 +147,23 @@ module FacilitiesManagement
       end_time_value.to_i
     end
 
+    # Public validations
+    def validate_service_choice(day)
+      errors.add(:service_choice, :inclusion, day: day) unless SERVICE_CHOICES.include?(service_choice)
+    end
+
+    def validate_time_selection
+      add_errors_to_time unless valid?(:time_selection)
+    end
+
+    def validate_total_hours
+      errors.add(:end_time, :too_long) if total_hours > 24
+    end
+
+    def validate_time_sequence(day)
+      errors.add(:end_time, :after, date: start_time, day: day) if end_time_value <= start_time_value
+    end
+
     private
 
     # Used to render summary information
@@ -164,30 +177,6 @@ module FacilitiesManagement
 
     def hours_between_times
       ServiceHourChoice.time_range(to_h)
-    end
-    ########
-
-    # Used to validate the week
-    def validate_choice
-      if errors.present?
-        add_errors_to_time
-        return
-      end
-
-      return if %i[not_required all_day].include? service_choice.to_sym
-
-      validate_total_hours
-      return if errors.present?
-
-      validate_time_sequence
-    end
-
-    def validate_total_hours
-      errors.add(:end_time, :too_long) if total_hours > 24
-    end
-
-    def validate_time_sequence
-      errors.add(:end_time, :after, date: start_time) if end_time_value <= start_time_value
     end
 
     def start_time_value

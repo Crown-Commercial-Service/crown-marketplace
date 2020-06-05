@@ -81,16 +81,30 @@ module FacilitiesManagement
 
     private
 
+    def validate_choice(key, value)
+      value.validate_service_choice(key.to_s.capitalize)
+      return if value.errors.any? || value.service_choice != 'hourly'
+
+      value.validate_time_selection
+      return if value.errors.any?
+
+      value.validate_total_hours
+      return if value.errors.any?
+
+      value.validate_time_sequence(key.to_s.capitalize)
+    end
+
     def all_present_and_valid?
       attributes.each do |key, value|
         next if key == :uom
 
-        errors.add(:base, :invalid) unless value.valid?
+        validate_choice(key, value)
+        errors.add(:base, :invalid) if value.errors.any?
       end
     end
 
     def all_not_required?
-      add_not_required_error if all_days_not_required?
+      errors.add(:base, :required) if all_days_not_required?
     end
 
     def all_days_not_required?
@@ -113,34 +127,15 @@ module FacilitiesManagement
 
         case today[:service_choice]
         when 'all_day'
-          if yesterday.end_time_integer > 2400
-            today.errors.add(:service_choice, :all_day_overlap)
-            errors.add(:base, :invalid)
-          end
+          add_overlap_errors(today, :all_day_overlap, day) if yesterday.end_time_integer > 2400
         else
-          if yesterday.end_time_integer > today.start_time_integer + 2400
-            today.errors.add(:start_time, :selection_overlap)
-            errors.add(:base, :invalid)
-          end
+          add_overlap_errors(today, :selection_overlap, day) if yesterday.end_time_integer > today.start_time_integer + 2400
         end
       end
     end
 
     def valid_time_entries?(today, yesterday)
       ['all_day', 'hourly'].include?(today[:service_choice]) && yesterday[:service_choice] == 'hourly' && today.errors.none? && yesterday.errors.none?
-    end
-
-    def add_not_required_error
-      attributes.each do |key, value|
-        next if key == :uom
-
-        value.errors.add(:service_choice, :required)
-      end
-      errors.add(:base, :required)
-    end
-
-    def any_values?
-      attributes.any? { |k, v| k != :uom ? v.valid? : true }
     end
 
     def hourly_summary(day)
@@ -155,6 +150,15 @@ module FacilitiesManagement
 
     def shorten_day(day)
       day.to_s.capitalize[0..2]
+    end
+
+    def add_overlap_errors(today, attribute, day)
+      if attribute == :all_day_overlap
+        today.errors.add(:service_choice, :all_day_overlap, day: day.to_s.capitalize)
+      else
+        today.errors.add(:start_time, :selection_overlap, day: day.to_s.capitalize)
+      end
+      errors.add(:base, :invalid)
     end
   end
 end
