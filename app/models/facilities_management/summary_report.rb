@@ -31,17 +31,18 @@ module FacilitiesManagement
       @tupe_flag = @procurement.tupe
     end
 
-    def calculate_services_for_buildings(supplier_name = nil, remove_cafm_help = true, spreadsheet_type = nil)
+    def calculate_services_for_buildings(supplier_name = nil, remove_cafm_help = true, spreadsheet_type = nil, use_latest_building = true)
       @sum_uom = 0
       @sum_benchmark = 0
       @results = {}
 
       @procurement.active_procurement_buildings.order_by_building_name.each do |building|
-        result = uvals_for_building(building, spreadsheet_type)
+        result = uvals_for_building(building, spreadsheet_type, use_latest_building)
         building_data = result[1]
         # TBC filter out nil values for now
         building_uvals = result[0].reject { |v| v[:uom_value].nil? }
 
+        building_data&.deep_symbolize_keys! unless use_latest_building
         vals_per_building = services(building_data, building_uvals, supplier_name, remove_cafm_help)
         @sum_uom += vals_per_building[:sum_uom]
         @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
@@ -101,7 +102,7 @@ module FacilitiesManagement
       end
     end
 
-    def uvals_for_building(building, spreadsheet_type = nil)
+    def uvals_for_building(building, spreadsheet_type = nil, use_latest_building = true)
       services = case spreadsheet_type
                  when :da
                    da_procurement_building_services(building)
@@ -119,7 +120,12 @@ module FacilitiesManagement
           service_standard: procurement_building_service.service_standard
         }
       end
-      [building_uvals, building.building.building_json]
+
+      if use_latest_building
+        [building_uvals, building.building.building_json]
+      else
+        [building_uvals, building.building_json]
+      end
     end
 
     def da_procurement_building_services(building)
