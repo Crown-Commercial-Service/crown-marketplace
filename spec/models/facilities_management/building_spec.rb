@@ -132,6 +132,264 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         expect(building.status).to eq 'Incomplete'
       end
     end
+
+    context 'when GIA is not present' do
+      before do
+        building.gia = nil
+      end
+
+      it 'is invalid' do
+        expect(building.valid?(:all)).to eq false
+        expect(building.valid?(:gia)).to eq false
+      end
+
+      it 'will have gia errors' do
+        building.valid?(:gia)
+        expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
+      end
+    end
+
+    context 'when gia is invalid' do
+      context 'when gia is 0' do
+        before do
+          building.gia = 0
+          building.valid? :gia
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :greater_than
+        end
+      end
+
+      context 'when gia is a float' do
+        before do
+          building.gia = 434.2
+          building.valid? :gia
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_an_integer
+        end
+      end
+
+      context 'when gia is not an integer' do
+        before do
+          building.gia = 'some words'
+          building.valid? :gia
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
+        end
+      end
+    end
+
+    context 'security_type' do
+      context 'security_type is blank' do
+        before do
+          building.security_type = nil
+        end
+
+        it 'will be invalid' do
+          building.valid? :security
+          expect(building.errors.details.dig(:security_type).first.dig(:error)).to eq :blank
+        end
+      end
+
+      context 'when security_type set to something' do
+        before do
+          building.security_type = 'something'
+          building.valid? :security
+        end
+
+        it 'will be valid' do
+          expect(building.errors.details.length.zero?).to eq true
+        end
+      end
+
+      describe 'other security type' do
+        context 'when other_security_type is blank' do
+          before do
+            building.security_type = :other
+            building.valid? :security
+          end
+
+          it 'will be invalid' do
+            expect(building.errors.details.dig(:other_security_type).first.dig(:error)).to eq :blank
+          end
+        end
+
+        context 'when other_security_type is not blank' do
+          before do
+            building.security_type       = :other
+            building.other_security_type = 'other security type'
+            building.valid? :security
+          end
+
+          it 'will be invalid' do
+            expect(building.errors.details.dig(:other_security_type)).to eq []
+          end
+        end
+      end
+    end
+
+    context 'building_type' do
+      context 'building_type is blank' do
+        before do
+          building.building_type = nil
+        end
+
+        it 'will be invalid' do
+          building.valid? :type
+          expect(building.errors.details.dig(:building_type).first.dig(:error)).to eq :blank
+        end
+      end
+
+      context 'when building_type set to something' do
+        before do
+          building.building_type = 'something'
+          building.valid? :type
+        end
+
+        it 'will be valid' do
+          expect(building.errors.details.length.zero?).to eq true
+        end
+      end
+
+      describe 'other building type' do
+        context 'when other_building_type is blank' do
+          before do
+            building.building_type = :other
+            building.valid? :type
+          end
+
+          it 'will be invalid' do
+            expect(building.errors.details.dig(:other_building_type).first.dig(:error)).to eq :blank
+          end
+        end
+
+        context 'when other_building_type is not blank' do
+          before do
+            building.building_type       = :other
+            building.other_building_type = 'other security type'
+            building.valid? :type
+          end
+
+          it 'will be invalid' do
+            expect(building.errors.details.dig(:other_building_type)).to eq []
+          end
+        end
+      end
+
+      describe 'address_line_1' do
+        context 'when blank' do
+          before do
+            building.address_line_1 = nil
+          end
+
+          it 'will be invalid when manually adding an address' do
+            building.valid? :add_address
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
+          end
+
+          it 'will be valid if no postcode given' do
+            building.address_postcode = nil
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1)).to eq []
+          end
+
+          it 'will be invalid if a postcode is given' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
+          end
+        end
+      end
+
+      context 'address_town' do
+        context 'if blank' do
+          before do
+            building.address_town = nil
+            building.valid? :all
+          end
+
+          it 'will be invalid' do
+            expect(building.errors.details.dig(:address_town).first.dig(:error)).to eq :blank
+          end
+        end
+      end
+
+      context 'address_region' do
+        context 'if blank' do
+          before do
+            building.address_region = nil
+          end
+
+          it 'will be invalid if postcode and line 1 present' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_region).first.dig(:error)).to eq :blank
+          end
+        end
+      end
+
+      context '#address_postcode' do
+        context 'when postcode is blank' do
+          before do
+            building.address_postcode = nil
+          end
+
+          context 'when manually adding an address' do
+            it 'will be invalid' do
+              building.valid? :add_address
+              expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            end
+          end
+
+          context 'when creating a building' do
+            it 'will be invalid' do
+              building.valid? :new
+              expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            end
+          end
+
+          context 'when editing a building' do
+            it 'will be invalid' do
+              building.valid? :new
+              expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            end
+          end
+        end
+
+        context 'postcode_format' do
+          context 'totally bad format' do
+            it 'will be invalid' do
+              building.address_postcode = 'something'
+              building.valid? :edit
+              expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
+            end
+          end
+
+          context 'incorrect format' do
+            it 'will be invalid' do
+              building.address_postcode = '1XX X11'
+              building.valid? :edit
+              expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
+            end
+          end
+        end
+      end
+
+      context '#address selection' do
+        before do
+          building.address_line_1 = nil
+          building.postcode_entry = building.address_postcode
+          building.valid? :all
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:address).first.dig(:error)).to eq :not_selected
+        end
+      end
+    end
   end
 
   describe '#building_standard' do
