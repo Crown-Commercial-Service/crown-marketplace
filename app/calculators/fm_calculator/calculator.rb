@@ -53,7 +53,7 @@ module FMCalculator
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
       if @supplier_name && @rate_card_discounts[@service_ref_sym]
-        (100 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) / 100 * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
+        (1 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
       else
         @uom_vol * framework_rate_for(@service_ref.gsub('.', '')).to_f
       end
@@ -152,11 +152,11 @@ module FMCalculator
     end
 
     # framework profit
-    def profit(year1)
+    def profit(year1total)
       if @supplier_name
-        year1 * @rate_card_variances[:'Profit %']
+        year1total * @rate_card_variances[:'Profit %']
       else
-        year1 * @framework_rates['M142']
+        year1total * @framework_rates['M142']
       end
     end
 
@@ -254,8 +254,8 @@ module FMCalculator
       mobilisation = mobilisation(subtotal3)
       year1 = subtotal3 + mobilisation + tupe(subtotal3)
 
-      year1total = year1 + manage(year1) + corporate(year1)
-      year1totalcharges = year1total + profit(year1)
+      year1total = year1 + manage(year1) + corporate(year1) + tupe_management(tupe(subtotal3))
+      year1totalcharges = year1total + profit(year1total)
 
       results[:subtotal1] = subtotal1
       results[:year1totalcharges] = year1totalcharges
@@ -263,9 +263,9 @@ module FMCalculator
       results[:helpdesk] = helpdesk(subtotal2)
       results[:variance] = variance(subtotal1)
       results[:tupe] = tupe(subtotal3)
-      results[:manage] = manage(year1)
+      results[:manage] = manage(year1) + tupe_management(results[:tupe])
       results[:corporate] = corporate(year1)
-      results[:profit] = profit(year1)
+      results[:profit] = profit(year1total)
       results[:mobilisation] = mobilisation
       results[:subyearstotal] = 0 # in all cases
       results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years) if @subsequent_length_years.positive?
@@ -287,6 +287,14 @@ module FMCalculator
 
       benchyear1totalcharges = benchyear1total + benchprofit(benchyear1)
       benchyear1totalcharges + benchsubyearstotal(benchyear1totalcharges, bench_mobilisation)
+    end
+
+    def tupe_management(tupe_value)
+      if @supplier_name
+        tupe_value * @rate_card_variances[:'Management Overhead %']
+      else
+        tupe_value * @framework_rates['M140']
+      end
     end
 
     protected
