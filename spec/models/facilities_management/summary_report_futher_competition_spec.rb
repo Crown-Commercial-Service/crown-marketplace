@@ -91,7 +91,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         expect(report.direct_award_value).to be > 0
       end
 
-      expect(report.assessed_value).to eq 1574.5296192911997
+      expect(report.assessed_value).to eq 1605.5697051504
 
       #  uom_values = report.uom_values(:fc)  # TODO this did not work due to buildings factory array within an array type of issue
 

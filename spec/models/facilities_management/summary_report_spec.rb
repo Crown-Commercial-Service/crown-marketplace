@@ -35,16 +35,16 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         it 'results has the correct values' do
           expected = {
             subtotal1: 2339,
-            year1totalcharges: 2747,
+            year1totalcharges: 2758,
             cafm: 0,
             helpdesk: 0,
             variance: 0,
             tupe: 0,
             manage: 96,
             corporate: 120,
-            profit: 120,
+            profit: 131,
             mobilisation: 70,
-            subyearstotal: 2666
+            subyearstotal: 2677
           }
 
           expected.each do |key, rounded_value|
@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         # rubocop:enable RSpec/ExampleLength
 
         it 'sum uom is correct' do
-          expect(report.sum_uom.round).to eq(18745)
+          expect(report.sum_uom.round).to eq(18821)
         end
 
         it 'sum benchmark is correct' do
@@ -74,7 +74,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'sum uom is correct' do
-        expect(report.sum_uom.round).to eq(40738)
+        expect(report.sum_uom.round).to eq(41015)
       end
 
       it 'sum benchmark is correct' do
@@ -94,7 +94,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     before { report.calculate_services_for_buildings(supplier_name) }
 
     it 'contains correct values' do
-      expect(values_to_average.map(&:round)).to eq([18745, 0])
+      expect(values_to_average.map(&:round)).to eq([18821, 0])
     end
 
     # TODO: contexts:
