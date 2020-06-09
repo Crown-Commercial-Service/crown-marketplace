@@ -1,14 +1,14 @@
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
-    before_action :set_procurement, only: %i[show edit update destroy results]
+    before_action :set_procurement, only: %i[show edit update destroy]
     before_action :authorize_user
     before_action :set_deleted_action_occurred, only: %i[index]
     before_action :set_edit_state, only: %i[index show edit update destroy]
     before_action :ready_buildings, only: %i[show edit update]
-    before_action :set_procurement_data, only: %i[show edit update results]
+    before_action :set_procurement_data, only: %i[show edit update]
     before_action :set_new_procurement_data, only: %i[new]
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-    before_action :build_page_details, only: %i[show edit update destroy results]
+    before_action :build_page_details, only: %i[show edit update destroy]
 
     def index
       @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -20,8 +20,15 @@ module FacilitiesManagement
     end
 
     def show
-      redirect_to edit_facilities_management_procurement_url(id: @procurement.id, delete: @delete) if @procurement.quick_search? && @delete
-      redirect_to edit_facilities_management_procurement_url(id: @procurement.id) if @procurement.quick_search? && !@delete
+      if @procurement.quick_search?
+        if @delete
+          redirect_to edit_facilities_management_procurement_url(id: @procurement.id, delete: @delete)
+        elsif !@delete
+          redirect_to edit_facilities_management_procurement_url(id: @procurement.id)
+        end
+      end
+
+      redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
       @view_name = set_view_data unless @procurement.quick_search?
       reset_security_policy_document_page
@@ -33,7 +40,6 @@ module FacilitiesManagement
     end
 
     def create
-      flash.clear
       @procurement = current_user.procurements.build(procurement_params)
 
       if @procurement.save(context: :contract_name)
@@ -46,7 +52,7 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def edit
       if @procurement.quick_search?
         render :edit
@@ -55,14 +61,11 @@ module FacilitiesManagement
 
         unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
           # da journey follows
-          @view_name = set_view_data unless @procurement.quick_search?
+          @view_name = set_view_data
           render @view_da && return
         end
-
-        redirect_to facilities_management_procurement_url(id: @procurement.id) && return unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step])
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def update
@@ -86,23 +89,11 @@ module FacilitiesManagement
 
       update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
 
-      continue_to_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'invoicing_contact_details' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_invoice_details') == 'false'
+      continue_to_new_contact_detail && return if ['invoicing_contact_details', 'authorised_representative', 'notices_contact_details'].include? params.dig('facilities_management_procurement', 'step')
 
-      continue_to_new_invoice_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_address'
+      continue_to_new_contact_detail_from_add_address && return if ['new_invoicing_address', 'new_authorised_representative_address', 'new_notices_address'].include? params.dig('facilities_management_procurement', 'step')
 
-      continue_to_invoice_from_new_invoice && return if params.dig('facilities_management_procurement', 'step') == 'new_invoicing_contact_details'
-
-      continue_to_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'authorised_representative' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_authorised_detail') == 'false'
-
-      continue_to_new_authorised_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_address'
-
-      continue_to_authorised_from_new_authorised && return if params.dig('facilities_management_procurement', 'step') == 'new_authorised_representative_details'
-
-      continue_to_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'notices_contact_details' && params.dig('facilities_management_procurement', 'using_buyer_detail_for_notices_detail') == 'false'
-
-      continue_to_new_notices_from_add_address && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_address'
-
-      continue_to_notices_from_new_notices && return if params.dig('facilities_management_procurement', 'step') == 'new_notices_contact_details'
+      continue_to_contact_detail_from_new_contact_detail && return if ['new_invoicing_contact_details', 'new_authorised_representative_details', 'new_notices_contact_details'].include? params.dig('facilities_management_procurement', 'step')
 
       copy_service_codes && update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
 
@@ -135,13 +126,6 @@ module FacilitiesManagement
     def summary
       @page_data = {}
       @page_data[:model_object] = @procurement
-    end
-
-    def results
-      redirect_to(facilities_management_procurement_path(@procurement)) && return unless verify_status('results')
-
-      set_results_page_data
-      @procurement[:route_to_market] = @procurement.aasm_state
     end
 
     def da_spreadsheets
@@ -250,16 +234,6 @@ module FacilitiesManagement
       @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services && params[:facilities_management_procurement][:service_codes].nil?
     end
 
-    def verify_status(status)
-      if status == 'results'
-        return false if %w[quick_search detailed_search].include?(@procurement.aasm_state.downcase)
-
-        return true
-      end
-
-      @procurement.aasm_state.to_sym == status.to_sym
-    end
-
     def change_the_contract_value
       @procurement.set_state_to_choose_contract_value!
       redirect_to facilities_management_procurement_path(@procurement)
@@ -309,16 +283,6 @@ module FacilitiesManagement
     def return_to_review_contract
       @procurement.update(da_journey_state: :review)
       redirect_to facilities_management_procurement_path(@procurement)
-    end
-
-    def continue_to_contract_details
-      if procurement_valid?
-        @procurement.set_to_contract_details
-        @procurement.save
-        redirect_to facilities_management_procurement_path(@procurement)
-      else
-        redirect_to facilities_management_procurement_path(@procurement, validate: true)
-      end
     end
 
     def continue_da_journey
@@ -401,18 +365,38 @@ module FacilitiesManagement
       end
     end
 
-    def continue_to_new_invoice
+    def continue_to_new_contact_detail
+      if params.dig('facilities_management_procurement', 'using_buyer_detail_for_invoice_details') == 'false'
+        contact_detail_redirection('new_invoicing_contact_details', :invoice_contact_detail)
+      elsif params.dig('facilities_management_procurement', 'using_buyer_detail_for_authorised_detail') == 'false'
+        contact_detail_redirection('new_authorised_representative_details', :authorised_contact_detail)
+      elsif params.dig('facilities_management_procurement', 'using_buyer_detail_for_notices_detail') == 'false'
+        contact_detail_redirection('new_notices_contact_details', :notices_contact_detail)
+      else
+        update_procurement
+      end
+    end
+
+    def contact_detail_redirection(step, contact_detail)
       @procurement.assign_attributes(procurement_params)
 
-      return if @procurement.using_buyer_detail_for_invoice_details
-
-      redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details') if !@procurement.using_buyer_detail_for_invoice_details && @procurement.invoice_contact_detail.blank?
+      redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: step) if @procurement.send(contact_detail).blank?
     end
 
-    def continue_to_new_invoice_from_add_address
+    def continue_to_new_contact_detail_from_add_address
       assign_procurement_parameters
+
       if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details')
+        step = case params.dig('facilities_management_procurement', 'step')
+               when 'new_invoicing_address'
+                 'new_invoicing_contact_details'
+               when 'new_authorised_representative_address'
+                 'new_authorised_representative_details'
+               else
+                 'new_notices_contact_details'
+               end
+
+        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: step)
       else
         create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
         set_step_param
@@ -420,73 +404,20 @@ module FacilitiesManagement
       end
     end
 
-    def continue_to_invoice_from_new_invoice
+    def continue_to_contact_detail_from_new_contact_detail
+      step = case params.dig('facilities_management_procurement', 'step')
+             when 'new_invoicing_contact_details'
+               ['using_buyer_detail_for_invoice_details', 'invoicing_contact_details']
+             when 'new_authorised_representative_details'
+               ['using_buyer_detail_for_authorised_detail', 'authorised_representative']
+             else
+               ['using_buyer_detail_for_notices_detail', 'notices_contact_details']
+             end
+
       assign_procurement_parameters
-      @procurement.assign_attributes(using_buyer_detail_for_invoice_details: false)
+      @procurement.assign_attributes(step[0] => false)
       if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'invoicing_contact_details')
-      else
-        create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
-        set_step_param
-        render :edit
-      end
-    end
-
-    def continue_to_new_authorised
-      @procurement.assign_attributes(procurement_params)
-
-      return if @procurement.using_buyer_detail_for_authorised_detail
-
-      redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details') if !@procurement.using_buyer_detail_for_authorised_detail && @procurement.authorised_contact_detail.blank?
-    end
-
-    def continue_to_new_authorised_from_add_address
-      assign_procurement_parameters
-      if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details')
-      else
-        create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
-        set_step_param
-        render :edit
-      end
-    end
-
-    def continue_to_authorised_from_new_authorised
-      assign_procurement_parameters
-      @procurement.assign_attributes(using_buyer_detail_for_authorised_detail: false)
-      if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative')
-      else
-        create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
-        set_step_param
-        render :edit
-      end
-    end
-
-    def continue_to_new_notices
-      @procurement.assign_attributes(procurement_params)
-
-      return if @procurement.using_buyer_detail_for_notices_detail
-
-      redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_notices_contact_details') if !@procurement.using_buyer_detail_for_notices_detail && @procurement.notices_contact_detail.blank?
-    end
-
-    def continue_to_new_notices_from_add_address
-      assign_procurement_parameters
-      if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_notices_contact_details')
-      else
-        create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
-        set_step_param
-        render :edit
-      end
-    end
-
-    def continue_to_notices_from_new_notices
-      assign_procurement_parameters
-      @procurement.assign_attributes(using_buyer_detail_for_notices_detail: false)
-      if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: 'notices_contact_details')
+        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: step[1])
       else
         create_da_buyer_page_data(params[:facilities_management_procurement][:step].try(:to_sym))
         set_step_param
@@ -500,14 +431,6 @@ module FacilitiesManagement
 
     # sets the state of the procurement depending on the submission from the results view
     def set_route_to_market
-      if params[:commit] == page_details(:results)[:secondary_text]
-        @procurement.set_state_to_detailed_search
-        @procurement.save
-
-        redirect_to facilities_management_procurement_path(@procurement)
-        return
-      end
-
       @procurement.assign_attributes(procurement_route_params)
 
       unless @procurement.valid?(:route_to_market)
@@ -551,11 +474,11 @@ module FacilitiesManagement
 
       case step
       when 'new_invoicing_contact_details', 'new_invoicing_address'
-        set_invoice_data
+        create_contact_data('invoice_contact_detail')
       when 'new_authorised_representative_details', 'new_authorised_representative_address'
-        set_authorised_data
+        create_contact_data('authorised_contact_detail')
       when 'new_notices_contact_details', 'new_notices_address'
-        set_notices_data
+        create_contact_data('notices_contact_detail')
       end
     end
 
@@ -569,57 +492,31 @@ module FacilitiesManagement
 
       return if step.nil?
 
-      if delete_invoice_data? step
+      if delete_contact_data? step, 'new_invoicing_contact_details', 'new_invoicing_address', 'invoice_contact_detail'
         @procurement.invoice_contact_detail.delete
         @procurement.reload
       end
-      if delete_authorised_data? step
+      if delete_contact_data? step, 'new_authorised_representative_details', 'new_authorised_representative_address', 'authorised_contact_detail'
         @procurement.authorised_contact_detail.delete
         @procurement.reload
       end
-      if delete_notices_data? step
+      if delete_contact_data? step, 'new_notices_contact_details', 'new_notices_address', 'notices_contact_detail'
         @procurement.notices_contact_detail.delete
         @procurement.reload
       end
     end
     # rubocop:enable Style/GuardClause
 
-    def set_invoice_data
-      @procurement.build_invoice_contact_detail if @procurement.invoice_contact_detail.blank?
+    def create_contact_data(contact)
+      @procurement.send('build_' + contact) if @procurement.send(contact).blank?
     end
 
-    def set_authorised_data
-      @procurement.build_authorised_contact_detail if @procurement.authorised_contact_detail.blank?
-    end
-
-    def set_notices_data
-      @procurement.build_notices_contact_detail if @procurement.notices_contact_detail.blank?
-    end
-
-    def delete_invoice_data?(step)
+    def delete_contact_data?(step, new_contact, contact_address, contact_detail)
       case step
-      when 'new_invoicing_contact_details', 'new_invoicing_address'
+      when new_contact, contact_address
         false
       else
-        !@procurement.invoice_contact_detail.nil? && @procurement.invoice_contact_detail.name.nil?
-      end
-    end
-
-    def delete_authorised_data?(step)
-      case step
-      when 'new_authorised_representative_details', 'new_authorised_representative_address'
-        false
-      else
-        !@procurement.authorised_contact_detail.nil? && @procurement.authorised_contact_detail.name.nil?
-      end
-    end
-
-    def delete_notices_data?(step)
-      case step
-      when 'new_notices_contact_details', 'new_notices_address'
-        false
-      else
-        !@procurement.notices_contact_detail.nil? && @procurement.notices_contact_detail.name.nil?
+        !@procurement.send(contact_detail).nil? && @procurement.send(contact_detail).name.nil?
       end
     end
 
@@ -632,10 +529,6 @@ module FacilitiesManagement
       else
         @procurement.procurement_pension_funds.empty?
       end
-    end
-
-    def contracts(state)
-      current_user.procurements.direct_award.map { |procurement| procurement.public_send(state) }&.flatten
     end
 
     def sent_offers
@@ -1032,12 +925,12 @@ module FacilitiesManagement
         results: set_results_page_definitions,
         direct_award: {
           page_title: 'Direct Award Pricing',
-          back_url: facilities_management_procurement_results_path(@procurement),
+          back_url: facilities_management_procurements_path,
           continuation_text: 'Continue to direct award',
           secondary_text: 'Return to results',
           secondary_name: 'continue_to_results',
           primary_name: 'continue_da',
-          secondary_url: facilities_management_procurement_results_path(@procurement),
+          secondary_url: facilities_management_procurements_path,
         },
         further_competition: {
           page_title: 'Further competition',

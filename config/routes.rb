@@ -126,7 +126,6 @@ Rails.application.routes.draw do
     get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
 
     resources :procurements do
-      get 'results'
       get 'further_competition_spreadsheet'
       post 'da_spreadsheets'
       get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
