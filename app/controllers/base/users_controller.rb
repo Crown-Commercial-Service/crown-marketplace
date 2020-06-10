@@ -55,7 +55,7 @@ module Base
 
     def set_user_phone
       user_phone_full = User.find_by(cognito_uuid: params[:username]).try(:phone_number) || Cognito::CreateUserFromCognito.call(params[:username]).try(:user).try(:phone_number)
-      @user_phone =   '*' * 9 + user_phone_full[(user_phone_full.length - 3)..user_phone_full.length]
+      @user_phone =   '*' * 9 + user_phone_full[(user_phone_full.length - 3)..user_phone_full.length] if user_phone_full
     end
   end
 end
