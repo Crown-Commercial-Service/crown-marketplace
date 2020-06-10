@@ -28,18 +28,14 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   describe 'default values' do
     subject(:building) { create(:facilities_management_building_defaults) }
 
-    context 'when saving an empty record', skip: true do
+    context 'when saving an empty record' do
       before do
         building.save(validate: false)
         building.reload
       end
 
-      it 'json should not be empty' do
-        expect(building.building_json).not_to eq('{}')
-      end
-
-      it 'json should contain id == to building id' do
-        expect(building.building_json[:id]).to eq(building.id)
+      it 'json should be empty' do
+        expect(building.building_json).to eq nil
       end
 
       it 'default status should be Incomplete' do
