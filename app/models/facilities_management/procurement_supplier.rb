@@ -267,10 +267,6 @@ module FacilitiesManagement
       template_name = email_type
       email_to = procurement.user.email
 
-      Sidekiq.logger('Environment: ' + ENV['RAILS_ENV_URL'])
-      Sidekiq.logger('Procurement id: ' + procurement.id)
-      Sidekiq.logger('Contract id: ' + id)
-
       gov_notify_template_arg = {
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
