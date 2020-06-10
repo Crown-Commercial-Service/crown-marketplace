@@ -276,6 +276,7 @@ module FacilitiesManagement
         logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
         logger.debug "Procurement id: #{procurement.id}"
         logger.debug "Contract id: #{id}"
+        logger.debug "Environment variables: #{ENV}"
       end
 
       gov_notify_template_arg = {
@@ -308,6 +309,7 @@ module FacilitiesManagement
         logger.debug e.to_s
         logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
         logger.debug "Contract id: #{id}"
+        logger.debug "Environment variables: #{ENV}"
       end
 
       gov_notify_template_arg = {
