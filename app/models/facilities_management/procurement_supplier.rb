@@ -271,11 +271,11 @@ module FacilitiesManagement
         link = ENV['RAILS_ENV_URL'] + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
       rescue NoMethodError => e
         link = '/facilities-management/procurements'
-        Sidekiq.logger.debug 'Change state worker error:'
-        Sidekiq.logger.debug e.to_s
-        Sidekiq.logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
-        Sidekiq.logger.debug "Procurement id: #{procurement.id}"
-        Sidekiq.logger.debug "Contract id: #{id}"
+        logger.debug 'Change state worker error:'
+        logger.debug e.to_s
+        logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
+        logger.debug "Procurement id: #{procurement.id}"
+        logger.debug "Contract id: #{id}"
       end
 
       gov_notify_template_arg = {
@@ -304,10 +304,10 @@ module FacilitiesManagement
         link = ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id
       rescue NoMethodError => e
         link = '/facilities-management/supplier/dashboard'
-        Sidekiq.logger.debug 'Change state worker error:'
-        Sidekiq.logger.debug e.to_s
-        Sidekiq.logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
-        Sidekiq.logger.debug "Contract id: #{id}"
+        logger.debug 'Change state worker error:'
+        logger.debug e.to_s
+        logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
+        logger.debug "Contract id: #{id}"
       end
 
       gov_notify_template_arg = {
