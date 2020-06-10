@@ -17,8 +17,6 @@ RSpec.describe FMCalculator::Calculator do
     it 'FMCalculator for basic math using CSV' do
       csv_test_data.each do |row|
         method_to_call = row['expectation_name']
-        puts "Test #{row['test_name']}: #{method_to_call}"
-        
         calculator = described_class.new(
           row['contract_length_years'].to_i, row['service_ref'], row['service_standard'], row['uom_vol'].to_i, row['occupants'].to_i, row['tupe_flag'] == 'true', row['london_flag'] == 'true', row['cafm_flag'] == 'true', row['helpdesk_flag'] == 'true', rates, rate_card
         )
@@ -35,8 +33,6 @@ RSpec.describe FMCalculator::Calculator do
         test_data = JSON.parse(file_fixture(fixture['test']).read)
         
         test_data.each do |test|
-          puts test['test_name']
-          
           calculator = described_class.new(
             test['contract_length_years'].to_i, test['service_ref'], test['service_standard'], test['uom_vol'].to_i, test['occupants'].to_i, test['tupe_flag'] == 'true', test['london_flag'], test['cafm_flag'], test['helpdesk_flag'], rates, rate_card
           )
@@ -50,7 +46,7 @@ RSpec.describe FMCalculator::Calculator do
       end
     end
     
-    describe 'spreadsheet parsing', skip: true  do
+    describe 'spreadsheet parsing', skip: false  do
       context 'parsing reduced CSV' do
         it 'will create JSON data' do
           csv_table = CSV.parse(file_fixture('fm-calculator-test-data-3.csv').read, headers: true)
@@ -58,13 +54,12 @@ RSpec.describe FMCalculator::Calculator do
           status    = {
             expectation_name: ''
           }
-          
+
           csv_table.each do |reduced_row|
             json_data << create_json_from(reduced_row, status)
           end
           
-          expect(json_data.count).to eq(csv_table)
-          puts json_data
+          expect(json_data.count).to eq(csv_table.size)
         end
       end
       
@@ -132,7 +127,6 @@ RSpec.describe FMCalculator::Calculator do
           )
           
           expect(json_data.count).to eq(csv_input.count)
-          puts json_data
         end
       end
       
@@ -174,7 +168,15 @@ RSpec.describe FMCalculator::Calculator do
         hash                 = {}
         hash['expectations'] = {}
         row.each do |cell|
-          hash[cell[0]] = cell[1] unless %w[expectation_name expectation_value].include? cell[0]
+          aa = cell[0]
+          bb = cell[1]
+          # hash[cell[0]] = cell[1] unless %w[expectation_name expectation_value].include? cell[0]
+          #  hash[cell[0]] = cell[1] unless %w[expectation_name expectation_value].include? cell[0] || cell[1] == 'x'
+
+          if (! %w[expectation_name expectation_value].include? cell[0]) && cell[1] != 'x'
+            hash[cell[0]] = cell[1]
+          end
+
           if cell[0] == 'expectation_name'
             hash['expectations']["#{cell[1]}"] = 0
             status[:expectation_name]          = cell[1]
