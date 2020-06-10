@@ -495,7 +495,7 @@ en:
       gia:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
         further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
-        gia_header: What’s the size of internal area of this building?
+        gia_header: What’s the size of the internal area of this building?
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
