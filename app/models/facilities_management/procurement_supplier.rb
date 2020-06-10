@@ -267,18 +267,6 @@ module FacilitiesManagement
       template_name = email_type
       email_to = procurement.user.email
 
-      begin
-        link = ENV['RAILS_ENV_URL'] + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
-      rescue NoMethodError => e
-        link = '/facilities-management/procurements'
-        logger.debug 'Change state worker error:'
-        logger.debug e.to_s
-        logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
-        logger.debug "Procurement id: #{procurement.id}"
-        logger.debug "Contract id: #{id}"
-        logger.debug "Environment variables: #{ENV}"
-      end
-
       gov_notify_template_arg = {
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
@@ -286,7 +274,7 @@ module FacilitiesManagement
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-decline-reason': reason_for_declining,
         'da-offer-1-accept-date': format_date_time_numeric(supplier_response_date),
-        'da-offer-1-link': link
+        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -301,22 +289,11 @@ module FacilitiesManagement
       template_name = email_type
       email_to = supplier_email
 
-      begin
-        link = ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id
-      rescue NoMethodError => e
-        link = '/facilities-management/supplier/dashboard'
-        logger.debug 'Change state worker error:'
-        logger.debug e.to_s
-        logger.debug "Environment: #{ENV['RAILS_ENV_URL']}"
-        logger.debug "Contract id: #{id}"
-        logger.debug "Environment variables: #{ENV}"
-      end
-
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
-        'da-offer-1-link': link,
+        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,
