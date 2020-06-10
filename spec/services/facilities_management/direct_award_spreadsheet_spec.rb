@@ -52,10 +52,6 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
         expect(wb.sheet('Contract Price Matrix').row(6)).to match_array(['Planned Deliverables sub total', nil, 3426.84, 1713.42, 1713.42])
         expect(wb.sheet('Contract Price Matrix').row(8)).to match_array(['CAFM', nil, 0.0, 0.0, 0.0])
         expect(wb.sheet('Contract Price Matrix').row(9)).to match_array(['Helpdesk', nil, 0.0, 0.0, 0.0])
-        expect(wb.sheet('Contract Price Matrix').row(15)).to match_array(['Mobilisation', nil, 130.21992, 65.10996, 65.10996])
-        expect(wb.sheet('Contract Price Matrix').row(16)).to match_array(['TUPE Risk Premium', nil, 264.209364, 132.104682, 132.104682])
-        expect(wb.sheet('Contract Price Matrix').row(20)).to match_array(['Corporate Overhead', nil, 234.2438071092, 117.1219035546, 117.1219035546])
-        expect(wb.sheet('Contract Price Matrix').row(22)).to match_array(['Profit', nil, 351.556774128, 175.778387064, 175.778387064])
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
