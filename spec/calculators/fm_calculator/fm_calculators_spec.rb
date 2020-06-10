@@ -46,7 +46,7 @@ RSpec.describe FMCalculator::Calculator do
       end
     end
     
-    describe 'spreadsheet parsing', skip: false  do
+    describe 'spreadsheet parsing'  do
       context 'parsing reduced CSV' do
         it 'will create JSON data' do
           csv_table = CSV.parse(file_fixture('fm-calculator-test-data-3.csv').read, headers: true)
