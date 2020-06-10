@@ -1,6 +1,6 @@
 test_name,contract_length_years,service_ref,service_standard,uom_vol,occupants,tupe_flag,london_flag,cafm_flag,helpdesk_flag,expectation_name,expectation_value
-x1,3,G1,A,23000,125,true,true,true,false,sumunitofmeasure,1370201
-x2,3,C5,A,54,0,true,true,true,false,sumunitofmeasure,55474
+x1,3,G1,A,23000,125,true,true,true,false,sumunitofmeasure,1347789
+x2,3,C5,A,54,0,true,true,true,false,sumunitofmeasure,54567
 x3,3,C19,nil,0,0,true,true,true,false,sumunitofmeasure,0
 x4,3,E4,nil,450,0,false,false,false,true,sumunitofmeasure,1349
 x5,3,K1,nil,75,0,false,false,false,true,sumunitofmeasure,26671
