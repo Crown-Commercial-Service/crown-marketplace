@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::Building, type: :model do
   describe '#building' do
     it { is_expected.to belong_to(:user) }
@@ -184,8 +184,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'security_type' do
-      context 'security_type is blank' do
+    context 'when saving security_type' do
+      context 'when security_type is blank' do
         before do
           building.security_type = nil
         end
@@ -207,34 +207,32 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      describe 'other security type' do
-        context 'when other_security_type is blank' do
-          before do
-            building.security_type = :other
-            building.valid? :security
-          end
-
-          it 'will be invalid' do
-            expect(building.errors.details.dig(:other_security_type).first.dig(:error)).to eq :blank
-          end
+      context 'when other_security_type is blank' do
+        before do
+          building.security_type = :other
+          building.valid? :security
         end
 
-        context 'when other_security_type is not blank' do
-          before do
-            building.security_type       = :other
-            building.other_security_type = 'other security type'
-            building.valid? :security
-          end
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:other_security_type).first.dig(:error)).to eq :blank
+        end
+      end
 
-          it 'will be invalid' do
-            expect(building.errors.details.dig(:other_security_type)).to eq []
-          end
+      context 'when other_security_type is not blank' do
+        before do
+          building.security_type       = :other
+          building.other_security_type = 'other security type'
+          building.valid? :security
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:other_security_type)).to eq []
         end
       end
     end
 
-    context 'building_type' do
-      context 'building_type is blank' do
+    context 'when saving building_type' do
+      context 'and building_type is blank' do
         before do
           building.building_type = nil
         end
@@ -256,32 +254,30 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      describe 'other building type' do
-        context 'when other_building_type is blank' do
-          before do
-            building.building_type = :other
-            building.valid? :type
-          end
-
-          it 'will be invalid' do
-            expect(building.errors.details.dig(:other_building_type).first.dig(:error)).to eq :blank
-          end
+      context 'when other_building_type is blank' do
+        before do
+          building.building_type = :other
+          building.valid? :type
         end
 
-        context 'when other_building_type is not blank' do
-          before do
-            building.building_type       = :other
-            building.other_building_type = 'other security type'
-            building.valid? :type
-          end
-
-          it 'will be invalid' do
-            expect(building.errors.details.dig(:other_building_type)).to eq []
-          end
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:other_building_type).first.dig(:error)).to eq :blank
         end
       end
 
-      describe 'address_line_1' do
+      context 'when other_building_type is not blank' do
+        before do
+          building.building_type       = :other
+          building.other_building_type = 'other security type'
+          building.valid? :type
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:other_building_type)).to eq []
+        end
+      end
+
+      describe 'when saving address_line_1' do
         context 'when blank' do
           before do
             building.address_line_1 = nil
@@ -305,8 +301,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'address_town' do
-        context 'if blank' do
+      context 'when saving address_town' do
+        context 'when blank' do
           before do
             building.address_town = nil
             building.valid? :all
@@ -318,8 +314,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'address_region' do
-        context 'if blank' do
+      context 'when saving address_region' do
+        context 'when blank' do
           before do
             building.address_region = nil
           end
@@ -331,7 +327,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context '#address_postcode' do
+      describe 'when saving address_postcode' do
         context 'when postcode is blank' do
           before do
             building.address_postcode = nil
@@ -359,8 +355,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           end
         end
 
-        context 'postcode_format' do
-          context 'totally bad format' do
+        context 'when saving postcode_format' do
+          context 'when totally bad format' do
             it 'will be invalid' do
               building.address_postcode = 'something'
               building.valid? :edit
@@ -368,7 +364,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
             end
           end
 
-          context 'incorrect format' do
+          context 'when saved with incorrect format' do
             it 'will be invalid' do
               building.address_postcode = '1XX X11'
               building.valid? :edit
@@ -378,7 +374,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context '#address selection' do
+      context 'when processing the address selection' do
         before do
           building.address_line_1 = nil
           building.postcode_entry = building.address_postcode
@@ -454,3 +450,4 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     end
   end
 end
+# rubocop:enable RSpec/NestedGroups
