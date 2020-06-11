@@ -32,4 +32,7 @@ FactoryBot.define do
     building { create :facilities_management_building_london }
     building_json { building.building_json }
   end
+  factory :facilities_management_procurement_building_for_further_competition_with_gia, parent: :facilities_management_procurement_building do
+    building { create :facilities_management_building_london }
+  end
 end
