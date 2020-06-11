@@ -85,27 +85,7 @@ module FacilitiesManagement
     private
 
     def building_params
-      params.require(:facilities_management_building)
-            .permit(
-              :building_name,
-              :description,
-              :postcode,
-              :region,
-              :region_code,
-              :gia,
-              :region,
-              :building_type,
-              :other_building_type,
-              :security_type,
-              :other_security_type,
-              :address_town,
-              :address_line_1,
-              :address_line_2,
-              :address_postcode,
-              :address_region,
-              :address_region_code,
-              :postcode_entry
-            )
+      params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
     end
 
     def add_address_form_details
@@ -160,8 +140,7 @@ module FacilitiesManagement
       []
     end
 
-    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?,
-                  :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
+    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
 
     def resolve_region
       return if @page_data[:model_object].blank?
