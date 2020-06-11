@@ -17,61 +17,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   let(:supplier) { create(:ccs_fm_supplier) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
-  let(:building1_json) do
-    {
-      'id' => 'd92b0939-d7c4-0d54-38dd-a2a2709cb95b',
-      'gia' => 4200,
-      'name' => 'c4',
-      'region' => 'London',
-      'description' => 'Channel 4',
-      'address' => {
-        'fm-address-town' => 'London',
-        'fm-address-line-1' => '1 Horseferry Road',
-        'fm-address-postcode' => 'SW1P 2BA',
-        'fm-address-region' => 'Outer London - South'
-      },
-      'isLondon' => false,
-      :'security-type' => 'Baseline Personnel Security Standard',
-      'services' => [
-        { 'code' => 'M-1', 'name' => 'CAFM system' },
-        { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-        { 'code' => 'I-1', 'name' => 'Reception service' },
-        { 'code' => 'K-3', 'name' => 'Recycled waste' }
-      ],
-      :'fm-building-type' => 'General office - Customer Facing',
-      'building-type' => 'General office - Customer Facing'
-    }
-  end
-
-  let(:building2_json) do
-    {
-      'id' => 'e60f5b57-5f15-604c-b729-a689ede34a99',
-      'gia' => 12000,
-      'name' => 'ccs',
-      'region' => 'London',
-      'description' => 'Crown Commercial Service',
-      'address' => {
-        'fm-address-town' => 'London',
-        'fm-address-line-1' => '151 Buckingham Palace Road',
-        'fm-address-postcode' => 'SW1W 9SZ',
-        'fm-address-region' => 'Outer London - South'
-      },
-      'isLondon' => false,
-      :'security-type' => 'Baseline Personnel Security Standard',
-      'services' => [
-        { 'code' => 'M-1', 'name' => 'CAFM system' },
-        { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-        { 'code' => 'I-1', 'name' => 'Reception service' },
-        { 'code' => 'K-3', 'name' => 'Recycled waste' }
-      ],
-      :'fm-building-type' => 'Warehouse',
-      'building-type' => 'Warehouse'
-    }
-  end
-
   before do
-    create(:ccs_fm_rate_card)
-
     service_hours[:monday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
     service_hours[:tuesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
     service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'PM', uom: 0)
@@ -83,9 +29,6 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     procurement.active_procurement_buildings.each do |pb|
       pb.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours)
     end
-
-    procurement.active_procurement_buildings.first.building.update(building_json: building1_json)
-    procurement.active_procurement_buildings.last.building.update(building_json: building2_json)
   end
 
   it 'verify for, service periods worksheet, worksheet headers' do
