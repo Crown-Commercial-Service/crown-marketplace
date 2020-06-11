@@ -81,6 +81,12 @@ FactoryBot.define do
     procurement_buildings { build_list :facilities_management_procurement_building_for_further_competition, 1 }
   end
 
+  factory :facilities_management_procurement_for_further_competition_with_gia, parent: :facilities_management_procurement_for_further_competition do
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    association :user, :with_detail
+    procurement_buildings { build_list :facilities_management_procurement_building_for_further_competition_with_gia, 1 }
+  end
+
   factory :facilities_management_procurement_with_security_document, parent: :facilities_management_procurement do
     security_policy_document_file { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'test_pdf.pdf'), 'application/pdf') }
   end
