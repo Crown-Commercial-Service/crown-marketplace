@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
-  describe 'GET #buildings' do
+  describe 'GET #index' do
     it 'returns http success' do
-      get :buildings
+      get :index
       expect(response).to have_http_status(:found)
     end
   end

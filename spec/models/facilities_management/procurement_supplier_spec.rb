@@ -58,18 +58,10 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         expect(direct_award.send(:generate_contract_number)).to eq("RM3830-DA#{expected_number}-#{current_year}")
       end
     end
-
-    context 'with a procurement in further competition' do
-      it 'returns an available number for a further competition contract' do
-        string_to_hash = further_competition.procurement.id + further_competition.procurement.contract_name
-        expected_format = format('%04d', string_to_hash.hash % 10000)
-        expect(further_competition.send(:generate_contract_number)).to eq("RM3830-FC#{expected_format}-#{current_year}")
-      end
-    end
   end
 
   describe 'contracts' do
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
     let(:user) { create(:user) }
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
     let(:da_value_test1) {  347.60116658878 }
@@ -80,16 +72,17 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
     before do
       allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::EligibleSuppliers).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([[:test1, da_value_test1], [:test2, da_value_test2], [:test3, da_value_test3], [:test4, da_value_test4]])
       allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-      procurement.save_eligible_suppliers_and_set_state
+      procurement.set_state_to_results_if_possible
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
+      allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
       allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
       allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
       allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
@@ -157,6 +150,10 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
       describe '.sent' do
         context 'when the offer gets sent' do
+          it 'will call the GenerateContractZip' do
+            expect(FacilitiesManagement::GenerateContractZip).to have_received(:perform_in)
+          end
+
           it 'will call the ChangeStateWorker' do
             expect(FacilitiesManagement::ChangeStateWorker).to have_received(:perform_at)
           end
@@ -520,7 +517,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         context 'when a procurement is sent on Saturday' do
           it 'is expected to expire on Wednesday' do
             contract.offer_sent_date = DateTime.new(2020, 6, 6, 7, 8, 9).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 6, 10, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 6, 9, 23, 0, 0).in_time_zone('London')
           end
         end
 
@@ -572,16 +569,16 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         context 'when a procurement is sent on Saturday with a bank holiday on Monday' do
           it 'is expected to expire on the next Thursday' do
             contract.offer_sent_date = DateTime.new(2020, 8, 29, 4, 48, 52).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 9, 3, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 9, 2, 23, 0, 0).in_time_zone('London')
           end
         end
 
         context 'when a procurment is sent on a bank holiday' do
           it 'is expected to expire in two working days' do
             contract.offer_sent_date = DateTime.new(2019, 5, 6, 4, 37, 12).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2019, 5, 9, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2019, 5, 8, 23, 0, 0).in_time_zone('London')
             contract.offer_sent_date = DateTime.new(2021, 8, 29, 23, 4, 3).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2021, 9, 2, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2021, 9, 1, 23, 0, 0).in_time_zone('London')
             contract.offer_sent_date = DateTime.new(2020, 12, 25, 10, 10, 10).in_time_zone('London')
             expect(contract.contract_expiry_date).to eq DateTime.new(2020, 12, 31, 0, 0, 0).in_time_zone('London')
           end
@@ -615,7 +612,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         context 'when sent at 2am on the Sunday' do
           it 'is expected to expire on the next Wednesday at midnight' do
             contract.offer_sent_date = DateTime.new(2020, 3, 28, 2, 0, 0).in_time_zone('London')
-            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 4, 1, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_expiry_date).to eq DateTime.new(2020, 3, 31, 23, 0, 0).in_time_zone('London')
           end
         end
       end
@@ -644,15 +641,15 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           contract.offer_sent_date = DateTime.new(2018, 5, 3, 4, 3, 7).in_time_zone('London')
           expect(contract.contract_reminder_date).to eq DateTime.new(2018, 5, 4, 4, 3, 7).in_time_zone('London')
           contract.offer_sent_date = DateTime.new(2020, 8, 29, 3, 4, 5).in_time_zone('London')
-          expect(contract.contract_reminder_date).to eq DateTime.new(2020, 9, 2, 0, 0, 0).in_time_zone('London')
+          expect(contract.contract_reminder_date).to eq DateTime.new(2020, 9, 1, 23, 0, 0).in_time_zone('London')
         end
 
         context 'when the contract is sent on a bank holiday' do
           it 'is expected to have reminder date in one working day' do
             contract.offer_sent_date = DateTime.new(2019, 5, 6, 5, 12, 13).in_time_zone('London')
-            expect(contract.contract_reminder_date).to eq DateTime.new(2019, 5, 8, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_reminder_date).to eq DateTime.new(2019, 5, 7, 23, 0, 0).in_time_zone('London')
             contract.offer_sent_date = DateTime.new(2018, 8, 6, 12, 3, 6).in_time_zone('London')
-            expect(contract.contract_reminder_date).to eq DateTime.new(2018, 8, 8, 0, 0, 0).in_time_zone('London')
+            expect(contract.contract_reminder_date).to eq DateTime.new(2018, 8, 7, 23, 0, 0).in_time_zone('London')
             contract.offer_sent_date = DateTime.new(2020, 12, 25, 4, 3, 0).in_time_zone('London')
             expect(contract.contract_reminder_date).to eq DateTime.new(2020, 12, 30, 0, 0, 0).in_time_zone('London')
           end

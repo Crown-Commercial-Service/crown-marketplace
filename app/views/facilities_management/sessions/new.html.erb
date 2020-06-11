@@ -1,3 +1,4 @@
+<%= content_for :page_title, t('.sign_in_header') %>
 <h1 class="govuk-heading-xl">
   <%= t('.sign_in_header') %>
 </h1>
@@ -5,7 +6,7 @@
   <div class="govuk-grid-column-two-thirds">
     <div id="ccs-error-sum" class="govuk-error-summary <%= 'govuk-visually-hidden' unless @result.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
       <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('common.error_summary_title') %>
+        <%= t('common.error_summary_title') if @result.errors.any?%>
       </h2>
       <div class="govuk-error-summary__body">
         <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
@@ -17,20 +18,20 @@
         </ul>
       </div>
     </div>
-    <%= form_for resource, as: resource_name, url: facilities_management_new_user_session_path, html: {class: 'ccs-form', id: 'cop_sign_in_form'}, method: :post  do |f| %>
+    <%= form_for resource, as: resource_name, url: facilities_management_new_user_session_path, method: :post, html: { specialvalidation: true, novalidate: true, class: 'ccs-form', id: 'cop_sign_in_form'} do |f| %>
       <div class="govuk-form-group govuk-!-margin-bottom-4 <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
         <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="email">
-          <%= t('.email_address') %>
+          <%=  t('.email_address')%>
         </label>
         <span id="email-hint" class="govuk-hint">
-                    <%= t('.email_hint_html') %>
-                </span>
+          <%= t('.email_hint_html') %>
+        </span>
 
         <span id="email-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
                     <%= t('activemodel.errors.models.ccs_patterns/home/cog_sign_in.attributes.cog_sign_in.please_enter_a_valid_email_address') %>
         </span>
         <%= display_error(@result, :email) %>
-        <%=  f.email_field :email, class:"govuk-input govuk-!-width-two-thirds", id:"email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
+        <%=  f.email_field :email, value: "#{ @result.email unless @result.email.nil? }", class:"govuk-input govuk-!-width-two-thirds", id:"email", autocomplete: "off", spellcheck:'false', aria: {describedby: "email-hint"}  %>
       </div>
 
       <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @result.errors[:password].any? %>">
@@ -46,7 +47,7 @@
 
       </div>
 
-      <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7" %>
+      <%= f.submit t('common.sign_in'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.sign_in')}" %>
 
     <% end %>
 
@@ -65,6 +66,3 @@
     </ul>
   </div>
 </div>
-
-
-

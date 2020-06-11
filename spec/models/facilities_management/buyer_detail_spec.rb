@@ -26,6 +26,12 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
       end
     end
 
+    context 'when everything is present verify alias methods' do
+      it 'is valid email' do
+        expect(buyer_detail.user.email).to eq buyer_detail.email
+      end
+    end
+
     context 'when telephone number not present' do
       it 'is invalid' do
         expect(buyer_detail.update(telephone_number: nil)).to eq false
@@ -68,12 +74,12 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
 
   describe '#full_organisation_address' do
     it 'returns the existing address without any extra commas' do
-      expect(buyer_detail.full_organisation_address).to eq buyer_detail.organisation_address_line_1 + ', ' + buyer_detail.organisation_address_line_2 + ', ' + buyer_detail.organisation_address_town + ', ' + buyer_detail.organisation_address_county + ', ' + buyer_detail.organisation_address_postcode
+      expect(buyer_detail.full_organisation_address).to eq buyer_detail.organisation_address_line_1 + ', ' + buyer_detail.organisation_address_line_2 + ', ' + buyer_detail.organisation_address_town + ', ' + buyer_detail.organisation_address_county + ' ' + buyer_detail.organisation_address_postcode
     end
     it 'returns the existing address without address line 2 or county' do
       buyer_detail.organisation_address_line_2 = nil
       buyer_detail.organisation_address_county = nil
-      expect(buyer_detail.full_organisation_address).to eq buyer_detail.organisation_address_line_1 + ', ' + buyer_detail.organisation_address_town + ', ' + buyer_detail.organisation_address_postcode
+      expect(buyer_detail.full_organisation_address).to eq buyer_detail.organisation_address_line_1 + ', ' + buyer_detail.organisation_address_town + ' ' + buyer_detail.organisation_address_postcode
     end
   end
 end

@@ -32,12 +32,17 @@ const contractDateUtils = {
 
         result['Contract-Start-Date'] = contractStartDate.toLocaleDateString().slice(0, 10);
         result['Contract-End-Date'] = contractEndDate.toLocaleDateString().slice(0, 10);
-        result['Contract-Mob-Start'] = mobilisationStartDate.toLocaleDateString().slice(0, 10);
-        result['Contract-Mob-End'] = mobilisationEndDate.toLocaleDateString().slice(0, 10);
+        result['Contract-Mob-Start'] = mobilisationStartDate;
+        result['Contract-Mob-End'] = mobilisationEndDate;
         return result;
     },
 
     contractEndDate: function (contractStartDate, initialCallOffPeriod) {
+        currentYear = new Date().getFullYear();
+
+        if (contractStartDate.getFullYear() < currentYear){
+            return null
+        }
         let contractEndDate = contractDateUtils.dateAdd(contractStartDate, 'y', initialCallOffPeriod);
         contractEndDate = contractDateUtils.dateAdd(contractEndDate, 'd', -1);
         return contractEndDate;

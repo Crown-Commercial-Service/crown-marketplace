@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    include FacilitiesManagement::Beta::SummaryHelper
+    include FacilitiesManagement::SummaryHelper
 
     attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag, :posted_services, :posted_locations, :subregions, :results
 
@@ -10,8 +10,13 @@ module FacilitiesManagement
       @procurement = FacilitiesManagement::Procurement.find(procurement_id)
       initialize_from_procurement
 
-      @rates ||= CCS::FM::Rate.read_benchmark_rates
-      @rate_card ||= CCS::FM::RateCard.latest
+      frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement_id)
+      @rates = frozen_rates.read_benchmark_rates unless frozen_rates.size.zero?
+      @rates = CCS::FM::Rate.read_benchmark_rates if frozen_rates.size.zero?
+
+      frozen_ratecard = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement_id)
+      @rate_card = frozen_ratecard.latest unless frozen_ratecard.size.zero?
+      @rate_card = CCS::FM::RateCard.latest if frozen_ratecard.size.zero?
       regions
     end
 
@@ -19,7 +24,7 @@ module FacilitiesManagement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
       @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building['building_json']['address']['fm-address-region-code'] }
+      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
@@ -70,6 +75,8 @@ module FacilitiesManagement
     end
 
     def current_lot
+      return @procurement.lot_number if @procurement.lot_number_selected_by_customer
+
       case assessed_value
       when 0..7000000
         '1a'
@@ -115,11 +122,11 @@ module FacilitiesManagement
     end
 
     def da_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
     end
 
     def fc_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services }
+      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -160,7 +167,7 @@ module FacilitiesManagement
 
           uvals << { user_id: @procurement.user.id,
                      service_code: s.code.gsub('-', '.'),
-                     uom_value: b.building.building_json['gia'].to_f,
+                     uom_value: b.gia.to_f,
                      building_id: b.building_id,
                      title_text: 'What is the total internal area of this building?',
                      example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
@@ -171,6 +178,18 @@ module FacilitiesManagement
       uvals
     end
     # rubocop:enable Metrics/AbcSize
+
+    def values_to_average
+      if any_services_missing_framework_price?
+        if any_services_missing_benchmark_price?
+          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
+        elsif variance_over_30_percent?(sum_uom, (buyer_input + sum_benchmark) / 2)
+          return [sum_benchmark]
+        end
+      end
+
+      [sum_uom, sum_benchmark]
+    end
 
     private
 
@@ -186,6 +205,7 @@ module FacilitiesManagement
     def copy_params(building_data, _uvals)
       @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
       procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
+      @gia = procurement_building.gia
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
       @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
     end
@@ -211,13 +231,14 @@ module FacilitiesManagement
 
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
-          uom_value = (building_data[:gia] || building_data['gia']).to_f
+          uom_value = @gia.to_f
         else
           occupants = 0
         end
 
         calc_fm = FMCalculator::Calculator.new(@contract_length_years,
                                                v[:service_code],
+                                               v[:service_standard],
                                                uom_value,
                                                occupants,
                                                @tupe_flag,
@@ -249,40 +270,32 @@ module FacilitiesManagement
     def calculate_assessed_value
       return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
 
-      values = values_to_average
+      values = buyer_input.zero? ? values_if_no_buyer_input : values_to_average
 
       values << buyer_input unless buyer_input.zero?
       (values.sum / values.size).to_f
     end
 
-    def values_to_average
-      if any_services_missing_framework_price?
-        if any_services_missing_benchmark_price?
-          return [] if variance_over_30_percent?((sum_uom + sum_benchmark) / 2, buyer_input)
-        elsif variance_over_30_percent?((buyer_input + sum_benchmark) / 2, sum_uom)
-          return [sum_benchmark]
-        end
+    def values_if_no_buyer_input
+      if any_services_missing_framework_price? && !any_services_missing_benchmark_price?
+        variance_over_30_percent?(sum_uom, sum_benchmark) ? [sum_benchmark] : [(sum_benchmark + sum_uom) / 2]
+      else
+        [sum_uom, sum_benchmark]
       end
-
-      [sum_uom, sum_benchmark]
     end
 
     def any_services_missing_framework_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.framework_rate_for(code).nil?
-      end
-      false
+      @procurement.any_services_missing_framework_price?
     end
 
     def any_services_missing_benchmark_price?
-      @procurement.procurement_building_services.map(&:code).each do |code|
-        return true if CCS::FM::Rate.benchmark_rate_for(code).nil?
-      end
-      false
+      @procurement.any_services_missing_benchmark_price?
     end
 
-    def variance_over_30_percent?(sample_average, value)
-      (value - sample_average) / value > 0.03
+    def variance_over_30_percent?(new, baseline)
+      variance = (new - baseline) / baseline
+
+      variance > 0.3 || variance < -0.3
     end
   end
 end

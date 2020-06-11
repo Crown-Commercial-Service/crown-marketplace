@@ -32,3 +32,18 @@
 	outline: 3px solid #fd0;
 	background-color: #fd0
 }
+
+.govuk-breadcrumbs__link:focus {
+	outline: 3px solid rgba(0, 0, 0, 0);
+  background-color: #fd0;
+	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+	text-decoration: none
+}
+
+.govuk-breadcrumbs__link:active,
+.govuk-breadcrumbs__link:focus,
+.govuk-breadcrumbs__link:hover,
+.govuk-breadcrumbs__link:link,
+.govuk-breadcrumbs__link:visited {
+	color: #0b0c0c
+}

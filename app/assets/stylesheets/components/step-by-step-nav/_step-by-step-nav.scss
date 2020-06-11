@@ -71,6 +71,8 @@ $top-border: solid 2px govuk-colour("grey-3");
 
   &:focus {
     @include govuk-focused-text;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
     }
   }
 
@@ -258,16 +260,22 @@ $top-border: solid 2px govuk-colour("grey-3");
       top: govuk-spacing(6);
       width: $number-circle-size-large;
       height: $number-circle-size-large;
+
+      @media (max-width: 70em) {
+        top: 20px;
+        width: 50px;
+        height: 50px;
       }
     }
   }
+}
 
 .app-step-nav__circle--number {
   @include step-nav-font(16, $weight: bold, $line-height: 23px);
   border: solid $stroke-width govuk-colour("grey-2");
 
   .app-step-nav--large & {
-    @include step-nav-font(16, $tablet-size: 19, $weight: bold, $line-height: 23px, $tablet-line-height: 30px);
+    @include step-nav-font(16, $tablet-size: 19, $weight: bold, $line-height: 23px, $tablet-line-height: 25px);
 
     @include govuk-media-query($from: tablet) {
       border-width: $stroke-width-large;
@@ -313,9 +321,14 @@ $top-border: solid 2px govuk-colour("grey-3");
   .app-step-nav__button {
     &:focus {
       @include govuk-focused-text;
+      background-color: #fd0;
+      box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
 
       .app-step-nav__toggle-link {
         @include govuk-focused-text;
+        background-color: #fd0;
+        box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+
         }
       }
     }

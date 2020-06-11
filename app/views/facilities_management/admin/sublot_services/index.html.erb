@@ -1,0 +1,55 @@
+<%= content_for :page_title, @lot_name %>
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_supplier_framework_data_path %>"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.breadcrumb_text_supplier_framework_data') %></a></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= @lot_name %></li>
+  </ol>
+</div>
+<fieldset class="govuk-fieldset">
+<div class="govuk-grid-column-one-thirds">
+  <legend class="govuk-fieldset__legend">
+    <span class="govuk-caption-l"><%= @supplier_name %></span>
+  </legend>
+</div>
+<h1 class="govuk-heading-xl"><%= @lot_name %></h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %>
+</p>
+
+<%= form_tag facilities_management_admin_update_sublot_services_path, class: 'ccs-form', method: :put, specialvalidation: true, novalidate: true, local: false do %>
+  <% @full_services.each do |service| %>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left"><%= service['name'] %></th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <% service['work_package'].each do |work_pckg| %>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag(
+                      "checked_services[]",
+                      work_pckg['code'],
+                      @supplier_rate_data_checkboxes[work_pckg['code']],
+                      class: "govuk-checkboxes__input",
+                      id: "rates_#{work_pckg['code']}"
+                  ) %>
+              <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>">
+
+                <%= work_pckg['code'] %> <%= work_pckg['name'] %>
+              </label>
+            </div>
+          </th>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</fieldset>
+  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <a href="<%= facilities_management_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard" ><%= t('facilities_management.admin.supplier_framework_data.sublot_data.return_button') %></a>
+<% end %>

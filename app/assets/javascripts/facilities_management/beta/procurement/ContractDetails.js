@@ -1,11 +1,11 @@
 $(function () {
     if (typeof(Storage) !== "undefined") {
         let formContactDetails = document.getElementById('new_invoice_contact_details');
-        let formContactDetailsAddress = document.getElementById('new_invoice_contact_details_adress');
+        let formContactDetailsAddress = document.getElementById('new_invoice_contact_details_address');
         let formAuthorisedRep = document.getElementById('new_authorised_contact_details');
-        let formAuthorisedRepAddress = document.getElementById('new_authorised_contact_details_adress');
+        let formAuthorisedRepAddress = document.getElementById('new_authorised_contact_details_address');
         let formNoticeDetails = document.getElementById('new_notices_contact_details');
-        let formNoticeDetailsAddress = document.getElementById('new_notices_contact_details_adress');
+        let formNoticeDetailsAddress = document.getElementById('new_notices_contact_details_address');
 
         if (formContactDetails && window.sessionStorage.contactDetails) {
             fillInDetails(formContactDetails);
@@ -23,22 +23,28 @@ $(function () {
                 getDetails(formContactDetails);
             });
         } else if (formAuthorisedRep) {
-            $('#add_new_authorised_contact_details_adress_1').on('click', function(e) {
+            $('#add_new_authorised_contact_details_address_1').on('click', function(e) {
                 getDetails(formAuthorisedRep);
             });
-            $('#add_new_authorised_contact_details_adress_2').on('click', function(e) {
+            $('#add_new_authorised_contact_details_address_2').on('click', function(e) {
                 getDetails(formAuthorisedRep);
             });
         } else if (formNoticeDetails) {
-            $('#add_new_notices_contact_details_adress_1').on('click', function(e) {
+            $('#add_new_notices_contact_details_address_1').on('click', function(e) {
                 getDetails(formNoticeDetails);
             });
-            $('#add_new_notices_contact_details_adress_2').on('click', function(e) {
+            $('#add_new_notices_contact_details_address_2').on('click', function(e) {
                 getDetails(formNoticeDetails);
             });
         } else if (!(formContactDetailsAddress || formAuthorisedRepAddress || formNoticeDetailsAddress)) {
             removeDetails();
         }
+
+        if (formContactDetails || formAuthorisedRep || formNoticeDetails) {
+          $(document.querySelector('input[type="submit"]')).on('click', function() {
+            removeDetails();
+          });
+        }    
     }
 
     function fillInDetails(form){
@@ -87,5 +93,17 @@ $(function () {
         let telephoneNumberElem = 'facilities_management_procurement' + e.id.substring(3, e.id.length - 1) + '_attributes_telephone_number';
 
         return [nameElem, jobTitleElem, emailElem, telephoneNumberElem];
+    }
+
+    $('.govuk-details__summary').on('click', function(e) {
+      var links = $(e.currentTarget).next().find('a');
+      removeTabIndex = e.currentTarget.getAttribute('aria-expanded') === 'false'
+      for (var i = 0; i < links.length; i++) {
+        removeTabIndexOnLinks(links[i], removeTabIndex)
+      }
+    });
+
+    function removeTabIndexOnLinks(e, state) {
+      state ? e.removeAttribute('tabindex') : e.setAttribute('tabindex', -1)
     }
 });

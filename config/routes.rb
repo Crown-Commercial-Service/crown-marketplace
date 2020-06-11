@@ -46,14 +46,11 @@ Rails.application.routes.draw do
 
     namespace 'facilities_management', path: 'facilities-management' do
       concerns %i[authenticatable registrable]
-      namespace :beta do
+      namespace :supplier do
         concerns :authenticatable
-        namespace :supplier do
-          concerns :authenticatable
-        end
-        namespace :admin do
-          concerns :authenticatable
-        end
+      end
+      namespace :admin do
+        concerns :authenticatable
       end
     end
 
@@ -106,129 +103,74 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management' do
-    namespace 'beta', path: 'beta' do
-      get '/', to: 'buyer_account#buyer_account'
-      get '/start', to: 'home#index'
-      get '/gateway', to: 'gateway#index'
-      get '/buyer_account', to: 'buyer_account#buyer_account'
-      get '/buildings-management', to: 'buildings_management#buildings_management'
-      get '/building-details-summary/:id', to: 'buildings_management#building_details_summary'
-      get '/building-details-summary', to: 'buildings_management#building_details_summary'
-      post '/building-details-summary', to: 'buildings_management#building_details_summary'
-      get '/building', to: 'buildings_management#building'
-      post '/building', to: 'buildings_management#building'
-      put '/building', to: 'buildings_management#update_building_details'
-      get '/building-type', to: 'buildings_management#building_type'
-      post '/building-type', to: 'buildings_management#building_type'
-      put '/building-type', to: 'buildings_management#update_building_type'
-      get '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      post '/building-gross-internal-area', to: 'buildings_management#building_gross_internal_area'
-      put '/building-gross-internal-area', to: 'buildings_management#update_building_gia'
-      get '/building-address', to: 'buildings_management#building_address'
-      get '/building-security-type', to: 'buildings_management#building_security_type'
-      post '/building-security-type', to: 'buildings_management#building_security_type'
-      put '/building-security-type', to: 'buildings_management#update_security_type'
-      match '/buildings-management/save-new-building', to: 'buildings_management#save_new_building', via: %i[get post]
-      match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
-      match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
-      match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
-      match '/save-address', to: 'buildings_management#save_building_address', via: %i[get post]
-      match '/save-building-type', to: 'buildings_management#save_building_type', via: %i[get post]
-      match '/save-building-gia', to: 'buildings_management#save_building_gia', via: %i[get post]
-      match '/save-building-security-type', to: 'buildings_management#save_security_type', via: %i[get post]
-      # post '/summary', to: 'summary#index'
-      match '/summary', to: 'summary#index', via: %i[get post]
-      post '/summary/guidance', to: 'summary#guidance'
-      post '/summary/suppliers', to: 'summary#sorted_suppliers'
-      get '/start', to: 'journey#start', as: 'journey_start'
-      get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
-      get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-      resources :procurements do
-        get 'results'
-        get 'further_competition_spreadsheet'
-        post 'da_spreadsheets'
-        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
-          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
-          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-          get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
-        end
-        resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
-      end
-      resources :procurement_buildings, only: %i[show edit update]
-      resources :procurement_buildings_services, only: %i[show update]
-      resources :buyer_details, only: %i[show edit update] do
-        get 'edit_address'
-      end
-      namespace :supplier do
-        get '/', to: 'home#index'
-        get 'offer-declined', to: 'offer#declined'
-        get 'respond-to-contract-offer', to: 'offer#respond_to_contract_offer'
-        get 'offer-accepted', to: 'offer#accepted'
-        resources :dashboard, only: :index
-        resources :contracts, only: %i[show edit update], controller: 'contracts' do
-          resources :sent, only: %i[index], controller: 'sent'
-        end
-      end
-      namespace :admin, path: 'admin' do
-        get '/', to: 'admin_account#admin_account'
-        get '/start', to: 'dashboard#index'
-        get '/gateway', to: 'gateway#index'
-        get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-        put 'update-call-off-benchmark-rates', to: 'supplier_rates#update_supplier_benchmark_rates'
-        get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-        put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
-        get 'supplier-framework-data', to: 'suppliers_framework_data#index'
-        get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
-        put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
-        get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
-        put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
-        get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
-        put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
+    get '/', to: 'buyer_account#buyer_account'
+    get '/start', to: 'home#index'
+    get '/gateway', to: 'gateway#index'
+    get '/buyer_account', to: 'buyer_account#buyer_account'
+    resources :buildings do
+      member do
+        get 'gia'
+        get 'type'
+        get 'security'
+        match 'add_address', via: %i[get post patch]
       end
     end
-
-    get '/', to: 'home#index'
-    get '/gateway', to: 'gateway#index'
-    # get '/value-band', to: 'select_locations#select_location'
-    get '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations'
-    # get '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
-    # post '/select-services', to: 'select_services#select_services', as: 'select_FM_services'
     match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
-    get '/suppliers/long-list', to: 'long_list#long_list'
-    post '/suppliers/longList' => 'long_list#long_list'
-    post '/suppliers/long-list' => 'long_list#long_list'
-    post '/standard-contract/questions', to: 'standard_contract_questions#standard_contract_questions'
-    # post '/buildings-list', to: 'buildings#buildings'
-    match '/buildings-list', to: 'buildings#buildings', via: %i[get post]
-    post '/buildings/new-building', to: 'buildings#new_building'
-    post '/buildings/new-building-address', to: 'buildings#manual_address_entry_form'
-    post '/buildings/new-building-address/save-building' => 'buildings#save_building'
-    post '/buildings/building-type', to: 'buildings#building_type'
-    post '/buildings/update_building' => 'buildings#update_building'
-    post '/buildings/select-services', to: 'buildings#select_services_per_building'
+    match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
+    match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
+    match '/summary', to: 'summary#index', via: %i[get post]
+    post '/summary/guidance', to: 'summary#guidance'
+    post '/summary/suppliers', to: 'summary#sorted_suppliers'
+    get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
+    get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
 
-    post '/buildings/units-of-measurement', to: 'buildings#units_of_measurement'
-    post '/buildings/save-uom-value' => 'buildings#save_uom_value'
-    post '/services/save-lift-data' => 'select_services#save_lift_data'
-    get '/buildings/region', to: 'buildings#region_info'
-    get '/suppliers', to: 'suppliers#index'
-    post '/buildings/delete_building' => 'buildings#delete_building'
+    resources :procurements do
+      get 'results'
+      get 'further_competition_spreadsheet'
+      post 'da_spreadsheets'
+      get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
+      get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
+      resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
+        resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+        resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+        get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
+        get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
+      end
+      resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
+    end
+    resources :procurement_buildings, only: %i[show edit update]
+    resources :procurement_buildings_services, only: %i[show update]
+    resources :buyer_details, only: %i[show edit update] do
+      get 'edit_address'
+    end
+    namespace :supplier do
+      get '/', to: 'home#index'
+      resources :dashboard, only: :index
+      resources :contracts, only: %i[show edit update], controller: 'contracts' do
+        resources :sent, only: %i[index], controller: 'sent'
+      end
+    end
+    namespace :admin, path: 'admin' do
+      get '/', to: 'admin_account#admin_account'
+      get '/gateway', to: 'gateway#index'
+      get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
+      put 'update-call-off-benchmark-rates', to: 'supplier_rates#update_supplier_benchmark_rates'
+      get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
+      put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
+      get 'supplier-framework-data', to: 'suppliers_framework_data#index'
+      get 'management-report', to: 'management_report#index'
+      put 'update-management-report', to: 'management_report#update'
+      get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
+      put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
+      get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
+      put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
+      get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
+      put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
+    end
 
-    get '/admin/start', to: 'dashboard#index'
-    get '/start', to: 'home#index'
-    # post '/contract-start', to: 'contract#start_of_contract'
-    match '/contract-start', to: 'contract#start_of_contract', via: %i[get post]
-    get '/directaward', to: 'direct_award#calc_eligibility'
-    post '/cache/set', to: 'cache#set'
-    post '/cache/get', to: 'cache#retrieve'
-    post '/cache/clear_by_key', to: 'cache#clear_by_key'
-    post '/cache/clear', to: 'cache#clear_all'
-    get '/buyer-account', to: 'buyer_account#buyer_account'
-    get '/reset', to: 'buildings#reset_buildings_tables'
+    get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-    get '/:slug', to: '/errors#404'
-
     resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
@@ -243,7 +185,6 @@ Rails.application.routes.draw do
     get '/html/select-location', to: 'html#select_location'
     get '/html/supplier-detail', to: 'html#supplier_detail'
     get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
-    # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
       resources :uploads, only: %i[index new create show] do
         get 'approve'
@@ -252,7 +193,6 @@ Rails.application.routes.draw do
       end
       get '/in_progress', to: 'uploads#in_progress'
     end
-    # end
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
@@ -261,6 +201,8 @@ Rails.application.routes.draw do
 
   namespace 'ccs_patterns', path: 'ccs-patterns' do
     get '/', to: 'home#index'
+    # get '/metadata', to: 'dbdata#index', as: 'ccsmetadata'
+    # put '/metadata/kill/:id', to: 'dbdata#killpid', as: 'killlockpid'
     get '/new_layout', to: 'home#new_layout'
     get '/prototypes', to: 'prototype#index'
     get '/prototypes/no-response', to: 'prototype#no_response'
@@ -311,7 +253,6 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :downloads, only: :index
-    # unless Rails.env.production? # not be available on production environments yet
     namespace :admin do
       resources :uploads, only: %i[index new create show] do
         get 'approve'
@@ -339,6 +280,15 @@ Rails.application.routes.draw do
       post '/postcode/:slug', to: 'uploads#postcodes'
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
+      get '/find-region/:postcode', to: 'nuts#find_region_query'
+      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
+      get '/test-notification', to: 'api_test_notifications#send_notification'
+      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
+    end
+    namespace :v2 do
+      resources :postcodes, only: :show
+      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
+      get '/search-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
       get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
       get '/test-notification', to: 'api_test_notifications#send_notification'

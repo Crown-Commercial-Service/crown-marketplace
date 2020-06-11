@@ -25,8 +25,8 @@ module CCS
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             l['lot_number'] == for_lot &&
-              l['regions'].any? { |reg| for_regions.include?(reg) } &&
-              l['services'].any? { |ser| for_services.include?(ser) }
+              (for_regions - l['regions']).empty? &&
+              (for_services - l['services']).empty?
           end
         end
       end
@@ -39,7 +39,7 @@ module CCS
         result =
           vals.map do |s|
             selected_lot = s.data['lots'].select do |x|
-              x['lot_number'] = for_lot
+              x['lot_number'] == for_lot
             end
             first_selected_lot = selected_lot&.first
             { 'name' => s.data['supplier_name'],

@@ -30,3 +30,6 @@
 
 div.radio-content-toggle input[type=radio] ~ div.govuk-inset-text { display:none ;}
 div.radio-content-toggle input[type=radio]:checked ~ div.govuk-inset-text { display:block ;}
+
+div.radio-content-toggle input[type=radio] ~ div.radio-inner-content { display:none ;}
+div.radio-content-toggle input[type=radio]:checked ~ div.radio-inner-content  { display:block ;}

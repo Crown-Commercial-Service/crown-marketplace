@@ -20,8 +20,13 @@ FactoryBot.define do
     optional_call_off_extensions_4 { 1 }
   end
 
+  factory :facilities_management_procurement_detailed_search, parent: :facilities_management_procurement do
+    aasm_state { 'detailed_search' }
+  end
+
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
     aasm_state { 'da_draft' }
+    procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
   end
 
   factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do
@@ -53,5 +58,26 @@ FactoryBot.define do
     authorised_contact_detail { create :facilities_management_procurement_authorised_contact_detail }
     notices_contact_detail { create :facilities_management_procurement_notices_contact_detail }
     procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
+  end
+
+  factory :facilities_management_procurement_with_contact_details_with_buildings, parent: :facilities_management_procurement_with_contact_details do
+    tupe { true }
+    procurement_buildings { build_list :facilities_management_procurement_building, 2 }
+    association :user, :with_detail
+  end
+
+  factory :facilities_management_procurement_with_contact_details_with_buildings_no_tupe_london, parent: :facilities_management_procurement_with_contact_details do
+    tupe { false }
+    procurement_buildings { build_list :facilities_management_procurement_building_london, 2 }
+  end
+
+  factory :facilities_management_procurement_for_further_competition, class: FacilitiesManagement::Procurement do
+    contract_name { Faker::Name.unique.name }
+    estimated_cost_known { false }
+    tupe { false }
+    initial_call_off_period { 1 }
+    service_codes { ['C.1', 'C.2'] }
+    association :user
+    procurement_buildings { build_list :facilities_management_procurement_building_for_further_competition, 1 }
   end
 end

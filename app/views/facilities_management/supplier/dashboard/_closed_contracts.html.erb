@@ -1,0 +1,35 @@
+<% unless @closed_contracts.empty? %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Date</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"> Status </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @closed_contracts.each do |closed_contract| %>
+        <tr class="govuk-table__row" scope="row">
+          <td class="govuk-table__cell govuk-!-padding-right-4"> <%= link_to closed_contract.procurement.contract_name, facilities_management_supplier_contract_path(closed_contract.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
+          <td class="govuk-table__cell govuk-!-padding-right-4"> <%= closed_contract.procurement.user.buyer_detail.organisation_name %> </td>
+          <td class="govuk-table__cell govuk-!-padding-right-4">
+            <% case closed_contract.aasm_state %>
+            <% when 'not_signed' %>
+              <%= format_date closed_contract.contract_signed_date %>
+            <% when 'expired', 'declined' %>
+              <%= format_date closed_contract.supplier_response_date %>
+            <% else %>
+              <%= format_date closed_contract.contract_closed_date %>
+            <% end %>
+          </td>
+          <td class="govuk-table__cell"> <%= FacilitiesManagement::Supplier::DashboardHelper::SUPPLIER_STATUS[closed_contract.aasm_state.to_sym] %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <hr class="govuk-section-break govuk-section-break--visible">
+    <span class="govuk-hint govuk-!-margin-top-3"> You do not have any items in this section </span>
+  <hr class="govuk-section-break govuk-section-break--visible">
+<% end %>

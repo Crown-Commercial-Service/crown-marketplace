@@ -53,7 +53,7 @@ RSpec.describe Cognito::SignInUser do
 
       it 'does returns cognito error' do
         response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq 'Oops'
+        expect(response.error).to eq I18n.t('facilities_management.users.sign_in_error')
       end
     end
 
@@ -114,7 +114,7 @@ RSpec.describe Cognito::SignInUser do
 
       it 'does returns cognito error' do
         response = described_class.call(email, password, cookies_disabled)
-        expect(response.error).to eq I18n.t('activemodel.errors.models.user.incorrect_username_or_password')
+        expect(response.error).to eq I18n.t('facilities_management.users.sign_in_error')
       end
 
       it 'returns need_password_reset false' do

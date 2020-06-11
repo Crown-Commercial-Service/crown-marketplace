@@ -1,16 +1,18 @@
 require 'facilities_management/fm_buildings_data'
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
-    default_scope { order(name: :asc) }
     scope :active, -> { where(active: true) }
+    scope :order_by_building_name, -> { includes(:building).order('facilities_management_buildings.building_name ASC') }
     scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.new.codes.include?(code) } } }
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
     belongs_to :building, class_name: 'FacilitiesManagement::Building', optional: true
+    delegate :full_address, to: :building
 
     validate :service_codes_not_empty, on: :building_services
     validate :services_valid?, on: :procurement_building_services
+    validate :services_present?, on: :procurement_building_services_present
 
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
@@ -19,12 +21,13 @@ module FacilitiesManagement
       include_association :procurement_building_services
     end
 
-    def full_address
-      "#{address_line_1 + ', ' if address_line_1.present?}
-      #{address_line_2 + ', ' if address_line_2.present?}
-      #{town + ', ' if town.present?}
-      #{county + ', ' if county.present?}
-      #{postcode}"
+    def set_gia
+      # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
+      update(gia: building.gia)
+    end
+
+    def name
+      building.building_name
     end
 
     private
@@ -39,10 +42,14 @@ module FacilitiesManagement
       self.service_codes = service_codes.reject(&:blank?)
     end
 
+    def services_present?
+      errors.add(:service_codes, :at_least_one, building_name: name) if service_codes.empty?
+    end
+
     def services_valid?
       false if procurement_building_services.empty?
       result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
-      errors.add(:procurement_building_services, :invalid, message: 'Some services are invalid') unless result && answers_present?
+      errors.add(:procurement_building_services, :invalid) unless result && answers_present?
       result
     end
 

@@ -6,6 +6,8 @@ module FacilitiesManagement
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
 
+    has_one_attached :contract_documents_zip
+
     attribute :contract_response
     attribute :contract_signed
     attribute :reason_for_not_signing
@@ -18,14 +20,20 @@ module FacilitiesManagement
 
     before_validation proc { convert_to_boolean('contract_response') }, on: :contract_response
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
-    validates :reason_for_declining, presence: true, length: { maximum: 500 }, if: proc { contract_response == false }, on: :contract_response
-    validates :reason_for_closing, length: { maximum: 500 }, presence: true, on: :reason_for_closing
+
+    validates :reason_for_declining, presence: true, if: -> { contract_response == false }, on: :contract_response
+    validate :reason_for_declining_length, if: -> { contract_response == false }, on: :contract_response
+
+    validates :reason_for_closing, presence: true, on: :reason_for_closing
+    validate :reason_for_closing_length, on: :reason_for_closing
 
     acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
     before_validation proc { convert_to_boolean('contract_signed') }, on: :confirmation_of_signed_contract
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
-    validates :reason_for_not_signing, presence: true, length: 1..100, if: proc { contract_signed == false }, on: :confirmation_of_signed_contract
+
+    validates :reason_for_not_signing, presence: true, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
+    validate :reason_for_not_signing_length, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
 
     validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
@@ -48,9 +56,11 @@ module FacilitiesManagement
       event :offer_to_supplier do
         before do
           assign_contract_number
+          unset_contract_documents_zip_generated
           set_sent_date
           send_email_to_supplier('DA_offer_sent')
           begin
+            FacilitiesManagement::GenerateContractZip.perform_in(1.minute, id)
             FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
             FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
           rescue StandardError
@@ -117,8 +127,8 @@ module FacilitiesManagement
         transitions from: :sent, to: :expired
       end
     end
-    # rubocop:enable Metrics/BlockLength
 
+    # rubocop:enable Metrics/BlockLength
     def self.used_direct_award_contract_numbers_for_current_year
       where('contract_number like ?', 'RM3860-DA%')
         .where('contract_number like ?', "%-#{Date.current.year}")
@@ -148,7 +158,7 @@ module FacilitiesManagement
       procurement.procurement_suppliers.where.not(aasm_state: 'unsent')&.last&.id != id
     end
 
-    SENT_OFFER_ORDER = %i[sent declined expired accepted not_signed].freeze
+    SENT_OFFER_ORDER = %w[sent declined expired accepted not_signed].freeze
 
     CLOSED_TO_SUPPLIER = %w[declined expired withdrawn not_signed].freeze
 
@@ -170,6 +180,10 @@ module FacilitiesManagement
 
     def set_contract_closed_date
       self.contract_closed_date = DateTime.now.in_time_zone('London')
+    end
+
+    def unset_contract_documents_zip_generated
+      self.contract_documents_zip_generated = false
     end
 
     def last_offer?
@@ -196,6 +210,18 @@ module FacilitiesManagement
       errors.add(date, :not_a_date) unless real_date?(date)
     end
 
+    def reason_for_declining_length
+      errors.add(:reason_for_declining, :too_long) if !reason_for_declining.nil? && reason_for_declining.gsub("\r\n", "\r").length > 500
+    end
+
+    def reason_for_closing_length
+      errors.add(:reason_for_closing, :too_long) if !reason_for_closing.nil? && reason_for_closing.gsub("\r\n", "\r").length > 500
+    end
+
+    def reason_for_not_signing_length
+      errors.add(:reason_for_not_signing, :too_long) if !reason_for_not_signing.nil? && reason_for_not_signing.gsub("\r\n", "\r").length > 100
+    end
+
     def time_delta_in_days(start_date, end_date)
       (end_date - start_date.to_datetime).to_f.days
     end
@@ -213,7 +239,7 @@ module FacilitiesManagement
 
       return ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: self.class.used_direct_award_contract_numbers_for_current_year).new_number if procurement.direct_award? || procurement.da_draft?
 
-      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number_fc(procurement.id + procurement.contract_name)
+      ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end
 
     def set_sent_date
@@ -229,20 +255,11 @@ module FacilitiesManagement
     end
 
     def format_date_time_numeric(date)
-      date&.strftime '%d/%m/%Y, %l:%M%P'
+      date&.in_time_zone('London')&.strftime '%d/%m/%Y, %l:%M%P'
     end
 
     def format_date(date)
-      date&.strftime '%d/%m/%Y'
-    end
-
-    def host
-      case ENV['RAILS_ENV']
-      when 'production'
-        'https://cmp.cmpdev.crowncommercial.gov.uk'
-      when 'development'
-        'http://localhost:3000'
-      end
+      date&.in_time_zone('London')&.strftime '%d/%m/%Y'
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -257,7 +274,7 @@ module FacilitiesManagement
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-decline-reason': reason_for_declining,
         'da-offer-1-accept-date': format_date_time_numeric(supplier_response_date),
-        'da-offer-1-link': host + '/facilities-management/beta/procurements/' + procurement.id + '/contracts/' + id
+        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -276,7 +293,7 @@ module FacilitiesManagement
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
-        'da-offer-1-link': host + '/facilities-management/beta/supplier/contracts/' + id,
+        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id,
         'da-offer-1-supplier-1': supplier.data['supplier_name'],
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,

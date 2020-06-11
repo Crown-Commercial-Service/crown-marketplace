@@ -91,7 +91,7 @@ module FacilitiesManagement
     def to_summary
       return 'na' if service_choice.nil?
 
-      return I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.not_required') if service_choice&.to_sym == :not_required
+      return I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.not_required').downcase if service_choice&.to_sym == :not_required
 
       return I18n.t('activemodel.attributes.facilities_management/service_hour_choice/service_choice.all_day') if service_choice&.to_sym == :all_day
 

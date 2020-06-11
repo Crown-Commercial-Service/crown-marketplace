@@ -1,0 +1,17 @@
+<%= render 'layouts/logo' %>
+<div class="govuk-header__content">
+  <span class="govuk-header__link--service-name">Supplier account</span>
+  <nav role="navigation" aria-label="Top Level Navigation">
+    <ul id="navigation" class="govuk-header__navigation ">
+      <% unless fm_supplier_login_page %>
+        <% if passwords_page || cookies_page %>
+          <li class="govuk-header__navigation-item"><%= link_to 'Back to start', facilities_management_supplier_path, class: 'govuk-header__link' %></li>
+        <% else %>
+          <li class="govuk-header__navigation-item"><%= link_to 'My dashboard', facilities_management_supplier_path, class: 'govuk-header__link' %></li>
+        <% end %>
+      <% end %>
+      <%= navigation_link_supplier_and_buyer if not_permitted_page %>
+      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_supplier_destroy_user_session_path %>
+    </ul>
+  </nav>
+</div>

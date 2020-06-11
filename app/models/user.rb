@@ -20,7 +20,7 @@ class User < ApplicationRecord
           dependent: :destroy
 
   has_many :buildings,
-           foreign_key: :users_id,
+           foreign_key: :user_id,
            class_name: 'FacilitiesManagement::Building',
            inverse_of: :user,
            dependent: :destroy
@@ -28,6 +28,14 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable
+
+  def authenticatable_salt
+    "#{id}#{session_token}"
+  end
+
+  def invalidate_session!
+    self.session_token = SecureRandom.hex
+  end
 
   roles_attribute :roles_mask
 

@@ -1,0 +1,30 @@
+<table class="govuk-table">
+  <% unless @sent_offers.empty? %>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="25%">Contract name</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%">Supplier</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="15%">Sent</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%">Stage</th>
+        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" width="20%"></td>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @sent_offers.each do |sent_offer| %>
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
+            <%= link_to sent_offer.procurement.contract_name, facilities_management_procurement_contract_path(procurement_id: sent_offer.procurement.id, id: sent_offer.id) %>
+          </th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= sent_offer.supplier.data['supplier_name'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(sent_offer.offer_sent_date.in_time_zone('London')) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= FacilitiesManagement::ProcurementSuppliersHelper::CONTRACT_STATE[sent_offer.aasm_state.to_sym] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><strong class="govuk-tag <%= 'govuk-visually-hidden' if sent_offer.aasm_state.to_sym == :sent %>"> ACTION REQUIRED  </strong></td>
+        </tr>
+      <% end %>
+  </tbody>
+  <% else %>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+      <span class="govuk-body"> <%= t('.no_sent') %></span>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-3">
+  <% end %>
+</table>

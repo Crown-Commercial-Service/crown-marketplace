@@ -1,0 +1,52 @@
+<div class="govuk-body">
+  <div class="grid-column-two-thirds">
+    <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label="Back to the previous page" href=".">Back</a>
+    <% if @deleted %>
+      <div class="govuk-grid-row">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Your search was deleted
+          </h1>
+          <div class="govuk-panel__body">
+            '<%= @what_was_deleted %>' search result was deleted.
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <h1 class="govuk-heading-xl"><%= t('.manage_procurements') %></h1>
+    <% content_for :page_title, t('.manage_procurements') %>
+
+    <a class="govuk-button govuk-!-margin-top-4  govuk-!-margin-bottom-8 govuk-!-padding-left-5 govuk-!-padding-right-5" href="/facilities-management/choose-services" aria-label="<%= t('.start_new_search') %>" ><%= t('.start_new_search') %></a>
+
+    <div class="ccs-info-panel">
+      <h1 class="govuk-heading-m"><%= t('.searches_title') %></h1>
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/searches' %>
+    </div>
+
+    <div class="ccs-info-panel">
+      <h1 class="govuk-heading-l govuk-!-font-size-27"><%= t('.direct_award_title') %></h1>
+
+      <h2 class="govuk-heading-m"><%= t('.in-draft-title') %></h2>
+
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/in_draft' %>
+
+      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.sent_offers') %></h1>
+
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/sent_offers' %>
+
+      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.contracts_title') %></h1>
+
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/contracts' %>
+
+      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.closed_title') %></h1>
+
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/closed' %>
+    </div>
+
+    <div class="ccs-info-panel">
+      <h1 class="govuk-heading-m"><%= t('.further_competition') %></h1>
+      <%= render partial: 'facilities_management/procurements/dashboard_tables/further_competition' %>
+    </div>
+  </div>
+</div>

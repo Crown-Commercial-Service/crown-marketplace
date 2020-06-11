@@ -1,6 +1,7 @@
 @import "govuk-frontend/components/details/details";
 
 .govuk-details {
+  font-size: inherit !important;
   margin-bottom: 0;
 }
 
@@ -9,8 +10,8 @@
 	color: #0b0c0c;
 	background-color: #fd0;
 	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-  text-decoration: none;
-  
+    text-decoration: none;
+
   & .govuk-details__summary-text {
     text-decoration: none;
   }

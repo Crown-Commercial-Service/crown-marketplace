@@ -8,7 +8,7 @@ module FacilitiesManagement
 
         unless raw_value.blank? || raw_value.to_s.match(/(\A\d*\.\d+\z)|(\A\d+\z)/)
           record.errors.add(attr, :not_a_number,
-                            message: I18n.t('facilities_management.beta.admin.supplier_rates.supplier_framework_rates.not_a_number'))
+                            message: I18n.t('facilities_management.admin.supplier_rates.supplier_framework_rates.not_a_number'))
         end
       end
     end

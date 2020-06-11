@@ -1,0 +1,61 @@
+<%= content_for :page_title, t('facilities_management.admin.management_report.heading_title') %>
+<%= form_for @management_report, url: facilities_management_admin_update_management_report_path, method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_management_report_path %>">
+        <%= t('facilities_management.admin.management_report.breadcrumb_text_management_report') %>
+      </a>
+    </li>
+  </ol>
+</div>
+
+<% if f.object.errors.any? %>
+  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" id="error-summary">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      <%= t('facilities_management.admin.management_report.there_is_a_problem') %>
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        <% f.object.errors.keys.each do |attribute| %>
+          <% case attribute %>
+          <% when :start_date, :end_date %>
+            <li>
+             <%= link_to "#{f.object.errors[attribute].first}", "##{error_id(attribute)}", data: {fieldname: attribute, errortype: get_client_side_error_type_from_errors(f.object.errors, attribute).to_s } %>
+            </li>
+          <% else %>
+            <% next %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <% end %>
+
+<% render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
+
+<h1 class="govuk-heading-xl"><%= t('facilities_management.admin.management_report.heading_title') %></h1>
+<h2 class="govuk-heading-l"><%= t('facilities_management.admin.management_report.heading_sub') %></h2>
+<h3 class="govuk-body-l"><%= t('facilities_management.admin.management_report.heading_sub_detail') %></h3>
+
+<div class="govuk-table__row <%= ' govuk-form-group govuk-form-group--error' if @management_report.errors[:start_date].any? %>">
+<h4 class="govuk-heading-l govuk-!-margin-bottom-1">From</h4>
+<p class="govuk-!-font-weight-regular govuk-hint">For example, 15 06 2020</p>
+    <%= display_errors @management_report, :start_date %>
+    <%= f.gov_uk_date_field :start_date, required: true, legend_options: { page_heading: false, visually_hidden: true } %>
+    </div>
+
+    <div class="govuk-table__row govuk-!-padding-top-3 govuk-!-padding-bottom-3 <%= 'govuk-form-group govuk-form-group--error' if @management_report.errors[:end_date].any? %>">
+      <h4 class="govuk-heading-l govuk-!-margin-bottom-1">To</h4>
+      <p class="govuk-!-font-weight-regular govuk-hint">For example, 30 06 2020</p>
+    <%= display_errors @management_report, :end_date %>
+    <%= f.gov_uk_date_field :end_date, required: true, legend_options: { page_heading: false, visually_hidden: true } %>
+    </div>
+    <%= f.submit t('facilities_management.admin.management_report.download_btn_text'), class: 'govuk-button', id: 'management-report-submit', data: { disable_with: false }, 'aria-label': "#{t('facilities_management.admin.management_report.download_btn_text')}" %>
+
+<% end %>
+
+<a href="<%= facilities_management_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.admin.management_report.return_link') %></a>

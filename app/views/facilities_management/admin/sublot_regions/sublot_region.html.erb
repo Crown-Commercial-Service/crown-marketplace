@@ -1,0 +1,54 @@
+<%= content_for :page_title, @sublot_region_name %>
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_supplier_framework_data_path %>"><%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.breadcrumb_supllier_framework_data') %></a>
+    </li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+      <%= @sublot_region_name %>
+    </li>
+  </ol>
+</div>
+
+<h1 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.data['supplier_name'] %></h1>
+<h2 class="govuk-heading-xl govuk-!-margin-bottom-2"><%= @sublot_region_name %></h2>
+
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.leading_text') %>
+</p>
+
+<%= form_with(url: "", method: "put", local: "false") do %>
+<% @regions.each do |key, value| %>
+  <h2 class="govuk-heading-m"><%= value %></h2>
+  <div>
+    <% @subregions.each do |key2, value2| %>
+      <% if key2.start_with?(key) %>
+        <div class="govuk-form-group">
+          <div id="<%=key2%>-checkbox" class="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <%= check_box_tag(
+                      "regions[]",
+                      key2,
+                      @selected_supplier_regions[key2],
+                      class: "govuk-checkboxes__input",
+                      id: "#{key2}"
+                  ) %>
+              <label id="<%= key2 %>_label" class="govuk-label govuk-checkboxes__label CCS-fm-region-filter-check-box-label" for="<%= key2 %>">
+                <%= value2 %>
+              </label>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<input type="submit" name="update_supplier_regions" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.update_button') %>% class="govuk-button" data-disable-with="Continue">
+
+<% end %>
+<a href="<%= facilities_management_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.admin.supplier_framework_data.sublot_1a_regions.rtrn_link') %></a>

@@ -1,10 +1,10 @@
 <%= render 'layouts/logo' %>
 <div class="govuk-header__content">
-  <%= render 'layouts/admin/header-title', service: 'admin_account', path: facilities_management_admin_start_path %>
+  <%= render 'layouts/admin/header-title', service: 'admin_account', path: facilities_management_admin_path %>
   <nav role="navigation" aria-label="Top Level Navigation">
     <ul id="navigation" class="govuk-header__navigation ">
-      <%= render 'layouts/admin/header-dashboard-link', admin_dashboard_path: facilities_management_beta_admin_path %> 
-      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_beta_admin_destroy_user_session_path %>
+      <%= render 'layouts/admin/header-dashboard-link', admin_dashboard_path: facilities_management_admin_path %>
+      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_admin_destroy_user_session_path %>
     </ul>
   </nav>
 </div>

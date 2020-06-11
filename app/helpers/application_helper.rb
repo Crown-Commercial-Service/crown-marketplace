@@ -4,7 +4,7 @@ module ApplicationHelper
 
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
   PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
-  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home', 'facilities_management/beta/home'].freeze
+  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home'].freeze
 
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
@@ -48,20 +48,23 @@ module ApplicationHelper
   def govuk_form_field(model_object, attribute, form_object_name, label_text, readable_property_name, top_level_data_options)
     css_classes = %w[govuk-!-margin-top-3]
     form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if model_object.errors.any?
+    form_group_css += ['govuk-form-group--error'] if model_object.errors[attribute].any?
+    label_for_id = form_object_name
+    id_for_label = "#{form_object_name}_#{attribute}-info"
+    label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
 
     content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
       content_tag :div, class: form_group_css, data: top_level_data_options do
+        concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
         concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
-        concat display_label(attribute, label_text, "#{form_object_name}_#{attribute}") if label_text.present?
-        concat yield
+        yield
       end
     end
   end
   # rubocop:enable Metrics/ParameterLists
 
-  def display_label(attribute, text, form_object_name)
-    content_tag :label, text, class: 'govuk-label', for: "#{form_object_name}_#{attribute}"
+  def display_label(_attribute, text, form_object_name, _id_for_label)
+    content_tag :label, text, class: 'govuk-label', for: form_object_name
   end
 
   def govuk_form_group_with_optional_error(journey, *attributes)
@@ -89,10 +92,8 @@ module ApplicationHelper
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attribute)
 
-    content_tag :div, class: 'error-collection govuk-visually-hidden', id: "error_#{form_object_name}_#{attribute}" do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    collection.each do |key, val|
+      concat(govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
     end
   end
 
@@ -102,26 +103,13 @@ module ApplicationHelper
     (attributes.is_a?(Array) ? attributes.last : attributes).to_s
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def display_potential_errors(model_object, attributes, form_object_name, error_lookup = nil, error_position = nil, section_name = nil)
+  def display_potential_errors(model_object, attributes, form_object_name, section_name = nil)
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
+    return if collection.empty?
 
-    content_tag :div, class: 'error-collection', property_name: property_name(section_name, attributes) do
-      collection.each do |key, val|
-        concat(govuk_validation_error({ model_object: model_object, attribute: attributes.is_a?(Array) ? attributes.last : attributes, error_type: key, text: val, form_object_name: form_object_name }, error_lookup, error_position))
-      end
+    content_tag :div, class: 'error-collection potenital-error', property_name: property_name(section_name, attributes) do
+      multiple_validation_errors(model_object, attributes, form_object_name, collection)
     end
-  end
-  # rubocop:enable Metrics/ParameterLists
-
-  def display_specialised_error(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
-    error = model_object.errors[attribute].first
-    return if error.blank?
-
-    error_type = model_object.errors.details[attribute].first[:error]
-    error_message = model_object.errors[attribute]&.first
-
-    govuk_validation_error({ model_object: model_object, attribute: attribute, error_type: error_type, text: error_message, form_object_name: form_object_name }, error_lookup, error_position)
   end
 
   def model_attribute_has_error(model_object, *attributes)
@@ -139,11 +127,11 @@ module ApplicationHelper
     safe_join(attributes.map { |a| display_error(journey, a) })
   end
 
-  def display_error(journey, attribute, margin = true)
+  def display_error(journey, attribute, margin = true, id_prefix = '')
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute), class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
+    content_tag :span, id: "#{id_prefix}#{error_id(attribute)}", class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
       error.to_s
     end
   end
@@ -269,8 +257,28 @@ module ApplicationHelper
     request.path_info.include? 'buyer-account'
   end
 
+  def fm_activate_account_landing_page
+    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
+  end
+
   def fm_supplier_landing_page
-    request.path_info.include? 'supplier-account'
+    request.path_info.include? 'supplier'
+  end
+
+  def fm_supplier_login_page
+    controller.controller_name == 'sessions' && controller.action_name == 'new'
+  end
+
+  def fm_back_to_start_page
+    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
+  end
+
+  def passwords_page
+    controller.controller_name == 'passwords'
+  end
+
+  def cookies_page
+    controller.action_name == 'cookies'
   end
 
   def not_permitted_page
@@ -286,18 +294,18 @@ module ApplicationHelper
   end
 
   def format_date_time_day(date_object)
-    date_object&.in_time_zone('London')&.strftime '%A %e %B %Y at %l:%M%P'
+    date_object&.in_time_zone('London')&.strftime '%e %B %Y, %l:%M%P'
   end
 
-  def format_money(cost)
-    number_to_currency(cost, precision: 2, unit: '£')
+  def format_money(cost, precision = 2)
+    number_to_currency(cost, precision: precision, unit: '£')
   end
 
   def link_to_add_row(name, form, association, **args)
     new_object = form.object.send(association).klass.new
     id = new_object.object_id
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
-      render("facilities_management/beta/procurements/edit/#{association.to_s.singularize}", ff: builder)
+      render("facilities_management/procurements/edit/#{association.to_s.singularize}", ff: builder)
     end
     link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
   end
