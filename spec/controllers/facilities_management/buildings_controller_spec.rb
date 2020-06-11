@@ -260,7 +260,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       context 'when saving a manual address' do
         it 'will render add_address' do
-          patch :update, params: { id: building.id, add_address:'add_address', step: 'edit', facilities_management_building: { postcode_entry: 'SW1A 1AA', building_name:'name', address_line_1: 'line 1', address_postcode: 'SW1A 1AA' } }
+          patch :update, params: { id: building.id, add_address: 'add_address', step: 'edit', facilities_management_building: { postcode_entry: 'SW1A 1AA', building_name: 'name', address_line_1: 'line 1', address_postcode: 'SW1A 1AA' } }
           expect(response).to have_http_status(:ok)
           expect(response).to render_template(:add_address)
         end
