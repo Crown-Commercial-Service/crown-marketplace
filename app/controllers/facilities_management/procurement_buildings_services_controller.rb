@@ -9,10 +9,6 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     render :edit
   end
 
-  def edit
-    raise ActionController::RoutingError, 'not found' if @building_service.blank?
-  end
-
   def update
     if params[:facilities_management_procurement_building_service][:step] == 'lifts'
       update_lifts
