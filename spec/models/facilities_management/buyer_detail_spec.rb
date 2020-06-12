@@ -48,6 +48,14 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
       it 'is invalid' do
         expect(buyer_detail.update(organisation_address_postcode: nil)).to eq false
       end
+
+      it 'will throw an error' do
+        buyer_detail.organisation_address_postcode = 'SAN TA1'
+        buyer_detail.save
+        # binding.pry
+        # expect(buyer_detail.attributes[:organisation_address_postcode].errors[:invalid].first).to eq 'Enter a valid postcode, for example SW1A 1AA'
+        expect(buyer_detail.errors.messages).to eq(organisation_address_postcode: ['Enter a valid postcode, for example SW1A 1AA'])
+      end
     end
 
     context 'when organisation line 1 is not present on update_address context' do
