@@ -505,6 +505,7 @@ en:
         link_to_building_summary: View details for
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
+        procurement_dashboard_link: Go to procurements dashboard
         start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
         start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
       page_definitions:

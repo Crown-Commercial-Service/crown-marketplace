@@ -2,7 +2,9 @@
 <%= content_for :page_title, pd.heading_details.text %>
   <div id="buildings-container">
     <%= link_to t('.create_new_button'), new_facilities_management_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
-    <div class="govuk-!-width-two-thirds">
+    <br>
+    <%= link_to t('.procurement_dashboard_link'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 govuk-link--no-visited-state', 'aria-label': t('.procurement_dashboard_link') %>
+    <div class="govuk-!-width-two-thirds govuk-!-margin-top-6">
       <p class="govuk-!-margin-bottom-2">
         <%= t('.start_paragraph') %>
       </p>
