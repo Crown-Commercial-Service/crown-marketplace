@@ -297,10 +297,19 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'POST create' do
       context 'with a valid record' do
-        it 'redirects to edit path for the new record' do
-          post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
-          new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-          expect(response).to redirect_to edit_facilities_management_procurement_path(new_procurement.id)
+        context 'when Save and continue is selected' do
+          it 'redirects to edit path for the new record' do
+            post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
+            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            expect(response).to redirect_to edit_facilities_management_procurement_path(new_procurement.id)
+          end
+        end
+
+        context 'when Save for later is selected' do
+          it 'redirects to show path' do
+            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement' } }
+            expect(response).to redirect_to facilities_management_procurements_path
+          end
         end
       end
 
