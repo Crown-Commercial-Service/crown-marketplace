@@ -1289,6 +1289,7 @@ en:
       new:
         cancel_text: Cancel, and return to the procurements dashboard
         quick_search: Quick search
+        save_and_continue: Save and continue
         save_for_later: Save for later
         save_your_search: Save your search
         search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however your procurement will fall into only one sub-lot dependent on your potential total contract value (excludes billable works, optional extension periods and VAT).
