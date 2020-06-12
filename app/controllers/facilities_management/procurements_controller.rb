@@ -43,7 +43,11 @@ module FacilitiesManagement
       @procurement = current_user.procurements.build(procurement_params)
 
       if @procurement.save(context: :contract_name)
-        redirect_to edit_facilities_management_procurement_url(id: @procurement.id)
+        if params[:save_for_later].present?
+          redirect_to facilities_management_procurements_path
+        else
+          redirect_to edit_facilities_management_procurement_url(id: @procurement.id)
+        end
       else
         @errors = @procurement.errors
         set_procurement_data
@@ -190,7 +194,6 @@ module FacilitiesManagement
         @procurement.reload
 
         set_current_step
-
         redirect_to FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: @current_step).route
       else
         remove_invalid_security_policy_document_file
