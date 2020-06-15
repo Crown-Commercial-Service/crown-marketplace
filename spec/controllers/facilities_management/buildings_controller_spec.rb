@@ -235,6 +235,39 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     end
   end
 
+  describe 'Postcode games' do
+    context 'when saving without a postcode' do
+      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+      login_fm_buyer_with_details
+
+      it 'will reject the empty password with a postcode.blank message' do
+        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_postcode: '', postcode_entry: '', address_region: '', address_region_code: '' } }
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_postcode.blank'))
+      end
+
+      it 'will reject the empty password with a address not_selected message' do
+        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: '', address_town: '', address_line_2: '', address_postcode: '', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address.not_selected'))
+      end
+
+      it 'will reject an empty region for when none can be selected' do
+        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 1', address_town: 'town', address_line_2: 'line 2', address_postcode: 'SW1A 1AA', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_region.blank'))
+      end
+
+      it 'will not reject an empty region for when none can be selected' do
+        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', postcode_entry: 'SW1A 1AA', address_region: 'test', address_region_code: 'test_code' } }
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to gia_facilities_management_building_path
+        building.reload
+        expect(building[:address_postcode]).to eq('SW2A 1AA')
+      end
+    end
+  end
+
   describe 'PUT' do
     context 'when saving GIA' do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
