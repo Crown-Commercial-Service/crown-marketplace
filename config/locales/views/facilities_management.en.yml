@@ -196,7 +196,7 @@ en:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about ‘Payment method’
             procurement_building_services:
-              invalid_html: You have to answer one or more questions on "%{building_name}". Service information status must be ‘Complete’
+              invalid_html: You have to answer one or more questions on "%{building_name}". Service requirement status must be ‘Complete’
             procurement_buildings:
               invalid: Select one or more buildings you want to include in your procurement
               not_present: You must select at least one building
@@ -653,7 +653,7 @@ en:
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
       building_standards:
-        back_to_service_information: Back to service information
+        back_to_service_information: Back to service requirements
         caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
         fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
         fabric_standard_a_title: Standard A - the general or normal service level
@@ -662,10 +662,10 @@ en:
         fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
         fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
         heading: Building fabric maintenance services standards
-        save_and_return_to_service_information: Save and return to service information
+        save_and_return_to_service_information: Save and return to service requirements
         subheading: What standard are you applying to all selected building fabric maintenance services?
       cleaning_standards:
-        back_to_service_information: Back to service information
+        back_to_service_information: Back to service requirements
         caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
         cleaning_standard_a_copy: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
         cleaning_standard_a_title: Standard A - the general or normal service level
@@ -674,13 +674,13 @@ en:
         cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
         cleaning_standard_c_title: Standard C - a bespoke service level
         heading: Cleaning services standards
-        save_and_return_to_service_information: Save and return to service information
+        save_and_return_to_service_information: Save and return to service requirements
         subheading: What standard are you applying to all selected cleaning services?
       ppm_standards:
-        back_to_service_information: Back to service information
+        back_to_service_information: Back to service requirements
         caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
         heading: Planned maintenance (PPM) services standards
-        save_and_return_to_service_information: Save and return to service information
+        save_and_return_to_service_information: Save and return to service requirements
         standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
         standard_a_title: Standard A - the general or normal service level
         standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
@@ -712,9 +712,9 @@ en:
         volume_required_heading: Volume required (per annum)
         volume_required_html: "<b>Volume required <br> (per annum)</b>"
       volume:
-        back_to_service_information: Back to service information
-        caption: To enable us to calculate your prices, you need to provide additional service specific information.You must answer all questions below
-        heading: Service information volumes
+        back_to_service_information: Back to service requirements
+        caption: To enable us to calculate your prices, you need to provide additional service specific information. You must answer all questions below
+        heading: Service requirement volumes
         question:
           no_of_appliances_for_testing: How many appliances to be tested per annum?
           no_of_building_occupants: How many building occupants?
@@ -722,7 +722,7 @@ en:
           no_of_units_to_be_serviced: How many units to be serviced per annum?
           size_of_external_area: What is the size of the external area (in square metres)?
           tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
-        save_and_return_to_service_information: Save and return to service information
+        save_and_return_to_service_information: Save and return to service requirements
         subheading: Answer additional questions about the services
     procurement_buildings_services:
       day_section:
@@ -736,11 +736,11 @@ en:
         not_required: Not required
         start_time: Start time
       lifts:
-        back_to_service_information: Back to service information
-        save_and_return_to_service_information: Save and return to service information
+        back_to_service_information: Back to service requirements
+        save_and_return_to_service_information: Save and return to service requirements
       service_hours:
-        back_to_service_information: Return to service information
-        save_and_return_to_service_information: Save and return to service information
+        back_to_service_information: Return to service requirements
+        save_and_return_to_service_information: Save and return to service requirements
         service_hours_description_1: 'The hours you enter will be used to:'
         service_hours_description_2: The calculation will assume 52 weeks x 7 days in one year.
         service_hours_description_list_1: inform the supplier the exact hours you require this service to be delivered
@@ -748,8 +748,8 @@ en:
         service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
         there_is_a_problem: There is a problem
       show:
-        back_to_service_information: Back to service information
-        save_and_return_to_service_information: Save and return to service information
+        back_to_service_information: Back to service requirements
+        save_and_return_to_service_information: Save and return to service requirements
     procurements:
       about_the_contract:
         no_cost_provided: None
