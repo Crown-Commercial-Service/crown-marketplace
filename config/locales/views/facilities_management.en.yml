@@ -609,16 +609,14 @@ en:
         <li>about your buildings and service requirements</li>
         <li>basic contract information</li>
       3_DA_list_html: |
-        <li>create your contract online, and offer to the cheapest supplier</li>
-        <li>the quickest, simplest way to procure FM services</li>
-      3_FC_list_html: "<li>download your supplier shortlist and requirement documents</li>\n"
-      3_offline_list_html: |
-        <li>use our templates to create a bid pack offline</li>
-        <li>invite shortlisted suppliers to bid for your contract</li>
-        <li>evaluate supplier responses and pricing</li>
-        <li>award your contract</li>
+        <li>create your contract online, and offer to the most competitive supplier</li>
+        <li>the quickest, most efficient and compliant route to procure FM services</li>
+      3_FC_list_html: |
+        <li>download your supplier shortlist and requirement documents</li>
+        <li>proceed with your standard procurement process or contact CCS for further guidance</li>
       beforeyoustart: Before you start
       heading: Find a facilities management supplier
+      note: Direct award is only available for contracts less than £1.5 million, and can only be awarded to the lowest priced supplier.
       startlist: |
         <li>what services you are looking for</li>
         <li>your building locations and information</li>
@@ -630,7 +628,7 @@ en:
         <li>see an estimated contract cost</li>
         <li>create and offer a direct award contract</li>
         <li>shortlist suppliers ready for further competition</li>
-        <li>compliantly place a contract with a supplier</li>
+        <li>compliantly place a direct award contract with a supplier</li>
       youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
