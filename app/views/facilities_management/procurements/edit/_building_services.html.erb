@@ -54,11 +54,11 @@
               </legend>
               <%= display_building_services_error procurement_building %>
               <div class="govuk-checkboxes ccs-govuk-checkboxes--s govuk-checkboxes--small">
-                <ul>
+                <ul id=<%= "#{procurement_building.name.parameterize(separator: '_')}-services" %>>
                   <%= ff.collection_check_boxes(:service_codes, @services, :code, :name) do |c| %>
                     <li class="">
                       <div class="govuk-checkboxes__item">
-                        <%= c.check_box(class: "govuk-checkboxes__input procurement-building__input") %>
+                        <%= c.check_box(class: "govuk-checkboxes__input procurement-building__input #{procurement_building.name.parameterize(separator: '_')}-service-#{c.object.code.downcase}") %>
                         <%= c.label(class: "govuk-label govuk-checkboxes__label") %>
                       </div>
                     </li>
