@@ -238,6 +238,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   describe 'Postcode games' do
     context 'when saving without a postcode' do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+
       login_fm_buyer_with_details
 
       it 'will reject the empty password with a postcode.blank message' do
