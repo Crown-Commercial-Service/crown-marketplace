@@ -72,14 +72,17 @@ module CCS
   # rubocop:enable Metrics/AbcSize
 
   def self.supplier_details_path
-    if Rails.env.production?
+    db_host = ENV['CCS_DEFAULT_DB_HOST']
+    if Rails.env.development || (%w[dev. cmpdefault.db.internal.fm-preview preview sandbox].any? { |env| db_host.include?(env) })
+      puts 'dummy supplier details'
+      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+    elsif ENV['SECRET_KEY_BASE']
+      puts 'real supplier details'
       s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
       object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['SUPPLIER_DETAILS_DATA_KEY'])
       response_target = 'data/facilities_management/Supplier_details_data.xlsx'
       object.get(response_target: response_target)
       response_target
-    else
-      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
     end
   end
 
