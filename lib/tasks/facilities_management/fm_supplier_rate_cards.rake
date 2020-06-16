@@ -23,13 +23,16 @@ module FM
   def self.add_rate_cards_to_suppliers
     create_fm_rate_cards_table
 
-    if Rails.env.production?
+    db_host = ENV['CCS_DEFAULT_DB_HOST']
+    if db_host.nil? || (%w[dev. cmpdefault.db.internal.fm-preview preview sandbox].any? { |env| db_host.include?(env) })
+      puts 'dummy supplier rate cards'
+      spreadsheet_path = Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
+    elsif ENV['SECRET_KEY_BASE']
+      puts 'real supplier rate cards'
       s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
       object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['DIRECT_AWARD_DATA_KEY'])
       object.get(response_target: 'data/facilities_management/DA_data.xlsx')
       spreadsheet_path = 'data/facilities_management/DA_data.xlsx'
-    else
-      spreadsheet_path = Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
     end
 
     rate_cards_workbook = Roo::Spreadsheet.open(spreadsheet_path, extension: :xlsx)

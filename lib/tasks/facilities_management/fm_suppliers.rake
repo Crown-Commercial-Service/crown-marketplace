@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module CCS
   require 'pg'
   require 'csv'
@@ -72,14 +73,17 @@ module CCS
   # rubocop:enable Metrics/AbcSize
 
   def self.supplier_details_path
-    if Rails.env.production?
+    db_host = ENV['CCS_DEFAULT_DB_HOST']
+    if db_host.nil? || (%w[dev. cmpdefault.db.internal.fm-preview preview sandbox].any? { |env| db_host.include?(env) })
+      puts 'dummy supplier details'
+      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+    elsif ENV['SECRET_KEY_BASE']
+      puts 'real supplier details'
       s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
       object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['SUPPLIER_DETAILS_DATA_KEY'])
       response_target = 'data/facilities_management/Supplier_details_data.xlsx'
       object.get(response_target: response_target)
       response_target
-    else
-      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
     end
   end
 
@@ -98,9 +102,38 @@ module CCS
 
   # EDITOR=vim rails credentials:edit
   def self.fm_aws
-    s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-    object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['JSON_SUPPLIER_DATA_KEY'])
-    object.get.body.string
+    ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
+    creds = ActiveSupport::EncryptedConfiguration.new(
+      config_path: Rails.root.join('config', 'credentials.yml.enc'),
+      key_path: 'config/master.key',
+      env_key: 'RAILS_MASTER_KEY_2',
+      raise_if_missing_key: false # config.require_master_key
+    )
+
+    access_key = creds.aws_suppliers[:access_key_id]
+    secret_key = creds.aws_suppliers[:secret_access_key]
+    bucket = creds.aws_suppliers[:bucket]
+    region = creds.aws_suppliers[:region]
+
+    import_suppliers(access_key, secret_key, bucket, region)
+  rescue StandardError => e
+    puts e.message
+  end
+
+  def self.import_suppliers(access_key, secret_key, bucket, region)
+    awd_credentials access_key, secret_key, bucket, region
+
+    object = Aws::S3::Resource.new(region: region)
+    object.bucket(bucket).objects.each do |obj|
+      next unless obj.key.starts_with? 'suppliers/data/final'
+
+      p 'Loading ' + obj.key
+
+      data = obj.get.body
+      return data.string
+    rescue PG::Error => e
+      puts e.message
+    end
   end
 end
 
@@ -119,3 +152,4 @@ namespace :db do
   task static: :aws do
   end
 end
+# rubocop:enable Metrics/ModuleLength
