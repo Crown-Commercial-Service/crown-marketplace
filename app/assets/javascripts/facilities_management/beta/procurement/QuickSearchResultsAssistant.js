@@ -14,7 +14,6 @@ const QuickSearchResultsAssistant = {
         this.helper.UpdateCounts();
         this.helper.ConnectCheckboxes(this.FilterSuppliers.bind(this));
 
-        // Filter the list of suppliers
         let filterEvent = {
             FilterTarget: this.helper.getFilterTarget()
         };

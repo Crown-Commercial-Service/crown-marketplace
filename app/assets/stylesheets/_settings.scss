@@ -1,14 +1,10 @@
 // Override any GOVUK settings here
 
-// use Rails asset helpers
 $govuk-font-url-function: 'font-url';
 $govuk-image-url-function: 'image-url';
 
-// tell GOVUK to apply base styles to <p> and <a> so we don't have to add the
-// classes
 $govuk-global-styles: true;
 
-// Disable compatibilty with old GOVUK kits as we do not need it
 $govuk-compatibility-govukfrontendtoolkit: false;
 $govuk-compatibility-govuktemplate: false;
 $govuk-compatibility-govukelements: false;
@@ -51,7 +47,7 @@ $govuk-colours: (
   "primary": #9B1A47,
   "secondary": #007E8A,
   "dark-grey": #2F2F2F,
-  "focus": #ffbf47
+  "focus": #ffdd00,
 );
 
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');

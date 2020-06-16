@@ -193,21 +193,45 @@ LookupHandler.prototype.init = function () {
     var selectResult = this.selectResult.bind(this)
   	var selectRegion = this.selectRegionResult.bind(this);
     
-    if ( /Trident/.test(navigator.userAgent) || /Edge/.test(navigator.userAgent) ) {
-	    $(this.resultsDropDown).on('blur', selectResult);
-	    $(this.regionDropDown).on('blur', selectRegion);
-    } else {
-        $(this.resultsDropDown).on('change', selectResult);
-	      $(this.regionDropDown).on('change', selectRegion);
-    }
-
-    this.resultsDropDown.addEventListener('keypress', function (e) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        selectResult();
-      }
+    this.resultsDropDown.addEventListener('blur', function(e){
+    	e.preventDefault();
+    	selectResult();
     });
-
+	this.regionDropDown.addEventListener('blur', function(e){
+		e.preventDefault();
+		selectRegion();
+	});
+	
+	if (! (/Windows/.test(navigator.userAgent)) ) {
+		$(this.resultsDropDown).on('change', selectResult);
+		$(this.regionDropDown).on('change', selectRegion);
+	} else {
+		$(this.resultsDropDown).on('click', function(e) {
+			if (this.selectedIndex > 0) {
+				selectResult();
+			}
+		});
+		$(this.resultsDropDown).on('keypress', function(e) {
+			if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				selectResult();
+			}
+		});
+		$(this.regionDropDown).on('click', function(e) {
+			if (this.selectedIndex > 0) {
+				selectRegion();
+			}
+		});
+		$(this.regionDropDown).on('keypress', function(e) {
+			if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				selectRegion();
+			}
+		});
+	}
+ 
     this.regionDropDown.addEventListener('keypress', function (e) {
       if (e.keyCode === 13) {
         e.preventDefault();
@@ -215,7 +239,7 @@ LookupHandler.prototype.init = function () {
       }
     });
 
-    self = this
+    self = this;
 
     $(this.btnChangeRegion).on('click', function (e) {
       e.preventDefault();
@@ -229,7 +253,6 @@ LookupHandler.prototype.reset = function () {
     this.clearRegionResultsList();
     this.adjustIndicatorOption(this.resultsDropDown, 0);
     this.adjustIndicatorOption(this.regionDropDown, 0);
-    //this.resultsDropDown.removeEventListener('change', this.selectResult.bind(this));
 };
 
 LookupHandler.prototype.clearResultsList = function () {
@@ -407,9 +430,6 @@ LookupHandler.prototype.populateDropDown = function (addresses) {
             newOption.dataset.address_region_code = address.address_region_code;
             this.resultsDropDown.add(newOption);
         }
-        /*if (addresses.length === 1) {
-            this.resultsDropDown.selectedIndex = 1;
-        }*/
     } else {
         newOption.innerText = '0 addresses found';
         this.resultsDropDown.add(newOption);
@@ -431,9 +451,6 @@ LookupHandler.prototype.populateRegionDropDown = function (regions) {
             newOption.dataset.address_region_code = region.code;
             this.regionDropDown.add(newOption);
         }
-        /*if (regions.length === 1) {
-            this.regionDropDown.selectedIndex = 1;
-        }*/
     }
     this.adjustIndicatorOption(this.regionDropDown, regions.length);
 };
@@ -514,7 +531,6 @@ LookupHandler.prototype.changeTabbingState = function(state) {
 
   switch(state) {
     case 1:
-      // Default for when no postcode entered
       postcodeInput.tabIndex = 0;
       findAddressButton.tabIndex = 0;
       changeInput1.tabIndex = -1;
@@ -526,7 +542,6 @@ LookupHandler.prototype.changeTabbingState = function(state) {
       postcodeInput.focus();
       break;
     case 2:
-      // When The user has entered a postcode and selection box is present
       postcodeInput.tabIndex = -1;
       findAddressButton.tabIndex = -1;
       changeInput1.tabIndex = 0;
@@ -538,7 +553,6 @@ LookupHandler.prototype.changeTabbingState = function(state) {
       addressSelect.focus();
       break;
     case 3:
-      // User selected address and only one region
       postcodeInput.tabIndex = -1;
       findAddressButton.tabIndex = -1;
       changeInput1.tabIndex = -1;
@@ -550,7 +564,6 @@ LookupHandler.prototype.changeTabbingState = function(state) {
       changeInput2.focus();
       break;
     case 4:
-      // User selected address and multiple region
       postcodeInput.tabIndex = -1;
       findAddressButton.tabIndex = -1;
       changeInput1.tabIndex = -1;
@@ -562,7 +575,6 @@ LookupHandler.prototype.changeTabbingState = function(state) {
       regionSelect.focus();
       break;
     case 5:
-      // User selected address and has selected a region
       postcodeInput.tabIndex = -1;
       findAddressButton.tabIndex = -1;
       changeInput1.tabIndex = -1;

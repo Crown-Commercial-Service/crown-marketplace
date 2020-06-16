@@ -7,8 +7,11 @@
 
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
 
-      <div class="govuk-caption-l govuk-!-margin-top-2">
+      <div class="govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-1">
         <%= current_user.email %>
+      </div>
+      <div class="govuk-caption-xl govuk-!-font-size-36">
+      <%= t('.manage_details') %>
       </div>
       <div class="govuk-heading-xl">
         <%= t('.add_address') %>

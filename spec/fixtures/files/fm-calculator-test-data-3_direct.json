@@ -1,7 +1,7 @@
 [
   {
     "expectations": {
-      "sumunitofmeasure": "3484.86",
+      "sumunitofmeasure": "3508.53",
       "benchmarkedcostssum": "1893.46"
     },
     "contract_length_years": 6,
@@ -17,7 +17,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1554.45",
+      "sumunitofmeasure": "1565.01",
       "benchmarkedcostssum": "2035.82"
     },
     "contract_length_years": 6,
@@ -33,7 +33,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "187.98",
+      "sumunitofmeasure": "189.26",
       "benchmarkedcostssum": "106.77"
     },
     "contract_length_years": 6,
@@ -49,7 +49,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "751.92",
+      "sumunitofmeasure": "757.03",
       "benchmarkedcostssum": "654.88"
     },
     "contract_length_years": 6,
@@ -65,7 +65,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "361.5",
+      "sumunitofmeasure": "363.95",
       "benchmarkedcostssum": "370.15"
     },
     "contract_length_years": 6,
@@ -81,7 +81,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "1070.04",
+      "sumunitofmeasure": "1077.31",
       "benchmarkedcostssum": "1986.0"
     },
     "contract_length_years": 6,
@@ -97,7 +97,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "404.88",
+      "sumunitofmeasure": "407.63",
       "benchmarkedcostssum": "284.73"
     },
     "contract_length_years": 6,
@@ -113,7 +113,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "412.11",
+      "sumunitofmeasure": "414.91",
       "benchmarkedcostssum": "398.62"
     },
     "contract_length_years": 6,
@@ -129,7 +129,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "209.67",
+      "sumunitofmeasure": "211.09",
       "benchmarkedcostssum": "199.31"
     },
     "contract_length_years": 6,
@@ -145,7 +145,7 @@
   },
   {
     "expectations": {
-      "sumunitofmeasure": "4564.01",
+      "sumunitofmeasure": "4595.0",
       "benchmarkedcostssum": "4493.48"
     },
     "contract_length_years": 6,

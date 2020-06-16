@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :controller do
-  login_admin_buyer
+  login_fm_admin
 
   let(:id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
   let(:target_lot) { '1b' }
@@ -72,6 +72,15 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
       it 'redirects to admin dashboard' do
         expect(response).to redirect_to(facilities_management_admin_supplier_framework_data_path)
       end
+    end
+  end
+
+  context 'when not an fm admin' do
+    login_mc_admin
+
+    it 'redirects to not permitted page' do
+      get :index, params: { id: 'f644dfef-c534-4432-9bbc-f537e02652e6', lot: '1c' }
+      expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
     end
   end
 end

@@ -33,11 +33,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     supplier_names.each do |supplier_name|
       # e.g. dummy_supplier_name = 'Hickle-Schinner'
       @results[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, true, :da
+      @report.calculate_services_for_buildings supplier_name, true, :da, false
       @results[supplier_name] = @report.results
 
       @report_results_no_cafmhelp_removed[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, false, :da
+      @report.calculate_services_for_buildings supplier_name, false, :da, false
       @report_results_no_cafmhelp_removed[supplier_name] = @report.results
     end
 
@@ -139,7 +139,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
             building_type_ids = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }
             building_linking_to_this_service = []
             building_type_ids.each do |building_type_id|
-              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:id] }
+              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:building_id] }
               building_linking_to_this_service << contract_building_service unless contract_building_service.empty?
             end
 
@@ -189,11 +189,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def get_building_data(selected_building_names, selected_building_info)
-    selected_buildings_data = @active_procurement_buildings.map(&:building).flatten
+    selected_buildings_data = @active_procurement_buildings
     selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
     selected_building_names.uniq!
-
-    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type } }
+    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type, 'building_id': building_data.building_id } }
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -217,7 +216,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row, style: header_row_style
 
       building_name_row = ['', '', '']
-      @active_procurement_buildings.each { |building| building_name_row << building.name }
+      @active_procurement_buildings.each { |building| building_name_row << sanitize_string_for_excel(building.building_name) }
       sheet.add_row building_name_row, style: header_row_style
 
       sorted_building_keys = @data.keys
@@ -376,4 +375,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/AbcSize
+
+  def sanitize_string_for_excel(string)
+    return "'#{string}" if string.match?(/\A(@|=|\+|\-)/)
+
+    string
+  end
 end

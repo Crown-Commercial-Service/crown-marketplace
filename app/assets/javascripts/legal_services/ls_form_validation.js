@@ -1,4 +1,4 @@
-function fireErrors(s){//note: 'hidden_fields_for_previous_steps_and_responses' should be inside 'govuk_form_group_with_optional_error' (.govuk_form_group)
+function fireErrors(s){
 
   s.parents('.govuk-form-group').addClass('govuk-form-group--error');
 
@@ -177,8 +177,8 @@ jQuery(document).ready(function(){
       var formIDs = ['check_suitability','check_suitability2','lot1_regional_service', 'lot1_regional_service2','lot2_full_service','choose_organistion_type','requirement','regional_legal_service','legal_jurisdiction','choose_services_area','choose_services_area2','select_lot'];
 
       $.each(formIDs, function(i, val){
-        if(f.is('#'+val)){//the form has this id
-          window[val](f);//call the function using this id as its name
+        if(f.is('#'+val)){
+          window[val](f);
         }
       });
     }

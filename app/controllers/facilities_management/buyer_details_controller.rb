@@ -11,8 +11,7 @@ module FacilitiesManagement
     def edit_address; end
 
     def update
-      @buyer_detail.assign_attributes(buyer_detail_params)
-
+      assign_params_protect_postcode
       if @buyer_detail.save(context: context_from_params)
         redirect_to_return_url if params['facilities_management_buyer_detail']['return_details'].present?
 
@@ -25,6 +24,12 @@ module FacilitiesManagement
     end
 
     private
+
+    def assign_params_protect_postcode
+      old_postcode = @buyer_detail[:organisation_address_postcode]
+      @buyer_detail.assign_attributes(buyer_detail_params)
+      @buyer_detail[:organisation_address_postcode] = old_postcode if params[:'buyer-details-postcode-lookup-results'] == 'status-option'
+    end
 
     def redirect_to_return_url
       redirect_details = Rack::Utils.parse_nested_query(params['facilities_management_buyer_detail']['return_details'])

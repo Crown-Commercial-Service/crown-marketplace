@@ -119,9 +119,8 @@
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.security_policy_document_required %>" style="overflow-wrap: anywhere">
           <% case @procurement.security_policy_document_required %>
           <% when true %>
-            <!--<a href="<%#= asset_path() %>?format=doc" download> <%#= @procurement.security_policy_document_file.to_s.split('/').last %> </a> -->
             <% if @procurement.security_policy_document_file.attached? %>
-              <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment') %>&format=<%= @procurement.security_policy_document_file.filename.to_s.split('.').last[0..2] %>" download> <%= @procurement.security_policy_document_file.filename.to_s %> </a>
+              <a href="<%= rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment', procurement_id: @procurement.id) %>&format=<%= @procurement.security_policy_document_file.filename.to_s.split('.').last[0..2] %>" download> <%= @procurement.security_policy_document_file.filename.to_s %> </a>
             <% else %>
               Please upload a security policy document
             <% end %>

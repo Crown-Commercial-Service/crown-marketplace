@@ -1,5 +1,5 @@
-require 'axlsx'
-require 'axlsx_rails'
+require 'caxlsx'
+require 'caxlsx_rails'
 require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
@@ -141,7 +141,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     row = initial_values
 
-    @active_procurement_buildings.each { |building| row << building.name }
+    @active_procurement_buildings.each { |building| row << sanitize_string_for_excel(building.building_name) }
 
     sheet.add_row row, style: standard_style, height: standard_row_height
   end
@@ -177,7 +177,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Name']
 
     @active_procurement_buildings.each do |building|
-      row << building.name
+      row << sanitize_string_for_excel(building.building_name)
     end
 
     row
@@ -187,7 +187,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Description']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.description
+      row << sanitize_string_for_excel(building.description)
     end
 
     row
@@ -197,7 +197,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Street']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.address_line_1
+      row << sanitize_string_for_excel(building.address_line_1)
     end
 
     row
@@ -207,7 +207,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Town']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.address_town
+      row << sanitize_string_for_excel(building.address_town)
     end
 
     row
@@ -217,7 +217,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Address - Postcode']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.address_postcode
+      row << sanitize_string_for_excel(building.address_postcode)
     end
 
     row
@@ -227,7 +227,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Location (NUTS Region)']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.address_region
+      row << sanitize_string_for_excel(building.address_region)
     end
 
     row
@@ -247,7 +247,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Type']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.building_type
+      row << sanitize_string_for_excel(building.building_type)
     end
 
     row
@@ -257,7 +257,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row = ['Building Security Clearance']
 
     @active_procurement_buildings.each do |building|
-      row << building.building.security_type
+      row << sanitize_string_for_excel(building.security_type)
     end
 
     row
@@ -350,10 +350,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     when 'all_day'
       'All day (24 hours)'
     when 'hourly'
-      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol)
+      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol) + next_day(service_measure[:service_hours][day_symbol])
     else
       'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
     end
+  end
+
+  def next_day(service_hour_choice)
+    service_hour_choice[:next_day] ? ' (next day)' : ''
   end
 
   def service_measure_invalid_type?(service_measure)
@@ -364,14 +368,14 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%02d', service_measure[:service_hours][day_symbol]['start_hour'])
+    start_hour = format('%01d', service_measure[:service_hours][day_symbol]['start_hour'])
     start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
     start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
     start_hour + ':' + start_minute + start_ampm
   end
 
   def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%02d', service_measure[:service_hours][day_symbol]['end_hour'])
+    end_hour = format('%01d', service_measure[:service_hours][day_symbol]['end_hour'])
     end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
     end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
     end_hour + ':' + end_minute + end_ampm
@@ -388,15 +392,19 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_customer_details(sheet)
     bold_style = sheet.styles.add_style b: true
-    telephone_number_style = sheet.styles.add_style format_code: '0##########', alignment: { horizontal: :left }
-    buyer_detail = @procurement.user.buyer_detail
 
     sheet.add_row ['1. Customer details'], style: bold_style
-    sheet.add_row ['Contract name', @procurement.contract_name]
-    sheet.add_row ['Buyer Organisation Name', buyer_detail.organisation_name]
+    add_sanitized_customer_details(sheet)
+  end
+
+  def add_sanitized_customer_details(sheet)
+    telephone_number_style = sheet.styles.add_style format_code: '0##########', alignment: { horizontal: :left }
+    buyer_detail = @procurement.user.buyer_detail
+    sheet.add_row ['Contract name', sanitize_string_for_excel(@procurement.contract_name)]
+    sheet.add_row ['Buyer Organisation Name', sanitize_string_for_excel(buyer_detail.organisation_name)]
     sheet.add_row ['Buyer Organisation Sector', buyer_detail.central_government? ? 'Central Government' : 'Wider Public Sector']
-    sheet.add_row ['Buyer Contact Name', buyer_detail.full_name]
-    sheet.add_row ['Buyer Contact Job Title', buyer_detail.job_title]
+    sheet.add_row ['Buyer Contact Name', sanitize_string_for_excel(buyer_detail.full_name)]
+    sheet.add_row ['Buyer Contact Job Title', sanitize_string_for_excel(buyer_detail.job_title)]
     sheet.add_row ['Buyer Contact Email Address', @procurement.user.email]
     sheet.add_row ['Buyer Contact Telephone Number', buyer_detail.telephone_number], style: [nil, telephone_number_style]
   end
@@ -567,5 +575,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def services_with_service_hours
     %w[H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6]
+  end
+
+  def sanitize_string_for_excel(string)
+    return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
+
+    string
   end
 end

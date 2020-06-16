@@ -53,8 +53,8 @@ module OrdnanceSurvey
     query = <<~SQL
         DO $$
         BEGIN
-        drop view postcode_lookup;
-        drop view os_address_view_2;
+        drop view if exists postcode_lookup cascade;
+        drop view if exists os_address_view_2 cascade;
         CREATE VIEW os_address_view_2
         (building, street_address, postal_town, postcode_locator, sub_building_name, building_name, pao_name,
          sao_name, house_number, street_description, village, post_town, formatted_postcode, building_ref, uprn,
@@ -120,7 +120,7 @@ module OrdnanceSurvey
             AND adds.class::TEXT !~~ 'U%'::TEXT
             AND adds.class::TEXT !~~ 'CH%'::TEXT
             AND adds.class::TEXT !~~ 'CZ%'::TEXT
-            AND adds.class::TEXT !~~ 'P%'::TEXT
+            AND adds.class::text !~~ 'PS'::text
             AND adds.class::TEXT !~~ 'CU11%'::TEXT;
       EXCEPTION
           WHEN SQLSTATE '42P07' THEN
@@ -171,10 +171,10 @@ module OrdnanceSurvey
         THEN initcap(addresses.street_address) || ''::TEXT
         WHEN addresses.building IS NOT NULL THEN initcap(addresses.street_description::TEXT) || ''::TEXT
         ELSE NULL::TEXT
-        END                                                                          AS address_line_2
+        END                                                                AS address_line_2
         , initcap(addresses.postal_town)                                   AS address_town
         , addresses.postcode_locator                                       AS address_postcode
-        , initcap(regions.region::TEXT)                                    AS address_region
+        , regions.region                                                   AS address_region
         , regions.region_code                                              AS address_region_code
         FROM os_address_view_2              addresses
         LEFT JOIN postcode_region_view regions
@@ -260,13 +260,17 @@ module OrdnanceSurvey
         log_postcode_file_failed(File.basename(filename, File.extname(filename)), e.message)
         Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       end
-      p "Duration: #{Time.current - beginning_time}"
+      p "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
+      purge_excluded_areas
+      p "Duration: #{Time.current - beginning_time} seconds"
       Rails.logger.info("POSTCODE: Duration #{Time.current - beginning_time}")
     else
       Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
       p "POSTCODE: No folder for local postcode import found (#{directory})"
     end
   end
+
+  EXCLUDED_POSTCODE_AREAS = %w[GY IM JE].freeze
 
   # rubocop:disable CyclomaticComplexity, PerceivedComplexity
   def self.import_postcodes(folder_root, access_key, secret_key, bucket, region)
@@ -279,6 +283,7 @@ module OrdnanceSurvey
     awd_credentials access_key, secret_key, bucket, region
 
     object = Aws::S3::Resource.new(region: region)
+    beginning_time = Time.current
     object.bucket(bucket).objects.each do |obj|
       next if obj.key == "#{folder_root}/" || !obj.key.starts_with?(folder_root)
 
@@ -304,6 +309,9 @@ module OrdnanceSurvey
       Rails.logger.error((["POSTCODE: #{e.message}"] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
       raise e
     end
+    p "Purging excluded areas: #{EXCLUDED_POSTCODE_AREAS.map { |e| "'#{e}'" }.join(',')}"
+    purge_excluded_areas
+    p "Duration: #{Time.current - beginning_time} seconds"
   rescue PG::Error => e
     puts e.message
   end

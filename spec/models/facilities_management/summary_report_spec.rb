@@ -1,812 +1,179 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
-  let(:start_date) { Time.zone.today + 1 }
+  subject(:report) { described_class.new(procurement.id) }
 
-  let(:dummy_supplier_name) { 'Hickle-Schinner' }
-
-  let(:data) do
-    {
-      posted_locations: ['UKC1', 'UKC2'],
-      posted_services: ['C.21', 'C.15', 'C.10', 'C.11', 'C.14', 'C.3', 'C.4', 'C.13', 'C.7', 'C.5', 'C.20', 'C.17', 'C.1', 'C.18', 'C.9', 'C.8', 'C.6', 'C.22', 'C.12', 'C.16', 'C.2', 'C.19', 'D.6', 'D.1', 'D.5', 'D.3', 'D.4', 'D.2', 'E.1', 'E.9', 'E.5', 'E.6', 'E.7', 'E.8', 'E.4', 'E.3', 'E.2', 'F.1', 'F.2', 'F.3', 'F.4', 'F.5', 'F.6', 'F.7', 'F.8', 'F.9', 'F.10', 'G.8', 'G.13', 'G.5', 'G.2', 'G.4', 'G.10', 'G.11', 'G.16', 'G.14', 'G.3', 'G.15', 'G.9', 'G.1', 'G.12', 'G.7', 'G.6', 'H.16', 'H.9', 'H.12', 'H.7', 'H.3', 'H.10', 'H.4', 'H.2', 'H.1', 'H.5', 'H.15', 'H.6', 'H.13', 'H.8', 'H.11', 'H.14', 'I.3', 'I.1', 'I.2', 'I.4', 'J.8', 'J.2', 'J.3', 'J.4', 'J.9', 'J.10', 'J.11', 'J.6', 'J.1', 'J.5', 'J.12', 'J.7', 'K.1', 'K.5', 'K.7', 'K.2', 'K.4', 'K.6', 'K.3', 'L.1', 'L.2', 'L.3', 'L.4', 'L.5', 'L.6', 'L.7', 'L.8', 'L.9', 'L.10', 'L.11', 'M.1', 'N.1', 'O.1'],
-      start_date: start_date,
-      'fm-contract-length': 3
-    }
+  let(:procurement) do
+    create(:facilities_management_procurement_with_extension_periods,
+           initial_call_off_period: 7,
+           lot_number_selected_by_customer: lot_number_selected_by_customer)
   end
 
-  let(:data2) do
-    {
-      posted_locations: ['UKC1', 'UKC2'],
-      posted_services: ['G.1', 'C.5', 'C.19', 'E.4', 'K.1', 'H.4', 'G.5', 'K.2', 'K.7'],
-      start_date: start_date,
-      'is-tupe': 'yes',
-      'fm-contract-length': 3
-    }
-  end
+  let(:lot_number_selected_by_customer) { false }
 
-  let(:building1) do
-    { 'id' => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1',
-      'gia' => 12345,
-      'name' => 'ccs',
-      'region' => 'London',
-      'address' => { 'fm-address-town' => 'London', 'fm-address-line-1' => '151 Buckingham Palace Road', 'fm-address-postcode' => 'SW1W 9SZ' },
-      'isLondon' => false,
-      'services' => [
-        { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-        { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-        { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-        { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-        { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-        { 'code' => 'C-3', 'name' => 'Environmental cleaning' },
-        { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
-        { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
-        { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
-        { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-        { 'code' => 'C-20', 'name' => 'Locksmith services' },
-        { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
-        { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
-        { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
-        { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
-        { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
-        { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
-        { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
-        { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
-        { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
-        { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
-        { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
-        { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-        { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
-        { 'code' => 'D-5', 'name' => 'Internal planting' },
-        { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
-        { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
-        { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
-        { 'code' => 'E-1', 'name' => 'Asbestos management' },
-        { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-        { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-        { 'code' => 'E-6', 'name' => 'Conditions survey' },
-        { 'code' => 'E-7', 'name' => 'Electrical testing' },
-        { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
-        { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
-        { 'code' => 'E-3', 'name' => 'Statutory inspections' },
-        { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
-        { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-        { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
-        { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-        { 'code' => 'F-4', 'name' => 'Events and functions' },
-        { 'code' => 'F-5', 'name' => 'Full service restaurant' },
-        { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
-        { 'code' => 'F-7', 'name' => 'Outside catering' },
-        { 'code' => 'F-8', 'name' => 'Trolley service' },
-        { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
-        { 'code' => 'F-10', 'name' => 'Residential catering services' },
-        { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-        { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-        { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-        { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-        { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-        { 'code' => 'G-10', 'name' => 'Housekeeping' },
-        { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
-        { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
-        { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
-        { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
-        { 'code' => 'G-15', 'name' => 'Pest control services' },
-        { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
-        { 'code' => 'G-1', 'name' => 'Routine cleaning' },
-        { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
-        { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
-        { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' },
-        { 'code' => 'H-16', 'name' => 'Administrative support services' },
-        { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-        { 'code' => 'H-12', 'name' => 'Cable management' },
-        { 'code' => 'H-7', 'name' => 'Clocks' },
-        { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-        { 'code' => 'H-10', 'name' => 'Furniture management' },
-        { 'code' => 'H-4', 'name' => 'Handyman services' },
-        { 'code' => 'H-2', 'name' => 'Internal messenger service' },
-        { 'code' => 'H-1', 'name' => 'Mail services' },
-        { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
-        { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
-        { 'code' => 'H-6', 'name' => 'Porterage' },
-        { 'code' => 'H-13', 'name' => 'Reprographics service' },
-        { 'code' => 'H-8', 'name' => 'Signage' },
-        { 'code' => 'H-11', 'name' => 'Space management' },
-        { 'code' => 'H-14', 'name' => 'Stores management' },
-        { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-        { 'code' => 'I-1', 'name' => 'Reception service' },
-        { 'code' => 'I-2', 'name' => 'Taxi booking service' },
-        { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
-        { 'code' => 'J-8', 'name' => 'Additional security services' },
-        { 'code' => 'J-2', 'name' => 'Cctv / alarm monitoring' },
-        { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-        { 'code' => 'J-4', 'name' => 'Emergency response' },
-        { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-        { 'code' => 'J-10', 'name' => 'Key holding' },
-        { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
-        { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
-        { 'code' => 'J-1', 'name' => 'Manned guarding service' },
-        { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
-        { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
-        { 'code' => 'J-7', 'name' => 'Reactive guarding' },
-        { 'code' => 'K-1', 'name' => 'Classified waste' },
-        { 'code' => 'K-5', 'name' => 'Clinical waste' },
-        { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-        { 'code' => 'K-2', 'name' => 'General waste' },
-        { 'code' => 'K-4', 'name' => 'Hazardous waste' },
-        { 'code' => 'K-6', 'name' => 'Medical waste' },
-        { 'code' => 'K-3', 'name' => 'Recycled waste' },
-        { 'code' => 'L-1', 'name' => 'Childcare facility' },
-        { 'code' => 'L-2', 'name' => 'Sports and leisure' },
-        { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-        { 'code' => 'L-4', 'name' => 'First aid and medical service' },
-        { 'code' => 'L-5', 'name' => 'Flag flying service' },
-        { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
-        { 'code' => 'L-7', 'name' => 'Hairdressing services' },
-        { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
-        { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
-        { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
-        { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
-        { 'code' => 'M-1', 'name' => 'CAFM system' },
-        { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-        { 'code' => 'O-1', 'name' => 'Management of billable works' }
-      ],
-      "fm-building-type": 'General office - Customer Facing' }
-  end
+  describe '#calculate_services_for_buildings' do
+    let(:building_id) { procurement.procurement_buildings.first.building.id }
+    let(:service_code) { 'C.1' }
 
-  let(:building2) do
-    { 'id' => 'AB5059BB-9525-7372-4A9E-074F1852BF66',
-      'gia' => 123, 'name' => 'home',
-      'region' => 'Region not found for this postcode',
-      'address' => { 'fm-address-town' => 'Glagsow', 'fm-address-line-1' => '12 Mansionhouse Road', 'fm-address-postcode' => 'G32 0RP' },
-      'isLondon' => false,
-      'services' => [
-        { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-        { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-        { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-        { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-        { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-        { 'code' => 'C-3', 'name' => 'Environmental cleaning' },
-        { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
-        { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
-        { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
-        { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-        { 'code' => 'C-20', 'name' => 'Locksmith services' },
-        { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
-        { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
-        { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
-        { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
-        { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
-        { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
-        { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
-        { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
-        { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
-        { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
-        { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
-        { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-        { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
-        { 'code' => 'D-5', 'name' => 'Internal planting' },
-        { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
-        { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
-        { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
-        { 'code' => 'E-1', 'name' => 'Asbestos management' },
-        { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-        { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-        { 'code' => 'E-6', 'name' => 'Conditions survey' },
-        { 'code' => 'E-7', 'name' => 'Electrical testing' },
-        { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
-        { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
-        { 'code' => 'E-3', 'name' => 'Statutory inspections' },
-        { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
-        { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-        { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
-        { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-        { 'code' => 'F-4', 'name' => 'Events and functions' },
-        { 'code' => 'F-5', 'name' => 'Full service restaurant' },
-        { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
-        { 'code' => 'F-7', 'name' => 'Outside catering' },
-        { 'code' => 'F-8', 'name' => 'Trolley service' },
-        { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
-        { 'code' => 'F-10', 'name' => 'Residential catering services' },
-        { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-        { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-        { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-        { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-        { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-        { 'code' => 'G-10', 'name' => 'Housekeeping' },
-        { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
-        { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
-        { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
-        { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
-        { 'code' => 'G-15', 'name' => 'Pest control services' },
-        { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
-        { 'code' => 'G-1', 'name' => 'Routine cleaning' },
-        { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
-        { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
-        { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' },
-        { 'code' => 'H-16', 'name' => 'Administrative support services' },
-        { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-        { 'code' => 'H-12', 'name' => 'Cable management' },
-        { 'code' => 'H-7', 'name' => 'Clocks' },
-        { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-        { 'code' => 'H-10', 'name' => 'Furniture management' },
-        { 'code' => 'H-4', 'name' => 'Handyman services' },
-        { 'code' => 'H-2', 'name' => 'Internal messenger service' },
-        { 'code' => 'H-1', 'name' => 'Mail services' },
-        { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
-        { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
-        { 'code' => 'H-6', 'name' => 'Porterage' },
-        { 'code' => 'H-13', 'name' => 'Reprographics service' },
-        { 'code' => 'H-8', 'name' => 'Signage' },
-        { 'code' => 'H-11', 'name' => 'Space management' },
-        { 'code' => 'H-14', 'name' => 'Stores management' },
-        { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-        { 'code' => 'I-1', 'name' => 'Reception service' },
-        { 'code' => 'I-2', 'name' => 'Taxi booking service' },
-        { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
-        { 'code' => 'J-8', 'name' => 'Additional security services' },
-        { 'code' => 'J-2', 'name' => 'Cctv / alarm monitoring' },
-        { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-        { 'code' => 'J-4', 'name' => 'Emergency response' },
-        { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-        { 'code' => 'J-10', 'name' => 'Key holding' },
-        { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
-        { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
-        { 'code' => 'J-1', 'name' => 'Manned guarding service' },
-        { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
-        { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
-        { 'code' => 'J-7', 'name' => 'Reactive guarding' },
-        { 'code' => 'K-1', 'name' => 'Classified waste' },
-        { 'code' => 'K-5', 'name' => 'Clinical waste' },
-        { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-        { 'code' => 'K-2', 'name' => 'General waste' },
-        { 'code' => 'K-4', 'name' => 'Hazardous waste' },
-        { 'code' => 'K-6', 'name' => 'Medical waste' },
-        { 'code' => 'K-3', 'name' => 'Recycled waste' },
-        { 'code' => 'L-1', 'name' => 'Childcare facility' },
-        { 'code' => 'L-2', 'name' => 'Sports and leisure' },
-        { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-        { 'code' => 'L-4', 'name' => 'First aid and medical service' },
-        { 'code' => 'L-5', 'name' => 'Flag flying service' },
-        { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
-        { 'code' => 'L-7', 'name' => 'Hairdressing services' },
-        { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
-        { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
-        { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
-        { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
-        { 'code' => 'M-1', 'name' => 'CAFM system' },
-        { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-        { 'code' => 'O-1', 'name' => 'Management of billable works' }
-      ],
-      'fm-building-type': 'Residential Buildings' }
-  end
+    before { report.calculate_services_for_buildings(supplier_name, remove_cafm_help) }
 
-  let(:buildingLondon) do
-    { 'id' => '5D0901B0-E8C1-C6A7-191D-4710C4514EE1', 'gia' => 12345, 'name' => 'ccs', 'region' => 'London',
-      'address' => { 'fm-address-town' => 'London', 'fm-address-line-1' => '151 Buckingham Palace Road', 'fm-address-postcode' => 'SW1W 9SZ' },
-      'isLondon' => true,
-      'services' => [
-        { 'code' => 'C-21', 'name' => 'Airport and aerodrome maintenance services' },
-        { 'code' => 'C-15', 'name' => 'Audio visual (AV) equipment maintenance' },
-        { 'code' => 'C-10', 'name' => 'Automated barrier control system maintenance' },
-        { 'code' => 'C-11', 'name' => 'Building management system (BMS) maintenance' },
-        { 'code' => 'C-14', 'name' => 'Catering equipment maintenance' },
-        { 'code' => 'C-3', 'name' => 'Environmental cleaning' },
-        { 'code' => 'C-4', 'name' => 'Fire detection and firefighting systems maintenance' },
-        { 'code' => 'C-13', 'name' => 'High voltage (HV) and switchgear maintenance' },
-        { 'code' => 'C-7', 'name' => 'Internal and external building fabric maintenance' },
-        { 'code' => 'C-5', 'name' => 'Lifts, hoists and conveyance systems maintenance' },
-        { 'code' => 'C-20', 'name' => 'Locksmith services' },
-        { 'code' => 'C-17', 'name' => 'Mail room equipment maintenance' },
-        { 'code' => 'C-1', 'name' => 'Mechanical and electrical engineering maintenance' },
-        { 'code' => 'C-18', 'name' => 'Office machinery servicing and maintenance' },
-        { 'code' => 'C-9', 'name' => 'Planned / group re-lamping service' },
-        { 'code' => 'C-8', 'name' => 'Reactive maintenance services' },
-        { 'code' => 'C-6', 'name' => 'Security, access and intruder systems maintenance' },
-        { 'code' => 'C-22', 'name' => 'Specialist maintenance services' },
-        { 'code' => 'C-12', 'name' => 'Standby power system maintenance' },
-        { 'code' => 'C-16', 'name' => 'Television cabling maintenance' },
-        { 'code' => 'C-2', 'name' => 'Ventilation and air conditioning system maintenance' },
-        { 'code' => 'C-19', 'name' => 'Voice announcement system maintenance' },
-        { 'code' => 'D-6', 'name' => 'Cut flowers and christmas trees' },
-        { 'code' => 'D-1', 'name' => 'Grounds maintenance services' },
-        { 'code' => 'D-5', 'name' => 'Internal planting' },
-        { 'code' => 'D-3', 'name' => 'Professional snow & ice clearance' },
-        { 'code' => 'D-4', 'name' => 'Reservoirs, ponds, river walls and water features maintenance' },
-        { 'code' => 'D-2', 'name' => 'Tree surgery (arboriculture)' },
-        { 'code' => 'E-1', 'name' => 'Asbestos management' },
-        { 'code' => 'E-9', 'name' => 'Building information modelling and government soft landings' },
-        { 'code' => 'E-5', 'name' => 'Compliance plans, specialist surveys and audits' },
-        { 'code' => 'E-6', 'name' => 'Conditions survey' },
-        { 'code' => 'E-7', 'name' => 'Electrical testing' },
-        { 'code' => 'E-8', 'name' => 'Fire risk assessments' },
-        { 'code' => 'E-4', 'name' => 'Portable appliance testing' },
-        { 'code' => 'E-3', 'name' => 'Statutory inspections' },
-        { 'code' => 'E-2', 'name' => 'Water hygiene maintenance' },
-        { 'code' => 'F-1', 'name' => 'Chilled potable water' },
-        { 'code' => 'F-2', 'name' => 'Retail services / convenience store' },
-        { 'code' => 'F-3', 'name' => 'Deli/coffee bar' },
-        { 'code' => 'F-4', 'name' => 'Events and functions' },
-        { 'code' => 'F-5', 'name' => 'Full service restaurant' },
-        { 'code' => 'F-6', 'name' => 'Hospitality and meetings' },
-        { 'code' => 'F-7', 'name' => 'Outside catering' },
-        { 'code' => 'F-8', 'name' => 'Trolley service' },
-        { 'code' => 'F-9', 'name' => 'Vending services (food & beverage)' },
-        { 'code' => 'F-10', 'name' => 'Residential catering services' },
-        { 'code' => 'G-8', 'name' => 'Cleaning of communications and equipment rooms' },
-        { 'code' => 'G-13', 'name' => 'Cleaning of curtains and window blinds' },
-        { 'code' => 'G-5', 'name' => 'Cleaning of external areas' },
-        { 'code' => 'G-2', 'name' => 'Cleaning of integral barrier mats' },
-        { 'code' => 'G-4', 'name' => 'Deep (periodic) cleaning' },
-        { 'code' => 'G-10', 'name' => 'Housekeeping' },
-        { 'code' => 'G-11', 'name' => 'It equipment cleaning' },
-        { 'code' => 'G-16', 'name' => 'Linen and laundry services' },
-        { 'code' => 'G-14', 'name' => 'Medical and clinical cleaning' },
-        { 'code' => 'G-3', 'name' => 'Mobile cleaning services' },
-        { 'code' => 'G-15', 'name' => 'Pest control services' },
-        { 'code' => 'G-9', 'name' => 'Reactive cleaning (outside cleaning operational hours)' },
-        { 'code' => 'G-1', 'name' => 'Routine cleaning' },
-        { 'code' => 'G-12', 'name' => 'Specialist cleaning' },
-        { 'code' => 'G-7', 'name' => 'Window cleaning (external)' },
-        { 'code' => 'G-6', 'name' => 'Window cleaning (internal)' },
-        { 'code' => 'H-16', 'name' => 'Administrative support services' },
-        { 'code' => 'H-9', 'name' => 'Archiving (on-site)' },
-        { 'code' => 'H-12', 'name' => 'Cable management' },
-        { 'code' => 'H-7', 'name' => 'Clocks' },
-        { 'code' => 'H-3', 'name' => 'Courier booking and external distribution' },
-        { 'code' => 'H-10', 'name' => 'Furniture management' },
-        { 'code' => 'H-4', 'name' => 'Handyman services' },
-        { 'code' => 'H-2', 'name' => 'Internal messenger service' },
-        { 'code' => 'H-1', 'name' => 'Mail services' },
-        { 'code' => 'H-5', 'name' => 'Move and space management - internal moves' },
-        { 'code' => 'H-15', 'name' => 'Portable washroom solutions' },
-        { 'code' => 'H-6', 'name' => 'Porterage' },
-        { 'code' => 'H-13', 'name' => 'Reprographics service' },
-        { 'code' => 'H-8', 'name' => 'Signage' },
-        { 'code' => 'H-11', 'name' => 'Space management' },
-        { 'code' => 'H-14', 'name' => 'Stores management' },
-        { 'code' => 'I-3', 'name' => 'Car park management and booking' },
-        { 'code' => 'I-1', 'name' => 'Reception service' },
-        { 'code' => 'I-2', 'name' => 'Taxi booking service' },
-        { 'code' => 'I-4', 'name' => 'Voice announcement system operation' },
-        { 'code' => 'J-8', 'name' => 'Additional security services' },
-        { 'code' => 'J-2', 'name' => 'Cctv / alarm monitoring' },
-        { 'code' => 'J-3', 'name' => 'Control of access and security passes' },
-        { 'code' => 'J-4', 'name' => 'Emergency response' },
-        { 'code' => 'J-9', 'name' => 'Enhanced security requirements' },
-        { 'code' => 'J-10', 'name' => 'Key holding' },
-        { 'code' => 'J-11', 'name' => 'Lock up / open up of buyer premises' },
-        { 'code' => 'J-6', 'name' => 'Management of visitors and passes' },
-        { 'code' => 'J-1', 'name' => 'Manned guarding service' },
-        { 'code' => 'J-5', 'name' => 'Patrols (fixed or static guarding)' },
-        { 'code' => 'J-12', 'name' => 'Patrols (mobile via a specific visiting vehicle)' },
-        { 'code' => 'J-7', 'name' => 'Reactive guarding' },
-        { 'code' => 'K-1', 'name' => 'Classified waste' },
-        { 'code' => 'K-5', 'name' => 'Clinical waste' },
-        { 'code' => 'K-7', 'name' => 'Feminine hygiene waste' },
-        { 'code' => 'K-2', 'name' => 'General waste' },
-        { 'code' => 'K-4', 'name' => 'Hazardous waste' },
-        { 'code' => 'K-6', 'name' => 'Medical waste' },
-        { 'code' => 'K-3', 'name' => 'Recycled waste' },
-        { 'code' => 'L-1', 'name' => 'Childcare facility' },
-        { 'code' => 'L-2', 'name' => 'Sports and leisure' },
-        { 'code' => 'L-3', 'name' => 'Driver and vehicle service' },
-        { 'code' => 'L-4', 'name' => 'First aid and medical service' },
-        { 'code' => 'L-5', 'name' => 'Flag flying service' },
-        { 'code' => 'L-6', 'name' => 'Journal, magazine and newspaper supply' },
-        { 'code' => 'L-7', 'name' => 'Hairdressing services' },
-        { 'code' => 'L-8', 'name' => 'Footwear cobbling services' },
-        { 'code' => 'L-9', 'name' => 'Provision of chaplaincy support services' },
-        { 'code' => 'L-10', 'name' => 'Housing and residential accommodation management' },
-        { 'code' => 'L-11', 'name' => 'Training establishment management and booking service' },
-        { 'code' => 'M-1', 'name' => 'CAFM system' },
-        { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-        { 'code' => 'O-1', 'name' => 'Management of billable works' }
-      ],
-      'fm-building-type': 'General office - Customer Facing' }
-  end
+    context 'when supplier_name provided' do
+      let(:supplier_name) { 'Wolf-Wiza' }
 
-  let(:buildings) do
-    [
-      OpenStruct.new(building_json: building1),
-      OpenStruct.new(building_json: building2),
-      OpenStruct.new(building_json: buildingLondon)
-    ]
-  end
+      context 'when remove CAFM help is true' do
+        let(:remove_cafm_help) { true }
 
-  let(:uvals) do
-    [
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.4', 'uom_value' => '150', :building_id => building1['id'], 'title_text' => 'How many appliances do you have for testing each year?', 'example_text' => 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.1', 'uom_value' => '56', :building_id => building1['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.3', 'uom_value' => '66', :building_id => building1['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'M.1', 'uom_value' => '1000', :building_id => building1['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'N.1', 'uom_value' => '10', :building_id => building1['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.5', 'uom_value' => '1200', :building_id => building1['id'], 'title_text' => "What's the total external area of this building?", 'example_text' => 'For example, 21000 sqm. When the total external area measures 21000 sqm' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.4', 'uom_value' => '520', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.5', 'uom_value' => '320', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.1', 'uom_value' => '180', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.2', 'uom_value' => '90', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.3', 'uom_value' => '160', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.4', 'uom_value' => '432', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.1', 'uom_value' => '787', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.2', 'uom_value' => '678', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.3', 'uom_value' => '467', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.4', 'uom_value' => '355', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.5', 'uom_value' => '234', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.6', 'uom_value' => '125', :building_id => building1['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.1', 'uom_value' => '456', :building_id => building1['id'], 'title_text' => 'How many classified waste consoles need emptying each year?', 'example_text' => 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.2', 'uom_value' => '890', :building_id => building1['id'], 'title_text' => 'How many tonnes of waste need disposal each year?', 'example_text' => 'Number of tonnes per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.3', 'uom_value' => '342', :building_id => building1['id'], 'title_text' => 'How many tonnes of waste need disposal each year?', 'example_text' => 'Number of tonnes per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.7', 'uom_value' => '108', :building_id => building1['id'], 'title_text' => 'How many units of feminine hygiene waste need to be emptied each year?', 'example_text' => 'Example, 600. When 50 units per month need emptying, enter 600 units each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.4', 'uom_value' => '10', :building_id => building2['id'], 'title_text' => 'How many appliances do you have for testing each year?', 'example_text' => 'For example, 150. When 100 PC computers, 50 laptops needs PAT service each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.1', 'uom_value' => '20', :building_id => building2['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.3', 'uom_value' => '30', :building_id => building2['id'], 'title_text' => "What's the number of building users (occupants) in this building?", 'example_text' => "For example, 56. What's the maximum capacity of this building." },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.5', 'uom_value' => '40', :building_id => building2['id'], 'title_text' => "What's the total external area of this building?", 'example_text' => 'For example, 21000 sqm. When the total external area measures 21000 sqm' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.4', 'uom_value' => '50', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.5', 'uom_value' => '40', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.1', 'uom_value' => '50', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.2', 'uom_value' => '60', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.3', 'uom_value' => '50', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'I.4', 'uom_value' => '60', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.1', 'uom_value' => '70', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.2', 'uom_value' => '80', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.3', 'uom_value' => '90', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.4', 'uom_value' => '100', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.5', 'uom_value' => '110', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.6', 'uom_value' => '120', :building_id => building2['id'], 'title_text' => 'How many hours are required each year?', 'example_text' => 'Example, 520. If this service is required for 10 hours per week, then enter 520 hours (each year)' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.1', 'uom_value' => '140', :building_id => building2['id'], 'title_text' => 'How many classified waste consoles need emptying each year?', 'example_text' => 'Example 60. When 5 consoles are emptied monthly, enter 60 consoles each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.2', 'uom_value' => '150', :building_id => building2['id'], 'title_text' => 'How many tonnes of waste need disposal each year?', 'example_text' => 'Number of tonnes per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.3', 'uom_value' => '160', :building_id => building2['id'], 'title_text' => 'How many tonnes of waste need disposal each year?', 'example_text' => 'Number of tonnes per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'K.7', 'uom_value' => '170', :building_id => building2['id'], 'title_text' => 'How many units of feminine hygiene waste need to be emptied each year?', 'example_text' => 'Example, 600. When 50 units per month need emptying, enter 600 units each year' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.5', 'uom_value' => 5, :building_id => building1['id'], 'title_text' => "What's the number of floors each lift can access?", 'example_text' => "What's the number of floors each lift can access?", 'spreadsheet_label' => 'The sum total of number of floors per lift' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.5', 'uom_value' => 5, :building_id => building1['id'], 'title_text' => "What's the number of floors each lift can access?", 'example_text' => "What's the number of floors each lift can access?", 'spreadsheet_label' => 'The sum total of number of floors per lift' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.5', 'uom_value' => 5, :building_id => building1['id'], 'title_text' => "What's the number of floors each lift can access?", 'example_text' => "What's the number of floors each lift can access?", 'spreadsheet_label' => 'The sum total of number of floors per lift' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.5', 'uom_value' => 5, :building_id => building1['id'], 'title_text' => "What's the number of floors each lift can access?", 'example_text' => "What's the number of floors each lift can access?", 'spreadsheet_label' => 'The sum total of number of floors per lift' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.5', 'uom_value' => 2, :building_id => building2['id'], 'title_text' => "What's the number of floors each lift can access?", 'example_text' => "What's the number of floors each lift can access?", 'spreadsheet_label' => 'The sum total of number of floors per lift' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.15', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.10', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.11', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.14', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.3', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.4', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.13', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.7', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.20', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.17', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.1', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.18', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.9', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.8', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.6', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.12', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.16', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.6', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.1', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.5', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.4', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.1', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.5', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.6', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.7', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.8', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.3', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'F.1', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.4', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.10', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.11', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.16', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.14', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.15', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.9', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.7', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.6', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.9', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.7', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.3', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.10', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.1', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.6', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.13', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.8', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.11', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.9', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.10', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.11', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.7', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.2', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.3', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.4', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.5', 'uom_value' => 12345.0, :building_id => building1['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.15', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.10', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.11', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.14', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.3', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.4', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.13', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.7', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.20', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.17', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.1', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.18', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.9', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.8', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.6', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.12', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.16', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'C.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.6', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.1', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.5', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.4', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'D.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.1', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.5', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.6', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.7', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.8', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.3', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'E.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'F.1', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.4', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.10', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.11', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.16', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.14', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.15', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.9', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.7', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'G.6', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.9', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.7', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.3', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.10', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.1', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.6', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.13', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.8', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'H.11', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.9', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.10', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.11', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'J.7', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.2', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.3', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.4', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' },
-      { 'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n', 'service_code' => 'L.5', 'uom_value' => 123.0, :building_id => building2['id'], 'title_text' => 'What is the total internal area of this building?', 'example_text' => 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm', 'spreadsheet_label' => 'Square Metre (GIA) per annum' }
-    ]
-  end
+        it 'results key matches building ID' do
+          expect(report.results.keys.first).to eq(building_id)
+        end
 
-  let(:report) { described_class.new(start_date: start_date, user_email: 'test@example.com', data: data2) }
+        it 'results has the service code' do
+          expect(report.results[building_id].keys.first).to eq(service_code)
+        end
 
-  # rubocop:disable RSpec/ExampleLength
-  context 'when summary report', skip: true do
-    it 'creates summary report for buildings' do
-      report = FacilitiesManagement::SummaryReport.new(procurement.id)
-
-      report.calculate_services_for_buildings buildings, uvals
-
-      expect(report.assessed_value.round(2)).to be 8110569.05
-    end
-
-    it 'price all services' do
-      report.calculate_services_for_buildings buildings, uvals, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 9783253.13
-    end
-
-    it 'price individual services E.4' do
-      u = uvals.select { |s| s['service_code'] == 'E.4' && s[:building_id] == building1['id'] }
-
-      report.calculate_services_for_buildings buildings, u, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 941.60
-    end
-
-    it 'price individual services G.3' do
-      u = uvals.select { |s| s['service_code'] == 'G.3' && s[:building_id] == building1['id'] }
-      report.calculate_services_for_buildings buildings, u, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 2239396.54
-      # -------------------
-    end
-
-    it 'price individual services C.11' do
-      u = uvals.select { |s| s['service_code'] == 'C.11' && s[:building_id] == building1['id'] }
-      report.calculate_services_for_buildings buildings, u, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 105311.91
-    end
-
-    it 'price individual services G.3 and M.1' do
-      u = uvals.select { |s| (s['service_code'] == 'G.3' || s['service_code'] == 'M.1') && s[:building_id] == building1['id'] }
-
-      report.calculate_services_for_buildings buildings, u, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 2266269.30
-      # -------------------
-    end
-
-    it 'price individual services G.3 and N.1' do
-      u = uvals.select { |s| (s['service_code'] == 'G.3' || s['service_code'] == 'N.1') && s[:building_id] == building1['id'] }
-
-      report.calculate_services_for_buildings buildings, u, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 2252832.92
-      # -------------------
-    end
-
-    it 'price multiple buildings and services with rate card' do
-      results = {}
-
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
-      supplier_names.each do |s|
-        report = FacilitiesManagement::SummaryReport.new(procurement.id)
-        report.calculate_services_for_buildings buildings, uvals, s
-        results[s] = report.direct_award_value
-      end
-
-      sorted_results = results.sort_by { |_key, value| value }
-
-      expect(sorted_results.first[0].to_s).to eq 'Cartwright and Sons'
-
-      expect(sorted_results.first[1].round(2)).to equal 5790150.23
-    end
-
-    it 'uses ratecard for dummy supplier for service C.5' do
-      id = SecureRandom.uuid
-
-      b =
-        {
-          'id' => id,
-          'gia' => 21000,
-          'name' => 'ccs',
-          'region' => 'London',
-          'address' =>
-            {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ'
-            },
-          'isLondon' => true,
-          'services' =>
-            [
-              { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-              { 'code' => 'O-1', 'name' => 'Management of billable works' }
-            ],
-          'fm-building-type': 'General office - Customer Facing'
-        }
-
-      all_buildings =
-        [
-          OpenStruct.new(building_json: b)
-        ]
-      uom_vals =
-        [
-          {
-            'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
-            'service_code' => 'C.5',
-            'uom_value' => '54',
-            :building_id => id
-          },
-          {
-            'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\\n',
-            :service_code => 'M.1',
-            :uom_value => '1000',
-            :building_id => id
+        # rubocop:disable RSpec/ExampleLength
+        it 'results has the correct values' do
+          expected = {
+            subtotal1: 2339,
+            year1totalcharges: 2758,
+            cafm: 0,
+            helpdesk: 0,
+            variance: 0,
+            tupe: 0,
+            manage: 96,
+            corporate: 120,
+            profit: 131,
+            mobilisation: 70,
+            subyearstotal: 2677
           }
-        ]
-      data2[:isLondon] = true
-      report = FacilitiesManagement::SummaryReport.new(procurement.id)
-      report.calculate_services_for_buildings all_buildings, uom_vals, dummy_supplier_name
-      expect(report.direct_award_value.round(2)).to be 59153.05
-    end
 
-    it 'uses ratecard for dummy supplier service G.1' do
-      id = SecureRandom.uuid
+          expected.each do |key, rounded_value|
+            expect(report.results[building_id][service_code][key].round).to eq(rounded_value)
+          end
+        end
+        # rubocop:enable RSpec/ExampleLength
 
-      b =
-        {
-          'id' => id,
-          'gia' => 21000,
-          'name' => 'ccs',
-          'region' => 'London',
-          'address' =>
-            {
-              'fm-address-town' => 'London',
-              'fm-address-line-1' => '151 Buckingham Palace Road',
-              'fm-address-postcode' => 'SW1W 9SZ'
-            },
-          'isLondon' => false,
-          'services' =>
-            [
-              { 'code' => 'G-1', 'name' => 'Airport and aerodrome maintenance services' },
-              { 'code' => 'M-1', 'name' => 'CAFM system' },
-              # { 'code' => 'N-1', 'name' => 'Helpdesk services' },
-              { 'code' => 'O-1', 'name' => 'Management of billable works' }
-            ],
-          'fm-building-type': 'General office - Customer Facing'
-        }
+        it 'sum uom is correct' do
+          expect(report.sum_uom.round).to eq(18821)
+        end
 
-      all_buildings =
-        [
-          OpenStruct.new(building_json: b)
-        ]
-      uom_vals =
-        [
-          {
-            'user_id' => 'dGVzdEBleGFtcGxlLmNvbQ==\n',
-            'service_code' => 'G.1',
-            'uom_value' => '125',
-            :building_id => id,
-            'title_text' => "What's the number of building users (occupants) in this building?",
-            'example_text' => "For example, 56. What's the maximum capacity of this building."
-          }
-        ]
-
-      report = FacilitiesManagement::SummaryReport.new(procurement.id)
-      report.calculate_services_for_buildings all_buildings, uom_vals, dummy_supplier_name
-
-      # p report.assessed_value
-      expect(report.direct_award_value.round(2)).to be 972572.38
-    end
-
-    it 'can calculate prices' do
-      # eligible = true if @building_type == 'STANDARD' && (@service_standard == 'A' || @service_standard.nil?) && @priced_at_framework.to_s == 'true' && Integer(@assessed_value) <= 1500000
-      sum_uom = 0
-      sum_benchmark = 0
-
-      contract_length_years = 7
-      # code = 'A1'
-      uom_value = 100
-      occupants = 0
-      tupe_flag = false
-      london_flag = false
-      cafm_flag = true
-      helpdesk_flag = true
-
-      services = ['C1', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C2', 'C20', 'C21', 'C22', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'F1', 'F10', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'G1', 'G10', 'G11', 'G12', 'G13', 'G14', 'G15', 'G16', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'H1', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'I1', 'I2', 'I3', 'I4', 'J1', 'J10', 'J11', 'J12', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'L1', 'L10', 'L11', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'M1', 'N1', 'O1', 'B1', 'M136', 'N138', 'M140', 'M141', 'M142', 'M144', 'M148', 'M146']
-
-      services.each do |code|
-        calc_fm = FMCalculator::Calculator.new(contract_length_years, code, uom_value, occupants,
-                                               tupe_flag, london_flag, cafm_flag, helpdesk_flag, CCS::FM::Rate.read_benchmark_rates, CCS::FM::RateCard.latest)
-        sum_uom += calc_fm.sumunitofmeasure
-        sum_benchmark += calc_fm.benchmarkedcostssum
+        it 'sum benchmark is correct' do
+          expect(report.sum_benchmark.round).to eq(0)
+        end
       end
 
-      expect(sum_uom.round(2)).to be 866817.15
-      expect(sum_benchmark.round(2)).to be 925420.53
+      # TODO: context 'when remove CAFM help is false'
+    end
+
+    context 'when supplier_name not provided' do
+      let(:supplier_name) { nil }
+      let(:remove_cafm_help) { true }
+
+      it 'results are empty' do
+        expect(report.results).to be_empty
+      end
+
+      it 'sum uom is correct' do
+        expect(report.sum_uom.round).to eq(41015)
+      end
+
+      it 'sum benchmark is correct' do
+        expect(report.sum_benchmark.round).to eq(22101)
+      end
     end
   end
-  # rubocop:enable RSpec/ExampleLength
 
-  describe '#buyer_input' do
-    let(:initial_call_off_period) { 7 }
-    let(:estimated_annual_cost) { 70000 }
-    let(:procurement_building_service) do
-      create(:facilities_management_procurement_building_service,
-             code: 'C.5',
-             procurement_building: create(:facilities_management_procurement_building_no_services,
-                                          building_id: create(:facilities_management_building_london).id,
-                                          procurement: create(:facilities_management_procurement_no_procurement_buildings,
-                                                              initial_call_off_period: initial_call_off_period,
-                                                              estimated_annual_cost: estimated_annual_cost,
-                                                              estimated_cost_known: true)))
+  # TODO: public method #uom_values isn't called from anywhere and errors when
+  # called. It may need removing.
+
+  describe '#values_to_average' do
+    subject(:values_to_average) { report.values_to_average }
+
+    let(:supplier_name) { 'Wolf-Wiza' }
+
+    before { report.calculate_services_for_buildings(supplier_name) }
+
+    it 'contains correct values' do
+      expect(values_to_average.map(&:round)).to eq([18821, 0])
     end
-    let(:report) { described_class.new(procurement_building_service.procurement_building.procurement.id) }
 
-    context 'when contract length is 7 years' do
-      it 'returns contract_length * estimated cost' do
-        expect(report.buyer_input).to eq initial_call_off_period * estimated_annual_cost
+    # TODO: contexts:
+    #   any_services_missing_framework_price?
+    #   any_services_missing_benchmark_price?
+    #   varience_over_30_percent?
+  end
+
+  describe '#selected_suppliers' do
+    subject(:selected_suppliers) { report.selected_suppliers(lot) }
+
+    context 'when lot 1a' do
+      let(:lot) { '1a' }
+
+      it 'returns expected number of suppliers' do
+        expect(selected_suppliers.first.class).to eq(CCS::FM::Supplier)
+        expect(selected_suppliers.size).to eq(16)
       end
     end
 
-    context 'when contract length is 1 year' do
-      let(:initial_call_off_period) { 1 }
+    context 'when lot 1b' do
+      let(:lot) { '1b' }
 
-      it 'returns contract_length * estimated cost' do
-        expect(report.buyer_input).to eq initial_call_off_period * estimated_annual_cost
+      it 'returns expected number of suppliers' do
+        expect(selected_suppliers.first.class).to eq(CCS::FM::Supplier)
+        expect(selected_suppliers.size).to eq(27)
+      end
+    end
+
+    context 'when lot 1c' do
+      let(:lot) { '1c' }
+
+      it 'returns expected number of suppliers' do
+        expect(selected_suppliers.first.class).to eq(CCS::FM::Supplier)
+        expect(selected_suppliers.size).to eq(20)
+      end
+    end
+  end
+
+  describe '#current_lot' do
+    subject(:current_lot) { report.current_lot }
+
+    context 'when lot number selected by customer' do
+      let(:lot_number_selected_by_customer) { true }
+
+      it 'returns procurement lot number' do
+        expect(current_lot).to eq(procurement.lot_number)
+      end
+    end
+
+    context 'when lot number not selected by customer' do
+      context 'when assessed value under 7m' do
+        before do
+          allow(report).to receive(:assessed_value).and_return(6_000_000)
+        end
+
+        it 'returns 1a' do
+          expect(current_lot).to eq('1a')
+        end
+      end
+
+      context 'when assessed between 7m - 50m' do
+        before do
+          allow(report).to receive(:assessed_value).and_return(8_000_000)
+        end
+
+        it 'returns 1b' do
+          expect(current_lot).to eq('1b')
+        end
+      end
+
+      context 'when assessed over 50m' do
+        before do
+          allow(report).to receive(:assessed_value).and_return(51_000_000)
+        end
+
+        it 'returns 1c' do
+          expect(current_lot).to eq('1c')
+        end
       end
     end
   end

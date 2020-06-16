@@ -66,9 +66,6 @@ const pageUtils = {
         },
 
         inlineErrors_clear: function () {
-            /* Will clear the list items inside the unordered list contained
-            in the inline error block at the head of the page
-             */
             let inLineErrorMessageList = $('#inline-error-message ul');
             if (null != inLineErrorMessageList) {
                 inLineErrorMessageList.empty();
@@ -76,9 +73,6 @@ const pageUtils = {
         }
         ,
         inlineErrors_addMessage: function (msg) {
-            /* Will append an item to  the list items inside the unordered list contained
-            in the inline error block at the head of the page
-             */
             let inLineErrorMessageList = $('#inline-error-message ul');
             if (null != inLineErrorMessageList) {
                 inLineErrorMessageList.append("<li>" + msg + "</li>");
@@ -87,40 +81,25 @@ const pageUtils = {
         ,
 
         toggleFieldValidationError: function (show, id, msg) {
-            /* Show or hide a field validation error messages adding
-            * or removing GDS style field validation html on the fly
-            * Params :
-            * show, boolean (show or hide)
-            * id: The offending field id (without a #) that requires an error message
-            * msg: The error message to show
-            * */
-
             let errorID = id + '-error';
 
             if (show === true) {
 
                 if (!$('#' + id + '-container').length) {
-                    /* Create an element to hold the message gds style */
                     let errorElem = '<span id="' + errorID + '" class="govuk-error-message">' +
                         '<span>Error: ' + msg + '</span></span>';
 
-                    /* Wrap the offending element in a container and GDS style it*/
                     $('#' + id).wrap('<div id="' + id + '-container' + '" class="govuk-form-group govuk-form-group--error"></div>');
-                    /* prepend the error message in the container */
                     $('#' + id + '-container').prepend(errorElem);
-                    /* add error styling to the offending element */
                     $('#' + id).addClass('govuk-input--error');
                 }
                 $('#' + id + '-error-form-group').addClass('govuk-form-group--error');
 
-                /* scroll to the offending element */
                 $('body').animate({
                     scrollTop: $('#' + id).offset().top - $('body').offset().top + $('body').scrollTop()
                 }, 'fast');
-                /* focus on the offending input */
                 $('#' + id).focus();
             } else {
-                /* Undo above if present */
                 if ($('#' + id + '-container').length) {
                     $('#' + id).unwrap();
                     $('#' + errorID).remove();
@@ -164,32 +143,21 @@ const pageUtils = {
             return result
         },
 
-        /* Sort an un-ordered list */
         sortUnorderedList: function (listID) {
             let list, i, switching, b, shouldSwitch;
             list = document.getElementById(listID);
             switching = true;
-            /* Loop until no switching has been done: function */
             while (switching) {
-                // Start by saying: function no switching is done:
                 switching = false;
                 b = list.getElementsByTagName("LI");
-                // Loop through all list items:
                 for (i = 0; i < (b.length - 1); i++) {
-                    // Start by saying there should be no switching:
                     shouldSwitch = false;
-                    /* Check if the next item should
-                    switch place with the current item: */
                     if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
-                        /* If next item is alphabetically lower than current item,
-                        mark as a switch and break the loop: */
                         shouldSwitch = true;
                         break;
                     }
                 }
                 if (shouldSwitch) {
-                    /* If a switch has been marked, make the switch
-                    and mark the switch as done: */
                     b[i].parentNode.insertBefore(b[i + 1], b[i]);
                     switching = true;
                 }
@@ -227,7 +195,7 @@ const pageUtils = {
         sortByName: function (arr) {
             return arr.sort(function (a, b) {
                 const nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
-                if (nameA < nameB) //sort string ascending
+                if (nameA < nameB)
                     return -1;
                 if (nameA > nameB)
                     return 1;
@@ -363,7 +331,6 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     pageUtils.setCachedData('fm-current-building', building);
-                    // location.href = whereNext
                     if (whereNext == '/facilities-management/buildings/select-services') {
                         $('#fm-building-type-form').submit()
                     } else {
@@ -397,7 +364,6 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        // location.replace(data.next);
                         $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },
@@ -451,7 +417,6 @@ const fm = {
                 processData: false,
                 success: function (data, textStatus, jQxhr) {
                     if (textStatus === 'success') {
-                        // location.replace(data.next);
                         $('#fm-units-of-measurement-form').attr('action', data.next).submit()
                     }
                 },

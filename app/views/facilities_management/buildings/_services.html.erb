@@ -27,9 +27,9 @@
       <%= hidden_field_tag 'current_choices', TransientSessionInfo[session.id].to_json %>
 
       <a onclick="document.getElementById('fm-buldings-add-services-continue-link-form').submit();" id="fm-buldings-add-services-continue-link" href="/facilities-management/select-services" class="govuk-link--no-visited-state  ccs-no-print" role="button" aria-label="Add new services">+
-        Add new services</a>
+        Add new services
+      </a>
 
-      <!-- submit_tag '+ Add services', class: "govuk-link--no-visited-state ccs-no-print" -->
     <% end %>
   </div>
   <%= form_tag '/facilities-management/buildings-list', id: 'fm-select-services-continue-btn-form', method: :post do %>

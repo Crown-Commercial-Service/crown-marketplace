@@ -17,8 +17,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-
-
     <% if params[:controller].present? && params[:controller].start_with?('apprenticeships') %>
       <%= stylesheet_link_tag 'apprenticeships', media: 'all' %>
     <% else %>
@@ -27,17 +25,12 @@
 
     <%= render partial: '/shared/google_analytics' %>
   </head>
-  <body class="govuk-template__body">
-
+  <body class="govuk-template__body" validation_id="<%= session.id %>">
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
-
-
     <div id="wrapper">
-
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
-
       <header id="main-header" class="govuk-header" role="banner" data-module="header">
         <%= render partial: '/layouts/cookie-banner' %>
         <div class="govuk-header__container govuk-width-container">
@@ -46,7 +39,8 @@
         <%= render partial: '/layouts/beta-banner', locals: {end_of_journey: @end_of_journey.present?} %>
       </header>
 
-      <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main">
+      <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main"
+            style="visibility:<%= 'visible' if request.fullpath.include?('facilities-management') && !(['gateway', 'start', 'sign-in'].any? { |word| request.fullpath.include?(word) })%>">
         <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
           <% if @back_path.present? %>
             <%= render partial: '/layouts/back-link' %>
@@ -64,6 +58,5 @@
 
     <%= javascript_include_tag 'application' %>
     <%= render partial: '/layouts/init-js' %>
-
   </body>
 </html>

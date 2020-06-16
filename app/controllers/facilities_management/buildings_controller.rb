@@ -7,6 +7,7 @@ module FacilitiesManagement
     include BuildingsControllerRegions
 
     before_action :build_page_data, only: %i[index show new create edit update gia type security add_address]
+    before_action :authorize_user
 
     def index; end
 
@@ -84,27 +85,7 @@ module FacilitiesManagement
     private
 
     def building_params
-      params.require(:facilities_management_building)
-            .permit(
-              :building_name,
-              :description,
-              :postcode,
-              :region,
-              :region_code,
-              :gia,
-              :region,
-              :building_type,
-              :other_building_type,
-              :security_type,
-              :other_security_type,
-              :address_town,
-              :address_line_1,
-              :address_line_2,
-              :address_postcode,
-              :address_region,
-              :address_region_code,
-              :postcode_entry
-            )
+      params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
     end
 
     def add_address_form_details
@@ -139,6 +120,10 @@ module FacilitiesManagement
       valid_regions.length > 1
     end
 
+    def no_regions?
+      valid_regions.length.zero?
+    end
+
     def multiple_addresses?
       valid_addresses.length > 1
     end
@@ -155,8 +140,7 @@ module FacilitiesManagement
       []
     end
 
-    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?,
-                  :multiple_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
+    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
 
     def resolve_region
       return if @page_data[:model_object].blank?
@@ -178,13 +162,19 @@ module FacilitiesManagement
       @page_data                = {}
       @page_data[:model_object] = Building.find(params[:id]) if params[:id]
       @page_data[:model_object] = current_user.buildings.order('lower(building_name)') if action_name == 'index'
-      @page_data[:model_object] = Building.new if @page_data[:model_object].nil?
+      @page_data[:model_object] = Building.new(user: current_user) if @page_data[:model_object].nil?
 
       build_page_description
     end
 
     def id_present?
       @page_data[:model_object].respond_to?(:id) && @page_data[:model_object][:id].present?
+    end
+
+    protected
+
+    def authorize_user
+      @page_data[:model_object].present? && (@page_data[:model_object].is_a? Building) ? (authorize! :manage, @page_data[:model_object]) : (authorize! :read, FacilitiesManagement)
     end
   end
 end

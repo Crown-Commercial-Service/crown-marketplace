@@ -86,4 +86,25 @@ module FacilitiesManagement::ProcurementsHelper
     parts = @procurement.procurement_pension_funds.partition { |o| o.created_at.nil? }
     parts.last.sort_by(&:created_at) + parts.first
   end
+
+  def procurement_building_errors
+    @procurement.errors.details[:"procurement_buildings.service_codes"].map { |error| error[:building_id] }
+  end
+
+  def building_tab_class(building, index)
+    css_class = ''
+    css_class << 'active' if index.zero?
+    css_class << ' govuk-form-group--error' if procurement_building_errors.include? building.id
+    css_class
+  end
+
+  def display_building_services_error(procurement_building)
+    return if procurement_building.errors.empty?
+
+    error = procurement_building.errors
+
+    content_tag :span, id: "#{procurement_building.building.building_name}-#{error.details[:service_codes].first[:error]}-error", class: 'govuk-error-message' do
+      error[:service_codes].first.to_s
+    end
+  end
 end

@@ -94,6 +94,8 @@ module FacilitiesManagement
               )
       end
 
+      protected
+
       def authorize_user
         authorize! :manage, @procurement
       end
