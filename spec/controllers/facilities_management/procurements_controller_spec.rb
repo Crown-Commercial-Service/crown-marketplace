@@ -702,6 +702,21 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             expect(response).to redirect_to facilities_management_procurement_path(procurement)
           end
         end
+
+        context 'when no option is selected' do
+          before do
+            procurement.update(da_journey_state: 'contract_details')
+            patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'invoicing_contact_details', using_buyer_detail_for_invoice_details: nil } }
+          end
+
+          it 'will render the edit page' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'will have a inclusion error on the procurement' do
+            expect(assigns(:procurement).errors[:using_buyer_detail_for_invoice_details].any?).to be true
+          end
+        end
       end
 
       context 'when continuing to new authorised contact details' do
@@ -744,6 +759,21 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             expect(response).to redirect_to facilities_management_procurement_path(procurement)
           end
         end
+
+        context 'when no option is selected' do
+          before do
+            procurement.update(da_journey_state: 'contract_details')
+            patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'authorised_representative', using_buyer_detail_for_authorised_detail: nil } }
+          end
+
+          it 'will render the edit page' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'will have a inclusion error on the procurement' do
+            expect(assigns(:procurement).errors[:using_buyer_detail_for_authorised_detail].any?).to be true
+          end
+        end
       end
 
       context 'when continuing to new notices contact details' do
@@ -784,6 +814,21 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           it 'will update the procurement' do
             expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+        end
+
+        context 'when no option is selected' do
+          before do
+            procurement.update(da_journey_state: 'contract_details')
+            patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'notices_contact_details', using_buyer_detail_for_notices_detail: nil } }
+          end
+
+          it 'will render the edit page' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'will have a inclusion error on the procurement' do
+            expect(assigns(:procurement).errors[:using_buyer_detail_for_notices_detail].any?).to be true
           end
         end
       end
