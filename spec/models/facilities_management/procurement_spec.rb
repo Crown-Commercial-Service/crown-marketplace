@@ -515,6 +515,35 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
 
+      context 'when customer has unpriced services, a percentage service and no buyer input' do
+        let(:codes) { %w[L.6 L.7 M.1] }
+        let(:services_standard) { [nil, nil, nil] }
+
+        it 'changes state to choose_contract_value' do
+          expect(procurement.aasm_state).to eq 'choose_contract_value'
+        end
+
+        it 'does not start da_journey' do
+          expect(procurement.da_journey_state).not_to eq 'pricing'
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input? returns true' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be true
+        end
+
+        it 'procurement_building_services_not_used_in_calculation returns a list with L.6 and L.7' do
+          expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 2
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be false
+        end
+
+        it 'does not save lot number' do
+          expect(procurement.lot_number).to be nil
+        end
+      end
+
       context 'when customer has some services unpriced and no buyer input' do
         let(:codes) { %w[G.1 L.7 L.8] }
         let(:services_standard) { ['A', nil, nil] }
@@ -538,6 +567,27 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'eligible_for_da returns false' do
           expect(procurement.eligible_for_da).to be false
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
+        end
+      end
+
+      context 'when buyer has priced services and unused services and no buyer input' do
+        let(:codes) { %w[C.1 C.2 M.1 N.1] }
+        let(:services_standard) { ['A', 'A', nil, nil] }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'procurement_building_services_not_used_in_calculation returns a list without any services' do
+          expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 0
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be true
         end
 
         it 'does save lot number' do
@@ -586,6 +636,35 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'does save lot number' do
           expect(procurement.lot_number).not_to be nil
+        end
+      end
+
+      context 'when customer has all services priced, O.1 services and buyer input is not present' do
+        let(:codes) { %w[I.1 I.2 O.1] }
+        let(:services_standard) { [nil, nil, nil] }
+
+        it 'some_services_unpriced_and_no_buyer_input? returns false' do
+          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
+        end
+
+        it 'contract_value_needed? returns false' do
+          expect(procurement.send(:contract_value_needed?)).to be false
+        end
+
+        it 'changes state to results' do
+          expect(procurement.aasm_state).to eq 'results'
+        end
+
+        it 'eligible_for_da returns false' do
+          expect(procurement.eligible_for_da).to be true
+        end
+
+        it 'does save lot number' do
+          expect(procurement.lot_number).not_to be nil
+        end
+
+        it 'procurement_building_services_not_used_in_calculation an empty list' do
+          expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 0
         end
       end
 
@@ -968,7 +1047,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#all_services_unpriced_and_no_buyer_input?' do
+  describe 'services missing prices' do
     let(:procurement_building) { create(:facilities_management_procurement_building_no_services, procurement: procurement) }
 
     before do
@@ -985,24 +1064,72 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when all services are missing FW & BM prices' do
         let(:codes) { %w[L.6 L.7 L.8] }
 
-        it 'returns true' do
+        it 'all_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
         end
       end
 
       context 'when all but one service missing FW price' do
         let(:codes) { %w[G.1 G.2 D.6] }
 
-        it 'returns false' do
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
       end
 
       context 'when all but one service missing BM and FW price' do
         let(:codes) { %w[G.1 G.2 L.6] }
 
-        it 'returns false' do
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+        end
+      end
+
+      context 'when the services include unused services and one unpriced service' do
+        let(:codes) { %w[D.3 M.1 O.1] }
+
+        it 'all_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+        end
+      end
+
+      context 'when the services include the two unused services and one priced service' do
+        let(:codes) { %w[C.1 M.1 N.1] }
+
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+      end
+
+      context 'when all the services are priced' do
+        let(:codes) { %w[C.1 C.2 C.3] }
+
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
       end
     end
@@ -1013,24 +1140,36 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when all services are missing FW & BM prices' do
         let(:codes) { %w[L.6 L.7 L.8] }
 
-        it 'returns false' do
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
       end
 
       context 'when all but one service missing FW price' do
         let(:codes) { %w[G.1 G.2 D.6] }
 
-        it 'returns false' do
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
       end
 
       context 'when all but one service missing BM and FW price' do
         let(:codes) { %w[G.1 G.2 L.6] }
 
-        it 'returns false' do
+        it 'all_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'some_services_unpriced_and_no_buyer_input returns true' do
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
       end
     end

@@ -16,7 +16,7 @@
     <% if params[:template] == 'review-contract' %>
       <%= render('review_contract') %>
     <% else %>
-      <div class="govuk-!-width-two-thirds">
+      <div class="govuk-!-width-three-quarters">
         <span class="govuk-caption-m"><%= @procurement.contract_name %></span>
         <h1 class="govuk-heading-xl"><%= t('.detailed_search_summary_title') %></h1>
         <% content_for :page_title, t('.detailed_search_summary_title') %>
@@ -25,7 +25,7 @@
         </p>
         <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { novalidate: true, multipart: true } do |f| %>
           <%= render('about_the_contract') %>
-          <table class="govuk-table small">
+          <table class="govuk-table">
             <thead>
             <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any? %>">
               <th style="width:40%" scope="row" class="govuk-table__header govuk-!-font-size-24 <%= 'govuk-!-padding-left-2' if @procurement.errors[:initial_call_off_period].any? %>">Contract
