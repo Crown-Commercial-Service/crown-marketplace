@@ -376,8 +376,6 @@ module FacilitiesManagement
         contact_detail_redirection('new_authorised_representative_details', :authorised_contact_detail)
       elsif params.dig('facilities_management_procurement', 'using_buyer_detail_for_notices_detail') == 'false'
         contact_detail_redirection('new_notices_contact_details', :notices_contact_detail)
-      else
-        update_procurement
       end
     end
 
