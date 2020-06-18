@@ -69,3 +69,6 @@ launch.json
 .env.local.iulia
 .history/
 .vscode/
+
+# We are using yarn not npm, but this file sometimes gets added by snyk which brakes the pipeline
+package-lock.json
