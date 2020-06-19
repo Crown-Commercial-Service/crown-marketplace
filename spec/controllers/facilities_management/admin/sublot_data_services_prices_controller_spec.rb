@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SublotDataServicesPricesController, type: :controller do
-  login_admin_buyer
+  login_fm_admin
 
   describe 'GET index' do
     context 'when index page is rendered' do
@@ -33,6 +33,15 @@ RSpec.describe FacilitiesManagement::Admin::SublotDataServicesPricesController, 
         expect(assigns(:supplier_data_ratecard_discounts).size).to eq 1
       end
     end
+
+    context 'when not an fm admin' do
+      login_mc_admin
+
+      it 'redirects to not permitted page' do
+        get :index, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
   end
 
   describe 'PUT update_rates for variance' do
@@ -57,6 +66,15 @@ RSpec.describe FacilitiesManagement::Admin::SublotDataServicesPricesController, 
       put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 'abcd', 'checked_services': 'C.1', 'data[C.1][Direct Award Discount (%)]': 1.00, 'data[C.4][Direct Award Discount (%)]': 1.00 }
 
       expect(flash[:error]).to match ['M.141', 'abcd']
+    end
+
+    context 'when not an fm admin' do
+      login_fm_buyer
+
+      it 'redirects to not permitted page' do
+        put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
     end
   end
 

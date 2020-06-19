@@ -1,17 +1,19 @@
 <%= content_for :page_title, t('.heading') %>
 <div class="govuk-body building-services govuk-grid-row">
   <div class="govuk-!-width-three-quarters">
-    <%= render('facilities_management/procurements/shared/backlink_header') %>
+    <%= link_to 'Back', facilities_management_procurement_path(@procurement_building.procurement.id), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
     <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
       - <%= @procurement_building.name %></span>
     <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
     <table class="govuk-table govuk-!-margin-bottom-6 govuk-!-font-size-16">
       <thead>
-        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
-        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
-        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 30%"></td>
-        <td class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 10%"></td>
+        <tr>
+          <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 30%"></td>
+          <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 30%"></td>
+          <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 30%"></td>
+          <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 10%"></td>
+        </tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">

@@ -12,6 +12,7 @@ module ManagementConsultancy
       aasm do
         state :in_progress, initial: true
         state :uploaded
+        state :failed
         event :upload do
           transitions from: :in_progress, to: :uploaded
         end

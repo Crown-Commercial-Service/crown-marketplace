@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Admin
-    class ManagementReportController < FacilitiesManagement::FrameworkController
+    class ManagementReportController < FacilitiesManagement::Admin::FrameworkController
       def index
         @management_report = FacilitiesManagement::Admin::ManagementReport.new(nil, nil)
       end

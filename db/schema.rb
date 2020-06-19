@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_124804) do
+ActiveRecord::Schema.define(version: 2020_06_02_110615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 2020_05_20_124804) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "user_email", null: false
+    t.jsonb "building_json"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
     t.text "updated_by"
-    t.text "user_email"
-    t.jsonb "building_json"
     t.text "building_name"
     t.text "description"
     t.integer "gia"
@@ -109,6 +109,18 @@ ActiveRecord::Schema.define(version: 2020_05_20_124804) do
     t.boolean "active"
     t.uuid "building_id"
     t.integer "gia"
+    t.text "region"
+    t.text "building_type"
+    t.text "security_type"
+    t.text "address_town"
+    t.text "address_line_1"
+    t.text "address_line_2"
+    t.text "address_postcode"
+    t.text "address_region"
+    t.text "address_region_code"
+    t.text "building_name"
+    t.jsonb "building_json"
+    t.text "description"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 

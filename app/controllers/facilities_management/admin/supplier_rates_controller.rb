@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Admin
-    class SupplierRatesController < FacilitiesManagement::FrameworkController
+    class SupplierRatesController < FacilitiesManagement::Admin::FrameworkController
       before_action :full_services, :variances, :init_errors
 
       def update_supplier_benchmark_rates

@@ -6,7 +6,6 @@ $(function () {
         $("#facilities_management_procurement_supplier_character_left").text("You have " + charsLeft + " characters remaining");
     }
     
-    // Check if on a procurement supplier page
     if ($("#facilities_management_contract").length) {
         if ($(".edit_facilities_management_procurement_supplier").length) {
             let textArea = document.getElementsByTagName("textarea")[0].id;

@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     determine_non_admin_gateway_url
   end
 
+  def handle_unverified_request
+    sign_out
+  end
+
   private
 
   def determine_non_admin_gateway_url

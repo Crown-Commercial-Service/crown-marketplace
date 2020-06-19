@@ -1,11 +1,9 @@
 .input-type {
   display: block;
-  // Keep the entire component display block, but use inline-flex on inner to prevent the orange focus from going full width
   &__inner {
     display: inline-flex;
     position: relative;
     }
-  // Double ampersand is needed to solve specificity issues
   & &__input {
     z-index: 1;
     flex: 1 1 auto;
@@ -16,10 +14,11 @@
       }
     }
   &__type[title] {
+    font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
     display: block;
     flex: 0 0 auto;
     border: 1px solid govuk-colour("black");
-    padding: govuk-spacing(2);
+    padding: 9px;
     background-color: govuk-colour("grey-3");
     font-size: 1rem;
     font-weight: 600;

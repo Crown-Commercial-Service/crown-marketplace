@@ -12,8 +12,7 @@ class AuthController < ApplicationController
   protected
 
   def find_or_create(login)
-    user = User.find_or_initialize_by(email: login.email)
-    user.new_record?
+    user = User.find_for_authentication(email: login.email) || User.new(email: login.email)
     user.roles = %i[buyer st_access]
     user.save
     user

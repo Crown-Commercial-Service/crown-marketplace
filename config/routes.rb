@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     get '/', to: 'buyer_account#buyer_account'
     get '/start', to: 'home#index'
     get '/gateway', to: 'gateway#index'
+    get '/gateway/validate/:id', to: 'gateway#validate'
     get '/buyer_account', to: 'buyer_account#buyer_account'
     resources :buildings do
       member do
@@ -125,7 +126,6 @@ Rails.application.routes.draw do
     get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
 
     resources :procurements do
-      get 'results'
       get 'further_competition_spreadsheet'
       post 'da_spreadsheets'
       get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
@@ -275,24 +275,12 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
-    namespace :v1 do
-      resources :postcodes, only: :show
-      post '/postcode/:slug', to: 'uploads#postcodes'
-      get '/search-postcode/:postcode', to: 'nuts#show_post_code'
-      get '/serach-nuts-code/:code', to: 'nuts#show_nuts_code'
-      get '/find-region/:postcode', to: 'nuts#find_region_query'
-      get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
-      get '/test-notification', to: 'api_test_notifications#send_notification'
-      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
-    end
     namespace :v2 do
       resources :postcodes, only: :show
       get '/search-postcode/:postcode', to: 'nuts#show_post_code'
       get '/search-nuts-code/:code', to: 'nuts#show_nuts_code'
       get '/find-region/:postcode', to: 'nuts#find_region_query'
       get '/find-region-postcode/:postcode', to: 'nuts#find_region_query_by_postcode'
-      get '/test-notification', to: 'api_test_notifications#send_notification'
-      post '/delivery-notification', to: 'api_test_notifications#notification_callback'
     end
   end
 

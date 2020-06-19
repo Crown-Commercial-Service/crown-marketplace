@@ -14,7 +14,7 @@
     </div>
   </div>
 <%elsif defined?(render_empty) && render_empty %>
-  <div class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+  <div class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" data-module="error-summary" style="display: none;">
     <div class="govuk-error-summary__title" id="error-summary-title">
       <%= t(".there_is_a_problem") if errors.any? %>
     </div>

@@ -22,7 +22,7 @@
       </tr>
     <% @page_data[:sorted_supplier_list][1..-1].each_with_index do |s, i| %>
       <tr class="govuk-summary-list__value govuk-heading-m govuk-!-margin-bottom-0">
-        <td class= "govuk-!-width-full"><%= s[:name] %></td>
+        <td class= "govuk-!-width-full"><%= "Supplier #{i + 2}" %></td>
         <td style="min-width:10em; text-align:right;"><%= number_to_currency(s[:price]) %></td>
       </tr>
     <% end %>

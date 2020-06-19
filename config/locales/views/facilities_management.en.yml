@@ -1,12 +1,6 @@
 ---
 en:
   activemodel:
-    attributes:
-      facilities_management/service_hour_choice/service_choice:
-        all_day: all day (24 hours)
-        hourly: Specified hours
-        not_required: Not required
-        time_to: to
     errors:
       models:
         facilities_management/admin/management_report:
@@ -27,35 +21,22 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+        facilities_management/service_hour_choice:
+          attributes:
+            end_time:
+              after: The end time must be after the start time for %{day}
+              invalid: Select end time
+              too_long: The total service period for a day cannot be more than 24 hours
+            service_choice:
+              all_day_overlap: The start time of %{day} cannot be earlier than the end time of the previous day
+              inclusion: Select one option for %{day}
+            start_time:
+              after: The end time must be after the start time for %{day}
+              invalid: Select start time
+              selection_overlap: The start time of %{day} cannot be earlier than the end time of the previous day
         facilities_management/service_hours:
           attributes:
-            friday:
-              invalid: Select not required if you don’t need the service on Friday
-              not_a_date: Enter a real start time or end time for Friday
-              required: You must provide hours required for at least one of the days
-            monday:
-              invalid: Select not required if you don’t need the service on Monday
-              not_a_date: Enter a real start time or end time for Monday
-              required: You must provide hours required for at least one of the days
-            saturday:
-              invalid: Select not required if you don’t need the service on Saturday
-              not_a_date: Enter a real start time or end time for Saturday
-              required: You must provide hours required for at least one of the days
-            sunday:
-              invalid: Select not required if you don’t need the service on Sunday
-              not_a_date: Enter a real start time or end time for Sunday
-              required: You must provide hours required for at least one of the days
-            thursday:
-              invalid: Select not required if you don’t need the service on Thursday
-              not_a_date: Enter a real start time or end time for Thursday
-              required: You must provide hours required for at least one of the days
-            tuesday:
-              invalid: Select not required if you don’t need the service on Tuesday
-              not_a_date: Enter a real start time or end time for Tuesday
-              required: You must provide hours required for at least one of the days
-            wednesday:
-              invalid: Select not required if you don’t need the service on Wednesday
-              not_a_date: Enter a real start time or end time for Wednesday
+            base:
               required: You must provide hours required for at least one of the days
         user:
           incorrect_username_or_password: You must provide a correct username or password
@@ -112,7 +93,7 @@ en:
             organisation_address_postcode:
               address_not_complete: Address not provided
               blank: Enter your postcode
-              invalid: Enter a valid postcode
+              invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter your town or city
               invalid: Enter your town or city
@@ -120,8 +101,8 @@ en:
               blank: Enter your organisation name
               invalid: Enter your organisation name
             telephone_number:
-              blank: Enter your telephone number
-              invalid: Enter a telephone number
+              blank: Enter a UK telephone number, for example 020 7946 0000
+              invalid: Enter a UK telephone number, for example 020 7946 0000
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -152,6 +133,7 @@ en:
               inclusion: Select yes if you want to extend your call-off contract
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
             initial_call_off_period:
               blank: Enter initial call-off period
@@ -165,6 +147,7 @@ en:
               after_2100: Initial call-off period start date cannot be later than 31 December 2100
               after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
+              date_after_or_equal_to: Initial call-off period start date must be today or in the future
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
@@ -194,21 +177,21 @@ en:
               too_short: Enter the name for the search
             optional_call_off_extensions_1:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
-              too_long: Call-off contract period, including extensions must not be more than 10 years
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
+              too_long: Call-off contract period, including extensions, must not be more than 10 years in total
             optional_call_off_extensions_2:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             optional_call_off_extensions_3:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             optional_call_off_extensions_4:
               blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be greater than or equal to 1
-              not_an_integer: Extension period must be a whole number
+              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
+              not_an_integer: Extension period must be a whole number and greater than 0
             payment_method:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about ‘Payment method’
@@ -265,6 +248,14 @@ en:
             service_codes:
               at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
+              invalid_billable: You must select another service to include 'Management of billable works' to '%{building_name}' building
+              invalid_cafm: You must select another service to include 'CAFM system' to '%{building_name}' building
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works' to '%{building_name}' building
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services' to '%{building_name}' building
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '%{building_name}' building"
+              invalid_helpdesk: You must select another service to include 'Helpdesk services' to '%{building_name}' building
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
         facilities_management/procurement_building_service:
           attributes:
             lift_data:
@@ -290,12 +281,16 @@ en:
                 greater_than: The end time must be after the start time
                 invalid: Select end time
                 less_than: The start time must be before the end time
+                too_long: The total service period for a day cannot be more than 24 hours.
               service_choice:
                 inclusion: Select not required if you don’t need the service on this day
+                required: You must provide hours required for at least one of the days
+                too_long: The total service period for a day cannot be more than 24 hours.
               start_time:
                 greater_than: The end time must be after the start time
                 invalid: Select start time
                 less_than: The start time must be before the end time
+                not_a_date: Select start time
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -315,6 +310,7 @@ en:
             organisation_address_postcode:
               address_not_complete: Select an address from the list or add a missing address
               blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter the town or city of the address
         facilities_management/procurement_invoice_contact_detail:
@@ -354,6 +350,7 @@ en:
             contract_end_date:
               after_or_equal_to: The contract end date must be after the contract start date
               blank: Enter contract end date
+              date_after_or_equal_to: The contract end date must be after the contract start date
               not_a_date: Enter a valid end date
             contract_response:
               inclusion: You must select one option to respond to the contract offer
@@ -371,20 +368,6 @@ en:
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
               too_long: Reason for not signing must be 100 characters or less
-        facilities_management/service_hour_choice:
-          attributes:
-            end_time:
-              greater_than: The end time must be after the start time
-              invalid: Select end time
-              less_than: The start time must be before the end time
-              not_a_date: Select end time
-            service_choice:
-              inclusion: Select one option
-            start_time:
-              greater_than: The end time must be after the start time
-              invalid: Select start time
-              less_than: The start time must be before the end time
-              not_a_date: Select start time
   dashboard:
     index:
       admin_link: Managing framework and supplier data
@@ -429,7 +412,7 @@ en:
           heading_title_three: Services and prices
           heading_title_two: Variances
           leading_text: Sub-lot 1a services, prices, and variances
-          note: The tick boxes in the first column indicate the services this suppler can provide.
+          note: The tick boxes in the first column indicate the services this supplier can provide.
           rate_error: The rate must be a number, like 2.60 or 8
           return_button: Return to supplier framework data
           there_is_a_problem: There is a problem
@@ -449,10 +432,12 @@ en:
           rate_percentage_a: Rate (%)
           rate_pound_a: Rate (£)
           rtrn_link: Return to admin dashboard
+          td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
           td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
           td_corporate: Corporate overhead (%)
           td_london: London location percentage variance (%)
           td_mobilisation: Mobilisation (%)
+          td_overhead: Management overhead  (%) <br /> Workpackage A - contract management
           td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
           td_profit: Profit (%)
           td_tupe: TUPE risk premium (%)
@@ -511,7 +496,7 @@ en:
       gia:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
         further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
-        gia_header: What’s the size of internal area of this building?
+        gia_header: What’s the size of the internal area of this building?
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -527,7 +512,7 @@ en:
         add_building_address: Add building address
         building_size: Building size
         building_type: Building type
-        change_building_details: Change building details
+        change_building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
         manage_building_title: Manage buildings
@@ -571,12 +556,12 @@ en:
         view_more: View more building types
     buyer_account:
       buyer_account:
-        about_the_buyer_description: Edit buyer account details such as contact name, organisation name
-        about_the_buyer_title: About the buyer
+        about_the_buyer_description: Edit your account details such as your name or organisation name
+        about_the_buyer_title: About your account
         buildings_title: Buildings
         buyer_account_dashboard: Buyer account dashboard
-        buyer_account_title: Buyer account
-        link_text: Update buyer details
+        buyer_account_title: Your account
+        link_text: Manage your details
         manage_buildings: Manage buildings
         manage_buildings_desc: Create and manage your buildings used in your procurements
         manage_procurements_link: Procurements dashboard
@@ -585,8 +570,8 @@ en:
         procurements: Procurements
     buyer_details:
       edit:
-        buyer_details: Buyer details
-        cant_find_addr_in_list: Can’t find address/enter address manually
+        buyer_details: Manage your details
+        cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
         change: Change
         find_addr: Find address
@@ -598,19 +583,19 @@ en:
         postcode: Postcode
         search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
         select_an_addr: Select an address
-        selected_addr: Selected address
         submit: Save and continue
         which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
         wider_public_sector: Wider public sector
-        your_details: Your details
+        your_details: Personal details
       edit_address:
         add_address: Add address
         building_and_street: Building and street
         county: County (optional)
+        manage_details: Manage your details
         postcode: Postcode
         submit: Save and continue
         town_or_city: Town or city
-        your_details: Your details
+        your_details: Organisation address
     home:
       1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
       1_you_will_tell_us_html: |
@@ -651,8 +636,9 @@ en:
     journey:
       choose_locations:
         heading: Regions
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        location_selected: Region selected
+        locations_selected: Regions selected
+        no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -661,6 +647,7 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        service_selected: Service selected
         service_specification_doc: Read the service specification document
         services_selected: Services selected
         start_a_new_procurement_header: Services
@@ -740,15 +727,27 @@ en:
         subheading: Answer additional questions about the services
     procurement_buildings_services:
       day_section:
+        all_day: All day (24 hours)
+        am_pm: AM or PM
         copy_details: Apply to Monday through Friday
+        end_time: End time
+        hour: Hour
+        hourly: Specified hours
+        minute: Minute
+        not_required: Not required
+        start_time: Start time
       lifts:
         back_to_service_information: Back to service information
         save_and_return_to_service_information: Save and return to service information
       service_hours:
         back_to_service_information: Return to service information
         save_and_return_to_service_information: Save and return to service information
-        service_hours_description_html: "<p>The hours you enter will be used to:</p><ul><li>inform the supplier the exact hours you require this service to be delivered</li><li>calculate the cost of this service</li></ul><p>The calculation will assume 52 weeks x 7 days in one year.</p>"
-        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
+        service_hours_description_1: 'The hours you enter will be used to:'
+        service_hours_description_2: The calculation will assume 52 weeks x 7 days in one year.
+        service_hours_description_list_1: inform the supplier the exact hours you require this service to be delivered
+        service_hours_description_list_2: calculate the cost of this service
+        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
+        there_is_a_problem: There is a problem
       show:
         back_to_service_information: Back to service information
         save_and_return_to_service_information: Save and return to service information
@@ -996,7 +995,7 @@ en:
           optional_call_off_extensions_2: Optional call-off extension period 2
           optional_call_off_extensions_3: Optional call-off extension period 3
           optional_call_off_extensions_4: Optional call-off extension period 4
-          route_to_market: Route to Market
+          route_to_market: Route to market
           supplier: Supplier
         review_contract:
           attachment_1:
@@ -1029,7 +1028,7 @@ en:
             guidance: If you wish to make changes to your requirements, click on the ‘Change requirements’ button below.
             title: Change requirements
           change_schedule:
-            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended
+            guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended.
           contract_documents:
             call_off_schedule_1:
               document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
@@ -1063,7 +1062,7 @@ en:
               title: Call-off Schedule 7 - Key Staff
             call_off_schedule_8:
               document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
-              title: Call-Off Schedule 8 - Business Continuity and Disaster Recovery
+              title: Call-off Schedule 8 - Business Continuity and Disaster Recovery
             call_off_schedule_9:
               document_name: Call-Off Schedule 9 - Security (DA).docx
               title: Call-off Schedule 9 - Security
@@ -1132,6 +1131,7 @@ en:
           change_buildings: "+ Change buildings"
           content_html: Click on each building below and selected services you need from the shortlist. <br> For each building in the left hand column, select the services required from the right hand column. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
           heading: Which facilities management services do you need for each building?
+          there_is_a_problem: There is a problem
           your_buildings: Your buildings
         cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page
@@ -1290,6 +1290,7 @@ en:
       new:
         cancel_text: Cancel, and return to the procurements dashboard
         quick_search: Quick search
+        save_and_continue: Save and continue
         save_for_later: Save for later
         save_your_search: Save your search
         search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however your procurement will fall into only one sub-lot dependent on your potential total contract value (excludes billable works, optional extension periods and VAT).
@@ -1301,8 +1302,9 @@ en:
         save_headline: Save a new search
         save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
       regions:
-        locations_selected: Locations selected
-        no_locations_selected: No locations selected
+        location_selected: Region selected
+        locations_selected: Regions selected
+        no_locations_selected: No Regions selected
         question: Where are your buildings located?
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
@@ -1335,6 +1337,7 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        service_selected: Service selected
         service_specification_doc: Read the service specification document
         services_selected: Services selected
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.

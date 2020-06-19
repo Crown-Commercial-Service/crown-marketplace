@@ -54,8 +54,7 @@ function PensionFundFund() {
       }
       return e.preventDefault();
     });
-    
-    // Functions to run on load
+
     checkIfOneRow();
     getRowCount();
     pensionToAddLeft();

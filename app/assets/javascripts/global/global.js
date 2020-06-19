@@ -1,7 +1,7 @@
-function ifChecked(sWrap, h) {//count and show checked checkboxes totals
+function ifChecked(sWrap, h) {
     var howmany;
 
-    if (sWrap === false) {//called from Clear All link
+    if (sWrap === false) {
         howmany = 0;
     } else {
         howmany = sWrap.find('.govuk-checkboxes__input:checked').length;
@@ -15,7 +15,7 @@ function ifChecked(sWrap, h) {//count and show checked checkboxes totals
     }
 }
 
-function whenChecked(sWrap, h) {//recount checked boxes totals when checkbox states changes
+function whenChecked(sWrap, h) {
     var allcheckbxs = sWrap.find('.govuk-checkboxes__input');
 
     allcheckbxs.on('change', function () {
@@ -31,14 +31,14 @@ function initSearchResults(id) {
 
         var hint = shopWrap.find('.ccs-govuk-hint--selected');
         if (hint.length) {
-            ifChecked(shopWrap, hint); //1. ccs-at-checkbox-accordian  2. ccs-govuk-hint--selected
+            ifChecked(shopWrap, hint);
             whenChecked(shopWrap, hint);
         }
 
         var link = $(this).find('.ccs-at-btn-toggle');
 
         link.attr('aria-expanded', 'false').on('click', function (e) {
-            e.preventDefault();//if 'a' tag used
+            e.preventDefault();
 
             $(this).attr('aria-expanded', $(this).attr('aria-expanded') === 'true' ? 'false' : 'true')
                 .find('span').text(function (i, text) {
@@ -53,34 +53,22 @@ function initSearchResults(id) {
         });
     });
 
-    //var theForm = id.find('form');
     var checkboxs = accord.find('.govuk-checkboxes__input');
 
-    checkboxs.keypress(function (e) {//select checkbox with keyboard
+    checkboxs.keypress(function (e) {
         if ((e.keyCode ? e.keyCode : e.which) == 13) {
             $(this).trigger('click');
-            /*theForm.submit(function(e){
-                e.preventDefault();
-            });*/
         }
     });
 
     $('#ccs-clear-filters').on('click', function (e) {
         e.preventDefault();
-        checkboxs.prop('checked', false); // AND resubmit form to 'self' ????
+        checkboxs.prop('checked', false);
 
         var hint = id.find('.ccs-govuk-hint--selected');
         if (hint.length) {
             ifChecked(false, hint);
         }
-
-        /* additional submit functionality start ... */
-        /*var pathname = window.location.pathname; //path only (/path/example.html)
-        var origin   = window.location.origin;   //base URL (https://example.com)
-        window.location.href = origin + pathname;//removes querystrings*/
-        //id.find('form').submit();
-        /* additional submit functionality end */
-
     });
 }
 
@@ -174,7 +162,7 @@ function initDynamicAccordian() {
                 .not(hasAll).not(hasFull)
                 .find('.govuk-checkboxes__input');
 
-            if (hasAll.length) {//start 'select all' checkbox functionality
+            if (hasAll.length) {
 
                 var hasAllInput = hasAll.find('.govuk-checkboxes__input');
 
@@ -182,7 +170,7 @@ function initDynamicAccordian() {
                     var checkstate = hasAllInput.is(':checked');
 
                     thecheckboxes.each(function () {
-                        if (checkstate) {//$(this).prop("checked", !$(this).prop("checked"));
+                        if (checkstate) {
                             $(this).prop('checked', true);
                         } else {
                             $(this).prop('checked', false);
@@ -192,19 +180,19 @@ function initDynamicAccordian() {
                 });
 
                 thecheckboxes.on('change', function () {
-                    if (!$(this).is(':checked')) {//if NOT checked
+                    if (!$(this).is(':checked')) {
                         hasAll.find('.govuk-checkboxes__input').prop('checked', false);
                     }
-                });//end: 'select all' checkbox functionality
+                });
 
-            } else if (hasFull.length) {//start has a 'Full' coverage link
+            } else if (hasFull.length) {
 
                 var hasFullInput = hasFull.find('.govuk-checkboxes__input');
 
                 hasFullInput.on('change', function () {
                     var checkstate = hasFullInput.is(':checked');
 
-                    if (checkstate) {//$(this).prop("checked", !$(this).prop("checked"));
+                    if (checkstate) {
                         $(this).prop('checked', true);
                         thecheckboxes.prop('checked', false);
                     }
@@ -213,14 +201,14 @@ function initDynamicAccordian() {
                 });
 
                 thecheckboxes.on('change', function () {
-                    if ($(this).is(':checked')) {//if it IS checked
+                    if ($(this).is(':checked')) {
                         hasFull.find('.govuk-checkboxes__input').prop('checked', false);
                     }
-                });//end: has a 'Full' coverage link
+                });
 
             }
 
-            thecheckboxes.on('change', function () {//for all checkboxes
+            thecheckboxes.on('change', function () {
                 updateList(govcheckboxes, id, basketheader);
             });
 
@@ -239,11 +227,11 @@ function initStepByStepNav() {
 
 function initCustomFnc() {
     var filt = $('#ccs-at-results-filters');
-    if (filt.length) {//call function only if this id is on this page
+    if (filt.length) {
         initSearchResults(filt);
     }
 
-    if ($('#ccs-dynamic-accordian').length) {//if this pg has this ID
+    if ($('#ccs-dynamic-accordian').length) {
         initDynamicAccordian();
     }
 
@@ -253,5 +241,5 @@ function initCustomFnc() {
 }
 
 jQuery(document).ready(function () {
-    initCustomFnc(); //call block of custom functions calls
+    initCustomFnc();
 });

@@ -84,4 +84,198 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
     end
   end
+
+  describe 'validation for special service choices' do
+    before { procurement_building.active = true }
+
+    context 'when the only service code selected is O.1' do
+      before { procurement_building.service_codes = ['O.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service code selected is N.1' do
+      before { procurement_building.service_codes = ['N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service code selected is M.1' do
+      before { procurement_building.service_codes = ['M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1 and M.1' do
+      before { procurement_building.service_codes = ['O.1', 'M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1 and N.1' do
+      before { procurement_building.service_codes = ['O.1', 'N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only M.1 and N.1' do
+      before { procurement_building.service_codes = ['M.1', 'N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1, N.1 and M.1' do
+      before { procurement_building.service_codes = ['O.1', 'N.1', 'M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement_building.valid?(:building_services)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected include G.1 and G.3' do
+      before { procurement_building.service_codes = ['G.1', 'G.3'] }
+
+      it 'will not be valid' do
+        expect(procurement_building.valid?(:building_services)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building.valid?(:building_services)
+        expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{procurement_building.building_name}' building"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement_building.service_codes << 'C.1' }
+
+        it 'will not be valid' do
+          expect(procurement_building.valid?(:building_services)).to be false
+        end
+      end
+    end
+  end
+
+  describe 'validation on procurement_building_services_present' do
+    context 'when there are no services selected' do
+      it 'is not valid' do
+        expect(procurement_building.valid?(:procurement_building_services_present)).to be false
+      end
+
+      it 'returns the correct error message' do
+        procurement_building.valid?(:procurement_building_services_present)
+
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select at least one service for ‘#{procurement_building.building_name}’ building"
+      end
+    end
+
+    context 'when a service is selected' do
+      it 'is valid' do
+        procurement_building.service_codes << 'C.1'
+
+        expect(procurement_building.valid?(:procurement_building_services_present)).to be true
+      end
+    end
+  end
 end

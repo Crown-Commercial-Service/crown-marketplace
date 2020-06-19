@@ -7,4 +7,7 @@ FactoryBot.define do
     organisation_address_town { Faker::Address.city }
     organisation_address_postcode { Faker::Address.postcode }
   end
+
+  factory :facilities_management_procurement_contact_detail_empty, class: FacilitiesManagement::ProcurementContactDetail do
+  end
 end

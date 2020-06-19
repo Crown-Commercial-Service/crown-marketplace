@@ -57,7 +57,6 @@ $(function () {
 
     const getRegion = (function (post_code) {
 
-        //if (post_code && pageUtils.isPostCodeValid(post_code)) {
         $.get(encodeURI("/facilities-management/buildings/region?post_code=" + post_code.trim()))
             .done(function (data) {
                 if (data) {
@@ -68,7 +67,6 @@ $(function () {
                 pageUtils.setCachedData('fm-current-region', 'Region not found for this postcode');
                 pageUtils.showPostCodeError(true, data.error);
             });
-        //}
     });
 
     $('#fm-postcode-lookup-results').on('change', function (e) {

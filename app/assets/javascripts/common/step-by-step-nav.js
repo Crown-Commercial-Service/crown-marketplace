@@ -1,14 +1,10 @@
-// Based on https://github.com/alphagov/govuk_publishing_components/blob/v22.0.0/app/assets/javascripts/govuk_publishing_components/components/step-by-step-nav.js
-
-/* eslint-env jquery */
-
 window.GOVUKFrontend = window.GOVUKFrontend || {};
 
 (function (Modules) {
     "use strict";
 
     Modules.AppStepNav = function () {
-        const actions = {}; // stores text for JS appended elements 'show' and 'hide' on steps, and 'show/hide all' button
+        const actions = {};
         let rememberShownStep = false;
         let stepNavSize;
         let sessionStoreLink = "govuk-step-nav-active-link";
@@ -18,10 +14,8 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
         let uniqueId;
 
         this.start = function ($element) {
-            // Indicate that js has worked
             $element.addClass("app-step-nav--active");
 
-            // Prevent FOUC, remove class hiding content
             $element.removeClass("js-hidden");
 
             stepNavSize = $element.hasClass("app-step-nav--large") ? "Big" : "Small";
@@ -66,7 +60,7 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
 
             function addShowHideToggle () {
                 $stepHeaders.each(function () {
-                    let linkText = actions.showText; // eslint-disable-line no-unused-vars
+                    let linkText = actions.showText;
 
                     if (headerIsOpen($(this))) {
                         linkText = actions.hideText ;
@@ -91,7 +85,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 $showOrHideAllButton.attr("aria-controls", ariaControlsValue);
             }
 
-            // called by show all/hide all, sets all steps accordingly
             function setAllStepsShownState (isShown) {
                 const data = [];
 
@@ -111,7 +104,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 }
             }
 
-            // called on load, determines whether each step should be open or closed
             function showPreviouslyOpenedSteps () {
                 const data = loadFromSessionStorage(uniqueId) || [];
 
@@ -119,7 +111,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                     const id = $(this).attr("id");
                     const stepView = new StepView($(this));
 
-                    // show the step if it has been remembered or if it has the 'data-show' attribute
                     if ((rememberShownStep && data.indexOf(id) > -1) || typeof $(this).attr("data-show") !== "undefined") {
                         stepView.setIsShown(true);
                     } else {
@@ -168,8 +159,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 })
             }
 
-            // if the step is open, store its id in session store
-            // if the step is closed, remove its id from session store
             function rememberStepState ($step) {
                 if (rememberShownStep) {
                     const data = JSON.parse(loadFromSessionStorage(uniqueId)) || [];
@@ -188,10 +177,9 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 }
             }
 
-            // tracking click events on links in step content
             function bindComponentLinkClicks (stepNavTracker) {
                 $element.find(".js-link").click(function (event) {
-                    const linkClick = new componentLinkClick(event, stepNavTracker, $(this).attr("data-position")); // eslint-disable-line no-new, new-cap
+                    const linkClick = new componentLinkClick(event, stepNavTracker, $(this).attr("data-position"));
                     linkClick.track();
                     const thisLinkHref = $(this).attr("href");
 
@@ -223,11 +211,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 clicked.parent().addClass(activeLinkClass);
             }
 
-            // if a link occurs more than once in a step nav, the backend doesn't know which one to highlight
-            // so it gives all those links the 'active' attribute and highlights the last step containing that link
-            // if the user clicked on one of those links previously, it will be in the session store
-            // this code ensures only that link and its corresponding step have the highlighting
-            // otherwise it accepts what the backend has already passed to the component
             function ensureOnlyOneActiveLink () {
                 const $activeLinks = $element.find(".js-list-item." + activeLinkClass);
 
@@ -237,8 +220,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
 
                 let lastClicked = loadFromSessionStorage(sessionStoreLink) || $element.find('.' + activeLinkClass).first().attr("data-position");
 
-                // it's possible for the saved link position value to not match any of the currently duplicate highlighted links
-                // so check this otherwise it'll take the highlighting off all of them
                 if (!$element.find('.js-link[data-position="' + lastClicked + '"]').parent().hasClass(activeLinkClass)) {
                     lastClicked = $element.find('.' + activeLinkClass).first().find(".js-link").attr("data-position");
                 }
@@ -293,7 +274,6 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
 
             function setShowHideAllText () {
                 const shownSteps = $element.find(".step-is-shown").length;
-                // Find out if the number of is-opens == total number of steps
                 if (shownSteps === totalSteps) {
                     $showOrHideAllButton.text(actions.hideAllText);
                 } else {
@@ -366,8 +346,7 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
                 return $target.closest(".js-toggle-panel").attr("data-position") + ' - ' + stepView.title + ' - ' + locateClickElement() + ': ' + stepNavSize + isOptional();
             }
 
-            // returns index of the clicked step in the overall number of steps
-            function stepIndex () { // eslint-disable-line no-unused-vars
+            function stepIndex () {
                 return $steps.index(stepView.element) + 1 ;
             }
 
@@ -417,11 +396,8 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
             }
         }
 
-        // A helper that sends a custom event request to Google Analytics if
-        // the GOVUK module is setup
         function StepNavTracker (totalSteps, totalLinks, uniqueId) {
             this.track = function (category, action, options) {
-                // noop
             }
         }
     }

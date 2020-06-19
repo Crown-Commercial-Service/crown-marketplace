@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           procurement.initial_call_off_start_date = DateTime.current - 100
           procurement.initial_call_off_end_date = DateTime.current - 10
           procurement.save context: :contract_dates
-          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :after_or_equal_to
+          expect(procurement.errors.details[:initial_call_off_start_date][0][:error]).to eq :date_after_or_equal_to
           expect(procurement.valid?(:contract_dates)).to eq false
         end
         it 'will be valid if the date is after now' do

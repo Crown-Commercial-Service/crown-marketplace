@@ -31,7 +31,6 @@
       <%= t('.lead') %>
     </p>
     <%= form_for resource, as: resource_name, url: facilities_management_new_user_registration_path, html: {class: 'ccs-form', id: 'cop_register'}, method: :post do |f| %>
-      <!-- organisation details start -->
       <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
 
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
@@ -51,9 +50,7 @@
         </div>
 
       </fieldset>
-      <!-- organisation details end -->
 
-      <!-- password start -->
       <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
 
 
@@ -103,7 +100,6 @@
         </div>
 
       </fieldset>
-      <!-- password end -->
 
       <%= f.submit t('common.create_account'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7 govuk-!-margin-bottom-8", 'aria-label': "#{t('common.create_account')}" %>
 

@@ -1,14 +1,11 @@
 $(function () {
 
-        /* govuk-accordion__controls event handlers */
         let selectedLocations = pageUtils.getCachedData('fm-locations');
 
-        /* add a link to select all on the accordion */
         $('#region-accordion .govuk-accordion__controls').append("<a role='button' class='govuk-accordion__open-all' data-no-turbolink id=\"select-all-link\" name=\"select-all-link\" href=\"\">Select all</a>");
 
         const initialize = (function () {
 
-            /* Load and display cached values */
             if (selectedLocations) {
                 for (let x = 0; x < selectedLocations.length; x++) {
                     let value = selectedLocations[x];
@@ -16,11 +13,9 @@ $(function () {
                 }
             }
 
-            /* set the initial count */
             updateLocationCount();
         });
 
-        /* Update the count of selected locations */
         const updateLocationCount = (function () {
             let count = $("#selected-fm-locations li").length;
             let msg = count > 0 ? (count === 1 ? "1 region" : count + " regions") : "None";
@@ -35,14 +30,12 @@ $(function () {
 
         });
 
-        /* remove a location from the selected list */
         const removeSelectedItem = (function (id, groupID) {
             $('li#' + id).remove();
             id = id.replace('_selected', '');
             $("input#" + id).prop("checked", false);
             $("input#" + groupID + "_all").prop("checked", false);
 
-            /* remove from the array that is saved */
             let filtered = selectedLocations.filter(function (value, index, arr) {
                 if (value.code !== id) {
                     return true;
@@ -56,7 +49,6 @@ $(function () {
             updateLocationCount();
         });
 
-        /* uncheck all check boxes and clear list */
         const clearAllLocations = (function () {
             $("#selected-fm-locations li").remove();
             $("#region-accordion input:checkbox").prop("checked", false);
@@ -67,13 +59,10 @@ $(function () {
             updateLocationCount();
         });
 
-        /* Click handler to remove all locations */
         $('#remove-all-locations-link').on('click', function (e) {
             e.preventDefault();
             clearAllLocations();
         });
-
-        /* click handler for check boxes */
 
 
     const showOrRemoveBasketLinks = function(e, id, groupID) {
@@ -154,7 +143,6 @@ $(function () {
             pageUtils.sortUnorderedList('selected-fm-locations');
         });
 
-        /* click handler for select all on accordion */
         $('#select-all-link').on('click', function (e) {
             e.preventDefault();
 
@@ -170,7 +158,6 @@ $(function () {
 
         });
 
-        /* must have at least one location selected */
         const isLocationValid = (function () {
 
             let result = selectedLocations && selectedLocations.length > 0 ? true : false;
@@ -183,7 +170,6 @@ $(function () {
 
         });
 
-        /* Click handler for save and continue button */
         $('#save-locations-link').on('click', function (e) {
             pageUtils.setCachedData('fm-locations', selectedLocations);
             e.preventDefault();

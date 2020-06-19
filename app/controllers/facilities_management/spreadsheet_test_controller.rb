@@ -1,5 +1,3 @@
-require 'facilities_management/fm_buildings_data'
-
 module FacilitiesManagement
   class SpreadsheetTestController < FacilitiesManagement::FrameworkController
     def index; end

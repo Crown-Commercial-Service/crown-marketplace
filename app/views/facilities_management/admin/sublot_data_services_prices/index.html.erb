@@ -30,6 +30,7 @@
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
 <h1 class="govuk-heading-l govuk-!-font-weight-bold "><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title_three') %></h1>
+
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %>
 </p>
@@ -37,55 +38,61 @@
 <div style="width: 3000px !important;">
   <%= form_with(url: "", method: "put", local: "false") do %>
   <% @full_services.each do |service| %>
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left"><%= service['name'] %></th>
-        <% @list_service_types.each do |service_type| %>
-          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
-        <% end %>
-      </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-      <% service['work_package'].each do |work_pckg| %>
+    <fieldset class="govuk-fieldset">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
-            <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? work_pckg['code'] %>">
-              <div class="govuk-checkboxes__item">
-              <%= check_box_tag(
-                      "checked_services[]",
-                      work_pckg['code'],
-                      @supplier_rate_data_checkboxes[work_pckg['code']],
-                      class: "govuk-checkboxes__input",
-                      id: "rates_#{work_pckg['code']}",
-                      'aria-label': "#{work_pckg['name']} checkbox"
-                  ) %>
-              <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>" id='<%="#{work_pckg['code']}_label"%>'>
-                <%= work_pckg['code'] %> <%= work_pckg['name'] %>
-              </label>
-            </div>
-              <% if flash[:error]  and flash[:error].include? work_pckg['code'] %>
-                  <span id="event-name-error" class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.admin.supplier_framework_data.sublot_data.rate_error') %>
-                  </span>
-              <% end %>
-            </div>
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left">
+            <legend class="govuk-!-padding-left-0">
+              <%= service['name'] %>
+            </legend>
           </th>
-          <% @list_service_types.each do |service_type|   %>
-            <td class="govuk-table__cell supplier-rates-td">
-            <% if flash[:error]  and flash[:error].include? work_pckg['code'] and flash[:error].include? work_pckg['code']+service_type
-                 prev_display_value_index = flash[:error].index(work_pckg['code']+service_type ) + 1
-            %>
-                <input class="govuk-input govuk-input--width-3 govuk-input--error" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= flash[:error][prev_display_value_index] %>">
-            <% else %>
-              <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" aria-label= "<%= work_pckg['name'] + service_type %>" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
-              <% end %>
-            </td>
-      <% end %>
+          <% @list_service_types.each do |service_type| %>
+            <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
+          <% end %>
         </tr>
-      <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% service['work_package'].each do |work_pckg| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+              <div class="<%= 'govuk-form-group--error' if flash[:error] and flash[:error].include? work_pckg['code'] %>">
+                <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                        "checked_services[]",
+                        work_pckg['code'],
+                        @supplier_rate_data_checkboxes[work_pckg['code']],
+                        class: "govuk-checkboxes__input",
+                        id: "rates_#{work_pckg['code']}",
+                        'aria-label': "#{work_pckg['name']} checkbox"
+                    ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>" id='<%="#{work_pckg['code']}_label"%>'>
+                  <%= work_pckg['code'] %> <%= work_pckg['name'] %>
+                </label>
+              </div>
+                <% if flash[:error]  and flash[:error].include? work_pckg['code'] %>
+                    <span id="event-name-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span><%= t('facilities_management.admin.supplier_framework_data.sublot_data.rate_error') %>
+                    </span>
+                <% end %>
+              </div>
+            </th>
+            <% @list_service_types.each do |service_type|   %>
+              <td class="govuk-table__cell supplier-rates-td">
+              <% if flash[:error]  and flash[:error].include? work_pckg['code'] and flash[:error].include? work_pckg['code']+service_type
+                  prev_display_value_index = flash[:error].index(work_pckg['code']+service_type ) + 1
+              %>
+                  <input class="govuk-input govuk-input--width-3 govuk-input--error" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" value="<%= flash[:error][prev_display_value_index] %>">
+              <% else %>
+                <input class="govuk-input govuk-input--width-3" name="<%= 'data['+work_pckg['code']+']'+'['+service_type+']' %>" type="text" aria-label= "<%= work_pckg['name'] + service_type %>" value="<%= determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>">
+                <% end %>
+              </td>
+        <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </fieldset>
   <% end %>
 
   <h2 class="govuk-heading-xl govuk-!-font-weight-bold"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title_two') %></h2>

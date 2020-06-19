@@ -152,11 +152,11 @@ module FMCalculator
     end
 
     # framework profit
-    def profit(year1)
+    def profit(year1total)
       if @supplier_name
-        year1 * @rate_card_variances[:'Profit %']
+        year1total * @rate_card_variances[:'Profit %']
       else
-        year1 * @framework_rates['M142']
+        year1total * @framework_rates['M142']
       end
     end
 
@@ -252,10 +252,10 @@ module FMCalculator
       subtotal2 = subtotal1 + variance(subtotal1)
       subtotal3 = subtotal2 + cafm(subtotal2) + helpdesk(subtotal2)
       mobilisation = mobilisation(subtotal3)
-      year1 = subtotal3 + mobilisation + tupe(subtotal3)
+      year1 = subtotal3 + mobilisation
 
-      year1total = year1 + manage(year1) + corporate(year1)
-      year1totalcharges = year1total + profit(year1)
+      year1total = year1 + manage(year1) + tupe(subtotal3) + corporate(year1 + tupe(subtotal3))
+      year1totalcharges = year1total + profit(year1total)
 
       results[:subtotal1] = subtotal1
       results[:year1totalcharges] = year1totalcharges
@@ -264,8 +264,8 @@ module FMCalculator
       results[:variance] = variance(subtotal1)
       results[:tupe] = tupe(subtotal3)
       results[:manage] = manage(year1)
-      results[:corporate] = corporate(year1)
-      results[:profit] = profit(year1)
+      results[:corporate] = corporate(year1 + results[:tupe])
+      results[:profit] = profit(year1total)
       results[:mobilisation] = mobilisation
       results[:subyearstotal] = 0 # in all cases
       results[:subyearstotal] = (subyearstotal(year1totalcharges, mobilisation) / @subsequent_length_years) if @subsequent_length_years.positive?

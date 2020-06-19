@@ -35,7 +35,7 @@ module FacilitiesManagement
         @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
         @procurement = @contract.procurement
         file_policy = @procurement.security_policy_document_file
-        files_path = 'app/assets/files/'
+        files_path = 'public'
         direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new @contract.id
         deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @contract.id
         deliverable_matrix_spreadsheet_built = deliverable_matrix_spreadsheet.build

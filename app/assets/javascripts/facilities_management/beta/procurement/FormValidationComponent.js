@@ -277,8 +277,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
         var continueLooping = true;
         var counter = 0;
         var elementsToWrap = [];
-        // look at the previous sibling of the input element - if it is a label - we need to include it
-        // look at the previous siblings of the input element - if it is a div of class govuk-error-message, we need to include it
         var prevElem = inputElement.prev();
         if (inputElement.next().length > 0 && inputElement.next().prop("class").indexOf("character-count") >= 0) {
             elementsToWrap.push(inputElement.next()[0]);
@@ -338,7 +336,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                 } else {
                     display_text = message_text;
                 }
-                // is there a message, of any other type, with the same text...
                 var link = ul.find("a").filter(function () {
                     return $(this).attr("data-propertyname") === propertyName && $(this).text() === display_text;
                 });
@@ -361,7 +358,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
                     });
                 }
 
-                // ensure duplicates
                 if (link.length <= 0) {
                     var link = "<a href=\"" + href_value + "\" data-propertyname='" + propertyName + "' data-errortype='" + error_type + "' >" + display_text + "</a>";
                     ul.append("<li>" + link + "</li>");
@@ -391,6 +387,7 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
             if (bShow) {
                 $('#error-summary-title').text("There is a problem")
                 this.bannerErrorContainer.removeClass("govuk-visually-hidden");
+                this.bannerErrorContainer.get(0).removeAttribute('style');
                 $("html, body").animate({
                     scrollTop: this.bannerErrorContainer.offset().top
                 }, 500);
@@ -459,7 +456,6 @@ function FormValidationComponent(formDOMObject, validationCallback, thisisspecia
 
         if ( jQueryElement.prop("class").indexOf('govuk-date-input') < 0 ) {
             if (!jQueryElement.siblings().is(jqueryElementForRequiredMessage)) {
-                // clone error element and place it above the input element
                 jqueryElementForRequiredMessage = jqueryElementForRequiredMessage.clone();
                 jqueryElementForRequiredMessage.prop("id", this.getErrorID(jQueryElement));
                 if (jQueryElement.prop("type") === "radio") {
