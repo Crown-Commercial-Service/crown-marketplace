@@ -246,6 +246,7 @@ en:
         facilities_management/procurement_building:
           attributes:
             service_codes:
+              at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
               invalid_billable: You must select another service to include 'Management of billable works' to '%{building_name}' building
               invalid_cafm: You must select another service to include 'CAFM system' to '%{building_name}' building
