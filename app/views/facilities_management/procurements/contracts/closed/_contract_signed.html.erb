@@ -4,18 +4,37 @@
         <%= t('.title') %>
     </h1>
     <div class="govuk-panel__body">
-        The ‘<%= @procurement.contract_name %>’ <br />
-        (<%= @contract.contract_number %>) contract is now a live contract.
+        Your live contract reference number <br />
+        <%= @contract.contract_number %>
     </div>
 </div>
-<h1 class="govuk-heading-m govuk-!-margin-bottom-7">
-    <%= t('.info_1') %> <br />
-    <%= t('.info_2') %>
+<h1 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <%= t('.info_1') %>
 </h1>
-<div class="govuk-body govuk-!-margin-bottom-7">
-    <label class="govuk-label ccs-font-weight-semi-bold govuk-!-margin-bottom-2">
-        <%= t('.live_period') %>
-    </label>
-    <%= "#{t('.start_date')}: #{format_date @contract.contract_start_date}"  %> <br />
-    <%= "#{t('.end_date')}: #{format_date @contract.contract_end_date}" %>
+<div class="govuk-body govuk-!-margin-bottom-5">
+    <%= t('.contract_period') %><br />
+    <%= "#{format_date @contract.contract_start_date}" %> and <%= "#{format_date @contract.contract_end_date}." %> 
+</div>
+<div>
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+   <%= t('.info_2') %><br />
+  </h2>
+  <h3 class="govuk-heading-s govuk-!-width-one-half govuk-!-margin-bottom-4">
+   <%= t('.next') %>
+  </h3>
+</div>
+<div class="govuk-heading-s govuk-!-width-two-thirds">
+  <ol class="govuk-list govuk-list--number">
+    <li class="govuk-!-margin-bottom-2">Download the contract award notification form.<br />
+          <a href="<%= asset_path('Core Terms v3.0.2 (DA).docx', skip_pipeline: true)%>?format=doc" class="supplier-record__file-download govuk-!-margin-top-4" type="<%= t('common.type_doc') %>" download>
+            <%= t('.contract_award_notification_form') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+          </a>
+    </li>
+    <li>Complete the contract award notification form.</li>
+    <li>Send your completed contract award notification form using the details below:</li>
+    <ul class="govuk-list govuk-list--bullet">
+      <li> <%="#{t('.email_address')}" "#{t('.email_html')}".html_safe %> </li>
+      <li> <%= t('.email_subject')%> </li>
+    </ul>
+  </ol>
 </div>

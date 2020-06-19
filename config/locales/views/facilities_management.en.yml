@@ -808,12 +808,15 @@ en:
             info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
             title: Your procurement has been closed
           contract_signed:
-            end_date: End date
+            contract_award_notification_form: Contract award notification form
+            contract_period: 'Your live contract period is between:'
+            email_address: 'email address: '
+            email_html: <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
+            email_subject: 'email subject: RM3830 contract award notification.'
             info_1: You have confirmed that both parties have signed.
-            info_2: This is now a live contract.
-            live_period: Live contract period
-            start_date: Start date
-            title: Your contract has been signed
+            info_2: What to do next
+            next: Send your completed contract award notification form to Crown Commercial Service
+            title: Contract signed
           index:
             return_text: Return to procurements dashboard
         closing_direct_award_offer:
