@@ -835,6 +835,8 @@ en:
           contract_will_not_be_signed_reason: Please input the reason. Once you have saved and continued, you will be presented with your options on how to proceed further.
           description: Please confirm if both parties have signed and exchanged the contract
           input_remaining: You have 100 characters remaining
+          no_caption: If you select 'No', you are confirming that this contract will never be signed, the offer will be withdrawn and the system will proceed to the next steps.
+          yes_caption: If you select 'Yes', you must enter the confirmed contract start date and the contract end date.
         contract_offer_details:
           closed_reason: Your reason for closing this contract offer was
           declined: The supplier declined this contract offer on
