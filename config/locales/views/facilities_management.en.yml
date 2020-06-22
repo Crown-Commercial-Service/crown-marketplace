@@ -201,6 +201,7 @@ en:
               invalid: Select one or more buildings you want to include in your procurement
               not_present: You must select at least one building
             region_codes:
+              blank: Select at least one region you need to include in your procurement
               invalid: Select at least one region you need to include in your procurement
             route_to_market:
               inclusion: Select one option
@@ -219,6 +220,7 @@ en:
             security_policy_document_version_number:
               blank: Enter a security policy document version number
             service_codes:
+              blank: Select at least one service you need to include in your procurement
               invalid: Select at least one service you need to include in your procurement
             tupe:
               inclusion: Select yes if you know TUPE applies to your contract
@@ -1246,7 +1248,9 @@ en:
           question: Do you have an organisation security policy that you wish to form part of this contract? If yes, can you provide this document?
           title: Security policy document
         services:
+          question: Select the facilities management services you need
           service_specification_doc: Read the service specification document
+          subtitle_html: Select all of the facilities management services required within your estate.<br> You will then be able to match up each building with the services it requires.
         tupe:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -1364,12 +1368,8 @@ en:
         what_is_fc: What is further competition?
         who_are: who can provide the services you require in your location(s)
       services:
-        no_services_selected: No services selected
         question: Select the facilities management services that you need
-        remove_all: Remove all
-        service_selected: Service selected
         service_specification_doc: Read the service specification document
-        services_selected: Services selected
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     registrations:
       domain_not_on_whitelist:

@@ -4,6 +4,10 @@ module ProcurementValidator
 
   # rubocop:disable Metrics/BlockLength
   included do
+    # Validations on regions and services
+    validates :service_codes, presence: true, on: :service_codes
+    validates :region_codes, presence: true, on: :region_codes
+
     # validations on :contract_name step
     before_validation :remove_excess_whitespace_from_name, on: :contract_name
     validates :contract_name, presence: true, on: %i[contract_name]
