@@ -816,6 +816,7 @@ en:
             info_1: You have confirmed that both parties have signed.
             info_2: What to do next
             next: Send your completed contract award notification form to Crown Commercial Service
+            number: Your live contract reference number
             title: Contract signed
           index:
             return_text: Return to procurements dashboard

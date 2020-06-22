@@ -4,7 +4,7 @@
         <%= t('.title') %>
     </h1>
     <div class="govuk-panel__body">
-        Your live contract reference number <br />
+        <%= t('.number') %> <br />
         <%= @contract.contract_number %>
     </div>
 </div>
@@ -25,9 +25,9 @@
 </div>
 <div class="govuk-heading-s govuk-!-width-two-thirds">
   <ol class="govuk-list govuk-list--number">
-    <li class="govuk-!-margin-bottom-2">Download the contract award notification form.<br />
-          <a href="<%= asset_path('Core Terms v3.0.2 (DA).docx', skip_pipeline: true)%>?format=doc" class="supplier-record__file-download govuk-!-margin-top-4" type="<%= t('common.type_doc') %>" download>
-            <%= t('.contract_award_notification_form') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+    <li class="govuk-!-margin-bottom-4">Download the contract award notification form.<br />
+          <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3830-Contract-Award-Notification-Form-v3.docx" class="supplier-record__file-download supplier-record__file-download-doc govuk-!-margin-top-4">
+            <%= t('.contract_award_notification_form', url: "https://assets.crowncommercial.gov.uk/wp-content/uploads/RM3830-Contract-Award-Notification-Form-v3.docx") %><span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
           </a>
     </li>
     <li>Complete the contract award notification form.</li>
