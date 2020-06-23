@@ -800,7 +800,7 @@ en:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
+        heading: CCS Marketplace
     home:
       index:
         heading: Find legal services for the wider public sector
@@ -1066,7 +1066,7 @@ en:
       index:
         cmp_support_aria_label: Email us for support with this service
         cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
-        heading: CCS Marketplace private beta
+        heading: CCS Marketplace
     home:
       index:
         before_you_start:
