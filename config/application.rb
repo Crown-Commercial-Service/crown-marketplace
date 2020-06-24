@@ -39,6 +39,7 @@ module Marketplace
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
       'Strict-Transport-Security' => 'max-age=31536000',
+      'Server' => ' '
     }
 
     # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
