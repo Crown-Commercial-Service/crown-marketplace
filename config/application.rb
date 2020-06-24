@@ -35,9 +35,10 @@ module Marketplace
     config.action_controller.include_all_helpers = false
 
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'SAMEORIGIN',
+      'X-Frame-Options' => 'DENY',
       'X-XSS-Protection' => '1; mode=block',
-      'X-Content-Type-Options' => 'nosniff'
+      'X-Content-Type-Options' => 'nosniff',
+      'Strict-Transport-Security' => 'max-age=31536000',
     }
 
     # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
