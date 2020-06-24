@@ -1343,7 +1343,7 @@ en:
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       results:
-        any_changes: Any changes to the information provided may result in a different outcome.
+        any_changes: If you wish to change your requirements, click the 'Change requirements’ button below. Any changes may result in a different outcome.
         available_routes_to_market: Available route to market
         building_services_summary: Buildings and services summary
         da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
@@ -1363,7 +1363,7 @@ en:
         sub-lot-1c: Sub-lot 1c
         sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
         sub-text-FC-unpriced: 'Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:'
-        suppliers_shortlisted_html: <span style=""font-size:larger"">%{count}</span> supplier(s) shortlisted
+        suppliers_shortlisted_html: <span style="font-size:larger">%{count}</span> supplier(s) shortlisted
         what_is_da: What is a direct award?
         what_is_fc: What is further competition?
         who_are: who can provide the services you require in your location(s)
