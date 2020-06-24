@@ -527,17 +527,6 @@ en:
         lead_end: containing your confirmation code.
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
-      new_password_required:
-        confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
-        heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
-      sms_mfa:
-        access_code: Access code
-        content: It may take a few minutes to arrive.
-        heading: Enter your access code
-        lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   ccs_patterns:
     home:
       cog_email:
@@ -974,17 +963,6 @@ en:
         lead_end: containing your verification code.
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
-      new_password_required:
-        confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
-        heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
-      sms_mfa:
-        access_code: Access code
-        content: It may take a few minutes to arrive.
-        heading: Enter your access code
-        lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   legal_services_suppliers:
     unit:
       one: supplier
@@ -1050,18 +1028,6 @@ en:
         uploading:
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently in progress to be published to the <strong>''Agency supply teachers and agency workers''</strong> service.'
           heading: Data upload in progress
-      users:
-        new_password_required:
-          confirm_your_password: Confirm your password
-          create_your_password: Create a password you'll remember
-          heading: Change your password
-          intro: This is the first time you've signed in to your account. You need to reset your password.
-        sms_mfa:
-          access_code: Access code
-          content: It may take a few minutes to arrive.
-          heading: Enter your access code
-          lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     gateway:
       index:
         cmp_support_aria_label: Email us for support with this service
@@ -1315,17 +1281,6 @@ en:
         lead_end: containing your verification code.
         lead_start: An email has been sent to
         resend_the_confirmation_email_html: <a href="%{link}" class="govuk-link">Resend the email</a>
-      new_password_required:
-        confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
-        heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
-      sms_mfa:
-        access_code: Access code
-        content: It may take a few minutes to arrive.
-        heading: Enter your access code
-        lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   miles:
     unit:
       one: mile
@@ -1517,18 +1472,6 @@ en:
           button: Return to manage supplier data
           content_html: 'The data from <strong>''Upload session #%{session_no}''</strong> is currently processing and will soon be published to the <strong>''Supply teachers and agency workers''</strong> service.'
           heading: Data published
-      users:
-        new_password_required:
-          confirm_your_password: Confirm your password
-          create_your_password: Create a password you'll remember
-          heading: Change your password
-          intro: This is the first time you've signed in to your account. You need to reset your password.
-        sms_mfa:
-          access_code: Access code
-          content: It may take a few minutes to arrive.
-          heading: Enter your access code
-          lead: 'We just sent a 6 digit access code by text to:'
-          resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
     branches:
       branch:
         address: Address
@@ -1826,18 +1769,6 @@ en:
         mark_up_html: A %{mark_up} mark-up is charged if you use the agency to hire a specific person for you (a ‘nominated worker’).
         one_vendor_found_html: There is only one neutral vendor on this framework.
         page_title: Neutral vendor managed service providers
-    users:
-      new_password_required:
-        confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
-        heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
-      sms_mfa:
-        access_code: Access code
-        content: It may take a few minutes to arrive.
-        heading: Enter your access code
-        lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   views:
     pagination:
       next: Next <b>→</b>
