@@ -28,7 +28,7 @@ module Base
     private
 
     def roles
-      [:buyer, fm_access, st_access, ls_access, mc_access, at_access]
+      [:buyer, fm_access, st_access, ls_access, mc_access]
     end
 
     def fm_access
@@ -44,10 +44,6 @@ module Base
     end
 
     def ls_access
-      nil
-    end
-
-    def at_access
       nil
     end
 
