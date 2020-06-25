@@ -67,10 +67,6 @@ Rails.application.routes.draw do
         concerns :authenticatable
       end
     end
-
-    namespace 'apprenticeships' do
-      concerns %i[authenticatable registrable]
-    end
   end
 
   namespace 'supply_teachers', path: 'supply-teachers' do
@@ -197,47 +193,6 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
-  end
-
-  namespace 'ccs_patterns', path: 'ccs-patterns' do
-    get '/', to: 'home#index'
-    # get '/metadata', to: 'dbdata#index', as: 'ccsmetadata'
-    # put '/metadata/kill/:id', to: 'dbdata#killpid', as: 'killlockpid'
-    get '/new_layout', to: 'home#new_layout'
-    get '/prototypes', to: 'prototype#index'
-    get '/prototypes/no-response', to: 'prototype#no_response'
-    get '/prototypes/closed', to: 'prototype#closed'
-    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
-    get '/prototypes/declined', to: 'prototype#declined'
-    get '/prototypes/next-supplier', to: 'prototype#next_supplier'
-    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
-    get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
-    get '/dynamic-accordian', to: 'home#dynamic_accordian'
-    get '/supplier-results-v1', to: 'home#supplier_results_v1'
-    get '/supplier-results-v2', to: 'home#supplier_results_v2'
-    get '/small-checkboxes', to: 'home#small_checkboxes'
-    get '/titles-checkboxes', to: 'home#titles_checkboxes'
-    get '/numbered-pagination', to: 'home#numbered_pagination'
-    get '/table-5050', to: 'home#table_5050'
-    get '/supplier-detail', to: 'home#supplier_detail'
-    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
-    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
-    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
-    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
-    get '/errors-requirements', to: 'home#errors_requirements'
-    get '/start', to: 'home#start'
-    get '/select', to: 'home#select'
-    get '/cog-sign-in', to: 'home#cog_sign_in'
-    get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
-    get '/cog-register', to: 'home#cog_register'
-    get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
-    get '/cog-email', to: 'home#cog_email'
-    get '/cog-email2', to: 'home#cog_email2'
-    get '/cog-register-domain-not-on-whitelist', to: 'home#cog_register_domain_not_on_whitelist'
-    get '/cog-forgot-password-request', to: 'home#cog_forgot_password_request'
-    get '/cog-forgot-password-reset', to: 'home#cog_forgot_password_reset'
-    get '/cog-forgot-password-reset2', to: 'home#cog_forgot_password_reset2'
-    get '/cog-forgot-password-confirmation', to: 'home#cog_forgot_password_confirmation'
   end
 
   namespace 'legal_services', path: 'legal-services' do

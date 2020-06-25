@@ -3,7 +3,7 @@ module ApplicationHelper
   include LayoutHelper
 
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
+  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze
   FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home'].freeze
 
   def miles_to_metres(miles)
