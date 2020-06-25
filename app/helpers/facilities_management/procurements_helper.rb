@@ -35,7 +35,7 @@ module FacilitiesManagement::ProcurementsHelper
     Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
   end
 
-  def initial_call_off_period(period)
+  def time_period(period)
     period.to_s + (period > 1 ? ' years' : ' year') unless period.nil?
   end
 

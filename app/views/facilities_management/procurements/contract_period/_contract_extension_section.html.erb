@@ -11,7 +11,16 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header" >Optional call-off extension 1</th>
     <td class="govuk-table__cell" colspan="2">
-      <%= format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date %>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= time_period @procurement.optional_call_off_extensions_1 %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <%= format_extension @procurement.extension_period_1_start_date, @procurement.extension_period_1_end_date %>
+      </div>
+    </details>
     </td>
   </tr>
 <% end %>
@@ -20,7 +29,16 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header" >Optional call-off extension 2</th>
     <td class="govuk-table__cell" colspan="2">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= time_period @procurement.optional_call_off_extensions_2 %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
       <%= format_extension @procurement.extension_period_2_start_date, @procurement.extension_period_2_end_date %>
+      </div>
+    </details>
     </td>
   </tr>
 <% end %>
@@ -29,7 +47,16 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header">Optional call-off extension 3</th>
     <td class="govuk-table__cell" colspan="2">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= time_period @procurement.optional_call_off_extensions_3 %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
       <%= format_extension @procurement.extension_period_3_start_date, @procurement.extension_period_3_end_date %>
+      </div>
+    </details>
     </td>
   </tr>
 <% end %>
@@ -38,7 +65,16 @@
   <tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header">Optional call-off extension 4</th>
     <td class="govuk-table__cell" colspan="2">
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= time_period @procurement.optional_call_off_extensions_4 %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
       <%= format_extension @procurement.extension_period_4_start_date, @procurement.extension_period_4_end_date %>
+      </div>
+    </details>
     </td>
   </tr>
 <% end %>
