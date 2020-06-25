@@ -1,19 +1,22 @@
-<tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
-  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if (@procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any?) && params[:validate] %>">Mobilisation
-    period
+<% unless @procurement.initial_call_off_period.nil? %>
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? %>">
+  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if (@procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any?) && params[:validate] %>">Mobilisation period
   </th>
-  <td class="govuk-table__cell">
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          <%= mobilisation_period %>
-        </span>
-      </summary>
-      <div class="govuk-details__text">
+    <td class="govuk-table__cell" colspan="2">
+      <% if !@procurement.mobilisation_period.nil? %>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= mobilisation_period %>
+          </span>
+        </summary>
+        <div class="govuk-details__text">
       <%= format_extension mobilisation_start_date, mobilisation_end_date unless @procurement.initial_call_off_start_date.blank? %>
-      </div>
-    </details>
-  </td>
-  <td class="govuk-table__cell">
-  </td>
-</tr>
+        </div>
+      </details>
+      <% else %>
+      None
+      <% end %>
+    </td>
+  </tr>
+<% end %>
