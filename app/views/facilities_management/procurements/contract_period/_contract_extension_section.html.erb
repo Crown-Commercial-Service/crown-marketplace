@@ -1,11 +1,9 @@
-<% unless @procurement.extensions_required %>
-  <tr class="govuk-table__row">
+<tr class="govuk-table__row">
     <th scope="row" class="govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? && params[:validate] %>">Optional call-off extensions</th>
     <td class="govuk-table__cell" colspan="2">
       <%= 'None' unless @procurement.extensions_required.nil?%>
     </td>
-  </tr>
-<% end %>
+</tr>
 
 <% unless @procurement.optional_call_off_extensions_1.nil? %>
   <tr class="govuk-table__row">

@@ -1,18 +1,28 @@
-<tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:initial_call_off_start_date].any? %>">
-  <th scope="row" class="govuk-table__header  <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? && params[:validate] %>">Initial call-off period</th>
-  <td class="govuk-table__cell">
-  <details class="govuk-details" data-module="govuk-details">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">
-        <%= time_period @procurement.initial_call_off_period %>
-      </span>
-    </summary>
-    <div class="govuk-details__text">
-      <%= format_extension initial_call_off_period_start_date, initial_call_off_period_end_date unless @procurement.initial_call_off_period.nil? %>
-    </div>
-  </details>
-  </td>
-  <td class="govuk-table__cell">
-  </td>
+<tr class="govuk-table__row">
+  <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:initial_call_off_start_date].any? %>">
+    <th scope="row" class="govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.unanswered_contract_date_questions? && params[:validate] %>">Initial call-off period</th>
+    <td class="govuk-table__cell" colspan="2">
+      <%= 'None' unless @procurement.initial_call_off_period.nil? %>
+    </td>
 </tr>
+
+<% unless @procurement.initial_call_off_period.nil? %>
+    <td class="govuk-table__cell" colspan="2">
+      <% if !@procurement.initial_call_off_period.nil? %>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <%= time_period @procurement.initial_call_off_period %>
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <%= format_extension initial_call_off_period_start_date, initial_call_off_period_end_date unless @procurement.initial_call_off_period.nil? %>
+        </div>
+      </details>
+      <% else %>
+      None
+      <% end %>
+    </td>
+  </tr>
+<% end %>
 
