@@ -38,27 +38,25 @@
         <%= t('.contract_value_heading')%>
       </div>
       <div class='govuk-body'>
-        <h3 class='govuk-heading-m govuk-!-margin-bottom-1'>
-            <%= t('.partialy_estimated_contract_value') %>
-        </h3>
         <div class='govuk-!-font-size-24'>
-          <%= format_money @procurement.assessed_value, 0 %>
+          <%= govuk_details("#{@page_details[:unpriced_services].size} #{t('.service').pluralize(@page_details[:unpriced_services].size)} not included", true) do %>
+            <ul class="govuk-list govuk-list--bullet">
+              <% @page_details[:unpriced_services].each do |service| %>
+                <li><%= service %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </div>
       </div>
       <div class='govuk-body'>
-      <h3 class='govuk-heading-m govuk-!-margin-bottom-1'>
-          <%= t('.following_services_are_not_included') %>
-      </h3>
-      <div class='govuk-!-font-size-24'>
-        <%= govuk_details("#{t('.service').pluralize(@page_details[:unpriced_services].size)} (#{@page_details[:unpriced_services].size})", true) do %>
-          <ul class="govuk-list govuk-list--bullet">
-            <% @page_details[:unpriced_services].each do |service| %>
-              <li><%= service %></li>
-            <% end %>
-          </ul>
-        <% end %>
+        <div class='govuk-!-font-size-48 govuk-!-font-weight-bold'>
+          <%= format_money @procurement.assessed_value, 0 %>
+        </div>
+        <div class='govuk-!-font-size-24 govuk-!-font-weight-bold'>
+            <%= t('.partialy_estimated_contract_value') %>
+        </div>
       </div>
-    </div>
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-three-quarters"/>
       <% if @procurement.assessed_value <= 5e7 %>
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors.any? %>">
           <fieldset class='govuk-fieldset'>
@@ -99,9 +97,13 @@
         <%= f.hidden_field(:lot_number, value: '1c') %>
       <% end %>
       <% unless @procurement.lot_number == '1c' %>
-        <p class='govuk-body-m'>
-          <%= t('.not_able_to_select_range') %>
-        </p>
+        <div class="govuk-warning-text govuk-!-width-two-thirds">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+              <%= t('.not_able_to_select_range') %>
+          </strong>
+        </div>
       <% end %>
     <% end %>
     <%= govuk_continuation_buttons(pd, f) %>

@@ -921,7 +921,7 @@ module FacilitiesManagement
           back_url: facilities_management_procurements_path
         },
         choose_contract_value: {
-          page_title: 'Contract value',
+          page_title: 'Estimated contract cost',
           primary_name: 'continue_from_change_contract_value'
         },
         results: set_results_page_definitions,
