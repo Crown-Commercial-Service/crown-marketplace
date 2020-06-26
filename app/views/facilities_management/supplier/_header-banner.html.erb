@@ -4,7 +4,7 @@
   <nav role="navigation" aria-label="Top Level Navigation">
     <ul id="navigation" class="govuk-header__navigation ">
       <% unless fm_supplier_login_page %>
-        <% if passwords_page || cookies_page %>
+        <% if passwords_page || cookies_page || accessibility_statement_fm_page %>
           <li class="govuk-header__navigation-item"><%= link_to 'Back to start', facilities_management_supplier_path, class: 'govuk-header__link' %></li>
         <% else %>
           <li class="govuk-header__navigation-item"><%= link_to 'My dashboard', facilities_management_supplier_path, class: 'govuk-header__link' %></li>

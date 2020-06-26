@@ -5,7 +5,7 @@
     <ul id="navigation" class="govuk-header__navigation ">
       <% unless landing_or_admin_page || fm_buyer_landing_page || fm_supplier_landing_page || not_permitted_page || fm_landing_page %>
         <li class="govuk-header__navigation-item">
-          <% if fm_back_to_start_page || cookies_page || fm_activate_account_landing_page %>
+          <% if fm_back_to_start_page || cookies_page || fm_activate_account_landing_page || accessibility_statement_fm_page %>
             <%= link_to 'Back to start', facilities_management_start_path, class: 'govuk-header__link' %>
           <% else %>
             <%= link_to 'My account', facilities_management_path, class: 'govuk-header__link' %>
