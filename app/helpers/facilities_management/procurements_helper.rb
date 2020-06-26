@@ -74,6 +74,10 @@ module FacilitiesManagement::ProcurementsHelper
     format_extension(@procurement.initial_call_off_start_date, initial_call_off_period_end_date)
   end
 
+  def extension_period_description(period)
+    format_extension(@procurement.send("extension_period_#{period}_start_date"), @procurement.send("extension_period_#{period}_end_date"))
+  end
+
   def to_lower_case(str)
     return str if !/[[:upper:]]/.match(str[0]).nil? && !/[[:upper:]]/.match(str[1]).nil?
 
