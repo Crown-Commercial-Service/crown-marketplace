@@ -1213,8 +1213,10 @@ en:
           government_procurement_card: Government procurement card
           payment_description: Please select the payment method that will be used
         pension_funds:
+          attachment_2: Call-off Schedule 2 - staff transfer
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
+          lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view this schedule now, which will include your entered pension information.
         procurement_buildings:
           building_selected: Building selected
           buildings_selected: Buildings selected
