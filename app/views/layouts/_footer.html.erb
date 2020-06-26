@@ -27,11 +27,16 @@
           <nav class="govuk-grid-column-two-thirds" aria-label="Footer navigation">
             <div class="govuk-footer__meta">
               <div class="govuk-footer__meta-item">
-                <%= link_to t("layouts.application.cookie_link"), cookies_path(service: params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]), class: "ccs-footer__links ccs-no-print", aria: {label: t('layouts.application.cookie_link_aria_label')} %>
+                <%= link_to t("layouts.application.cookie_link"), cookies_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
               </div>
               <div class="govuk-footer__meta-item">
-                <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice" aria-label= "<%= t('layouts.application.privacy_link_aria_label') %>" class="ccs-footer__links ccs-no-print"><%= t("layouts.application.privacy_link") %></a>
+                <%= link_to t("layouts.application.privacy_link"), 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice', class: 'ccs-footer__links ccs-no-print', aria: { label: t('layouts.application.privacy_link_aria_label') }, target: "_blank" %>
               </div>
+              <% if service_name_param.include? 'facilities_management' %>
+                <div class="govuk-footer__meta-item">
+                  <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
+                </div>
+              <% end %>
               <div class="govuk-footer__meta-item">
                 <a href="https://docs.google.com/document/d/1-0fQrWj7P509SjrZqgnbbRIGKAQFECZm_OdnQu7rde4/edit?ts=5ef47f69" aria-label= "<%= t('layouts.application.accessibility_statement_link_aria_label') %>" class="ccs-footer__links ccs-no-print" target="_blank"><%= t("layouts.application.accessibility_statement_link") %></a>
               </div>

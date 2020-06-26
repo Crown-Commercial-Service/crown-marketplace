@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
+  get '/facilities-management/accessibility-statement', to: 'home#accessibility_statement_fm'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
