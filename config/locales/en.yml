@@ -321,6 +321,8 @@ en:
         nominated: Nominated
   layouts:
     application:
+      accessibility_statement_link: Accessibility statement
+      accessibility_statement_link_aria_label: View our accessibility statement
       back: Back
       back_aria_label: Back to the previous page
       beta: beta
