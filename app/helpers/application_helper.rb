@@ -281,6 +281,10 @@ module ApplicationHelper
     controller.action_name == 'cookies'
   end
 
+  def accessibility_statement_fm_page
+    controller.action_name == 'accessibility_statement_fm'
+  end
+
   def not_permitted_page
     controller.action_name == 'not_permitted'
   end
@@ -316,6 +320,10 @@ module ApplicationHelper
     else
       supplier_data_ratecard_prices.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_prices.values[0][work_pckg_code][service_type.remove(' (%)').remove(' (£)')]
     end
+  end
+
+  def service_name_param
+    params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end
 end
 # rubocop:enable Metrics/ModuleLength
