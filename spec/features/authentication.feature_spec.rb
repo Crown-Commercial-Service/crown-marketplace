@@ -75,7 +75,7 @@ RSpec.feature 'Authentication', type: :feature do
 
     visit '/supply-teachers/start'
 
-    expect(page).to have_xpath("//input[@value='Sign in with DfE Sign-in']")
+    expect(page).to have_text('Sign in with DfE Sign-in')
   end
 
   scenario 'DfE users cannot see other frameworks', dfe: true do
