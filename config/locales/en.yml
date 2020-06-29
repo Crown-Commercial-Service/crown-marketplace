@@ -412,7 +412,7 @@ en:
           text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
       sessions:
         new:
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          email_hint_html: Enter the email address you used to set up your account.
       uploads:
         index:
           caption: Manage supplier data
@@ -444,8 +444,6 @@ en:
           suppliers_data: Suppliers data
     gateway:
       index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace
     home:
       index:
@@ -546,7 +544,7 @@ en:
         list_02: you still can't create an account
     sessions:
       new:
-        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        email_hint_html: Enter the email address you used to set up your account.
         sign_in_header: Sign in to your legal services buyer account
     suppliers:
       download:
@@ -598,7 +596,7 @@ en:
           text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
       sessions:
         new:
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          email_hint_html: Enter the email address you used to set up your account.
       uploads:
         in_progress:
           content: The data have been uploaded and are now being processed.
@@ -630,8 +628,6 @@ en:
           heading: Data upload in progress
     gateway:
       index:
-        cmp_support_aria_label: Email us for support with this service
-        cmp_support_email_html: This service is currently restricted. Please contact %{link} at CCS if you have not received credentials.
         heading: CCS Marketplace
     home:
       index:
@@ -811,7 +807,7 @@ en:
         list_02: you still can't create an account
     sessions:
       new:
-        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        email_hint_html: Enter the email address you used to set up your account.
         sign_in_header: Sign in to your management consultancy buyer account
     suppliers:
       download:
@@ -929,7 +925,7 @@ en:
         lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:
-        create_ccs_account_html: Create a CCS account
+        create_ccs_account_html: Create an account
         enter_your_password: Enter your password
         please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         problems_signing_in: Problems signing in
@@ -967,7 +963,7 @@ en:
           text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
       sessions:
         new:
-          email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+          email_hint_html: Enter the email address you used to set up your account.
       uploads:
         in_progress:
           button: Return to manage supplier data
@@ -1272,7 +1268,7 @@ en:
         text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
     sessions:
       new:
-        email_hint_html: Enter the email address you used to set up your <abbr>CCS</abbr> account.
+        email_hint_html: Enter the email address you used to set up your account.
     suppliers:
       all_suppliers:
         branch: Branch
