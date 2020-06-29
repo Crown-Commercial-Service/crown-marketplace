@@ -107,13 +107,9 @@
         </ul>
       <% end %>
     <% end unless @page_data[:model_object].eligible_for_da %>
-    <div class="govuk-warning-text govuk-!-width-two-thirds">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        <%= t('.any_changes') %>
-      </strong>
-    </div>
+    <p class="govuk-body-m govuk-!-width-two-thirds">
+      <%= t('.any_changes') %>
+    </p>
     <%= govuk_continuation_buttons(pd, f) %>
     <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print
       this page</a>

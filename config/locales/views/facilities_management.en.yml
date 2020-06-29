@@ -1346,7 +1346,7 @@ en:
         any_changes: If you wish to change your requirements, click the 'Change requirements’ button below. Any changes may result in a different outcome.
         available_routes_to_market: Available route to market
         building_services_summary: Buildings and services summary
-        da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
+        da_list_html: "<li>the award of a contract directly to the supplier with the lowest price for your requirements, without the need for a further competition</li> <li>the contract is awarded based on price only (using rates submitted by suppliers when they competed to join the framework)</li> <li>standard call-off terms and conditions</li><li>a quick way of identifying a suitable supplier and awarding a contract</li>\n"
         direct_award_label_html: "<b>Direct award</b>"
         estimated_cost: Estimated cost
         estimated_cost_calc_html: Your estimated cost has been calculated using a combination of framework and benchmark pricing, and your current cost.  <br/>This cost has been used to place you in the correct sub-lot.
