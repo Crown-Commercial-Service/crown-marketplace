@@ -38,7 +38,7 @@
         </strong>
       </div>
       <p class='govuk-body-m govuk-!-width-two-thirds'>
-        <%= t('.change_requirements_text') %>
+        <%= t('.change_requirements_description') %>
       </p>
     <% else %>
       <div class='govuk-body-l govuk-!-width-three-quarters'>
@@ -104,15 +104,16 @@
         <%= f.hidden_field(:lot_number, value: '1c') %>
       <% end %>
       <% unless @procurement.lot_number == '1c' %>
-      <div class="govuk-warning-text govuk-!-width-two-thirds">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-            <%= t('.not_able_to_select_range') %>
-        </strong>
-      </div>
-      <p class='govuk-body-m govuk-!-width-two-thirds'>
-        <%= t('.change_requirements_text') %>
+        <div class="govuk-warning-text govuk-!-width-two-thirds">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+              <%= t('.not_able_to_select_range') %>
+          </strong>
+        </div>
+      <% end %>
+      <p class="govuk-body-m govuk-!-width-two-thirds">
+      <%= t('.change_requirements_description') %>
       </p>
     <% end %>
     <%= govuk_continuation_buttons(pd, f) %>

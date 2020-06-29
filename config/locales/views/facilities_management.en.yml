@@ -760,7 +760,7 @@ en:
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
       choose_contract_value:
         can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
-        change_requirements_text: If you wish to change your requirements, click the 'Change requirements' button below. Any changes may result in a different outcome.
+        change_requirements_description: If you wish to change your requirements, click the 'Change requirements' button below. Any changes may result in a different outcome.
         contract_value_heading: When calculating your total contract value, we have not been been able to include pricing for some of your services which have very customer specific pricing. The services not included are listed below.
         description_html: This will help us place your requirement in the correct sub-lot. <br> NB. The value ranges are total contract values for the full term contract for the services you have selected.
         heading: Looking at the options below, can you select the correct value range based on your budget, and expected cost of the contract?
