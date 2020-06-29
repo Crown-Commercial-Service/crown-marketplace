@@ -1214,7 +1214,7 @@ en:
           attachment_2: Call-off Schedule 2 - staff transfer
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
-          lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view this schedule now, which will include your entered pension information.
+          lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view the generic version of this schedule now, or alternatively you can review your own version later which will include your inserted pension information.
         procurement_buildings:
           building_selected: Building selected
           buildings_selected: Buildings selected
