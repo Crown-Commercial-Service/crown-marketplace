@@ -1157,13 +1157,18 @@ en:
           authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
           change: Change
           new: Enter a new authorised representative
-        back_to_detailed_summary: Back to detailed search summary
         building_services:
-          change_buildings: "+ Change buildings"
-          content_html: Click on each building below and selected services you need from the shortlist. <br> For each building in the left hand column, select the services required from the right hand column. <br> You can also add new buildings and services if they don’t already appear on your shortlist.
-          heading: Which facilities management services do you need for each building?
+          buildings: Buildings
+          buildings_caption: Add more buildings, by using the ‘Change buildings’ button.
+          caption: Detailed search
+          change_buildings: Change buildings
+          change_services: Change services
+          content_html: Click on each building below and select the services you need from your shortlist. You can also add new buildings and services if they don't already appear on your shortlist.
+          heading: Buildings and services
+          services: Services
+          services_caption: You must have at least one service selected for each building.
+          sub_heading: What facilities management services do you need for each building?
           there_is_a_problem: There is a problem
-          your_buildings: Your buildings
         cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page
         confirm_delete: Yes, delete this search result
@@ -1228,6 +1233,7 @@ en:
           name_text: Pension fund name
           percentage_text: Percentage of pensionable pay
         quick_search: Quick search
+        return_to_detailed_search_summary: Return to detailed search summary
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to detailed search summary
         save_for_later: Save for later

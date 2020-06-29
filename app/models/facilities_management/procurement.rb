@@ -249,6 +249,7 @@ module FacilitiesManagement
 
     def find_or_build_procurement_building(building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
+      procurement_building.service_codes = service_codes
       procurement_building.save
     end
 

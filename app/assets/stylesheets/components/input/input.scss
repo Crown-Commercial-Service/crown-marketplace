@@ -11,3 +11,28 @@
       height: 60px;
     }
 }
+
+.moj-label__currency {
+  @include govuk-font(19);
+  background-color: govuk-colour("light-grey");
+  position: absolute;
+  margin: 2px 0 0 2px !important;
+  padding: 5.5px 12px;
+  border-right: 2px solid govuk-colour("black");
+
+  &--error {
+    background-color: #d4351c;
+    border-right: 2px solid #d4351c;
+    color: govuk-colour("white");
+  }
+
+  @include govuk-media-query($until: tablet) {
+    padding: 8px 12px;
+  }
+
+}
+
+.moj-input__currency {
+  margin: 0;
+  padding-left: 40px;
+}

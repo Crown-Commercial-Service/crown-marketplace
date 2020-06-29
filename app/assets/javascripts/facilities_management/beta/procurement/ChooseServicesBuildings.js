@@ -20,7 +20,7 @@ $(function () {
         $('.building-button').click(function(e){
             e.preventDefault();
             var section_class = '#building-services-' + $(this).attr('id').replace('building-', '');
-            $('.pane-inner').addClass('hidden-pane');
+            $('.inner-pane').addClass('hidden-pane');
             $(section_class).removeClass('hidden-pane');
             $('.root-pane li').removeClass('active');
             $(this).parent().addClass('active');
