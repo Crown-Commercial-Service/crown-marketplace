@@ -1,5 +1,5 @@
-<tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:mobilisation_period].any? || @procurement.errors[:mobilisation_start_date].any? %>">
-  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if (@procurement.unanswered_contract_date_questions? || @procurement.errors[:mobilisation_period].any? || @procurement.errors[:mobilisation_start_date].any?) && params[:validate] %>">
+<tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if mobilisation_period_error_case < 2 %>">
+  <th class="govuk-table__header  <%= 'govuk-!-padding-left-2' if (@procurement.unanswered_contract_date_questions? || mobilisation_period_error_case < 2) && params[:validate] %>">
     Mobilisation period
   </th>
   <td class="govuk-table__cell">
@@ -14,10 +14,10 @@
   <td class="govuk-table__cell">
   </td>
 </tr>
-<% if @procurement.errors[:mobilisation_start_date].any? %>
+<% if mobilisation_period_error_case < 2 %>
   <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
     <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2 govuk-border-top_none" colspan="3">
-      <%= display_error(@procurement, :mobilisation_start_date, false) %>
+        <%= display_error(@procurement, [:mobilisation_period, :mobilisation_start_date][mobilisation_period_error_case], false) %>
     </td>
   </tr>
 <% end %>
