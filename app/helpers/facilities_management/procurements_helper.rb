@@ -78,6 +78,16 @@ module FacilitiesManagement::ProcurementsHelper
     format_extension(@procurement.send("extension_period_#{period}_start_date"), @procurement.send("extension_period_#{period}_end_date"))
   end
 
+  def mobilisation_period_error_case
+    if @procurement.errors[:mobilisation_period].any?
+      0
+    elsif @procurement.errors[:mobilisation_start_date].any?
+      1
+    else
+      2
+    end
+  end
+
   def to_lower_case(str)
     return str if !/[[:upper:]]/.match(str[0]).nil? && !/[[:upper:]]/.match(str[1]).nil?
 
