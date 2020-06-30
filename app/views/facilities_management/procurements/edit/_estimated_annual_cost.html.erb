@@ -21,7 +21,7 @@
             </span>
             <%= display_errors @procurement, :estimated_annual_cost %>
             <span class="moj-label__currency <%= 'moj-label__currency--error' if @procurement.errors[:estimated_annual_cost].any? %>">&pound;</span>
-            <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field moj-input__currency govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
+            <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field moj-input__currency govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
           </div>
         </div>
       </div>

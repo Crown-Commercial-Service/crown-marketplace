@@ -38,6 +38,11 @@ en:
           attributes:
             base:
               required: You must provide hours required for at least one of the days
+            personnel:
+              blank: Enter a number of personnel
+              greater_than: Enter a whole number between 1 and 999, like 300
+              less_than: Enter a whole number between 1 and 999, like 300
+              not_a_number: Enter a whole number between 1 and 999, like 300
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
@@ -699,18 +704,19 @@ en:
         gia: Gross internal area (GIA)
         gia-summary: The gross internal area of the building (in square meters)
         heading: Service requirements
-        lift_data: The sum total of number of floors
+        lift_data: The sum total of number of floors per floor
         no_of_appliances_for_testing: The number of appliances to be tested per annum
         no_of_building_occupants: The number of building occupants
         no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
         no_of_hours_of_service_provision: The number of hours of service provision per annum
         no_of_units_to_be_serviced: The number of units to be serviced per annum
         service: Service
-        service_hours: Service hours
+        service_hour_question: The number of hours of service provision per annum
+        service_hours: Number of personnel
         service_standard: The service standard required
         size_of_external_area: The size of the external area (in square metres)
         tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-        total_floors_per_lift: The sum total of number of floors
+        total_floors_per_lift: The sum total of number of floors per floor
         volume_required_heading: Volume required (per annum)
         volume_required_html: "<b>Volume required <br> (per annum)</b>"
       volume:
@@ -742,11 +748,10 @@ en:
         save_and_return_to_service_information: Save and return to service requirements
       service_hours:
         back_to_service_information: Return to service requirements
+        number_of_personnel: Number of personnel
+        personnel_subtitle: How many personnel do you require for this service?
         save_and_return_to_service_information: Save and return to service requirements
-        service_hours_description_1: 'The hours you enter will be used to:'
-        service_hours_description_2: The calculation will assume 52 weeks x 7 days in one year.
-        service_hours_description_list_1: inform the supplier the exact hours you require this service to be delivered
-        service_hours_description_list_2: calculate the cost of this service
+        service_hours_description_1: The calculation will assume 52 weeks x 7 days in one year.
         service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
         there_is_a_problem: There is a problem
       show:
