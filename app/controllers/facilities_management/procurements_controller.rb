@@ -685,7 +685,7 @@ module FacilitiesManagement
       if @procurement.lot_number_selected_by_customer
         page_definitions[:secondary_name] = 'change_the_contract_value'
         page_definitions[:secondary_url] = facilities_management_procurements_path
-        page_definitions[:secondary_text] = 'Change contract value'
+        page_definitions[:secondary_text] = 'Return to estimated contract cost'
       end
       page_definitions
     end
