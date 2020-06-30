@@ -183,7 +183,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_shortlist_contract_number(sheet, style)
-    sheet.add_row ['Reference number & date/time production of this document', "#{@procurement.contract_number} - #{@procurement.contract_datetime}"], style: style, height: standard_row_height
+    sheet.add_row ['Reference number:', @procurement.contract_number], style: style, height: standard_row_height
+    sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
