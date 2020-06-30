@@ -74,8 +74,8 @@
           </div>
         <% end %>
         <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-7">
-          <%= link_to t('.back_to_detailed_summary'), facilities_management_procurement_path(@procurement), class: 'govuk-link--no-visited-state', 'aria-label': "#{t('.back_to_detailed_summary')}" if @procurement.detailed_search? %>
-          <%= link_to t('.cancel_and_return'), facilities_management_procurements_path, class: 'govuk-link--no-visited-state', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
+          <%= link_to t('.return_to_detailed_search_summary'), facilities_management_procurement_path(@procurement), class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.return_to_detailed_search_summary')}" if @procurement.detailed_search? %>
+          <%= link_to t('.cancel_and_return'), facilities_management_procurements_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
         </div>
       <% end %>
     </div>

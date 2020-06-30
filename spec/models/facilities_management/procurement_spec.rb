@@ -258,6 +258,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.save
         expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
+
+      it 'has the services already on it' do
+        procurement.save
+        procurement.find_or_build_procurement_building(building_id)
+        expect(procurement.procurement_buildings.last.service_codes).to eq procurement.service_codes
+      end
+    end
+
+    context 'when the procurement building does exists' do
+      it 'does not change the service codes when they are updated on the procurement' do
+        procurement.save
+        procurement.find_or_build_procurement_building(building_id)
+        procurement.service_codes << 'C.5'
+        procurement.save
+        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(procurement.procurement_buildings.last.service_codes, :count)
+      end
     end
   end
 
