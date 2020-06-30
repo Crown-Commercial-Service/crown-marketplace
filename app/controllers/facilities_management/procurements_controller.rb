@@ -643,7 +643,7 @@ module FacilitiesManagement
     end
 
     def find_services(service_codes)
-      @services = Service.where(code: service_codes)
+      @services = Service.where(code: service_codes)&.sort_by { |service| service_codes.index(service.code) }
     end
 
     def set_step_param
