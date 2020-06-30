@@ -1163,8 +1163,8 @@ en:
           caption: Detailed search
           change_buildings: Change buildings
           change_services: Change services
-          content_html: Click on each building below and select the services you need from your shortlist. You can also add new buildings and services if they don't already appear on your shortlist.
-          heading: Buildings and services
+          content_html: Services from search have been applied to all buildings
+          heading: Services
           services: Services
           services_caption: You must have at least one service selected for each building.
           sub_heading: What facilities management services do you need for each building?
@@ -1177,6 +1177,12 @@ en:
           contract_name_question: What do you want to call your contract?
         delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
         detailed_search: Detailed search
+        estimated_annual_cost:
+          content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
+          do_you_know: Do you know your current or estimated annual cost?
+          heading: Estimated annual cost
+          hint: For example, £500 or £243.
+          label: Enter the estimated annual cost, excluding VAT
         heading: Results
         invoicing_contact_details:
           change: Change
