@@ -183,7 +183,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_shortlist_contract_number(sheet, style)
-    sheet.add_row ['Reference number & date/time production of this document', "#{@procurement.contract_number} - #{@procurement.contract_datetime}"], style: style, height: standard_row_height
+    sheet.add_row ['Reference number:', @procurement.contract_number], style: style, height: standard_row_height
+    sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: style, height: standard_row_height
     sheet.add_row [], style: style, height: standard_row_height
   end
 
@@ -279,14 +280,19 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
     bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
-    label = 'Suppliers shortlist'
-    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
-    supplier_names.each do |supplier_name|
-      sheet.add_row [label, supplier_name], style: standard_style, height: standard_row_height
-      label = nil
-    end
+    supplier_datas = @report.selected_suppliers(@report.current_lot).map { |s| s['data'] }
+    return if supplier_datas.empty?
 
-    sheet['A8:A8'].each { |c| c.style = bold_style } unless supplier_names.empty?
+    sheet.add_row ['Suppliers shortlist'], style: bold_style, height: standard_row_height
+    sheet.add_row ['Company name', 'Contact name', 'Contact e-mail address', 'Contact telephone', 'Company address'],
+                  style: bold_style, height: standard_row_height
+
+    supplier_datas.each do |data|
+      detail = FacilitiesManagement::SupplierDetail.find_by(name: data['supplier_name'])
+
+      sheet.add_row [data['supplier_name'], data['contact_name'], data['contact_email'],
+                     data['contact_phone'], detail.full_organisation_address], style: standard_style, height: standard_row_height
+    end
   end
 
   def style_supplier_names_sheet(sheet, style, rows_added)

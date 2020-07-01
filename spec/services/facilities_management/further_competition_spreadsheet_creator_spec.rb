@@ -51,12 +51,12 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do
-      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number & date/time production of this document', ' - ']
-      expect(wb.sheet('Shortlist').row(2)).to eq [nil, nil]
-      expect(wb.sheet('Shortlist').row(3)).to eq ['Cost and sub-lot recommendation', nil]
-      expect(wb.sheet('Shortlist').row(4)).to eq ['Estimated cost', '£11,541.72 ']
-      expect(wb.sheet('Shortlist').row(5)).to eq ['Sub-lot recommendation', 'Sub-lot 1a']
-      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot value range', 'Up to £7m']
+      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil, nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil, nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil, nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(5)).to eq ['Estimated cost', '£11,541.72 ', nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a', nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m', nil, nil, nil]
     end
     # rubocop:enable RSpec/MultipleExpectations
 
