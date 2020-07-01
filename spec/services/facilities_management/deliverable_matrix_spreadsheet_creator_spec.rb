@@ -25,6 +25,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     service_hours[:friday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
     service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: '05', end_minute: '30', end_ampm: 'AM', uom: 0)
     service_hours[:sunday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
+    service_hours[:personnel] = 1
 
     procurement.active_procurement_buildings.each do |pb|
       pb.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours)

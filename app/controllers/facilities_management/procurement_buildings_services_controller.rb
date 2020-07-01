@@ -70,7 +70,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
                     friday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     saturday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     sunday: FacilitiesManagement::ServiceHourChoice::PARAMETERS
-                  }])
+                  }, :personnel])
   end
 
   def set_building_and_service_data

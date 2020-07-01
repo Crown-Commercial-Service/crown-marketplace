@@ -66,7 +66,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       let(:not_required_service_hours) { { service_choice: 'not_required', start_hour: 9, start_minute: 0, start_ampm: 'AM', end_hour: 1, end_minute: 0, end_ampm: 'PM' } }
 
       context 'when the service hour data is valid' do
-        let(:service_hours) { { monday: hourly_service_hours, tuesday: not_required_service_hours, wednesday: not_required_service_hours, thursday: not_required_service_hours, friday: not_required_service_hours, saturday: not_required_service_hours, sunday: not_required_service_hours } }
+        let(:service_hours) { { monday: hourly_service_hours, tuesday: not_required_service_hours, wednesday: not_required_service_hours, thursday: not_required_service_hours, friday: not_required_service_hours, saturday: not_required_service_hours, sunday: not_required_service_hours, personnel: 1 } }
 
         before do
           patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { step: 'service_hours', service_hours: service_hours } }
@@ -78,11 +78,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
 
         it 'updates the service hour data correctly' do
           procurement_building_service.reload
-          updated_service_hours = procurement_building_service.service_hours.attributes.except(:uom).keys.map do |key|
+          updated_service_hours = procurement_building_service.service_hours.attributes.except(:uom, :personnel).keys.map do |key|
             [key, procurement_building_service.service_hours[key].attributes.except(:uom, :next_day)]
           end
 
-          expect(updated_service_hours.to_h).to eq service_hours
+          expect(updated_service_hours.to_h).to eq service_hours.except(:personnel)
         end
       end
 
