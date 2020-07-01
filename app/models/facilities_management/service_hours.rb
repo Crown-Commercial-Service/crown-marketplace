@@ -49,7 +49,7 @@ module FacilitiesManagement
       attributes.each do |k, v|
         total += v.total_hours unless %i[uom personnel].include? k
       end
-      total * personnel
+      total * personnel.to_i
     end
 
     PARAMETERS = { monday: ServiceHourChoice::PARAMETERS,
