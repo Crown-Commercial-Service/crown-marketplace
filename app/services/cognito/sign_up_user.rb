@@ -95,12 +95,12 @@ module Cognito
 
       access_key = creds.aws_postcodes[:access_key_id]
       secret_key = creds.aws_postcodes[:secret_access_key]
-      bucket     = ENV['BUYER_EMAIL_NICE_LIST_BUCKET']
+      bucket     = ENV['BUYER_EMAIL_SAFE_LIST_BUCKET']
       region     = creds.aws_postcodes[:region]
 
       Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
       object = Aws::S3::Resource.new(region: region)
-      object.bucket(bucket).object(ENV['BUYER_EMAIL_NICE_LIST_KEY']).get.body.string.split("\n")
+      object.bucket(bucket).object(ENV['BUYER_EMAIL_SAFE_LIST_KEY']).get.body.string.split("\n")
     end
 
     def domain_name
