@@ -100,7 +100,7 @@ module Cognito
 
       Aws.config[:credentials] = Aws::Credentials.new(access_key, secret_key)
       object = Aws::S3::Resource.new(region: region)
-      object.bucket(bucket).object(ENV['BUYER_EMAIL_NICE_LIST_KEY']).get.body.string
+      object.bucket(bucket).object(ENV['BUYER_EMAIL_NICE_LIST_KEY']).get.body.string.split("\n")
     end
 
     def domain_name
