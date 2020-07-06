@@ -1087,6 +1087,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
         end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns true' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+        end
       end
 
       context 'when all but one service missing FW price' do
@@ -1098,6 +1102,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
         end
       end
 
@@ -1111,6 +1119,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
         end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+        end
       end
 
       context 'when the services include unused services and one unpriced service' do
@@ -1123,6 +1135,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
         end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns true' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+        end
       end
 
       context 'when the services include the two unused services and one priced service' do
@@ -1132,8 +1148,12 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
         end
 
-        it 'some_services_unpriced_and_no_buyer_input returns true' do
+        it 'some_services_unpriced_and_no_buyer_input returns false' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
         end
       end
 
@@ -1146,6 +1166,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
         end
       end
     end
@@ -1163,6 +1187,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns true' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+        end
       end
 
       context 'when all but one service missing FW price' do
@@ -1175,6 +1203,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
         end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+        end
       end
 
       context 'when all but one service missing BM and FW price' do
@@ -1186,6 +1218,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
           expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+        end
+
+        it 'all_services_missing_framework_and_benchmark_price? returns false' do
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
         end
       end
     end
