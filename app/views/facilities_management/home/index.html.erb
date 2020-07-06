@@ -26,7 +26,8 @@
         <%= t('.startlist_html') %>
       </ul>
 
-      <%= link_to t('.startnow'), facilities_management_gateway_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8', 'aria-label': "#{t('.startnow')}'" %>
+      <%= link_to t('.further_information'), 'https://www.crowncommercial.gov.uk/agreements/rm3830', target: "_blank", class: 'govuk-link--no-visited-state' %>
+      <%= link_to t('.startnow'), facilities_management_gateway_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-8', 'aria-label': "#{t('.startnow')}'" %>
     </div>
 
     <div class="govuk-grid-column-one-third">
