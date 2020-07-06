@@ -515,7 +515,9 @@ en:
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
         start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
-        start_warning_html: <p class="govuk-!-margin-bottom-2">When creating your buildings, you are not restricted to create just full buildings. For example, you may choose to set up just a floor or a specific area within a building.</p><p class="govuk-!-margin-bottom-2">Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.</p><p>If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.</p>
+        start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
+        start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
+        start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
       page_definitions:
         add_building_address: Add building address
         building_size: Building size
