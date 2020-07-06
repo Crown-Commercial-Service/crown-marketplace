@@ -1408,13 +1408,16 @@ en:
     supplier:
       contracts:
         accepted_contract_offer:
-          list01_1: you will sign the contract first, in the order form, and share with the buyer
-          list01_2: this would usually take place within 5 working days
-          list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
-          list02_2: this would usually take place within 2 working days
-          list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
-          list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
-          list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
+          list01_1: The signing of the contract is a process that is undertaken outside of the portal and will require the buyer and supplier to communicate using details provided to make the necessary arrangements.
+          list01_2: Typically you will sign the contract in the order form and share with the buyer within 5 working days. The buyer will then complete the effective date, sign and share back with you (within 2 working days).
+          list01_title: 1. Contract signatures
+          list02_1: The buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date.
+          list02_title: 2. Signature confirmation
+          list03_1: The contract number which can be found in the requirements section is a unique reference number that has been created for this contract and must be used when reporting Management Information.
+          list03_title: 3. Within the contract
+          list04_1: Until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed.
+          list04_2: If you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier.
+          list04_title: 4. Withdraw before signing
           what_happens_next: What happens next
         contract_offer_details:
           accepted_contract_offer: You accepted this contract offer on
@@ -1433,11 +1436,18 @@ en:
         procurement_requirements_head:
           buyer: Buyer
         received_contract_offer:
-          list01_1: you should review the offer to see if you wish to accept the contract
-          list01_2: please ensure you download and review all the contract documents
-          list02_1: you are required to accept or decline this offer within 48 hours (Monday to Friday only, excluding weekends and bank holidays)
-          list02_2: the deadline for your response is shown at the top of this page
-          list03_1: if you do not respond within 48 hours it will be recorded as ‘no response’ and the offer will be automatically withrawn allowing the customer the option of offering the contract to the next lowest priced supplier
+          list01_1: You should review the offer to see if you wish to accept the contract or decline the offer. An overview of the contract is shown, and you should download the zip file containing the contract documents for review.
+          list01_2: The buyer contact details are also shown, which will allow you to contact the buyer to clarify any uncertainty before responding to the offer. Please note however this is not an opportunity to engage in negotiation with a buyer.
+          list01_3: NB. the deadline for a response is 2 working days (48 hours)  as displayed at the top of this page.
+          list01_title: 1. Review the offer
+          list02_1: Once you have accepted an offer you will now find the procurement in your ‘accepted offers’ section of your dashboard.
+          list02_2: It is important to understand, whilst acceptance of the offer is carried out in the digital portal, the signing of the Contract is a process that is undertaken outside of the portal and will require the buyer and supplier to communicate using details provided to make the necessary arrangements.
+          list02_title: 2. Accepting an offer
+          list03_1: When you decline an offer you will be asked to give a reason for decline in line with the requirements of Framework Schedule 7. Once you have declined an offer you will now find the procurement in the ‘closed’ section of your dashboard.
+          list03_2: Please note once you have declined an opportunity the buyer will be alerted and the process will continue, you will not be allowed to change your mind and decide to accept at a later date.
+          list03_title: 3. Declining an offer
+          list04_1: Suppliers have 2 working days (48 hours) to respond to a Direct Award offer, after which the opportunity will be automatically declined and the reason will state ‘not responded’.
+          list04_title: 4. Not responding in time
           what_happens_next: What happens next
         show:
           buyer_contact_details: Buyer contact details
@@ -1445,16 +1455,6 @@ en:
           requirements: Requirements
       sent:
         accepted_offer:
-          list01_1: you will sign the contract first, in the order form, and share with the buyer
-          list01_2: this would usually take place within 5 working days
-          list01_title: 1. You sign the contract
-          list02_1: the buyer will then complete the effective date (on page 4 of the order form - this is the date the contract is fully signed), sign the contract, and share it back with you
-          list02_title: 2. Buyer signs the contract
-          list03_1: the buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date
-          list03_title: 3. Signature confirmation
-          list04_1: until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed
-          list04_2: if you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier
-          list04_title: 4. Withdraw before signing
           title: You have accepted this contract offer
           what_happens_next: What happens next
         declined_offer:
