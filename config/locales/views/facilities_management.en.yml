@@ -607,40 +607,54 @@ en:
         town_or_city: Town or city
         your_details: Organisation address
     home:
-      1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
-      1_you_will_tell_us_html: |
-        <li>which services you are looking for</li>
-        <li>building locations and information</li>
-      2_we_will_tell_you_html: |
-        <li>which sub-lot is suitable</li>
-        <li>an estimated contract cost</li>
-        <li>a shortlist of suppliers</li>
-        <li>procurement options to proceed</li>
-      2_you_will_tell_us_html: |
-        <li>about your buildings and service requirements</li>
-        <li>basic contract information</li>
-      3_DA_list_html: |
-        <li>create your contract online, and offer to the most competitive supplier</li>
-        <li>the most efficient and compliant route to procure FM services</li>
-      3_FC_list_html: |
-        <li>download your supplier shortlist and requirement documents</li>
-        <li>proceed with your standard procurement process or contact CCS for further guidance</li>
-      beforeyoustart: Before you start
-      heading: Find a facilities management supplier
-      note: Direct award is only available for contracts less than £1.5 million, and can only be awarded to the lowest priced supplier.
-      startlist: |
-        <li>what services you are looking for</li>
-        <li>your building locations and information</li>
-        <li>your basic contract requirements</li>
-      startnow: Start now
-      subheading: 'Use this service to:'
-      usagelist: |
-        <li>quickly view suppliers who can provide services to your locations</li>
-        <li>see an estimated contract cost</li>
-        <li>create and offer a direct award contract</li>
-        <li>shortlist suppliers ready for further competition</li>
-        <li>compliantly place a direct award contract with a supplier</li>
-      youneedtoknow: 'You need to know:'
+      index:
+        1_title: 1. Quick search
+        1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
+        1_you_will_tell_us_html: |
+          <li>which services you are looking for</li>
+          <li>building locations and information</li>
+        2_title: 2. Detailed search
+        2_we_will_tell_you_html: |
+          <li>which sub-lot is suitable</li>
+          <li>an estimated contract cost</li>
+          <li>a shortlist of suppliers</li>
+          <li>procurement options to proceed</li>
+        2_you_will_tell_us_html: |
+          <li>about your buildings and service requirements</li>
+          <li>basic contract information</li>
+        3_DA_list_html: |
+          <li>create your contract online, and offer to the most competitive supplier</li>
+          <li>the most efficient and compliant route to procure FM services</li>
+        3_DA_tile: Direct award (if option is available)
+        3_FC_list_html: |
+          <li>download your supplier shortlist and requirement documents</li>
+          <li>proceed with your standard procurement process or contact CCS for further guidance</li>
+        3_further_comp: Further competition
+        3_title: 3. Procurement options
+        beforeyoustart: Before you start
+        da_description: A quick way of identifying suitable suppliers and awarding a contract without the need for a further competition. A preferred supplier cannot be manually selected, a direct award is only awardable to the lowest priced supplier based on your requirements.
+        da_title: Direct award
+        heading: Find a facilities management supplier
+        how_it_works: How it works
+        international_coverage: International coverage
+        note: Direct award is only available for contracts less than £1.5 million, and can only be awarded to the lowest priced supplier.
+        please_email: Please contact us for overseas services - email/phone details below.
+        startlist_html: |
+          <li>what services you are looking for</li>
+          <li>your building locations and information</li>
+          <li>your basic contract requirements</li>
+        startnow: Start now
+        subheading: 'Use this service to:'
+        usagelist_html: |
+          <li>quickly view suppliers who can provide services to your locations</li>
+          <li>see an estimated contract cost</li>
+          <li>create and offer a direct award contract</li>
+          <li>shortlist suppliers ready for further competition</li>
+          <li>compliantly place a direct award contract with a supplier</li>
+        we_will_tell_you: We will tell you
+        you_can_progress: 'You can progress through these three steps:'
+        you_will_tell_us: You will tell us
+        youneedtoknow: 'You need to know:'
     journey:
       choose_locations:
         heading: Regions
