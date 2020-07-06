@@ -412,6 +412,10 @@ module FacilitiesManagement
       procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
+    def all_services_missing_framework_and_benchmark_price?
+      all_services_missing_framework_price? && all_services_missing_benchmark_price?
+    end
+
     private
 
     def copy_procurement_buildings_gia
