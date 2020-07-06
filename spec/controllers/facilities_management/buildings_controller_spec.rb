@@ -236,11 +236,10 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   end
 
   describe 'Postcode games' do
+    let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+
+    login_fm_buyer_with_details
     context 'when saving without a postcode' do
-      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
-
-      login_fm_buyer_with_details
-
       it 'will reject the empty password with a postcode.blank message' do
         patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_postcode: '', postcode_entry: '', address_region: '', address_region_code: '' } }
         expect(response).to have_http_status(:ok)
@@ -263,6 +262,14 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', postcode_entry: 'SW1A 1AA', address_region: 'test', address_region_code: 'test_code' } }
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to gia_facilities_management_building_path
+        building.reload
+        expect(building[:address_postcode]).to eq('SW2A 1AA')
+      end
+    end
+
+    context 'when postcode is in lowercase' do
+      it 'will cast postcode to uppercase' do
+        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'sw2a 1aa', postcode_entry: 'sw2a 1aa', address_region: 'test', address_region_code: 'test_code' } }
         building.reload
         expect(building[:address_postcode]).to eq('SW2A 1AA')
       end
