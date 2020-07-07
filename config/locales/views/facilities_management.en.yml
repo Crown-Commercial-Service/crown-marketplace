@@ -1409,7 +1409,7 @@ en:
         service_specification_doc: Read the service specification document
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     registrations:
-      domain_not_on_whitelist:
+      domain_not_on_safelist:
         heading: You must use a public sector email address
         lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
         line_01: The email you used doesn’t belong to a recognised public sector domain.

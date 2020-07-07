@@ -10,10 +10,10 @@ module Cognito
 
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
-    validate :domain_in_whitelist
+    validate :domain_in_safelist
 
     attr_reader :email, :password, :password_confirmation, :roles
-    attr_accessor :user, :not_on_whitelist
+    attr_accessor :user, :not_on_safelist
 
     def initialize(email, password, password_confirmation, roles)
       @email = email
@@ -21,11 +21,12 @@ module Cognito
       @password_confirmation = password_confirmation
       @roles = roles.compact
       @user = nil
-      @not_on_whitelist = nil
+      @not_on_safelist = nil
     end
 
     def call
       if valid?
+        Aws.config[:credentials] = Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_KEY'])
         resp = create_cognito_user
         @cognito_uuid = resp['user_sub']
         add_user_to_groups
@@ -77,14 +78,14 @@ module Cognito
       }
     end
 
-    def domain_in_whitelist
-      return if whitelist.include? domain_name
+    def domain_in_safelist
+      return if safelist.include? domain_name
 
-      errors.add(:email, :not_on_whitelist)
-      @not_on_whitelist = true
+      errors.add(:email, :not_on_safelist)
+      @not_on_safelist = true
     end
 
-    def whitelist
+    def safelist
       ENV['RAILS_MASTER_KEY_2'] = ENV['SECRET_KEY_BASE'][0..31] if ENV['SECRET_KEY_BASE']
       creds = ActiveSupport::EncryptedConfiguration.new(
         config_path: Rails.root.join('config', 'credentials.yml.enc'),

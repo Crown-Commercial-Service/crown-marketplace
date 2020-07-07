@@ -17,7 +17,7 @@ RSpec.describe Cognito::SignUpUser do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow(response).to receive(:whitelist).and_return(email_list)
+        allow(response).to receive(:safelist).and_return(email_list)
       end
 
       context 'when password shorter than 8 characters' do
@@ -64,7 +64,7 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
 
-      context 'when email domain not in whitelist' do
+      context 'when email domain not in safelist' do
         let(:email) { 'user@test.com' }
 
         it 'is invalid' do
@@ -72,7 +72,7 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
 
-      context 'when email domain is in whitelist' do
+      context 'when email domain is in safelist' do
         let(:email) { 'user@cheemail.com' }
 
         it 'is invalid' do
@@ -87,7 +87,7 @@ RSpec.describe Cognito::SignUpUser do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow_any_instance_of(described_class).to receive(:whitelist).and_return(email_list)
+        allow_any_instance_of(described_class).to receive(:safelist).and_return(email_list)
       end
 
       it 'creates user' do
@@ -114,7 +114,7 @@ RSpec.describe Cognito::SignUpUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-        allow_any_instance_of(described_class).to receive(:whitelist).and_return(email_list)
+        allow_any_instance_of(described_class).to receive(:safelist).and_return(email_list)
       end
 
       it 'does not create user' do
