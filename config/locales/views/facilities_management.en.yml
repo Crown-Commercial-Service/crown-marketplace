@@ -1404,6 +1404,8 @@ en:
         what_is_da: What is a direct award?
         what_is_fc: What is further competition?
         who_are: who can provide the services you require in your location(s)
+      service_codes_checkboxes:
+        learn_more: Learn more (opens in a new tab)
       services:
         question: Select the facilities management services that you need
         service_specification_doc: Read the service specification document

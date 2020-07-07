@@ -37,6 +37,10 @@
                         <%= work_package['name'] %>
                         <br/>
                         <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
+                        <div>
+                          <%= link_to t('.learn_more'), 'https://news.bbc.co.uk', target: '_blank' %>
+                          <p>Service code: <%= service['code'] %>, work package code: <%= work_package['code'] %></p>
+                        </div>
                       </label>
                     </div>
                   </div>
