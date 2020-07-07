@@ -285,6 +285,10 @@ module ApplicationHelper
     controller.action_name == 'accessibility_statement_fm'
   end
 
+  def accessibility_statement_mc_page
+    controller.action_name == 'accessibility_statement_mc'
+  end
+
   def not_permitted_page
     controller.action_name == 'not_permitted'
   end
