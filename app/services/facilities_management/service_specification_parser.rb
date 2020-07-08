@@ -1,6 +1,19 @@
-class FacilitiesManagement::ServiceSpecificationParser
-  DATA_FILE_PATH = File.join(Rails.root, 'data', 'facilities_management', 'service_specifications.csv')
+# This class reads the services specification CSV file and parses all the
+# headings, sub-headings, clauses and sub-clauses, into a hash, ready to be
+# rendered via an ERB template. The initialize method reads and parses the whole
+# file, then the call method extracts just the parts relevant the specified
+# service.
+#
+# To replace the CSV file take the 'RM3830 DIRECT AWARD Deliverables Matrix -
+# template v3.0.xlsx' file and export just the 'Service Descriptions' tab as a
+# CSV named according to the DATA_FILE_PATH constant.
 
+class FacilitiesManagement::ServiceSpecificationParser
+  DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'service_specifications.csv')
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def initialize
     csv = CSV.read(DATA_FILE_PATH)
 
@@ -25,7 +38,7 @@ class FacilitiesManagement::ServiceSpecificationParser
         next
       end
 
-      # New service
+      # New service
       match = line.match(/^[0-9]+\.[^\.]*service\s+([A-Z]:[0-9]+)\s/i)
       if match
         generic = false
@@ -51,40 +64,10 @@ class FacilitiesManagement::ServiceSpecificationParser
       # Must be a clause of current service within a work package
       @work_packages[work_package_code][:services][service_code][:clauses] << split_number_and_clause(sanitized_line) if work_package_code && service_code
     end
-
-=begin
-# What to aim for
-work_packages:
-  'A':
-    heading: 'Work Package A – Contract Management'
-    generic: {}
-    services:
-      'A.1':
-        heading: 'Service A:1 - Integration'
-        clauses:
-          - number: '1.1.'
-            clause: 'Service A:1 – Integration is Mandatory for Lot 1a-1c.'
-          - ...more clauses
-      'more services': ...
-  'C':
-    heading: 'Work Package C – Maintenance Services',
-    generic:
-      heading: 20.   Generic maintenance requirements
-      clauses:
-        - number: '1.1.',
-          clause: 'Service A:1 – Integration is Mandatory for Lot 1a-1c.'
-        - ...more generic clauses
-    services:
-      'A.1':
-        heading: 'Service A:1 - Integration'
-        clauses:
-          - number: '1.1.',
-            clause: 'Service A:1 – Integration is Mandatory for Lot 1a-1c.'
-          - ...more clauses
-      'more services': ...
-=end
-
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def call(service_code, work_package_code)
     service_code_with_colon = service_code.tr('.', ':')
@@ -112,9 +95,9 @@ work_packages:
     str.sub(/\d+\.\W+/, '') # Using \W (non-word char) because spaces seem to be non-ascii from the XLS export
   end
 
-  def split_number_and_clause(str) # Must have a '#santize'd string
+  def split_number_and_clause(str)
     number = nil
-    match = str.match(/\A[\d\.]+/)
+    match = str.match(/\A[\d\.]+/) # Must have a '#santize'd string
 
     if match
       str.slice!(match[0])
