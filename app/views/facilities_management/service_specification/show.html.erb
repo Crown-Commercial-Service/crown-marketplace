@@ -1,0 +1,27 @@
+<div class="govuk-clearfix">
+  <span class="govuk-caption-xl"><%= t('.service_specification') %></span>
+  <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
+    <%= @specification[:work_package][:heading] %>
+  </h1>
+
+  <% if @specification[:work_package][:generic].any? %>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= @specification[:work_package][:generic][:heading] %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <% @specification[:work_package][:generic][:clauses].each do |clause| %>
+          <%= render 'clause', clause: clause %>
+        <% end %>
+      </div>
+    </details>
+  <% end %>
+
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @specification[:service][:heading] %>
+
+  <% @specification[:service][:clauses].each do |clause| %>
+    <%= render 'clause', clause: clause %>
+  <% end %>
+</div>

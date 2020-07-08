@@ -1,0 +1,10 @@
+<div>
+  <% if clause[:number].blank? %>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= clause[:body] %></h3>
+  <% else %>
+    <p style="float: left; width: 10%; margin-left: <%= clause[:number].split('.').size-2 %>em; margin-right: 10px"><%= clause[:number] %></p>
+    <p style="float: left; width: 85%"><%= clause[:body] %></p>
+  <% end %>
+
+  <div style="clear: both"></div>
+</div>

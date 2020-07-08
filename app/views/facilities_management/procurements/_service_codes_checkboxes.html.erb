@@ -38,8 +38,8 @@
                         <br/>
                         <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
                         <div>
-                          <%= link_to t('.learn_more'), 'https://news.bbc.co.uk', target: '_blank' %>
-                          <p>Service code: <%= service['code'] %>, work package code: <%= work_package['code'] %></p>
+                          <%# TODO: work_package and service vars are named the wrong way around %>
+                          <%= link_to t('.learn_more'), facilities_management_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank' %>
                         </div>
                       </label>
                     </div>
