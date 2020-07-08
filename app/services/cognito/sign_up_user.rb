@@ -26,7 +26,6 @@ module Cognito
 
     def call
       if valid?
-        Aws.config[:credentials] = Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_KEY'])
         resp = create_cognito_user
         @cognito_uuid = resp['user_sub']
         add_user_to_groups
