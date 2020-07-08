@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::ServiceSpecificationParser do
       end
 
       it 'has correct clause structure' do
-        expect(service_specification[:service][:clauses].first.keys).to eq(%i[number clause])
+        expect(service_specification[:service][:clauses].first.keys).to eq(%i[number body])
       end
     end
 
@@ -48,6 +48,26 @@ RSpec.describe FacilitiesManagement::ServiceSpecificationParser do
       it 'has correct number of generic clauses' do
         expect(service_specification[:work_package][:generic][:clauses].size).to eq(31)
       end
+    end
+  end
+
+  describe '#split_number_and_clause' do
+    subject(:parser) { described_class.new }
+
+    it 'handles non-ascii whitespace' do
+      str = parser.send(:sanitize, '42.2.9.    Calibration and maintenance of language laboratory equipment abc;')
+      expect(parser.send(:split_number_and_clause, str)[:number]).to eq('42.2.9.')
+    end
+
+    it 'handles no space after number' do
+      str = parser.send(:sanitize, '42.2.The Supplier shall be responsible for undertaking inspections and all xyz')
+      expect(parser.send(:split_number_and_clause, str)[:number]).to eq('42.2.')
+    end
+
+    it 'handles no number' do
+      str = parser.send(:sanitize, 'A heading')
+      expect(parser.send(:split_number_and_clause, str)[:number]).to be_nil
+      expect(parser.send(:split_number_and_clause, str)[:body]).to eq(str)
     end
   end
 end

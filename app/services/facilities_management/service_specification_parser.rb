@@ -104,16 +104,23 @@ work_packages:
   private
 
   def sanitize(str)
-    str.tr('–', '-') # Non-ascii hyphens from the XLS export
+    str.tr('–', '-')                 # Convert any non-ascii hyphens to ascii
+       .delete("^\u{0000}-\u{007F}") # Remove any remaining non-ascii chars
   end
 
   def remove_front_number(str)
     str.sub(/\d+\.\W+/, '') # Using \W (non-word char) because spaces seem to be non-ascii from the XLS export
   end
 
-  def split_number_and_clause(str)
-    parts = str.split(/\s/)
+  def split_number_and_clause(str) # Must have a '#santize'd string
+    number = nil
+    match = str.match(/\A[\d\.]+/)
 
-    { number: parts.shift, clause: parts.join(' ') }
+    if match
+      str.slice!(match[0])
+      number = match[0]
+    end
+
+    { number: number, body: str.strip }
   end
 end
