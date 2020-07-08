@@ -6,7 +6,7 @@
 
   <% if @specification[:work_package][:generic].any? %>
     <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
+      <summary class="govuk-details__summary govuk-!-margin-bottom-1">
         <span class="govuk-details__summary-text">
           <%= @specification[:work_package][:generic][:heading] %>
         </span>
@@ -19,7 +19,9 @@
     </details>
   <% end %>
 
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @specification[:service][:heading] %>
+  <h2 class="govuk-heading-m govuk-!-margin-top-3 govuk-!-margin-bottom-3">
+    <%= @specification[:service][:heading] %>
+  </h2>
 
   <% @specification[:service][:clauses].each do |clause| %>
     <%= render 'clause', clause: clause %>
