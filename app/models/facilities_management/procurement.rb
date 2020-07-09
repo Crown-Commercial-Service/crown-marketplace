@@ -380,6 +380,10 @@ module FacilitiesManagement
       procurement_building_services.map(&:code).uniq
     end
 
+    def procurement_building_service_codes_and_standards
+      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+    end
+
     def active_procurement_building_region_codes
       active_procurement_buildings.map { |proc_building| proc_building&.building&.address_region_code } .uniq
     end
