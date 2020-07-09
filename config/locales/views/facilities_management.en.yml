@@ -667,6 +667,7 @@ en:
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       choose_services:
         heading: Services
+        learn_more: Learn more (opens in a new tab)
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
