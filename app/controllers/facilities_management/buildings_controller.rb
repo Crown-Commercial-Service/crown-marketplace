@@ -57,12 +57,14 @@ module FacilitiesManagement
 
     def update
       @page_data[:model_object].assign_attributes(building_params)
-      valid_postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry&.upcase)
-      @page_data[:model_object].postcode_entry = valid_postcode_entry
-      @page_data[:model_object].address_postcode = building_params[:address_postcode]&.upcase
+      if @page_data[:model_object].postcode_entry
+        valid_postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry.upcase)
+        @page_data[:model_object].postcode_entry = valid_postcode_entry
+      end
+      @page_data[:model_object].address_postcode = building_params[:address_postcode].upcase if building_params[:address_postcode]
 
       if params[:add_address].present?
-        @page_data[:model_object].address_postcode = valid_postcode_entry
+        @page_data[:model_object].address_postcode = valid_postcode_entry if @page_data[:model_object].postcode_entry
         rebuild_page_description 'add_address'
         render action: :add_address and return
       end

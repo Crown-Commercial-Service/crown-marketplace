@@ -328,6 +328,12 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
           building.reload
           expect(building.building_type).to eq('other')
         end
+
+        it 'does not override the postcode' do
+          patch :update, params: { id: building.id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
+          building.reload
+          expect(building.address_postcode).not_to eq nil
+        end
       end
     end
 
