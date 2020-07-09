@@ -12,7 +12,7 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
   fi
 
   if [ "$APP_RUN_EMAIL_REPLACEMENT" = 'TRUE' ]; then
-    bundle exec rails supplier_email:update
+    bundle exec rails supplier_emails:update
   fi
 
   if [ "$APP_RUN_PC_TABLE_MIGRATION" = 'TRUE' ]; then
