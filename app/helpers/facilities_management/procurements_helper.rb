@@ -121,4 +121,8 @@ module FacilitiesManagement::ProcurementsHelper
       error[:service_codes].first.to_s
     end
   end
+
+  def procurement_can_be_deleted?
+    %w[quick_search detailed_search da_draft choose_contract_value results].include? @procurement.aasm_state
+  end
 end
