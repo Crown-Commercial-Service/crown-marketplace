@@ -11,6 +11,10 @@
 class FacilitiesManagement::ServiceSpecificationParser
   DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'service_specifications.csv')
 
+  WORK_PACKAGE_REGEX = /^work package ([A-Z]) /i.freeze
+  SERVICE_REGEX = /^[0-9]+\.[^\.]*[Ss]ervice\s+([A-Z]:{1,2}[0-9]+)/.freeze
+  GENERIC_CLAUSE_REGEX = /^[0-9]+\.[^\.]*generic/i.freeze
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
@@ -31,7 +35,7 @@ class FacilitiesManagement::ServiceSpecificationParser
       leading_number_removed_line = remove_front_number(sanitized_line)
 
       # New work package
-      match = line.match(/^work package ([A-Z]) /i)
+      match = line.match(WORK_PACKAGE_REGEX)
       if match
         work_package_code = match[1]
         @work_packages[work_package_code] = { heading: leading_number_removed_line, generic: {}, services: {} }
@@ -39,16 +43,16 @@ class FacilitiesManagement::ServiceSpecificationParser
       end
 
       # New service
-      match = line.match(/^[0-9]+\.[^\.]*service\s+([A-Z]:[0-9]+)\s/i)
+      match = line.match(SERVICE_REGEX)
       if match
         generic = false
-        service_code = match[1]
+        service_code = match[1].sub('::', ':') # Some service codes in the spreadsheet are known to have TWO colons
         @work_packages[work_package_code][:services][service_code] = { heading: leading_number_removed_line, clauses: [] }
         next
       end
 
       # New and subsequent generic clauses for work package
-      match = line.match(/^[0-9]+\.[^\.]*generic/i)
+      match = line.match(GENERIC_CLAUSE_REGEX)
       if match || generic
         generic = true
 
@@ -87,7 +91,9 @@ class FacilitiesManagement::ServiceSpecificationParser
   private
 
   def sanitize(str)
-    str.tr('–', '-')                 # Convert any non-ascii hyphens to ascii
+    str.tr('–', '-')                 # Convert non-ascii hyphens to ascii
+       .tr('‘', "'")                 # Convert non-ascii left apostrophes to ascii
+       .tr('’', "'")                 # Convert non-ascii right apostrophes to ascii
        .delete("^\u{0000}-\u{007F}") # Remove any remaining non-ascii chars
   end
 

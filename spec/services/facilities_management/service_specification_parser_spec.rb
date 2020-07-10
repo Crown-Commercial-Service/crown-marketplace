@@ -3,6 +3,23 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::ServiceSpecificationParser do
   subject(:service_specification) { described_class.new.call(service_code, work_package_code) }
 
+  describe 'regular expressions' do
+    describe 'new service' do
+      [
+        '58.   Service A:1- Building Information',
+        '58.   Service A:1 - Building Information',
+        '58.   Service A::1 - Building Information',
+        '58.   Service A::1- Building Information'
+      ].each do |line|
+        it "extracts service code from: #{line}" do
+          result = line.match(described_class::SERVICE_REGEX)
+          expect(result.class).to eq(MatchData)
+          expect(result[1]).to match(/A:+1/)
+        end
+      end
+    end
+  end
+
   describe '#call' do
     context 'when work package has no generic part' do
       let(:work_package_code) { 'A' }
