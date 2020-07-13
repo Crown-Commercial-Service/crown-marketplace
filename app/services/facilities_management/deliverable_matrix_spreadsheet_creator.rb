@@ -168,7 +168,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_buildings_information(sheet)
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
-    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_type, building_security_clearance].each do |row_type|
+    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_external_area, building_type, building_security_clearance].each do |row_type|
       sheet.add_row row_type, style: standard_style, height: standard_row_height
     end
   end
@@ -238,6 +238,16 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     @active_procurement_buildings.each do |building|
       row << building.gia
+    end
+
+    row
+  end
+
+  def building_external_area
+    row = ['Building External Area (sqm)']
+
+    @active_procurement_buildings.each do |building|
+      row << building.external_area
     end
 
     row

@@ -51,12 +51,14 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do
-      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil, nil, nil, nil]
-      expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil, nil, nil, nil]
-      expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil, nil, nil, nil]
-      expect(wb.sheet('Shortlist').row(5)).to eq ['Estimated cost', '£11,541.72 ', nil, nil, nil]
-      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a', nil, nil, nil]
-      expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m', nil, nil, nil]
+      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil]
+      expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil]
+      expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil]
+      expect(wb.sheet('Shortlist').row(5)).to eq ['Estimated cost', '£11,541.72 ']
+      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a']
+      expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m']
+      expect(wb.sheet('Shortlist').row(9)).to eq ['Suppliers shortlist', 'Further supplier information and contact details can be found here:']
+      expect(wb.sheet('Shortlist').row(10)).to eq ['Company name', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers']
     end
     # rubocop:enable RSpec/MultipleExpectations
 
@@ -66,6 +68,8 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       expect(wb.sheet('Buildings information').row(2)).to eq ['Building name', 'asa']
       expect(wb.sheet('Buildings information').row(3)).to eq ['Building Description', 'non-json description']
       expect(wb.sheet('Buildings information').row(4)).to eq ['Building Address - Street', '10 Mariners Court']
+      expect(wb.sheet('Buildings information').row(8)).to eq ['Building Gross Internal Area (GIA) (sqm)', 1002]
+      expect(wb.sheet('Buildings information').row(9)).to eq ['Building External Area (sqm)', 4596]
     end
     # rubocop:enable RSpec/MultipleExpectations
 

@@ -17,7 +17,10 @@ module FacilitiesManagement
 
     validates :building_name, presence: true, on: %i[new edit all]
     validates :gia, presence: true, on: %i[gia all]
-    validates :gia, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true, on: %i[gia all]
+    validates :gia, numericality: { only_integer: true }, on: %i[gia all]
+    validates :external_area, presence: true, on: %i[gia all]
+    validates :external_area, numericality: { only_integer: true }, on: %i[gia all]
+    validate  :combined_external_area_and_gia_greater_than_zero, on: %i[gia all]
     validates :security_type, presence: true, on: %i[security all]
     validates :building_type, presence: true, on: %i[type all]
     validates :address_line_1, presence: true, on: %i[all add_address], if: -> { address_postcode.present? }
@@ -67,16 +70,23 @@ module FacilitiesManagement
       self.user_email = Base64.encode64(user.email.to_s) unless user.nil?
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def determine_status
-      self.status = if building_name.present? && address_postcode.present? && address_region_code.present? &&
-                       building_type.present? && security_type.present? && gia.present? && gia.positive?
+      self.status = if building_ready?
                       'Ready'
                     else
                       'Incomplete'
                     end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+    def building_ready?
+      building_name.present? && address_postcode.present? && address_region_code.present? && building_type.present? && security_type.present? && combined_area_positive?
+    end
+
+    def combined_area_positive?
+      false if gia.nil? || external_area.nil?
+
+      (gia.to_i + external_area.to_i).positive?
+    end
 
     def json_from_row
       {
@@ -130,6 +140,13 @@ module FacilitiesManagement
     def postcode_format
       pc = UKPostcode.parse(address_postcode)
       pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
+    end
+
+    def combined_external_area_and_gia_greater_than_zero
+      return if (gia.to_i + external_area.to_i).positive?
+
+      errors.add(:gia, :combined_area)
+      errors.add(:external_area, :combined_area)
     end
 
     BUILDING_TYPES          = [{ id: 'General office - Customer Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },

@@ -9,13 +9,13 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         procurement.update(aasm_state: 'quick_search')
       end
 
-      context 'when the procurment has not been deleted' do
+      context 'when the procurement has not been deleted' do
         it 'will find the procurement' do
           expect(FacilitiesManagement::Procurement.find_by(id: procurement.id)).not_to be_nil
         end
       end
 
-      context 'when the procurment has not been deleted' do
+      context 'when the procurement has not been deleted' do
         before do
           described_class.delete_procurement(procurement)
         end
@@ -34,7 +34,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         procurement.update(aasm_state: 'detailed_search')
       end
 
-      context 'when the procurment has not been deleted' do
+      context 'when the procurement has not been deleted' do
         it 'will find the procurement in the procurements table' do
           expect(FacilitiesManagement::Procurement.find_by(id: procurement.id)).not_to be_nil
         end
@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
       end
 
-      context 'when the procurment has been deleted' do
+      context 'when the procurement has been deleted' do
         before do
           described_class.delete_procurement(procurement)
         end
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         create(:facilities_management_procurement_supplier, procurement: procurement)
       end
 
-      context 'when the procurment has not been deleted' do
+      context 'when the procurement has not been deleted' do
         it 'will find the procurement, procurement_buildings and procurement_buildings_services for the procurement' do
           expect(FacilitiesManagement::Procurement.find_by(id: procurement.id)).not_to be_nil
           expect(FacilitiesManagement::ProcurementBuilding.where(facilities_management_procurement_id: procurement.id).empty?).to be false
@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
       end
 
-      context 'when the procurment has been deleted' do
+      context 'when the procurement has been deleted' do
         before do
           described_class.delete_procurement(procurement)
         end
@@ -136,7 +136,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         procurement.send(:copy_fm_rate_cards_to_frozen)
       end
 
-      context 'when the procurment has not been deleted' do
+      context 'when the procurement has not been deleted' do
         it 'will find the procurement, procurement_buildings and procurement_buildings_services for the procurement' do
           expect(FacilitiesManagement::Procurement.find_by(id: procurement.id)).not_to be_nil
           expect(FacilitiesManagement::ProcurementBuilding.where(facilities_management_procurement_id: procurement.id).empty?).to be false
@@ -154,7 +154,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
       end
 
-      context 'when the procurment has been deleted' do
+      context 'when the procurement has been deleted' do
         before do
           described_class.delete_procurement(procurement)
         end
