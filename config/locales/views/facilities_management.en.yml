@@ -68,9 +68,13 @@ en:
               blank: Enter a name for your building
             building_type:
               blank: You must select a buiding type or describe your own
+            external_area:
+              blank: External area must be a number between 0 and 999,999,999
+              combined_area: One or other of the internal area and external area must be greater than 0
+              not_an_integer: Enter a whole number for the size of internal area of this building
             gia:
-              blank: Building size must be a number between 1 and 999,999,999
-              greater_than: Building size must be a number between 1 and 999,999,999
+              blank: Building size must be a number between 0 and 999,999,999
+              combined_area: One or other of the internal area and external area must be greater than 0
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -502,8 +506,11 @@ en:
         zero_regions_found: 0 regions found
       gia:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 18000 square metres.
+        external_area_description_html: External area is the area outside a building measured in square metres.<br/>For example, 18000 square metres.
+        external_area_header: What’s the size of the external area of this building?
         further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
         gia_header: What’s the size of the internal area of this building?
+        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -520,7 +527,7 @@ en:
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
       page_definitions:
         add_building_address: Add building address
-        building_size: Building size
+        building_size: Internal and external areas
         building_type: Building type
         change_building_details: Building details
         create_new_building: Save and continue
@@ -545,6 +552,7 @@ en:
         answer_question_text: Answer question
         caption_addr: Address
         caption_desc: Description (optional)
+        caption_external_area: External area
         caption_gia: Gross internal area
         caption_name: Name
         caption_region_nuts: Region
