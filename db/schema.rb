@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_152434) do
     t.string "contract_number"
     t.string "contract_datetime"
     t.boolean "lot_number_selected_by_customer", default: false
+    t.boolean "further_competition_chosen", default: false
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
