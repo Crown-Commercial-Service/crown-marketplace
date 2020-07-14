@@ -5,9 +5,9 @@ module BuildingsControllerRegions
     if [' '].exclude?(postcode)
       postcode_reg = /^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i
       matches = postcode.match(postcode_reg)
-      return "#{matches[1]} #{matches[4]}" unless matches.nil?
+      return "#{matches[1]} #{matches[4]}".upcase unless matches.nil?
     end
-    postcode
+    postcode&.upcase
   end
 
   def find_addresses_by_postcode(postcode)
