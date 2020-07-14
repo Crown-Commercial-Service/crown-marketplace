@@ -6,6 +6,7 @@ RSpec.describe Cognito::SignUpUser do
     let(:password) { 'ValidPass123!' }
     let(:password_confirmation) { 'ValidPass123!' }
     let(:roles) { %i[buyer st_access] }
+    let(:email_list) { ['crowncommercial.gov.uk', 'email.com', 'tmail.com', 'kmail.com', 'cmail.com', 'jmail.com', 'cheemail.com'] }
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
 
@@ -16,6 +17,7 @@ RSpec.describe Cognito::SignUpUser do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
+        allow(response).to receive(:whitelist).and_return(email_list)
       end
 
       context 'when password shorter than 8 characters' do
@@ -69,13 +71,23 @@ RSpec.describe Cognito::SignUpUser do
           expect(response.valid?).to eq false
         end
       end
+
+      context 'when email domain is in whitelist' do
+        let(:email) { 'user@cheemail.com' }
+
+        it 'is invalid' do
+          expect(response.valid?).to eq true
+        end
+      end
     end
+    # rubocop:disable RSpec/AnyInstance
 
     context 'when success' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
+        allow_any_instance_of(described_class).to receive(:whitelist).and_return(email_list)
       end
 
       it 'creates user' do
@@ -102,6 +114,7 @@ RSpec.describe Cognito::SignUpUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
+        allow_any_instance_of(described_class).to receive(:whitelist).and_return(email_list)
       end
 
       it 'does not create user' do
@@ -125,3 +138,5 @@ RSpec.describe Cognito::SignUpUser do
     end
   end
 end
+
+# rubocop:enable RSpec/AnyInstance
