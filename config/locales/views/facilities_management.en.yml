@@ -1173,7 +1173,6 @@ en:
       delete_procurement:
         delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
       detailed_search_summary:
-        delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
         detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
         detailed_search_summary_title: Detailed search summary
       edit:
