@@ -112,7 +112,7 @@ module FacilitiesManagement
     # DELETE /procurements/1
     # DELETE /procurements/1.json
     def destroy
-      FacilitiesManagement::DeleteProcurement.delete_porcurement(@procurement)
+      FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
       redirect_to facilities_management_procurements_url(deleted: @procurement.contract_name)
     end
 

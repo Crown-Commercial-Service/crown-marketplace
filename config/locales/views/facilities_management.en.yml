@@ -1351,6 +1351,7 @@ en:
       index:
         closed_title: Closed
         contracts_title: Contracts
+        deleted: Your search was deleted
         direct_award_title: Direct award
         further_competition: Further competition
         in-draft-title: In draft
