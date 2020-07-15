@@ -165,7 +165,10 @@ module FacilitiesManagement
       view_name = if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
                     'edit'
                   else
-                    FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
+                    FacilitiesManagement::ProcurementRouter.new(id: @procurement.id,
+                                                                procurement_state: @procurement.aasm_state,
+                                                                step: params[:step],
+                                                                further_competition_chosen: @procurement.further_competition_chosen).view
                   end
       build_page_details(view_name.to_sym)
 
@@ -443,6 +446,7 @@ module FacilitiesManagement
       end
 
       @procurement.start_direct_award if @procurement[:route_to_market] == 'da_draft'
+      @procurement.further_competition_chosen = true if @procurement[:route_to_market] == 'further_competition_chosen'
       @procurement.start_further_competition if @procurement[:route_to_market] == 'further_competition'
       @procurement.save
 

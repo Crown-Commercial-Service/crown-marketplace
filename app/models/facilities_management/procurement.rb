@@ -45,7 +45,7 @@ module FacilitiesManagement
     attr_accessor :mobilisation_start_date
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
 
     # attributes to hold and validate optional call off extension
     attribute :call_off_extension_2
@@ -169,6 +169,7 @@ module FacilitiesManagement
         after do
           assign_contract_number_fc
           assign_contract_datetime
+          self.further_competition_chosen = false
         end
       end
     end

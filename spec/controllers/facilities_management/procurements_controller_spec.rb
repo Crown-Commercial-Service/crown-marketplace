@@ -94,7 +94,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(assigns(:view_name)).to eq 'results'
         end
 
-        context 'when lot number is sleceted by customer' do
+        context 'when lot number is selected by customer' do
           before { procurement.update(lot_number_selected_by_customer: true) }
 
           it 'the secondary button is named change_the_contract_value' do
@@ -104,7 +104,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
 
-        context 'when lot number is not sleceted by customer' do
+        context 'when lot number is not selected by customer' do
           before { procurement.update(lot_number_selected_by_customer: false) }
 
           it 'the secondary button is named change_requirements' do
@@ -115,19 +115,43 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
-      context 'when the procurement is in a further competition state' do
-        before { procurement.update(aasm_state: 'further_competition') }
+      context 'when a procurement in the results state with competition state chosen' do
+        render_views
+
+        before do
+          procurement.update(aasm_state: 'results',  further_competition_chosen: true)
+          get :show, params: { id: procurement.id }
+        end
 
         it 'renders the show template' do
-          get :show, params: { id: procurement.id }
-
           expect(response).to render_template('show')
         end
 
-        it 'sets the view name to choose_contract_value' do
-          get :show, params: { id: procurement.id }
-
+        it 'sets the view name to further_competition' do
           expect(assigns(:view_name)).to eq 'further_competition'
+        end
+
+        it 'displays Save as further competition button' do
+          expect(response.body).to match /Save as further competition/
+        end
+      end
+
+      context 'when the procurement is in a further competition state' do
+        before do
+          procurement.update(aasm_state: 'further_competition')
+          get :show, params: { id: procurement.id }
+        end
+
+        it 'renders the show template' do
+          expect(response).to render_template('show')
+        end
+
+        it 'sets the view name to further_competition' do
+          expect(assigns(:view_name)).to eq 'further_competition'
+        end
+
+        it 'displays Make a copy button' do
+          expect(response.body).to match /Make a copy/
         end
       end
 
@@ -290,6 +314,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           it 'will have a view_da of payment_method' do
             expect(assigns(:view_da)).to eq 'payment_method'
+          end
+        end
+      end
+
+      context 'when the procurement is in results' do
+        before do
+          procurement.update(aasm_state: 'results')
+        end
+
+        context 'when continuing to further competition' do
+          before do
+            get :edit, params: { id: procurement.id, step: 'payment_method' }
           end
         end
       end
@@ -506,7 +542,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
 
-        context 'when the selection is valid and further competition is chosen' do
+        context 'when the selection is valid and saving as further competition' do
           before do
             patch :update, params: { id: procurement.id, set_route_to_market: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition' } }
           end
@@ -518,6 +554,21 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'will change the state to further_competition' do
             procurement.reload
             expect(procurement.aasm_state).to eq('further_competition')
+          end
+        end
+
+        context 'when the selection is valid and further competition is chosen' do
+          before do
+            patch :update, params: { id: procurement.id, set_route_to_market: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition_chosen' } }
+          end
+
+          it 'will redirect to facilities_management_procurement_path' do
+            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+
+          it 'will not change the state to further_competition' do
+            procurement.reload
+            expect(procurement.aasm_state).to eq('results')
           end
         end
       end
