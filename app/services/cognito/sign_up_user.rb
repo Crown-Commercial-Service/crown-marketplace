@@ -78,14 +78,15 @@ module Cognito
     end
 
     def domain_in_whitelist
-      return unless File.readlines(whitelist_path).grep(/#{domain_name}/).empty?
+      return if whitelist.include? domain_name
 
       errors.add(:email, :not_on_whitelist)
       @not_on_whitelist = true
     end
 
-    def whitelist_path
-      Rails.root.join('data', 'buyer-email-domains.txt')
+    def whitelist
+      object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+      object.bucket(ENV['BUYER_EMAIL_SAFE_LIST_BUCKET']).object(ENV['BUYER_EMAIL_SAFE_LIST_KEY']).get.body.string.split("\n")
     end
 
     def domain_name
