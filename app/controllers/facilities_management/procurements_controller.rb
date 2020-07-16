@@ -168,9 +168,9 @@ module FacilitiesManagement
                     FacilitiesManagement::ProcurementRouter.new(id: @procurement.id,
                                                                 procurement_state: @procurement.aasm_state,
                                                                 step: params[:step],
-                                                                further_competition_chosen: @procurement.further_competition_chosen).view
+                                                                further_competition_chosen: params[:fc_chosen] == 'true').view
                   end
-      build_page_details(@procurement.further_competition_chosen ? :further_competition_chosen : view_name.to_sym)
+      build_page_details(params[:fc_chosen] == 'true' ? :further_competition_chosen : view_name.to_sym)
 
       case view_name
       when 'results'
@@ -446,11 +446,11 @@ module FacilitiesManagement
       end
 
       @procurement.start_direct_award if @procurement[:route_to_market] == 'da_draft'
-      @procurement.further_competition_chosen = true if @procurement[:route_to_market] == 'further_competition_chosen'
       @procurement.start_further_competition if @procurement[:route_to_market] == 'further_competition'
       @procurement.save
 
-      redirect_to facilities_management_procurement_path(@procurement)
+      redirect_to facilities_management_procurement_path(@procurement,
+                                                         fc_chosen: @procurement[:route_to_market] == 'further_competition_chosen')
     end
 
     def set_results_page_data

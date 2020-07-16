@@ -1,7 +1,7 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
-  <%= render :partial => 'facilities_management/procurements/further_competition/further_competition_partial', locals: { post: pd, procurement: @procurement } %>
+  <%= render :partial => 'facilities_management/procurements/further_competition/further_competition_partial', locals: { post: pd, fc_chosen: params[:fc_chosen] == 'true' } %>
   <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <% if @procurement.further_competition_chosen %>
+    <% if params[:fc_chosen] == 'true' %>
       <%= hidden_field_tag :set_route_to_market, 'further_competition' %>
       <%= f.hidden_field :route_to_market, value: 'further_competition' %>
       <%= govuk_continuation_buttons(pd, f) %>
