@@ -21,11 +21,7 @@ module FacilitiesManagement
 
     def show
       if @procurement.quick_search?
-        if @delete
-          redirect_to edit_facilities_management_procurement_url(id: @procurement.id, delete: @delete)
-        elsif !@delete
-          redirect_to edit_facilities_management_procurement_url(id: @procurement.id)
-        end
+        redirect_to edit_facilities_management_procurement_url(id: @procurement.id) unless @delete
       end
 
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'

@@ -1170,8 +1170,6 @@ en:
           no_searches: You do not have any searches
         sent_offers:
           no_sent: You do not have any sent offers
-      delete_procurement:
-        delete_message: Are you sure you want to delete this search result? This action cannot be un-done.
       detailed_search_summary:
         detailed_search_description: Once you have answered all of the questions below, you will be provided with an estimated cost and shortlist of suppliers in the recommended sub-lot.
         detailed_search_summary_title: Detailed search summary
@@ -1193,13 +1191,10 @@ en:
           services_caption: You must have at least one service selected for each building.
           sub_heading: What facilities management services do you need for each building?
           there_is_a_problem: There is a problem
-        cancel: Cancel
         cancel_and_return: Cancel, and return to the manage procurements page
-        confirm_delete: Yes, delete this search result
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
-        delete_message: Are you sure you want to delete this search result?  This action cannot be undone.
         detailed_search: Detailed search
         estimated_annual_cost:
           caption: Detailed search
@@ -1351,7 +1346,7 @@ en:
       index:
         closed_title: Closed
         contracts_title: Contracts
-        deleted: Your search was deleted
+        deleted: Your item was deleted
         direct_award_title: Direct award
         further_competition: Further competition
         in-draft-title: In draft
