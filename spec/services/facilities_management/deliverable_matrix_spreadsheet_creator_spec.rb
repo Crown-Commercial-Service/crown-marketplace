@@ -48,7 +48,8 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa', 'asa'])
     expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Street', '10 Mariners Court', '10 Mariners Court'])
     expect(wb.sheet('Buildings information').row(8)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
-    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
+    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building External Area (sqm)', 4596, 4596])
+    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
   end
   # rubocop:enable RSpec/MultipleExpectations
 

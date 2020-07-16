@@ -66,6 +66,8 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       expect(wb.sheet('Buildings information').row(2)).to eq ['Building name', 'asa']
       expect(wb.sheet('Buildings information').row(3)).to eq ['Building Description', 'non-json description']
       expect(wb.sheet('Buildings information').row(4)).to eq ['Building Address - Street', '10 Mariners Court']
+      expect(wb.sheet('Buildings information').row(8)).to eq ['Building Gross Internal Area (GIA) (sqm)', 1002]
+      expect(wb.sheet('Buildings information').row(9)).to eq ['Building External Area (sqm)', 4596]
     end
     # rubocop:enable RSpec/MultipleExpectations
 

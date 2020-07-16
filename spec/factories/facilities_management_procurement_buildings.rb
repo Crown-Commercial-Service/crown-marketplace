@@ -4,6 +4,7 @@ FactoryBot.define do
     procurement_building_services { build_list :facilities_management_procurement_building_service, 2 }
     building { create :facilities_management_building }
     gia { 1002 }
+    external_area { 4596 }
     building_name { 'asa' }
     description { 'non-json description' }
     region { 'Essex' }
