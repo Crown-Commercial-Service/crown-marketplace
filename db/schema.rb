@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_140233) do
+ActiveRecord::Schema.define(version: 2020_07_16_152434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_140233) do
     t.uuid "user_id"
     t.string "other_building_type"
     t.string "other_security_type"
-    t.integer "external_area"
+    t.bigint "external_area"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 2020_07_14_140233) do
     t.datetime "updated_at", null: false
     t.bigint "no_of_appliances_for_testing"
     t.bigint "no_of_building_occupants"
-    t.bigint "size_of_external_area"
     t.bigint "no_of_consoles_to_be_serviced"
     t.bigint "tones_to_be_collected_and_removed"
     t.bigint "no_of_units_to_be_serviced"
@@ -122,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_140233) do
     t.text "building_name"
     t.jsonb "building_json"
     t.text "description"
-    t.integer "external_area"
+    t.bigint "external_area"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
   end
 

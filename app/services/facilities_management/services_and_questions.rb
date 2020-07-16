@@ -48,7 +48,7 @@ class FacilitiesManagement::ServicesAndQuestions
      { code: 'E.4', context: { volume: [:no_of_appliances_for_testing] }, questions: [:no_of_appliances_for_testing] },
      { code: 'G.1', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions }, questions: %i[no_of_building_occupants] + cleaning_questions },
      { code: 'G.3', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions }, questions: %i[no_of_building_occupants] + cleaning_questions },
-     { code: 'G.5', context: { volume: [:size_of_external_area], cleaning_standards: cleaning_questions }, questions: %i[size_of_external_area] + cleaning_questions },
+     { code: 'G.5', context: { cleaning_standards: cleaning_questions }, questions: cleaning_questions },
      { code: 'H.4', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
      { code: 'I.1', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
      { code: 'H.5', context: { service_hours: service_hours_questions }, questions: service_hours_questions },
