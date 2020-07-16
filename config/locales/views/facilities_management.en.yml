@@ -1356,6 +1356,7 @@ en:
           tender_period_3: evaluate suppliers’ responses
           what_happens_next_description: 'Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:'
           what_happens_next_title: What happens next
+        return_to_dashboard: Return to procurements dashboard
       index:
         closed_title: Closed
         contracts_title: Contracts

@@ -253,7 +253,7 @@ module FacilitiesManagement
 
     def continue_to_results
       if procurement_valid?
-        @procurement.set_state_to_results_if_possible!
+        @procurement.set_state_to_results_if_possible! unless @procurement.results?
         redirect_to facilities_management_procurement_path(@procurement)
       else
         redirect_to facilities_management_procurement_path(@procurement, validate: true)
@@ -940,7 +940,7 @@ module FacilitiesManagement
         },
         further_competition_chosen: {
           page_title: 'Further competition',
-          secondary_name: 'change_requirements',
+          secondary_name: 'continue_to_results',
           secondary_text: 'Return to results',
           continuation_text: 'Save as further competition'
         },

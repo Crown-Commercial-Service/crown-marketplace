@@ -7,6 +7,7 @@
       <%= govuk_continuation_buttons(pd, f) %>
     <% else %>
       <%= link_to(pd.navigation_details.primary_text, new_facilities_management_procurement_copy_procurement_path(procurement_id: @page_data[:model_object].id), role: 'button', class: 'govuk-button') %> <br/>
+      <%= link_to(t('.return_to_dashboard'), facilities_management_procurements_path, role: 'button', class: 'govuk-link govuk-!-font-size-19 break-before') %>
     <% end %>
   <% end %>
 <% end %>
