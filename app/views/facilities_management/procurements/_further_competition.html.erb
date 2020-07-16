@@ -2,14 +2,11 @@
   <%= render :partial => 'facilities_management/procurements/further_competition/further_competition_partial', locals: { post: pd, procurement: @procurement } %>
   <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <% if @procurement.further_competition_chosen %>
+      <%= hidden_field_tag :set_route_to_market, 'further_competition' %>
       <%= f.hidden_field :route_to_market, value: 'further_competition' %>
-
       <%= govuk_continuation_buttons(pd, f) %>
-
-      <p>SAVE AS FC</p>
     <% else %>
       <%= link_to(pd.navigation_details.primary_text, new_facilities_management_procurement_copy_procurement_path(procurement_id: @page_data[:model_object].id), role: 'button', class: 'govuk-button') %> <br/>
     <% end %>
-    <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-caption-m') %>
   <% end %>
 <% end %>

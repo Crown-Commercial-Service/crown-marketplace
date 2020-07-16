@@ -170,7 +170,7 @@ module FacilitiesManagement
                                                                 step: params[:step],
                                                                 further_competition_chosen: @procurement.further_competition_chosen).view
                   end
-      build_page_details(view_name.to_sym)
+      build_page_details(@procurement.further_competition_chosen ? :further_competition_chosen : view_name.to_sym)
 
       case view_name
       when 'results'
@@ -937,6 +937,12 @@ module FacilitiesManagement
           secondary_name: 'continue_to_results',
           primary_name: 'continue_da',
           secondary_url: facilities_management_procurements_path,
+        },
+        further_competition_chosen: {
+          page_title: 'Further competition',
+          secondary_name: 'change_requirements',
+          secondary_text: 'Return to results',
+          continuation_text: 'Save as further competition'
         },
         further_competition: {
           page_title: 'Further competition',
