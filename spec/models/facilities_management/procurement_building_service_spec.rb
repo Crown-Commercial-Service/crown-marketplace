@@ -253,31 +253,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    context 'when code = G.5' do
-      it 'validates size_of_external_area grater than 0 if value is present' do
-        procurement_building_service.code = 'G.5'
-        procurement_building_service.size_of_external_area = -1
-        expect(procurement_building_service.valid?(:volume)).to eq false
-      end
-
-      it 'does not validate size_of_external_area if value is not present' do
-        procurement_building_service.code = 'G.5'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
-      it 'is valid if size_of_external_area is present and greater than 0' do
-        procurement_building_service.code = 'G.5'
-        procurement_building_service.size_of_external_area = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
-      it 'validates size_of_external_area less than 10000000000 if value is present' do
-        procurement_building_service.code = 'G.5'
-        procurement_building_service.size_of_external_area = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
-      end
-    end
-
     context 'when code = K.1' do
       it 'validates no_of_consoles_to_be_serviced grater than 0 if value is present' do
         procurement_building_service.code = 'K.1'
@@ -647,6 +622,22 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
     end
+
+    describe '#requires_external_area?' do
+      context 'when a service requires an external area' do
+        it 'will be true' do
+          procurement_building_service.code = 'G.5'
+          expect(procurement_building_service.requires_external_area?).to eq true
+        end
+      end
+
+      context 'when a service does not require an external area' do
+        it 'will be false' do
+          procurement_building_service.code = 'K.1'
+          expect(procurement_building_service.requires_external_area?).to eq false
+        end
+      end
+    end
   end
 
   describe '#validate_services' do
@@ -763,7 +754,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     let(:lift_data) { nil }
     let(:no_of_appliances_for_testing) { nil }
     let(:no_of_building_occupants) { nil }
-    let(:size_of_external_area) { nil }
     let(:no_of_consoles_to_be_serviced) { nil }
     let(:tones_to_be_collected_and_removed) { nil }
     let(:no_of_units_to_be_serviced) { nil }
@@ -774,7 +764,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
              lift_data: lift_data,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
              no_of_building_occupants: no_of_building_occupants,
-             size_of_external_area: size_of_external_area,
              no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
              tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
              no_of_units_to_be_serviced: no_of_units_to_be_serviced,
@@ -816,7 +805,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
     context 'when service is G.5' do
       let(:code) { 'G.5' }
-      let(:size_of_external_area) { 925 }
+      let(:size_of_external_area) { procurement_building_service.procurement_building.external_area }
 
       it 'returns size_of_external_area' do
         expect(procurement_building_service.uval).to eq size_of_external_area

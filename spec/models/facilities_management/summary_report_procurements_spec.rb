@@ -17,7 +17,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:lift_data) { nil }
     let(:no_of_appliances_for_testing) { nil }
     let(:no_of_building_occupants) { nil }
-    let(:size_of_external_area) { nil }
     let(:no_of_consoles_to_be_serviced) { nil }
     let(:tones_to_be_collected_and_removed) { nil }
     let(:no_of_units_to_be_serviced) { nil }
@@ -31,7 +30,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
              lift_data: lift_data,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
              no_of_building_occupants: no_of_building_occupants,
-             size_of_external_area: size_of_external_area,
              no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
              tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
              no_of_units_to_be_serviced: no_of_units_to_be_serviced,
@@ -550,10 +548,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       context 'when service is G.5' do
         let(:code) { 'G.5' }
         let(:service_standard) { 'A' }
-        let(:size_of_external_area) { 925 }
 
         it 'returns the right assessed value' do
-          expect(report.assessed_value.round(2)).to eq 2996.4
+          expect(report.assessed_value.round(2)).to eq 14888.07
         end
       end
 
