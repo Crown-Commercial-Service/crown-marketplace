@@ -44,9 +44,6 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   # rubocop:disable Metrics/AbcSize
   def build
-    start_date = @procurement.initial_call_off_start_date
-    current_user = @procurement.user
-
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
         first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -78,7 +75,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           end
         end
 
-        add_other_competition_worksheets(p, standard_column_style, standard_bold_style, start_date, current_user)
+        add_other_competition_worksheets(p, standard_column_style, standard_bold_style)
       end
     end
   end
@@ -105,10 +102,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     allowed_volume_services.count
   end
 
-  def add_other_competition_worksheets(package, standard_column_style, standard_bold_style, start_date, current_user)
+  def add_other_competition_worksheets(package, standard_column_style, standard_bold_style)
     add_service_periods_worksheet(package, standard_column_style, @units_of_measure_values_for_volume) if services_require_service_periods?
 
-    add_shortlist_details(package, standard_column_style, standard_bold_style, start_date, current_user)
+    add_shortlist_details(package, standard_column_style, standard_bold_style)
 
     add_customer_and_contract_details(package) if @procurement
   end
@@ -170,29 +167,52 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     name
   end
 
-  def add_shortlist_details(package, standard_column_style, standard_bold_style, start_date, current_user)
+  def add_shortlist_details(package, standard_column_style, _standard_bold_style)
     package.workbook.add_worksheet(name: 'Shortlist') do |sheet|
-      add_shortlist_contract_number(sheet, standard_column_style)
-      add_shortlist_cost_sublot_recommendation(sheet, start_date, current_user, standard_column_style, standard_bold_style)
+      standard_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }
+      bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, b: true
+      hint_style = sheet.styles.add_style sz: 12, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
+      link_style = sheet.styles.add_style sz: 12, alignment: { vertical: :center, horizontal: :left }, fg_color: '4472c4', u: true
+
+      add_shortlist_contract_number(sheet, bold_style, hint_style)
+      add_shortlist_cost_sublot_recommendation(sheet, standard_style, bold_style, hint_style)
       sheet.add_row [], style: standard_column_style, height: standard_row_height
 
-      add_shortlist_supplier_names(sheet)
+      add_shortlist_supplier_names(sheet, standard_style, bold_style, hint_style, link_style)
 
       style_shortlist_sheet(sheet)
     end
   end
 
-  def add_shortlist_contract_number(sheet, style)
-    sheet.add_row ['Reference number:', @procurement.contract_number], style: style, height: standard_row_height
-    sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: style, height: standard_row_height
-    sheet.add_row [], style: style, height: standard_row_height
+  def add_shortlist_contract_number(sheet, bold_style, hint_style)
+    sheet.add_row ['Reference number:', @procurement.contract_number], style: bold_style, height: standard_row_height
+    sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: bold_style, height: standard_row_height
+    sheet.add_row [], style: bold_style, height: standard_row_height
+    update_cell_styles(sheet, ['B1', 'B2'], hint_style)
   end
 
-  def add_shortlist_cost_sublot_recommendation(sheet, _start_date, _current_user, standard_style, bold_style)
+  def add_shortlist_cost_sublot_recommendation(sheet, standard_style, bold_style, hint_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
-    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: standard_style, height: standard_row_height
-    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: standard_style, height: standard_row_height
-    sheet.add_row ['Sub-lot value range', determine_lot_range], style: standard_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Sub-lot value range', determine_lot_range], style: hint_style, height: standard_row_height
+    update_cell_styles(sheet, ['A5', 'A6', 'A7'], standard_style)
+  end
+
+  def add_shortlist_supplier_names(sheet, standard_style, bold_style, hint_style, link_style)
+    supplier_datas = @report.selected_suppliers(@report.current_lot).map { |s| s['data'] }
+    return if supplier_datas.empty?
+
+    sheet.add_row ['Suppliers shortlist', 'Further supplier information and contact details can be found here:'], style: bold_style, height: standard_row_height
+    update_cell_styles(sheet, ['B9'], standard_style)
+
+    sheet.add_row ['Company name', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers'], style: standard_style, height: standard_row_height
+    sheet.add_hyperlink location: 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', ref: sheet['B10']
+    update_cell_styles(sheet, ['B10'], link_style)
+
+    supplier_datas.each do |data|
+      sheet.add_row [data['supplier_name']], style: hint_style, height: standard_row_height
+    end
   end
 
   def  sublot_customer_selected_text
@@ -276,25 +296,6 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     lot_range
   end
 
-  def add_shortlist_supplier_names(sheet)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
-    bold_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
-
-    supplier_datas = @report.selected_suppliers(@report.current_lot).map { |s| s['data'] }
-    return if supplier_datas.empty?
-
-    sheet.add_row ['Suppliers shortlist'], style: bold_style, height: standard_row_height
-    sheet.add_row ['Company name', 'Contact name', 'Contact e-mail address', 'Contact telephone', 'Company address'],
-                  style: bold_style, height: standard_row_height
-
-    supplier_datas.each do |data|
-      detail = FacilitiesManagement::SupplierDetail.find_by(name: data['supplier_name'])
-
-      sheet.add_row [data['supplier_name'], data['contact_name'], data['contact_email'],
-                     data['contact_phone'], detail.full_organisation_address], style: standard_style, height: standard_row_height
-    end
-  end
-
   def style_supplier_names_sheet(sheet, style, rows_added)
     column_widths = [75, 50]
     sheet["A2:B#{rows_added + 1}"].each { |c| c.style = style } if rows_added.positive?
@@ -304,5 +305,9 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   def style_shortlist_sheet(sheet)
     column_widths = [50, 50, 50]
     sheet.column_widths(*column_widths)
+  end
+
+  def update_cell_styles(sheet, cells, style)
+    cells.each { |cell| sheet[cell].style = style }
   end
 end
