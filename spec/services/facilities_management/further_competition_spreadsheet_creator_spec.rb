@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a']
       expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m']
       expect(wb.sheet('Shortlist').row(9)).to eq ['Suppliers shortlist', 'Further supplier information and contact details can be found here:']
-      expect(wb.sheet('Shortlist').row(10)).to eq ['Company name', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers']
+      expect(wb.sheet('Shortlist').row(10)).to eq ['Abernathy and Sons', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers']
     end
     # rubocop:enable RSpec/MultipleExpectations
 
