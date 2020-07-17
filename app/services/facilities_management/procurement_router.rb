@@ -52,6 +52,7 @@ class FacilitiesManagement::ProcurementRouter
   def view
     if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
       return 'further_competition' if @procurement_state == 'results' && @further_competition_chosen
+
       return STATES_TO_VIEWS[@procurement_state.to_sym]
     end
 

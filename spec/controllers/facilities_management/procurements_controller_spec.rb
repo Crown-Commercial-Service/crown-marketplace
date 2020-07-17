@@ -119,8 +119,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         render_views
 
         before do
-          procurement.update(aasm_state: 'results',  further_competition_chosen: true)
-          get :show, params: { id: procurement.id }
+          procurement.update(aasm_state: 'results')
+          get :show, params: { id: procurement.id, fc_chosen: 'true' }
         end
 
         it 'renders the show template' do
@@ -132,11 +132,13 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'displays Save as further competition button' do
-          expect(response.body).to match /Save as further competition/
+          expect(response.body).to match(/Save as further competition/)
         end
       end
 
       context 'when the procurement is in a further competition state' do
+        render_views
+
         before do
           procurement.update(aasm_state: 'further_competition')
           get :show, params: { id: procurement.id }
@@ -151,7 +153,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'displays Make a copy button' do
-          expect(response.body).to match /Make a copy/
+          expect(response.body).to match(/Make a copy/)
         end
       end
 
@@ -314,18 +316,6 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           it 'will have a view_da of payment_method' do
             expect(assigns(:view_da)).to eq 'payment_method'
-          end
-        end
-      end
-
-      context 'when the procurement is in results' do
-        before do
-          procurement.update(aasm_state: 'results')
-        end
-
-        context 'when continuing to further competition' do
-          before do
-            get :edit, params: { id: procurement.id, step: 'payment_method' }
           end
         end
       end
@@ -533,7 +523,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
 
           it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'false')
           end
 
           it 'will change the state to da_draft' do
@@ -548,7 +538,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
 
           it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'false')
           end
 
           it 'will change the state to further_competition' do
@@ -563,7 +553,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
 
           it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'true')
           end
 
           it 'will not change the state to further_competition' do

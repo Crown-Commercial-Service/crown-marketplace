@@ -160,6 +160,7 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     def set_view_data
       set_current_step
       view_name = if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
@@ -189,6 +190,7 @@ module FacilitiesManagement
 
       view_name
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def update_procurement
       assign_procurement_parameters
