@@ -256,6 +256,9 @@ en:
               invalid: Enter a UK telephone number, for example 020 7946 0000
         facilities_management/procurement_building:
           attributes:
+            building:
+              external_area_too_small: You have a service in ‘%{building_name}’ building that requires external area, please go to 'Manage buildings' to update the building external area size
+              gia_too_small: You have a service in ‘%{building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size
             service_codes:
               at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
