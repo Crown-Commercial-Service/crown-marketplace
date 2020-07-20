@@ -1,5 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <p class="govuk-body-l">Below outlines the steps you will follow to direct award your contract.</p>
+  <p class="govuk-body-l"><%= t('.heading') %></p>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
@@ -16,7 +16,7 @@
               </span>
               <span class="js-step-title">
                 <span class="js-step-title-text">
-                  Creating your contract
+                  <%= t('.step_1_title') %>
                 </span>
                 <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
                   Hide
@@ -28,10 +28,10 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-creating-your-contract-1" hidden>
               <ol class="app-step-nav__list " data-length="3">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="1.1">we will inform you about some key contract information</span>
+                  <span data-position="1.1"><%= t('.step_1_content_1') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="1.2">you will be asked a few questions that will help us build your contract</span>
+                  <span data-position="1.2"><%= t('.step_1_content_2') %></span>
                 </li>
               </ol>
             </div>
@@ -48,7 +48,7 @@
               </span>
               <span class="js-step-title">
                 <span class="js-step-title-text">
-                  Review contract and send offer
+                  <%= t('.step_2_title') %>
                 </span>
                 <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
                   Hide
@@ -60,13 +60,13 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-review-contract-2" hidden>
               <ol class="app-step-nav__list " data-length="1">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.1">you can review details of your contract before deciding how to proceed</span>
+                  <span data-position="2.1"><%= t('.step_2_content_1') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.2">if you are happy with the content of your contract, you can send your offer to the supplier</span>
+                  <span data-position="2.2"><%= t('.step_2_content_2') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="2.3">the supplier has <b><u>2 working days (48 hours)</u></b> to accept or decline your offer</span>
+                  <span data-position="2.3"><%= t('.step_2_content_3_html') %></span>
                 </li>
               </ol>
             </div>
@@ -77,7 +77,7 @@
               <span class="app-step-nav__square app-step-nav__square--logic">
                 <span class="app-step-nav__square-inner">
                   <span class="app-step-nav__square-background">
-                    waiting<br/>on<br/>response
+                    <%= t('.waiting_html') %>
                   </span>
                 </span>
               </span>
@@ -97,7 +97,7 @@
               </span>
               <span class="js-step-title">
                 <span class="js-step-title-text">
-                  When your offer has been accepted
+                  <%= t('.step_3_title') %>
                 </span>
                 <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
                   Hide
@@ -109,16 +109,16 @@
             <div class="app-step-nav__panel js-panel" id="step-panel-offer-accepted-3" hidden>
               <ol class="app-step-nav__list " data-length="4">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="3.1">the system will notify you that the offer has been accepted, and take you through the next steps</span>
+                  <span data-position="3.1"><%= t('.step_3_content_1') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="3.2">the supplier will sign the contract and send it back to you (this step will happen offline, outside of this portal)</span>
+                  <span data-position="3.2"><%= t('.step_3_content_2') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="3.3">you will then sign the contract and send it back to the supplier (this step will happen offline, outside of this portal)</span>
+                  <span data-position="3.3"><%= t('.step_3_content_3') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="3.4">you will confirm on this portal that the contract has been signed by both parties</span>
+                  <span data-position="3.4"><%= t('.step_3_content_4') %></span>
                 </li>
               </ol>
             </div>
@@ -148,7 +148,7 @@
               </span>
               <span class="js-step-title">
                 <span class="js-step-title-text">
-                  If your offer was declined
+                  <%= t('.step_4_title') %>
                 </span>
                 <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
                   Hide
@@ -158,24 +158,21 @@
             </div>
 
             <div class="app-step-nav__panel js-panel" id="step-panel-offer-declined-4" hidden>
-              <p class="app-step-nav__paragraph">You will be notified that the supplier has declined your offer, and the
-                reason why. You will have a choice to:</p>
+              <p class="app-step-nav__paragraph"><%= t('.step_4_content_1') %></p>
               <ol class="app-step-nav__list " data-length="3">
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.1">offer the contract to the next placed supplier (after reviewing their price)</span>
+                  <span data-position="4.1"><%= t('.step_4_content_2') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.2">switch to a further competition</span>
+                  <span data-position="4.2"><%= t('.step_4_content_3') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.3">change your requirements</span>
+                  <span data-position="4.3"><%= t('.step_4_content_4') %></span>
                 </li>
                 <li class="app-step-nav__list-item js-list-item ">
-                  <span data-position="4.4">stop the process</span>
+                  <span data-position="4.4"><%= t('.step_4_content_5') %></span>
                 </li>
               </ol>
-              <p class="app-step-nav__paragraph">If the supplier doesn't respond within 2 working days (48 hours), they
-                are deemed to have declined the offer.</p>
             </div>
           </li>
         </ol>

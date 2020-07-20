@@ -7,6 +7,10 @@ $(function () {
     if (e.target.checked) {
       $("#contract-signed-yes-container").removeClass("govuk-visually-hidden");
       $("#contract-signed-no-container").addClass("govuk-visually-hidden");
+      if($("#yes-caption").length) {
+        $("#no-caption").removeClass("govuk-visually-hidden");
+        $("#yes-caption").addClass("govuk-visually-hidden");
+      }
       toggleNoElements(false);
       toggleYesElements(true);
     }
@@ -16,6 +20,10 @@ $(function () {
     if (e.target.checked) {
       $("#contract-signed-no-container").removeClass("govuk-visually-hidden");
       $("#contract-signed-yes-container").addClass("govuk-visually-hidden");
+      if($("#no-caption").length) {
+        $("#yes-caption").removeClass("govuk-visually-hidden");
+        $("#no-caption").addClass("govuk-visually-hidden");
+      }
       toggleNoElements(true);
       toggleYesElements(false);
     }

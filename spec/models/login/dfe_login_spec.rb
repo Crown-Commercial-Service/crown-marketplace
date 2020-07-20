@@ -42,14 +42,14 @@ RSpec.describe Login::DfeLogin, type: :model do
     }
   end
 
-  let(:whitelist_enabled) { true }
-  let(:whitelisted_email_addresses) { [email] }
+  let(:safelist_enabled) { true }
+  let(:safelisted_email_addresses) { [email] }
 
   before do
-    allow(Marketplace).to receive(:dfe_signin_whitelist_enabled?)
-      .and_return(whitelist_enabled)
-    allow(Marketplace).to receive(:dfe_signin_whitelisted_email_addresses)
-      .and_return(whitelisted_email_addresses)
+    allow(Marketplace).to receive(:dfe_signin_safelist_enabled?)
+      .and_return(safelist_enabled)
+    allow(Marketplace).to receive(:dfe_signin_safelisted_email_addresses)
+      .and_return(safelisted_email_addresses)
     allow(Rails.logger).to receive(:info)
   end
 
@@ -59,8 +59,8 @@ RSpec.describe Login::DfeLogin, type: :model do
 
   context 'when the framework is supply_teachers' do
     context 'when the school type is non-profit' do
-      context 'and email whitelisting is disabled' do
-        let(:whitelist_enabled) { false }
+      context 'and email safelisting is disabled' do
+        let(:safelist_enabled) { false }
 
         it 'permits access to any email address' do
           expect(login.permit?(:supply_teachers)).to be true
@@ -74,17 +74,17 @@ RSpec.describe Login::DfeLogin, type: :model do
       end
 
       context 'and email address is white-listed' do
-        let(:whitelist_enabled) { true }
-        let(:whitelisted_email_addresses) { [email] }
+        let(:safelist_enabled) { true }
+        let(:safelisted_email_addresses) { [email] }
 
-        it 'permits access to whitelisted email address' do
+        it 'permits access to safelisted email address' do
           expect(login.permit?(:supply_teachers)).to be true
         end
       end
 
       context 'and email address is not white-listed' do
-        let(:whitelist_enabled) { true }
-        let(:whitelisted_email_addresses) { ['another-user@example.com'] }
+        let(:safelist_enabled) { true }
+        let(:safelisted_email_addresses) { ['another-user@example.com'] }
 
         it 'denies access' do
           expect(login.permit?(:supply_teachers)).to be false
@@ -100,8 +100,8 @@ RSpec.describe Login::DfeLogin, type: :model do
         }
       end
 
-      context 'and email whitelisting is disabled' do
-        let(:whitelist_enabled) { false }
+      context 'and email safelisting is disabled' do
+        let(:safelist_enabled) { false }
 
         it 'permits access to any email address' do
           expect(login.permit?(:supply_teachers)).to be true

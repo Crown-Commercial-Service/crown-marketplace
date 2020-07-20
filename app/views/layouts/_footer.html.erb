@@ -37,6 +37,11 @@
                   <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
                 </div>
               <% end %>
+              <% if service_name_param&.include? 'management_consultancy' %>
+                <div class="govuk-footer__meta-item">
+                  <%= link_to t("layouts.application.accessibility_statement_link"), management_consultancy_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
+                </div>
+              <% end %>
               <div class="govuk-footer__meta-item">
                 <%= t("layouts.application.crown_copyright") %>
               </div>

@@ -52,7 +52,10 @@ module Postcode
 
       if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
         result = execute_find_region_query postcode_structure[:out_code]
-        result = Nuts3Region.all.map { |f| { code: f.code, region: f.name } } if result.length.zero?
+        if result.length.zero?
+          nuts1region_codes = Nuts1Region.all.map(&:code)
+          result = FacilitiesManagement::Region.all.map { |f| { code: f.code, region: f.name } if f.code.start_with?(*nuts1region_codes) }.compact
+        end
       else
         result = execute_find_region_query(':')
       end

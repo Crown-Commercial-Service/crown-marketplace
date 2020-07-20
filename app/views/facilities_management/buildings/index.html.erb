@@ -2,6 +2,9 @@
 <%= content_for :page_title, pd.heading_details.text %>
   <div id="buildings-container">
     <%= link_to t('.create_new_button'), new_facilities_management_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
+    <div class='govuk-!-margin-bottom-4'>
+      <%= link_to t('.go_to_procurements_dashboard'), facilities_management_procurements_path, class: 'govuk-link' %>
+    </div>
     <div class="govuk-!-width-two-thirds">
       <p class="govuk-!-margin-bottom-2">
         <%= t('.start_paragraph') %>
@@ -13,7 +16,15 @@
           </span>
         </summary>
         <div class="govuk-details__text">
-          <%= t('.start_warning_html') %>
+          <p class="govuk-!-margin-bottom-2">
+            <%= t('.start_warning_1') %>
+          </p>
+          <p class="govuk-!-margin-bottom-2">
+            <%= t('.start_warning_2') %>
+          </p>
+          <p>
+            <%= t('.start_warning_3') %>
+          </p>
         </div>
       </details>
 

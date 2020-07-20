@@ -35,11 +35,6 @@ RSpec.describe Cognito::UpdateUser do
         expect(response.user.has_role?(:fm_access)).to eq false
       end
 
-      it 'returns the newly created resource with no at_access role' do
-        response = described_class.call(user)
-        expect(response.user.has_role?(:at_access)).to eq false
-      end
-
       it 'returns the newly created resource with no ls_access role' do
         response = described_class.call(user)
         expect(response.user.has_role?(:ls_access)).to eq false

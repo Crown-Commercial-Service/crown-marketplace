@@ -5,6 +5,56 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
   let(:user) { build(:user) }
 
+  describe 'services validation' do
+    before { procurement.region_codes = ['UKC1'] }
+
+    context 'when no service codes are selected' do
+      it 'is not valid' do
+        procurement.service_codes = nil
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+    end
+
+    context 'when no service codes are empty' do
+      it 'is not valid' do
+        procurement.service_codes = []
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+    end
+
+    context 'when some service codes are selected' do
+      it 'is valid' do
+        procurement.service_codes = ['C.1', 'C.2']
+        expect(procurement.valid?(:service_codes)).to be true
+      end
+    end
+  end
+
+  describe 'region validation' do
+    before { procurement.service_codes = ['C.1', 'C.2'] }
+
+    context 'when no region codes are selected' do
+      it 'is not valid' do
+        procurement.region_codes = nil
+        expect(procurement.valid?(:region_codes)).to be false
+      end
+    end
+
+    context 'when no region codes are empty' do
+      it 'is not valid' do
+        procurement.region_codes = []
+        expect(procurement.valid?(:region_codes)).to be false
+      end
+    end
+
+    context 'when some region codes are selected' do
+      it 'is valid' do
+        procurement.region_codes = ['UKC1', 'UKN01']
+        expect(procurement.valid?(:region_codes)).to be true
+      end
+    end
+  end
+
   describe '#tupevalidations' do
     context 'when editing TUPE' do
       context 'when it is blank' do

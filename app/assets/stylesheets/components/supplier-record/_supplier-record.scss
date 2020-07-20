@@ -67,6 +67,11 @@
     content: ".DOC";
 }
 
+.supplier-record__file-download-doc:before {
+  background-color: #0C5FAE;
+  content: ".DOC";
+}
+
 .supplier-record__file-download[href*='format=pdf']:before {
     background-color: #df1a1a;
     content: ".PDF";

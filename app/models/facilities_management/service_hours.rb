@@ -12,8 +12,10 @@ module FacilitiesManagement
     attribute :friday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :saturday, ServiceHourChoice, default: ServiceHourChoice.new
     attribute :sunday, ServiceHourChoice, default: ServiceHourChoice.new
+    attribute :personnel, Integer
     attribute :uom, Integer, default: 0
 
+    validates :personnel, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 1000 }
     validate :all_not_required?
     validate :all_present_and_valid?, unless: -> { all_days_not_required? }
     validate :no_days_overlap?, unless: -> { all_days_not_required? }
@@ -22,15 +24,13 @@ module FacilitiesManagement
       return {} if service_hours.blank?
 
       new_hash = {}
-      new_hash[:monday] = ServiceHourChoice.dump(service_hours[:monday])
-      new_hash[:tuesday] = ServiceHourChoice.dump(service_hours[:tuesday])
-      new_hash[:wednesday] = ServiceHourChoice.dump(service_hours[:wednesday])
-      new_hash[:thursday] = ServiceHourChoice.dump(service_hours[:thursday])
-      new_hash[:friday] = ServiceHourChoice.dump(service_hours[:friday])
-      new_hash[:saturday] = ServiceHourChoice.dump(service_hours[:saturday])
-      new_hash[:sunday] = ServiceHourChoice.dump(service_hours[:sunday])
+      %i[monday tuesday wednesday thursday friday saturday sunday].each do |day|
+        new_hash[day] = ServiceHourChoice.dump(service_hours[day])
+      end
+
       total_hours = new_hash.sum { |_key, shc| shc[:uom] }
-      new_hash[uom: total_hours * 52]
+      new_hash[:personnel] = service_hours[:personnel]
+      new_hash[uom: total_hours * 52 * new_hash[:personnel].to_i]
       new_hash
     end
 
@@ -47,9 +47,9 @@ module FacilitiesManagement
     def total_hours
       total = 0
       attributes.each do |k, v|
-        total += v.total_hours unless k == :uom
+        total += v.total_hours unless %i[uom personnel].include? k
       end
-      total
+      total * personnel.to_i
     end
 
     PARAMETERS = { monday: ServiceHourChoice::PARAMETERS,
@@ -96,7 +96,7 @@ module FacilitiesManagement
 
     def all_present_and_valid?
       attributes.each do |key, value|
-        next if key == :uom
+        next if %i[uom personnel].include? key
 
         validate_choice(key, value)
         errors.add(:base, :invalid) if value.errors.any?
@@ -110,7 +110,7 @@ module FacilitiesManagement
     def all_days_not_required?
       count_of_not_required = 0
       attributes.each do |key, value|
-        next if key == :uom
+        next if %i[uom personnel].include? key
 
         count_of_not_required += 1 if value.service_choice == 'not_required'
       end
