@@ -159,15 +159,9 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def set_view_data
       set_current_step
-      view_name = if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
-                    'edit'
-                  else
-                    FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: params[:step]).view
-                  end
-      build_page_details(view_name.to_sym)
+      build_page_details(params[:fc_chosen] == 'true' ? :further_competition_chosen : view_name.to_sym)
 
       case view_name
       when 'results'
@@ -185,6 +179,17 @@ module FacilitiesManagement
       contract_value_page_details if @procurement.aasm_state == 'choose_contract_value'
 
       view_name
+    end
+
+    def view_name
+      @view_name ||= if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
+                       'edit'
+                     else
+                       FacilitiesManagement::ProcurementRouter.new(id: @procurement.id,
+                                                                   procurement_state: @procurement.aasm_state,
+                                                                   step: params[:step],
+                                                                   further_competition_chosen: params[:fc_chosen] == 'true').view
+                     end
     end
 
     def update_procurement
@@ -205,7 +210,6 @@ module FacilitiesManagement
         render :edit
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def remove_invalid_security_policy_document_file
       # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
@@ -250,7 +254,7 @@ module FacilitiesManagement
 
     def continue_to_results
       if procurement_valid?
-        @procurement.set_state_to_results_if_possible!
+        @procurement.set_state_to_results_if_possible! unless @procurement.results?
         redirect_to facilities_management_procurement_path(@procurement)
       else
         redirect_to facilities_management_procurement_path(@procurement, validate: true)
@@ -446,7 +450,8 @@ module FacilitiesManagement
       @procurement.start_further_competition if @procurement[:route_to_market] == 'further_competition'
       @procurement.save
 
-      redirect_to facilities_management_procurement_path(@procurement)
+      redirect_to facilities_management_procurement_path(@procurement,
+                                                         fc_chosen: @procurement[:route_to_market] == 'further_competition_chosen')
     end
 
     def set_results_page_data
@@ -933,6 +938,12 @@ module FacilitiesManagement
           secondary_name: 'continue_to_results',
           primary_name: 'continue_da',
           secondary_url: facilities_management_procurements_path,
+        },
+        further_competition_chosen: {
+          page_title: 'Further competition',
+          secondary_name: 'continue_to_results',
+          secondary_text: 'Return to results',
+          continuation_text: 'Save as further competition'
         },
         further_competition: {
           page_title: 'Further competition',

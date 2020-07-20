@@ -5,11 +5,12 @@ class FacilitiesManagement::ProcurementRouter
 
   STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
 
-  def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
+  def initialize(id:, procurement_state:, step: nil, da_journey_state: nil, further_competition_chosen: false)
     @id = id
     @procurement_state = procurement_state
     @da_journey_state = da_journey_state
     @step = step
+    @further_competition_chosen = further_competition_chosen
   end
 
   STATES_TO_VIEWS = {
@@ -49,7 +50,11 @@ class FacilitiesManagement::ProcurementRouter
   end
 
   def view
-    return STATES_TO_VIEWS[@procurement_state.to_sym] if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+    if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+      return 'further_competition' if @procurement_state == 'results' && @further_competition_chosen
+
+      return STATES_TO_VIEWS[@procurement_state.to_sym]
+    end
 
     'detailed_search_summary'
   end
