@@ -4,7 +4,8 @@ module SupplyTeachers
       protected
 
       def challenge_path
-        supply_teachers_admin_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
+        cookies[:session] = { value: @result.session, expires: 20.minutes }
+        supply_teachers_admin_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
       end
 
       def after_sign_in_path_for(resource)

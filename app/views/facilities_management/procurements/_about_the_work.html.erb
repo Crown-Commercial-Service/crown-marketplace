@@ -143,7 +143,7 @@
                 <td style="width:40%" class="govuk-table__cell">
 
                 </td>
-                <td style="width:48%" class="govuk-table__cell">
+                <td style="width:45%" class="govuk-table__cell">
                   <strong>Buildings</strong>
                 </td>
                 <td class="">
@@ -151,7 +151,7 @@
                 </td>
               </tr>
             <% else %>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell govuk-border-bottom_none">
                   No additional information needed
                 </td>
                 <td class="govuk-table__cell">
@@ -167,7 +167,7 @@
                   <tr class="govuk-table__row govuk-no-border <%= 'govuk-form-group--error' if !procurement_building.valid?(:procurement_building_services) && params[:validate] %>">
                     <td style="width:40%" class="govuk-table__cell">
                     </td>
-                    <td style="width:48%" class="govuk-table__cell">
+                    <td style="width:45%" class="govuk-table__cell">
                       <%= link_to procurement_building.name, facilities_management_procurement_building_path(procurement_building) %>
                     </td>
                     <td class="govuk-table__cell">

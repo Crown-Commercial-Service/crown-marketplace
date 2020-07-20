@@ -213,6 +213,7 @@ module FacilitiesManagement
       @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
       procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
       @gia = procurement_building.gia
+      @external_area = procurement_building.external_area
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
       @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
     end
@@ -239,6 +240,9 @@ module FacilitiesManagement
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
           occupants = v[:uom_value].to_i
           uom_value = @gia.to_f
+        elsif v[:service_code] == 'G.5'
+          occupants = 0
+          uom_value = @external_area.to_f
         else
           occupants = 0
         end

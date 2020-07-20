@@ -20,5 +20,14 @@ RSpec.describe LegalServices::SupplierSpreadsheetCreator do
       spreadsheet = spreadsheet_creator.build
       expect(spreadsheet.class).to eq(Axlsx::Package)
     end
+
+    it 'returns checks worksheet headers' do
+      spreadsheet = spreadsheet_creator.build
+      IO.write('/tmp/shortlist_of_management_consultancy_suppliers.xlsx', spreadsheet.to_stream.read)
+      wb = Roo::Excelx.new('/tmp/shortlist_of_management_consultancy_suppliers.xlsx')
+      expect(wb.sheet('Supplier shortlist').row(1)).to eq ['Supplier name', 'Phone number', 'Email']
+      expect(wb.sheet('Shortlist audit').row(1)).to eq ['Central Government user?', nil]
+      expect(wb.sheet('Shortlist audit').row(2)).to eq ['Lot', '1 - Regional service provision']
+    end
   end
 end

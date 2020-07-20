@@ -10,8 +10,8 @@ module ManagementConsultancy
       management_consultancy_users_confirm_path(email: resource.email)
     end
 
-    def domain_not_on_whitelist_path
-      management_consultancy_domain_not_on_whitelist_path
+    def domain_not_on_safelist_path
+      management_consultancy_domain_not_on_safelist_path
     end
   end
 end
