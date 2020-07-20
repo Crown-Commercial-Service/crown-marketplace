@@ -14,8 +14,4 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
   def error_summary_link(key, value, attribute)
     link_to value.errors[attribute].first.to_s, "##{key}-#{attribute}-error", data: { fieldname: :service_choice, errortype: value.errors.details[attribute].first[:error] }
   end
-
-  def base_error_link(object, attribute)
-    link_to object.errors[attribute].first.to_s, "##{attribute}-error", data: { fieldname: attribute, errortype: object.errors.details[attribute].first[:error] }
-  end
 end

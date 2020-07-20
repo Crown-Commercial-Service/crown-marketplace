@@ -86,8 +86,7 @@ FactoryBot.define do
           end_minute: 0,
           end_ampm: 'AM',
           uom: 0.0
-        },
-        personnel: 1
+        }
       }
     end
   end

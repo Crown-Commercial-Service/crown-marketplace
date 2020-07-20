@@ -11,9 +11,9 @@ class SupplyTeachersJsonFileUploader < CarrierWave::Uploader::Base
     1..5.megabytes
   end
 
-  # Add a safe list of extensions which are allowed to be uploaded.
+  # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  def extension_safelist
+  def extension_whitelist
     %w[json]
   end
 

@@ -30,21 +30,7 @@
   </table>
 
   <div class="govuk-body govuk-!-width-two-thirds govuk-!-margin-bottom-4">
-    <p>
-      <%= t('.pricing_description_1') %>
-    </p>
-    <p>
-      <%= t('.pricing_description_2') %>
-    </p>
-    <p>
-      <%= t('.pricing_description_3') %>
-    </p>
-    <p>
-      <%= t('.pricing_description_4') %>
-    </p>
-    <p class='govuk-inset-text'>
-      <%= t('.pricing_description_5') %>
-    </p>
+    <%= t('.description_html') %>
   </div>
   <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <%= govuk_continuation_buttons(pd, f) %>

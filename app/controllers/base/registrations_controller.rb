@@ -1,8 +1,8 @@
 module Base
   class RegistrationsController < Devise::RegistrationsController
     protect_from_forgery
-    before_action :authenticate_user!, except: %i[new create domain_not_on_safelist]
-    before_action :authorize_user, except: %i[new create domain_not_on_safelist]
+    before_action :authenticate_user!, except: %i[new create domain_not_on_whitelist]
+    before_action :authorize_user, except: %i[new create domain_not_on_whitelist]
 
     def new
       @result = Cognito::SignUpUser.new(nil, nil, nil, roles)
@@ -23,12 +23,12 @@ module Base
       end
     end
 
-    def domain_not_on_safelist; end
+    def domain_not_on_whitelist; end
 
     private
 
     def roles
-      [:buyer, fm_access, st_access, ls_access, mc_access]
+      [:buyer, fm_access, st_access, ls_access, mc_access, at_access]
     end
 
     def fm_access
@@ -47,9 +47,13 @@ module Base
       nil
     end
 
+    def at_access
+      nil
+    end
+
     def fail_create(result)
-      if result.not_on_safelist
-        redirect_to domain_not_on_safelist_path
+      if result.not_on_whitelist
+        redirect_to domain_not_on_whitelist_path
       else
         clean_up_passwords resource
         set_minimum_password_length

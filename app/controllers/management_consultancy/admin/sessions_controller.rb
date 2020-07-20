@@ -4,12 +4,11 @@ module ManagementConsultancy
       protected
 
       def challenge_path
-        cookies[:session] = { value: @result.session, expires: 20.minutes }
-        management_consultancy_admin_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
+        management_consultancy_admin_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
       end
 
       def after_sign_in_path_for(resource)
-        stored_location_for(resource) || management_consultancy_admin_uploads_path
+        stored_location_for(resource) || supply_teachers_admin_uploads_path
       end
 
       def after_sign_out_path_for(_resource)

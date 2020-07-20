@@ -3,8 +3,7 @@ module LegalServices
     protected
 
     def challenge_path
-      cookies[:session] = { value: @result.session, expires: 20.minutes }
-      legal_services_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
+      legal_services_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
     end
 
     def after_sign_in_path_for(resource)
