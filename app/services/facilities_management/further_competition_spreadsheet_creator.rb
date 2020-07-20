@@ -206,13 +206,12 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row ['Suppliers shortlist', 'Further supplier information and contact details can be found here:'], style: bold_style, height: standard_row_height
     update_cell_styles(sheet, ['B9'], standard_style)
 
-    sheet.add_row ['Company name', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers'], style: standard_style, height: standard_row_height
-    sheet.add_hyperlink location: 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', ref: sheet['B10']
-    update_cell_styles(sheet, ['B10'], link_style)
-
     supplier_datas.each do |data|
       sheet.add_row [data['supplier_name']], style: hint_style, height: standard_row_height
     end
+
+    sheet.rows[9].add_cell 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', style: link_style
+    sheet.add_hyperlink location: 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', ref: sheet['B10']
   end
 
   def  sublot_customer_selected_text
