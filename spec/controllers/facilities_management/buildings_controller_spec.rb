@@ -83,9 +83,9 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         postcode1 = "#{('aa1'..'zz9').to_a.sample} #{('1a'..'9z').to_a.sample}"
         postcode2 = "#{('aa11a'..'zz99z').to_a.sample} #{('1a'..'9z').to_a.sample}"
         postcode3 = "#{('aa1'..'zz9').to_a.sample} #{('1a'..'9z').to_a.sample}"
-        expect(controller.ensure_postcode_is_valid(postcode1)).to eq postcode1.upcase
-        expect(controller.ensure_postcode_is_valid(postcode2)).to eq postcode2.upcase
-        expect(controller.ensure_postcode_is_valid(postcode3)).to eq postcode3.upcase
+        expect(controller.ensure_postcode_is_valid(postcode1)).to eq postcode1
+        expect(controller.ensure_postcode_is_valid(postcode2)).to eq postcode2
+        expect(controller.ensure_postcode_is_valid(postcode3)).to eq postcode3
       end
     end
 
@@ -93,8 +93,8 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'returns the matching postcode' do
         postcode1 = "#{('aa1'..'zz9').to_a.sample} #{('1aa'..'9zz').to_a.sample}"
         postcode2 = "#{('aa1'..'zz9').to_a.sample} #{('1aa'..'9zz').to_a.sample}"
-        expect(controller.ensure_postcode_is_valid(postcode1)).to eq postcode1.upcase
-        expect(controller.ensure_postcode_is_valid(postcode2)).to eq postcode2.upcase
+        expect(controller.ensure_postcode_is_valid(postcode1)).to eq postcode1
+        expect(controller.ensure_postcode_is_valid(postcode2)).to eq postcode2
       end
     end
   end
@@ -233,71 +233,6 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         expect(response.headers['Location']).to redirect_to(facilities_management_building_path(id))
       end
     end
-
-    context 'when address_postcode is in lower case' do
-      it 'will cast it to upper case' do
-        post :create, params: { facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'sw1a 1aa', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
-
-        expect(FacilitiesManagement::Building.last.address_postcode).to eq('SW1A 1AA')
-      end
-    end
-
-    context 'when adding a manual address and address_postcode is in lower case' do
-      it 'will cast it to upper case' do
-        post :create, params: { add_address: 'add_address', facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'sw1a 1aa', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
-
-        expect(assigns(:page_data)[:model_object].address_postcode).to eq('SW1A 1AA')
-      end
-    end
-
-    context 'when on add_address step and address_postcode is in lower case' do
-      it 'will cast it to upper case' do
-        post :create, params: { step: 'add_address', facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'sw1a 1aa', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
-
-        expect(assigns(:page_data)[:model_object].address_postcode).to eq('SW1A 1AA')
-      end
-    end
-  end
-
-  describe 'Postcode games' do
-    let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
-
-    login_fm_buyer_with_details
-    context 'when saving without a postcode' do
-      it 'will reject the empty password with a postcode.blank message' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_postcode: '', postcode_entry: '', address_region: '', address_region_code: '' } }
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_postcode.blank'))
-      end
-
-      it 'will reject the empty password with a address not_selected message' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: '', address_town: '', address_line_2: '', address_postcode: '', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address.not_selected'))
-      end
-
-      it 'will reject an empty region for when none can be selected' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 1', address_town: 'town', address_line_2: 'line 2', address_postcode: 'SW1A 1AA', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_region.blank'))
-      end
-
-      it 'will not reject an empty region for when none can be selected' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', postcode_entry: 'SW1A 1AA', address_region: 'test', address_region_code: 'test_code' } }
-        expect(response).to have_http_status(:found)
-        expect(response).to redirect_to gia_facilities_management_building_path
-        building.reload
-        expect(building[:address_postcode]).to eq('SW2A 1AA')
-      end
-    end
-
-    context 'when postcode is in lowercase' do
-      it 'will cast postcode to uppercase' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'sw2a 1aa', postcode_entry: 'sw2a 1aa', address_region: 'test', address_region_code: 'test_code' } }
-        building.reload
-        expect(building[:address_postcode]).to eq('SW2A 1AA')
-      end
-    end
   end
 
   describe 'PUT' do
@@ -351,12 +286,6 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
           expect(response).to redirect_to security_facilities_management_building_path
           building.reload
           expect(building.building_type).to eq('other')
-        end
-
-        it 'does not override the postcode' do
-          patch :update, params: { id: building.id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
-          building.reload
-          expect(building.address_postcode).not_to eq nil
         end
       end
     end

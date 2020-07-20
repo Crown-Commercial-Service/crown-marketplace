@@ -10,10 +10,10 @@ module Cognito
 
     validates_format_of :password, with: /(?=.*[A-Z])/, message: :invalid_no_capitals
     validates_format_of :password, with: /(?=.*\W)/, message: :invalid_no_symbol
-    validate :domain_in_safelist
+    validate :domain_in_whitelist
 
     attr_reader :email, :password, :password_confirmation, :roles
-    attr_accessor :user, :not_on_safelist
+    attr_accessor :user, :not_on_whitelist
 
     def initialize(email, password, password_confirmation, roles)
       @email = email
@@ -21,7 +21,7 @@ module Cognito
       @password_confirmation = password_confirmation
       @roles = roles.compact
       @user = nil
-      @not_on_safelist = nil
+      @not_on_whitelist = nil
     end
 
     def call
@@ -77,14 +77,14 @@ module Cognito
       }
     end
 
-    def domain_in_safelist
-      return if safelist.include? domain_name
+    def domain_in_whitelist
+      return if whitelist.include? domain_name
 
-      errors.add(:email, :not_on_safelist)
-      @not_on_safelist = true
+      errors.add(:email, :not_on_whitelist)
+      @not_on_whitelist = true
     end
 
-    def safelist
+    def whitelist
       object = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
       object.bucket(ENV['BUYER_EMAIL_SAFE_LIST_BUCKET']).object(ENV['BUYER_EMAIL_SAFE_LIST_KEY']).get.body.string.split("\n")
     end

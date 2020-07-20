@@ -8,8 +8,7 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       'wednesday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'PM', end_hour: 6, end_minute: 30, end_ampm: 'PM' },
       'thursday': { service_choice: :all_day }, friday: { service_choice: :not_required },
       'saturday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' },
-      'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' },
-      'personnel': 1 }
+      'sunday': { service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'AM', end_hour: 6, end_minute: 30, end_ampm: 'PM' } }
   end
 
   def add_times_to_service_hours(start__time, end_time, day = :monday)
@@ -45,78 +44,10 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
       it 'will contain an error message for each day' do
         nil_sh.valid?
         day_errors = []
-        nil_sh.attributes.reject { |k, _v| %i[uom personnel].include? k }.each do |_k, v|
+        nil_sh.attributes.reject { |k, _v| k == :uom }.each do |_k, v|
           day_errors << v.errors.any?
         end
         expect(day_errors.length).to eq 7
-      end
-    end
-
-    describe 'personnel' do
-      let(:service_hours) { described_class.load(source) }
-
-      context 'when the personnel is 0' do
-        before { service_hours[:personnel] = 0 }
-
-        it 'is not valid' do
-          expect(service_hours.valid?).to eq false
-        end
-
-        it 'has the correct error' do
-          service_hours.valid?
-          expect(service_hours.errors.details[:personnel].first[:error]).to eq :greater_than
-          expect(service_hours.errors[:personnel].first).to eq 'Enter a whole number between 1 and 999, like 300'
-        end
-      end
-
-      context 'when the personnel is 1000' do
-        before { service_hours[:personnel] = 1000 }
-
-        it 'is not valid' do
-          expect(service_hours.valid?).to eq false
-        end
-
-        it 'has the correct error' do
-          service_hours.valid?
-          expect(service_hours.errors.details[:personnel].first[:error]).to eq :less_than
-          expect(service_hours.errors[:personnel].first).to eq 'Enter a whole number between 1 and 999, like 300'
-        end
-      end
-
-      context 'when the personnel is blank' do
-        before { service_hours[:personnel] = nil }
-
-        it 'is not valid' do
-          expect(service_hours.valid?).to eq false
-        end
-
-        it 'has the correct error' do
-          service_hours.valid?
-          expect(service_hours.errors.details[:personnel].first[:error]).to eq :blank
-          expect(service_hours.errors[:personnel].first).to eq 'Enter a number of personnel'
-        end
-      end
-
-      context 'when the personnel is not a number' do
-        before { service_hours[:personnel] = 'Hello there' }
-
-        it 'is not valid' do
-          expect(service_hours.valid?).to eq false
-        end
-
-        it 'has the correct error' do
-          service_hours.valid?
-          expect(service_hours.errors.details[:personnel].first[:error]).to eq :not_a_number
-          expect(service_hours.errors[:personnel].first).to eq 'Enter a whole number between 1 and 999, like 300'
-        end
-      end
-
-      context 'when the personnel is an integer greater than 0' do
-        it 'is valid' do
-          service_hours[:personnel] = rand(1..10)
-
-          expect(service_hours.valid?).to eq true
-        end
       end
     end
 
@@ -757,44 +688,9 @@ RSpec.describe FacilitiesManagement::ServiceHours, type: :model do
         expect(service_hours.total_hours_annually).to eq 2912
       end
     end
-
-    context 'when the number of personnel is greater than 1' do
-      it 'will return the correct answer when personnel is less than 5' do
-        add_times_to_service_hours(['10', '00', 'AM'], ['11', '00', 'AM'])
-        personnel = rand(1..5)
-        service_hours[:personnel] = personnel
-
-        expect(service_hours.total_hours_annually).to eq 52 * personnel
-      end
-
-      it 'will return the correct answer when personnel is less than 10' do
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :monday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :tuesday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :wednesday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :thursday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :friday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :saturday)
-        add_times_to_service_hours(['09', '00', 'AM'], ['05', '00', 'PM'], :sunday)
-        personnel = rand(6..10)
-        service_hours[:personnel] = personnel
-
-        expect(service_hours.total_hours_annually).to eq 2912 * personnel
-      end
-
-      it 'will return the correct answer when personnel is less than 20' do
-        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'])
-        add_times_to_service_hours(['09', '00', 'AM'], ['10', '00', 'AM'], :tuesday)
-        personnel = rand(11..20)
-        service_hours[:personnel] = personnel
-
-        expect(service_hours.total_hours_annually).to eq 104 * personnel
-      end
-    end
   end
 
   describe 'service hour validation' do
-    before { service_hours[:personnel] = 1 }
-
     context 'when the times of consecutive days overlap' do
       context 'when Mon end time is 8 am next day and Tues start time is 6 am' do
         it 'is expected to not be valid and have the correct error message' do

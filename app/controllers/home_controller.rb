@@ -17,10 +17,6 @@ class HomeController < ApplicationController
     params[:service] = 'facilities_management' if params[:service].nil?
   end
 
-  def accessibility_statement_mc
-    params[:service] = 'management_consultancy' if params[:service].nil?
-  end
-
   def not_permitted
     @service = params[:service]
   end

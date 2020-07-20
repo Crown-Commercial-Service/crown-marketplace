@@ -9,6 +9,10 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     render :edit
   end
 
+  def edit
+    raise ActionController::RoutingError, 'not found' if @building_service.blank?
+  end
+
   def update
     if params[:facilities_management_procurement_building_service][:step] == 'lifts'
       update_lifts
@@ -70,7 +74,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
                     friday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     saturday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
                     sunday: FacilitiesManagement::ServiceHourChoice::PARAMETERS
-                  }, :personnel])
+                  }])
   end
 
   def set_building_and_service_data

@@ -2,7 +2,6 @@ class ProcurementCsvExport
   TIME_FORMAT = '%e %B %Y, %l:%M%P'.freeze
   DATE_FORMAT = '%e %B %Y'.freeze
   TIME_ZONE = 'London'.freeze
-  LIST_ITEM_SEPARATOR = ";\n".freeze
 
   # TODO: These should probably be under I18n in en.yml
   STATE_DESCRIPTIONS = {
@@ -46,24 +45,22 @@ class ProcurementCsvExport
     'Mobilisation - period length, start date, end date',
     'Optional call-off extensions',
     'Number of Buildings',
-    'Building Types', # 20
-    'Services',
-    'Building GIAs',
+    'Services', # 20
     'Building regions',
     'Assessed Value (GBP)',
-    'Recommended Sub-lot', # 25
+    'Recommended Sub-lot',
     'Eligible for DA',
-    'Shortlisted Suppliers',
+    'Shortlisted Suppliers', # 25
     'Unpriced services',
     'Route to market selected',
-    'DA Suppliers (ranked)', # 30
+    'DA Suppliers (ranked)',
     'DA Suppliers costs (GBP ranked)',
-    'DA Awarded Supplier',
+    'DA Awarded Supplier', # 30
     'DA Awarded Supplier cost (GBP)',
     'Contract number',
-    'DA Supplier decline reason', # 35
+    'DA Supplier decline reason',
     'DA Buyer withdraw reason',
-    'DA Buyer not-sign reason',
+    'DA Buyer not-sign reason', # 35
     'DA Buyer contract signed/not-signed date',
     'DA Buyer confirmed contract dates'
   ].freeze
@@ -98,24 +95,22 @@ class ProcurementCsvExport
       mobilisation_period(contract.procurement),
       call_off_extensions(contract.procurement),
       blank_if_zero(contract.procurement.active_procurement_buildings.size),
-      building_types(contract.procurement), # 20
-      expand_services_and_standards(contract.procurement.procurement_building_service_codes_and_standards),
-      building_gias(contract.procurement),
+      expand_services(contract.procurement.procurement_building_service_codes), # 20
       expand_regions(contract.procurement.active_procurement_building_region_codes),
       delimited_with_pence(contract.procurement.assessed_value),
-      format_lot_number(contract.procurement.lot_number), # 25
+      format_lot_number(contract.procurement.lot_number),
       yes_no(contract.procurement.eligible_for_da),
-      shortlisted_suppliers(contract.procurement),
+      shortlisted_suppliers(contract.procurement), # 25
       expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
       route_to_market(contract.procurement),
-      da_suppliers(contract.procurement), # 30
+      da_suppliers(contract.procurement),
       da_suppliers_costs(contract.procurement),
-      contract.supplier.data['supplier_name'],
+      contract.supplier.data['supplier_name'], # 30
       delimited_with_pence(contract.direct_award_value),
       contract.contract_number,
-      contract.reason_for_declining, # 35
+      contract.reason_for_declining,
       contract.reason_for_closing,
-      contract.reason_for_not_signing,
+      contract.reason_for_not_signing, # 35
       localised_date(contract.contract_signed_date),
       [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
     ]
@@ -142,24 +137,22 @@ class ProcurementCsvExport
       mobilisation_period(procurement),
       call_off_extensions(procurement),
       blank_if_zero(procurement.active_procurement_buildings.size),
-      building_types(procurement), # 20
-      expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
-      building_gias(procurement),
+      expand_services(procurement.procurement_building_service_codes), # 20
       expand_regions(procurement.active_procurement_building_region_codes),
       delimited_with_pence(procurement.assessed_value),
-      format_lot_number(procurement.lot_number), # 25
+      format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
-      shortlisted_suppliers(procurement),
+      shortlisted_suppliers(procurement), # 25
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
       route_to_market(procurement),
-      procurement.eligible_for_da? ? da_suppliers(procurement) : nil, # 30
+      procurement.eligible_for_da? ? da_suppliers(procurement) : nil,
       procurement.eligible_for_da? ? da_suppliers_costs(procurement) : nil,
-      nil,
+      nil, # 30
       nil,
       procurement.further_competition? ? procurement.contract_number : nil,
+      nil,
+      nil,
       nil, # 35
-      nil,
-      nil,
       nil,
       nil
     ]
@@ -209,18 +202,6 @@ class ProcurementCsvExport
 
     service_codes.compact.map do |code|
       "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'};\n"
-    end.join
-  end
-
-  def self.expand_services_and_standards(list)
-    return if list.nil?
-
-    list.compact.sort_by(&:join).map do |code, standard|
-      [
-        "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'}",
-        standard.present? ? " - Standard #{standard}" : '',
-        LIST_ITEM_SEPARATOR
-      ].join
     end.join
   end
 
@@ -327,25 +308,14 @@ class ProcurementCsvExport
   end
 
   def self.da_suppliers(procurement)
-    procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| s.supplier.data['supplier_name'] } .join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| s.supplier.data['supplier_name'] } .join(";\n")
   end
 
   def self.da_suppliers_costs(procurement)
-    procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| delimited_with_pence(s.direct_award_value) } .join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.sort_by(&:direct_award_value) .map { |s| delimited_with_pence(s.direct_award_value) } .join(";\n")
   end
 
   def self.shortlisted_suppliers(procurement)
-    procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(LIST_ITEM_SEPARATOR)
-  end
-
-  def self.building_types(procurement)
-    procurement.active_procurement_buildings.map(&:building_type).compact.uniq.join(LIST_ITEM_SEPARATOR)
-  end
-
-  def self.building_gias(procurement)
-    gias = procurement.active_procurement_buildings.map(&:gia).compact
-    gias.one? ? string_as_formula(gias.join) : gias.join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(";\n")
   end
 end

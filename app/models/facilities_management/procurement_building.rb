@@ -25,7 +25,6 @@ module FacilitiesManagement
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
       update(
         gia: building.gia,
-        external_area: building.external_area,
         region: building.region,
         building_type: building.building_type,
         security_type: building.security_type,

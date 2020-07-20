@@ -168,7 +168,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_buildings_information(sheet)
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
-    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_external_area, building_type, building_security_clearance].each do |row_type|
+    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_type, building_security_clearance].each do |row_type|
       sheet.add_row row_type, style: standard_style, height: standard_row_height
     end
   end
@@ -238,16 +238,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     @active_procurement_buildings.each do |building|
       row << building.gia
-    end
-
-    row
-  end
-
-  def building_external_area
-    row = ['Building External Area (sqm)']
-
-    @active_procurement_buildings.each do |building|
-      row << building.external_area
     end
 
     row
@@ -328,12 +318,19 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     rows_added = 0
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
 
-    hours_required_services.each_with_index do |service, index|
-      rows_added += add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_personnel_row(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_break_row(sheet, index, hours_required_services.size - 1)
-    end
+    hours_required_services.each do |service|
+      Date::DAYNAMES.rotate(1).each do |day|
+        row_values = [service['code'], service['name'], day]
+        buildings_data.each do |building|
+          service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
 
+          row_values << add_service_measure_row_value(service_measure, day)
+        end
+
+        rows_added += 1
+        sheet.add_row row_values, style: standard_style, height: standard_row_height
+      end
+    end
     rows_added
   end
 
@@ -341,22 +338,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     allowed_services = []
     FacilitiesManagement::StaticData.work_packages.select { |work_package| allowed_services << work_package['code'] if work_package['metric'] == 'Number of hours required' }
     services_data.select { |service| allowed_services.include? service['code'] }
-  end
-
-  def add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-    rows_added = 0
-    Date::DAYNAMES.rotate(1).each do |day|
-      row_values = [service['code'], service['name'], day]
-      buildings_data.each do |building|
-        service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
-
-        row_values << add_service_measure_row_value(service_measure, day)
-      end
-
-      rows_added += 1
-      sheet.add_row row_values, style: standard_style, height: standard_row_height
-    end
-    rows_added
   end
 
   def add_service_measure_row_value(service_measure, day)
@@ -372,32 +353,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol) + next_day(service_measure[:service_hours][day_symbol])
     else
       'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
-    end
-  end
-
-  def add_personnel_row(sheet, service, buildings_data, units, standard_style)
-    personnel_row_values = [service['code'], service['name'], 'No. of personnel']
-
-    buildings_data.each do |building|
-      service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
-
-      personnel_row_values << if service_measure.nil?
-                                nil
-                              else
-                                service_measure[:service_hours][:personnel]
-                              end
-    end
-
-    sheet.add_row personnel_row_values, style: standard_style, height: standard_row_height
-    1
-  end
-
-  def add_break_row(sheet, index, max)
-    if index < max
-      sheet.add_row [], height: standard_row_height
-      1
-    else
-      0
     end
   end
 

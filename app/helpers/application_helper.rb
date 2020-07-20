@@ -3,7 +3,7 @@ module ApplicationHelper
   include LayoutHelper
 
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze
+  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home', 'apprenticeships/home'].freeze
   FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home'].freeze
 
   def miles_to_metres(miles)
@@ -283,10 +283,6 @@ module ApplicationHelper
 
   def accessibility_statement_fm_page
     controller.action_name == 'accessibility_statement_fm'
-  end
-
-  def accessibility_statement_mc_page
-    controller.action_name == 'accessibility_statement_mc'
   end
 
   def not_permitted_page

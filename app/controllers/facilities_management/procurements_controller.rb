@@ -99,7 +99,7 @@ module FacilitiesManagement
 
       continue_to_contact_detail_from_new_contact_detail && return if ['new_invoicing_contact_details', 'new_authorised_representative_details', 'new_notices_contact_details'].include? params.dig('facilities_management_procurement', 'step')
 
-      update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
+      copy_service_codes && update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
@@ -203,6 +203,7 @@ module FacilitiesManagement
 
         set_da_journey_render
         render :edit
+        past_service_codes if params.dig('facilities_management_procurement', 'step') == 'services'
       end
     end
     # rubocop:enable Metrics/AbcSize
@@ -323,29 +324,28 @@ module FacilitiesManagement
       end
     end
 
+    def copy_service_codes
+      @service_codes_copy = @procurement.service_codes
+    end
+
+    def past_service_codes
+      @procurement.service_codes = @service_codes_copy
+      @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+    end
+
     def update_service_codes
-      @procurement.assign_attributes(service_codes: procurement_params[:service_codes])
-      if @procurement.save(context: :service_codes)
-        if @procurement.quick_search?
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
-        else
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
-          redirect_to facilities_management_procurement_path(@procurement)
-        end
+      @procurement.update(service_codes: procurement_params[:service_codes])
+      if @procurement.quick_search?
+        redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
       else
-        params[:step] = 'services'
-        render :edit
+        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
+        redirect_to facilities_management_procurement_path(@procurement)
       end
     end
 
     def update_region_codes
-      @procurement.assign_attributes(region_codes: procurement_params[:region_codes])
-      if @procurement.save(context: :region_codes)
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
-      else
-        params[:step] = 'regions'
-        render :edit
-      end
+      @procurement.update(region_codes: procurement_params[:region_codes])
+      redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
     end
 
     def update_pension_funds
@@ -643,7 +643,7 @@ module FacilitiesManagement
     end
 
     def find_services(service_codes)
-      @services = Service.where(code: service_codes)&.sort_by { |service| service_codes.index(service.code) }
+      @services = Service.where(code: service_codes)
     end
 
     def set_step_param
@@ -685,7 +685,7 @@ module FacilitiesManagement
       if @procurement.lot_number_selected_by_customer
         page_definitions[:secondary_name] = 'change_the_contract_value'
         page_definitions[:secondary_url] = facilities_management_procurements_path
-        page_definitions[:secondary_text] = 'Return to estimated contract cost'
+        page_definitions[:secondary_text] = 'Change contract value'
       end
       page_definitions
     end
@@ -921,7 +921,7 @@ module FacilitiesManagement
           back_url: facilities_management_procurements_path
         },
         choose_contract_value: {
-          page_title: 'Estimated contract cost',
+          page_title: 'Contract value',
           primary_name: 'continue_from_change_contract_value'
         },
         results: set_results_page_definitions,

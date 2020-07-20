@@ -41,7 +41,7 @@ class User < ApplicationRecord
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :buyer, :supplier, :ccs_employee, :ccs_admin, :st_access, :fm_access, :ls_access, :mc_access
+  roles :buyer, :supplier, :ccs_employee, :ccs_admin, :st_access, :fm_access, :ls_access, :mc_access, :at_access
 
   attr_accessor :password, :password_confirmation
 

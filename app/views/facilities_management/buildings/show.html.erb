@@ -79,20 +79,6 @@
           <% end %></td>
       </tr>
       <tr>
-        <th class="govuk-!-width-one-third"><%= t('.caption_external_area') %></th>
-        <td>
-          <% if !@page_data[:model_object].external_area.blank? %>
-            <%= number_with_delimiter(@page_data[:model_object].external_area.to_i, :delimiter => ',') + " sqm" %>
-          <% else %>
-            <%= link_to t('.answer_question_text'), gia_facilities_management_building_path(@page_data[:model_object].id), { role: 'link', class: 'govuk-link', method: "get" } %>
-          <% end %>
-        </td>
-        <td>
-          <% unless @page_data[:model_object].external_area.blank? %>
-            <%= link_to t('.change_text'), gia_facilities_management_building_path(@page_data[:model_object].id), { role: 'link', class: 'govuk-link', method: "get" } %>
-          <% end %></td>
-      </tr>
-      <tr>
         <th class="govuk-!-width-one-third"><%= t('.caption_type') %></th>
         <td>
           <% unless @page_data[:model_object].building_type.blank? %>

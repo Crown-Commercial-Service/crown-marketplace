@@ -10,8 +10,8 @@ module FacilitiesManagement
       facilities_management_users_confirm_path(email: resource.email)
     end
 
-    def domain_not_on_safelist_path
-      facilities_management_domain_not_on_safelist_path
+    def domain_not_on_whitelist_path
+      facilities_management_domain_not_on_whitelist_path
     end
   end
 end

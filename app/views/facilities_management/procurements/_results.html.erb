@@ -107,13 +107,7 @@
         </ul>
       <% end %>
     <% end unless @page_data[:model_object].eligible_for_da %>
-    <p class="govuk-body-m govuk-!-width-two-thirds">
-    <% if @procurement.lot_number_selected_by_customer? %>
-      <%= t('.any_changes_chosen') %>
-    <% else %>
-      <%= t('.any_changes') %>
-    <% end %>
-    </p>
+    <p><%= t('.any_changes') %></p>
     <%= govuk_continuation_buttons(pd, f) %>
     <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print
       this page</a>

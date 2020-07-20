@@ -32,17 +32,17 @@
           <% service.answer_store[:questions].each_with_index do |qa_h, i| %>
             <tr class="govuk-table__row">
               <% if i == 0 %>
-                <th class="govuk-table__header <%= cell_class(qa_h[:question]) %>"> <%= "#{index + 1}. #{service.name}" %> </th>
+                <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= "#{index + 1}. #{service.name}" %> </th>
               <% else %>
-                <td class="govuk-table__header <%= cell_class(qa_h[:question]) %>"></td>
+                <td class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"></td>
               <% end %>
-              <td class="<%= cell_class(qa_h[:question]) %>"><%= t(".#{qa_h[:question].to_s}") %></td>
-              <td class="<%= cell_class(qa_h[:question]) %>">
-                <%= service.service_hours.personnel if qa_h[:question] == :service_hours && qa_h[:answer].valid?%>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".#{qa_h[:question].to_s}") %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2">
+                <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:question] == :service_hours && qa_h[:answer].valid? %>
                 <%= qa_h[:answer].map(&:to_i).reduce(:+) if qa_h[:question] == :lift_data %>
                 <%= 'Standard ' if qa_h[:answer].present? && qa_h[:question] == :service_standard %><%= qa_h[:answer].to_s unless %i[lift_data service_hours].include? qa_h[:question] %>
               </td>
-              <td class="<%= cell_class(qa_h[:question]) %>"">
+              <td class="govuk-table__cell govuk-!-padding-right-2">
                 <% link_text = 'Change' %>
                 <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].try(:invalid?) %>
                 <% if %i[service_hours lift_data].include?(qa_h[:question])%>
@@ -52,18 +52,6 @@
                 <% end %>
               </td>
             </tr>
-            <% if qa_h[:question] == :service_hours %>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"></td>
-                <td class="govuk-table__cell govuk-!-padding-right-2 govuk-!-padding-top-0">
-                  <%= t(".service_hour_question") %>
-                </td>
-                <td class="govuk-table__cell govuk-!-padding-right-2 govuk-!-padding-top-0">
-                  <%= render partial: 'service_hour_summary', locals: {position: index, service_hours: qa_h[:answer]} if qa_h[:answer].valid? %>
-                </td>
-                <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-              </tr>
-            <% end %>
           <% end %>
         <% end %>
       </tbody>
