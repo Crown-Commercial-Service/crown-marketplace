@@ -8,7 +8,6 @@ FactoryBot.define do
   factory :facilities_management_building, parent: :facilities_management_building_defaults do
     status { 'Ready' }
     gia { 1002 }
-    external_area { 999 }
     building_name { 'asa' }
     description { 'non-json description' }
     region { 'Essex' }

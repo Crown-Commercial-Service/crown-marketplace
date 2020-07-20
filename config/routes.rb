@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
   get '/facilities-management/accessibility-statement', to: 'home#accessibility_statement_fm'
-  get '/management-consultancy/accessibility-statement', to: 'home#accessibility_statement_mc'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
@@ -34,7 +33,7 @@ Rails.application.routes.draw do
     concern :registrable do
       get '/sign-up', to: 'registrations#new', as: :new_user_registration
       post '/sign-up', to: 'registrations#create', as: :user_registration
-      get '/domain-not-on-safelist', to: 'registrations#domain_not_on_safelist', as: :domain_not_on_safelist
+      get '/domain-not-on-whitelist', to: 'registrations#domain_not_on_whitelist', as: :domain_not_on_whitelist
     end
 
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
@@ -68,6 +67,10 @@ Rails.application.routes.draw do
       namespace :admin do
         concerns :authenticatable
       end
+    end
+
+    namespace 'apprenticeships' do
+      concerns %i[authenticatable registrable]
     end
   end
 
@@ -114,7 +117,6 @@ Rails.application.routes.draw do
         match 'add_address', via: %i[get post patch]
       end
     end
-    get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
     match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
     match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
     match '/suppliers/long-list', to: 'long_list#long_list', via: %i[get post]
@@ -196,6 +198,47 @@ Rails.application.routes.draw do
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
     resources :uploads, only: :create if Marketplace.upload_privileges?
+  end
+
+  namespace 'ccs_patterns', path: 'ccs-patterns' do
+    get '/', to: 'home#index'
+    # get '/metadata', to: 'dbdata#index', as: 'ccsmetadata'
+    # put '/metadata/kill/:id', to: 'dbdata#killpid', as: 'killlockpid'
+    get '/new_layout', to: 'home#new_layout'
+    get '/prototypes', to: 'prototype#index'
+    get '/prototypes/no-response', to: 'prototype#no_response'
+    get '/prototypes/closed', to: 'prototype#closed'
+    get '/prototypes/accepted-not-signed', to: 'prototype#accepted_not_signed'
+    get '/prototypes/declined', to: 'prototype#declined'
+    get '/prototypes/next-supplier', to: 'prototype#next_supplier'
+    get '/prototypes/no-suppliers', to: 'prototype#no_suppliers'
+    get '/prototypes/create-a-copy', to: 'prototype#create_a_copy'
+    get '/dynamic-accordian', to: 'home#dynamic_accordian'
+    get '/supplier-results-v1', to: 'home#supplier_results_v1'
+    get '/supplier-results-v2', to: 'home#supplier_results_v2'
+    get '/small-checkboxes', to: 'home#small_checkboxes'
+    get '/titles-checkboxes', to: 'home#titles_checkboxes'
+    get '/numbered-pagination', to: 'home#numbered_pagination'
+    get '/table-5050', to: 'home#table_5050'
+    get '/supplier-detail', to: 'home#supplier_detail'
+    get '/errors-find-apprentices', to: 'home#errors_find_apprentices'
+    get '/errors-find-apprentices2', to: 'home#errors_find_apprentices2'
+    get '/errors-find-apprentices3', to: 'home#errors_find_apprentices3'
+    get '/errors-find-apprentices4', to: 'home#errors_find_apprentices4'
+    get '/errors-requirements', to: 'home#errors_requirements'
+    get '/start', to: 'home#start'
+    get '/select', to: 'home#select'
+    get '/cog-sign-in', to: 'home#cog_sign_in'
+    get '/cog-sign-in-password-prompt-change', to: 'home#cog_sign_in_password_prompt_change'
+    get '/cog-register', to: 'home#cog_register'
+    get '/cog-register-enter-confirmation-code', to: 'home#cog_register_enter_confirmation_code'
+    get '/cog-email', to: 'home#cog_email'
+    get '/cog-email2', to: 'home#cog_email2'
+    get '/cog-register-domain-not-on-whitelist', to: 'home#cog_register_domain_not_on_whitelist'
+    get '/cog-forgot-password-request', to: 'home#cog_forgot_password_request'
+    get '/cog-forgot-password-reset', to: 'home#cog_forgot_password_reset'
+    get '/cog-forgot-password-reset2', to: 'home#cog_forgot_password_reset2'
+    get '/cog-forgot-password-confirmation', to: 'home#cog_forgot_password_confirmation'
   end
 
   namespace 'legal_services', path: 'legal-services' do

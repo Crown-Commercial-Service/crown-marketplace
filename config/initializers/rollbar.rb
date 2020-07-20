@@ -4,8 +4,8 @@ Rollbar.configure do |config|
 
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 
-  # Here we'll disable it in all environments, except for when ROLLBAR_ACCESS_TOKEN is present
-  config.enabled = true if ENV['ROLLBAR_ACCESS_TOKEN'].present?
+  # Here we'll disable in 'test':
+  config.enabled = false if Rails.env.test?
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`
@@ -44,9 +44,7 @@ Rollbar.configure do |config|
   # config.use_sucker_punch
 
   # Enable delayed reporting (using Sidekiq)
-  config.use_sidekiq
-  config.sidekiq_threshold = 3 # Start reporting from 3 retries jobs
-
+  # config.use_sidekiq
   # You can supply custom Sidekiq options:
   # config.use_sidekiq 'queue' => 'default'
 

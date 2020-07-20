@@ -5,7 +5,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia) }
 
+  let(:spreadsheet_builder) { FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(procurement_with_buildings.id) }
+
   context 'when testing FC report methods' do
+    # rubocop:disable RSpec/ExampleLength
     it 'create a further competition excel,very worksheets are there' do
       first_building = procurement_with_buildings.active_procurement_buildings.first
       create(:facilities_management_procurement_building_service_with_service_hours, procurement_building: first_building)
@@ -19,7 +22,22 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       expect(report.assessed_value).to eq 838.1929279363201
+
+      #  uom_values = report.uom_values(:fc)  # TODO this did not work due to buildings factory array within an array type of issue
+
+      spreadsheet = spreadsheet_builder.build
+      IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read)
+
+      wb = Roo::Excelx.new('/tmp/further_competition_procurement_summary.xlsx')
+
+      rows_found = true
+      rows_found = false if wb.sheet('Service Matrix').last_row == 0
+      rows_found = false if wb.sheet('Volume').last_row == 0
+      rows_found = false if wb.sheet('Service Periods').last_row == 0
+      rows_found = false if wb.sheet('Shortlist').last_row == 0
+      expect(rows_found).to be true
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 
   describe 'assessed_value for FC sub-lots' do

@@ -1,0 +1,95 @@
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-m">Numbered pagination (x3)</h1>
+            <p class="govuk-body">Example HTML pagination shown at bottom of list. There are <b>3</b> examples, showing different states.</p>
+
+            <p class="govuk-body"><b>Note</b> classes: .ccs-pagination, .ccs-first, .ccs-last</p>
+
+            <p class="govuk-body"><b>Note attributes</b>: rel="next", rel="prev"</p>
+
+            <p class="govuk-body"><b>Note aria</b>: aria-label="Pagination Navigation", aria-current="true"</p>
+
+            <p class="govuk-body"><b>Note Rails</b>: paginate @suppliers, views_prefix: 'shared', window: 0, outer_window: 2
+
+            <p class="govuk-body"><i>(&quot;When we get to mid-way through the page numbers, we can start to do what GDS do and bring in ellipsising before and after&quot;). Working out what logic you wish to use depends upon your scenario, but all the HTML required for the various options are here.</i></p>
+
+        </div>
+    </div>
+
+    <hr style="margin-bottom: 150px;">
+    <style>.ccs-search-results {margin-bottom: 100px; }</style>
+
+
+
+
+
+
+    <section class="govuk-grid-column-two-thirds ccs-search-results">
+        <ul class="ccs-results-list"> <li class="govuk-list"> <div class="govuk-grid-column-two-thirds"> <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline"> Lorem ipsum dolor sit amet <span class="govuk-!-font-size-14 ccs-tag">SME</span> </a> </div><div class="govuk-grid-column-one-third ccs-results-list__detail"> <div> <span class="govuk-!-font-size-16"> <span class="govuk-!-font-size-27 ccs-font--wrap">&pound;400</span> Average day rate </span> </div></div></li><li class="govuk-list"> <div class="govuk-grid-column-two-thirds"> <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline"> Consectetur adipiscing elit <span class="govuk-!-font-size-14 ccs-tag">SME</span> </a> </div><div class="govuk-grid-column-one-third ccs-results-list__detail"> <div> <span class="govuk-!-font-size-16"> <span class="govuk-!-font-size-27 ccs-font--wrap">&pound;325</span> Average day rate </span> </div></div></li><li class="govuk-list"> <div class="govuk-grid-column-two-thirds"> <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">Vestibulum pellentesque turpis at</a> </div><div class="govuk-grid-column-one-third ccs-results-list__detail"> <div> <span class="govuk-!-font-size-16"> <span class="govuk-!-font-size-27 ccs-font--wrap">&pound;395</span> Average day rate </span> </div></div></li><li class="govuk-list"> <div class="govuk-grid-column-two-thirds"> <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">Phasellus facilisis quis dui a pellentesque</a> </div><div class="govuk-grid-column-one-third ccs-results-list__detail"> <div> <span class="govuk-!-font-size-16"> <span class="govuk-!-font-size-27 ccs-font--wrap">&pound;475</span> Average day rate </span> </div></div></li><li class="govuk-list"> <div class="govuk-grid-column-two-thirds"> <a href="/" class="govuk-heading-s govuk-link--no-visited-state ccs-no-underline">Sed a fringilla risus</a> </div><div class="govuk-grid-column-one-third ccs-results-list__detail"> <div> <span class="govuk-!-font-size-16"> <span class="govuk-!-font-size-27 ccs-font--wrap">&pound;295</span> Average day rate </span> </div></div></li></ul>
+
+
+
+
+
+        <!-- numbered pagination HTML example one starts -->
+        <nav aria-label="Pagination Navigation">
+            <ul class="govuk-list ccs-pagination">
+                <li class="ccs-first">
+                    <a href="http://www.url.com" rel="prev"><b>&larr;</b>&nbsp;Previous page</a>
+                </li>
+                <li><a href="http://www.url.com">1</a></li>
+                <li><a href="http://www.url.com">2</a></li>
+                <li><a href="http://www.url.com" aria-current="true">3</a></li>
+                <li><a href="http://www.url.com">4</a></li>
+                <li><a href="http://www.url.com">5</a></li>
+                <li class="ccs-last">
+                    <a href="http://www.url.com" rel="next">Next page&nbsp;<b>&rarr;</b></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- numbered pagination HTML example one ends -->
+
+
+        <hr style="margin: 100px 50px;">
+
+
+        <!-- numbered pagination HTML example two starts -->
+        <nav aria-label="Pagination Navigation">
+            <ul class="govuk-list ccs-pagination">
+                <li><a href="http://www.url.com" aria-current="true">1</a></li>
+                <li><a href="http://www.url.com">2</a></li>
+                <li><a href="http://www.url.com">3</a></li>
+                <li>&hellip;</li>
+                <li><a href="http://www.url.com">94</a></li>
+                <li class="ccs-last">
+                    <a href="http://www.url.com" rel="next">Next page&nbsp;<b>&rarr;</b></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- numbered pagination HTML example two ends -->
+
+
+        <hr style="margin: 100px 50px;">
+
+
+        <!-- numbered pagination HTML example three starts -->
+        <nav aria-label="Pagination Navigation">
+            <ul class="govuk-list ccs-pagination">
+                <li class="ccs-first">
+                    <a href="http://www.url.com" rel="prev"><b>&larr;</b>&nbsp;Previous page</a>
+                </li>
+                <li><a href="http://www.url.com">1</a></li>
+                <li><a href="http://www.url.com">2</a></li>
+                <li>&hellip;</li>
+                <li><a href="http://www.url.com">52</a></li>
+                <li>&hellip;</li>
+                <li><a href="http://www.url.com" aria-current="true">94</a></li>
+                <li><a href="http://www.url.com">95</a></li>
+                <li class="ccs-last"><a href="#" rel="next">Next page&nbsp;<b>&rarr;</b></a></li>
+            </ul>
+        </nav>
+        <!-- numbered pagination HTML example three ends -->
+
+
+    </section>
+

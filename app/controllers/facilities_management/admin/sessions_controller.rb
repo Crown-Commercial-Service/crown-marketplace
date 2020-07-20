@@ -4,8 +4,7 @@ module FacilitiesManagement
       protected
 
       def challenge_path
-        cookies[:session] = { value: @result.session, expires: 20.minutes }
-        facilities_management_admin_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
+        facilities_management_admin_users_challenge_path(challenge_name: @result.challenge_name, session: @result.session, username: @result.cognito_uuid)
       end
 
       # rubocop:disable Lint/UnusedMethodArgument

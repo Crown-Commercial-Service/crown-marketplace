@@ -145,23 +145,18 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when external area is not present' do
-      before do
-        building.external_area = nil
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-        expect(building.valid?(:gia)).to eq false
-      end
-
-      it 'will have external area errors' do
-        building.valid?(:gia)
-        expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
-      end
-    end
-
     context 'when gia is invalid' do
+      context 'when gia is 0' do
+        before do
+          building.gia = 0
+          building.valid? :gia
+        end
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :greater_than
+        end
+      end
+
       context 'when gia is a float' do
         before do
           building.gia = 434.2
@@ -182,43 +177,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         it 'will be invalid' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
         end
-      end
-    end
-
-    context 'when external area is invalid' do
-      context 'when external_area is a float' do
-        before do
-          building.external_area = 434.2
-          building.valid? :gia
-        end
-
-        it 'will be invalid' do
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_an_integer
-        end
-      end
-
-      context 'when external_area is not an integer' do
-        before do
-          building.external_area = 'some words'
-          building.valid? :gia
-        end
-
-        it 'will be invalid' do
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_a_number
-        end
-      end
-    end
-
-    context 'when external_area and gia are both zero' do
-      before do
-        building.gia = 0
-        building.external_area = 0
-        building.valid? :gia
-      end
-
-      it 'will be invalid' do
-        expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
-        expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
       end
     end
 

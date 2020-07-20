@@ -19,10 +19,6 @@ module FacilitiesManagement
     def self.all_codes
       all.map(&:code)
     end
-
-    def self.special_da_service?(code)
-      ['M.1', 'N.1', 'O.1'].include? code
-    end
   end
 
   Service.load_csv('facilities_management/services.csv')

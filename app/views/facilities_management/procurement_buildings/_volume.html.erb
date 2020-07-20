@@ -19,7 +19,7 @@
                     <%= procurement_building_service.label t(".question.#{volume_question(procurement_building_service.object).to_s}"), class: "govuk-label govuk-!-font-weight-bold govuk-!-font-size-16" %>
                   </div>
                   <div class="services-volume govuk-grid-column-one-quarter">
-                    <%= procurement_building_service.text_field volume_question(procurement_building_service.object), value: procurement_building_service.object.send(volume_question(procurement_building_service.object)), class: "govuk-input govuk-input--width-3 #{procurement_building_service.object.name.downcase.parameterize(separator: '_')}-input #{'govuk-input--error' if procurement_building_service.object.errors.any?} " %>
+                    <%= procurement_building_service.text_field volume_question(procurement_building_service.object), value: procurement_building_service.object.send(volume_question(procurement_building_service.object)), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if procurement_building_service.object.errors.any?} " %>
                   </div>
                 </div>
               </div>
