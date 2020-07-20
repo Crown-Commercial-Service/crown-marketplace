@@ -159,18 +159,8 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/CyclomaticComplexity
     def set_view_data
       set_current_step
-      view_name = if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
-                    'edit'
-                  else
-                    FacilitiesManagement::ProcurementRouter.new(id: @procurement.id,
-                                                                procurement_state: @procurement.aasm_state,
-                                                                step: params[:step],
-                                                                further_competition_chosen: params[:fc_chosen] == 'true').view
-                  end
       build_page_details(params[:fc_chosen] == 'true' ? :further_competition_chosen : view_name.to_sym)
 
       case view_name
@@ -190,7 +180,17 @@ module FacilitiesManagement
 
       view_name
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
+
+    def view_name
+      @view_name ||= if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
+                       'edit'
+                     else
+                       FacilitiesManagement::ProcurementRouter.new(id: @procurement.id,
+                                                                   procurement_state: @procurement.aasm_state,
+                                                                   step: params[:step],
+                                                                   further_competition_chosen: params[:fc_chosen] == 'true').view
+                     end
+    end
 
     def update_procurement
       assign_procurement_parameters
@@ -210,7 +210,6 @@ module FacilitiesManagement
         render :edit
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def remove_invalid_security_policy_document_file
       # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
