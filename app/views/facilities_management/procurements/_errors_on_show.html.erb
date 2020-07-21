@@ -24,6 +24,13 @@
             <%= link_to procurement_building.errors[:service_codes][0].html_safe, "##{procurement_building.id}service_codes-error" %>
           </li>
         <% end %>
+        <% [:gia, :external_area].each do |attribute| %>
+          <% if !procurement_building.valid?(attribute) && params[:validate] %>
+            <li>
+              <%= link_to procurement_building.errors.messages[:building].first, gia_facilities_management_building_path(id: procurement_building.building.id) %>
+            </li>
+          <% end %>
+        <% end %>
       <% end %>
     </ul>
   </div>
