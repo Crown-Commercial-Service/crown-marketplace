@@ -22,7 +22,7 @@ module Login
     end
 
     def permit?(framework)
-      result = framework == :supply_teachers && non_profit? && whitelisted?
+      result = framework == :supply_teachers && non_profit? && safelisted?
       log_attempt(result, framework)
       result
     end
@@ -37,10 +37,10 @@ module Login
       SupplyTeachers::OrganisationCategory.find_by(id: @extra['organisation_category'].to_s)
     end
 
-    def whitelisted?
-      return true unless Marketplace.dfe_signin_whitelist_enabled?
+    def safelisted?
+      return true unless Marketplace.dfe_signin_safelist_enabled?
 
-      Marketplace.dfe_signin_whitelisted_email_addresses.include?(email)
+      Marketplace.dfe_signin_safelisted_email_addresses.include?(email)
     end
 
     def non_profit?

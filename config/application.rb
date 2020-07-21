@@ -35,9 +35,11 @@ module Marketplace
     config.action_controller.include_all_helpers = false
 
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'SAMEORIGIN',
+      'X-Frame-Options' => 'DENY',
       'X-XSS-Protection' => '1; mode=block',
-      'X-Content-Type-Options' => 'nosniff'
+      'X-Content-Type-Options' => 'nosniff',
+      'Strict-Transport-Security' => 'max-age=31536000',
+      'Server' => ' '
     }
 
     # config.action_dispatch.default_headers.merge!('X-Content-Type-Options' => 'nosniff')
@@ -132,14 +134,14 @@ module Marketplace
     @dfe_signin_redirect_uri ||= ENV.fetch('DFE_SIGNIN_REDIRECT_URI')
   end
 
-  def self.dfe_signin_whitelist_enabled?
+  def self.dfe_signin_safelist_enabled?
     ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].present?
   end
 
-  def self.dfe_signin_whitelisted_email_addresses
-    return unless dfe_signin_whitelist_enabled?
+  def self.dfe_signin_safelisted_email_addresses
+    return unless dfe_signin_safelist_enabled?
 
-    @dfe_signin_whitelisted_email_addresses ||= ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
+    @dfe_signin_safelisted_email_addresses ||= ENV['DFE_SIGNIN_WHITELISTED_EMAIL_ADDRESSES'].split(',')
   end
 
   def self.upload_privileges?

@@ -120,12 +120,12 @@ RSpec.feature 'Authentication', type: :feature do
     OmniAuth.config.mock_auth[:dfe] = nil
   end
 
-  scenario 'DfE users cannot see school pages if they are not on the whitelist', dfe: true do
+  scenario 'DfE users cannot see school pages if they are not on the safelist', dfe: true do
     allow(Marketplace)
-      .to receive(:dfe_signin_whitelist_enabled?)
+      .to receive(:dfe_signin_safelist_enabled?)
       .and_return(true)
     allow(Marketplace)
-      .to receive(:dfe_signin_whitelisted_email_addresses)
+      .to receive(:dfe_signin_safelisted_email_addresses)
       .and_return([])
     visit '/supply-teachers/start'
     click_on 'Sign in with DfE Sign-in'
