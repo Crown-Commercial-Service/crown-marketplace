@@ -778,7 +778,7 @@ en:
         personnel_subtitle: How many personnel do you require for this service?
         save_and_return_to_service_information: Save and return to service requirements
         service_hours_description_1: The calculation will assume 52 weeks x 7 days in one year.
-        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard
+        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
         there_is_a_problem: There is a problem
       show:
         back_to_service_information: Back to service requirements
