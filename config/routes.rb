@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   get '/management-consultancy/accessibility-statement', to: 'home#accessibility_statement_mc'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
-  get '/metadata', to: 'dbdata#index', as: 'ccsmetadata'
 
   authenticate :user, ->(u) { u.has_role? :ccs_employee } do
     mount Sidekiq::Web => '/sidekiq-log'
