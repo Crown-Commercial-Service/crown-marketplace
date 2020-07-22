@@ -1,0 +1,13 @@
+<h2>Migrations</h2>
+<ul>
+<%@migration_list.to_a.each do |m| %>
+    <li><%= m['version'] %></li>
+<%end%>
+</ul>
+
+<h2>OS views</h2>
+<%@view_list.to_a.each do |v| %>
+  <%=govuk_details v['table_name'] do%>
+    <pre style="width:100%"><code><%= v['view_definition'] %></code></pre>
+  <%end%>
+<%end %>
