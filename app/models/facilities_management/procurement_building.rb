@@ -113,11 +113,19 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def validate_internal_area
-      errors.add(:building, :gia_too_small, building_name: building.building_name) if requires_internal_area? && building.gia.zero?
+      errors.add(:building, :gia_too_small, building_name: building.building_name) if requires_internal_area? && building_internal_area.zero?
     end
 
     def validate_external_area
-      errors.add(:building, :external_area_too_small, building_name: building.building_name) if requires_external_area? && building.external_area.zero?
+      errors.add(:building, :external_area_too_small, building_name: building.building_name) if requires_external_area? && building_external_area.zero?
+    end
+
+    def building_internal_area
+      procurement.detailed_search? ? building.gia : gia
+    end
+
+    def building_external_area
+      procurement.detailed_search? ? building.external_area : external_area
     end
 
     def requires_external_area?
