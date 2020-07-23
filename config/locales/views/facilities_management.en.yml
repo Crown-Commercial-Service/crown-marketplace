@@ -1271,6 +1271,13 @@ en:
           name_text: Pension fund name
           percentage_text: Percentage of pensionable pay
         quick_search: Quick search
+        regions:
+          location_selected: Region selected
+          locations_selected: Regions selected
+          no_locations_selected: No Regions selected
+          question: Where are your buildings located?
+          remove_all: Remove all
+          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
         return_to_detailed_search_summary: Return to detailed search summary
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to detailed search summary
@@ -1296,6 +1303,8 @@ en:
           question: Select the facilities management services you need
           service_specification_doc: Read the service specification document
           subtitle_html: Select all of the facilities management services required within your estate.<br> You will then be able to match up each building with the services it requires.
+          subtitle_quick_search: Choose all facilities management services required within your estate, even if you want services in just one building.
+          title: All services
         tupe:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -1310,10 +1319,17 @@ en:
         change_add_region: Change
         change_add_service: Change
         hide_requirements: Hide requirements
+        lot_1a: Sub-lot 1a
+        lot_1b: Sub-lot 1b
+        lot_1c: Sub-lot 1c
+        lot_title_1a_html: up to<br/> £7m
+        lot_title_1b_html: between<br/> £7m-50m
+        lot_title_1c_html: over<br/> £50m
         regions: Regions
         requirements: Requirements
         services: Services
         show_requirements: Show requirements
+        total_contract_value: Total contract value
       further_competition:
         further_competition_partial:
           awarding_the_contract: Awarding the contract
@@ -1371,25 +1387,22 @@ en:
       mobilisation_period:
         description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
       new:
-        cancel_text: Cancel, and return to the procurements dashboard
-        quick_search: Quick search
-        save_and_continue: Save and continue
-        save_for_later: Save for later
-        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however your procurement will fall into only one sub-lot dependent on your potential total contract value (excludes billable works, optional extension periods and VAT).
-        search_results: Results
+        cancel_text: Return to your account
+        quick_view_results: Quick view results
+        save_and_continue: Save and continue to procurement
+        save_for_later: Save and return to procurements dashboard
+        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
+      quick_search:
+        cancel_text: Return to your account
+        quick_view_results: Quick view results
+        save_and_continue: Continue to procurement
+        save_for_later: Return to procurements dashboard
+        save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
+        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search_form:
-        continue_headline: Continue to procurement
-        continue_text: Next, you need to provide additional information on your contract requirements, buildings and services. Once completed, you will be provided with an estimated cost, recommended sub-lot, shortlist of potential suppliers, and options for your next steps.
-        new_name_label: Enter a name for the search
-        save_headline: Save a new search
-        save_text: Name your search. A reference number or short description of what you want to buy makes a good name.
-      regions:
-        location_selected: Region selected
-        locations_selected: Regions selected
-        no_locations_selected: No Regions selected
-        question: Where are your buildings located?
-        remove_all: Remove all
-        subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
+        new_name_label: Enter a name or reference to save this search.
+        save_headline: Save your search
+        save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
       results:
         any_changes: If you wish to change your requirements, click the 'Change requirements’ button below. Any changes may result in a different outcome.
         any_changes_chosen: If you wish to change the contract value that you selected or your requirements, click the 'Return to estimated contract cost’ button below. Any changes may result in a different outcome.
@@ -1418,10 +1431,6 @@ en:
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
         learn_more: Learn more (opens in a new tab)
-      services:
-        question: Select the facilities management services that you need
-        service_specification_doc: Read the service specification document
-        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     registrations:
       domain_not_on_safelist:
         heading: You must use a public sector email address

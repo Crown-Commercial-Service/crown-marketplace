@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         it 'redirects to the edit path' do
           get :show, params: { id: procurement.id }
 
-          expect(response).to redirect_to edit_facilities_management_procurement_path(procurement.id)
+          expect(response).to render_template('show')
         end
 
         context 'when the user deletes the quick search' do
@@ -327,7 +327,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'redirects to edit path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-            expect(response).to redirect_to edit_facilities_management_procurement_path(new_procurement.id)
+            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id)
           end
         end
 
@@ -1226,7 +1226,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'redirects to edit_facilities_management_procurement_path' do
-          expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id)
+          expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
         end
 
         it 'updates the regions in the procurement' do
@@ -1246,7 +1246,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             end
 
             it 'redirects to edit_facilities_management_procurement_path' do
-              expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id)
+              expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
             end
 
             it 'updates the service codes' do
@@ -1275,7 +1275,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             end
 
             it 'redirects to edit_facilities_management_procurement_path' do
-              expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id)
+              expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
             end
 
             it 'updates the region codes' do

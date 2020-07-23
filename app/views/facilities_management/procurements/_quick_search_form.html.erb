@@ -1,39 +1,19 @@
-<% if step == 'regions' %>
-  <%= render 'regions', locals: { f: f }%>
-  <%= f.hidden_field :step, value: step %>
-<% elsif step == 'services' %>
-  <%= render 'services', locals: { f: f }%>
-  <%= f.hidden_field :step, value: step %>
-<% else %>
-  <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <%= render partial: 'filter_details', locals: { form: f } %>
-      </div>
+<%= render partial: 'filter_details', locals: { form: f } %>
 
-      <div class="govuk-grid-column-full govuk-!-margin-top-5">
-        <h2 class="govuk-heading-m"><%= t('.continue_headline') unless @delete %></h2>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
+    <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="name">
+        <%= govuk_form_group_with_optional_error @procurement, :contract_name do %>
+          <%= display_errors(f.object, :contract_name)%>
+          <%= f.label :contract_name, t('.new_name_label'), class: 'govuk-label' %>
+          <p class="govuk-body govuk-!-width-two-thirds">
+            <%= t('.save_text') %>
+          </p>
+          <%= f.text_field :contract_name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count', "aria-describedby": "facilities_management_procurement_contract_name" %>
+        <% end %>
       </div>
-      <div class="govuk-grid-column-full">
-        <p class="govuk-caption-l"><%= t('.continue_text') unless @delete %></p>
-      </div>
-      <% if !@procurement.persisted? || @procurement.errors.any? %>
-        <div class="govuk-grid-column-full govuk-!-margin-top-7">
-          <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
-        </div>
-        <div class="govuk-grid-column-full">
-          <p class="govuk-caption-l"><%= t('.save_text') %></p>
-        </div>
-        <div class="govuk-grid-column-full">
-          <div class="govuk-caption-m govuk-!-margin-top-3" data-module="character-count" data-maxlength="100">
-            <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="name">
-              <%= govuk_form_group_with_optional_error @procurement, :contract_name do %>
-                <%= display_errors(f.object, :contract_name)%>
-                <%= f.label :contract_name, t('.new_name_label'), class: 'govuk-label' %>
-                <%= f.text_field :contract_name, maxlength: 110, required: true, class: 'govuk-input govuk-input--width-20 js-character-count', "aria-describedby": "facilities_management_procurement_contract_name" %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

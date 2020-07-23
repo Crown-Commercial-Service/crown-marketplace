@@ -14,6 +14,7 @@ class FacilitiesManagement::ProcurementRouter
   end
 
   STATES_TO_VIEWS = {
+    'quick_search': 'quick_search',
     'choose_contract_value': 'choose_contract_value',
     'results': 'results',
     'da_draft': 'direct_award',
