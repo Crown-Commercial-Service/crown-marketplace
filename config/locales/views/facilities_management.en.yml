@@ -577,18 +577,19 @@ en:
         view_more: View more building types
     buyer_account:
       buyer_account:
-        about_the_buyer_description: Edit your account details such as your name or organisation name
-        about_the_buyer_title: About your account
-        buildings_title: Buildings
         buyer_account_dashboard: Buyer account dashboard
         buyer_account_title: Your account
-        link_text: Manage your details
-        manage_buildings: Manage buildings
-        manage_buildings_desc: Create and manage your buildings used in your procurements
-        manage_procurements_link: Procurements dashboard
-        new_procurement_desc: Quick search for suppliers or create a new procurement
-        procurement_dashboard_desc: See a list of your search results and procurements
-        procurements: Procurements
+        manage_account_desc: Update and edit your contact details
+        manage_account_link: Manage my account
+        manage_buildings: Manage my buildings
+        manage_buildings_desc: Set up and manage your buildings that can be used in procurements
+        manage_procurements_desc: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
+        manage_procurements_link: Continue a procurement
+        new_procurement_desc: Quickly view suppliers who can provide services to your locations
+        quick_view: Quick view suppliers
+        return_to_page: To return to this page at any time, just click on 'My account' in the top right hand corner of your screen.
+        start_procurement_desc: Start a new procurement to find a suitable supplier, and progress through to contract award or further competition
+        start_procurement_link: Start a procurement
     buyer_details:
       edit:
         buyer_details: Manage your details
