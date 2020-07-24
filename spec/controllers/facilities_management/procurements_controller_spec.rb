@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'GET show' do
       context 'with a procurement in the quick search state' do
-        it 'redirects to the edit path' do
+        it 'renders the show page' do
           get :show, params: { id: procurement.id }
 
           expect(response).to render_template('show')
@@ -40,6 +40,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             get :show, params: { id: procurement.id, delete: 'y' }
 
             expect(response).to render_template('show')
+          end
+        end
+
+        context 'when the user continues from quick search' do
+          before { get :show, params: { id: procurement.id, 'what_happens_next': true } }
+
+          it 'renders the show page' do
+            expect(response).to render_template('show')
+          end
+
+          it 'will have a view name of what_happens_next' do
+            expect(assigns(:view_name)).to eq 'what_happens_next'
           end
         end
       end
@@ -321,13 +333,23 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       end
     end
 
+    describe 'GET what happens next' do
+      context 'when on the dashboard' do
+        it 'would render the what_happens_next' do
+          get :what_happens_next
+
+          expect(response).to render_template('what_happens_next')
+        end
+      end
+    end
+
     describe 'POST create' do
       context 'with a valid record' do
         context 'when Save and continue is selected' do
           it 'redirects to edit path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id)
+            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
         end
 

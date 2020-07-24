@@ -1431,6 +1431,39 @@ en:
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
         learn_more: Learn more (opens in a new tab)
+      what_happens_next:
+        cancel: Cancel and return to procurements dashboard
+        continue: Continue
+        heading: What happens next
+        return: Return to your account
+      what_happens_next_body:
+        first_information: 'We will first ask you for some information including: '
+        step_1_content_1: 'basic contract information such as: '
+        step_1_content_1_list_1: your current annual cost (if applicable)
+        step_1_content_1_list_2: any TUPE involvement
+        step_1_content_1_list_3: your required contract length, start date, optional extension periods
+        step_1_content_2: your buildings and service requirements
+        step_1_content_2_list_1: where your buildings are located, their size and what they're used for
+        step_1_content_2_list_2: which services you want to have provided, and in which of your buildings
+        step_1_content_3: 'You will be given the option of completing section 2 ''your building and service requirements'' either: '
+        step_1_content_3_list_1: within this portal with us guiding you through the questions
+        step_1_content_3_list_2: using a spreadsheet template, which you can download, fill out the information, then upload back into this portal.
+        step_1_content_4: We recommend that the first option is more suited to simpler procurements with a fewer number of buildings and services needed, and the spreadsheet option is more suited to more complex procurements with a larger number of buildings and services, however it is also down to your own preferred way of working.
+        step_1_title: Your requirements
+        step_2_content_1: 'You will be shown: '
+        step_2_content_1_list_1: your estimated contract cost
+        step_2_content_1_list_2: a compliant sub-lot, and a shortlist of potential suppliers
+        step_2_content_1_list_3: the options available for your next steps if you want to proceed into a procurement - this may include a direct award or further competition
+        step_2_title: Results
+        step_3_content_1: 'If direct award is an option you select, you will then be guided through further steps online, including: '
+        step_3_content_1_list_1: reviewing direct award pricing
+        step_3_content_1_list_2: building a contract online
+        step_3_content_1_list_3: sending a contract offer to the supplier
+        step_3_content_2: 'If further competition is selected, you will be presented with: '
+        step_3_content_2_list_1: guidance on what to do next
+        step_3_content_2_list_2: a download of your procurement requirements
+        step_3_title: Routes to market
+        steps: The steps shown below outline the process that you'll follow within this FM Marketplace portal.
     registrations:
       domain_not_on_safelist:
         heading: You must use a public sector email address

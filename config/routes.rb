@@ -122,6 +122,7 @@ Rails.application.routes.draw do
     post '/summary/suppliers', to: 'summary#sorted_suppliers'
     get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
     get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
+    get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
     resources :procurements do
       get 'further_competition_spreadsheet'

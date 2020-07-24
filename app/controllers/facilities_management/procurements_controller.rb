@@ -40,7 +40,7 @@ module FacilitiesManagement
         if params[:save_for_later].present?
           redirect_to facilities_management_procurements_path
         else
-          redirect_to facilities_management_procurement_path(@procurement)
+          redirect_to facilities_management_procurement_path(@procurement, 'what_happens_next': true)
         end
       else
         @errors = @procurement.errors
@@ -104,6 +104,8 @@ module FacilitiesManagement
       redirect_to facilities_management_procurements_url(deleted: @procurement.contract_name)
     end
 
+    def what_happens_next; end
+
     def further_competition_spreadsheet
       init
       spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
@@ -143,11 +145,15 @@ module FacilitiesManagement
       end
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity
     def set_view_data
       set_current_step
       build_page_details(params[:fc_chosen] == 'true' ? :further_competition_chosen : view_name.to_sym)
 
       case view_name
+      when 'quick_search'
+        @page_data[:model_object] = @procurement
+        return 'what_happens_next' if params[:what_happens_next]
       when 'results'
         set_results_page_data
         @procurement[:route_to_market] = @procurement.aasm_state
@@ -164,6 +170,7 @@ module FacilitiesManagement
 
       view_name
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def view_name
       @view_name ||= if !params[:step].nil? && FacilitiesManagement::ProcurementRouter::DA_JOURNEY_STATES_TO_VIEWS.include?(params[:step].to_sym)
@@ -908,6 +915,10 @@ module FacilitiesManagement
           secondary_url: facilities_management_procurements_path,
           back_text: 'Back',
           back_url: facilities_management_procurements_path
+        },
+        quick_search: {
+          caption1: @procurement[:contract_name],
+          page_title: 'What happens next'
         },
         choose_contract_value: {
           page_title: 'Estimated contract cost',
