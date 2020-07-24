@@ -20,13 +20,11 @@ module FacilitiesManagement
     end
 
     def show
-      if @procurement.quick_search?
-        redirect_to edit_facilities_management_procurement_url(id: @procurement.id) unless @delete
-      end
+      params[:delete] = 'y' if @delete
 
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
-      @view_name = set_view_data unless @procurement.quick_search?
+      @view_name = set_view_data
       reset_security_policy_document_page
     end
 
@@ -42,7 +40,7 @@ module FacilitiesManagement
         if params[:save_for_later].present?
           redirect_to facilities_management_procurements_path
         else
-          redirect_to edit_facilities_management_procurement_url(id: @procurement.id)
+          redirect_to facilities_management_procurement_path(@procurement)
         end
       else
         @errors = @procurement.errors
@@ -54,17 +52,11 @@ module FacilitiesManagement
 
     # rubocop:disable Metrics/AbcSize
     def edit
-      if @procurement.quick_search?
-        render :edit
-      else
-        @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
+      redirect_to facilities_management_procurement_path(@procurement) if params[:step].nil?
 
-        unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
-          # da journey follows
-          @view_name = set_view_data
-          render @view_da && return
-        end
-      end
+      @back_link = FacilitiesManagement::ProcurementRouter.new(id: @procurement.id, procurement_state: @procurement.aasm_state, step: nil).back_link
+
+      set_view_data && (render @view_da && return) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -323,7 +315,7 @@ module FacilitiesManagement
       @procurement.assign_attributes(service_codes: procurement_params[:service_codes])
       if @procurement.save(context: :service_codes)
         if @procurement.quick_search?
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
+          redirect_to facilities_management_procurement_path(id: @procurement.id)
         else
           redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
           redirect_to facilities_management_procurement_path(@procurement)
@@ -337,7 +329,7 @@ module FacilitiesManagement
     def update_region_codes
       @procurement.assign_attributes(region_codes: procurement_params[:region_codes])
       if @procurement.save(context: :region_codes)
-        redirect_to edit_facilities_management_procurement_path(id: @procurement.id)
+        redirect_to facilities_management_procurement_path(id: @procurement.id)
       else
         params[:step] = 'regions'
         render :edit
