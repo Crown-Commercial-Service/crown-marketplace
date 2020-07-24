@@ -36,10 +36,10 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         context 'when the user deletes the quick search' do
-          it 'redirects to the edit path' do
-            get :show, params: { id: procurement.id, delete: true }
+          it 'renders the show page' do
+            get :show, params: { id: procurement.id, delete: 'y' }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_url(procurement.id, delete: true)
+            expect(response).to render_template('show')
           end
         end
       end

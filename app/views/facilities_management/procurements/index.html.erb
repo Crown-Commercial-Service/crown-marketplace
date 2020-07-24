@@ -1,14 +1,14 @@
 <div class="govuk-body">
   <div class="grid-column-two-thirds">
     <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label="Back to the previous page" href=".">Back</a>
-    <% if @deleted %>
-      <div class="govuk-grid-row">
-        <div class="govuk-panel govuk-panel--confirmation">
-          <h1 class="govuk-panel__title">
-            Your search was deleted
+        <% if @deleted %>
+      <div class="govuk-grid-row govuk-!-padding-left-3">
+        <div class="govuk-inset-text cmp-inset-text--success ">
+          <h1 class="govuk-heading-m">
+            <%= t('.deleted') %>
           </h1>
-          <div class="govuk-panel__body">
-            '<%= @what_was_deleted %>' search result was deleted.
+          <div class="govuk-body">
+            '<%= @what_was_deleted %>' was deleted.
           </div>
         </div>
       </div>
