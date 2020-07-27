@@ -1290,4 +1290,35 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '#freeze_procurement_data' do
+    context 'when moving from detailed_search to results' do
+      it 'freezes the building and rate card data' do
+        building = procurement.procurement_buildings.first.building
+        building.update(gia: 1010, external_area: 2020)
+
+        procurement.set_state_to_results_if_possible!
+
+        procurement.reload
+
+        expect(procurement.procurement_buildings.first.gia).to eq 1010
+        expect(procurement.procurement_buildings.first.external_area).to eq 2020
+      end
+    end
+
+    context 'when moving from any other state to results' do
+      it 'does not update the frozen building and rate card data' do
+        building = procurement.procurement_buildings.first.building
+        building.update(gia: 1010, external_area: 2020)
+        procurement.update(aasm_state: :da_draft)
+
+        procurement.set_state_to_results_if_possible!
+
+        procurement.reload
+
+        expect(procurement.procurement_buildings.first.gia).not_to eq 1010
+        expect(procurement.procurement_buildings.first.external_area).not_to eq 2020
+      end
+    end
+  end
 end
