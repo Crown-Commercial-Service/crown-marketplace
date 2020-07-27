@@ -70,11 +70,11 @@ en:
               blank: You must select a buiding type or describe your own
             external_area:
               blank: External area must be a number between 0 and 999,999,999
-              combined_area: One or other of the internal area and external area must be greater than 0
+              combined_area: Please enter a value greater than zero for either the internal or external area - both cannot be zero.
               not_an_integer: Enter a whole number for the size of internal area of this building
             gia:
-              blank: Building size must be a number between 0 and 999,999,999
-              combined_area: One or other of the internal area and external area must be greater than 0
+              blank: Internal area must be a number between 0 and 999,999,999
+              combined_area: Please enter a value greater than zero for either the internal or external area - both cannot be zero.
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
