@@ -582,13 +582,13 @@ en:
         manage_account_desc: Update and edit your contact details
         manage_account_link: Manage my account
         manage_buildings: Manage my buildings
-        manage_buildings_desc: Set up and manage your buildings that can be used in procurements
+        manage_buildings_desc: Set up and manage your buildings for use in procurements
         manage_procurements_desc: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
         manage_procurements_link: Continue a procurement
         new_procurement_desc: Quickly view suppliers who can provide services to your locations
         quick_view: Quick view suppliers
         return_to_page: To return to this page at any time, just click on 'My account' in the top right hand corner of your screen.
-        start_procurement_desc: Start a new procurement to find a suitable supplier, and progress through to contract award or further competition
+        start_procurement_desc: See shortlisted suppliers, estimated contract costs, and explore direct award or further competition options
         start_procurement_link: Start a procurement
     buyer_details:
       edit:
@@ -1282,7 +1282,7 @@ en:
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to detailed search summary
         save_for_later: Save for later
-        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however your procurement will fall into only one sub-lot dependent on your potential total contract value (excludes billable works, optional extension periods and VAT).
+        search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
         security_policy_document:
           document:
             guidance: Supported file types are DOC, DOCX and PDF. Maximum file size is 10MB.
@@ -1391,14 +1391,14 @@ en:
         quick_view_results: Quick view results
         save_and_continue: Save and continue to procurement
         save_for_later: Save and return to procurements dashboard
-        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
+        search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search:
         cancel_text: Return to your account
         quick_view_results: Quick view results
         save_and_continue: Continue to procurement
         save_for_later: Return to procurements dashboard
         save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
-        search_result_body_html: Here are the suppliers that can provide your services to your buildings.<br/>We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
+        search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search_form:
         new_name_label: Enter a name or reference to save this search.
         save_headline: Save your search
@@ -1437,15 +1437,15 @@ en:
         heading: What happens next
         return: Return to your account
       what_happens_next_body:
-        first_information: 'We will first ask you for some information including: '
+        first_information: We will first ask you for some information including
         step_1_content_1: 'basic contract information such as: '
-        step_1_content_1_list_1: your current annual cost (if applicable)
+        step_1_content_1_list_1: your current annual cost (if known)
         step_1_content_1_list_2: any TUPE involvement
         step_1_content_1_list_3: your required contract length, start date, optional extension periods
         step_1_content_2: your buildings and service requirements
         step_1_content_2_list_1: where your buildings are located, their size and what they're used for
         step_1_content_2_list_2: which services you want to have provided, and in which of your buildings
-        step_1_content_3: 'You will be given the option of completing section 2 ''your building and service requirements'' either: '
+        step_1_content_3: 'You will be given the option of completing your building and service requirements either: '
         step_1_content_3_list_1: within this portal with us guiding you through the questions
         step_1_content_3_list_2: using a spreadsheet template, which you can download, fill out the information, then upload back into this portal.
         step_1_content_4: We recommend that the first option is more suited to simpler procurements with a fewer number of buildings and services needed, and the spreadsheet option is more suited to more complex procurements with a larger number of buildings and services, however it is also down to your own preferred way of working.
@@ -1463,7 +1463,7 @@ en:
         step_3_content_2_list_1: guidance on what to do next
         step_3_content_2_list_2: a download of your procurement requirements
         step_3_title: Routes to market
-        steps: The steps shown below outline the process that you'll follow within this FM Marketplace portal.
+        steps: The steps shown below outline the process that you'll follow within this portal.
     registrations:
       domain_not_on_safelist:
         heading: You must use a public sector email address
