@@ -6,7 +6,7 @@
       <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="name">
         <%= govuk_form_group_with_optional_error @procurement, :contract_name do %>
           <%= display_errors(f.object, :contract_name)%>
-          <p class="govuk-body govuk-!-width-three-quarters">
+          <p class="govuk-body">
             <%= t('.save_text') %>
           </p>
           <h2 class="govuk-heading-m"><%= t('.save_headline') %></h2>
