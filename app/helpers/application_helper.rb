@@ -329,5 +329,15 @@ module ApplicationHelper
   def service_name_param
     params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end
+
+  def govuk_tag(status)
+    extra_classes = {
+      cannot_start: 'govuk-tag--grey',
+      in_progress: 'govuk-tag--blue',
+      not_started: 'govuk-tag--green'
+    }
+
+    content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
+  end
 end
 # rubocop:enable Metrics/ModuleLength

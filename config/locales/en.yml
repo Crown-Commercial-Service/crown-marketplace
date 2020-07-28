@@ -981,6 +981,11 @@ en:
         enter_your_password: Enter your password
         please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         problems_signing_in: Problems signing in
+    tags:
+      cannot_start: cannot start yet
+      completed: completed
+      in_progress: in progress
+      not_started: not started
     users:
       confirm_new:
         confirmation_code: Confirmation code
