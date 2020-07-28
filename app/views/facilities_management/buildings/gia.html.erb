@@ -1,22 +1,4 @@
-<div>
-  <%= link_to t('layouts.application.back'), edit_facilities_management_building_path, class:"govuk-back-link" %>
-</div>
-<% if @page_data[:model_object].errors.any? %>
-  <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" id="error-summary">
-  <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t('facilities_management.buildings.gia.there_is_a_problem') %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul class="govuk-list govuk-error-summary__list">
-        <li class="govuk-error-message">
-          <%= link_to t(".#{@page_data[:model_object].errors.details[:gia].first[:error]}"), "##{error_id(:gia)}", data: {fieldname: :gia, errortype: get_client_side_error_type_from_errors(@page_data[:model_object].errors, :gia).to_s } %>
-        <li>
-        </ul>
-      </div>
-    </div>
-<% end %>
-
-<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, true) do |pd| %>
+<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
   <%= content_for :page_title, pd.heading_details.text %>
     <div class="govuk-!-width-two-thirds">
     <%= form_for @page_data[:model_object], url: facilities_management_building_path(@page_data[:model_object].id), html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
