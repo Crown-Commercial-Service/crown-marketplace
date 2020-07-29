@@ -116,11 +116,7 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
-          copy_procurement_buildings_gia
-          copy_fm_rates_to_frozen
-          copy_fm_rate_cards_to_frozen
-          calculate_initial_assesed_value
-          save_data_for_procurement
+          freeze_procurement_data
         end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
@@ -254,11 +250,15 @@ module FacilitiesManagement
     end
 
     def valid_on_continue?
-      valid?(:all) && valid_services?
+      valid?(:all) && valid_services? && valid_buildings?
     end
 
     def valid_services?
       procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
+    end
+
+    def valid_buildings?
+      active_procurement_buildings.all? { |pb| pb.valid?(:gia) && pb.valid?(:external_area) }
     end
 
     def buildings_standard
@@ -421,6 +421,16 @@ module FacilitiesManagement
     end
 
     private
+
+    def freeze_procurement_data
+      return unless detailed_search?
+
+      copy_procurement_buildings_gia
+      copy_fm_rates_to_frozen
+      copy_fm_rate_cards_to_frozen
+      calculate_initial_assesed_value
+      save_data_for_procurement
+    end
 
     def copy_procurement_buildings_gia
       procurement_buildings.each(&:set_gia)

@@ -36,79 +36,57 @@
   <tr class="govuk-table__row" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc;">
     <td class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
       <table style="width:100%; border-collapse: collapse;">
-        <tr>
-          <td>
-            <table style="width:100%; border-collapse: collapse;">
+        <% if @active_procurement_buildings.empty? %>
+          <tr>
+            <td style="vertical-align: top; width:40%;" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if params[:validate] %>">
+              2. Services
+            </td>
+            <td style="width:35%" class="govuk-table__cell govuk-border-bottom_none">
+              You must select buildings first
+            </td>
+            <td style="text-align: right" class="govuk-table__cell govuk-border-bottom_none">
+              <strong class="govuk-tag govuk-tag--grey">
+                CAN'T START YET
+              </strong>
+            </td>
+          </tr>
+          <% if params[:validate] && procurement.errors[:base].any? %>
+            <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+              <td class="govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3">
+                <span class="govuk-error-message">
+                  <%= display_error(@procurement, :base, false) %>
+                </span>
+              </td>
+            </tr>
+          <%end %>
+          <% else %>
+            <% @active_procurement_buildings.each_with_index do |procurement_building, index|%>
               <tr>
-                <td style="vertical-align: top; width:40%;"
-                    class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if @procurement.errors[:base].any? ||
-                        (nil != @active_procurement_buildings&.first&.errors && @active_procurement_buildings&.first&.errors[:service_codes].any?) %>">
-                  2. Services
+                <td style="vertical-align: top; width:40%;" class="govuk-table__header govuk-border-bottom_none <%= 'govuk-!-padding-left-2 govuk-form-group--error' if params[:validate] && procurement_building.errors[:service_codes].any? %>">
+                  <%= '2. Services' if index.zero? %>
                 </td>
-                <% if @active_procurement_buildings.any? %>
-                  <td style="width:40%" class="govuk-table__cell govuk-border-bottom_none">
-                    <% @active_procurement_buildings[0..0].each do |procurement_building| %>
-                      <%= render 'procurement_building_services', procurement_building: procurement_building %>
-                    <% end %>
-                  </td>
+                <td style="width:40%" class="govuk-table__cell govuk-border-bottom_none">
+                  <%= render 'procurement_building_services', procurement_building: procurement_building %>
+                </td>
+                <td style="text-align: right" class="govuk-table__cell govuk-border-bottom_none">
                   <% if any_service_codes(@active_procurement_buildings) %>
-                    <td style="text-align: right; vertical-align: top;" class="govuk-table__cell govuk-border-bottom_none">
-                      <%= link_to "Change", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
-                    </td>
+                    <%= link_to("Change", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link--no-visited-state") if index.zero? %>
                   <% else %>
-                    <td style="text-align: right; vertical-align: top" class="govuk-table__cell govuk-border-bottom_none">
-                      <%= link_to "Select services", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link" %>
-                    </td>
+                    <%= link_to("Select services", edit_facilities_management_procurement_path(:step => 'building_services'), :class => "govuk-link--no-visited-state") if index.zero? %>
                   <% end %>
-                <% else %>
-                  <td style="width:35%" class="govuk-table__cell govuk-border-bottom_none">
-                    You must select buildings first
-                  </td>
-                  <td style="text-align: right" class="govuk-table__cell govuk-border-bottom_none">
-                    <strong class="govuk-tag govuk-tag--grey">
-                      CAN'T START YET
-                    </strong>
-                  </td>
-                <% end %>
+                </td>
               </tr>
-              <% if @procurement.errors[:base].any? || (nil != @active_procurement_buildings&.first&.errors && @active_procurement_buildings&.first&.errors[:service_codes].any?)%>
+              <% if params[:validate] && procurement_building.errors[:service_codes].any? %>
                 <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
                   <td class="govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3">
                     <span class="govuk-error-message">
-                      <%= display_error(@procurement, :base, false) unless (nil != @active_procurement_buildings&.first&.errors && @active_procurement_buildings&.first&.errors[:service_codes].any?) %>
-                      <%= display_error(@active_procurement_buildings.first, :service_codes, false, @active_procurement_buildings.first.id) if (nil != @active_procurement_buildings&.first&.errors && @active_procurement_buildings&.first&.errors[:service_codes].any?) %>
+                      <%= display_error(procurement_building, :service_codes, false, procurement_building.id) %>
                     </span>
                   </td>
                 </tr>
               <%end %>
-            </table>
-          </td>
-        </tr>
-        <% if @active_procurement_buildings.length > 1 %>
-          <% @active_procurement_buildings.drop(1).each do |procurement_building| %>
-            <tr>
-              <td colspan="3" class="govuk-!-padding-top-2 govuk-!-padding-bottom-2">
-                <table style="border-collapse: collapse; width:100%">
-                  <tr>
-                    <td style="width:40%" class="<%= 'govuk-!-padding-left-2 govuk-form-group--error' if procurement_building.service_codes.empty? && procurement_building.errors[:service_codes].any?%>">&nbsp;</td>
-                    <td>
-                      <%= render 'procurement_building_services', procurement_building: procurement_building %>
-                    </td>
-                  </tr>
-                  <% if procurement_building.service_codes.empty? && procurement_building.errors[:service_codes].any? %>
-                    <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if procurement_building.service_codes.empty? %>">
-                      <td class="govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3">
-                        <span class="govuk-error-message">
-                          <%= display_error(procurement_building, :service_codes, false, procurement_building.id) %>
-                        </span>
-                      </td>
-                    </tr>
-                  <%end %>
-                </table>
-              </td>
-            </tr>
-          <%end %>
-        <%end %>
+            <% end %>
+          <% end %>
       </table>
     </td>
   </tr>
