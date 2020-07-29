@@ -12,6 +12,8 @@ module FacilitiesManagement
     validate :service_code_selection, on: :building_services
     validate :services_valid?, on: :procurement_building_services
     validate :services_present?, on: :procurement_building_services_present
+    validate :validate_internal_area, on: :gia
+    validate :validate_external_area, on: :external_area
 
     before_validation :cleanup_service_codes
     after_save :update_procurement_building_services
@@ -109,6 +111,30 @@ module FacilitiesManagement
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+
+    def validate_internal_area
+      errors.add(:building, :gia_too_small, building_name: building.building_name) if requires_internal_area? && building_internal_area.zero?
+    end
+
+    def validate_external_area
+      errors.add(:building, :external_area_too_small, building_name: building.building_name) if requires_external_area? && building_external_area.zero?
+    end
+
+    def building_internal_area
+      procurement.detailed_search? ? building.gia : gia
+    end
+
+    def building_external_area
+      procurement.detailed_search? ? building.external_area : external_area
+    end
+
+    def requires_external_area?
+      service_codes.include? 'G.5'
+    end
+
+    def requires_internal_area?
+      (CCS::FM::Service.full_gia_services & service_codes).any?
+    end
 
     def add_selection_error(index)
       errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index], building_name: building.building_name, building_id: id)

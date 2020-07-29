@@ -13,16 +13,25 @@
       <% end %>
       <% @active_procurement_buildings&.each do |procurement_building| %>
         <% procurement_building.valid?(:procurement_building_services) %>
-        <% if procurement_building.errors.any? && params[:validate] && procurement_building.service_codes %>
+        <% if procurement_building.errors.any? && procurement_building.service_codes %>
           <li>
             <%= link_to t('activerecord.errors.models.facilities_management/procurement.attributes.procurement_building_services.invalid_html', building_name: procurement_building.name), "##{procurement_building.id}" %>
           </li>
         <% end %>
         <% procurement_building.valid?(:procurement_building_services_present) %>
-        <% if procurement_building.errors.any? && params[:validate] %>
+        <% if procurement_building.errors.any? %>
           <li>
             <%= link_to procurement_building.errors[:service_codes][0].html_safe, "##{procurement_building.id}service_codes-error" %>
           </li>
+        <% end %>
+        <% unless procurement_building.errors.any? %>
+          <% [:gia, :external_area].each do |attribute| %>
+            <% if !procurement_building.valid?(attribute) %>
+              <li>
+                <%= link_to procurement_building.errors.messages[:building].first, gia_facilities_management_building_path(id: procurement_building.building.id) %>
+              </li>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
     </ul>

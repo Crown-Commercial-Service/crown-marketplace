@@ -70,11 +70,11 @@ en:
               blank: You must select a buiding type or describe your own
             external_area:
               blank: External area must be a number between 0 and 999,999,999
-              combined_area: One or other of the internal area and external area must be greater than 0
+              combined_area: External area must be greater than 0, if the internal area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
             gia:
-              blank: Building size must be a number between 0 and 999,999,999
-              combined_area: One or other of the internal area and external area must be greater than 0
+              blank: Internal area must be a number between 0 and 999,999,999
+              combined_area: Internal area must be greater than 0, if the external area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
             other_building_type:
               blank: You must enter your description of a building type
@@ -256,6 +256,9 @@ en:
               invalid: Enter a UK telephone number, for example 020 7946 0000
         facilities_management/procurement_building:
           attributes:
+            building:
+              external_area_too_small: You have a service in ‘%{building_name}’ building that requires external area, please go to 'Manage buildings' to update the building external area size
+              gia_too_small: You have a service in ‘%{building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size
             service_codes:
               at_least_one: You must select at least one service for ‘%{building_name}’ building
               invalid: Select at least one service for each building
