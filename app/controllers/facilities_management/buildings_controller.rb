@@ -130,7 +130,6 @@ module FacilitiesManagement
       return @valid_regions ||= find_region_query_by_postcode(@page_data[:model_object].address_postcode) if @page_data[:model_object].address_postcode.present?
 
       []
-      []
     end
 
     def valid_addresses
