@@ -237,6 +237,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_092533) do
 
   create_table "facilities_management_spreadsheet_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
+    t.string "aasm_state", limit: 15
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
