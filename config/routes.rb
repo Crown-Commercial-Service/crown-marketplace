@@ -137,6 +137,7 @@ Rails.application.routes.draw do
         get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
+      resources :spreadsheet_imports, only: %i[new create show], controller: 'procurements/spreadsheet_imports'
     end
     resources :procurement_buildings, only: %i[show edit update]
     resources :procurement_buildings_services, only: %i[show update]
