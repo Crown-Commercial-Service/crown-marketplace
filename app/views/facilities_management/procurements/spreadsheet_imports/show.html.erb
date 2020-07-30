@@ -1,4 +1,4 @@
-Spreadsheet import:
+<p>Spreadsheet import:
 <% if @spreadsheet_import.in_progress? %>
   in progress
 <% elsif @spreadsheet_import.succeeded? %>
@@ -8,3 +8,5 @@ Spreadsheet import:
 <% else %>
   unknown
 <% end %>
+</p>
+<%= link_to 'Go to procurement', facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link' %>
