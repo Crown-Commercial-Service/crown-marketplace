@@ -39,6 +39,8 @@
 
 @media (min-width:40.0625em) {
 	.govuk-error-message {
+    font-size: 19px;
+    font-size: 1.1875rem;
 		line-height: 1.31579
 	}
 }
@@ -86,7 +88,8 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-weight: 400;
-	font-size: inherit;
+  font-size: 16px;
+  font-size: 1rem;
 	line-height: 1.25
 }
 

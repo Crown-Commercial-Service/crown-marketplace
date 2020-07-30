@@ -119,7 +119,7 @@ const pageUtils = {
         ,
 
         destructurePostCode: function (pc) {
-            var input  = ("" + pc).trim();
+            var input  = ("" + pc).trim().toUpperCase();
             var regEx = /^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i ;
             var matches = input.match(regEx);
 

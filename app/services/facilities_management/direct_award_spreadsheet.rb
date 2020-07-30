@@ -351,6 +351,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         end
       end
 
+      sheet.add_row
+      sheet.add_row ['NOTES']
+      sheet.add_row ["For services 'CAFM' and 'Helpdesk' a £0 indicates this service is not required within this contract."]
+      sheet.add_row ["For service 'Management of billable works' (if requested within this contract) pricing for works should be detailed as outlined within Call-off Schedule 4a Billable Works and Projects"]
+      sheet.add_row ["For services 'Routine Cleaning' and 'Mobile Cleaning', the pricing within the service line includes both the service rate and the cleaning consumables."]
+
       service_count = @data.keys.collect { |k| @data[k].keys }.flatten.uniq.count
       # Service costs
       sheet["A#{service_count + 5}:C#{service_count + 5}"].each { |c| c.style = total_style }

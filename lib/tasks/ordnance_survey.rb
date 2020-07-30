@@ -218,9 +218,9 @@ module OrdnanceSurvey
   end
 
   def self.extend_timeout
-    Aws.config[:http_open_timeout] = 6000
-    Aws.config[:http_read_timeout] = 6000
-    Aws.config[:http_idle_timeout] = 6000
+    Aws.config[:http_open_timeout] = 36000
+    Aws.config[:http_read_timeout] = 36000
+    Aws.config[:http_idle_timeout] = 36000
   end
 
   # rubocop:disable Style/ClassVars

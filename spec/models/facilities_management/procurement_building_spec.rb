@@ -278,4 +278,146 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
     end
   end
+
+  describe '#validate_internal_area' do
+    context 'when the building has an internal area of 0' do
+      before do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'C.1'
+        procurement_building.building.gia = 0
+      end
+
+      it 'is not valid on gia' do
+        expect(procurement_building.valid?(:gia)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building.valid?(:gia)
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      it 'is valid on gia' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'C.1'
+        expect(procurement_building.valid?(:gia)).to eq true
+      end
+    end
+  end
+
+  describe '#validate_external_area' do
+    context 'when the building has an external area of 0' do
+      before do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'G.5'
+        procurement_building.building.external_area = 0
+      end
+
+      it 'is not valid on external_area' do
+        expect(procurement_building.valid?(:external_area)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building.valid?(:external_area)
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires external area, please go to 'Manage buildings' to update the building external area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      it 'is valid on external_area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'G.5'
+        expect(procurement_building.valid?(:external_area)).to eq true
+      end
+    end
+  end
+
+  describe '#requires_internal_area?' do
+    context 'when a service requires an internal area' do
+      it 'will be true' do
+        procurement_building.service_codes = CCS::FM::Service.full_gia_services.sample(4)
+        expect(procurement_building.send(:requires_internal_area?)).to eq true
+      end
+    end
+
+    context 'when a service does not require an internal area' do
+      it 'will be false' do
+        procurement_building.service_codes = ['G.5']
+        expect(procurement_building.send(:requires_internal_area?)).to eq false
+      end
+    end
+  end
+
+  describe '#requires_external_area?' do
+    context 'when a service requires an external area' do
+      it 'will be true' do
+        procurement_building.service_codes = ['G.5']
+        expect(procurement_building.send(:requires_external_area?)).to eq true
+      end
+    end
+
+    context 'when a service does not require an external area' do
+      it 'will be false' do
+        procurement_building.service_codes = ['C.1']
+        expect(procurement_building.send(:requires_external_area?)).to eq false
+      end
+    end
+  end
+
+  describe '#building_internal_area' do
+    before do
+      procurement_building.building.update(gia: 500)
+      procurement_building.update(gia: 1000)
+    end
+
+    context 'when the building is in a detailed search' do
+      it 'uses the building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        expect(procurement_building.send(:building_internal_area)).to eq 500
+      end
+    end
+
+    context 'when the building is in a results state' do
+      it 'uses the procurement_building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'results')
+        expect(procurement_building.send(:building_internal_area)).to eq 1000
+      end
+    end
+
+    context 'when the building is in a da_draft state' do
+      it 'uses the procurement_building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'da_draft')
+        expect(procurement_building.send(:building_internal_area)).to eq 1000
+      end
+    end
+  end
+
+  describe '#building_external_area' do
+    before do
+      procurement_building.building.update(external_area: 1000)
+      procurement_building.update(external_area: 500)
+    end
+
+    context 'when the building is in a detailed search' do
+      it 'uses the building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        expect(procurement_building.send(:building_external_area)).to eq 1000
+      end
+    end
+
+    context 'when the building is in a results state' do
+      it 'uses the procurement_building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'results')
+        expect(procurement_building.send(:building_external_area)).to eq 500
+      end
+    end
+
+    context 'when the building is in a da_draft state' do
+      it 'uses the procurement_building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'da_draft')
+        expect(procurement_building.send(:building_external_area)).to eq 500
+      end
+    end
+  end
 end

@@ -6,7 +6,12 @@
       </h2>
       <div class="govuk-error-summary__body">
         <ul class="govuk-list govuk-error-summary__list">
-          <% f.object.service_hours.attributes.reject {|k, _| k == :uom}.each do |key, value| %>
+          <% if f.object.errors[:personnel].any? %>
+            <li>
+              <%= base_error_link(f.object, :personnel) %>
+            </li>
+          <% end %>
+          <% f.object.service_hours.attributes.reject {|k, _| %i[uom personnel].include? k}.each do |key, value| %>
             <% if value.errors[:service_choice].present? %>
               <li>
                 <%= error_summary_link(key, value, :service_choice) %>
@@ -25,7 +30,7 @@
           <% end %>
           <% if all_not_required?(f.object) %>
             <li>
-              <%= link_to "#{f.object.errors[:base].first}", "#base-error", data: {fieldname: :base, errortype: f.object.errors.details[:base].first[:error] } %>
+              <%= base_error_link(f.object, :base) %>
             </li>
           <% end %>
         </ul>
@@ -33,22 +38,29 @@
     </div>
   <% end %>
   <%= f.hidden_field :step, value: @partial_prefix %>
+  <p class="govuk-!-margin-bottom-6 govuk-hint">
+    <%= t('.service_hours_description_1') %>
+  </p>
   <div class="servicehourscontainer">
     <div class="servicehoursdata">
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if f.object[:service_hours].errors[:personnel].any? %>">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+          <%= t('.personnel_subtitle') %>
+        </h2>
+        <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
+          <%= display_error f.object, :personnel %>
+          <%= sh.label :personnel, t('.number_of_personnel') %><br>
+          <%= sh.number_field :personnel, class: "govuk-input govuk-input--width-3 ccs-integer-field govuk-!-margin-top-2 #{'govuk-input--error' if f.object[:service_hours].errors[:personnel].any?}" %>
+        <% end %>
+      </div>
       <h2 class="govuk-heading-m govuk-!-margin-bottom-4"><%= t('.service_hours_subtitle') %></h2>
-      <p class="govuk-!-margin-bottom-2 govuk-hint"><%= t('.service_hours_description_1') %></p>
-      <ul class="govuk-!-margin-top-2 govuk-hint">
-        <li><%= t('.service_hours_description_list_1') %></li>
-        <li><%= t('.service_hours_description_list_2') %></li>
-      </ul>
-      <p class="govuk-!-margin-bottom-6 govuk-hint"><%= t('.service_hours_description_2') %></p>
       <div class="service_hours_container <%= 'govuk-form-group--error' if all_not_required?(f.object) %>">
         <% if all_not_required?(f.object) %>
           <%= display_error f.object, :base %>
         <% end %>
         <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
           <% sh.object.attributes.each do |key, _value| %>
-            <% if key != :uom %>
+            <% unless %i[uom personnel].include? key %>
               <%= sh.fields_for key, sh.object[key] do |day|%>
                 <%= render partial: 'day_section', locals: { day: key, f: day, service_hours: sh.object, service_choice: day.object } %>
               <%end%>

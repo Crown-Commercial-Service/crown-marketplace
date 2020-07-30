@@ -40,10 +40,12 @@ module Base
     private
 
     def new_challenge_path
-      users_challenge_path(challenge_name: @challenge.new_challenge_name, session: @challenge.new_session, username: params[:username])
+      cookies[:session] = @challenge.new_session
+      users_challenge_path(challenge_name: @challenge.new_challenge_name, username: params[:username])
     end
 
     def find_and_sign_in_user
+      cookies.delete :session
       user = Cognito::CreateUserFromCognito.call(params[:username]).user
       sign_in_user(user)
     end

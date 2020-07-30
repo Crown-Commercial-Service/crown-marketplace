@@ -173,9 +173,7 @@ module LayoutHelper
     content_tag :fieldset, options do
       capture do
         concat(list_errors_for_attributes(attributes_which_are_arrays)) if attributes_which_are_arrays.any?
-        concat(content_tag(:legend,
-                           content_tag(:h1, caption, class: 'govuk-fieldset__heading'),
-                           class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
+        concat(content_tag(:legend, caption, class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
 
         attributes.flatten.each do |a|
           yield(form, a)
@@ -211,11 +209,7 @@ module LayoutHelper
   def fieldset_structure(form, caption, options, header_text, *attributes, &block)
     content_tag :fieldset, options do
       capture do
-        unless caption.nil?
-          concat(content_tag(:legend,
-                             content_tag(:h2, caption, class: 'govuk-fieldset__heading'),
-                             class: 'govuk-fieldset__legend govuk-fieldset__legend--m'))
-        end
+        concat(content_tag(:legend, caption, class: 'govuk-fieldset__legend govuk-fieldset__legend--m')) unless caption.nil?
         concat(content_tag(:p, header_text, class: 'govuk-caption-m')) if header_text.present?
         attributes.flatten.each do |attr|
           concat(list_errors_for_attributes(attr)) if form.object[attr].is_a? Array

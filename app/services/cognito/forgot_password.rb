@@ -13,12 +13,12 @@ module Cognito
       if valid?
         forgot_password
       else
-        @error = I18n.t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_request.attributes.please_enter_a_valid_email_address')
+        @error = I18n.t('cognito/cog_forgot_password_request.attributes.please_enter_a_valid_email_address')
       end
     rescue Aws::CognitoIdentityProvider::Errors::UserNotFoundException
       @error = nil
     rescue Aws::CognitoIdentityProvider::Errors::InvalidParameterException
-      @error = I18n.t('activemodel.errors.models.ccs_patterns/home/cog_forgot_password_request.attributes.please_enter_a_valid_email_address')
+      @error = I18n.t('cognito/cog_forgot_password_request.attributes.please_enter_a_valid_email_address')
     rescue Aws::CognitoIdentityProvider::Errors::ServiceError => e
       @error = e.message
     end

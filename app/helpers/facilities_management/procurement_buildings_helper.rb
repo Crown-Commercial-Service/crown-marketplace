@@ -46,4 +46,10 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   def checked?(object_value, value)
     object_value == value
   end
+
+  def cell_class(service)
+    css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
+    css_class << 'govuk-border-bottom_none' if service == :service_hours
+    css_class.join(' ')
+  end
 end

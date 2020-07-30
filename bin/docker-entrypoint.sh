@@ -19,6 +19,10 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
     bundle exec rails db:pctable
   fi
 
+  if [ "$APP_RUN_POSTCODES_CLEANUP" = 'TRUE' ]; then
+    bundle exec rails db:postcode_cleanup
+  fi
+
   if [ "$APP_RUN_POSTCODES_IMPORT" = 'TRUE' ]; then
     bundle exec rails db:postcode
   fi

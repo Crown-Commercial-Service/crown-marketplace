@@ -28,10 +28,9 @@ module FacilitiesManagement
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
     def create
       @page_data[:model_object] = current_user.buildings.build(building_params)
-      @page_data[:model_object].postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
+      set_postcode_data
 
       if params[:add_address].present?
-        @page_data[:model_object].address_postcode = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
         rebuild_page_data(@page_data[:model_object])
         rebuild_page_description('add_address')
         render action: :add_address and return
@@ -57,10 +56,9 @@ module FacilitiesManagement
 
     def update
       @page_data[:model_object].assign_attributes(building_params)
-      @page_data[:model_object].postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
+      set_postcode_data
 
       if params[:add_address].present?
-        @page_data[:model_object].address_postcode = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
         rebuild_page_description 'add_address'
         render action: :add_address and return
       end
@@ -85,7 +83,7 @@ module FacilitiesManagement
     private
 
     def building_params
-      params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
+      params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :external_area, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
     end
 
     def add_address_form_details
@@ -138,6 +136,16 @@ module FacilitiesManagement
       return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry) if @page_data[:model_object].postcode_entry.present?
 
       []
+    end
+
+    def set_postcode_data
+      if @page_data[:model_object].postcode_entry
+        valid_postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
+        @page_data[:model_object].postcode_entry = valid_postcode_entry
+        @page_data[:model_object].address_postcode = valid_postcode_entry if params[:add_address].present?
+      end
+
+      @page_data[:model_object].address_postcode = building_params[:address_postcode].upcase if building_params[:address_postcode]
     end
 
     helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?

@@ -116,11 +116,7 @@ module FacilitiesManagement
 
       event :set_state_to_results_if_possible do
         before do
-          copy_procurement_buildings_gia
-          copy_fm_rates_to_frozen
-          copy_fm_rate_cards_to_frozen
-          calculate_initial_assesed_value
-          save_data_for_procurement
+          freeze_procurement_data
         end
         transitions from: :detailed_search, to: :choose_contract_value do
           guard do
@@ -249,15 +245,20 @@ module FacilitiesManagement
 
     def find_or_build_procurement_building(building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
+      procurement_building.service_codes = service_codes if procurement_building.service_codes.empty?
       procurement_building.save
     end
 
     def valid_on_continue?
-      valid?(:all) && valid_services?
+      valid?(:all) && valid_services? && valid_buildings?
     end
 
     def valid_services?
       procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
+    end
+
+    def valid_buildings?
+      active_procurement_buildings.all? { |pb| pb.valid?(:gia) && pb.valid?(:external_area) }
     end
 
     def buildings_standard
@@ -271,7 +272,7 @@ module FacilitiesManagement
 
     def priced_at_framework
       # if one service is not priced at framework, returns false
-      !procurement_building_services.map { |pbs| CCS::FM::Rate.priced_at_framework(pbs.code, pbs.service_standard) }.include?(false)
+      procurement_building_services.reject(&:special_da_service?).map { |pbs| pbs.service_missing_framework_price?(rate_model) }.all?(false)
     end
 
     SEARCH = %i[quick_search detailed_search choose_contract_value results].freeze
@@ -379,12 +380,20 @@ module FacilitiesManagement
       procurement_building_services.map(&:code).uniq
     end
 
+    def procurement_building_service_codes_and_standards
+      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+    end
+
     def active_procurement_building_region_codes
       active_procurement_buildings.map { |proc_building| proc_building&.building&.address_region_code } .uniq
     end
 
     def procurement_building_services_not_used_in_calculation
-      procurement_building_services.select { |service| CCS::FM::Rate.framework_rate_for(service.code, service.service_standard).nil? && CCS::FM::Rate.benchmark_rate_for(service.code, service.service_standard).nil? }.map(&:name).uniq
+      procurement_building_services.reject(&:special_da_service?).select { |service| unused_service?(service) }.map(&:name).uniq
+    end
+
+    def unused_service?(service)
+      service.service_missing_framework_price?(rate_model) && service.service_missing_benchmark_price?(rate_model)
     end
 
     def some_services_unpriced_and_no_buyer_input?
@@ -392,11 +401,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      procurement_building_services.uniq.any? { |pbs| rate_model.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     def any_services_missing_benchmark_price?
-      procurement_building_services.uniq.any? { |pbs| rate_model.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def all_services_unpriced_and_no_buyer_input?
@@ -404,10 +413,24 @@ module FacilitiesManagement
     end
 
     def all_services_missing_framework_price?
-      procurement_building_services.all? { |pbs| CCS::FM::Rate.framework_rate_for(pbs.code, pbs.service_standard).nil? }
+      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
+    end
+
+    def all_services_missing_framework_and_benchmark_price?
+      all_services_missing_framework_price? && all_services_missing_benchmark_price?
     end
 
     private
+
+    def freeze_procurement_data
+      return unless detailed_search?
+
+      copy_procurement_buildings_gia
+      copy_fm_rates_to_frozen
+      copy_fm_rate_cards_to_frozen
+      calculate_initial_assesed_value
+      save_data_for_procurement
+    end
 
     def copy_procurement_buildings_gia
       procurement_buildings.each(&:set_gia)
@@ -463,7 +486,7 @@ module FacilitiesManagement
     end
 
     def all_services_missing_benchmark_price?
-      procurement_building_services.all? { |pbs| CCS::FM::Rate.benchmark_rate_for(pbs.code, pbs.service_standard).nil? }
+      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def contract_value_needed?
