@@ -8,7 +8,7 @@ module FacilitiesManagement
       def create
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
         if @spreadsheet_import.save
-          # SupplyTeachers::DataScriptWorker.perform_async(@upload.id)
+          FacilitiesManagement::SpreadsheetImporter.new(@spreadsheet_import.id)
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
           render :new

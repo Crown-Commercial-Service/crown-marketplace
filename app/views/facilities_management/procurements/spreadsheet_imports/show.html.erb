@@ -1,9 +1,9 @@
 Spreadsheet import:
 <% if @spreadsheet_import.in_progress? %>
   in progress
-<% elsif @spreadsheet_importer.suceeded? %>
+<% elsif @spreadsheet_import.succeeded? %>
   succeeded
-<% elsif @spreadsheet_importer.failed? %>
+<% elsif @spreadsheet_import.failed? %>
   failed
 <% else %>
   unknown
