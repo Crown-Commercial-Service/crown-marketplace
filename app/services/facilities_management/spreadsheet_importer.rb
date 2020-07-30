@@ -34,6 +34,11 @@ class FacilitiesManagement::SpreadsheetImporter
                                                        other_building_type:building_column[10],
                                                        security_type:building_column[11],
                                                        other_security_type:building_column[12])
+      region = Postcode::PostcodeCheckerV2.find_region building_column[6].delete(' ')
+      if region.count == 1
+        building.address_region_code = region[0]['code']
+        building.address_region = region[0]['region']
+      end
       building.populate_json_attribute
       building.save
       procurement_building = FacilitiesManagement::ProcurementBuilding.create(procurement: @procurement, building_id: building.id, active: true)
