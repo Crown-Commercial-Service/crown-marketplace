@@ -1,0 +1,10 @@
+Spreadsheet import:
+<% if @spreadsheet_import.in_progress? %>
+  in progress
+<% elsif @spreadsheet_importer.suceeded? %>
+  succeeded
+<% elsif @spreadsheet_importer.failed? %>
+  failed
+<% else %>
+  unknown
+<% end %>
