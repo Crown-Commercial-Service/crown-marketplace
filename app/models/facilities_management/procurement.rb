@@ -20,6 +20,8 @@ module FacilitiesManagement
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
+    has_many :spreadsheet_imports, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+
     has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
 
