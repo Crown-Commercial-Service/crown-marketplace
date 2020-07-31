@@ -69,7 +69,7 @@ RSpec.feature 'FTA to Perm fee calculator', type: :feature, supply_teachers: tru
     click_on I18n.t('common.submit')
     fill_in_contract_end_date date_5_months_ago
     click_on I18n.t('common.submit')
-    fill_in_hire_date date_1_month_from_now - 1.day
+    fill_in_hire_date date_5_months_ago + 6.months - 1.day
     click_on I18n.t('common.submit')
 
     expect_no_fee_text I18n.t('.supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months')
@@ -85,7 +85,7 @@ RSpec.feature 'FTA to Perm fee calculator', type: :feature, supply_teachers: tru
     fill_in_hire_date date_0_months_ago
     click_on I18n.t('common.submit')
 
-    expect_fee_text I18n.t('supply_teachers.journey.fta_to_perm_hire_date_notice.header_html', date: date_1_month_from_now.strftime('%d %b %Y'))
+    expect_fee_text I18n.t('supply_teachers.journey.fta_to_perm_hire_date_notice.header_html', date: (date_5_months_ago + 6.months).strftime('%d %b %Y'))
   end
 
   scenario 'Worker contract end date is less than 6 months, has been employed for less than 12 months and hire date is less than 6 months' do
