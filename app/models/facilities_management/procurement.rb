@@ -425,25 +425,14 @@ module FacilitiesManagement
     end
 
     def estimated_annual_cost_status
-      return :cannot_start if contract_name.blank?
-      return :completed unless estimated_cost_known.nil?
-
-      :not_started
+      estimated_cost_known.nil? ? :not_started : :completed
     end
 
     def tupe_status
-      return :cannot_start if contract_name.blank?
-      return :cannot_start if estimated_cost_known.nil?
-      return :completed unless tupe.nil?
-
-      :not_started
+      tupe.nil? ? :not_started : :completed
     end
 
     def contract_period_status
-      return :cannot_start if contract_name.blank?
-      return :cannot_start if estimated_cost_known.nil?
-      return :cannot_start if tupe.nil?
-
       relevant_attributes = [
         initial_call_off_period,
         initial_call_off_start_date,
@@ -451,10 +440,7 @@ module FacilitiesManagement
         extensions_required
       ]
 
-      return :not_started if relevant_attributes.all?(&:nil?)
-      return :in_progress if relevant_attributes.any?(&:nil?)
-
-      :completed
+      relevant_attributes.all?(&:nil?) ? :not_started : :completed
     end
 
     private
