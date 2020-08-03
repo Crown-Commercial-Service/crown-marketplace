@@ -790,7 +790,10 @@ en:
     procurements:
       about_the_contract:
         contract_details: 1. Contract details
-        no_cost_provided: None
+        contract_name: Contract name
+        contract_period: Contract period
+        estimated_annual_cost: Estimated annual cost
+        tupe: TUPE
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
