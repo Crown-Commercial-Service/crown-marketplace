@@ -2295,6 +2295,12 @@
     }
 }
 
+.govuk-summary-list__row-top-border > .govuk-summary-list__key,
+.govuk-summary-list__row-top-border > .govuk-summary-list__value,
+.govuk-summary-list__row-top-border > .govuk-summary-list__actions {
+    border-top: 1px solid #bfc1c3;
+}
+
 .govuk-summary-list__value > p {
     margin-bottom: 10px
 }
@@ -3615,51 +3621,6 @@
         font-size: 24pt;
         line-height: 1.05
     }
-}
-
-.govuk-tag {
-    font-family: "nta", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 700;
-    font-size: 14px;
-    font-size: .875rem;
-    line-height: 1.25;
-    display: inline-block;
-    padding: 4px 8px;
-    padding-bottom: 1px;
-    outline: 2px solid transparent;
-    outline-offset: -2px;
-    color: #fff;
-    background-color: #005ea5;
-    letter-spacing: 1px;
-    text-decoration: none;
-    text-transform: uppercase
-}
-
-@media print {
-    .govuk-tag {
-        font-family: sans-serif
-    }
-}
-
-@media (min-width: 40.0625em) {
-    .govuk-tag {
-        font-size: 16px;
-        font-size: 1rem;
-        line-height: 1.25
-    }
-}
-
-@media print {
-    .govuk-tag {
-        font-size: 14pt;
-        line-height: 1.25
-    }
-}
-
-.govuk-tag--inactive {
-    background-color: #6f777b
 }
 
 .govuk-phase-banner {
@@ -7952,10 +7913,6 @@ li code, td code, p code {
     background-color: #6F777B;
     color: #FFFFFF;
     padding: 5px;
-}
-.govuk-tag--grey {
-    background-color: #6F777B !important;
-    color: #FFFFFF !important;
 }
 .govuk-border-bottom_none {
     border-bottom: 0px !important;

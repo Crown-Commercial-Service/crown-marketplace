@@ -420,6 +420,43 @@ module FacilitiesManagement
       all_services_missing_framework_price? && all_services_missing_benchmark_price?
     end
 
+    def contract_name_status
+      contract_name.present? ? :completed : :not_started
+    end
+
+    def estimated_annual_cost_status
+      return :cannot_start if contract_name.blank?
+      return :completed unless estimated_cost_known.nil?
+
+      :not_started
+    end
+
+    def tupe_status
+      return :cannot_start if contract_name.blank?
+      return :cannot_start if estimated_cost_known.nil?
+      return :completed unless tupe.nil?
+
+      :not_started
+    end
+
+    def contract_period_status
+      return :cannot_start if contract_name.blank?
+      return :cannot_start if estimated_cost_known.nil?
+      return :cannot_start if tupe.nil?
+
+      relevant_attributes = [
+        initial_call_off_period,
+        initial_call_off_start_date,
+        mobilisation_period_required,
+        extensions_required
+      ]
+
+      return :not_started if relevant_attributes.all?(&:nil?)
+      return :in_progress if relevant_attributes.any?(&:nil?)
+
+      :completed
+    end
+
     private
 
     def freeze_procurement_data
