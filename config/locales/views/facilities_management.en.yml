@@ -1435,6 +1435,9 @@ en:
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
         learn_more: Learn more (opens in a new tab)
+      spreadsheet_imports:
+        new:
+          submit: Submit
       what_happens_next:
         cancel: Cancel and return to procurements dashboard
         continue: Continue
