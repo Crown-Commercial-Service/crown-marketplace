@@ -338,7 +338,7 @@ module ApplicationHelper
     extra_classes = {
       cannot_start: 'govuk-tag--grey',
       in_progress: 'govuk-tag--blue',
-      not_started: 'govuk-tag--green'
+      not_started: 'govuk-tag--grey'
     }
 
     content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
