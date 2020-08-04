@@ -1,6 +1,8 @@
 module FacilitiesManagement
   module Procurements
     class SpreadsheetImportsController < FacilitiesManagement::FrameworkController
+      include FacilitiesManagement::ControllerLayoutHelper
+
       def new
         @spreadsheet_import = FacilitiesManagement::SpreadsheetImport.new(facilities_management_procurement_id: params[:procurement_id])
       end

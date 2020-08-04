@@ -1,0 +1,19 @@
+<span class="govuk-caption-xl"><%= @procurement.contract_name %></span>
+<h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+
+<strong class="govuk-tag"> <%= @spreadsheet_import.aasm_state %>  </strong>
+
+<% if @spreadsheet_import.in_progress? %>
+  <% render partial: 'in_progress' %>
+<% elsif @spreadsheet_import.succeeded? %>
+  <% render partial: 'success' %>
+  <% @spreadsheet_import.procurement.procurement_buildings.each do |pb| %>
+    <% if pb.building.address_region_code.nil? %>
+      <p><%= pb.building.building_name %> requires region. <%= link_to "Go to: " + pb.building.building_name, facilities_management_building_path(pb.building.id), class: 'govuk-link' %></p>
+    <% end %>
+  <% end %>
+<% elsif @spreadsheet_import.failed? %>
+  <p>Status: in progress </p>
+<% else %>
+  <p>Something went wrong. Please try again</p>
+<% end %>

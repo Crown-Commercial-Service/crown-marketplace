@@ -1,5 +1,7 @@
 <% if params[:delete] == 'y' && procurement_can_be_deleted? %>
   <%= render 'delete_procurement' %>
+<% elsif params[:spreadsheet] == 'true' %>
+  <%= render 'spreadsheet' %>
 <% else %>
   <%= render @view_name %>
 <% end %>

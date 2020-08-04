@@ -1,5 +1,5 @@
 <h2 class="govuk-heading-m govuk-!-margin-bottom-1">About the work</h2>
-<%= link_to 'Bulk upload', new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id) %>
+<%= link_to 'Click here to download an Excel template', facilities_management_procurement_path(procurement_id: @procurement.id, 'spreadsheet': true) %>, which you can complete and then upload, or click on the links below to complete your information.
 <table class="govuk-table small">
   <tbody class="govuk-table__body">
   <tr class="govuk-table__row" style="border-top:1px solid #ccc; border-bottom:1px solid #ccc;">

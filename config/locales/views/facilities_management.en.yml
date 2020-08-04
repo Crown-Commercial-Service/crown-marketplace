@@ -1445,9 +1445,48 @@ en:
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
         learn_more: Learn more (opens in a new tab)
+      spreadsheet:
+        download_the_template: Download the template
+        footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to procurement summary' button below.
+        heading: Services and buildings - spreadsheet
+        instructions: Instructions
+        link: Click on the link to download the blank template ready for you to complete. The spreadsheet contains full instructions to help you input your building information and service requirements.
+        list_2_description: The spreadsheet has a status indicator which will help you check its ready for uploading.<br/> Once you are ready, you can click on the 'continue and upload file' button below, or alternatively you can upload your spreadsheet at a later date - just click the 'save for later' button below. When ready, come back to this portal, log in and click on 'continue a procurement' on your 'my account' page. This will open your procurement dashboard in which you can select this procurement again and you will be presented with a spreadsheet upload page. You can then select the correct Excel file from your computer and proceed to upload.
+        list_3_description: Once you have uploaded your spreadsheet successfully, you will then be able to continue to see your results
+        list_description: Take your time completing the spreadsheet - there is no system deadline. You will need the following types of information to complete the spreadsheet.
+        list_information_1: building details - address, size, what its used for, security access requirements
+        list_information_2: services - which services you wish to buy in each building
+        list_information_3: service requirements - for example, what standard of service, which hours of the day, or how many lifts are in the building
+        results: Results
+        services_and_buildings_template: Services and buildings template
+        uploading: Uploading your spreadsheet
       spreadsheet_imports:
-        new:
+        in_progress:
+          processing: We are processing your file upload.
+          refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
+          review: After a successful upload, you can continue to review your procurement.
+        success:
+          about: About the procurement summary
+          buildings: buildings
+          completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
+          open_procurement_summary: Click the continue button below to open your procurement summary.
+          review: If you click into each section you can review your information, and make any amends if required.
+          service_requirements: service requirements
+          services: services
+          services_to_buildings: assigning services to buildings
+          successful: Your service and building information have been successfully uploaded and the details placed into the relevant sections within your procurement.
+        upload:
+          check: How to check your spreadsheet is ready
+          check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
+          description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
+          heading: Upload your spreadsheet
+          once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
           submit: Submit
+          upload: Upload your file
+          upload_size: Supported format is .xlsx and maximum file is 2mb
+          warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
+        upload_status:
+          heading: File upload status
       what_happens_next:
         cancel: Cancel and return to procurements dashboard
         continue: Continue
