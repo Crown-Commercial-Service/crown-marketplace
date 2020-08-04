@@ -22,7 +22,7 @@ module FacilitiesManagement
       private
 
       def spreadsheet_import_params
-        params.require(:facilities_management_spreadsheet_import).permit(:spreadsheet_file, :spreadsheet_file_cache, :facilities_management_procurement_id)
+        params.require(:facilities_management_spreadsheet_import).permit(:spreadsheet_file, :facilities_management_procurement_id)
       end
     end
   end

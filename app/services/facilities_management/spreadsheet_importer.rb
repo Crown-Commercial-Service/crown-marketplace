@@ -3,7 +3,7 @@ class FacilitiesManagement::SpreadsheetImporter
     @spreadsheet_import = FacilitiesManagement::SpreadsheetImport.find(spreadsheet_import_id)
     @procurement = @spreadsheet_import.procurement
     @user = @procurement.user
-    @spreadsheet = Roo::Spreadsheet.open(path_to_spreadsheet, extension: :xlsx)
+    @spreadsheet = Roo::Spreadsheet.open(downloaded_spreadsheet.path, extension: :xlsx)
 
     instructions_sheet = @spreadsheet.sheet(0)
     if instructions_sheet.row(10)[1] == 'Ready to upload'
@@ -69,8 +69,12 @@ class FacilitiesManagement::SpreadsheetImporter
   end
   # rubocop:enable Metrics/AbcSize
 
-  def path_to_spreadsheet
-    @spreadsheet_import.spreadsheet_file.path
+  def downloaded_spreadsheet
+    tmpfile = Tempfile.create
+    tmpfile.binmode
+    tmpfile.write @spreadsheet_import.spreadsheet_file.download
+    tmpfile.close
+    tmpfile
   end
 
   # def delete_existing_procurement_buildings_and_services

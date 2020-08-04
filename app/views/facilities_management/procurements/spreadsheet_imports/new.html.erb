@@ -1,7 +1,6 @@
 <%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_imports_path, method: :post, html: { novalidate: true, multipart: true } do |f| %>
   <%= f.label :spreadsheet_file, 'Upload a file', class: "govuk-label ccs-font-weight-semi-bold" %>
   <%= f.file_field :spreadsheet_file %>
-  <%= f.hidden_field :spreadsheet_file_cache %>
   <%= f.hidden_field :facilities_management_procurement_id, value: @spreadsheet_import.facilities_management_procurement_id %>
   <div class="govuk-!-margin-top-4">
     <%= f.submit 'Continue', class: "govuk-button", 'aria-label': t('.submit') %>
