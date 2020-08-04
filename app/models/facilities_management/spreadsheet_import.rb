@@ -8,13 +8,13 @@ module FacilitiesManagement
     validate :spreadsheet_file_validation
 
     aasm do
-      state :in_progress, initial: true
+      state :importing, initial: true
       state :succeeded, :failed
       event :succeed do
-        transitions from: :in_progress, to: :succeeded
+        transitions from: :importing, to: :succeeded
       end
       event :fail do
-        transitions from: :in_progress, to: :failed
+        transitions from: :importing, to: :failed
       end
     end
 

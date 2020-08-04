@@ -1,5 +1,5 @@
 
-<% if @spreadsheet_import.in_progress? %>
+<% if @spreadsheet_import.importing? %>
   <p>Spreadsheet import: in progress </p>
 <% elsif @spreadsheet_import.succeeded? %>
   <h1>Spreadsheet import: succeeded </h1>
@@ -9,8 +9,6 @@
     <% end %>
   <% end %>
 <% elsif @spreadsheet_import.failed? %>
-  <p>Spreadsheet import: in progress </p>
-<% else %>
   <p>Something went wrong. Please try again</p>
 <% end %>
 
