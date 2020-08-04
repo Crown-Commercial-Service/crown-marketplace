@@ -1,0 +1,16 @@
+
+<% if @spreadsheet_import.importing? %>
+  <p>Spreadsheet import: in progress </p>
+<% elsif @spreadsheet_import.succeeded? %>
+  <h1>Spreadsheet import: succeeded </h1>
+  <% @spreadsheet_import.procurement.procurement_buildings.each do |pb| %>
+    <% if pb.building.address_region_code.nil? %>
+      <p><%= pb.building.building_name %> requires region. <%= link_to "Go to: " + pb.building.building_name, facilities_management_building_path(pb.building.id), class: 'govuk-link' %></p>
+    <% end %>
+  <% end %>
+<% elsif @spreadsheet_import.failed? %>
+  <p>Something went wrong. Please try again</p>
+<% end %>
+
+
+<%= link_to 'Go to procurement', facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link' %>
