@@ -114,6 +114,23 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
+    context 'when the building name is a duplicate' do
+      let(:duplicate_building) { create(:facilities_management_building, user: building.user) }
+
+      before do
+        duplicate_building.update(building_name: building.building_name)
+      end
+
+      it 'is not valid' do
+        expect(duplicate_building.valid?(:all)).to eq false
+      end
+
+      it 'is taken' do
+        duplicate_building.valid?(:all)
+        expect(duplicate_building.errors.details[:building_name].first[:error]).to eq :taken
+      end
+    end
+
     context 'when required element not present' do
       before do
         building.building_name = nil
@@ -235,13 +252,32 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when security_type set to something' do
-        before do
+        it 'will not be valid' do
           building.security_type = 'something'
-          building.valid? :security
+          expect(building.valid?(:security)).to eq false
+        end
+      end
+
+      context 'when security_type set to Baseline personnel security standard (BPSS)' do
+        it 'will be valid' do
+          building.security_type = 'Baseline personnel security standard (BPSS)'
+          expect(building.valid?(:security)).to eq true
+        end
+      end
+
+      context 'when security_type set to Baseline personnel security standard (BPSS) and there is somthing in other' do
+        before do
+          building.security_type = 'Baseline personnel security standard (BPSS)'
+          building.other_security_type = 'other security type'
         end
 
         it 'will be valid' do
-          expect(building.errors.details.length.zero?).to eq true
+          expect(building.valid?(:security)).to eq true
+        end
+
+        it 'will be not save other_security_type' do
+          building.save(context: :security)
+          expect(building.other_security_type).to eq nil
         end
       end
 
@@ -282,13 +318,17 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when building_type set to something' do
-        before do
+        it 'will not be valid' do
           building.building_type = 'something'
           building.valid? :type
+          expect(building.valid?(:type)).to eq false
         end
+      end
 
+      context 'when building_type is set to General office - Customer Facing' do
         it 'will be valid' do
-          expect(building.errors.details.length.zero?).to eq true
+          building.building_type = 'General office - Customer Facing'
+          expect(building.valid?(:type)).to eq true
         end
       end
 
@@ -300,6 +340,22 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid' do
           expect(building.errors.details.dig(:other_building_type).first.dig(:error)).to eq :blank
+        end
+      end
+
+      context 'when other_building_type set to General office - Customer Facing and there is somthing in other' do
+        before do
+          building.building_type = 'General office - Customer Facing'
+          building.other_building_type = 'other building type'
+        end
+
+        it 'will be valid' do
+          expect(building.valid?(:security)).to eq true
+        end
+
+        it 'will be not save other_security_type' do
+          building.save(context: :type)
+          expect(building.other_building_type).to eq nil
         end
       end
 
