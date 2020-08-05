@@ -1,18 +1,23 @@
 class FacilitiesManagement::SpreadsheetImporter
-  def initialize(spreadsheet_import_id)
-    @spreadsheet_import = FacilitiesManagement::SpreadsheetImport.find(spreadsheet_import_id)
+  def initialize(spreadsheet_import)
+    @spreadsheet_import = spreadsheet_import
     @procurement = @spreadsheet_import.procurement
     @user = @procurement.user
     @spreadsheet = Roo::Spreadsheet.open(downloaded_spreadsheet.path, extension: :xlsx)
+  end
 
-    instructions_sheet = @spreadsheet.sheet(0)
-    if instructions_sheet.row(10)[1] == 'Ready to upload'
-      import_buildings
-      import_services
-      @spreadsheet_import.succeed!
-    else
-      @spreadsheet_import.fail!
-    end
+  def basic_data_validation
+    errors = []
+
+    errors << I18n.t(:template_invalid, scope: FacilitiesManagement::SpreadsheetImport::TRANSLATION_SCOPE) unless template_valid?
+    errors << I18n.t(:not_ready, scope: FacilitiesManagement::SpreadsheetImport::TRANSLATION_SCOPE) unless spreadsheet_ready?
+    errors
+  end
+
+  def data_import
+    import_buildings
+    import_services
+    @spreadsheet_import.succeed!
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -83,4 +88,15 @@ class FacilitiesManagement::SpreadsheetImporter
   #     pb.destroy
   #   end
   # end
+
+  private
+
+  def spreadsheet_ready?
+    instructions_sheet = @spreadsheet.sheet(0)
+    instructions_sheet.row(10)[1] == 'Ready to upload'
+  end
+
+  def template_valid?
+    false
+  end
 end
