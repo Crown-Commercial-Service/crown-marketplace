@@ -2,7 +2,8 @@ module FacilitiesManagement
   class SpreadsheetImport < ApplicationRecord
     include AASM
 
-    belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_imports
+    belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement',
+                             foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_imports
 
     has_one_attached :spreadsheet_file
     validates :spreadsheet_file, attached: { message: :not_attached }
