@@ -9,8 +9,8 @@ class FacilitiesManagement::SpreadsheetImporter
   def basic_data_validation
     errors = []
 
-    errors << I18n.t(:template_invalid, scope: FacilitiesManagement::SpreadsheetImport::TRANSLATION_SCOPE) unless template_valid?
-    errors << I18n.t(:not_ready, scope: FacilitiesManagement::SpreadsheetImport::TRANSLATION_SCOPE) unless spreadsheet_ready?
+    errors << :template_invalid unless template_valid?
+    errors << :not_ready unless spreadsheet_ready?
     errors
   end
 

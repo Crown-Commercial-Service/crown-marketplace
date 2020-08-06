@@ -382,6 +382,16 @@ en:
             reason_for_not_signing:
               blank: Enter a reason why this contract will not be signed
               too_long: Reason for not signing must be 100 characters or less
+        facilities_management/spreadsheet_import:
+          attributes:
+            spreadsheet_file:
+              malicious: This file is malicious, please check and try uploading again
+              not_attached: The file must be uploaded
+              not_ready: The file is not ready for upload. Please check cell B10 on the Instructions tab in your spreadsheet
+              template_invalid: The file must be the 'Services and buildings template' provided
+              too_large: The file is too large
+              wrong_content_type: The file has the wrong content type
+              wrong_extension: You have selected wrong file type - the building and services spreadsheet must be a .xlsx file
   dashboard:
     index:
       admin_link: Managing framework and supplier data
