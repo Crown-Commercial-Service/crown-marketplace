@@ -3,7 +3,7 @@ class FacilitiesManagement::SpreadsheetImporter
     @spreadsheet_import = spreadsheet_import
     @procurement = @spreadsheet_import.procurement
     @user = @procurement.user
-    @spreadsheet = Roo::Spreadsheet.open(downloaded_spreadsheet.path, extension: :xlsx)
+    @user_uploaded_spreadsheet = Roo::Spreadsheet.open(downloaded_spreadsheet.path, extension: :xlsx)
   end
 
   def basic_data_validation
@@ -22,7 +22,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
   # rubocop:disable Metrics/AbcSize
   def import_buildings
-    building_sheet = @spreadsheet.sheet(2)
+    building_sheet = @user_uploaded_spreadsheet.sheet(2)
     columns = building_sheet.row(14).count('Complete')
     (2..columns + 1).each do |col|
       building_column = building_sheet.column(col)
@@ -55,7 +55,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
   # rubocop:disable Metrics/AbcSize
   def import_services
-    services_sheet = @spreadsheet.sheet(3)
+    services_sheet = @user_uploaded_spreadsheet.sheet(3)
     columns = services_sheet.row(1).count('OK')
     (3..columns + 2).each do |col|
       building_column = services_sheet.column(col)
@@ -82,21 +82,34 @@ class FacilitiesManagement::SpreadsheetImporter
     tmpfile
   end
 
-  # def delete_existing_procurement_buildings_and_services
-  #   @procurement.procurement_buildings.each do |pb|
-  #     pb.building.destroy
-  #     pb.destroy
-  #   end
-  # end
-
   private
 
   def spreadsheet_ready?
-    instructions_sheet = @spreadsheet.sheet(0)
+    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
     instructions_sheet.row(10)[1] == 'Ready to upload'
   end
 
   def template_valid?
-    false
+    path = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.3.xlsx')
+    template_spreadsheet = Roo::Spreadsheet.open(path, extension: :xlsx)
+
+    # The arrays are [sheet, column] - I've called sheets tabs in the iterator
+    # Be aware sheets start from 0 (like an array), but columns start from 1
+    columns = [
+      [1, 2], # Compliance (hidden)
+      [2, 1], # Building info
+      [3, 1], # Service matrix
+      [4, 1], [4, 3], # Service volumes 1
+      [5, 1], [5, 3], [5, 4], # Service volumes 2
+      # TODO: Sheets 6 & 7 will be removed - Service Periods 1 & 2
+      [8, 1], [8, 3], # Service volumes 3 - TODO: Re-number when sheets 6 & 7 removed
+      [9, 1], [9, 2], [9, 3], [9, 4] # Lists (hidden) - TODO: Re-number when sheets 6 & 7 removed
+    ]
+
+    columns.each do |tab, col|
+      return false if template_spreadsheet.sheet(tab).column(col) != @user_uploaded_spreadsheet.sheet(tab).column(col)
+    end
+
+    true
   end
 end
