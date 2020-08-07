@@ -98,9 +98,11 @@ module FacilitiesManagement
         supplier_services = lot1a_data[0]['services']
 
         supplier_checkboxes = determine_used_services
+        checked_services = params['checked_services'].nil? ? [] : params['checked_services']
+
         supplier_checkboxes.each do |service|
-          supplier_services.append(service) if (params['checked_services'].include? service) && (!supplier_services.include? service)
-          supplier_services.delete(service) if (!params['checked_services'].include? service) && (supplier_services.include? service)
+          supplier_services.append(service) if (checked_services.include? service) && (!supplier_services.include? service)
+          supplier_services.delete(service) if (!checked_services.include? service) && (supplier_services.include? service)
         end
 
         supplier.save
