@@ -6,7 +6,7 @@ module FacilitiesManagement
       def replace_services_for_lot(new_services, target_lot)
         data['lots'].each do |lot|
           if lot['lot_number'] == target_lot
-            lot['services'] = new_services
+            lot['services'] = new_services.nil? ? [] : new_services
             break
           end
         end
