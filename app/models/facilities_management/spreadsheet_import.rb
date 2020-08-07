@@ -6,7 +6,7 @@ module FacilitiesManagement
                              foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_imports
 
     has_one_attached :spreadsheet_file
-    validates :spreadsheet_file, attached: { message: :not_attached }
+    validate :spreadsheet_file_attached # the 'attached' macro ignores custom error messages hence this validator
     validates :spreadsheet_file, antivirus: { message: :malicious }
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -26,6 +26,10 @@ module FacilitiesManagement
           spreadsheet_file.purge
         end
       end
+    end
+
+    def spreadsheet_file_attached
+      errors.add(:spreadsheet_file, :not_attached) unless spreadsheet_file.attached?
     end
 
     def spreadsheet_file_ext_validation
