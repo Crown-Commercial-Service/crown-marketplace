@@ -1,10 +1,9 @@
 <span class="govuk-caption-xl"><%= @procurement.contract_name %></span>
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-
+<% binding.pry %>
 <strong class="govuk-tag"> <%= @spreadsheet_import.aasm_state %>  </strong>
-
-<% if @spreadsheet_import.in_progress? %>
-  <% render partial: 'in_progress' %>
+<% if @spreadsheet_import.importing? %>
+  <% render partial: 'importing' %>
 <% elsif @spreadsheet_import.succeeded? %>
   <% render partial: 'success' %>
   <% @spreadsheet_import.procurement.procurement_buildings.each do |pb| %>

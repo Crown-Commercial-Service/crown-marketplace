@@ -1461,7 +1461,7 @@ en:
         services_and_buildings_template: Services and buildings template
         uploading: Uploading your spreadsheet
       spreadsheet_imports:
-        in_progress:
+        importing:
           processing: We are processing your file upload.
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.

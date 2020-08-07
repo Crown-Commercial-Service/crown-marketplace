@@ -14,13 +14,13 @@ module FacilitiesManagement
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
           @spreadsheet_import.fail!
-          Rails.logger.warn ">>>>>>> SpreadsheetImport errors:\n  #{@spreadsheet_import.errors.full_messages.join("\n  ")}" # TODO: remove when errors displayed in UI
           render :new
         end
       end
 
       def show
         @spreadsheet_import = SpreadsheetImport.find(params[:id])
+        @procurement = FacilitiesManagement::Procurement.find(params[:procurement_id])
       end
 
       private
