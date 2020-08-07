@@ -25,7 +25,7 @@ module FacilitiesManagement
         @supplier_name = supplier_data['supplier_name']
         @lot_name = 'Sub-lot ' + params[:lot] + ' services'
         lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] } .first
-        supplier_services = lot_data['services']
+        supplier_services = lot_data['services'].nil? ? [] : lot_data['services']
         full_services
         setup_checkboxes(supplier_services)
       end
