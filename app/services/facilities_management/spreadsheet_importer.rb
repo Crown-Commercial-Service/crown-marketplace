@@ -90,20 +90,19 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def template_valid?
-    path = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.3.xlsx')
+    path = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.4.xlsx')
     template_spreadsheet = Roo::Spreadsheet.open(path, extension: :xlsx)
 
     # The arrays are [sheet, column] - I've called sheets tabs in the iterator
     # Be aware sheets start from 0 (like an array), but columns start from 1
     columns = [
-      [1, 2], # Compliance (hidden)
-      [2, 1], # Building info
-      [3, 1], # Service matrix
-      [4, 1], [4, 3], # Service volumes 1
-      [5, 1], [5, 3], [5, 4], # Service volumes 2
-      # TODO: Sheets 6 & 7 will be removed - Service Periods 1 & 2
-      [8, 1], [8, 3], # Service volumes 3 - TODO: Re-number when sheets 6 & 7 removed
-      [9, 1], [9, 2], [9, 3], [9, 4] # Lists (hidden) - TODO: Re-number when sheets 6 & 7 removed
+      [1, 1], # Building info
+      [2, 1], [2, 2], [2, 3], # Service matrix
+      [3, 1], [3, 2], [3, 4], # Service volumes 1
+      [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
+      [5, 1], [5, 2], [5, 4], # Service volumes 3
+      [7, 2], # Compliance (hidden)
+      [8, 1], [8, 2], [8, 3], [8, 4] # Lists (hidden)
     ]
 
     columns.each do |tab, col|
