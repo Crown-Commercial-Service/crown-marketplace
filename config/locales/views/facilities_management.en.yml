@@ -385,13 +385,13 @@ en:
         facilities_management/spreadsheet_import:
           attributes:
             spreadsheet_file:
-              malicious: This file is malicious, please check and try uploading again
-              not_attached: The file must be uploaded
-              not_ready: The file is not ready for upload. Please check cell B10 on the Instructions tab in your spreadsheet
-              template_invalid: The file must be the 'Services and buildings template' provided
-              too_large: The file is too large
-              wrong_content_type: The file has the wrong content type
-              wrong_extension: You have selected wrong file type - the building and services spreadsheet must be a .xlsx file
+              malicious: The selected file contains a virus
+              not_attached: Select your 'Services and building template'
+              not_ready: The selected file could not be uploaded. Cell B10 must be 'Ready' on the Instructions tab of your template
+              template_invalid: The selected file must use the 'Services and buildings template'
+              too_large: The selected file must be smaller than 10mb
+              wrong_content_type: The selected file does not contain the expected content type
+              wrong_extension: The selected file must be a XLSX
   dashboard:
     index:
       admin_link: Managing framework and supplier data
