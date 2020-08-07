@@ -4,20 +4,19 @@ class FacilitiesManagement::SpreadsheetImporter
     @procurement = @spreadsheet_import.procurement
     @user = @procurement.user
     @user_uploaded_spreadsheet = Roo::Spreadsheet.open(downloaded_spreadsheet.path, extension: :xlsx)
+    @errors = []
   end
 
   def basic_data_validation
-    errors = []
-
-    errors << :template_invalid unless template_valid?
-    errors << :not_ready unless spreadsheet_ready?
-    errors
+    @errors << :template_invalid unless template_valid?
+    @errors << :not_ready unless spreadsheet_ready?
+    @errors
   end
 
   def data_import
     import_buildings
     import_services
-    @spreadsheet_import.succeed!
+    @errors.none? ? @spreadsheet_import.succeed! : @spreadsheet_import.fail!
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -68,11 +67,13 @@ class FacilitiesManagement::SpreadsheetImporter
         service_standard = fm_service.name.length < service_name.length ? service_name[service_name.length - 1] : nil
         FacilitiesManagement::ProcurementBuildingService.create(procurement_building: procurement_building, code: fm_service.code, name: fm_service.name, service_standard: service_standard)
       end
-      procurement_building.update(:service_codes, procurement_building.procurement_building_services.map(&:code))
+      procurement_building.update(service_codes: procurement_building.procurement_building_services.map(&:code))
     end
-    @procurement.update(:service_codes, @procurement.procurement_buildings.map(&:service_codes).flatten.uniq)
+    @procurement.update(service_codes: @procurement.procurement_buildings.map(&:service_codes).flatten.uniq)
   end
   # rubocop:enable Metrics/AbcSize
+
+  private
 
   def downloaded_spreadsheet
     tmpfile = Tempfile.create
@@ -82,16 +83,15 @@ class FacilitiesManagement::SpreadsheetImporter
     tmpfile
   end
 
-  private
-
   def spreadsheet_ready?
     instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
     instructions_sheet.row(10)[1] == 'Ready to upload'
   end
 
+  TEMPLATE_FILE_PATH = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.4.xlsx')
+
   def template_valid?
-    path = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.4.xlsx')
-    template_spreadsheet = Roo::Spreadsheet.open(path, extension: :xlsx)
+    template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
 
     # The arrays are [sheet, column] - I've called sheets tabs in the iterator
     # Be aware sheets start from 0 (like an array), but columns start from 1
