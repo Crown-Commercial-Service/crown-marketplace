@@ -804,6 +804,8 @@ en:
         contract_period: Contract period
         estimated_annual_cost: Estimated annual cost
         tupe: TUPE
+      about_the_work:
+        excel: Click here to download an Excel template
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
@@ -1446,6 +1448,8 @@ en:
       service_codes_checkboxes:
         learn_more: Learn more (opens in a new tab)
       spreadsheet:
+        cancel_and_return_link: Cancel and return to procurement summary
+        continue_link: Continue to upload your file
         download_the_template: Download the template
         footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to procurement summary' button below.
         heading: Services and buildings - spreadsheet
@@ -1458,6 +1462,7 @@ en:
         list_information_2: services - which services you wish to buy in each building
         list_information_3: service requirements - for example, what standard of service, which hours of the day, or how many lifts are in the building
         results: Results
+        save_for_later_link: Save for later
         services_and_buildings_template: Services and buildings template
         uploading: Uploading your spreadsheet
       spreadsheet_imports:
@@ -1465,6 +1470,9 @@ en:
           processing: We are processing your file upload.
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
+        show:
+          dashboard_link: Return to procurements dashboard
+          procurement_link: Go to procurement
         success:
           about: About the procurement summary
           buildings: buildings

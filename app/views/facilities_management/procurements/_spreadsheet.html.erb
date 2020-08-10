@@ -35,9 +35,9 @@
   </div>
   <div>
     <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :patch do |f| %>
-      <%= f.submit 'Continue to upload your file', name: 'bulk_upload_spreadsheet', class: 'govuk-button govuk-button--primary' %>
-      <%= f.submit 'Save for later', name: 'bulk_upload_spreadsheet', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %><br/>
-      <%= f.submit( 'Cancel and return to procurement summary',
+      <%= f.submit t('.continue_link'), name: 'bulk_upload_spreadsheet', class: 'govuk-button govuk-button--primary' %>
+      <%= f.submit t('.save_for_later_link'), name: 'bulk_upload_spreadsheet', class: 'govuk-button govuk-button--secondary govuk-!-margin-left-4' %><br/>
+      <%= f.submit( t('.cancel_and_return_link'),
                    tabindex:-1,
                    class: 'govuk-link govuk-!-margin-right-4 button_as_link',
                    data:  { disable_with: false }, name: 'change_requirements', style: 'display:block', tabindex:-1, 'aria-label': 'Cancel and return to procurement summary') %>
