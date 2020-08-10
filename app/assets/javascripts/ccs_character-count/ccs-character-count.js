@@ -87,13 +87,18 @@ CCSCharacterCount.prototype.getDataset = function (element) {
 
 CCSCharacterCount.prototype.count = function (text) {
 	var length;
+	var newLines = text.match(/(\r\n|\n|\r)/g);
+	var addition = 0;
+	if (newLines != null) {
+			addition = newLines.length;
+	}
 	if (this.options.maxwords) {
 		var tokens = text.match(/\S+/g) || [];
 		length = tokens.length;
 	} else {
 		length = text.length;
 	}
-	return length;
+	return length + addition;
 };
 
 CCSCharacterCount.prototype.createCountMessage = function () {
