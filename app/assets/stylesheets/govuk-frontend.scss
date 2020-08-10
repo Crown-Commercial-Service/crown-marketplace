@@ -22,6 +22,7 @@
   text-decoration : underline;
   margin         : 1ex 0;
   color           : $govuk-link-colour;
+  background-color: inherit;
 
   &:focus {
     outline          : 3px solid #ffbf47;

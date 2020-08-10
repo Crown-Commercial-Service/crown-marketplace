@@ -58,6 +58,7 @@ module FacilitiesManagement::ProcurementsHelper
                         results: 'Results',
                         quick_search: 'Quick search',
                         detailed_search: 'Detailed search',
+                        detailed_search_bulk_upload: 'Detailed search - Bulk upload',
                         closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
@@ -123,6 +124,6 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def procurement_can_be_deleted?
-    %w[quick_search detailed_search da_draft choose_contract_value results].include? @procurement.aasm_state
+    %w[quick_search detailed_search detailed_search_bulk_upload da_draft choose_contract_value results].include? @procurement.aasm_state
   end
 end

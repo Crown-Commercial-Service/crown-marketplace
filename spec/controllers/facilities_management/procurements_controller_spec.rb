@@ -404,6 +404,54 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
+      context 'when changing from detailed search to bulk upload' do
+        before do
+          procurement.update(aasm_state: 'detailed_search')
+          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'true' }
+        end
+
+        it 'will change the state to detailed search - bulk upload on selection' do
+          procurement.reload
+
+          expect(procurement.aasm_state).to eq 'detailed_search_bulk_upload'
+        end
+
+        it 'will redirect to the spreadsheet import path' do
+          expect(response).to redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+        end
+      end
+
+      context 'when in bulk upload and saving for later' do
+        before do
+          procurement.update(aasm_state: 'detailed_search_bulk_upload')
+          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'Save for later' }
+        end
+
+        it 'will remain in the bulk upload state' do
+          expect(procurement.aasm_state).to eq 'detailed_search_bulk_upload'
+        end
+
+        it 'will redirect to the facilities_management_procurements_path' do
+          expect(response).to redirect_to facilities_management_procurements_path
+        end
+      end
+
+      context 'when in bulk upload and going back to detailed search' do
+        before do
+          procurement.update(aasm_state: 'detailed_search_bulk_upload')
+          patch :update, params: { id: procurement.id, change_requirements: 'Change requirements' }
+        end
+
+        it 'will remain in the bulk upload state' do
+          procurement.reload
+          expect(procurement.aasm_state).to eq 'detailed_search'
+        end
+
+        it 'will redirect to the facilities_management_procurements_path' do
+          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        end
+      end
+
       context 'when change requirements is selected on the results page' do
         before do
           procurement.update(aasm_state: 'results')

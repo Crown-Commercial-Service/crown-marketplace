@@ -109,6 +109,7 @@ module FacilitiesManagement
     aasm do
       state :quick_search, initial: true
       state :detailed_search
+      state :detailed_search_bulk_upload
       state :choose_contract_value
       state :results
       state :da_draft
@@ -148,6 +149,10 @@ module FacilitiesManagement
 
       event :start_detailed_search do
         transitions from: :quick_search, to: :detailed_search
+      end
+
+      event :start_detailed_search_bulk_upload do
+        transitions from: :detailed_search, to: :detailed_search_bulk_upload
       end
 
       event :start_direct_award do
@@ -277,7 +282,7 @@ module FacilitiesManagement
       procurement_building_services.reject(&:special_da_service?).map { |pbs| pbs.service_missing_framework_price?(rate_model) }.all?(false)
     end
 
-    SEARCH = %i[quick_search detailed_search choose_contract_value results].freeze
+    SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
     DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
