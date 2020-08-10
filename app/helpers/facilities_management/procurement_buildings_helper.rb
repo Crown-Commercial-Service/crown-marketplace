@@ -47,9 +47,9 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     object_value == value
   end
 
-  def cell_class(service)
+  def cell_class(qa_h)
     css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
-    css_class << 'govuk-border-bottom_none' if service == :service_hours
+    css_class << 'govuk-border-bottom_none' if qa_h[:question] == :service_hours && qa_h[:answer].present?
     css_class.join(' ')
   end
 end

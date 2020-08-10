@@ -43,11 +43,14 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
       expect(wb.sheet('Volume').row(3)).to eq ['H.4', 'Handyman services', 'Number of hours required', 208.0]
     end
 
+    # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Service Periods headers' do
-      expect(wb.sheet('Service Periods').row(1)).to eq ['Service Reference', 'Service Name', 'Specific Service Periods', 'Building 1']
+      expect(wb.sheet('Service Periods').row(1)).to eq ['Service Reference', 'Service Name', 'Metric per Annum', 'Building 1']
       expect(wb.sheet('Service Periods').row(2)).to eq [nil, nil, nil, 'asa']
-      expect(wb.sheet('Service Periods').row(3)).to eq ['H.4', 'Handyman services', 'Monday', '9:00am to 1:00pm']
+      expect(wb.sheet('Service Periods').row(3)).to eq ['H.4', 'Handyman services', 'Number of hours required', 208]
+      expect(wb.sheet('Service Periods').row(4)).to eq ['H.4', 'Handyman services', 'Detail of requirement', 'Details of the requirement']
     end
+    # rubocop:enable RSpec/MultipleExpectations
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do

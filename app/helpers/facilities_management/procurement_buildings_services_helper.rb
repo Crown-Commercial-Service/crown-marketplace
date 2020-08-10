@@ -7,15 +7,12 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
     model.errors.details[:lift_data].find_index { |item| item[:position] == index }.present?
   end
 
-  def all_not_required?(service_hours)
-    service_hours.errors.details[:base].any? && service_hours.errors.details[:base].first[:error] == :required
-  end
+  def form_group_with_error(model, attribute)
+    css_classes = ['govuk-form-group']
+    css_classes += ['govuk-form-group--error'] if model.errors.key?(attribute)
 
-  def error_summary_link(key, value, attribute)
-    link_to value.errors[attribute].first.to_s, "##{key}-#{attribute}-error", data: { fieldname: :service_choice, errortype: value.errors.details[attribute].first[:error] }
-  end
-
-  def base_error_link(object, attribute)
-    link_to object.errors[attribute].first.to_s, "##{attribute}-error", data: { fieldname: attribute, errortype: object.errors.details[attribute].first[:error] }
+    content_tag :div, class: css_classes do
+      yield
+    end
   end
 end

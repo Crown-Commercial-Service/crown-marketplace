@@ -1,77 +1,63 @@
 <%= form_for @building_service, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: true, novalidate: true, multipart: true} do |f| %>
-    <% if f.object.errors.any? %>
-    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t(".there_is_a_problem") %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul class="govuk-list govuk-error-summary__list">
-          <% if f.object.errors[:personnel].any? %>
-            <li>
-              <%= base_error_link(f.object, :personnel) %>
-            </li>
-          <% end %>
-          <% f.object.service_hours.attributes.reject {|k, _| %i[uom personnel].include? k}.each do |key, value| %>
-            <% if value.errors[:service_choice].present? %>
-              <li>
-                <%= error_summary_link(key, value, :service_choice) %>
-              </li>
-            <% end %>
-            <% if value.errors[:start_time].present? %>
-              <li>
-                <%= error_summary_link(key, value, :start_time) %>
-              </li>
-            <% end %>
-            <% if value.errors[:end_time].present? %>
-              <li>
-                <%= error_summary_link(key, value, :end_time) %>
-              </li>
-            <% end %>
-          <% end %>
-          <% if all_not_required?(f.object) %>
-            <li>
-              <%= base_error_link(f.object, :base) %>
-            </li>
-          <% end %>
-        </ul>
+  <%= f.hidden_field :step, value: @partial_prefix %>
+  <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
+  <%= form_group_with_error(f.object, :service_hours) do %>
+    <h3 class="govuk-heading-m">
+      <%= t('.hour_heading') %>
+    </h3>
+    <div class="govuk-hint">
+      <%= t('.hour_hint') %>
+    </div>
+    <div>
+      <%= display_error f.object, :service_hours %>
+      <%= f.label :service_hours, t('.hour_label'), class: 'govuk-label' %>
+      <%= f.number_field :service_hours, class: "govuk-input govuk-input--width-5 #{'govuk-input--error' if f.object.errors.key?(:service_hours)}" %>
+    </div>
+  <% end %>
+
+  <%= form_group_with_error(f.object, :detail_of_requirement) do %>
+    <h3 class="govuk-heading-m">
+      <%= t('.detail_heading') %>
+    </h3>
+    <div class="govuk-hint">
+      <%= t('.detail_hint') %>
+    </div>
+    <div class="govuk-!-margin-bottom-4">
+      <%= govuk_details(t('.detail_example'), true) do%>
+        <div class="govuk-hint">
+          <span>
+            <%= t('.detail_example_1') %>
+          </span><br />
+          <span>
+            <%= t('.detail_example_2') %>
+          </span><br />
+          <span>
+            <%= t('.detail_example_3') %>
+          </span><br />
+          <span>
+            <%= t('.detail_example_4') %>
+          </span><br />
+          <br />
+          <span>
+            <%= t('.detail_example_5') %> 
+          </span><br />
+          <span>
+            <%= t('.detail_example_6') %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <%= display_error f.object, :detail_of_requirement %>
+      <%= f.label :detail_of_requirement, t('.detail_label'), class: 'govuk-label' %>
+      <div class="ccs-character-count-container" data-module="ccs-character-count" data-maxlength="500">
+        <%= govuk_text_area_input f, :detail_of_requirement, true, rows: 5, maxlength: 500, class: 'govuk-!-margin-bottom-2' %>
       </div>
     </div>
   <% end %>
-  <%= f.hidden_field :step, value: @partial_prefix %>
-  <p class="govuk-!-margin-bottom-6 govuk-hint">
-    <%= t('.service_hours_description_1') %>
-  </p>
-  <div class="servicehourscontainer">
-    <div class="servicehoursdata">
-      <div class="govuk-form-group <%= 'govuk-form-group--error' if f.object[:service_hours].errors[:personnel].any? %>">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
-          <%= t('.personnel_subtitle') %>
-        </h2>
-        <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
-          <%= display_error f.object, :personnel %>
-          <%= sh.label :personnel, t('.number_of_personnel') %><br>
-          <%= sh.number_field :personnel, class: "govuk-input govuk-input--width-3 ccs-integer-field govuk-!-margin-top-2 #{'govuk-input--error' if f.object[:service_hours].errors[:personnel].any?}" %>
-        <% end %>
-      </div>
-      <h2 class="govuk-heading-m govuk-!-margin-bottom-4"><%= t('.service_hours_subtitle') %></h2>
-      <div class="service_hours_container <%= 'govuk-form-group--error' if all_not_required?(f.object) %>">
-        <% if all_not_required?(f.object) %>
-          <%= display_error f.object, :base %>
-        <% end %>
-        <%= f.fields_for :service_hours, f.object[:service_hours] do |sh| %>
-          <% sh.object.attributes.each do |key, _value| %>
-            <% unless %i[uom personnel].include? key %>
-              <%= sh.fields_for key, sh.object[key] do |day|%>
-                <%= render partial: 'day_section', locals: { day: key, f: day, service_hours: sh.object, service_choice: day.object } %>
-              <%end%>
-            <%end %>
-          <%end%>
-        <%end%>
-      </div>
-    </div>
-  </div>
+
   <div class="govuk-grid-row govuk-!-margin-top-9">
-    <%= f.submit t('.save_and_return_to_service_information'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4', data: { disable_with:false }, 'aria-label': t('.save_and_return_to_service_information') %>
+    <%= f.submit t('.save_and_return'), class: 'govuk-button govuk-button--primary govuk-!-margin-left-3 govuk-!-margin-bottom-4', data: { disable_with:false }, 'aria-label': t('.save_and_return') %>
   </div>
-  <%= link_to t('.back_to_service_information'), facilities_management_procurement_building_path(@procurement_building), class: 'govuk-link--no-visited-state' %>
+  <%= link_to t('.return_to_service_requirements_summary'), facilities_management_procurement_building_path(@procurement_building), class: 'govuk-link--no-visited-state' %>
 <% end %>

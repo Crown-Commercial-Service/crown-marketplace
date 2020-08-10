@@ -292,15 +292,30 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
+      context 'when other_security_type contains carriage return characters' do
+        it 'will be valid' do
+          building.security_type       = :other
+          building.other_security_type = ('a' * 140) + ("\r\n" * 10)
+          expect(building.valid?(:security)).to eq true
+        end
+      end
+
+      context 'when other_security_type is more than 150 characters' do
+        it 'will be valid' do
+          building.security_type       = :other
+          building.other_security_type = ('a' * 141) + ("\r\n" * 10)
+          expect(building.valid?(:security)).to eq false
+        end
+      end
+
       context 'when other_security_type is not blank' do
         before do
           building.security_type       = :other
           building.other_security_type = 'other security type'
-          building.valid? :security
         end
 
-        it 'will be invalid' do
-          expect(building.errors.details.dig(:other_security_type)).to eq []
+        it 'will be valid' do
+          expect(building.valid?(:security)).to eq true
         end
       end
     end
@@ -350,24 +365,36 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will be valid' do
-          expect(building.valid?(:security)).to eq true
+          expect(building.valid?(:type)).to eq true
         end
 
-        it 'will be not save other_security_type' do
+        it 'will be not save other_building_type' do
           building.save(context: :type)
           expect(building.other_building_type).to eq nil
         end
       end
 
-      context 'when other_building_type is not blank' do
-        before do
+      context 'when other_building_type contains carriage return characters' do
+        it 'will be valid' do
           building.building_type       = :other
-          building.other_building_type = 'other security type'
-          building.valid? :type
+          building.other_building_type = ('a' * 140) + ("\r\n" * 10)
+          expect(building.valid?(:type)).to eq true
         end
+      end
 
-        it 'will be invalid' do
-          expect(building.errors.details.dig(:other_building_type)).to eq []
+      context 'when other_building_type is more than 150 characters' do
+        it 'will not be valid' do
+          building.building_type       = :other
+          building.other_building_type = ('a' * 141) + ("\r\n" * 10)
+          expect(building.valid?(:type)).to eq false
+        end
+      end
+
+      context 'when other_building_type is not blank' do
+        it 'will be valid' do
+          building.building_type       = :other
+          building.other_building_type = 'other building type'
+          expect(building.valid?(:type)).to eq true
         end
       end
 

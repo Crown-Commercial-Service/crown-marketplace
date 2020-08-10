@@ -11,34 +11,25 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     Roo::Excelx.new(path)
   end
 
-  let(:service_hours) { FacilitiesManagement::ServiceHours.new }
+  let(:service_hours) { 3484 }
+  let(:detail_of_requirement) { 'Details of the requirement' }
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
   let(:supplier) { create(:ccs_fm_supplier) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   before do
-    service_hours[:monday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:tuesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'PM', uom: 0)
-    service_hours[:thursday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:friday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: '05', end_minute: '30', end_ampm: 'AM', uom: 0)
-    service_hours[:sunday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:personnel] = 1
-
     procurement.active_procurement_buildings.each do |pb|
-      pb.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours)
+      pb.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours, detail_of_requirement: detail_of_requirement)
     end
   end
 
   # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, service periods, worksheet headers' do
-    expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Specific Service Periods', 'Building 1', 'Building 2'])
+    expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Metric per Annum', 'Building 1', 'Building 2'])
     expect(wb.sheet('Service Periods').row(2)).to match_array([nil, nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Periods').row(3)).to match_array(['I.1', 'Reception service', 'Monday', 'Not required', 'Not required'])
-    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Tuesday', 'All day (24 hours)', 'All day (24 hours)'])
-    expect(wb.sheet('Service Periods').row(5)).to match_array(['I.1', 'Reception service', 'Wednesday', '8:00am to 5:30pm', '8:00am to 5:30pm'])
+    expect(wb.sheet('Service Periods').row(3)).to match_array(['I.1', 'Reception service', 'Number of hours required', service_hours, service_hours])
+    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Detail of requirement', detail_of_requirement, detail_of_requirement])
   end
   # rubocop:enable RSpec/MultipleExpectations
 
