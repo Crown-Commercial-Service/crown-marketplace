@@ -1,5 +1,8 @@
 
+<%= render partial: 'facilities_management/procurements/spreadsheet_imports/upload_status' %>
 
-<% render partial: 'facilities_management/procurements/spreadsheet_imports/upload_status' %>
-
-<%= link_to 'Go to procurement', facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link' %>
+<% if @spreadsheet_import.importing? %>
+  <%= link_to 'Return to procurements dashboard', facilities_management_procurements_path, class: 'govuk-link govuk-!-margin-top-4' %>
+  <% else %>
+  <%= link_to 'Go to procurement', facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link govuk-!-margin-top-4' %>
+<% end %>
