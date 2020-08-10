@@ -1,6 +1,5 @@
 <span class="govuk-caption-xl"><%= @procurement.contract_name %></span>
 <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
-<% binding.pry %>
 <strong class="govuk-tag"> <%= @spreadsheet_import.aasm_state %>  </strong>
 <% if @spreadsheet_import.importing? %>
   <% render partial: 'importing' %>

@@ -7,11 +7,11 @@ module FacilitiesManagement
 
     has_one_attached :spreadsheet_file
     validate :spreadsheet_file_attached # the 'attached' macro ignores custom error messages hence this validator
+    validate :spreadsheet_file_ext_validation
     validates :spreadsheet_file, antivirus: { message: :malicious }
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                                                  message: :wrong_content_type }
-    validate :spreadsheet_file_ext_validation
     validate :spreadsheet_basic_data_validation
 
     aasm do
