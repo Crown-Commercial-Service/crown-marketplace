@@ -20,7 +20,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   # This can be added as more parts of the bulk upload are completed
-  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix].freeze
+  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes_1 import_service_volumes_2].freeze
 
   def import_data
     IMPORT_PROCESS_ORDER.each do |import_process|
@@ -80,12 +80,6 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  def buildings_complte?(building_sheet)
-    status_indicator = building_sheet.row(13).reject(&:empty?)
-    status_indicator.shift
-    status_indicator.count('Complete').positive? && status_indicator.reject { |status| status == 'Complete' }.empty?
-  end
-
   def add_regions(building, building_column)
     region = Postcode::PostcodeCheckerV2.find_region building_column[5].to_s.delete(' ')
     (building.address_region_code = region[0]['code']) && (building.address_region = region[0]['region']) if region.count == 1
@@ -129,42 +123,25 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def get_service_codes(matrix_sheet, col, index)
     matrix_column = matrix_sheet.column(col)[3..-1].map { |value| value == 'Yes' }
-    procurement_building_hash = @procurement_array[index][:procurement_building]
-    procurement_building = procurement_building_hash[:object]
-    procurement_building_services = procurement_building_hash[:procurement_building_services]
+    procurement_building = @procurement_array[index][:procurement_building][:object]
+    procurement_building_services = @procurement_array[index][:procurement_building][:procurement_building_services]
 
     matrix_column.each_with_index do |service, i|
       next unless service
 
       code = extract_code(SERVICE_CODES[i])
 
-      break if check_for_duplicate_code(procurement_building, procurement_building_hash, code)
-
       if procurement_building.service_codes.include? code
         @procurement_array[index][:procurement_building][:valid] = false
-        @procurement_array[index][:procurement_building][:errors] = { service_codes: [{ error: :multiple_standards_for_one_service }] }
+        @procurement_array[index][:procurement_building][:errors] = :multiple_standards_for_one_service
         break
       end
 
       procurement_building.service_codes << code
       add_procurement_building_service(procurement_building_services, code, i)
     end
-
-    validate_procurement_building(@procurement_array[index][:procurement_building], @procurement_array[index][:object])
-  end
-  # rubocop:enable Metrics/AbcSize
-
-  def check_for_duplicate_code(procurement_building, procurement_building_hash, code)
-    if procurement_building.service_codes.include? code
-      procurement_building_hash[:valid] = false
-      procurement_building_hash[:errors] = { service_codes: [{ error: :multiple_standards_for_one_service }] }
-      return true
-    end
-
-    false
   end
 
   def add_procurement_building_service(procurement_building_services, code, index)
@@ -204,7 +181,69 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   # Importing Service volumes 1
+  # rubocop:disable Metrics/AbcSize
+  def import_service_volumes_1
+    service_volume_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 1')
+    if sheet_complete?(service_volume_sheet, 1, 'OK') && sheet_contains_all_buildings?(service_volume_sheet, 3, 4)
+      columns = service_volume_sheet.row(1).count('OK')
+      (5..columns + 4).each_with_index do |col, building_index|
+        service_volume_column = service_volume_sheet.column(col)
+        services = { 'E.4': service_volume_column[3].to_i,
+                     'G.1': service_volume_column[4].to_i,
+                     'G.3': service_volume_column[5].to_i,
+                     'K.1': service_volume_column[6].to_i,
+                     'K.2': service_volume_column[7].to_i,
+                     'K.3': service_volume_column[8].to_i,
+                     'K.4': service_volume_column[9].to_i,
+                     'K.5': service_volume_column[10].to_i,
+                     'K.6': service_volume_column[11].to_i,
+                     'K.7': service_volume_column[12].to_i }
+        add_service_volumes(services, building_index)
+      end
+    else
+      @errors << :volumes_incomplete
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  VOLUME_CODES = %w[E.4 G.1 G.3 K.1 K.2 K.3 K.4 K.5 K.6 K.7].freeze
+
+  def add_service_volumes(services, building_index)
+    procurement_building_services = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }
+    procurement_building_services.each do |pbs|
+      next unless VOLUME_CODES.include?(pbs.code)
+
+      volume = pbs.required_contexts[:volume].first
+      pbs[volume] = services[pbs.code.to_sym]
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize
   # Importing Service volumes 2
+  def import_service_volumes_2
+    service_volume_lifts_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 2')
+    if sheet_complete?(service_volume_lifts_sheet, 1, 'OK') && sheet_contains_all_buildings?(service_volume_lifts_sheet, 2, 1)
+      columns = service_volume_lifts_sheet.row(1).count('OK')
+      (6..columns + 5).each_with_index do |col, building_index|
+        procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.select { |pbs| pbs.code == 'C.5' }.first
+        next if procurement_building_service.nil?
+
+        lift = []
+        service_volume_column = service_volume_lifts_sheet.column(col)[6..-2]
+
+        40.times do |row|
+          lift_data = service_volume_column[row]
+          break if lift_data.nil?
+
+          lift << lift_data.to_i
+        end
+        procurement_building_service.lift_data = lift
+      end
+    else
+      @errors << :lifts_incomplete
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
   # Importing Service volumes 3
 
   def downloaded_spreadsheet
@@ -322,17 +361,17 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def save_building(building, index)
-    exsisting_building = @user.buildings.find_by(building_name: building.building_name)
-    if exsisting_building.nil?
+    existing_building = @user.buildings.find_by(building_name: building.building_name)
+    if existing_building.nil?
       building.save
     else
-      if building.address_region.nil? && nomralise_postcode(exsisting_building.address_postcode) == nomralise_postcode(building.address_postcode)
-        exsisting_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'address_region', 'address_region_code', 'building_json'))
+      if building.address_region.nil? && normalise_postcode(existing_building.address_postcode) == normalise_postcode(building.address_postcode)
+        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'address_region', 'address_region_code', 'building_json'))
       else
-        exsisting_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'building_json'))
+        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'building_json'))
       end
-      exsisting_building.save
-      @procurement_array[index][:object] = exsisting_building
+      existing_building.save
+      @procurement_array[index][:object] = existing_building
     end
   end
 
@@ -352,7 +391,7 @@ class FacilitiesManagement::SpreadsheetImporter
     building[:procurement_building][:procurement_building_services].each { |pbs| pbs[:object].reload }
   end
 
-  def nomralise_postcode(postcode)
+  def normalise_postcode(postcode)
     postcode.gsub(' ', '').downcase
   end
 end
