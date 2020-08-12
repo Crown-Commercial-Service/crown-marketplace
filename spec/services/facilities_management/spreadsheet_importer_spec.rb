@@ -541,6 +541,27 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
             expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:errors][:other_building_type].first[:error]).to eq :too_long
           end
         end
+
+        context 'when validating all the building types' do
+          FacilitiesManagement::Building::SPREADSHEET_BUILDING_TYPES.each do |building_type|
+            context "when the building type is #{building_type}" do
+              before do
+                spreadsheet_building.building_type = building_type
+                bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
+                spreadsheet_importer.import_data
+              end
+
+              it 'changes the state of the spreadsheet_import to succeeded' do
+                spreadsheet_import.reload
+                expect(spreadsheet_import.succeeded?).to be true
+              end
+
+              it 'makes the building valid' do
+                expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:valid]).to be true
+              end
+            end
+          end
+        end
       end
 
       describe 'security_type' do
