@@ -67,6 +67,7 @@ module FacilitiesManagement
 
     before_validation proc { convert_other(:building_type) }, on: %i[type all], if: -> { building_type == 'Other' }
     before_validation proc { remove_other(:other_building_type) }, on: %i[type all], unless: -> { building_type == 'other' }
+    before_validation :convert_building_type, on: %i[type all], unless: -> { building_type == 'other' }
     validates :building_type, presence: true, inclusion: { in: BUILDING_TYPES.map { |type| type[:id] } + ['other'] }, on: %i[type all]
     validates :other_building_type, presence: true, length: { maximum: 150 }, on: %i[type all], if: -> { building_type == 'other' }
 
@@ -199,10 +200,18 @@ module FacilitiesManagement
       self[attribute] = 'other'
     end
 
+    SPREADSHEET_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations', 'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools', 'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations', 'External parks, grounds and car parks', 'Laboratory', 'Heritage Buildings', 'Nuclear Facilities', 'Animal Facilities', 'Custodial Facilities', 'Fire and Police Stations', 'Production Facilities', 'Workshops', 'Garages', 'Shopping Centres', 'Museums /Galleries', 'Fitness / Training Establishments', 'Residential Buildings', 'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal'].freeze
+
+    BUILDING_TYPES_CONVERSION = SPREADSHEET_BUILDING_TYPES.map.with_index { |type, index| [type, BUILDING_TYPES[index][:id]] }.to_h.freeze
+
     def security_type_selection
       fm_security_types = FacilitiesManagement::SecurityTypes&.all&.map(&:title)
       fm_security_types = [] if fm_security_types.nil?
       errors.add(:security_type, :inclusion) unless (fm_security_types + ['other']).include? security_type
+    end
+
+    def convert_building_type
+      self.building_type = BUILDING_TYPES_CONVERSION[building_type] || building_type
     end
 
     # The standard building types are: "General office - Customer Facing", "General office - Non Customer Facing", "Call Centre Operations",
