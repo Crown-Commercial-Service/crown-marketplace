@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_080425) do
+ActiveRecord::Schema.define(version: 2020_08_10_131855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -97,7 +97,8 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
     t.string "lift_data", default: [], array: true
-    t.jsonb "service_hours"
+    t.bigint "service_hours"
+    t.text "detail_of_requirement"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
   end
 

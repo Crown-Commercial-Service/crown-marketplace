@@ -1,12 +1,18 @@
 <%= content_for :page_title, @building_service.name.html_safe %>
 <div class="govuk-body govuk-grid-row procurement-building-service">
     <div class="govuk-grid-column-full">
-      <%= link_to 'Back', facilities_management_procurement_building_path(@procurement_building.id), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
+      <%= link_to 'Return to service requirements summary', facilities_management_procurement_building_path(@procurement_building.id), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
     </div>
-    <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-m"><%= @procurement_building.procurement.contract_name %>
-        - <%= @procurement_building.name %></span>
-      <h1 class="govuk-heading-xl"><%= @building_service.name %></h1>
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">
+        <%= @procurement_building.procurement.contract_name %>
+      </span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">
+        <%= @procurement_building.name %>
+      </h1>
+      <h2 class="govuk-heading-l ccs-font-weight-semi-bold">
+        <%= @building_service.name %>
+      </h1>
       <%= render partial: "#{@partial_prefix}"%>
   </div>
 </div>

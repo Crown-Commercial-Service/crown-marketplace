@@ -681,54 +681,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
-  # rubocop:disable RSpec/BeforeAfterAll
-  describe '#service_hours' do
-    let(:mock_ar_class) { build_mock_ar }
-    let(:record) { mock_ar_class.create(service_hours: {}) }
-
-    before(:all) do
-      ActiveRecord::Base.connection.drop_table :pbs_mock if ActiveRecord::Base.connection.data_source_exists? 'pbs_mock'
-      ActiveRecord::Base.connection.create_table :pbs_mock do |t|
-        t.jsonb :service_hours, null: true
-      end
-    end
-
-    after(:all) do
-      ActiveRecord::Base.connection.drop_table :pbs_mock
-    end
-
-    def build_mock_ar
-      Class.new(ApplicationRecord) do
-        self.table_name = 'pbs_mock'
-        serialize :service_hours, FacilitiesManagement::ServiceHours
-
-        attr_accessor :id
-      end
-    end
-
-    context 'when saving' do
-      let(:sh) { FacilitiesManagement::ServiceHours.new }
-
-      before do
-        sh[:tuesday][:service_choice] = :all_day
-        sh[:wednesday][:start_hour] = '10'
-        sh[:wednesday][:start_minute] = '00'
-        sh[:wednesday][:start_ampm] = 'am'
-        sh[:wednesday][:end_hour] = '10'
-        sh[:wednesday][:end_minute] = '00'
-        sh[:wednesday][:end_ampm] = 'pm'
-      end
-
-      it 'will produce a hash' do
-        record[:service_hours] = sh
-        record.save
-        result = ActiveRecord::Base.connection.execute('select service_hours from pbs_mock')
-        expect(result).not_to eq nil
-      end
-    end
-  end
-  # rubocop:enable RSpec/BeforeAfterAll
-
   describe '#lift_data' do
     context 'when more than 99 lifts are added' do
       it 'will not be valid' do
@@ -842,10 +794,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     context 'when J.6' do
       let(:code) { 'J.6' }
 
-      let(:service_hours) { { "monday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "tuesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "wednesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "thursday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "friday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "saturday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "sunday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "personnel": 1, "uom": 0 } }
+      let(:service_hours) { 1820 }
 
       it 'returns total_hours_annually' do
-        expect(procurement_building_service.uval).to eq 1820
+        expect(procurement_building_service.uval).to eq service_hours
       end
     end
 
@@ -854,6 +806,141 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
       it 'returns building GIA' do
         expect(procurement_building_service.uval).to eq 1002
+      end
+    end
+  end
+
+  describe '#service_hours' do
+    before { procurement_building_service.detail_of_requirement = 'Some detail' }
+
+    context 'when the service_hours is blank' do
+      before { procurement_building_service.service_hours = nil }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Enter number of hours per year'
+      end
+    end
+
+    context 'when the service_hours is zero' do
+      before { procurement_building_service.service_hours = 0 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is 1 billion' do
+      before { procurement_building_service.service_hours = 1000000000 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is not an interger' do
+      before { procurement_building_service.service_hours = 506.78 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is an integer within the range' do
+      it 'is valid' do
+        procurement_building_service.service_hours = rand(1000)
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the service_hours is 1' do
+      it 'is valid' do
+        procurement_building_service.service_hours = 1
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the service_hours is 999,999,999' do
+      it 'is valid' do
+        procurement_building_service.service_hours = 999999999
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+  end
+
+  describe '#detail_of_requirement' do
+    before { procurement_building_service.service_hours = 806 }
+
+    context 'when the detail_of_requirement is blank' do
+      before { procurement_building_service.detail_of_requirement = nil }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:detail_of_requirement].first).to eq 'Enter the detail of requirement'
+      end
+    end
+
+    context 'when the detail_of_requirement is blank' do
+      before { procurement_building_service.detail_of_requirement = '' }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:detail_of_requirement].first).to eq 'Enter the detail of requirement'
+      end
+    end
+
+    context 'when the detail_of_requirement is more than the max number of characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = 'a' * 501
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+    end
+
+    context 'when the detail_of_requirement is only carriage return characters' do
+      it 'is not valid' do
+        procurement_building_service.detail_of_requirement = "\r\n" * 10
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+    end
+
+    context 'when the detail_of_requirement is within the range of characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = 'This is the detail of the requirement'
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the detail_of_requirement is within the range of with carriage return characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = ('a' * 490) + ("\r\n" * 10)
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
       end
     end
   end

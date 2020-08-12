@@ -15,7 +15,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
           service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
+          service_hours: procurement_building_service.service_hours,
+          detail_of_requirement: procurement_building_service.detail_of_requirement
         }
       end
     end.flatten
@@ -29,7 +30,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
           service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
+          service_hours: procurement_building_service.service_hours,
+          detail_of_requirement: procurement_building_service.detail_of_requirement
         }
       end
     end.flatten
@@ -188,7 +190,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row ['Reference number:', @procurement.contract_number], style: bold_style, height: standard_row_height
     sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: bold_style, height: standard_row_height
     sheet.add_row [], style: bold_style, height: standard_row_height
-    update_cell_styles(sheet, ['B1', 'B2'], hint_style)
+    update_cell_styles(sheet, 'B1:B2', hint_style)
   end
 
   def add_shortlist_cost_sublot_recommendation(sheet, standard_style, bold_style, hint_style)
@@ -196,7 +198,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: hint_style, height: standard_row_height
     sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: hint_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: hint_style, height: standard_row_height
-    update_cell_styles(sheet, ['A5', 'A6', 'A7'], standard_style)
+    update_cell_styles(sheet, 'A5:A7', standard_style)
   end
 
   def add_shortlist_supplier_names(sheet, standard_style, bold_style, hint_style, link_style)
@@ -204,7 +206,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     return if supplier_datas.empty?
 
     sheet.add_row ['Suppliers shortlist', 'Further supplier information and contact details can be found here:'], style: bold_style, height: standard_row_height
-    update_cell_styles(sheet, ['B9'], standard_style)
+    update_cell_styles(sheet, 'B9:B9', standard_style)
 
     supplier_datas.each do |data|
       sheet.add_row [data['supplier_name']], style: hint_style, height: standard_row_height
@@ -304,9 +306,5 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   def style_shortlist_sheet(sheet)
     column_widths = [50, 50, 50]
     sheet.column_widths(*column_widths)
-  end
-
-  def update_cell_styles(sheet, cells, style)
-    cells.each { |cell| sheet[cell].style = style }
   end
 end
