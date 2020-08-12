@@ -50,7 +50,7 @@ class AddMigrationToEnterDataIntoNewColumns < ActiveRecord::Migration[5.2]
 
   def time_summary(attributes, point_of_day)
     time = attributes["#{point_of_day}_hour"].to_s
-    time += ":#{attributes["#{point_of_day}_minute"]}" unless attributes["#{point_of_day}_minute"].zero?
+    time += ":#{attributes["#{point_of_day}_minute"]}" unless attributes["#{point_of_day}_minute"].to_i.zero?
 
     time += attributes["#{point_of_day}_ampm"].downcase
     time
