@@ -19,6 +19,9 @@ class FacilitiesManagement::SpreadsheetImporter
     @errors
   end
 
+  # This can be added as more parts of the bulk upload are completed
+  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix].freeze
+
   def import_data
     IMPORT_PROCESS_ORDER.each do |import_process|
       send(import_process)
@@ -37,9 +40,6 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # This can be added as more parts of the bulk upload are completed
-  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings].freeze
-
   # We should store and validate all of the uploaded data first before we save it
   # My thinking is, as was suggested, to use an array which is laid out like follows
   # [{object: FacilitiesManagement::Building, valid: boolean, errors: Array, procurement_building:
@@ -55,7 +55,8 @@ class FacilitiesManagement::SpreadsheetImporter
   # Importing buildings
   def import_buildings
     building_sheet = @user_uploaded_spreadsheet.sheet('Building Information')
-    if buildings_complte?(building_sheet)
+
+    if buildings_complete?(building_sheet)
       columns = building_sheet.row(13).count('Complete')
       (2..columns + 1).each do |col|
         building_column = building_sheet.column(col)
@@ -79,8 +80,8 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  def buildings_complte?(building_sheet)
-    status_indicator = building_sheet.row(13).reject(&:empty?)
+  def buildings_complete?(building_sheet)
+    status_indicator = building_sheet.row(13).compact.reject(&:empty?)
     status_indicator.shift
     status_indicator.count('Complete').positive? && status_indicator.reject { |status| status == 'Complete' }.empty?
   end
@@ -134,6 +135,11 @@ class FacilitiesManagement::SpreadsheetImporter
     @procurement.update(service_codes: @procurement.procurement_buildings.map(&:service_codes).flatten.uniq)
   end
   # rubocop:enable Metrics/AbcSize
+
+  def import_service_matrix
+    matrix_sheet = @user_uploaded_spreadsheet.sheet('Service Matrix')
+    nil
+  end
 
   # Importing Service volumes 1
   # Importing Service volumes 2
