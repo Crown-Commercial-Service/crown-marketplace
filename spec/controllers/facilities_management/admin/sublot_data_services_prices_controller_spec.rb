@@ -35,7 +35,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotDataServicesPricesController, 
     end
 
     context 'when not an fm admin' do
-      login_mc_admin
+      login_fm_buyer_with_details
 
       it 'redirects to not permitted page' do
         get :index, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotDataServicesPricesController, 
     end
 
     context 'when not an fm admin' do
-      login_fm_buyer
+      login_fm_buyer_with_details
 
       it 'redirects to not permitted page' do
         put :update_sublot_data_services_prices, params: { id: 'ca57bf4c-e8a5-468a-95f4-39fcf730c770', 'rate[M.141]': 1.123, 'checked_services': 'C.1', 'data[C.1][ABC]': 1 }

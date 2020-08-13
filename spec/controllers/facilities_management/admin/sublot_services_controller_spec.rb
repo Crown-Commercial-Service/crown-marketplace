@@ -76,7 +76,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
   end
 
   context 'when not an fm admin' do
-    login_mc_admin
+    login_fm_buyer_with_details
 
     it 'redirects to not permitted page' do
       get :index, params: { id: 'f644dfef-c534-4432-9bbc-f537e02652e6', lot: '1c' }
