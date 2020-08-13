@@ -163,7 +163,8 @@ class FacilitiesManagement::SpreadsheetImporter
     instructions_sheet.row(10)[1] == 'Awaiting Data Input'
   end
 
-  TEMPLATE_FILE_PATH = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.6.xlsx')
+  TEMPLATE_FILE_NAME = 'RM3830 Customer Requirements Capture Matrix - template v2.6.xlsx'.freeze
+  TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
 
   def template_valid?
     template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
