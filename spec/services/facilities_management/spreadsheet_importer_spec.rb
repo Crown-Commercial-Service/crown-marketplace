@@ -93,12 +93,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     describe 'import with some buildings not complete' do
-      # before do
-      #   spreadsheet_building_2.building_name = 'other building'
-      #   fake_spreadsheet.add_building_sheet([[spreadsheet_building, 'Incomplete'], [spreadsheet_building_2, 'Complete']])
-      #   fake_spreadsheet.write
-      #   spreadsheet_importer.import_data
-      # end
       let(:building_data) { [[spreadsheet_building, 'Incomplete'], [spreadsheet_building_2, 'Complete']] }
 
       it 'changes the state of the spreadsheet_import to failed' do
@@ -499,11 +493,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         context 'when validating all the building types' do
           FacilitiesManagement::Building::SPREADSHEET_BUILDING_TYPES.each do |building_type|
             context "when the building type is #{building_type}" do
-              before do
-                spreadsheet_building.building_type = building_type
-                bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-                spreadsheet_importer.import_data
-              end
+              let(:spreadsheet_building) { create(:facilities_management_building, building_type: building_type) }
+              let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
               it 'changes the state of the spreadsheet_import to succeeded' do
                 spreadsheet_import.reload
