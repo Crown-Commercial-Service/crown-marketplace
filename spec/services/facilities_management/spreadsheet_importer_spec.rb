@@ -17,29 +17,37 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
-    context 'when uploaded file is true to template' do
-      let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
+    describe 'template validation' do
+      before { allow(spreadsheet_importer).to receive(:spreadsheet_ready?).and_return(true) }
 
-      it 'has one error' do
-        expect(errors.size).to eq 1
+      context 'when uploaded file is true to template' do
+        let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
+
+        it 'no errors' do
+          expect(errors).to be_empty
+        end
       end
 
-      it 'the error is not_started' do
-        expect(errors.first).to eq :not_started
+      context 'when uploaded file differs from template' do
+        let(:spreadsheet_path) do
+          Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+        end
+
+        it 'includes template invalid error' do
+          expect(errors).to include(:template_invalid)
+        end
       end
     end
 
-    context 'when uploaded file differs from template' do
-      let(:spreadsheet_path) do
-        Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
-      end
+    describe 'spreadsheet readiness' do
+      before { allow(spreadsheet_importer).to receive(:template_valid?).and_return(true) }
 
-      it 'includes template invalid error' do
-        expect(errors).to include(:template_invalid)
-      end
+      # Attention: Ensure the template file DOES NOT have 'Ready to upload' in cell B10.
+      # v2.5 (used at the time of writing) didn't
+      let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
-      it 'does not include any other error error' do
-        expect(errors.size).to eq 1
+      it 'includes not ready error' do
+        expect(errors).to include(:not_ready)
       end
     end
   end
