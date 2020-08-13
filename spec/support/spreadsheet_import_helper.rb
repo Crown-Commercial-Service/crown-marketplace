@@ -39,17 +39,32 @@ module SpreadsheetImportHelper
     def add_service_matrix_sheet(data)
       name = 'Service Matrix'
       @sheets_added << name
+      template_sheet = template_spreadsheet.sheet(name)
+      template_sheet_row_count = template_sheet.parse.size + 1
 
       @package.workbook.add_worksheet(name: name) do |sheet|
-        sheet.add_row(%w[bish bosh bash])
+        status_indicators = data.map { |building| building[:status] }
+        sheet.add_row(template_sheet.row(1) + status_indicators)
+
+        building_names = data.map { |building| building[:building_name] }
+        sheet.add_row(template_sheet.row(2) + building_names)
+
+        sheet.add_row(template_sheet.row(3))
+
+        (4..template_sheet_row_count).each do |row_num|
+          row_vals = template_sheet.row(row_num)
+          service_ref = row_vals[0]
+          service_selections = data.map { |building| building[:services].include?(service_ref) ? 'Y' : nil }
+          sheet.add_row(row_vals + service_selections)
+        end
       end
-      puts ">>>>>>> add_service_matrix_sheet: #{data}"
+    end
+
+    def template_spreadsheet
+      Roo::Spreadsheet.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, extension: :xlsx)
     end
 
     def add_missing_sheets_from_template
-      template_spreadsheet = Roo::Spreadsheet.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH,
-                                                   extension: :xlsx)
-
       template_spreadsheet.sheets.each do |template_sheet_name|
         next if @sheets_added.include?(template_sheet_name)
 

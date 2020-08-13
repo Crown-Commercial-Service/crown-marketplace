@@ -663,7 +663,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
   describe '#import_service_matrix' do
     before do
-      fake_spreadsheet.add_service_matrix_sheet('bobbins')
+      fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
       fake_spreadsheet.write
 
       allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
@@ -679,30 +679,31 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     let(:procurement) { create(:facilities_management_procurement) }
 
     context 'when the service matrix data has been filled in correctly (with Yes as the only valid input)' do
-      context 'when the data is not already on the system' do
+      let(:service_matrix_data) do
+        [
+          { status: 'OK', building_name: 'Foo Park', services: %w[C.1a C.2a C.12a] },
+          { status: 'OK', building_name: 'Bar Hall', services: %w[C.2a C.12a C.13a] }
+        ]
+      end
 
+      context 'when the data is not already on the system' do
         # Then the services and standards data should be saved and this can be checked in services & buildings section
-        it 'works' do
-          expect(true).to eq true
-        end
+        it { expect(1).to eq(1) }
       end
 
       context 'when the data is already on the system' do
-
         # Then the information in the spreadsheet should replace all the existing services and standards data
         pending
       end
     end
 
     context 'when status indicator cells has a red' do
-
       # Then the data should not be saved
       # the spreadsheet upload should fail
       pending
     end
 
     context 'when more than one standard of the same service for a building has been selected' do
-
       # Then the data should not be saved
       # the spreadsheet upload should fail.
       pending
