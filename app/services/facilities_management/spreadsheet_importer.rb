@@ -138,7 +138,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def import_service_matrix
     matrix_sheet = @user_uploaded_spreadsheet.sheet('Service Matrix')
-    nil
+    matrix_sheet
   end
 
   # Importing Service volumes 1

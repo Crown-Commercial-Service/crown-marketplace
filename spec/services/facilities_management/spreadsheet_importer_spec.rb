@@ -677,18 +677,37 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     let(:procurement) { create(:facilities_management_procurement) }
+    let(:name1) { 'Trumpy Towers' }
+    let(:name2) { 'Higginbottom Hall' }
+    let(:building1) { create(:facilities_management_building, building_name: name1) }
+    let(:building2) { create(:facilities_management_building, building_name: name2) }
+
+    let(:service_matrix_data) do
+      [
+        { status: status, building_name: name1, services: service_data1 },
+        { status: status, building_name: name2, services: service_data2 }
+      ]
+    end
 
     context 'when the service matrix data has been filled in correctly (with Yes as the only valid input)' do
-      let(:service_matrix_data) do
-        [
-          { status: 'OK', building_name: 'Foo Park', services: %w[C.1a C.2a C.12a] },
-          { status: 'OK', building_name: 'Bar Hall', services: %w[C.2a C.12a C.13a] }
-        ]
-      end
+      let(:service_data1) { %w[C.1a C.2a C.12a] }
+      let(:service_data2) { %w[C.12a C.13a] }
+      let(:status) { 'OK' }
 
       context 'when the data is not already on the system' do
+        let(:procurement_building1) do
+          create(:facilities_management_procurement_building_no_services, building: building1, procurement: procurement)
+        end
+
+        let(:procurement_building2) do
+          create(:facilities_management_procurement_building_no_services, building: building2, procurement: procurement)
+        end
+
         # Then the services and standards data should be saved and this can be checked in services & buildings section
-        it { expect(1).to eq(1) }
+        it 'saves service and standards' do
+          expect(procurement_building1.procurement_building_services.map(&:code).sort).to eq(service_data1.map { |s| s[0...-1] })
+          expect(procurement_building1.procurement_building_services.map(&:code).sort).to eq(service_data2.map { |s| s[0...-1] })
+        end
       end
 
       context 'when the data is already on the system' do
@@ -698,12 +717,20 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     context 'when status indicator cells has a red' do
+      let(:service_data1) { %w[C.1a C.2a C.12a] }
+      let(:service_data2) { %w[C.12a C.13a] }
+      let(:status) { 'all goofed up' }
+
       # Then the data should not be saved
       # the spreadsheet upload should fail
       pending
     end
 
     context 'when more than one standard of the same service for a building has been selected' do
+      let(:service_data1) { %w[C.1a C.1b C.12a] }
+      let(:service_data2) { %w[C.12a C.12a] }
+      let(:status) { 'OK' }
+
       # Then the data should not be saved
       # the spreadsheet upload should fail.
       pending
