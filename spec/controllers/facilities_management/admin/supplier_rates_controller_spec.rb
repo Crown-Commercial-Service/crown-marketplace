@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierRatesController do
     end
 
     context 'when not an fm admin' do
-      login_mc_admin
+      login_fm_buyer_with_details
 
       it 'redirects to not permitted page' do
         get :supplier_framework_rates
@@ -147,7 +147,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierRatesController do
   end
 
   context 'when not an fm admin' do
-    login_fm_buyer
+    login_fm_buyer_with_details
 
     it 'redirects to not permitted page' do
       put :update_supplier_benchmark_rates, params: { rates: { FacilitiesManagement::Admin::Rates.all[0].id => 0.1 } }

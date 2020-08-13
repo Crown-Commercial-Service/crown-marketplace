@@ -111,7 +111,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotRegionsController do
     end
 
     context 'when not an fm admin' do
-      login_mc_admin
+      login_fm_buyer_with_details
 
       it 'redirects to not permitted page' do
         get :sublot_region, params: { id: supplier_id, lot_type: '1a' }
