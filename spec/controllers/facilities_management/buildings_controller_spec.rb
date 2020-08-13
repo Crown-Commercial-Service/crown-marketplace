@@ -9,25 +9,6 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         expect(response).to have_http_status(:found)
       end
     end
-
-    context 'when logging in as an st buyer' do
-      login_st_buyer_with_detail
-      it 'redirects to the not permitted page' do
-        get :index
-
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
-      end
-    end
-
-    context 'when logging in without buyer details' do
-      login_fm_buyer
-
-      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
-        get :index
-
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
-      end
-    end
   end
 
   describe 'GET #new' do
@@ -36,25 +17,6 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     it 'returns http success' do
       get :new
       expect(response).to have_http_status(:found)
-    end
-
-    context 'when logging in as an mc buyer' do
-      login_mc_buyer_with_detail
-
-      it 'redirects to the not permitted page' do
-        get :new
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
-      end
-    end
-
-    context 'when logged in as FM buyer' do
-      login_fm_buyer_with_details
-
-      it 'has correct backlink text and destination' do
-        get :new
-        expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
-        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
-      end
     end
   end
 

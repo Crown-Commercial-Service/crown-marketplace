@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.datetime "updated_at", null: false
     t.bigint "no_of_appliances_for_testing"
     t.bigint "no_of_building_occupants"
+    t.bigint "size_of_external_area"
     t.bigint "no_of_consoles_to_be_serviced"
     t.bigint "tones_to_be_collected_and_removed"
     t.bigint "no_of_units_to_be_serviced"
@@ -595,16 +596,6 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "alt_language"
     t.index ["postcode"], name: "idx_postcode"
     t.index ["postcode_locator"], name: "index_os_address_on_postcode_locator"
-  end
-
-  create_table "os_address_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "filename", limit: 255
-    t.integer "size"
-    t.string "etag", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["filename"], name: "os_address_admin_uploads_filename_idx", unique: true
   end
 
   create_table "postcodes_nuts_regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
