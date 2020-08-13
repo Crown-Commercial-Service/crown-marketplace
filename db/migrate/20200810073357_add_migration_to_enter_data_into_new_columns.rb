@@ -33,6 +33,8 @@ class AddMigrationToEnterDataIntoNewColumns < ActiveRecord::Migration[5.2]
       "#{day.capitalize}, all day\r\n"
     when 'hourly'
       full_hourly_summary(day, attributes)
+    else
+      "#{day.capitalize}, no information\r\n"
     end
   end
 
