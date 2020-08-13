@@ -184,7 +184,10 @@ class FacilitiesManagement::SpreadsheetImporter
     ]
 
     columns.each do |tab, col|
-      return false if template_spreadsheet.sheet(tab).column(col) != @user_uploaded_spreadsheet.sheet(tab).column(col)
+      if template_spreadsheet.sheet(tab).column(col) != @user_uploaded_spreadsheet.sheet(tab).column(col)
+        Rails.logger.info "Bulk upload: column does not match template, sheet (start from 0): #{tab}, col (start from 1): #{col}, procurement id: #{@procurement.id}"
+        return false
+      end
     end
 
     # Special case for list as has number of buildings at the end
