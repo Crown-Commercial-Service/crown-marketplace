@@ -7,7 +7,9 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
 
   bundle exec rails db:migrate:ignore_concurrent
 
-  bundle exec rake assets:precompile
+  if [ "$APP_RUN_PRECOMPILE_ASSETS" = 'TRUE' ]; then
+    bundle exec rake assets:precompile
+  fi
 
   if [ "$APP_RUN_STATIC_TASK" = 'TRUE' ]; then
     bundle exec rails db:static
