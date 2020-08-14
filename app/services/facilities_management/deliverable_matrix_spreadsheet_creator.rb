@@ -351,7 +351,11 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     buildings_data.each do |building|
       service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
-      row_values << service_measure[:service_hours]
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      service_measure[:service_hours]
+                    end
     end
 
     sheet.add_row row_values, style: standard_style, height: standard_row_height
@@ -362,7 +366,12 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     buildings_data.each do |building|
       service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
-      row_values << sanitize_string_for_excel(service_measure[:detail_of_requirement])
+
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      sanitize_string_for_excel(service_measure[:detail_of_requirement])
+                    end
     end
 
     sheet.add_row row_values, style: standard_style
