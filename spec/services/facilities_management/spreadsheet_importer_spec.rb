@@ -17,8 +17,12 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     context 'when uploaded file is true to template' do
       let(:uploaded_file) { described_class::TEMPLATE_FILE_PATH }
 
-      it 'no errors' do
-        expect(errors).to be_empty
+      it 'has one error' do
+        expect(errors.size).to eq 1
+      end
+
+      it 'the error is not_started' do
+        expect(errors.first).to eq :not_started
       end
     end
 
@@ -31,8 +35,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         expect(errors).to include(:template_invalid)
       end
 
-      it 'includes not ready error' do
-        expect(errors).to include(:not_ready)
+      it 'does not include any other error error' do
+        expect(errors.size).to eq 1
       end
     end
   end
