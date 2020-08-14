@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
 
   describe 'spreadsheet_file' do
     context 'when not attached' do
-      before { import.valid? }
+      before { import.valid?(:upload) }
 
       it 'must be uploaded error' do
         expect(import.errors.full_messages.grep(/Select your/).size).to eq(1)
@@ -21,7 +21,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
     context 'when wrong type of file' do
       before do
         import.spreadsheet_file.attach(io: File.open(Rails.root.join('Gemfile')), filename: 'Gemfile')
-        import.valid?
+        import.valid?(:upload)
       end
 
       it 'wrong extension error message' do

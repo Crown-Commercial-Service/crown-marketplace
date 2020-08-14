@@ -9,8 +9,13 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def basic_data_validation
-    @errors << :template_invalid unless template_valid?
-    @errors << :not_ready unless spreadsheet_ready?
+    if !template_valid?
+      @errors << :template_invalid
+    elsif spreadsheet_not_started?
+      @errors << :not_started
+    elsif spreadsheet_not_ready?
+      @errors << :not_ready if spreadsheet_not_ready?
+    end
     @errors
   end
 
@@ -142,15 +147,22 @@ class FacilitiesManagement::SpreadsheetImporter
     tmpfile
   end
 
-  def spreadsheet_ready?
+  def spreadsheet_not_ready?
     instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
-    instructions_sheet.row(10)[1] == 'Ready to upload'
+    instructions_sheet.row(10)[1] != 'Ready to upload'
   end
 
-  TEMPLATE_FILE_PATH = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.4.xlsx')
+  def spreadsheet_not_started?
+    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
+    instructions_sheet.row(10)[1] == 'Awaiting Data Input'
+  end
+
+  TEMPLATE_FILE_PATH = Rails.root.join('public', 'RM3830 Customer Requirements Capture Matrix - template v2.6.xlsx')
 
   def template_valid?
     template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
+
+    return false if template_spreadsheet.sheets != @user_uploaded_spreadsheet.sheets
 
     # The arrays are [sheet, column] - I've called sheets tabs in the iterator
     # Be aware sheets start from 0 (like an array), but columns start from 1

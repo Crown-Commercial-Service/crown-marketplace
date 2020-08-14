@@ -178,3 +178,10 @@
 	border-color: #0b0c0c;
 	box-shadow: none
 }
+
+.govuk-file-upload--error {
+	border-style: solid;
+	border-width: 5px;
+	border-color: #d4351c;
+	padding: 10px;
+}
