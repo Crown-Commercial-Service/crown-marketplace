@@ -29,7 +29,6 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - bundle exec rake db:test:prepare
-  - bundle exec rake assets:precompile
   - bundle exec rake
   - rm public/assets/.sprockets-manifest-*.json
 after_script:
