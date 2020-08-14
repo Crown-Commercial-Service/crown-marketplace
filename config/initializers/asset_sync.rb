@@ -1,6 +1,6 @@
 if defined?(AssetSync)
   AssetSync.configure do |config|
-    config.enabled = Rails.env.production?
+    config.enabled = Rails.env.production? && ENV['APP_RUN_PRECOMPILE_ASSETS'] == 'TRUE'
     config.fog_provider = 'AWS'
     config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
     config.aws_secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
