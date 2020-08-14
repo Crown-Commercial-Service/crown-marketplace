@@ -91,6 +91,7 @@ Rails.application.configure do
   config.action_controller.asset_host = "//#{ENV['ASSET_BUCKET']}.s3.amazonaws.com"
   config.assets.digest = true
   config.assets.enabled = true
+  config.fail_silently = true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
