@@ -26,6 +26,5 @@ before_script:
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake
-  - rm public/assets/.sprockets-manifest-*.json
 notifications:
   webhooks: https://api.eu.opsgenie.com/v1/json/travisci?apiKey=430b3a4a-eeba-486e-9133-99083dde9787
