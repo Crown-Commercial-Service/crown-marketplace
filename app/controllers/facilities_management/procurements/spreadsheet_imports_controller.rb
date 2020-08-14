@@ -10,7 +10,7 @@ module FacilitiesManagement
       def create
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
         if @spreadsheet_import.save
-          FacilitiesManagement::SpreadsheetImporter.new(@spreadsheet_import).import_data # TODO: This will become a background job
+          FacilitiesManagement::UploadSpreadsheetWorker.perform_async(@spreadsheet_import.id)
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
           @spreadsheet_import.fail!
