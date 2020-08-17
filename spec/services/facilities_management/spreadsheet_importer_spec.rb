@@ -18,16 +18,17 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
     describe 'template validation' do
-      before do
-        allow(spreadsheet_importer).to receive(:spreadsheet_not_ready?).and_return(false)
-        allow(spreadsheet_importer).to receive(:spreadsheet_not_started?).and_return(false)
-      end
+      before { allow(spreadsheet_importer).to receive(:spreadsheet_ready?).and_return(true) }
 
       context 'when uploaded file is true to template' do
         let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
-        it 'no errors' do
-          expect(errors).to be_empty
+        it 'has one error' do
+          expect(errors.size).to eq 1
+        end
+
+        it 'the error is not_started' do
+          expect(errors.first).to eq :not_started
         end
       end
 
@@ -45,6 +46,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     describe 'spreadsheet readiness' do
       before { allow(spreadsheet_importer).to receive(:template_valid?).and_return(true) }
 
+      # Attention: Ensure the template file DOES NOT have 'Ready to upload' in cell B10.
+      # v2.6 (used at the time of writing) didn't
       let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
       it 'includes not started error' do
@@ -668,13 +671,14 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
   describe '#import_service_matrix' do
     before do
+      fake_spreadsheet.add_building_sheet(building_data)
       fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
       fake_spreadsheet.write
 
       allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - [:import_service_matrix]).each do |other_import_method|
+      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
 
@@ -694,30 +698,32 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       ]
     end
 
+    let(:building_data) do
+      [
+        [building1, 'Complete'],
+        [building2, 'Complete']
+      ]
+    end
+
     context 'when the service matrix data has been filled in correctly (with Yes as the only valid input)' do
-      let(:service_data1) { %w[C.1a C.2a C.12a] }
-      let(:service_data2) { %w[C.12a C.13a] }
+      let(:service_data1) { %w[C.1a C.2b C.12a] }
+      let(:service_data2) { %w[C.12a C.13c] }
       let(:status) { 'OK' }
 
       context 'when the data is not already on the system' do
-        let(:procurement_building1) do
-          create(:facilities_management_procurement_building_no_services, building: building1, procurement: procurement)
+        it 'stores the services' do
+          service_codes1 = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:object].service_codes
+          service_codes2 = spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:object].service_codes
+          expect(service_codes1).to eq %w[C.1 C.2 C.12]
+          expect(service_codes2).to eq %w[C.12 C.13]
         end
 
-        let(:procurement_building2) do
-          create(:facilities_management_procurement_building_no_services, building: building2, procurement: procurement)
+        it 'stores the standards' do
+          service_standards1 = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| pbs[:object].service_standard }
+          service_standards2 = spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:procurement_building_services].map { |pbs| pbs[:object].service_standard }
+          expect(service_standards1).to eq %w[A B A]
+          expect(service_standards2).to eq %w[A C]
         end
-
-        # Then the services and standards data should be saved and this can be checked in services & buildings section
-        xit 'saves service and standards' do
-          expect(procurement_building1.procurement_building_services.map(&:code).sort).to eq(service_data1.map { |s| s[0...-1] })
-          expect(procurement_building1.procurement_building_services.map(&:code).sort).to eq(service_data2.map { |s| s[0...-1] })
-        end
-      end
-
-      context 'when the data is already on the system' do
-        # Then the information in the spreadsheet should replace all the existing services and standards data
-        pending
       end
     end
 
@@ -726,9 +732,14 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       let(:service_data2) { %w[C.12a C.13a] }
       let(:status) { 'all goofed up' }
 
-      # Then the data should not be saved
-      # the spreadsheet upload should fail
-      pending
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'has the correct error' do
+        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
+      end
     end
 
     context 'when more than one standard of the same service for a building has been selected' do
@@ -736,9 +747,14 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       let(:service_data2) { %w[C.12a C.12a] }
       let(:status) { 'OK' }
 
-      # Then the data should not be saved
-      # the spreadsheet upload should fail.
-      pending
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'has the correct error' do
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:errors]).to eq(service_codes: [{ error: :multiple_standards_for_one_service }])
+      end
     end
   end
 end

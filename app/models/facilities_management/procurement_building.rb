@@ -48,6 +48,14 @@ module FacilitiesManagement
       building.building_name
     end
 
+    def validate_spreadsheet_gia(gia, building_name)
+      errors.add(:building, :gia_too_small, building_name: building_name) if requires_internal_area? && gia.zero?
+    end
+
+    def validate_spreadsheet_external_area(external_area, building_name)
+      errors.add(:building, :external_area_too_small, building_name: building_name) if requires_external_area? && external_area.zero?
+    end
+
     private
 
     def service_code_selection
@@ -113,11 +121,11 @@ module FacilitiesManagement
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def validate_internal_area
-      errors.add(:building, :gia_too_small, building_name: building.building_name) if requires_internal_area? && building_internal_area.zero?
+      errors.add(:building, :gia_too_small, building_name: name) if requires_internal_area? && building_internal_area.zero?
     end
 
     def validate_external_area
-      errors.add(:building, :external_area_too_small, building_name: building.building_name) if requires_external_area? && building_external_area.zero?
+      errors.add(:building, :external_area_too_small, building_name: name) if requires_external_area? && building_external_area.zero?
     end
 
     def building_internal_area

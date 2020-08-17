@@ -54,7 +54,7 @@ module SpreadsheetImportHelper
         (4..template_sheet_row_count).each do |row_num|
           row_vals = template_sheet.row(row_num)
           service_ref = row_vals[0]
-          service_selections = data.map { |building| building[:services].include?(service_ref) ? 'Y' : nil }
+          service_selections = data.map { |building| building[:services].include?(service_ref) ? 'Yes' : nil }
           sheet.add_row(row_vals + service_selections)
         end
       end
