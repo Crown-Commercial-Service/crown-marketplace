@@ -628,8 +628,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       # rubocop:disable RSpec/AnyInstance
       before do
-        allow_any_instance_of(Postcode::PostcodeCheckerV2).to receive(:find_region)
-          .with(user_building.address_postcode.delete(' ')).and_return([])
+        allow_any_instance_of(Postcode::PostcodeCheckerV2).to receive(:find_region).with(anything).and_return([])
       end
       # rubocop:enable RSpec/AnyInstance
 
