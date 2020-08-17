@@ -65,6 +65,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
 
+      allow(spreadsheet_importer).to receive(:procurement_buildings_valid?).and_return(true)
+      allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
+      allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
+
       spreadsheet_importer.import_data
     end
 

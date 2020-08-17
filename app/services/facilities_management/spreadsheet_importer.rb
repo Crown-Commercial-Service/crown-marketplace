@@ -208,7 +208,18 @@ class FacilitiesManagement::SpreadsheetImporter
 
   # Validate the entire import
   def imported_spreadsheet_data_valid?
+    building_valid = buildings_valid?
+    procurement_buildings_valid = procurement_buildings_valid?
+
+    [building_valid, procurement_buildings_valid].all?
+  end
+
+  def buildings_valid?
     @procurement_array.all? { |building| building[:valid] }
+  end
+
+  def procurement_buildings_valid?
+    @procurement_array.all? { |building| building[:procurement_building][:valid] }
   end
 
   # Save the entire import
