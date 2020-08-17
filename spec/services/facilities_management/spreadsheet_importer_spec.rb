@@ -752,7 +752,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'has the correct error' do
-        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:errors]).to eq(service_codes: [{ error: :multiple_standards_for_one_service }])
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:errors]).to eq :multiple_standards_for_one_service
       end
     end
   end
