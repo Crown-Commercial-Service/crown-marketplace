@@ -70,8 +70,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       allow(spreadsheet_importer).to receive(:procurement_buildings_valid?).and_return(true)
+      allow(spreadsheet_importer).to receive(:procurement_building_services_valid?).and_return(true)
       allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
+      allow(spreadsheet_importer).to receive(:service_codes).and_return(['C.1'])
 
       spreadsheet_importer.import_data
     end
@@ -757,7 +759,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
   end
 
-  describe '#import_service_volumes_1' do
+  describe '#import_service_volumes' do
     before do
       fake_spreadsheet.add_building_sheet(building_data)
       fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
@@ -767,7 +769,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes_1]).each do |other_import_method|
+      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
 
@@ -779,24 +781,33 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     let(:name2) { 'Wayne Manor' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
     let(:building2) { create(:facilities_management_building, building_name: name2) }
-    let(:building_data) { [[building1, 'Complete']] }
+
+    let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
+
+    let(:service_matrix_data) do
+      [
+        { status: 'OK', building_name: name1, services: service_data1 },
+        { status: 'OK', building_name: name2, services: service_data2 }
+      ]
+    end
+
+    let(:service_volumes_data) do
+      [
+        [building1.building_name, service_details1, status1],
+        [building2.building_name, service_details2, status2]
+      ]
+    end
 
     describe 'import with valid data' do
-      let(:service_matrix_data) do
-        [
-          { status: status, building_name: name1, services: service_data1 }
-        ]
-      end
+      context 'when there is one building' do
+        let(:building_data) { [[building1, 'Complete']] }
 
-      let(:procurement_building1) do
-        create(:facilities_management_procurement_building_no_services, building: building1, procurement: procurement)
-      end
+        let(:service_matrix_data) do
+          [
+            { status: 'OK', building_name: name1, services: service_data1 },
+          ]
+        end
 
-      let(:procurement_building2) do
-        create(:facilities_management_procurement_building_no_services, building: building2, procurement: procurement)
-      end
-
-      context 'when the data is not already on the system' do
         let(:service_volumes_data) do
           [
             [building1.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK']
@@ -804,7 +815,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
-        let(:status) { 'OK' }
 
         it 'assigns the service volumes and codes to the building' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:object].uval] }.sort.to_h).to eq(service_volumes_data.first[1])
@@ -812,25 +822,17 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       context 'when there is more than one building with the same service codes and volumes' do
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
-
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status1, building_name: name2, services: service_data1 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK'],
-            [building2.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK']
-          ]
-        end
-
+        let(:service_details1) { { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 } }
+        let(:service_details2) { service_details1 }
         let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
-        let(:status) { 'OK' }
+        let(:service_data2) { service_data1 }
         let(:status1) { 'OK' }
+        let(:status2) { status1 }
+
+        it 'changes the state of the spreadsheet_import to succeeded' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.succeeded?).to be true
+        end
 
         it 'assigns the service volumes and codes to the buildings' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:object].uval] }.sort.to_h).to eq(service_volumes_data.first[1])
@@ -838,26 +840,17 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       context 'when there is more than one building with different service codes and volumes' do
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
-
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status1, building_name: name2, services: service_data2 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK'],
-            [building2.building_name, { 'E.4': 27, 'G.1': 8, 'K.2': 95, 'K.4': 19, 'K.5': 94 }, 'OK']
-          ]
-        end
-
+        let(:service_details1) { { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 } }
+        let(:service_details2) { { 'E.4': 27, 'G.1': 8, 'K.2': 95, 'K.4': 19, 'K.5': 94 } }
         let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
         let(:service_data2) { %w[E.4 G.1 K.2 K.4 K.5] }
-        let(:status) { 'OK' }
         let(:status1) { 'OK' }
+        let(:status2) { status1 }
+
+        it 'changes the state of the spreadsheet_import to succeeded' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.succeeded?).to be true
+        end
 
         it 'assigns the service volumes and codes to the buildings' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:object].uval] }.sort.to_h).to eq(service_volumes_data.first[1])
@@ -866,108 +859,138 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     describe 'with invalid import data' do
-      let(:building_data) { [[building1, 'Complete']] }
-
-      let(:procurement_building1) do
-        create(:facilities_management_procurement_building_no_services, building: building1, procurement: procurement)
-      end
-
-      let(:procurement_building2) do
-        create(:facilities_management_procurement_building_no_services, building: building2, procurement: procurement)
-      end
-
-      context 'when importing one building with some missing volumes' do
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': 17, 'K.1': nil, 'K.3': 8, 'K.6': nil, 'K.7': 20 }, 'Input(s) required for this building (see yellow cells below)']
-          ]
-        end
-
-        let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
-        let(:status) { 'Input(s) required for this building (see yellow cells below)' }
-
-        it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
-        end
-      end
-
-      context 'when importing one building with no volumes' do
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': nil, 'K.1': nil, 'K.3': nil, 'K.6': nil, 'K.7': nil }, 'Input(s) required for this building (see yellow cells below)']
-          ]
-        end
-
-        let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
-        let(:status) { 'Input(s) required for this building (see yellow cells below)' }
-
-        it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
-        end
-      end
-
-      context 'when there are more than one building with the same volumes and service codes' do
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
-
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status1, building_name: name2, services: service_data1 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK'],
-            [building2.building_name, { 'E.4': nil, 'K.1': nil, 'K.3': 8, 'K.6': nil, 'K.7': 12 }, 'Input(s) required for this building (see yellow cells below)']
-          ]
-        end
-
-        let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
-        let(:status) { 'OK' }
-        let(:status1) { 'Input(s) required for this building (see yellow cells below)' }
-
-        it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
-        end
-      end
-
-      context 'when there is more than one building with different service codes and volumes' do
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
-
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status1, building_name: name2, services: service_data2 }
-          ]
-        end
-
-        let(:service_volumes_data) do
-          [
-            [building1.building_name, { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 }, 'OK'],
-            [building2.building_name, { 'E.4': nil, 'G.1': 8, 'K.2': nil, 'K.4': 19, 'K.5': 94 }, 'Input(s) required for this building (see yellow cells below)']
-          ]
-        end
-
+      context 'when importing service hours which are not ready' do
+        let(:service_details1) { { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 } }
+        let(:service_details2) { { 'E.4': 27, 'G.1': nil, 'K.2': 95, 'K.4': 19, 'K.5': nil } }
         let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
         let(:service_data2) { %w[E.4 G.1 K.2 K.4 K.5] }
-        let(:status) { 'OK' }
-        let(:status1) { 'Input(s) required for this building (see yellow cells below)' }
+        let(:status1) { 'OK' }
+        let(:status2) { 'Input(s) required for this building (see yellow cells below)' }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
 
         it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
+          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:volumes_incomplete)
+        end
+      end
+
+      context 'when importing one building with missing volumes' do
+        let(:building_data) { [[building1, 'Complete']] }
+
+        let(:service_matrix_data) do
+          [
+            { status: 'OK', building_name: name1, services: %w[E.4 K.1 K.3 K.6 K.7] }
+          ]
+        end
+
+        let(:service_volumes_data) do
+          [
+            [building1.building_name, { 'E.4': 17, 'K.1': nil, 'K.3': 8, 'K.6': nil, 'K.7': 20 }, 'OK']
+          ]
+        end
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'only makes K.1 and K.6 invalid' do
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          expect(validations).to eq([['E.4', true], ['K.1', false], ['K.3', true], ['K.6', false], ['K.7', true]])
+        end
+
+        it 'has the correct error' do
+          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
+          k6_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.6' }.first[:errors][:tones_to_be_collected_and_removed].map { |errors| errors[:error] }
+
+          expect(k1_errors).to include(:greater_than)
+          expect(k6_errors).to include(:greater_than)
+        end
+      end
+
+      context 'when importing one building with a volume as a string' do
+        let(:building_data) { [[building1, 'Complete']] }
+
+        let(:service_matrix_data) do
+          [
+            { status: 'OK', building_name: name1, services: %w[E.4 K.1 K.3] }
+          ]
+        end
+
+        let(:service_volumes_data) do
+          [
+            [building1.building_name, { 'E.4': 'Hello', 'K.1': 59, 'K.3': 8 }, 'OK']
+          ]
+        end
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'only makes E.4 invalid' do
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          expect(validations).to eq([['E.4', false], ['K.1', true], ['K.3', true]])
+        end
+
+        it 'has the correct error' do
+          e4_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'E.4' }.first[:errors][:no_of_appliances_for_testing].map { |errors| errors[:error] }
+
+          expect(e4_errors).to include(:greater_than)
+        end
+      end
+
+      context 'when importing one building with volumes to large' do
+        let(:building_data) { [[building1, 'Complete']] }
+
+        let(:service_matrix_data) do
+          [
+            { status: 'OK', building_name: name1, services: %w[E.4 K.1 K.3 K.6 K.7] }
+          ]
+        end
+
+        let(:service_volumes_data) do
+          [
+            [building1.building_name, { 'E.4': 17, 'K.1': 1000000000, 'K.3': 8, 'K.6': 78, 'K.7': 20 }, 'OK']
+          ]
+        end
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'only makes K.1 invalid' do
+          validations = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code, pbs[:valid]] }.to_h.sort
+          expect(validations).to eq([['E.4', true], ['K.1', false], ['K.3', true], ['K.6', true], ['K.7', true]])
+        end
+
+        it 'has the correct error' do
+          k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
+
+          expect(k1_errors).to include(:less_than_or_equal_to)
+        end
+      end
+
+      context 'when there are more than one building with the same volumes and some missing service codes' do
+        let(:service_details1) { { 'E.4': 4, 'K.1': 20, 'K.3': 8, 'K.6': 69, 'K.7': 12 } }
+        let(:service_details2) { { 'E.4': nil, 'K.1': nil, 'K.3': 8, 'K.6': nil, 'K.7': 12 } }
+        let(:service_data1) { %w[E.4 K.1 K.3 K.6 K.7] }
+        let(:service_data2) { service_data1 }
+        let(:status1) { 'OK' }
+        let(:status2) { status1 }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'only makes the second building invalid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].all? { |pbs| pbs[:valid] }).to be true
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:procurement_building_services].all? { |pbs| pbs[:valid] }).to be false
         end
       end
     end
@@ -983,7 +1006,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes_2]).each do |other_import_method|
+      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_lift_data validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
 
@@ -997,21 +1020,28 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
     let(:service_matrix_data) do
       [
-        { status: status, building_name: name1, services: service_data1 }
+        { status: 'OK', building_name: name1, services: service_data }
       ]
     end
 
     let(:service_details) do
       [
-        [building1.building_name, %w[1 2 3 4 5], 'OK']
+        [building1.building_name, service_detail, status]
       ]
     end
 
-    describe 'with valid data' do
-      let(:status) { 'OK' }
-      let(:service_data1) { %w[C.5a] }
+    let(:service_data) { %w[C.5a] }
 
+    describe 'with valid data' do
       context 'when importing lifts for one building' do
+        let(:status) { 'OK' }
+        let(:service_detail) { %w[1 2 3 4 5] }
+
+        it 'changes the state of the spreadsheet_import to succeeded' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.succeeded?).to be true
+        end
+
         it 'assigns the lift data to the building' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:object].lift_data).to eq(service_details.first[1])
         end
@@ -1024,8 +1054,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
         let(:service_matrix_data) do
           [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status, building_name: name2, services: service_data1 }
+            { status: 'OK', building_name: name1, services: service_data },
+            { status: 'OK', building_name: name2, services: service_data }
           ]
         end
 
@@ -1039,6 +1069,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         let(:status) { 'OK' }
         let(:service_data1) { %w[C.5a] }
 
+        it 'changes the state of the spreadsheet_import to succeeded' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.succeeded?).to be true
+        end
+
         it 'assigns the lift data to the building' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:object].lift_data).to eq(service_details.first[1])
         end
@@ -1051,8 +1086,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
         let(:service_matrix_data) do
           [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status, building_name: name2, services: service_data1 }
+            { status: 'OK', building_name: name1, services: service_data },
+            { status: 'OK', building_name: name2, services: service_data }
           ]
         end
 
@@ -1063,48 +1098,26 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           ]
         end
 
-        let(:status) { 'OK' }
-        let(:service_data1) { %w[C.5a] }
+        it 'changes the state of the spreadsheet_import to succeeded' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.succeeded?).to be true
+        end
 
         it 'assigns the lift data to the building' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:object].lift_data).to eq(service_details.first[1])
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:procurement_building_services].first[:object].lift_data).to eq(service_details.last[1])
         end
       end
     end
 
     describe 'with invalid data' do
-      let(:status) { 'OK' }
-      let(:service_data1) { %w[C.5a] }
+      context 'when importing incomplete lifts' do
+        let(:status) { 'Too many values input (see red cells below)' }
+        let(:service_detail) { %w[1 2 3] }
 
-      let(:service_details) do
-        [
-          [building1.building_name, %w[1 3 4], 'Too many values input (see red cells below)']
-        ]
-      end
-
-      context 'when importing lifts for one building' do
-        it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:lifts_incomplete)
-        end
-      end
-
-      context 'when importing the same number of lifts for two buildings but one is OK' do
-        let(:name2) { 'Wayne Manor' }
-        let(:building2) { create(:facilities_management_building, building_name: name2) }
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
-
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status, building_name: name2, services: service_data1 }
-          ]
-        end
-
-        let(:service_details) do
-          [
-            [building1.building_name, %w[1 2 4 5], 'OK'],
-            [building2.building_name, %w[1 2 4 5], 'Too many values input (see red cells below)']
-          ]
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
         end
 
         it 'has the correct error' do
@@ -1112,52 +1125,468 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
       end
 
-      context 'when importing the same number of lifts for two buildings but both have too many values' do
-        let(:name2) { 'Wayne Manor' }
-        let(:building2) { create(:facilities_management_building, building_name: name2) }
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
+      context 'when importing lifts which include a string value' do
+        let(:status) { 'OK' }
+        let(:service_detail) { %w[1 Two 3] }
 
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status, building_name: name2, services: service_data1 }
-          ]
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
         end
 
-        let(:service_details) do
-          [
-            [building1.building_name, %w[1 2 4 5], 'Too many values input (see red cells below)'],
-            [building2.building_name, %w[1 2 4 5], 'Too many values input (see red cells below)']
-          ]
+        it 'is invalid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
         end
 
         it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:lifts_incomplete)
+          error = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:lift_data].first[:error]
+
+          expect(error).to eq :greater_than
         end
       end
 
-      context 'when importing different numbers of lifts for two buildings' do
-        let(:name2) { 'Wayne Manor' }
-        let(:building2) { create(:facilities_management_building, building_name: name2) }
-        let(:building_data) { [[building1, 'Complete'], [building2, 'Complete']] }
+      context 'when importing lifts which include a 0 value' do
+        let(:status) { 'OK' }
+        let(:service_detail) { %w[0 2 3] }
 
-        let(:service_matrix_data) do
-          [
-            { status: status, building_name: name1, services: service_data1 },
-            { status: status, building_name: name2, services: service_data1 }
-          ]
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
         end
 
-        let(:service_details) do
-          [
-            [building1.building_name, %w[1 2 3 4], 'Too many values input (see red cells below)'],
-            [building2.building_name, %w[1 5 8 12 3 80], 'Too many values input (see red cells below)']
-          ]
+        it 'is invalid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
         end
 
         it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:lifts_incomplete)
+          error = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:lift_data].first[:error]
+
+          expect(error).to eq :greater_than
         end
+      end
+
+      context 'when importing lifts which include a nil value' do
+        let(:status) { 'OK' }
+        let(:service_detail) { ['1', '2', '', '4'] }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'is invalid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+        end
+
+        it 'has the correct error' do
+          error = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:lift_data].first[:error]
+
+          expect(error).to eq :too_short
+        end
+      end
+
+      context 'when importing lifts which include a value of 1000' do
+        let(:status) { 'OK' }
+        let(:service_detail) { %w[1 2 3 1000] }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'is invalid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+        end
+
+        it 'has the correct error' do
+          error = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:lift_data].first[:error]
+
+          expect(error).to eq :less_than
+        end
+      end
+    end
+  end
+
+  describe '#import_service_hours' do
+    before do
+      fake_spreadsheet.add_building_sheet(building_data)
+      fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
+      fake_spreadsheet.add_service_hours_sheet(service_hour_data)
+      fake_spreadsheet.write
+
+      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
+
+      # Stub out import methods not under test
+      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_hours validate_procurement_building_services]).each do |other_import_method|
+        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      end
+
+      spreadsheet_importer.import_data
+    end
+
+    let(:procurement) { create(:facilities_management_procurement) }
+    let(:name1) { 'U.A. High' }
+    let(:name2) { 'Funeral Parlor' }
+    let(:building1) { create(:facilities_management_building, building_name: name1) }
+    let(:building2) { create(:facilities_management_building, building_name: name2) }
+
+    let(:service_hour_data) do
+      [
+        { status: service_hour_status, building_name: name1, service_hours: service_hour_data1, detail_of_requirement: detail_of_requirement_data1 },
+        { status: service_hour_status, building_name: name2, service_hours: service_hour_data2, detail_of_requirement: detail_of_requirement_data2 }
+      ]
+    end
+
+    let(:service_matrix_data) do
+      [
+        { status: 'OK', building_name: name1, services: service_data1 },
+        { status: 'OK', building_name: name2, services: service_data2 }
+      ]
+    end
+
+    let(:building_data) do
+      [
+        [building1, 'Complete'],
+        [building2, 'Complete']
+      ]
+    end
+
+    context 'when some of the services are incomplete' do
+      let(:service_data1) { %w[H.4 I.1] }
+      let(:service_data2) { %w[J.1] }
+      let(:service_hour_status) { 'Not yet complete' }
+      let(:service_hour_data1) { { 'H.4': nil, 'I.1': nil } }
+      let(:service_hour_data2) { { 'J.1': nil } }
+      let(:detail_of_requirement_data1) { { 'H.4': nil, 'I.1': nil } }
+      let(:detail_of_requirement_data2) { { 'J.1': nil } }
+
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'has the correct error' do
+        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_hours_incomplete)
+      end
+    end
+
+    context 'when the service hours are filled out correctly with multiple building' do
+      let(:service_data1) { %w[H.5 I.2] }
+      let(:service_data2) { %w[J.2] }
+      let(:service_hour_status) { 'OK' }
+      let(:service_hour_data1) { { 'H.5': 450, 'I.2': 11 } }
+      let(:service_hour_data2) { { 'J.2': 220 } }
+      let(:detail_of_requirement_data1) { { 'H.5': 'Who knows', 'I.2': "It can't be possibles" } }
+      let(:detail_of_requirement_data2) { { 'J.2': 'Go beyond, Plus Ultra' } }
+
+      it 'changes the state of the spreadsheet_import to succeed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.succeeded?).to be true
+      end
+
+      it 'has the correct service_hour data' do
+        service_hours = procurement.procurement_building_services.map { |pbs| [pbs.code, pbs.service_hours] }.to_h
+        expect(service_hours['H.5']).to eq 450
+        expect(service_hours['I.2']).to eq 11
+        expect(service_hours['J.2']).to eq 220
+      end
+
+      it 'has the correct detail_of_requirement data' do
+        service_hours = procurement.procurement_building_services.map { |pbs| [pbs.code, pbs.detail_of_requirement] }.to_h
+        expect(service_hours['H.5']).to eq 'Who knows'
+        expect(service_hours['I.2']).to eq "It can't be possibles"
+        expect(service_hours['J.2']).to eq 'Go beyond, Plus Ultra'
+      end
+    end
+
+    context 'when the service hours are invlaid' do
+      let(:service_data1) { %w[H.5 I.2] }
+      let(:service_data2) { %w[J.2] }
+      let(:service_hour_status) { 'OK' }
+      let(:service_hour_data2) { { 'J.2': 220 } }
+      let(:detail_of_requirement_data1) { { 'H.5': 'Who knows', 'I.2': "It can't be possibles" } }
+      let(:detail_of_requirement_data2) { { 'J.2': 'Go beyond, Plus Ultra' } }
+
+      context 'when the service hours are blank' do
+        let(:service_hour_data1) { { 'H.5': nil, 'I.2': 11 } }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'is not valid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+        end
+
+        it 'has an error' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to eq true
+        end
+      end
+
+      context 'when the service hours are not a number' do
+        let(:service_hour_data1) { { 'H.5': 'Im not a number', 'I.2': 11 } }
+
+        it 'changes the state of the spreadsheet_import to failed' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.failed?).to be true
+        end
+
+        it 'is not valid' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+        end
+
+        it 'has an error on service_hours' do
+          expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to eq true
+        end
+      end
+    end
+
+    context 'when the detail of requirement is blank' do
+      let(:service_data1) { %w[H.5 I.2] }
+      let(:service_data2) { %w[J.2] }
+      let(:service_hour_status) { 'OK' }
+      let(:service_hour_data1) { { 'H.5': 450, 'I.2': 11 } }
+      let(:service_hour_data2) { { 'J.2': 220 } }
+      let(:detail_of_requirement_data1) { { 'H.5': nil, 'I.2': "It can't be possibles" } }
+      let(:detail_of_requirement_data2) { { 'J.2': 'Go beyond, Plus Ultra' } }
+
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'is not valid' do
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:valid]).to eq false
+      end
+
+      it 'has an error on detail_of_requirement' do
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:detail_of_requirement].any?).to eq true
+      end
+    end
+  end
+
+  describe '#import_data' do
+    before do
+      fake_spreadsheet.add_building_sheet(building_data)
+      fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
+      fake_spreadsheet.add_service_volumes_1(service_volumes_data)
+      fake_spreadsheet.add_service_volumes_2(lift_data)
+      fake_spreadsheet.add_service_hours_sheet(service_hour_data)
+      fake_spreadsheet.write
+
+      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
+
+      spreadsheet_importer.import_data
+      procurement.reload
+    end
+
+    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:user) { create(:user) }
+
+    let(:name1) { 'The TARDIS' }
+    let(:name2) { 'Time Lord Council' }
+    let(:name3) { 'Powell Estate' }
+    let(:building1) { create(:facilities_management_building, building_name: name1) }
+    let(:building2) { create(:facilities_management_building, building_name: name2) }
+    let(:building3) { create(:facilities_management_building, building_name: name3) }
+
+    let(:building_data) do
+      [
+        [building1, 'Complete'],
+        [building2, 'Complete'],
+        [building3, 'Complete']
+      ]
+    end
+
+    let(:service_matrix_data) do
+      [
+        { status: 'OK', building_name: name1, services: service_data1 },
+        { status: 'OK', building_name: name2, services: service_data2 },
+        { status: 'OK', building_name: name3, services: service_data3 }
+      ]
+    end
+
+    let(:service_data1) { %w[C.1b C.6a C.11b C.14b C.17 D.3 E.4 E.7 G.3b H.10 I.3 K.5 L.7] }
+    let(:service_data2) { %w[C.5a D.1 D.2 D.3 D.4 D.5 F.5 F.6 K.7 I.1 I.4 M.1 N.1 O.1] }
+    let(:service_data3) { %w[C.7c D.3 E.6 F.5 G.5c H.9 I.2 J.5 K.7 L.7 N.1] }
+
+    let(:service_volumes_data) do
+      [
+        [name1, service_volume_details1, 'OK'],
+        [name2, service_volume_details2, 'OK'],
+        [name3, service_volume_details3, 'OK']
+      ]
+    end
+
+    let(:service_volume_details1) { { 'E.4': 4, 'G.3': 11722, 'K.5': 17875222 } }
+    let(:service_volume_details2) { { 'K.7': 274113 } }
+    let(:service_volume_details3) { { 'K.7': 135 } }
+
+    let(:lift_data) do
+      [
+        [building1.building_name, lift_details1, 'OK'],
+        [building2.building_name, lift_details2, 'OK'],
+        [building3.building_name, lift_details3, 'OK']
+      ]
+    end
+
+    let(:lift_details1) { [] }
+    let(:lift_details2) { %w[1 5 8 12 3] }
+    let(:lift_details3) { [] }
+
+    let(:service_hour_data) do
+      [
+        { status: 'OK', building_name: name1, service_hours: service_hour_data1, detail_of_requirement: detail_of_requirement_data1 },
+        { status: 'OK', building_name: name2, service_hours: service_hour_data2, detail_of_requirement: detail_of_requirement_data2 },
+        { status: 'OK', building_name: name3, service_hours: service_hour_data3, detail_of_requirement: detail_of_requirement_data3 }
+      ]
+    end
+
+    let(:service_hour_data1) { { 'I.3': 365 } }
+    let(:service_hour_data2) { { 'I.1': 367, 'I.4': 3400 } }
+    let(:service_hour_data3) { { 'I.2': 321, 'J.5': 322222 } }
+
+    let(:detail_of_requirement_data1) { { 'I.3': '2 personnel for hald an hour every day' } }
+    let(:detail_of_requirement_data2) { { 'I.1': 'Some odd reasons', 'I.4': 'Banna swirl' } }
+    let(:detail_of_requirement_data3) { { 'I.2': 'Go Beyond', 'J.5': 'Plus Ultra!' } }
+
+    def extract_code(code)
+      if requires_service_standard?(code)
+        code[0..-2]
+      else
+        code
+      end
+    end
+
+    def requires_service_standard?(code)
+      ['a', 'b', 'c'].include? code[-1]
+    end
+
+    def service_standards_array(service_codes)
+      service_codes.select { |code| requires_service_standard?(code) }.map { |code| [extract_code(code), code[-1].upcase] }.sort
+    end
+
+    context 'when a full spreadsheet with multiple buildings is uploaded' do
+      it 'changes the state of the spreadsheet_import to succeeded' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.succeeded?).to be true
+      end
+
+      it 'will save the building data correctly' do
+        acceptable_attributes = %w[building_name description address_line_1 address_town gia external_area building_type other_building_type security_type other_security_type]
+        expect(user.buildings.find_by(building_name: name1).attributes.slice(*acceptable_attributes)).to eq building1.attributes.slice(*acceptable_attributes)
+        expect(user.buildings.find_by(building_name: name2).attributes.slice(*acceptable_attributes)).to eq building2.attributes.slice(*acceptable_attributes)
+        expect(user.buildings.find_by(building_name: name3).attributes.slice(*acceptable_attributes)).to eq building3.attributes.slice(*acceptable_attributes)
+      end
+
+      it 'will save the procurement data correctly' do
+        services = [service_data1, service_data2, service_data3].flatten.map { |code| extract_code(code) }
+
+        expect(procurement.service_codes.sort).to eq services.uniq.sort
+        expect(procurement.procurement_buildings.count).to eq 3
+        expect(procurement.procurement_building_services.count).to eq services.count
+      end
+
+      context 'when considering building1' do
+        let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name1 }.first }
+        let(:procurement_building_services) { procurement_building.procurement_building_services }
+
+        it 'will save the procurement_buildings data correctly' do
+          expect(procurement_building.service_codes.sort).to eq(service_data1.map { |code| extract_code(code) }.sort)
+          expect(procurement_building.name).to eq name1
+        end
+
+        it 'will save the procurement_building_service standards data correctly' do
+          standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.sort
+          expect(standards).to eq service_standards_array(service_data1)
+        end
+
+        it 'will save the procurement_building_service volume data correctly' do
+          volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
+          expect(volumes).to eq service_volume_details1.sort
+        end
+
+        it 'will save the procurement_building_service service hours data correctly' do
+          service_hour_services = procurement_building_services.select(&:requires_service_hours?)
+          service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
+          detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
+
+          expect(service_hours).to eq service_hour_data1.sort
+          expect(detail_of_requirements).to eq detail_of_requirement_data1.sort
+        end
+      end
+
+      context 'when considering building2' do
+        let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name2 }.first }
+        let(:procurement_building_services) { procurement_building.procurement_building_services }
+
+        it 'will save the procurement_buildings data correctly' do
+          expect(procurement_building.service_codes.sort).to eq(service_data2.map { |code| extract_code(code) }.sort)
+          expect(procurement_building.name).to eq name2
+        end
+
+        it 'will save the procurement_building_service standards data correctly' do
+          standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.to_h.sort
+          expect(standards).to eq service_standards_array(service_data2)
+        end
+
+        it 'will save the procurement_building_service volume data correctly' do
+          volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
+          expect(volumes).to eq service_volume_details2.sort
+        end
+
+        it 'will save the procurement_building_service lift data correctly' do
+          lifts = procurement_building_services.find_by(code: 'C.5').lift_data
+          expect(lifts).to eq lift_details2
+        end
+
+        it 'will save the procurement_building_service service hours data correctly' do
+          service_hour_services = procurement_building_services.select(&:requires_service_hours?)
+          service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
+          detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
+
+          expect(service_hours).to eq service_hour_data2.sort
+          expect(detail_of_requirements).to eq detail_of_requirement_data2.sort
+        end
+      end
+
+      context 'when considering building3' do
+        let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name3 }.first }
+        let(:procurement_building_services) { procurement_building.procurement_building_services }
+
+        it 'will save the procurement_buildings data correctly' do
+          expect(procurement_building.service_codes.sort).to eq(service_data3.map { |code| extract_code(code) }.sort)
+          expect(procurement_building.name).to eq name3
+        end
+
+        it 'will save the procurement_building_service standards data correctly' do
+          standards = procurement_building_services.select { |pbs| pbs.service_standard.present? }.map { |pbs| [pbs.code, pbs.service_standard] }.sort
+          expect(standards).to eq service_standards_array(service_data3)
+        end
+
+        it 'will save the procurement_building_service volume data correctly' do
+          volumes = procurement_building_services.select(&:requires_volume?).map { |pbs| [pbs.code.to_sym, pbs.uval] }.sort
+          expect(volumes).to eq service_volume_details3.sort
+        end
+
+        it 'will save the procurement_building_service service hours data correctly' do
+          service_hour_services = procurement_building_services.select(&:requires_service_hours?)
+          service_hours = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.service_hours] }.sort
+          detail_of_requirements = service_hour_services.map { |pbs| [pbs.code.to_sym, pbs.detail_of_requirement] }.sort
+
+          expect(service_hours).to eq service_hour_data3.sort
+          expect(detail_of_requirements).to eq detail_of_requirement_data3.sort
+        end
+      end
+    end
+
+    context 'when a full spreadsheet with multiple buildings is uploaded with one error' do
+      let(:service_hour_data2) { { 'I.1': 0, 'I.4': 3400 } }
+
+      it 'changes the state of the spreadsheet_import to have failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
       end
     end
   end
