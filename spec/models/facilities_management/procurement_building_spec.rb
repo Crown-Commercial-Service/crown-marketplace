@@ -333,6 +333,68 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe '#validate_spreadsheet_gia' do
+    context 'when the building has an internal area of 0' do
+      let(:gia) { 0 }
+
+      before do
+        procurement_building.service_codes << 'C.1'
+        procurement_building.validate_spreadsheet_gia(gia, procurement_building.name)
+      end
+
+      it 'is not valid on gia' do
+        expect(procurement_building.errors.any?).to eq true
+      end
+
+      it 'has the correct error message' do
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      let(:gia) { procurement_building.building.gia }
+
+      it 'is valid on gia' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'C.1'
+        procurement_building.validate_spreadsheet_gia(gia, procurement_building.name)
+
+        expect(procurement_building.errors.any?).to eq false
+      end
+    end
+  end
+
+  describe '#validate_spreadsheet_external_area' do
+    context 'when the building has an internal area of 0' do
+      let(:external_area) { 0 }
+
+      before do
+        procurement_building.service_codes << 'G.5'
+        procurement_building.validate_spreadsheet_external_area(external_area, procurement_building.name)
+      end
+
+      it 'is not valid on gia' do
+        expect(procurement_building.errors.any?).to eq true
+      end
+
+      it 'has the correct error message' do
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires external area, please go to 'Manage buildings' to update the building external area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      let(:external_area) { procurement_building.building.external_area }
+
+      it 'is valid on gia' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'G.5'
+        procurement_building.validate_spreadsheet_external_area(external_area, procurement_building.name)
+
+        expect(procurement_building.errors.any?).to eq false
+      end
+    end
+  end
+
   describe '#requires_internal_area?' do
     context 'when a service requires an internal area' do
       it 'will be true' do

@@ -1,71 +1,88 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
-  let!(:spreadsheet_import) do
+  let(:spreadsheet_import) do
     FacilitiesManagement::SpreadsheetImport.new.tap do |import|
       import.procurement = procurement
-      import.spreadsheet_file.attach(io: File.open(uploaded_file), filename: 'test.xlsx')
+      import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')
     end
   end
 
-  describe '#basic_data_validation' do
-    subject(:errors) { importer.basic_data_validation }
+  let(:fake_spreadsheet) { SpreadsheetImportHelper::FakeBulkUploadSpreadsheet.new }
+  let(:spreadsheet_path) { SpreadsheetImportHelper::FakeBulkUploadSpreadsheet::OUTPUT_PATH }
+  let(:spreadsheet_importer) { described_class.new(spreadsheet_import) }
 
-    let(:importer) { described_class.new(spreadsheet_import) }
+  describe '#basic_data_validation' do
+    subject(:errors) { spreadsheet_importer.basic_data_validation }
+
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
-    context 'when uploaded file is true to template' do
-      let(:uploaded_file) { described_class::TEMPLATE_FILE_PATH }
+    describe 'template validation' do
+      before { allow(spreadsheet_importer).to receive(:spreadsheet_ready?).and_return(true) }
 
-      it 'has one error' do
-        expect(errors.size).to eq 1
+      context 'when uploaded file is true to template' do
+        let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
+
+        it 'has one error' do
+          expect(errors.size).to eq 1
+        end
+
+        it 'the error is not_started' do
+          expect(errors.first).to eq :not_started
+        end
       end
 
-      it 'the error is not_started' do
-        expect(errors.first).to eq :not_started
+      context 'when uploaded file differs from template' do
+        let(:spreadsheet_path) do
+          Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+        end
+
+        it 'includes template invalid error' do
+          expect(errors).to include(:template_invalid)
+        end
       end
     end
 
-    context 'when uploaded file differs from template' do
-      let(:uploaded_file) do
-        Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
-      end
+    describe 'spreadsheet readiness' do
+      before { allow(spreadsheet_importer).to receive(:template_valid?).and_return(true) }
 
-      it 'includes template invalid error' do
-        expect(errors).to include(:template_invalid)
-      end
+      # Attention: Ensure the template file DOES NOT have 'Ready to upload' in cell B10.
+      # v2.6 (used at the time of writing) didn't
+      let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
-      it 'does not include any other error error' do
-        expect(errors.size).to eq 1
+      it 'includes not started error' do
+        expect(errors).to include(:not_started)
       end
     end
   end
 
   # rubocop:disable RSpec/NestedGroups
   describe '#import_buildings' do
-    let(:uploaded_file) { described_class::TEMPLATE_FILE_PATH }
+    before do
+      fake_spreadsheet.add_building_sheet(building_data)
+      fake_spreadsheet.write
+
+      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
+
+      # Stub out import methods not under test
+      (described_class::IMPORT_PROCESS_ORDER - [:import_buildings]).each do |other_import_method|
+        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      end
+
+      allow(spreadsheet_importer).to receive(:procurement_buildings_valid?).and_return(true)
+      allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
+      allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
+
+      spreadsheet_importer.import_data
+    end
+
     let(:procurement) { create(:facilities_management_procurement, user: user) }
     let(:user) { create(:user) }
-
     let(:spreadsheet_building) { create(:facilities_management_building) }
     let(:spreadsheet_building_2) { create(:facilities_management_building) }
-    let(:spreadsheet_importer) { described_class.new(spreadsheet_import) }
-
-    let(:spreadsheet_file) { File.new(spreadsheet_path, 'w+') }
-    let(:spreadsheet_path) { './tmp/test.xlsx' }
-
-    # rubocop:disable RSpec/AnyInstance
-    before do
-      allow_any_instance_of(described_class).to receive(:downloaded_spreadsheet).and_return(spreadsheet_file)
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
-    end
-    # rubocop:enable RSpec/AnyInstance
 
     describe 'import with valid data' do
-      before do
-        bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-        spreadsheet_importer.import_data
-      end
+      let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
       it 'will save the data correctly' do
         acceptable_attributes = ['building_name', 'description', 'address_line_1', 'address_town', 'gia', 'external_area', 'building_type', 'other_building_type', 'security_type', 'other_security_type']
@@ -79,11 +96,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     describe 'import with no buildings' do
-      before do
-        spreadsheet_building_2.building_name = 'other building'
-        bulk_upload_spreadsheet_builder(spreadsheet_path, [])
-        spreadsheet_importer.import_data
-      end
+      let(:building_data) { [] }
 
       it 'changes the state of the spreadsheet_import to failed' do
         spreadsheet_import.reload
@@ -96,11 +109,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     end
 
     describe 'import with some buildings not complete' do
-      before do
-        spreadsheet_building_2.building_name = 'other building'
-        bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Incomplete'], [spreadsheet_building_2, 'Complete']])
-        spreadsheet_importer.import_data
-      end
+      let(:building_data) { [[spreadsheet_building, 'Incomplete'], [spreadsheet_building_2, 'Complete']] }
 
       it 'changes the state of the spreadsheet_import to failed' do
         spreadsheet_import.reload
@@ -115,11 +124,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     describe 'import with invalid data' do
       describe 'building_name' do
         context 'when the building name is blank' do
-          before do
-            spreadsheet_building.building_name = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, building_name: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -136,11 +142,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building name is more than the max characters' do
-          before do
-            spreadsheet_building.building_name = 'a' * 26
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, building_name: 'a' * 26) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -157,10 +160,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building name is duplicated' do
-          before do
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete'], [spreadsheet_building_2, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:building_data) { [[spreadsheet_building, 'Complete'], [spreadsheet_building_2, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -179,11 +179,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'building_description' do
         context 'when the building description is more than the max characters' do
-          before do
-            spreadsheet_building.description = 'a' * 51
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, description: 'a' * 51) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -202,11 +199,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'address_line_1' do
         context 'when the address_line_1 is blank' do
-          before do
-            spreadsheet_building.address_line_1 = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_line_1: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -223,11 +217,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the address_line_1 is more than the max characters' do
-          before do
-            spreadsheet_building.address_line_1 = 'a' * 101
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_line_1: 'a' * 101) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -246,11 +237,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'address_town' do
         context 'when the address_town is blank' do
-          before do
-            spreadsheet_building.address_town = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_town: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -267,11 +255,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the address_town is more than the max characters' do
-          before do
-            spreadsheet_building.address_town = 'a' * 31
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_town: 'a' * 31) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -290,11 +275,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'address_postcode' do
         context 'when the address_postcode is blank' do
-          before do
-            spreadsheet_building.address_postcode = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -311,11 +293,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the address_postcode is not a valid format' do
-          before do
-            spreadsheet_building.address_postcode = 'S143 0VV 0VV'
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: 'S143 0VV 0VV') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -334,11 +313,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'building area' do
         context 'when the gia is blank' do
-          before do
-            spreadsheet_building.gia = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, gia: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -355,11 +331,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the external_area is blank' do
-          before do
-            spreadsheet_building.external_area = ''
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, external_area: '') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -376,11 +349,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the gia is not numeric' do
-          before do
-            allow(spreadsheet_building).to receive(:gia).and_return('abc')
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building).tap { |b| allow(b).to receive(:gia).and_return('abc') }
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -397,11 +370,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the external_area is not numeric' do
-          before do
-            allow(spreadsheet_building).to receive(:external_area).and_return('def')
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building).tap { |b| allow(b).to receive(:external_area).and_return('abc') }
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -418,12 +391,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the gia and external area are zero' do
-          before do
-            spreadsheet_building.gia = 0
-            spreadsheet_building.external_area = 0
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, gia: 0, external_area: 0) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -443,11 +412,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'building_type' do
         context 'when the building_type is blank' do
-          before do
-            spreadsheet_building.building_type = nil
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, building_type: nil) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -464,11 +430,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building_type is not in the list' do
-          before do
-            spreadsheet_building.building_type = 'House'
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, building_type: 'House') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -485,12 +448,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building_type is Other' do
-          before do
-            spreadsheet_building.building_type = 'Other'
-            spreadsheet_building.other_building_type = 'Spanish Villa'
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, building_type: 'Other', other_building_type: 'Spanish Villa')
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to succeeded' do
             spreadsheet_import.reload
@@ -503,12 +465,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building_type is other and other is blank' do
-          before do
-            spreadsheet_building.building_type = 'other'
-            spreadsheet_building.other_building_type = nil
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, building_type: 'Other', other_building_type: nil)
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -525,12 +486,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building_type is other and other is more than 150 characters' do
-          before do
-            spreadsheet_building.building_type = 'other'
-            spreadsheet_building.other_building_type = 'a' * 151
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, building_type: 'Other', other_building_type: 'a' * 151)
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -549,11 +509,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         context 'when validating all the building types' do
           FacilitiesManagement::Building::SPREADSHEET_BUILDING_TYPES.each do |building_type|
             context "when the building type is #{building_type}" do
-              before do
-                spreadsheet_building.building_type = building_type
-                bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-                spreadsheet_importer.import_data
-              end
+              let(:spreadsheet_building) { create(:facilities_management_building, building_type: building_type) }
+              let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
               it 'changes the state of the spreadsheet_import to succeeded' do
                 spreadsheet_import.reload
@@ -570,11 +527,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       describe 'security_type' do
         context 'when the security_type is blank' do
-          before do
-            spreadsheet_building.security_type = nil
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, security_type: nil) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -591,11 +545,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the security_type is not in the list' do
-          before do
-            spreadsheet_building.security_type = 'Super Secret'
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
-          end
+          let(:spreadsheet_building) { create(:facilities_management_building, security_type: 'Super Secret') }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -612,12 +563,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the security_type is Other' do
-          before do
-            spreadsheet_building.security_type = 'Other'
-            spreadsheet_building.other_security_type = 'Super Secret'
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, security_type: 'Other', other_security_type: 'Super Secret')
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to succeeded' do
             spreadsheet_import.reload
@@ -630,12 +580,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the security_type is other and other is blank' do
-          before do
-            spreadsheet_building.security_type = 'other'
-            spreadsheet_building.other_security_type = nil
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, security_type: 'Other', other_security_type: nil)
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -652,12 +601,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the security_type is other and other is more than 150 characters' do
-          before do
-            spreadsheet_building.security_type = 'other'
-            spreadsheet_building.other_security_type = 'a' * 151
-            bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-            spreadsheet_importer.import_data
+          let(:spreadsheet_building) do
+            create(:facilities_management_building, security_type: 'Other', other_security_type: 'a' * 151)
           end
+
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
             spreadsheet_import.reload
@@ -679,15 +627,17 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       let(:user_building) { create(:facilities_management_building, user: user) }
 
       # rubocop:disable RSpec/AnyInstance
-      before { allow_any_instance_of(Postcode::PostcodeCheckerV2).to receive(:find_region).with(user_building.address_postcode.delete(' ')).and_return([]) }
+      before do
+        allow_any_instance_of(Postcode::PostcodeCheckerV2).to receive(:find_region).with(anything).and_return([])
+      end
       # rubocop:enable RSpec/AnyInstance
 
       context 'when the postcodes are the same' do
-        before do
-          spreadsheet_building.address_postcode = user_building.address_postcode
-          bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-          spreadsheet_importer.import_data
+        let(:spreadsheet_building) do
+          create(:facilities_management_building, address_postcode: user_building.address_postcode)
         end
+
+        let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
         it 'changes the state of the spreadsheet_import to succeeded' do
           spreadsheet_import.reload
@@ -701,11 +651,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       context 'when the postcodes are different' do
-        before do
-          spreadsheet_building.address_postcode = 'AB101AA'
-          bulk_upload_spreadsheet_builder(spreadsheet_path, [[spreadsheet_building, 'Complete']])
-          spreadsheet_importer.import_data
-        end
+        let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: 'AB101AA') }
+        let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
         it 'changes the state of the spreadsheet_import to succeeded' do
           spreadsheet_import.reload
@@ -721,7 +668,92 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   end
   # rubocop:enable RSpec/NestedGroups
 
-  describe '#import_services' do
-    pending
+  describe '#import_service_matrix' do
+    before do
+      fake_spreadsheet.add_building_sheet(building_data)
+      fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
+      fake_spreadsheet.write
+
+      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
+
+      # Stub out import methods not under test
+      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix]).each do |other_import_method|
+        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      end
+
+      spreadsheet_importer.import_data
+    end
+
+    let(:procurement) { create(:facilities_management_procurement) }
+    let(:name1) { 'Trumpy Towers' }
+    let(:name2) { 'Higginbottom Hall' }
+    let(:building1) { create(:facilities_management_building, building_name: name1) }
+    let(:building2) { create(:facilities_management_building, building_name: name2) }
+
+    let(:service_matrix_data) do
+      [
+        { status: status, building_name: name1, services: service_data1 },
+        { status: status, building_name: name2, services: service_data2 }
+      ]
+    end
+
+    let(:building_data) do
+      [
+        [building1, 'Complete'],
+        [building2, 'Complete']
+      ]
+    end
+
+    context 'when the service matrix data has been filled in correctly (with Yes as the only valid input)' do
+      let(:service_data1) { %w[C.1a C.2b C.12a] }
+      let(:service_data2) { %w[C.12a C.13c] }
+      let(:status) { 'OK' }
+
+      context 'when the data is not already on the system' do
+        it 'stores the services' do
+          service_codes1 = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:object].service_codes
+          service_codes2 = spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:object].service_codes
+          expect(service_codes1).to eq %w[C.1 C.2 C.12]
+          expect(service_codes2).to eq %w[C.12 C.13]
+        end
+
+        it 'stores the standards' do
+          service_standards1 = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].map { |pbs| pbs[:object].service_standard }
+          service_standards2 = spreadsheet_importer.instance_variable_get(:@procurement_array).last[:procurement_building][:procurement_building_services].map { |pbs| pbs[:object].service_standard }
+          expect(service_standards1).to eq %w[A B A]
+          expect(service_standards2).to eq %w[A C]
+        end
+      end
+    end
+
+    context 'when status indicator cells has a red' do
+      let(:service_data1) { %w[C.1a C.2a C.12a] }
+      let(:service_data2) { %w[C.12a C.13a] }
+      let(:status) { 'all goofed up' }
+
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'has the correct error' do
+        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
+      end
+    end
+
+    context 'when more than one standard of the same service for a building has been selected' do
+      let(:service_data1) { %w[C.1a C.1b C.12a] }
+      let(:service_data2) { %w[C.12a C.12a] }
+      let(:status) { 'OK' }
+
+      it 'changes the state of the spreadsheet_import to failed' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.failed?).to be true
+      end
+
+      it 'has the correct error' do
+        expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:errors]).to eq(service_codes: [{ error: :multiple_standards_for_one_service }])
+      end
+    end
   end
 end
