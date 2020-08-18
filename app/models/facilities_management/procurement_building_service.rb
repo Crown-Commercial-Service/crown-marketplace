@@ -141,7 +141,7 @@ module FacilitiesManagement
       Array(lift_data).each_with_index do |value, index|
         errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
 
-        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 1000
+        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i >= 1000
 
         errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
       end
@@ -189,6 +189,7 @@ module FacilitiesManagement
     end
 
     def validate_detail_of_requirement_max_length
+      self.detail_of_requirement = ActionController::Base.helpers.strip_tags(detail_of_requirement)
       errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
     end
 

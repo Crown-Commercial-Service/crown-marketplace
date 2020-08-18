@@ -105,6 +105,40 @@ module SpreadsheetImportHelper
       end
     end
 
+    SERVICE_HOURS = { 'H.4': 'Handyman Services', 'H.5': 'Move and Space Management - Internal Moves', 'I.1': 'Reception Service', 'I.2': 'Taxi Booking Service', 'I.3': 'Car Park Management and Booking', 'I.4': 'Voice Announcement System Operation', 'J.1': 'Manned Guarding Service', 'J.2': 'CCTV / Alarm Monitoring', 'J.3': 'Control of Access and Security Passes', 'J.4': 'Emergency Response', 'J.5': 'Patrols (Fixed or Static Guarding)', 'J.6': 'Management of Visitors and Passes' }.freeze
+
+    def add_service_hours_sheet(data)
+      name = 'Service Volumes 3'
+      @sheets_added << name
+      @package.workbook.add_worksheet(name: name) do |sheet|
+        sheet.add_row([nil, nil, nil, 'Service status indicator'] + data.map { |service| service[:status] })
+        sheet.add_row([])
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + data.map { |building| building[:building_name] })
+
+        SERVICE_HOURS.each do |code, detail|
+          service_volume_3_row(code.to_s, detail, data).each do |row|
+            sheet.add_row(row)
+          end
+        end
+
+        12.times do |index|
+          min = 4 + index * 2
+          max = min + 1
+          sheet.merge_cells "A#{min}:A#{max}"
+          sheet.merge_cells "B#{min}:B#{max}"
+          sheet.merge_cells "C#{min}:C#{max}"
+        end
+      end
+    end
+
+    def service_volume_3_row(service_code, detail, service_hour_details)
+      current_service_hours = service_hour_details.map { |pb| pb[:service_hours][service_code.to_sym] }
+      current_detail_of_requirement = service_hour_details.map { |pb| pb[:detail_of_requirement][service_code.to_sym] }
+
+      [[service_code, detail, ((current_service_hours + current_detail_of_requirement).all?(&:nil?) ? 'No' : 'Yes'), 'Number of hours required'] + current_service_hours,
+       [nil, nil, nil, 'Detail of requirement'] + current_detail_of_requirement]
+    end
+
     def template_spreadsheet
       Roo::Spreadsheet.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, extension: :xlsx)
     end
