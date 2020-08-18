@@ -60,6 +60,51 @@ module SpreadsheetImportHelper
       end
     end
 
+    def add_service_volumes_1(service_details)
+      name = 'Service Volumes 1'
+      @sheets_added << name
+      @package.workbook.add_worksheet(name: name) do |sheet|
+        sheet.add_row(['', '', '', 'Service status indicator'] + service_details.map { |pb| pb[2] })
+        sheet.add_row([])
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Metric per Annum'] + service_details.map { |pb| pb[0] })
+        sheet.add_row(service_volume_1_row('E.4', 'Portable Appliance Testing', 'Number of appliances to be tested', service_details))
+        sheet.add_row(service_volume_1_row('G.1', 'Routine Cleaning', 'Number of building occupants', service_details))
+        sheet.add_row(service_volume_1_row('G.3', 'Mobile Cleaning', 'Number of building occupants', service_details))
+        sheet.add_row(service_volume_1_row('K.1', 'Classified Waste', 'Number of consoles', service_details))
+        sheet.add_row(service_volume_1_row('K.2', 'General Waste', 'Number of tonnes', service_details))
+        sheet.add_row(service_volume_1_row('K.3', 'Recycled Waste', 'Number of tonnes', service_details))
+        sheet.add_row(service_volume_1_row('K.4', 'Hazardous Waste', 'Number of tonnes', service_details))
+        sheet.add_row(service_volume_1_row('K.5', 'Clinical Waste', 'Number of tonnes', service_details))
+        sheet.add_row(service_volume_1_row('K.6', 'Medical Waste', 'Number of tonnes', service_details))
+        sheet.add_row(service_volume_1_row('K.7', 'Feminine Hygiene Waste', 'Number of units', service_details))
+      end
+    end
+
+    def service_volume_1_row(service_code, detail, unit, service_details)
+      current_service = service_details.map { |pb| pb[1][service_code.to_sym] }
+      [service_code, detail, (current_service.all?(&:nil?) ? 'No' : 'Yes'), unit] + current_service
+    end
+
+    def add_service_volumes_2(service_details)
+      name = 'Service Volumes 2'
+      @sheets_added << name
+      @package.workbook.add_worksheet(name: name) do |sheet|
+        sheet.add_row(['', '', '', '', 'Service status indicator'] + service_details.map { |pb| pb[2] })
+        sheet.add_row(['', '', '', '', 'Building name'] + service_details.map { |pb| pb[0] })
+        sheet.add_row(['', '', '', '', 'Service required within this building?'] + service_details.map { |pb| pb[1].any? ? 'Yes' : 'No' })
+        sheet.add_row(['', '', '', '', 'Number of lifts in each building'] + service_details.map { |pb| pb[1].length })
+        sheet.add_row([])
+        sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Lift Number', 'Metric'] + service_details.map { |pb| pb[0] })
+        FacilitiesManagement::SpreadsheetImporter::NUMBER_OF_LIFTS.times do |i|
+          sheet.add_row(['C.5', 'Lifts, Hoists & Conveyance Systems Maintenance', service_details.map { |pb| pb[1].any? }.any? ? 'Yes' : 'No', i + 1, 'Number of floors'] + service_details.map { |pb| pb[1][i] })
+        end
+        sheet.merge_cells 'A7:A46'
+        sheet.merge_cells 'B7:B46'
+        sheet.merge_cells 'C7:C46'
+        sheet.add_row(['', '', '', '', 'Total number of lift entrances'] + service_details.map { |pb| pb[1].sum })
+      end
+    end
+
     def template_spreadsheet
       Roo::Spreadsheet.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, extension: :xlsx)
     end
