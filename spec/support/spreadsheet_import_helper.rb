@@ -95,7 +95,7 @@ module SpreadsheetImportHelper
         sheet.add_row(['', '', '', '', 'Number of lifts in each building'] + service_details.map { |pb| pb[1].length })
         sheet.add_row([])
         sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Lift Number', 'Metric'] + service_details.map { |pb| pb[0] })
-        40.times do |i|
+        FacilitiesManagement::SpreadsheetImporter::NUMBER_OF_LIFTS.times do |i|
           sheet.add_row(['C.5', 'Lifts, Hoists & Conveyance Systems Maintenance', service_details.map { |pb| pb[1].any? }.any? ? 'Yes' : 'No', i + 1, 'Number of floors'] + service_details.map { |pb| pb[1][i] })
         end
         sheet.merge_cells 'A7:A46'
