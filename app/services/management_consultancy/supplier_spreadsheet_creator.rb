@@ -40,7 +40,7 @@ class ManagementConsultancy::SupplierSpreadsheetCreator
   def add_audit_trail(sheet)
     services = []
     @params['services'].each do |service|
-      if service =~ /^MCF\d[.]\d+[.]\d+[.]\d$/
+      if service =~ /^MCF\d[.]\d+[.]\d+[.]\d+$/
         subservice =  ManagementConsultancy::Subservice.find_by(code: service)
         parent_service = ManagementConsultancy::Service.find_by(code: subservice.service)
         services << "#{parent_service.name} - #{subservice.name}"
