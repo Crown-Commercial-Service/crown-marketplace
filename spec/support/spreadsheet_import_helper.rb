@@ -121,7 +121,7 @@ module SpreadsheetImportHelper
           end
         end
 
-        12.times do |index|
+        SERVICE_HOURS.count.times do |index|
           min = 4 + index * 2
           max = min + 1
           sheet.merge_cells "A#{min}:A#{max}"
