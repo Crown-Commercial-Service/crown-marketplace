@@ -620,5 +620,30 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
   end
+
+  describe '#add_region_code_from_address_region' do
+    subject(:building) { create(:facilities_management_building) }
+
+    before do
+      building.update(address_region: region, address_region_code: nil)
+      building.add_region_code_from_address_region
+    end
+
+    context 'when zero regions are returned' do
+      let(:region) { 'New York State' }
+
+      it 'does not change the building region' do
+        expect(building.address_region_code).to eq nil
+      end
+    end
+
+    context 'when a region is returned' do
+      let(:region) { 'Aberdeen and Aberdeenshire' }
+
+      it 'does change the building region' do
+        expect(building.address_region_code).to eq 'UKM50'
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/NestedGroups

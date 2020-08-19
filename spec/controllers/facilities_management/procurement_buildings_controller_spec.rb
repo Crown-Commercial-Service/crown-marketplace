@@ -24,9 +24,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
   end
 
   describe 'PATCH #update' do
-    context 'when logged in as the fm buyer that created the procurement' do
-      login_fm_buyer_with_details
+    login_fm_buyer_with_details
 
+    context 'when logged in as the fm buyer that created the procurement' do
       before do
         procurement_building.reload
         pbs = procurement_building.procurement_building_services.first
@@ -45,6 +45,28 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
 
       it 'redirects to the procurement building page' do
         expect(response).to redirect_to("/facilities-management/procurement_buildings/#{procurement_building.id}")
+      end
+    end
+
+    context 'when updating a missing region' do
+      before do
+        patch :update, params: { id: procurement_building.id, add_missing_region: 'Save and return', facilities_management_building: { address_region: address_region } }
+      end
+
+      context 'when the building has a region' do
+        let(:address_region) { 'Cardiff and Vale of Glamorgan' }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+        end
+      end
+
+      context 'when the building does not have a region' do
+        let(:address_region) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
       end
     end
   end

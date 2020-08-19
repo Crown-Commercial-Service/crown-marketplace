@@ -670,7 +670,7 @@ module FacilitiesManagement
 
     def set_deleted_action_occurred
       @deleted = params[:deleted].present?
-      @what_was_deleted = params[:deleted].to_s.downcase if @deleted
+      @what_was_deleted = params[:deleted].to_s if @deleted
     end
 
     def set_edit_state

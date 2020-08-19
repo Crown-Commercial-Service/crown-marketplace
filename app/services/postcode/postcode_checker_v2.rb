@@ -51,18 +51,26 @@ module Postcode
       postcode_structure = destructure_postcode(postcode)
 
       if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
-        result = execute_find_region_query postcode_structure[:out_code]
+        result = extract_regions(execute_find_region_query(postcode_structure[:out_code]))
         if result.length.zero?
-          nuts1region_codes = Nuts1Region.all.map(&:code)
-          result = FacilitiesManagement::Region.all.map { |f| { code: f.code, region: f.name } if f.code.start_with?(*nuts1region_codes) }.compact
+          regions_from_nuts
+        else
+          result
         end
       else
-        result = execute_find_region_query(':')
+        execute_find_region_query(':')
       end
-
-      result
     rescue StandardError => e
       raise e
+    end
+
+    def self.regions_from_nuts
+      nuts1region_codes = Nuts1Region.all.map(&:code)
+      FacilitiesManagement::Region.all.map { |f| { code: f.code, region: f.name } if f.code.start_with?(*nuts1region_codes) }.compact
+    end
+
+    def self.extract_regions(result)
+      result.map { |code| code.transform_keys(&:to_sym) }.reject { |region| region[:code].nil? || region[:region].nil? }
     end
 
     def self.execute_find_region_query(postcode)

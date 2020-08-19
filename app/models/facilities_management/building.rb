@@ -109,6 +109,14 @@ module FacilitiesManagement
       #{address_postcode}"
     end
 
+    def add_region_code_from_address_region
+      regions = Postcode::PostcodeCheckerV2.find_region address_postcode.delete(' ')
+      region = regions.select { |single_region| single_region[:region] == address_region }.first
+      return if region.nil?
+
+      self.address_region_code = region[:code]
+    end
+
     private
 
     def populate_other_data

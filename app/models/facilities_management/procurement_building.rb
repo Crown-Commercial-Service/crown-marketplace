@@ -56,6 +56,10 @@ module FacilitiesManagement
       errors.add(:building, :external_area_too_small, building_name: building_name) if requires_external_area? && external_area.to_i.zero?
     end
 
+    def missing_region?
+      building.address_region_code.nil? || building.address_region.nil?
+    end
+
     private
 
     def service_code_selection
