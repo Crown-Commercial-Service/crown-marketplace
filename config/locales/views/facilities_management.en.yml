@@ -44,8 +44,11 @@ en:
               blank: Town or city name for this building must be 30 characters or less
             building_name:
               blank: Enter a name for your building
+              too_long: Building name must be 25 characters or less
             building_type:
               blank: You must select a buiding type or describe your own
+            description:
+              too_long: Building description must be 50 characters or less
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
