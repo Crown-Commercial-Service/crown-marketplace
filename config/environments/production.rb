@@ -88,7 +88,7 @@ Rails.application.configure do
   end
 
   config.assets.initialize_on_precompile = true
-  config.action_controller.asset_host = "//#{ENV['ASSET_BUCKET']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "//#{ENV['ASSETS_BUCKET']}.s3.amazonaws.com/"
   config.assets.digest = true
   config.assets.enabled = true
   config.fail_silently = true
