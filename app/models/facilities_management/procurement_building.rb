@@ -49,11 +49,11 @@ module FacilitiesManagement
     end
 
     def validate_spreadsheet_gia(gia, building_name)
-      errors.add(:building, :gia_too_small, building_name: building_name) if requires_internal_area? && gia.zero?
+      errors.add(:building, :gia_too_small, building_name: building_name) if requires_internal_area? && gia.to_i.zero?
     end
 
     def validate_spreadsheet_external_area(external_area, building_name)
-      errors.add(:building, :external_area_too_small, building_name: building_name) if requires_external_area? && external_area.zero?
+      errors.add(:building, :external_area_too_small, building_name: building_name) if requires_external_area? && external_area.to_i.zero?
     end
 
     private
