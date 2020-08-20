@@ -1193,13 +1193,12 @@ en:
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
+          heading: Contract name
         detailed_search: Detailed search
         estimated_annual_cost:
-          caption: Detailed search
           content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
           do_you_know: Do you know your current or estimated annual cost?
           heading: Estimated annual cost
-          hint: For example, £500.
           label: Enter the estimated annual cost, excluding VAT
         heading: Results
         invoicing_contact_details:

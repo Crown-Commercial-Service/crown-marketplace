@@ -1,6 +1,6 @@
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), t('.caption'), @procurement.contract_name, nil, nil)) %>
+<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, t('.heading') %>
-<fieldset class="govuk-fieldset govuk-!-margin-top-3 govuk-!-width-three-quarters">
+<fieldset class="govuk-fieldset govuk-!-width-three-quarters">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>" data-propertyname="Estimated cost">
     <legend class="govuk-heading-m">
       <%= t('.do_you_know') %>
@@ -9,16 +9,13 @@
       <%= t('.content') %>
     </span>
     <%= display_errors @procurement, :estimated_cost_known %>
-    <div class="radio-content-toggle govuk-radios govuk-radios">
+    <div class="radio-content-toggle govuk-radios govuk-radios govuk-!-margin-top-4">
       <div class="govuk-radios__item">
         <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true %>
         <%= f.label :estimated_cost_known, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
         <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
           <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
             <%= f.label :estimated_annual_cost, t('.label'), class: "govuk-label" %>
-            <span class="govuk-hint">
-              <%= t('.hint') %>
-            </span>
             <%= display_errors @procurement, :estimated_annual_cost %>
             <span class="moj-label__currency <%= 'moj-label__currency--error' if @procurement.errors[:estimated_annual_cost].any? %>">&pound;</span>
             <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field moj-input__currency govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
