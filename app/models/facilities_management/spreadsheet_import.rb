@@ -45,5 +45,16 @@ module FacilitiesManagement
         errors.add(:spreadsheet_file, error_symbol)
       end
     end
+
+    def state_to_string
+      case aasm_state
+      when 'importing'
+        [:grey, 'Upload in progress']
+      when 'succeeded'
+        [:blue, 'Upload completed']
+      when 'failed'
+        [:red, 'Upload failed']
+      end
+    end
   end
 end
