@@ -5,14 +5,16 @@ module FacilitiesManagement
 
       def new
         @spreadsheet_import = FacilitiesManagement::SpreadsheetImport.new(facilities_management_procurement_id: params[:procurement_id])
+        @spreadsheet_import_error = ''
       end
 
       def create
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
-        if @spreadsheet_import.save
-          FacilitiesManagement::SpreadsheetImporter.new(@spreadsheet_import).import_data # TODO: This will become a background job
+        if @spreadsheet_import.save(context: :upload)
+          FacilitiesManagement::UploadSpreadsheetWorker.perform_async(@spreadsheet_import.id)
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
+          @spreadsheet_import_error = @spreadsheet_import.errors.first.last
           @spreadsheet_import.fail!
           render :new
         end

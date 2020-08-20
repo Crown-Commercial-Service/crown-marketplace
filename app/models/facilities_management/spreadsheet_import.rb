@@ -6,13 +6,13 @@ module FacilitiesManagement
                              foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_imports
 
     has_one_attached :spreadsheet_file
-    validate :spreadsheet_file_attached # the 'attached' macro ignores custom error messages hence this validator
-    validate :spreadsheet_file_ext_validation
-    validates :spreadsheet_file, antivirus: { message: :malicious }
-    validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }
+    validate :spreadsheet_file_attached, on: :upload # the 'attached' macro ignores custom error messages hence this validator
+    validate :spreadsheet_file_ext_validation, on: :upload
+    validates :spreadsheet_file, antivirus: { message: :malicious }, on: :upload
+    validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                                 message: :wrong_content_type }
-    validate :spreadsheet_basic_data_validation
+                                                 message: :wrong_content_type }, on: :upload
+    validate :spreadsheet_basic_data_validation, on: :upload
 
     aasm do
       state :importing, initial: true
@@ -43,6 +43,17 @@ module FacilitiesManagement
 
       FacilitiesManagement::SpreadsheetImporter.new(self).basic_data_validation.each do |error_symbol|
         errors.add(:spreadsheet_file, error_symbol)
+      end
+    end
+
+    def state_to_string
+      case aasm_state
+      when 'importing'
+        [:grey, 'Upload in progress']
+      when 'succeeded'
+        [:blue, 'Upload completed']
+      when 'failed'
+        [:red, 'Upload failed']
       end
     end
   end

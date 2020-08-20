@@ -255,7 +255,14 @@ module FacilitiesManagement
     end
 
     def continue_to_results
-      if procurement_valid?
+      can_continue_to_results = case @procurement.aasm_state
+                                when 'detailed_search', 'choose_contract_value', 'results'
+                                  procurement_valid?
+                                else
+                                  true
+                                end
+
+      if can_continue_to_results
         @procurement.set_state_to_results_if_possible! unless @procurement.results?
         redirect_to facilities_management_procurement_path(@procurement)
       else

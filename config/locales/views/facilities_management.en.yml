@@ -21,28 +21,6 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
-        facilities_management/service_hour_choice:
-          attributes:
-            end_time:
-              after: The end time must be after the start time for %{day}
-              invalid: Select end time
-              too_long: The total service period for a day cannot be more than 24 hours
-            service_choice:
-              all_day_overlap: The start time of %{day} cannot be earlier than the end time of the previous day
-              inclusion: Select one option for %{day}
-            start_time:
-              after: The end time must be after the start time for %{day}
-              invalid: Select start time
-              selection_overlap: The start time of %{day} cannot be earlier than the end time of the previous day
-        facilities_management/service_hours:
-          attributes:
-            base:
-              required: You must provide hours required for at least one of the days
-            personnel:
-              blank: Enter a number of personnel
-              greater_than: Enter a whole number between 1 and 999, like 300
-              less_than: Enter a whole number between 1 and 999, like 300
-              not_a_number: Enter a whole number between 1 and 999, like 300
         user:
           incorrect_username_or_password: You must provide a correct username or password
   activerecord:
@@ -66,8 +44,11 @@ en:
               blank: Town or city name for this building must be 30 characters or less
             building_name:
               blank: Enter a name for your building
+              too_long: Building name must be 25 characters or less
             building_type:
               blank: You must select a buiding type or describe your own
+            description:
+              too_long: Building description must be 50 characters or less
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
@@ -272,6 +253,8 @@ en:
               invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
         facilities_management/procurement_building_service:
           attributes:
+            detail_of_requirement:
+              blank: Enter the detail of requirement
             lift_data:
               above_maximum: The maximum number of lifts is 99
               greater_than: The number of floors accessed must be a whole number greater than 0.
@@ -291,20 +274,10 @@ en:
               invalid: The number of units to be serviced must be a whole number between 1 and 999,999,999.
               invalid_k7: The number of units of feminine hygiene waste must be a whole number between 1 and 999,999,999.
             service_hours:
-              end_time:
-                greater_than: The end time must be after the start time
-                invalid: Select end time
-                less_than: The start time must be before the end time
-                too_long: The total service period for a day cannot be more than 24 hours.
-              service_choice:
-                inclusion: Select not required if you don’t need the service on this day
-                required: You must provide hours required for at least one of the days
-                too_long: The total service period for a day cannot be more than 24 hours.
-              start_time:
-                greater_than: The end time must be after the start time
-                invalid: Select start time
-                less_than: The start time must be before the end time
-                not_a_date: Select start time
+              greater_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
+              less_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
+              not_a_number: Enter number of hours per year
+              not_an_integer: Number of hours per year must be a whole number between 1 and 999,999,999
             service_standard:
               blank: Select level of standard for your
             size_of_external_area:
@@ -386,8 +359,9 @@ en:
           attributes:
             spreadsheet_file:
               malicious: The selected file contains a virus
-              not_attached: Select your 'Services and building template'
+              not_attached: Select your 'Services and buildings template'
               not_ready: The selected file could not be uploaded. Cell B10 must be 'Ready' on the Instructions tab of your template
+              not_started: The selected file is using the 'Services and buildings template', but is empty
               template_invalid: The selected file must use the 'Services and buildings template'
               too_large: The selected file must be smaller than 10mb
               wrong_content_type: The selected file does not contain the expected content type
@@ -735,12 +709,10 @@ en:
         standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
         standard_c_title: Standard C - a bespoke service level
         subheading: What standard are you applying to all selected planned maintenance services?
-      service_hour_summary:
-        service_hours_caption: Service times
-        total_hours_tip: Total annual hours this service will be used
       show:
         answer_question: Answer question
         back_to_detailed_summary: Back to detailed search summary
+        detail_of_requirement: Detail of requirement
         gia: Gross internal area (GIA)
         gia-summary: The gross internal area of the building (in square meters)
         heading: Service requirements
@@ -752,7 +724,7 @@ en:
         no_of_units_to_be_serviced: The number of units to be serviced per annum
         service: Service
         service_hour_question: The number of hours of service provision per annum
-        service_hours: Number of personnel
+        service_hours: Number of hours per year
         service_standard: The service standard required
         size_of_external_area: The size of the external area (in square metres)
         tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
@@ -773,27 +745,25 @@ en:
         save_and_return_to_service_information: Save and return to service requirements
         subheading: Answer additional questions about the services
     procurement_buildings_services:
-      day_section:
-        all_day: All day (24 hours)
-        am_pm: AM or PM
-        copy_details: Apply to Monday through Friday
-        end_time: End time
-        hour: Hour
-        hourly: Specified hours
-        minute: Minute
-        not_required: Not required
-        start_time: Start time
       lifts:
         back_to_service_information: Back to service requirements
         save_and_return_to_service_information: Save and return to service requirements
       service_hours:
-        back_to_service_information: Return to service requirements
-        number_of_personnel: Number of personnel
-        personnel_subtitle: How many personnel do you require for this service?
-        save_and_return_to_service_information: Save and return to service requirements
-        service_hours_description_1: The calculation will assume 52 weeks x 7 days in one year.
-        service_hours_subtitle: Please input below the hours you require this service to be delivered in a standard week
-        there_is_a_problem: There is a problem
+        detail_example: See an example
+        detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
+        detail_example_2: 2 x people
+        detail_example_3: 1 x person working Monday - Friday, 9am-5pm, totalling 2080 hours
+        detail_example_4: 1 x person Monday - Wednesday, 9am - 5pm, totalling 1248 hours
+        detail_example_5: It is suggested that you base the hours on a standard of 52 weeks x 7 days in one year. Adjustments for bank holidays etc can then be made within contract if necessary.
+        detail_example_6: Please ensure the total of the values in the detail match the total number of hours input above.
+        detail_heading: Please detail below when the service hours should be provided per week, and the number of people to provide those hours of service.
+        detail_hint: This information will be used to inform the supplier of your requirements.
+        detail_label: Detail of requirement
+        hour_heading: Please enter the total number of hours of this service required per year.
+        hour_hint: The hours entered will be used to calculate the cost of this service.
+        hour_label: Number of hours per year
+        return_to_service_requirements_summary: Return to service requirements summary
+        save_and_return: Save and return
       show:
         back_to_service_information: Back to service requirements
         save_and_return_to_service_information: Save and return to service requirements
@@ -1223,13 +1193,12 @@ en:
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
+          heading: Contract name
         detailed_search: Detailed search
         estimated_annual_cost:
-          caption: Detailed search
           content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
           do_you_know: Do you know your current or estimated annual cost?
           heading: Estimated annual cost
-          hint: For example, £500.
           label: Enter the estimated annual cost, excluding VAT
         heading: Results
         invoicing_contact_details:
@@ -1254,13 +1223,6 @@ en:
           county: County (optional)
           postcode: Postcode
           town_or_city: Town or city
-        next_step:
-          contract_dates: 'Next: Buildings'
-          contract_name: 'Next: Estimated annual cost'
-          estimated_annual_cost: 'Next: TUPE'
-          procurement_buildings: 'Next: Services'
-          services: 'Next: Select services for detailed search'
-          tupe: 'Next: Contract period'
         notices_contact_details:
           change: Change
           new: Enter a new contact for notices
@@ -1294,8 +1256,9 @@ en:
           question: Where are your buildings located?
           remove_all: Remove all
           subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
-        return_to_detailed_search_summary: Return to detailed search summary
+        return_to_requirements: Return to requirements
         save_and_continue: Save and continue
+        save_and_return: Save and return
         save_and_return_to_detailed_summary: Save and return to detailed search summary
         save_for_later: Save for later
         search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
@@ -1325,7 +1288,7 @@ en:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
           tupe_title: TUPE
-          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) Regulations protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer. <a href="https://www.gov.uk/transfers-takeovers" target="_blank" class="govuk-link--no-visited-state hidden-link" tabindex="-1">Find out when TUPE applies</a>
+          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer.
           what_you_need_to_know_title: What you need to know about TUPE
       edit_procurement:
         cancel_and_return: Cancel and return to Procurements

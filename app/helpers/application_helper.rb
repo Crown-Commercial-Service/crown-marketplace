@@ -343,5 +343,15 @@ module ApplicationHelper
 
     content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
   end
+
+  def govuk_tag_with_text(status, text)
+    extra_classes = {
+      grey: 'govuk-tag--grey',
+      blue: 'govuk-tag',
+      red: 'govuk-tag--red'
+    }
+
+    content_tag :strong, text, class: ['govuk-tag'] << extra_classes[status]
+  end
 end
 # rubocop:enable Metrics/ModuleLength

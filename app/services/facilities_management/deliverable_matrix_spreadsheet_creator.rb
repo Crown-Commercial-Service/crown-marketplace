@@ -33,7 +33,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
           service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
+          service_hours: procurement_building_service.service_hours,
+          detail_of_requirement: procurement_building_service.detail_of_requirement
         }
       end
     end
@@ -92,10 +93,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def add_service_periods_worksheet(package, standard_column_style, units)
     package.workbook.add_worksheet(name: 'Service Periods') do |sheet|
-      add_header_row(sheet, ['Service Reference', 'Service Name', 'Specific Service Periods'])
+      hint_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
+      hint_center_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+
+      add_header_row(sheet, ['Service Reference', 'Service Name', 'Metric per Annum'])
       add_building_name_row(sheet, ['', '', ''], :center)
-      rows_added = add_service_periods(sheet, units)
-      style_service_periods_matrix_sheet(sheet, standard_column_style, rows_added) if sheet.rows.size > 1
+      add_service_periods(sheet, units)
+      style_service_periods_matrix_sheet(sheet, standard_column_style, hint_style, hint_center_style) if sheet.rows.size > 1
     end
   end
 
@@ -158,10 +162,12 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.column_widths(*column_widths)
   end
 
-  def style_service_periods_matrix_sheet(sheet, style, rows_added)
+  def style_service_periods_matrix_sheet(sheet, style, hint_style, hint_center_style)
     column_widths = [15, 100]
     @active_procurement_buildings.count.times { column_widths << 50 }
-    sheet["A3:B#{rows_added + 2}"].each { |c| c.style = style }
+    update_cell_styles(sheet, "D2:#{sheet.rows[2].cells.last.r}", hint_center_style)
+    update_cell_styles(sheet, "A3:#{sheet.rows.last.cells.last.r}", hint_style)
+    update_cell_styles(sheet, "A3:#{sheet.rows.last.cells[2].r}", style)
     sheet.column_widths(*column_widths)
   end
 
@@ -325,16 +331,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_service_periods(sheet, units)
-    rows_added = 0
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
     hours_required_services.each_with_index do |service, index|
-      rows_added += add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_personnel_row(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_break_row(sheet, index, hours_required_services.size - 1)
+      add_service_hour_row(sheet, service, buildings_data, units, standard_style)
+      add_detail_of_requirement_row(sheet, service, buildings_data, units, standard_style)
+      add_break_row(sheet, index, hours_required_services.size - 1)
     end
-
-    rows_added
   end
 
   def hours_required_services
@@ -343,87 +346,39 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     services_data.select { |service| allowed_services.include? service['code'] }
   end
 
-  def add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-    rows_added = 0
-    Date::DAYNAMES.rotate(1).each do |day|
-      row_values = [service['code'], service['name'], day]
-      buildings_data.each do |building|
-        service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+  def add_service_hour_row(sheet, service, buildings_data, units, standard_style)
+    row_values = [service['code'], service['name'], 'Number of hours required']
 
-        row_values << add_service_measure_row_value(service_measure, day)
-      end
-
-      rows_added += 1
-      sheet.add_row row_values, style: standard_style, height: standard_row_height
+    buildings_data.each do |building|
+      service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      service_measure[:service_hours]
+                    end
     end
-    rows_added
+
+    sheet.add_row row_values, style: standard_style, height: standard_row_height
   end
 
-  def add_service_measure_row_value(service_measure, day)
-    return nil if service_measure.nil? || service_measure[:service_hours].nil?
-
-    day_symbol = day.downcase.to_sym
-    case service_measure[:service_hours][day_symbol]['service_choice']
-    when 'not_required'
-      'Not required'
-    when 'all_day'
-      'All day (24 hours)'
-    when 'hourly'
-      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol) + next_day(service_measure[:service_hours][day_symbol])
-    else
-      'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
-    end
-  end
-
-  def add_personnel_row(sheet, service, buildings_data, units, standard_style)
-    personnel_row_values = [service['code'], service['name'], 'No. of personnel']
+  def add_detail_of_requirement_row(sheet, service, buildings_data, units, standard_style)
+    row_values = [service['code'], service['name'], 'Detail of requirement']
 
     buildings_data.each do |building|
       service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
 
-      personnel_row_values << if service_measure.nil?
-                                nil
-                              else
-                                service_measure[:service_hours][:personnel]
-                              end
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      sanitize_string_for_excel(service_measure[:detail_of_requirement])
+                    end
     end
 
-    sheet.add_row personnel_row_values, style: standard_style, height: standard_row_height
-    1
+    sheet.add_row row_values, style: standard_style
   end
 
   def add_break_row(sheet, index, max)
-    if index < max
-      sheet.add_row [], height: standard_row_height
-      1
-    else
-      0
-    end
-  end
-
-  def next_day(service_hour_choice)
-    service_hour_choice[:next_day] ? ' (next day)' : ''
-  end
-
-  def service_measure_invalid_type?(service_measure)
-    invalid = false
-    invalid = true if service_measure.nil? || service_measure[:uom_value].instance_of?(String) || service_measure[:uom_value].instance_of?(Integer)
-
-    invalid
-  end
-
-  def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%01d', service_measure[:service_hours][day_symbol]['start_hour'])
-    start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
-    start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
-    start_hour + ':' + start_minute + start_ampm
-  end
-
-  def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%01d', service_measure[:service_hours][day_symbol]['end_hour'])
-    end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
-    end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
-    end_hour + ':' + end_minute + end_ampm
+    sheet.add_row [], height: standard_row_height if index < max
   end
 
   def add_contract_number(sheet)
@@ -626,5 +581,9 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
 
     string
+  end
+
+  def update_cell_styles(sheet, cells, style)
+    sheet[cells].each { |cell| cell.style = style }
   end
 end

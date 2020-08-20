@@ -9,7 +9,6 @@ module FacilitiesManagement
     scope :require_volume, -> { where(code: [REQUIRE_VOLUME_CODES]) }
     scope :has_service_questions, -> { where(code: [SERVICES_DEFINITION.pluck(:code)]) }
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
-    serialize :service_hours, ServiceHours
 
     # Lookup data for 'constants' are taken from this service object
     services_and_questions = ServicesAndQuestions.new
@@ -20,7 +19,11 @@ module FacilitiesManagement
     # validates on :lifts
     validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :validate_lift_data, on: :lifts
-    validate :service_hours_complete?, on: :service_hours
+
+    # validatiomns on :service_hours
+    validates :service_hours, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }, on: :service_hours
+    validates :detail_of_requirement, presence: true, on: :service_hours
+    validate :validate_detail_of_requirement_max_length, on: :service_hours
 
     # validates on the service_standard service question
     validate :validate_ppm_standard_presence, on: :ppm_standards
@@ -107,7 +110,7 @@ module FacilitiesManagement
       elsif requires_lift_data?
         lift_data.map(&:to_i).inject(&:+)
       elsif requires_service_hours?
-        service_hours.total_hours_annually.to_f.round(2)
+        service_hours
       elsif requires_external_area?
         procurement_building.external_area
       else
@@ -129,10 +132,6 @@ module FacilitiesManagement
 
     private
 
-    def service_hours_complete?
-      errors.merge!(service_hours.errors) if service_hours.invalid?
-    end
-
     # rubocop:disable Metrics/AbcSize
     def validate_lift_data
       errors.add(:lift_data, :required, position: 0) if lift_data.blank?
@@ -142,7 +141,7 @@ module FacilitiesManagement
       Array(lift_data).each_with_index do |value, index|
         errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
 
-        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i > 1000
+        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i >= 1000
 
         errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
       end
@@ -187,6 +186,11 @@ module FacilitiesManagement
       this_service[:context][:volume].each do |question|
         validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: invalid) if send(this_service[:context][:volume].first).present?
       end
+    end
+
+    def validate_detail_of_requirement_max_length
+      self.detail_of_requirement = ActionController::Base.helpers.strip_tags(detail_of_requirement)
+      errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
     end
 
     # rubocop:enable Rails/Validation, Metrics/AbcSize
