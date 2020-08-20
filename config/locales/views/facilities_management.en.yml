@@ -1224,13 +1224,6 @@ en:
           county: County (optional)
           postcode: Postcode
           town_or_city: Town or city
-        next_step:
-          contract_dates: 'Next: Buildings'
-          contract_name: 'Next: Estimated annual cost'
-          estimated_annual_cost: 'Next: TUPE'
-          procurement_buildings: 'Next: Services'
-          services: 'Next: Select services for detailed search'
-          tupe: 'Next: Contract period'
         notices_contact_details:
           change: Change
           new: Enter a new contact for notices
@@ -1264,8 +1257,9 @@ en:
           question: Where are your buildings located?
           remove_all: Remove all
           subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
-        return_to_detailed_search_summary: Return to detailed search summary
+        return_to_requirements: Return to requirements
         save_and_continue: Save and continue
+        save_and_return: Save and return
         save_and_return_to_detailed_summary: Save and return to detailed search summary
         save_for_later: Save for later
         search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
