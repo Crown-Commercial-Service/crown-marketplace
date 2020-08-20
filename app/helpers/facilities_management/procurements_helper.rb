@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::ProcurementsHelper
   def journey_step_url_former(journey_step:, region_codes: nil, service_codes: nil)
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
@@ -126,4 +127,12 @@ module FacilitiesManagement::ProcurementsHelper
   def procurement_can_be_deleted?
     %w[quick_search detailed_search detailed_search_bulk_upload da_draft choose_contract_value results].include? @procurement.aasm_state
   end
+
+  def hint_details(question, hint)
+    capture do
+      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
 end
+# rubocop:enable Metrics/ModuleLength

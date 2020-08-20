@@ -2,12 +2,9 @@
 <% content_for :page_title, t('.heading') %>
 <fieldset class="govuk-fieldset govuk-!-width-three-quarters">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>" data-propertyname="Estimated cost">
-    <legend class="govuk-heading-m">
-      <%= t('.do_you_know') %>
-    </legend>
-    <span id="hint-radio-c" class="govuk-hint govuk-!-font-size-20">
-      <%= t('.content') %>
-    </span>
+
+    <%= hint_details(t('.do_you_know'), t('.content')) %>
+
     <%= display_errors @procurement, :estimated_cost_known %>
     <div class="radio-content-toggle govuk-radios govuk-radios govuk-!-margin-top-4">
       <div class="govuk-radios__item">
