@@ -48,7 +48,7 @@ module FacilitiesManagement
                       { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
 
     validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 25 }, on: %i[new edit all]
-    validates :description, length: { maximum: 25 }, on: %i[new edit all]
+    validates :description, length: { maximum: 50 }, on: %i[new edit all]
 
     validates :gia, presence: true, on: %i[gia all]
     validates :gia, numericality: { only_integer: true }, on: %i[gia all]

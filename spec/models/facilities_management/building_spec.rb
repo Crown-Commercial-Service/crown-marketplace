@@ -131,6 +131,56 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
+    context 'when the building name is too long' do
+      before do
+        building.building_name = 'a' * 26
+      end
+
+      it 'is invalid' do
+        expect(building.valid?(:all)).to eq false
+      end
+
+      it 'will have the correct error message' do
+        building.valid?(:all)
+        expect(building.errors[:building_name].first).to eq 'Building name must be 25 characters or less'
+      end
+    end
+
+    context 'when the building name is within range' do
+      before do
+        building.description = 'a' * 25
+      end
+
+      it 'is valid' do
+        expect(building.valid?(:all)).to eq true
+      end
+    end
+
+    context 'when the building description is too long' do
+      before do
+        building.description = 'a' * 51
+      end
+
+      it 'is invalid' do
+        expect(building.valid?(:all)).to eq false
+      end
+
+      it 'will have the correct error message' do
+        building.valid?(:all)
+        expect(building.errors[:description].first).to eq 'Building description must be 50 characters or less'
+      end
+    end
+
+    context 'when the building description is within range' do
+      before do
+        building.description = 'a' * 50
+      end
+
+      it 'is valid' do
+        expect(building.valid?(:all)).to eq true
+      end
+    end
+
     context 'when required element not present' do
       before do
         building.building_name = nil
