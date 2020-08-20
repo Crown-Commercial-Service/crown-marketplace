@@ -5,7 +5,7 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_name contract_dates estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
+    %i[contract_name contract_period estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
   end
 
   def initial_call_off_period_start_date
@@ -143,6 +143,14 @@ module FacilitiesManagement::ProcurementsHelper
 
   def buildings_with_missing_regions
     @procurement.active_procurement_buildings.select(&:missing_region?)
+  end
+
+  def convert_summary_to_title
+    "#{@summary_page.gsub('_', ' ').capitalize} summary"
+  end
+
+  def requires_back_link?
+    %w[contract_name estimated_annual_cost tupe].include? params[:step]
   end
 end
 # rubocop:enable Metrics/ModuleLength

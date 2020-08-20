@@ -127,6 +127,7 @@ Rails.application.routes.draw do
 
     resources :procurements do
       get 'further_competition_spreadsheet'
+      get 'summary', to: 'procurements#summary'
       post 'da_spreadsheets'
       get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
       get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
