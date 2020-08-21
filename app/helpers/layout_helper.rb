@@ -313,5 +313,14 @@ module LayoutHelper
     end
     safe_join(html)
   end
+
+  def form_group_with_error(model, attribute)
+    css_classes = ['govuk-form-group']
+    css_classes += ['govuk-form-group--error'] if model.errors.key?(attribute)
+
+    content_tag :div, class: css_classes, id: "#{attribute}-form-group" do
+      yield
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

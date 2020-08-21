@@ -482,4 +482,44 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
     end
   end
+
+  describe '#missing_region?' do
+    before do
+      procurement_building.building.update(address_region: address_region, address_region_code: address_region_code)
+    end
+
+    let(:address_region) { procurement_building.building.address_region }
+    let(:address_region_code) { procurement_building.building.address_region_code }
+
+    context 'when the building is missing address_region' do
+      let(:address_region) { nil }
+
+      it 'returns true' do
+        expect(procurement_building.missing_region?).to eq true
+      end
+    end
+
+    context 'when the building is missing address_region_code' do
+      let(:address_region_code) { nil }
+
+      it 'returns true' do
+        expect(procurement_building.missing_region?).to eq true
+      end
+    end
+
+    context 'when the building is missing address_region and address_region_code' do
+      let(:address_region_code) { nil }
+      let(:address_region) { nil }
+
+      it 'returns true' do
+        expect(procurement_building.missing_region?).to eq true
+      end
+    end
+
+    context 'when the building is not missing address_region or address_region_code' do
+      it 'returns false' do
+        expect(procurement_building.missing_region?).to eq false
+      end
+    end
+  end
 end
