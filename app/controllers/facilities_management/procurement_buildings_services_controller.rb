@@ -5,15 +5,18 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   before_action :set_partial
   before_action :set_lift_count
 
-  def show
-    render :edit
-  end
+  def edit; end
 
   def update
-    if params[:facilities_management_procurement_building_service][:step] == 'lifts'
+    case params[:facilities_management_procurement_building_service][:service_question]
+    when 'lifts'
       update_lifts
-    elsif params[:facilities_management_procurement_building_service][:step] == 'service_hours'
-      update_service_hours
+    when 'service_hours'
+      update_procurement_building_service(service_hours_params, :service_hours)
+    when 'volumes'
+      update_procurement_building_service(volume_params, :volume)
+    when 'service_standards'
+      update_procurement_building_service(service_standards_params, :service_standard)
     else
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     end
@@ -32,12 +35,14 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     end
   end
 
-  def update_service_hours
-    @building_service.assign_attributes(service_hours_params)
+  def update_procurement_building_service(pbs_params, context)
+    @building_service.assign_attributes(pbs_params)
 
-    if @building_service.save(context: :service_hours)
+    if @building_service.save(context: context)
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     else
+      params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+      set_partial
       render :edit
     end
   end
@@ -49,10 +54,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   end
 
   def set_partial
-    @partial_prefix = ''
-    return @partial_prefix = 'lifts' if @building_service.code == 'C.5'
-
-    @partial_prefix = 'service_hours'
+    @partial_prefix = params[:service_question]
   end
 
   def lift_params
@@ -64,6 +66,20 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     params.require(:facilities_management_procurement_building_service)
           .permit(:service_hours,
                   :detail_of_requirement)
+  end
+
+  def volume_params
+    params.require(:facilities_management_procurement_building_service)
+          .permit(:no_of_appliances_for_testing,
+                  :no_of_building_occupants,
+                  :no_of_consoles_to_be_serviced,
+                  :tones_to_be_collected_and_removed,
+                  :no_of_units_to_be_serviced)
+  end
+
+  def service_standards_params
+    params.require(:facilities_management_procurement_building_service)
+          .permit(:service_standard)
   end
 
   def set_building_and_service_data

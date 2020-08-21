@@ -45,11 +45,7 @@
               <td class="<%= cell_class(qa_h)%>">
                 <% link_text = 'Change' %>
                 <% link_text = 'Answer question' if qa_h[:answer].blank? || qa_h[:answer].try(:invalid?) %>
-                <% if %i[service_hours lift_data].include?(qa_h[:question])%>
-                  <%= link_to link_text, facilities_management_procurement_buildings_service_path(service) %>
-                <% else %>
-                  <%= link_to link_text, edit_facilities_management_procurement_building_path(@procurement_building, service_question: question_type(service, qa_h[:question])) %>
-                <% end %>
+                <%= link_to link_text, edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(qa_h[:question])) %>
               </td>
             </tr>
             <% if qa_h[:question] == :service_hours && qa_h[:answer].present? %>
