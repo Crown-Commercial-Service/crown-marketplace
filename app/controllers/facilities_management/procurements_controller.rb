@@ -35,14 +35,17 @@ module FacilitiesManagement
 
     def new
       @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
-      @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes])
+      @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]) if @procurement.service_codes.present?
     end
 
     def create
       @procurement = current_user.procurements.build(procurement_params)
 
       if @procurement.save(context: :contract_name)
-        if params[:save_for_later].present?
+        if @procurement.region_codes.empty?
+          @procurement.start_detailed_search!
+          redirect_to facilities_management_procurement_path(@procurement)
+        elsif params[:save_for_later].present?
           redirect_to facilities_management_procurements_path
         else
           redirect_to facilities_management_procurement_path(@procurement, 'what_happens_next': true)
@@ -621,6 +624,8 @@ module FacilitiesManagement
     end
 
     def set_new_procurement_data
+      return if params[:region_codes].nil?
+
       set_suppliers(params[:region_codes], params[:service_codes])
       find_regions(params[:region_codes])
       find_services(params[:service_codes])
@@ -633,6 +638,8 @@ module FacilitiesManagement
 
       region_codes = @procurement.region_codes
       service_codes = @procurement.service_codes
+      return if region_codes.nil?
+
       set_suppliers(region_codes, service_codes)
       find_regions(region_codes)
       find_services(service_codes)

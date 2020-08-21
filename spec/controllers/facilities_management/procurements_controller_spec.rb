@@ -367,9 +367,17 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'POST create' do
       context 'with a valid record' do
-        context 'when Save and continue is selected' do
-          it 'redirects to edit path for the new record' do
+        context 'when Save and continue is selected with no region codes' do
+          it 'redirects to facilities_management_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
+            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id)
+          end
+        end
+
+        context 'when Save and continue is selected with region codes' do
+          it 'redirects to facilities_management_procurement_path for the new record' do
+            post :create, params: { facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
@@ -377,7 +385,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when Save for later is selected' do
           it 'redirects to show path' do
-            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement' } }
+            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             expect(response).to redirect_to facilities_management_procurements_path
           end
         end

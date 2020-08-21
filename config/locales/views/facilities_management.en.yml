@@ -810,6 +810,13 @@ en:
         sub_lot_1a_hint: Total contract value up to £7 million
         sub_lot_1b_hint: Total contract value between £7 million and £50 million
         sub_lot_1c_hint: Total contract value over £50 million
+      contract_name:
+        contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+        contract_name_question: What do you want to call your contract?
+        heading: Contract name
+        return_to_what_happens_next: Return to what happens next
+        return_to_your_account: Return to your account
+        save_and_return: Save and return
       contracts:
         awaiting_response:
           else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
