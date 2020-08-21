@@ -35,7 +35,7 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-      <%= link_to t('.contract_period'), edit_facilities_management_procurement_path(:step => 'contract_dates'), :class => "govuk-link" %>
+      <%= link_to t('.contract_period'), facilities_management_procurement_summary_path(@procurement, summary: 'contract_period'), :class => "govuk-link" %>
     </dt>
     <dd class="govuk-summary-list__value">
     </dd>

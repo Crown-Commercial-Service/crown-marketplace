@@ -1,0 +1,3 @@
+<%= govuk_page_header(LayoutHelper::HeadingDetail.new(convert_summary_to_title, @procurement.contract_name, nil, nil, nil)) %>
+<%= content_for :page_title, convert_summary_to_title %>
+<%= render "facilities_management/procurements/summary/#{@summary_page}" %>

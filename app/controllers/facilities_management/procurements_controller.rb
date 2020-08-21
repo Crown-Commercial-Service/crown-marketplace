@@ -1,14 +1,14 @@
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
-    before_action :set_procurement, only: %i[show edit update destroy]
+    before_action :set_procurement, only: %i[show summary edit update destroy]
     before_action :authorize_user
     before_action :set_deleted_action_occurred, only: %i[index]
-    before_action :set_edit_state, only: %i[index show edit update destroy]
-    before_action :ready_buildings, only: %i[show edit update]
-    before_action :set_procurement_data, only: %i[show edit update]
+    before_action :set_edit_state, only: %i[index show summary edit update destroy]
+    before_action :ready_buildings, only: %i[show summary edit update]
+    before_action :set_procurement_data, only: %i[show summary edit update]
     before_action :set_new_procurement_data, only: %i[new]
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-    before_action :build_page_details, only: %i[show edit update destroy]
+    before_action :build_page_details, only: %i[show summary edit update destroy]
 
     def index
       @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -26,6 +26,11 @@ module FacilitiesManagement
 
       @view_name = set_view_data
       reset_security_policy_document_page
+    end
+
+    def summary
+      @summary_page = params['summary']
+      redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if @procurement.send("#{@summary_page}_status") == :not_started
     end
 
     def new
@@ -122,11 +127,6 @@ module FacilitiesManagement
       spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
       spreadsheet_builder.build
       send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
-    end
-
-    def summary
-      @page_data = {}
-      @page_data[:model_object] = @procurement
     end
 
     def da_spreadsheets
