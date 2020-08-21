@@ -57,9 +57,9 @@ module FacilitiesManagement::ProcurementsHelper
   PROCUREMENT_STATE = { da_draft: 'DA draft',
                         further_competition: 'Further competition',
                         results: 'Results',
-                        quick_search: 'Quick search',
-                        detailed_search: 'Detailed search',
-                        detailed_search_bulk_upload: 'Detailed search - Bulk upload',
+                        quick_search: 'Quick view',
+                        detailed_search: 'Requirements',
+                        detailed_search_bulk_upload: 'Requirements',
                         closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
