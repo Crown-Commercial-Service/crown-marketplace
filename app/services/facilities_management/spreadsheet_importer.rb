@@ -82,7 +82,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def add_regions(building, building_column)
     region = Postcode::PostcodeCheckerV2.find_region building_column[5].to_s.delete(' ')
-    (building.address_region_code = region[0]['code']) && (building.address_region = region[0]['region']) if region.count == 1
+    (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.count == 1
   end
 
   def store_building(building)
