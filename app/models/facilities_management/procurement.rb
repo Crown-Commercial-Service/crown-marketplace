@@ -83,6 +83,10 @@ module FacilitiesManagement
       self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
     end
 
+    def latest_spreadsheet_import
+      spreadsheet_imports.order(:created_at).last
+    end
+
     def generate_contract_number_fc
       ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
     end

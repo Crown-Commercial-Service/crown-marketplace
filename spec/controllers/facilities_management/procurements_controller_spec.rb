@@ -72,6 +72,28 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
+      context 'with a procurement which has just bulk uploaded successfully' do
+        before do
+          procurement.update(aasm_state: 'detailed_search_bulk_upload')
+          procurement.spreadsheet_imports.create(aasm_state: 'succeeded')
+          get :show, params: { id: procurement.id } # First navigation after bulk upload success
+        end
+
+        it 'redirects to file upload status page on first navigation' do
+          expect(response).to redirect_to facilities_management_procurement_spreadsheet_import_path(
+            procurement, procurement.latest_spreadsheet_import
+          )
+        end
+
+        it 'does not redirect on subsequent navigations' do
+          get :show, params: { id: procurement.id } # Subsequent navigation
+
+          expect(response).not_to redirect_to facilities_management_procurement_spreadsheet_import_path(
+            procurement, procurement.latest_spreadsheet_import
+          )
+        end
+      end
+
       context 'with a procurement in the choose contract value state' do
         before do
           procurement.update(aasm_state: 'choose_contract_value')
