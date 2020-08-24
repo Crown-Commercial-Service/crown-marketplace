@@ -1,4 +1,4 @@
-<%= link_to t('.return_to_upload'), facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-back-link govuk-!-margin-bottom-6' %>
+<%= link_to t('.return_to_upload'), new_facilities_management_procurement_spreadsheet_import_path(@spreadsheet_import.procurement), class: 'govuk-back-link govuk-!-margin-bottom-6' %>
 
 <%= render partial: 'facilities_management/procurements/spreadsheet_imports/upload_status' %>
 
@@ -6,6 +6,7 @@
   <%= link_to t('.dashboard_link'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>
 <% elsif @spreadsheet_import.succeeded? %>
   <%= link_to t('.continue_to_procurement'), facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-button govuk-!-font-size-19 govuk-!-margin-top-4' %>
+  <br /><%= link_to t('.return_to_dashboard'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19' %>
 <% else %>
   <%= link_to t('.procurement_link'), facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>
 <% end %>

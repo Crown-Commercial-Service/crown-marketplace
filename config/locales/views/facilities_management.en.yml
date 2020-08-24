@@ -1480,10 +1480,11 @@ en:
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
         show:
+          continue_to_procurement: Continue to procurement
           dashboard_link: Return to procurements dashboard
           procurement_link: Go to procurement
+          return_to_dashboard: Return to procurements dashboard
           return_to_upload: Return to upload your spreadsheet
-          continue_to_procurement: Continue to procurement
         success:
           about: About the procurement summary
           buildings: buildings
