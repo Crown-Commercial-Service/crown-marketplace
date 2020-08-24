@@ -179,6 +179,62 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       end
     end
 
+    context 'when updating no_of_consoles_to_be_serviced data' do
+      before do
+        procurement_building_service.update(code: 'K.1')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced } }
+      end
+
+      context 'when the no_of_consoles_to_be_serviced data is valid' do
+        let(:no_of_consoles_to_be_serviced) { 340 }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the no_of_consoles_to_be_serviced data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.no_of_consoles_to_be_serviced).to eq no_of_consoles_to_be_serviced
+        end
+      end
+
+      context 'when the no_of_consoles_to_be_serviced is not valid' do
+        let(:no_of_consoles_to_be_serviced) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    context 'when updating no_of_building_occupants data' do
+      before do
+        procurement_building_service.update(code: 'G.3')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_building_occupants: no_of_building_occupants } }
+      end
+
+      context 'when the no_of_building_occupants data is valid' do
+        let(:no_of_building_occupants) { 150 }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the no_of_building_occupants data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.no_of_building_occupants).to eq no_of_building_occupants
+        end
+      end
+
+      context 'when the no_of_building_occupants is not valid' do
+        let(:no_of_building_occupants) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
     context 'when updating neither lift or service hour data' do
       it 'redirects to facilities_management_procurement_building_path' do
         patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: nil } }
