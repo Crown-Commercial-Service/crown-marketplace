@@ -41,7 +41,7 @@ module FacilitiesManagement
 
     def new
       @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
-      @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes]) if @procurement.service_codes.present?
+      @back_path = back_path
     end
 
     def create
@@ -59,7 +59,7 @@ module FacilitiesManagement
       else
         @errors = @procurement.errors
         set_procurement_data
-        @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes)
+        @back_path = back_path
         render :new
       end
     end
@@ -163,6 +163,10 @@ module FacilitiesManagement
       else
         @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       end
+    end
+
+    def back_path
+      helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
