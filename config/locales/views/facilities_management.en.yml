@@ -655,8 +655,8 @@ en:
     journey:
       choose_locations:
         heading: Regions
-        location_selected: Region selected
-        locations_selected: Regions selected
+        location_selected: region selected
+        locations_selected: regions selected
         no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
@@ -667,9 +667,9 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
-        service_selected: Service selected
+        service_selected: service selected
         service_specification_doc: Read the service specification document
-        services_selected: Services selected
+        services_selected: services selected
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:

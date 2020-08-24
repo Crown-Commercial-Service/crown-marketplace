@@ -62,6 +62,7 @@
                                         <div>
                                           <%# TODO: work_package and service vars are named the wrong way around %>
                                           <%= link_to t('.learn_more'), facilities_management_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank' %>
+                                          <%= govuk_tag_with_text(:grey, t('common.da_eligible')) if da_eligible?(work_package['code']) %>
                                         </div>
                                       </label>
                                     </div>
