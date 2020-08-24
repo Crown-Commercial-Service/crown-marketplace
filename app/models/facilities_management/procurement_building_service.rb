@@ -173,18 +173,15 @@ module FacilitiesManagement
     # according to it's specified context (:volume) and specific questions
     # rubocop:disable Rails/Validation
     def validate_volume
-      return if this_service.empty?
-
-      return unless this_service[:context].key?(:volume)
-
-      invalid = if ['K.1', 'K.2', 'K.3', 'K.4', 'K.5', 'K.6', 'K.7'].include? this_service[:code]
-                  "invalid_#{this_service[:code].downcase.tr('.', '')}".to_sym
-                else
-                  :invalid
-                end
+      return unless requires_volume?
 
       this_service[:context][:volume].each do |question|
-        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: invalid)
+        if self[question.to_sym].nil?
+          errors.add(question.to_sym, :blank)
+          break
+        end
+
+        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: :invalid)
       end
     end
 

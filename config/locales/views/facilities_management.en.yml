@@ -265,15 +265,17 @@ en:
               too_long: Enter a whole number between 1 and 999, like 100.
               too_short: The number of floors accessed must be a whole number greater than 0.
             no_of_appliances_for_testing:
-              invalid: The number of appliances to be tested must be a whole number between 1 and 999,999,999.
+              blank: Enter number of portable appliances
+              invalid: The number of portable appliances must be a whole number between 1 and 999,999,999
             no_of_building_occupants:
-              invalid: The number of building occupants must be a whole number between 1 and 999,999,999.
+              blank: Enter number of building occupants
+              invalid: The number of building occupants must be a whole number between 1 and 999,999,999
             no_of_consoles_to_be_serviced:
-              invalid: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
-              invalid_k1: The number of consoles of classified waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of consoles
+              invalid: The number of consoles must be a whole number between 1 and 999,999,999
             no_of_units_to_be_serviced:
-              invalid: The number of units to be serviced must be a whole number between 1 and 999,999,999.
-              invalid_k7: The number of units of feminine hygiene waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of units
+              invalid: The number of units must be a whole number between 1 and 999,999,999
             service_hours:
               greater_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
               less_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
@@ -284,11 +286,8 @@ en:
             size_of_external_area:
               invalid: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
-              invalid_k2: The number of tonnes of general waste must be a whole number between 1 and 999,999,999.
-              invalid_k3: The number of tonnes of recycled waste must be a whole number between 1 and 999,999,999.
-              invalid_k4: The number of tonnes of hazardous waste must be a whole number between 1 and 999,999,999.
-              invalid_k5: The number of tonnes of clinical waste must be a whole number between 1 and 999,999,999.
-              invalid_k6: The number of tonnes of medical waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of tonnes
+              invalid: The number of tonnes must be a whole number between 1 and 999,999,999
         facilities_management/procurement_contact_detail:
           attributes:
             email:
