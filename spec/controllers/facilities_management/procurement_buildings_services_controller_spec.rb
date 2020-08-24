@@ -110,12 +110,68 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
 
         it 'updates the no_of_appliances_for_testing data correctly' do
           procurement_building_service.reload
-          expect(procurement_building_service.no_of_appliances_for_testing).to eq 506
+          expect(procurement_building_service.no_of_appliances_for_testing).to eq no_of_appliances_for_testing
         end
       end
 
       context 'when the no_of_appliances_for_testing is not valid' do
         let(:no_of_appliances_for_testing) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    context 'when updating tones_to_be_collected_and_removed data' do
+      before do
+        procurement_building_service.update(code: 'K.2')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', tones_to_be_collected_and_removed: tones_to_be_collected_and_removed } }
+      end
+
+      context 'when the tones_to_be_collected_and_removed data is valid' do
+        let(:tones_to_be_collected_and_removed) { 1000 }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the tones_to_be_collected_and_removed data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.tones_to_be_collected_and_removed).to eq tones_to_be_collected_and_removed
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is not valid' do
+        let(:tones_to_be_collected_and_removed) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    context 'when updating no_of_units_to_be_serviced data' do
+      before do
+        procurement_building_service.update(code: 'K.7')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_units_to_be_serviced: no_of_units_to_be_serviced } }
+      end
+
+      context 'when the no_of_units_to_be_serviced data is valid' do
+        let(:no_of_units_to_be_serviced) { 350 }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the no_of_units_to_be_serviced data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.no_of_units_to_be_serviced).to eq no_of_units_to_be_serviced
+        end
+      end
+
+      context 'when the no_of_appliances_for_testing is not valid' do
+        let(:no_of_units_to_be_serviced) { nil }
 
         it 'renders the edit page' do
           expect(response).to render_template('edit')
