@@ -34,12 +34,6 @@ module FacilitiesManagement
       params.require(:facilities_management_procurement_building)
             .permit(
               procurement_building_services_attributes: %i[id
-                                                           no_of_appliances_for_testing
-                                                           no_of_building_occupants
-                                                           no_of_units_to_be_serviced
-                                                           size_of_external_area
-                                                           no_of_consoles_to_be_serviced
-                                                           tones_to_be_collected_and_removed
                                                            service_standard
                                                            service_hours
                                                            detail_of_requirement]
