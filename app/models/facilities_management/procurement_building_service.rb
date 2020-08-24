@@ -26,9 +26,7 @@ module FacilitiesManagement
     validate :validate_detail_of_requirement_max_length, on: :service_hours
 
     # validates on the service_standard service question
-    validate :validate_ppm_standard_presence, on: :ppm_standards
-    validate :validate_building_standard_presence, on: :building_standards
-    validate :validate_cleaning_standard_presence, on: :cleaning_standards
+    validate :validate_standard, on: %i[service_standard ppm_standards building_standards cleaning_standards]
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
@@ -148,24 +146,8 @@ module FacilitiesManagement
     end
     # rubocop:enable Metrics/AbcSize
 
-    def validate_ppm_standard_presence
-      validate_standard if validation_needed_for?(:ppm_standards)
-    end
-
-    def validate_building_standard_presence
-      validate_standard if validation_needed_for?(:building_standards)
-    end
-
-    def validate_cleaning_standard_presence
-      validate_standard if validation_needed_for?(:cleaning_standards)
-    end
-
-    def validation_needed_for?(context)
-      this_service[:context].keys.include?(context)
-    end
-
     def validate_standard
-      errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank?
+      errors.add(:service_standard, :blank) if service_standard.blank? || SERVICE_STANDARDS.exclude?(service_standard)
     end
 
     # Checks that each field for each question

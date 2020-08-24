@@ -11,34 +11,10 @@ module FacilitiesManagement
     def edit; end
 
     def update
-      if params['add_missing_region'].present?
-        update_missing_region
-        return
-      end
-
-      @procurement_building.assign_attributes(procurement_building_params)
-
-      # save(context: context) does not work for nested objects (fix might be coming at some point: https://github.com/rails/rails/pull/24135)
-      # if procurement_building_services are valid
-      if !@procurement_building.procurement_building_services.map { |pbs| pbs.valid?(@service_question.to_sym) }.include?(false)
-        @procurement_building.save
-        redirect_to facilities_management_procurement_building_path(@procurement_building)
-      else
-        render :edit
-      end
+      update_missing_region if params['add_missing_region'].present?
     end
 
     private
-
-    def procurement_building_params
-      params.require(:facilities_management_procurement_building)
-            .permit(
-              procurement_building_services_attributes: %i[id
-                                                           service_standard
-                                                           service_hours
-                                                           detail_of_requirement]
-            )
-    end
 
     def building_params
       params.require(:facilities_management_building)

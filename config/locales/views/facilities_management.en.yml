@@ -280,7 +280,7 @@ en:
               not_a_number: Enter number of hours per year
               not_an_integer: Number of hours per year must be a whole number between 1 and 999,999,999
             service_standard:
-              blank: Select level of standard for your %{name}
+              blank: Select the level of standard
             size_of_external_area:
               invalid: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
@@ -674,30 +674,6 @@ en:
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
-      building_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
-        fabric_standard_a_title: Standard A - the general or normal service level
-        fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
-        fabric_standard_b_title: Standard B - this is the minimum level of service required
-        fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-        fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
-        heading: Building fabric maintenance services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: What standard are you applying to all selected building fabric maintenance services?
-      cleaning_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        cleaning_standard_a_copy: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
-        cleaning_standard_a_title: Standard A - the general or normal service level
-        cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
-        cleaning_standard_b_title: Standard B - the highest service level
-        cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-        cleaning_standard_c_title: Standard C - a bespoke service level
-        heading: Cleaning services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: What standard are you applying to all selected cleaning services?
       missing_region:
         building_address: Building address
         building_name: Building name
@@ -710,18 +686,6 @@ en:
         return_link: Return to review your buildings
         select_region: Select region
         we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
-      ppm_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        heading: Planned maintenance (PPM) services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
-        standard_a_title: Standard A - the general or normal service level
-        standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
-        standard_b_title: Standard B - this is the minimum level of service required
-        standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-        standard_c_title: Standard C - a bespoke service level
-        subheading: What standard are you applying to all selected planned maintenance services?
       show:
         answer_question: Answer question
         back_to_detailed_summary: Back to detailed search summary
@@ -770,6 +734,36 @@ en:
         hour_heading: Please enter the total number of hours of this service required per year.
         hour_hint: The hours entered will be used to calculate the cost of this service.
         hour_label: Number of hours per year
+      service_standards:
+        detail_text:
+          building_standards:
+            standard_A: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
+            standard_B: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
+            standard_C: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
+          cleaning_standards:
+            standard_A: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
+            standard_B: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
+            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          ppm_standards:
+            standard_A: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
+            standard_B: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
+            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+        detail_title:
+          building_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - this is the minimum level of service required
+            standard_C: Standard C - this level of service will be bespoke and site or area specific.
+          cleaning_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - the highest service level
+            standard_C: Standard C  - a bespoke service level
+          ppm_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - this is the minimum level of service required
+            standard_C: Standard C  - a bespoke service level
+        heading: Which service standard do you want for this service in this building?
+        hint_text: To understand the differences between the standards, please read the brief descriptions, or alternatively open the service specification document below and go to the service standards section.
+        warning: Please note that only Standard A is suitable for direct award, the other standards require a further competition.
       volumes:
         question:
           no_of_appliances_for_testing: How many portable appliances will require testing each year within this building?

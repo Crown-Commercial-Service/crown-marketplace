@@ -235,6 +235,90 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       end
     end
 
+    context 'when updating service standards for routine cleaning' do
+      before do
+        procurement_building_service.update(code: 'G.1')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+      end
+
+      context 'when the routine cleaning data is valid' do
+        let(:service_standard) { 'A' }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the routine cleaning service standards data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.service_standard).to eq service_standard
+        end
+      end
+
+      context 'when the routine cleaning service standards is not valid' do
+        let(:service_standard) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    context 'when updating service standards for building and fabric maintenance' do
+      before do
+        procurement_building_service.update(code: 'C.7')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+      end
+
+      context 'when the building and fabric maintenance data is valid' do
+        let(:service_standard) { 'B' }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the building and fabric maintenance service standards data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.service_standard).to eq service_standard
+        end
+      end
+
+      context 'when the building and fabric maintenance service standards is not valid' do
+        let(:service_standard) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
+    context 'when updating service standards for mechanical and electrical engineering maintenance' do
+      before do
+        procurement_building_service.update(code: 'C.7')
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+      end
+
+      context 'when the mechanical and electrical engineering maintenance data is valid' do
+        let(:service_standard) { 'C' }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+
+        it 'updates the mechanical and electrical engineering maintenance service standards data correctly' do
+          procurement_building_service.reload
+          expect(procurement_building_service.service_standard).to eq service_standard
+        end
+      end
+
+      context 'when the mechanical and electrical engineering maintenance service standards is not valid' do
+        let(:service_standard) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template('edit')
+        end
+      end
+    end
+
     context 'when updating neither lift or service hour data' do
       it 'redirects to facilities_management_procurement_building_path' do
         patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: nil } }
