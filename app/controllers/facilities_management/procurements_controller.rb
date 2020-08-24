@@ -24,6 +24,12 @@ module FacilitiesManagement
 
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
+      if @procurement.detailed_search_bulk_upload? && @procurement.latest_spreadsheet_import.succeeded?
+        @procurement.set_state_to_detailed_search! # So we don't get redirected subsequently
+        redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement,
+                                                                              id: @procurement.latest_spreadsheet_import)
+      end
+
       @view_name = set_view_data
       reset_security_policy_document_page
     end

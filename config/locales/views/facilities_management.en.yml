@@ -1480,13 +1480,15 @@ en:
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
         show:
+          continue_to_procurement: Continue to procurement
           dashboard_link: Return to procurements dashboard
           procurement_link: Go to procurement
+          return_to_dashboard: Return to procurements dashboard
+          return_to_upload: Return to upload your spreadsheet
         success:
           about: About the procurement summary
           buildings: buildings
           completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
-          open_procurement_summary: Click the continue button below to open your procurement summary.
           review: If you click into each section you can review your information, and make any amends if required.
           service_requirements: service requirements
           services: services
