@@ -4,6 +4,10 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
     pbs.this_service[:context][:volume]&.first
   end
 
+  def service_standard_type
+    @building_service.this_service[:context].select { |_, attributes| attributes.first == :service_standard }.keys.first
+  end
+
   def specific_lift_error?(model, error_type, index)
     model.errors.details[:lift_data].find_index { |item| item[:position] == index && item[:error] == error_type }.present?
   end

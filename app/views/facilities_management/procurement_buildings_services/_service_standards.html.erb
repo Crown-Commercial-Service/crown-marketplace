@@ -1,0 +1,32 @@
+<fieldset class="govuk-fieldset">
+  <%= hint_details(t('.heading'), t('.hint_text')) %>
+  <div class="govuk-!-margin-bottom-5 govuk-!-margin-top-5">
+    <a href="<%= Marketplace.service_information_doc %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
+        Read the service specification document <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+    </a>
+  </div>
+  <% standard_type = service_standard_type %>
+	<% FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
+		<div class="govuk-!-margin-bottom-2">
+			<%= govuk_details(t(".detail_title.#{standard_type}.standard_#{standard}")) do %>
+				<%= t(".detail_text.#{standard_type}.standard_#{standard}") %>
+			<% end %>
+		</div>	
+	<% end %>
+  <%= form_group_with_error(f.object, :service_standard) do %>
+    <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-5">
+      <%= display_errors(f.object, :service_standard)%>
+      <div class="govuk-radios">
+        <% FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
+          <div class="govuk-radios__item govuk-radios--small">
+            <%= f.radio_button :service_standard, standard, class: 'govuk-radios__input' %>
+            <%= f.label :service_standard, "Standard #{standard}", value: standard, class: 'govuk-label govuk-radios__label' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+	<div class="govuk-body-l ccs-font-weight-semi-bold">
+		<%= t('.warning') %>
+	</div>
+</fieldset>

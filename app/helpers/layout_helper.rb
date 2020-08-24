@@ -322,5 +322,12 @@ module LayoutHelper
       yield
     end
   end
+
+  def hint_details(question, hint)
+    capture do
+      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

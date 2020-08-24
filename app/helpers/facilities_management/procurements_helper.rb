@@ -128,13 +128,6 @@ module FacilitiesManagement::ProcurementsHelper
     %w[quick_search detailed_search detailed_search_bulk_upload da_draft choose_contract_value results].include? @procurement.aasm_state
   end
 
-  def hint_details(question, hint)
-    capture do
-      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
-      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
-    end
-  end
-
   def procurement_buildings_missing_regions
     return false unless @procurement.detailed_search? || @procurement.detailed_search_bulk_upload?
 

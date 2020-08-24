@@ -645,6 +645,35 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
+    context 'when code requires standard' do
+      before do
+        procurement_building_service.code = 'C.1'
+      end
+
+      it 'will be invalid when service standard is not an option' do
+        procurement_building_service.service_standard = 'D'
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'will be valid' do
+        procurement_building_service.service_standard = 'B'
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq true
+      end
+
+      it 'will be invalid when service_standard is blank' do
+        procurement_building_service.service_standard = nil
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building_service.service_standard = nil
+        procurement_building_service.valid?(:ppm_standards)
+        expect(procurement_building_service.errors[:service_standard].first).to eq 'Select the level of standard'
+      end
+    end
+
     context 'when code has multiple validations' do
       before do
         procurement_building_service.code = 'C.5'
