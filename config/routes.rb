@@ -141,7 +141,7 @@ Rails.application.routes.draw do
       resources :spreadsheet_imports, only: %i[new create show], controller: 'procurements/spreadsheet_imports'
     end
     resources :procurement_buildings, only: %i[show edit update]
-    resources :procurement_buildings_services, only: %i[show update]
+    resources :procurement_buildings_services, only: %i[edit update]
     resources :buyer_details, only: %i[show edit update] do
       get 'edit_address'
     end

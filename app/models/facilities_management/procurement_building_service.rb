@@ -171,7 +171,7 @@ module FacilitiesManagement
     # Checks that each field for each question
     # in the collection of VOLUME_QUESTIONS is correctly filled
     # according to it's specified context (:volume) and specific questions
-    # rubocop:disable Rails/Validation, Metrics/AbcSize
+    # rubocop:disable Rails/Validation
     def validate_volume
       return if this_service.empty?
 
@@ -184,7 +184,7 @@ module FacilitiesManagement
                 end
 
       this_service[:context][:volume].each do |question|
-        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: invalid) if send(this_service[:context][:volume].first).present?
+        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: invalid)
       end
     end
 
@@ -193,7 +193,7 @@ module FacilitiesManagement
       errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
     end
 
-    # rubocop:enable Rails/Validation, Metrics/AbcSize
+    # rubocop:enable Rails/Validation
     # gathers the answers for a set of questions
     # in an array of question => answer key-value pairs
     def get_answers(questions)

@@ -1,4 +1,9 @@
 module FacilitiesManagement::ProcurementBuildingsServicesHelper
+  def volume_question(pbs)
+    [] unless pbs.this_service[:context].key? :volume
+    pbs.this_service[:context][:volume]&.first
+  end
+
   def specific_lift_error?(model, error_type, index)
     model.errors.details[:lift_data].find_index { |item| item[:position] == index && item[:error] == error_type }.present?
   end

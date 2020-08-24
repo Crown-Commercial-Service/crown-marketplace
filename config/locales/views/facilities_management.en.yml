@@ -115,9 +115,10 @@ en:
               blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
+              not_a_number: The estimated annual cost must be an amount of money
               not_an_integer: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
-              inclusion: Select yes if you know your estimated annual cost, if you do not please select no
+              inclusion: Select one option
               not_present: You must answer the question about ‘Estimated annual cost’
             extensions_required:
               inclusion: Select yes if you want to extend your call-off contract
@@ -213,7 +214,7 @@ en:
               blank: Select at least one service you need to include in your procurement
               invalid: Select at least one service you need to include in your procurement
             tupe:
-              inclusion: Select yes if you know TUPE applies to your contract
+              inclusion: Select one option
               not_present: You must answer the question about ‘TUPE’
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
@@ -279,7 +280,7 @@ en:
               not_a_number: Enter number of hours per year
               not_an_integer: Number of hours per year must be a whole number between 1 and 999,999,999
             service_standard:
-              blank: Select level of standard for your
+              blank: Select level of standard for your %{name}
             size_of_external_area:
               invalid: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
@@ -744,9 +745,6 @@ en:
         volume_required_heading: Volume required (per annum)
         volume_required_html: "<b>Volume required <br> (per annum)</b>"
       volume:
-        back_to_service_information: Back to service requirements
-        caption: To enable us to calculate your prices, you need to provide additional service specific information. You must answer all questions below
-        heading: Service requirement volumes
         question:
           no_of_appliances_for_testing: How many appliances to be tested per annum?
           no_of_building_occupants: How many building occupants?
@@ -754,12 +752,10 @@ en:
           no_of_units_to_be_serviced: How many units to be serviced per annum?
           size_of_external_area: What is the size of the external area (in square metres)?
           tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: Answer additional questions about the services
     procurement_buildings_services:
-      lifts:
-        back_to_service_information: Back to service requirements
-        save_and_return_to_service_information: Save and return to service requirements
+      edit:
+        return_to_service_requirements: Return to service requirements
+        save_and_return: Save and return
       service_hours:
         detail_example: See an example
         detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
@@ -774,11 +770,19 @@ en:
         hour_heading: Please enter the total number of hours of this service required per year.
         hour_hint: The hours entered will be used to calculate the cost of this service.
         hour_label: Number of hours per year
-        return_to_service_requirements_summary: Return to service requirements summary
-        save_and_return: Save and return
-      show:
-        back_to_service_information: Back to service requirements
-        save_and_return_to_service_information: Save and return to service requirements
+      volumes:
+        question:
+          no_of_appliances_for_testing: How many portable appliances will require testing each year within this building?
+          no_of_building_occupants: How many building occupants (building users) are there in this building?
+          no_of_consoles_to_be_serviced: How many consoles are to be serviced each year within this building?
+          no_of_units_to_be_serviced: How many units are to be serviced each year within this building?
+          tones_to_be_collected_and_removed: How many tonnes are to be collected, stored and removed each year within this building?
+        unit:
+          no_of_appliances_for_testing: appliances
+          no_of_building_occupants: occupants
+          no_of_consoles_to_be_serviced: consoles
+          no_of_units_to_be_serviced: units
+          tones_to_be_collected_and_removed: tonnes
     procurements:
       about_the_contract:
         contract_details: 1. Contract details

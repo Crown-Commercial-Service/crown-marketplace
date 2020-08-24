@@ -1,7 +1,13 @@
 $(function () {
   if ($(".ccs-number-field").length) {
     var input = document.querySelector('.ccs-number-field');
-    var form = document.querySelector('.edit_facilities_management_procurement');
+    var form
+
+    if ($('.edit_facilities_management_procurement').length) {
+      form = document.querySelector('.edit_facilities_management_procurement');
+    } else if ($('.edit_facilities_management_procurement_building_service').length) {
+      form = document.querySelector('.edit_facilities_management_procurement_building_service');
+    }
 
     input.value = numberWithCommas(input.value)
 

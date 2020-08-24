@@ -1,9 +1,4 @@
 module FacilitiesManagement::ProcurementBuildingsHelper
-  def volume_question(pbs)
-    [] unless pbs.this_service[:context].key? :volume
-    pbs.this_service[:context][:volume]&.first
-  end
-
   def ppm_standard_question(pbs)
     [] unless pbs.this_service[:context].key? :ppm_standards
     pbs.this_service[:context][:ppm_standards]&.first
@@ -18,22 +13,6 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     [] unless pbs.this_service[:context].key? :cleaning_standards
     pbs.this_service[:context][:cleaning_standards]&.first
   end
-
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-  def question_type(service, question)
-    return 'service_hours' if question == :service_hours
-
-    if question == :service_standard
-      return 'ppm_standards' if service.requires_ppm_standards?
-
-      return 'building_standards' if service.requires_building_standards?
-
-      return 'cleaning_standards' if service.requires_cleaning_standards?
-    elsif service.requires_volume?
-      'volume'
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def service_standard(service)
     return 'ppm_standards' if service.requires_ppm_standards?
@@ -66,5 +45,20 @@ module FacilitiesManagement::ProcurementBuildingsHelper
 
   def regions
     Postcode::PostcodeCheckerV2.find_region(@building.address_postcode.delete(' ')).map { |region| region[:region] }
+  end
+
+  def get_service_question(question)
+    case question
+    when :lift_data
+      'lifts'
+    when :service_hours
+      'service_hours'
+    when :service_standard
+      'service_standards'
+    when :no_of_appliances_for_testing, :no_of_building_occupants, :no_of_consoles_to_be_serviced, :tones_to_be_collected_and_removed, :no_of_units_to_be_serviced
+      'volumes'
+    else
+      'area'
+    end
   end
 end

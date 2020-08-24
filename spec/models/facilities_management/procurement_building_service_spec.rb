@@ -191,9 +191,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_appliances_for_testing if value is not present' do
+      it 'is not valid on no_of_appliances_for_testing if value is not present' do
         procurement_building_service.code = 'E.4'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_appliances_for_testing is present and greater than 0' do
@@ -216,9 +216,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
+      it 'is not valid on no_of_building_occupants if value is not present' do
         procurement_building_service.code = 'G.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_building_occupants is present and greater than 0' do
@@ -241,9 +241,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
+      it 'is not valid on no_of_building_occupants if value is not present' do
         procurement_building_service.code = 'G.3'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_building_occupants is present and greater than 0' do
@@ -260,9 +260,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_consoles_to_be_serviced if value is not present' do
+      it 'is not valid on no_of_consoles_to_be_serviced if value is not present' do
         procurement_building_service.code = 'K.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_consoles_to_be_serviced is present and greater than 0' do
@@ -285,9 +285,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'is not valid on tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.2'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -310,9 +310,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'is not valid on tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.3'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -329,9 +329,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_units_to_be_serviced if value is not present' do
+      it 'is not valid on no_of_units_to_be_serviced if value is not present' do
         procurement_building_service.code = 'K.7'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if no_of_units_to_be_serviced is present and greater than 0' do
@@ -354,9 +354,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'is not valid on tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.4'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -373,9 +373,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'is not valid on tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.5'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
@@ -392,9 +392,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
+      it 'is not valid on tones_to_be_collected_and_removed if value is not present' do
         procurement_building_service.code = 'K.6'
-        expect(procurement_building_service.valid?(:volume)).to eq true
+        expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
