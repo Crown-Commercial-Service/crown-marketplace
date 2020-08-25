@@ -10,19 +10,38 @@ RSpec.describe Postcode::PostcodeCheckerV2 do
   end
 
   describe '#extract_regions' do
-    context 'when a region can be found for a postcode' do
-      it 'returns all the regions formatted properly' do
-        results = ActiveRecord::Result.new(['code', 'region'], [['UKL22', 'Cardiff and Vale of Glamorgan'], ['UKM50', 'Aberdeen and Aberdeenshire']])
+    let(:postcode_postcode_structure) { { full_postcode: 'EC1A 2AT', out_code: 'EC1A' } }
+    let(:empty_results) { ActiveRecord::Result.new(['code', 'region'], []) }
+    let(:full_postcode_results) { empty_results }
+    let(:out_code_results) { ActiveRecord::Result.new(['code', 'region'], [['UKI3', 'Inner London - West'], ['UKI4', 'Inner London - East']]) }
 
-        expect(described_class.extract_regions(results)).to eq [{ code: 'UKL22', region: 'Cardiff and Vale of Glamorgan' }, { code: 'UKM50', region: 'Aberdeen and Aberdeenshire' }]
+    before do
+      allow(described_class).to receive(:execute_find_region_query).and_return(empty_results)
+      allow(described_class).to receive(:execute_find_region_query).with(postcode_postcode_structure[:full_postcode].delete(' ')).and_return(full_postcode_results)
+      allow(described_class).to receive(:execute_find_region_query).with(postcode_postcode_structure[:out_code]).and_return(out_code_results)
+    end
+
+    context 'when a region can be found from the postcode' do
+      let(:full_postcode_results) { ActiveRecord::Result.new(['code', 'region'], [['UKI3', 'Inner London - West']]) }
+
+      it 'returns the single region' do
+        expect(described_class.extract_regions(postcode_postcode_structure)).to eq [{ code: 'UKI3', region: 'Inner London - West' }]
       end
     end
 
-    context 'when regions can be found but some only have codes' do
-      it 'returns only the complete regions formatted properly' do
-        results = ActiveRecord::Result.new(['code', 'region'], [['UKM50', nil], [nil, 'Aberdeen and Aberdeenshire'], ['UKL22', 'Cardiff and Vale of Glamorgan']])
+    context 'when a region cannot be found from the postcode' do
+      before { described_class.extract_regions(postcode_postcode_structure) }
 
-        expect(described_class.extract_regions(results)).to eq [{ code: 'UKL22', region: 'Cardiff and Vale of Glamorgan' }]
+      it 'does the query with the out_code' do
+        expect(described_class).to have_received(:execute_find_region_query).with(postcode_postcode_structure[:out_code])
+      end
+    end
+
+    context 'when multiple regions can be found from the postcode with some nil' do
+      let(:out_code_results) { ActiveRecord::Result.new(['code', 'region'], [['UKI3', nil], [nil, 'Inner London - West'], ['UKI4', 'Inner London - East']]) }
+
+      it 'returns the regions formatted correctly' do
+        expect(described_class.extract_regions(postcode_postcode_structure)).to eq [{ code: 'UKI4', region: 'Inner London - East' }]
       end
     end
   end
