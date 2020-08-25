@@ -51,7 +51,7 @@ module FacilitiesManagement
       when 'importing'
         [:grey, 'Upload in progress']
       when 'succeeded'
-        [:blue, 'Upload successful']
+        [:blue, 'Upload completed']
       when 'failed'
         [:red, 'Upload failed']
       end
