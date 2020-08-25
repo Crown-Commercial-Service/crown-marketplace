@@ -54,7 +54,11 @@ $(function () {
 
     function setSelectedServices(idName) {
         var selected = $('#'+ idName).find('input.procurement-building__input:checked').length;
-        $('.' + idName).text('('+selected + ' selected)')
+        if (selected === 1) {
+            $('.' + idName).text('('+selected + ' service selected)')
+        } else {
+            $('.' + idName).text('('+selected + ' services selected)')
+        }
     }
 });
 

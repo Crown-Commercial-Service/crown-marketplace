@@ -1377,8 +1377,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:procurement_building2) { build(:facilities_management_procurement_building) }
   end
 
-  describe '.assigning_services_to_buildings_status' do
-    subject(:status) { procurement.assigning_services_to_buildings_status }
+  describe '.buildings_and_services_status' do
+    subject(:status) { procurement.buildings_and_services_status }
 
     include_context 'with buildings and services'
 
@@ -1411,6 +1411,11 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
 
       context 'when at least one service is assigned to each and every building' do
+        before do
+          procurement_building1.update(service_codes: ['C.1'])
+          procurement_building2.update(service_codes: ['D.1', 'E.4', 'M.1'])
+        end
+
         it 'shown with the COMPLETED status label' do
           expect(status).to eq(:completed)
         end
@@ -1425,7 +1430,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     context 'when the Assigning services to buildings task is not COMPLETED yet' do
       before do
-        allow(procurement).to receive(:assigning_services_to_buildings_status).and_return(:not_started)
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:not_started)
       end
 
       it 'shown with the CANNOT START YET status label' do
@@ -1435,7 +1440,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     context 'when Assigning services to buildings task is COMPLETED' do
       before do
-        allow(procurement).to receive(:assigning_services_to_buildings_status).and_return(:completed)
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:completed)
       end
 
       context 'when all the buildings service requirements have not yet been COMPLETED' do

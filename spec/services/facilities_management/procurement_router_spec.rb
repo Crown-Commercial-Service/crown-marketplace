@@ -58,6 +58,14 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         end
       end
 
+      context 'when on the buildings_and_services step' do
+        let(:step) { 'buildings_and_services' }
+
+        it 'returns a route for the summary' do
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/summary?summary=buildings_and_services')
+        end
+      end
+
       context 'when on the procurement_buildings_step' do
         let(:step) { 'procurement_buildings' }
 

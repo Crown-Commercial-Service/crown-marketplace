@@ -1206,17 +1206,12 @@ en:
           authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
           change: Change
           new: Enter a new authorised representative
-        building_services:
+        buildings_and_services:
           buildings: Buildings
-          buildings_caption: Add more buildings, by using the ‘Change buildings’ button.
-          caption: Detailed search
-          change_buildings: Change buildings
-          change_services: Change services
-          content_html: Services from search have been applied to all buildings
-          heading: Services
+          heading: Assigning services to buildings
+          help_html: For each building list in the left hand column, please select the required services from the right hand column. To help, we have already applied all your pre-selected services to all your buildings.<br/>To add to, or change your list of buildings or services, click on 'Return to requirements' and select either Services or Buildings in section 2.
           services: Services
-          services_caption: You must have at least one service selected for each building.
-          sub_heading: What facilities management services do you need for each building?
+          sub_heading: Which facilities management services do you require within each building?
           there_is_a_problem: There is a problem
         cancel_and_return: Cancel, and return to the manage procurements page
         contract_name:
@@ -1510,6 +1505,10 @@ en:
         upload_status:
           heading: File upload status
       summary:
+        buildings_and_services:
+          buildings: Buildings
+          services: Services
+          summary: The summary below shows the buildings within your procurement and the services you have assigned to each building. If you wish to amend or add a new building or service, please click on the 'change' button.
         contract_period:
           heading: Contract period
           initial_call_off_period: Initial call-off period
@@ -1517,7 +1516,7 @@ en:
           none: None
           optional_call_off_extension_period: Optional call-off extension period
           optional_call_off_extensions: Optional call-off extensions
-          return_to_requirements: Return to requirements
+        return_to_requirements: Return to requirements
       what_happens_next:
         cancel: Cancel and return to procurements dashboard
         continue: Continue
