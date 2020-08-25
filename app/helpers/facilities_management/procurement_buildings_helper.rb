@@ -3,9 +3,9 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     object_value == value
   end
 
-  def cell_class(qa_h)
+  def cell_class(context, answer)
     css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
-    css_class << 'govuk-border-bottom_none' if qa_h[:question] == :service_hours && qa_h[:answer].present?
+    css_class << 'govuk-border-bottom_none' if context == :service_hours && answer.present?
     css_class.join(' ')
   end
 
@@ -36,6 +36,20 @@ module FacilitiesManagement::ProcurementBuildingsHelper
       'volumes'
     else
       'area'
+    end
+  end
+
+  def procurement_building_status
+    if @procurement_building.complete?
+      [:blue, 'COMPLETE']
+    else
+      [:red, 'INCOMPLETE']
+    end
+  end
+
+  def services_with_contexts(volume_procurement_building_services)
+    volume_procurement_building_services.each do |service_with_context|
+      yield(service_with_context[:procurement_building_service], service_with_context[:context])
     end
   end
 end

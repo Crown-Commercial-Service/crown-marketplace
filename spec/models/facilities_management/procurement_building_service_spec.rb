@@ -752,50 +752,50 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    describe '#requires_ppm_standards?' do
+    describe '# requires_service_standard?' do
       context 'when code requires ppm standards' do
         it 'will be true when C.5' do
           procurement_building_service.code = 'C.5'
-          expect(procurement_building_service.requires_ppm_standards?).to eq true
+          expect(procurement_building_service. requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require ppm standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service.requires_ppm_standards?).to eq false
+          expect(procurement_building_service. requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '#requires_building_standards?' do
+    describe '# requires_service_standard?' do
       context 'when code requires building standards' do
         it 'will be true when C.7' do
           procurement_building_service.code = 'C.7'
-          expect(procurement_building_service.requires_building_standards?).to eq true
+          expect(procurement_building_service. requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require building standards' do
         it 'will be false when K.1' do
           procurement_building_service.code = 'K.1'
-          expect(procurement_building_service.requires_building_standards?).to eq false
+          expect(procurement_building_service. requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '#requires_cleaning_standards?' do
+    describe '# requires_service_standard?' do
       context 'when code requires cleaning standards' do
         it 'will be true when G.5' do
           procurement_building_service.code = 'G.5'
-          expect(procurement_building_service.requires_cleaning_standards?).to eq true
+          expect(procurement_building_service. requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require cleaning standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service.requires_cleaning_standards?).to eq false
+          expect(procurement_building_service. requires_service_standard?).to eq false
         end
       end
     end
@@ -1118,6 +1118,54 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       it 'is valid' do
         procurement_building_service.detail_of_requirement = ('a' * 490) + ("\r\n" * 10)
         expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+  end
+
+  describe '#required_volume_contexts' do
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             procurement_building: create(:facilities_management_procurement_building_no_services, procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+    end
+
+    context 'when the service does not have any required contexts' do
+      let(:code) { 'O.1' }
+
+      it 'returns an empty hash' do
+        expect(procurement_building_service.required_volume_contexts).to eq({})
+      end
+    end
+
+    context 'when the service does have one required context' do
+      let(:code) { 'C.5' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq lifts: [:lift_data]
+      end
+    end
+
+    context 'when the service requires gia' do
+      let(:code) { 'C.1' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq gia: [:gia]
+      end
+    end
+
+    context 'when the service requires external area' do
+      let(:code) { 'G.5' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq external_area: [:external_area]
+      end
+    end
+
+    context 'when the service requires a volume and gia' do
+      let(:code) { 'G.3' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq(volume: [:no_of_building_occupants], gia: [:gia])
       end
     end
   end

@@ -65,4 +65,31 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
       end
     end
   end
+
+  describe '#procurement_building_status' do
+    let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
+    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:user) { create(:user) }
+
+    before do
+      @procurement_building = procurement_building
+      allow(procurement_building).to receive(:complete?).and_return(answer)
+    end
+
+    context 'when the procurement_building is complete' do
+      let(:answer) { true }
+
+      it 'returns the COMPLETE status' do
+        expect(helper.procurement_building_status).to eq [:blue, 'COMPLETE']
+      end
+    end
+
+    context 'when the procurement_building is not complete' do
+      let(:answer) { false }
+
+      it 'returns the INCOMPLETE status' do
+        expect(helper.procurement_building_status).to eq [:red, 'INCOMPLETE']
+      end
+    end
+  end
 end

@@ -34,7 +34,7 @@ class FacilitiesManagement::ServicesAndQuestions
       ppm_standards: %i[service_standard].freeze,
       building_standards: %i[service_standard].freeze,
       cleaning_standards: %i[service_standard].freeze,
-      volume: %i[no_of_appliances_for_testing no_of_building_occupants no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze,
+      volume: %i[no_of_appliances_for_testing no_of_building_occupants no_of_consoles_to_be_serviced tones_to_be_collected_and_removed no_of_units_to_be_serviced].freeze,
       service_hours: %i[service_hours].freeze }
   end
 

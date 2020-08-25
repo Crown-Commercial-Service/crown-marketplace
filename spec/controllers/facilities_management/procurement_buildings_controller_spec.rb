@@ -48,4 +48,26 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
       end
     end
   end
+
+  describe 'methods called on show' do
+    login_fm_buyer_with_details
+
+    before do
+      procurement_building.update(service_codes: %w[C.1 E.4 C.2 C.3 C.4 G.3 C.5 K.4 I.3 O.1 N.1])
+      procurement_building.reload
+      get :show, params: { id: procurement_building.id }
+    end
+
+    context 'when set_standards_procurement_building_services is used' do
+      it 'returns the correct procurement_building_services' do
+        expect(assigns(:standards_procurement_building_services).map(&:code)).to eq %w[C.1 C.2 C.3 C.4 C.5 G.3]
+      end
+    end
+
+    context 'when set_volume_procurement_building_services is used' do
+      it 'returns the correct procurement_building_services' do
+        expect(assigns(:volume_procurement_building_services).map { |service_and_context| service_and_context[:procurement_building_service].code }).to eq %w[C.1 C.2 C.3 C.4 C.5 E.4 G.3 G.3 I.3 K.4]
+      end
+    end
+  end
 end
