@@ -1044,7 +1044,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
     context 'when the service_hours is an integer within the range' do
       it 'is valid' do
-        procurement_building_service.service_hours = rand(1000)
+        procurement_building_service.service_hours = rand(1..1000)
         expect(procurement_building_service.valid?(:service_hours)).to eq true
       end
     end
