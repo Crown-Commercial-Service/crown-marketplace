@@ -1266,12 +1266,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '.valid_buildings?' do
+  describe '.valid_on_continue?' do
     context 'when the building is missing gia' do
       it 'is not valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['C.1'])
         procurement.active_procurement_buildings.first.building.update(gia: 0)
-        expect(procurement.send(:valid_buildings?)).to eq false
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
@@ -1279,14 +1280,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'is not valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['G.5'])
         procurement.active_procurement_buildings.first.building.update(external_area: 0)
-        expect(procurement.send(:valid_buildings?)).to eq false
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
     context 'when the building is not missing gia or external_area' do
       it 'is valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['C.1', 'G.5'])
-        expect(procurement.send(:valid_buildings?)).to eq true
+        procurement.procurement_building_services.update(service_standard: 'A')
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq true
       end
     end
   end

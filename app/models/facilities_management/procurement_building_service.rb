@@ -11,7 +11,7 @@ module FacilitiesManagement
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
     # Lookup data for 'constants' are taken from this service object
-    services_and_questions = ServicesAndQuestions.new
+    services_and_questions = ServicesAndQuestions
 
     # validates on :volume service question
     validate :validate_volume, on: :volume # this validator will valid the appropriate field for the given service

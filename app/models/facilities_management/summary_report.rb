@@ -24,8 +24,10 @@ module FacilitiesManagement
     def initialize_from_procurement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
-      @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }
+      @active_procurement_buildings = @procurement.active_procurement_buildings
+      @procurement_building_services = @procurement.procurement_building_services
+      @posted_services = @procurement_building_services.map(&:code)
+      @posted_locations = @active_procurement_buildings.map(&:address_region_code)
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
@@ -36,7 +38,7 @@ module FacilitiesManagement
       @sum_benchmark = 0
       @results = {}
 
-      @procurement.active_procurement_buildings.order_by_building_name.each do |building|
+      @active_procurement_buildings.order_by_building_name.each do |building|
         result = uvals_for_building(building, spreadsheet_type, use_latest_building)
         building_data = result[1]
         # TBC filter out nil values for now
@@ -136,9 +138,8 @@ module FacilitiesManagement
       building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
     end
 
-    # rubocop:disable Metrics/AbcSize
     def uom_values(spreadsheet_type)
-      uvals = @procurement.active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
+      uvals = @active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
 
       # add labels for spreadsheet
       uvals.each do |u|
@@ -147,44 +148,22 @@ module FacilitiesManagement
         u['example_text'] = uoms.last['example_text']
       end
 
-      # lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
-      # if lift_service.count.positive?
-      #   lifts_title_text = lift_service.last['title_text']
-      #   lifts_example_text = lift_service.last['title_text']
-      #
-      #   uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
-      #
-      #   lifts_per_building.each do |b|
-      #     b['lift_data']['lift_data']['floor-data'].each do |l|
-      #       uvals << { user_id: b['user_id'],
-      #                  service_code: 'C.5',
-      #                  uom_value: l.first[1],
-      #                  building_id: b['building_id'],
-      #                  title_text: lifts_title_text,
-      #                  example_text: lifts_example_text,
-      #                  spreadsheet_label: 'The sum total of number of floors per lift' }
-      #     end
-      #   end
-      # end
+      @procurement_building_services.each do |s|
+        # selected_services.each do |s|
+        next unless CCS::FM::Service.gia_services.include? s.code
 
-      @procurement.active_procurement_buildings.each do |b|
-        b.procurement_building_services.each do |s|
-          # selected_services.each do |s|
-          next unless CCS::FM::Service.gia_services.include? s.code
-
-          uvals << { user_id: @procurement.user.id,
-                     service_code: s.code.gsub('-', '.'),
-                     uom_value: b.gia.to_f,
-                     building_id: b.building_id,
-                     title_text: 'What is the total internal area of this building?',
-                     example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
-                     spreadsheet_label: 'Square Metre (GIA) per annum' }
-        end
+        pc = s.procurement_building
+        uvals << { user_id: @procurement.user.id,
+                   service_code: s.code.gsub('-', '.'),
+                   uom_value: pc.gia.to_f,
+                   building_id: pc.building_id,
+                   title_text: 'What is the total internal area of this building?',
+                   example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
+                   spreadsheet_label: 'Square Metre (GIA) per annum' }
       end
 
       uvals
     end
-    # rubocop:enable Metrics/AbcSize
 
     def values_to_average
       if any_services_missing_framework_price?
@@ -211,7 +190,7 @@ module FacilitiesManagement
 
     def copy_params(building_data, _uvals)
       @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
-      procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
+      procurement_building = @active_procurement_buildings.find_by(building_id: building_data[:id])
       @gia = procurement_building.gia
       @external_area = procurement_building.external_area
       @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
