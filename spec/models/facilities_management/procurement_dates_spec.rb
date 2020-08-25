@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurement, type: :model do
-  subject(:procurement) { build(:facilities_management_procurement, contract_name: 'contract_period_test', user: user) }
+  subject(:procurement) { build(:facilities_management_procurement, initial_call_off_start_date: nil, contract_name: 'contract_period_test', user: user) }
 
   let(:user) { build(:user) }
 

@@ -81,11 +81,9 @@ module ProcurementValidator
 
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
     validate :presence_of_about_the_contract, on: :all
-    validate :at_least_one_building, on: :all
-    validate :all_services_valid, on: :all
+    validate :buildings_and_services, on: :all
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
-    validate :at_least_one_service_per_building, on: :all
 
     # Validation for the contract_details page
     validate :validate_contract_details, on: :contract_details
@@ -186,16 +184,18 @@ module ProcurementValidator
       errors.add(:initial_call_off_period, :not_present) if initial_call_off_period.blank?
     end
 
-    def at_least_one_building
-      errors.add(:procurement_buildings, :not_present) if active_procurement_buildings.none?
+    def buildings_and_services
+      # at least one building
+      errors.add(:procurement_buildings, :not_present) && errors.add(:base, :services_not_present) && return if active_procurement_buildings.none?
+
+      validate_buildings_and_services
     end
 
-    def at_least_one_service_per_building
-      errors.add(:base, :services_not_present) if active_procurement_buildings.none? || procurement_building_services.none?
-    end
-
-    def all_services_valid
-      active_procurement_buildings.each do |pb|
+    def validate_buildings_and_services
+      active_procurement_buildings.includes(:procurement_building_services).all? do |pb|
+        # at least one service per building
+        errors.add(:base, :services_not_present) && (return false) if pb.procurement_building_services.none?
+        # services valid
         pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services)
       end
     end

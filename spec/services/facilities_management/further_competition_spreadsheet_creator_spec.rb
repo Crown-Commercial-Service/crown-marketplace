@@ -54,6 +54,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do
+      procurement_with_buildings.procurement_buildings.each(&:set_gia)
       expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil]
       expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil]
       expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil]

@@ -1,8 +1,8 @@
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
     scope :active, -> { where(active: true) }
-    scope :order_by_building_name, -> { includes(:building).order('facilities_management_buildings.building_name ASC') }
-    scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.new.codes.include?(code) } } }
+    scope :order_by_building_name, -> { order(:building_name) }
+    scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.codes.include?(code) } } }
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
@@ -22,10 +22,10 @@ module FacilitiesManagement
       include_association :procurement_building_services
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Rails/SkipsModelValidations
     def set_gia
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
-      update(
+      update_columns(
         gia: building.gia,
         external_area: building.external_area,
         region: building.region,
@@ -42,7 +42,7 @@ module FacilitiesManagement
         description: building.description
       )
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Rails/SkipsModelValidations
 
     def name
       building.building_name
@@ -75,6 +75,10 @@ module FacilitiesManagement
       volumes_complete & standards_complete
     end
 
+    def valid_on_continue?
+      valid?(:buildings_and_services) && valid?(:gia) && valid?(:external_area)
+    end
+
     private
 
     def service_code_selection
@@ -96,10 +100,9 @@ module FacilitiesManagement
     end
 
     def services_valid?
-      false if procurement_building_services.empty?
-      result = procurement_building_services.all? { |pbs| pbs.valid?(:all) }
-      errors.add(:procurement_building_services, :invalid) unless result && answers_present?
-      result
+      return if procurement_building_services.empty?
+
+      errors.add(:procurement_building_services, :invalid) unless procurement_building_services.all? { |pbs| pbs.valid?(:all) && pbs.answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
 
     def update_procurement_building_services
@@ -113,7 +116,9 @@ module FacilitiesManagement
     end
 
     def answers_present?
-      service_codes.all? { |service_code| procurement_building_services.find_by(code: service_code).answer_store[:questions].all? { |question| !question[:answer].nil? } }
+      procurement_building_services.all? do |pb|
+        pb.answer_store[:questions].all? { |question| !question[:answer].nil? }
+      end
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
