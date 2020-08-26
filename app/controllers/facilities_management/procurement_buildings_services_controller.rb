@@ -17,6 +17,8 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
       update_procurement_building_service(volume_params, :volume)
     when 'service_standards'
       update_procurement_building_service(service_standards_params, :service_standard)
+    when 'area'
+      update_building_area
     else
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     end
@@ -47,6 +49,28 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     end
   end
 
+  def update_building_area
+    @building.assign_attributes(area_params)
+
+    if building_valid?
+      @building.save
+      redirect_to facilities_management_procurement_building_path(@procurement_building)
+    else
+      params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+      set_partial
+      render :edit
+    end
+  end
+
+  def building_valid?
+    return false unless @building.valid?(:gia)
+
+    @building.errors.add(:gia, :required) unless @procurement_building.valid?(:gia)
+    @building.errors.add(:external_area, :required) unless @procurement_building.valid?(:external_area)
+
+    @building.errors.empty?
+  end
+
   def set_lift_count
     @lift_count = 1 if @building_service[:lift_data].blank?
 
@@ -64,8 +88,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
 
   def service_hours_params
     params.require(:facilities_management_procurement_building_service)
-          .permit(:service_hours,
-                  :detail_of_requirement)
+          .permit(:service_hours, :detail_of_requirement)
   end
 
   def volume_params
@@ -80,6 +103,11 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   def service_standards_params
     params.require(:facilities_management_procurement_building_service)
           .permit(:service_standard)
+  end
+
+  def area_params
+    params.require(:facilities_management_building)
+          .permit(:gia, :external_area)
   end
 
   def set_building_and_service_data

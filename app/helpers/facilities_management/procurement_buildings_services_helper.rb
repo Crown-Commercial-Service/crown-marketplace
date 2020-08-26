@@ -15,4 +15,12 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
   def any_lift_error?(model, index)
     model.errors.details[:lift_data].find_index { |item| item[:position] == index }.present?
   end
+
+  def form_model
+    params[:service_question] == 'area' ? @building : @building_service
+  end
+
+  def page_heading
+    params[:service_question] == 'area' ? t('facilities_management.procurement_buildings_services.area.heading') : @building_service.name
+  end
 end
