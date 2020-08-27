@@ -788,7 +788,13 @@ en:
         estimated_annual_cost: Estimated annual cost
         tupe: TUPE
       about_the_work:
+        assigning_services_to_buildings: Assigning services to buildings
+        buildings: Buildings
         excel: Click here to download an Excel template
+        service_requirements: Service requirements
+        services: Services
+        services_and_buildings: 2. Services and buildings
+        which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.

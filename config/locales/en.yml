@@ -1040,6 +1040,7 @@ en:
       cannot_start: cannot start yet
       completed: completed
       in_progress: in progress
+      incomplete: incomplete
       not_started: not started
     users:
       confirm_new:
