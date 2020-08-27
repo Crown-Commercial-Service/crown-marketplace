@@ -142,6 +142,14 @@ module FacilitiesManagement::ProcurementsHelper
     "#{@summary_page.gsub('_', ' ').capitalize} summary"
   end
 
+  def continue_button_text
+    FacilitiesManagement::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
+  end
+
+  def service_name(service_code)
+    @services.select { |s| s['code'] == service_code }.first&.name&.humanize
+  end
+
   def requires_back_link?
     %w[contract_name estimated_annual_cost tupe].include? params[:step]
   end

@@ -5,7 +5,7 @@ class FacilitiesManagement::ProcurementRouter
 
   STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings building_services services].freeze
 
-  SUMMARY = %w[contract_period].freeze
+  SUMMARY = %w[contract_period buildings_and_services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil, further_competition_chosen: false)
     @id = id

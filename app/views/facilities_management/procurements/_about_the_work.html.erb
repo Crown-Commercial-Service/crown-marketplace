@@ -30,16 +30,16 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-      <% if procurement.assigning_services_to_buildings_status == :cannot_start %>
+      <% if procurement.buildings_and_services_status == :cannot_start %>
         <%= t('.assigning_services_to_buildings') %>
       <% else %>
-        <%= link_to t('.assigning_services_to_buildings'), edit_facilities_management_procurement_path(step: 'procurement_buildings'), :class => "govuk-link" %>
+        <%= link_to t('.assigning_services_to_buildings'), facilities_management_procurement_summary_path(@procurement, summary: 'buildings_and_services'), :class => "govuk-link" %>
       <% end %>
     </dt>
     <dd class="govuk-summary-list__value">
     </dd>
     <dd class="govuk-summary-list__actions">
-      <%= govuk_tag(procurement.assigning_services_to_buildings_status) %>
+      <%= govuk_tag(procurement.buildings_and_services_status) %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">

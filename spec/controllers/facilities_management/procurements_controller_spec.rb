@@ -292,6 +292,26 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
       end
+
+      context 'when the user wants to edit buildings_and_services' do
+        context 'when the buildings and services are not complete' do
+          it 'redirects to the edit page with contract_period step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings_and_services')
+          end
+        end
+
+        context 'when the buildings and services are complete' do
+          before { procurement.active_procurement_buildings.first.update(service_codes: ['C.1']) }
+
+          it 'renders the summary page' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+
+            expect(response).to render_template(:summary)
+          end
+        end
+      end
     end
 
     describe 'GET new' do

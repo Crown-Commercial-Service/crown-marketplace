@@ -462,16 +462,14 @@ module FacilitiesManagement
       procurement_buildings.any? ? :completed : :not_started
     end
 
-    def assigning_services_to_buildings_status
+    def buildings_and_services_status
       return :cannot_start if services_status == :not_started && procurement_buildings_status == :not_started
-      return :not_started if procurement_buildings.any? && procurement_buildings.all? { |pb| pb.procurement_building_services.empty? }
 
-      # In progress scenario is not possible, because the user is forced to assign at least one service to all buildings
-      :completed
+      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :not_started
     end
 
     def service_requirements_status
-      return :cannot_start unless assigning_services_to_buildings_status == :completed
+      return :cannot_start unless buildings_and_services_status == :completed
       return :completed if procurement_building_services.any? && procurement_building_services.none? { |pbs| pbs.uval.nil? }
 
       :incomplete
