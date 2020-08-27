@@ -4,8 +4,8 @@ module Postcode
   # post code retrieval
   class PostcodeCheckerV2
     def self.destructure_postcode(postcode)
-      result = { valid: false, input: postcode }
-      input  = ('' + postcode).strip
+      result = { valid: false, input: normalise_postcode(postcode) }
+      input  = ('' + normalise_postcode(postcode)).strip
       matches = input.match(/^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i)
       unless matches.nil?
         result = {
@@ -84,7 +84,7 @@ module Postcode
         FROM   PUBLIC.postcodes_nuts_regions
                LEFT JOIN PUBLIC.nuts_regions
                       ON PUBLIC.nuts_regions.code = PUBLIC.postcodes_nuts_regions.code
-        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{postcode}%'
+        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{normalise_postcode(postcode)}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query(ActiveRecord::Base.sanitize_sql(query)) }
     rescue StandardError => e
@@ -129,6 +129,10 @@ module Postcode
 
     def self.upload(access_key, secret_access_key, bucket, region)
       uploader(access_key, secret_access_key, bucket, region)
+    end
+
+    def self.normalise_postcode(postcode)
+      postcode&.delete(' ')&.upcase
     end
   end
 end
