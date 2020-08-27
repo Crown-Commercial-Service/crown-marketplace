@@ -265,7 +265,7 @@ module FacilitiesManagement
     end
 
     def valid_services?
-      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
+      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:buildings_and_services) }
     end
 
     def valid_buildings?
@@ -463,7 +463,7 @@ module FacilitiesManagement
     end
 
     def buildings_and_services_status
-      return :cannot_start if services_status == :not_started && procurement_buildings_status == :not_started
+      return :cannot_start if services_status == :not_started || procurement_buildings_status == :not_started
 
       active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :not_started
     end

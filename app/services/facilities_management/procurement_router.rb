@@ -3,7 +3,7 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings building_services services].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
 
   SUMMARY = %w[contract_period buildings_and_services].freeze
 

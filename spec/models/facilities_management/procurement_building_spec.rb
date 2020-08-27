@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is valid' do
         procurement_building.active = false
         procurement_building.service_codes = []
-        expect(procurement_building.valid?(:building_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to eq true
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is valid' do
         procurement_building.active = false
         procurement_building.service_codes = ['test']
-        expect(procurement_building.valid?(:building_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to eq true
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is invalid' do
         procurement_building.active = true
         procurement_building.service_codes = []
-        expect(procurement_building.valid?(:building_services)).to eq false
+        expect(procurement_building.valid?(:buildings_and_services)).to eq false
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is valid' do
         procurement_building.active = true
         procurement_building.service_codes = ['test']
-        expect(procurement_building.valid?(:building_services)).to eq true
+        expect(procurement_building.valid?(:buildings_and_services)).to eq true
       end
     end
   end
@@ -92,11 +92,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['O.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works' to '#{procurement_building.building_name}' building"
       end
 
@@ -104,7 +104,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -113,11 +113,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['N.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services' to '#{procurement_building.building_name}' building"
       end
 
@@ -125,7 +125,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -134,11 +134,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['M.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' to '#{procurement_building.building_name}' building"
       end
 
@@ -146,7 +146,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -155,11 +155,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['O.1', 'M.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works' to '#{procurement_building.building_name}' building"
       end
 
@@ -167,7 +167,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -176,11 +176,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['O.1', 'N.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
       end
 
@@ -188,7 +188,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -197,11 +197,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['M.1', 'N.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' to '#{procurement_building.building_name}' building"
       end
 
@@ -209,7 +209,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -218,11 +218,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['O.1', 'N.1', 'M.1'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
       end
 
@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement_building.valid?(:building_services)).to be true
+          expect(procurement_building.valid?(:buildings_and_services)).to be true
         end
       end
     end
@@ -239,11 +239,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       before { procurement_building.service_codes = ['G.1', 'G.3'] }
 
       it 'will not be valid' do
-        expect(procurement_building.valid?(:building_services)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement_building.valid?(:building_services)
+        procurement_building.valid?(:buildings_and_services)
         expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{procurement_building.building_name}' building"
       end
 
@@ -251,7 +251,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         before { procurement_building.service_codes << 'C.1' }
 
         it 'will not be valid' do
-          expect(procurement_building.valid?(:building_services)).to be false
+          expect(procurement_building.valid?(:buildings_and_services)).to be false
         end
       end
     end
