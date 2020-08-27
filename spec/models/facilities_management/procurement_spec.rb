@@ -211,7 +211,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.save
         procurement.procurement_buildings.create
         procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
-        expect(procurement.valid?(:building_services)).to eq true
+        expect(procurement.valid?(:buildings_and_services)).to eq true
       end
     end
     # rubocop:enable Rails/SkipsModelValidations
@@ -221,7 +221,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.save
         procurement_building = procurement.procurement_buildings.create(active: true)
         allow(procurement_building.building).to receive(:building_name).and_return('asa')
-        expect(procurement_building.valid?(:building_services)).to eq false
+        expect(procurement_building.valid?(:buildings_and_services)).to eq false
       end
     end
   end

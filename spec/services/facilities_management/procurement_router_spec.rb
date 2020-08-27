@@ -102,14 +102,6 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
         end
       end
 
-      context 'when on the last step' do
-        let(:step) { 'building_services' }
-
-        it 'returns a route for the edit page of the previous step' do
-          expect(procurement_router.back_link).to eq('/facilities-management/procurements/1/edit?step=procurement_buildings')
-        end
-      end
-
       context 'when there is no current step' do
         it 'returns a route for the show page' do
           expect(procurement_router.back_link).to eq('/facilities-management/procurements/1')

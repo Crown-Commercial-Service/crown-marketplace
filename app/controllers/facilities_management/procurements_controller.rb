@@ -356,7 +356,7 @@ module FacilitiesManagement
         if @procurement.quick_search?
           redirect_to facilities_management_procurement_path(id: @procurement.id)
         else
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
+          redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :buildings_and_services) && return if params['next_step'].present?
           redirect_to facilities_management_procurement_path(@procurement)
         end
       else

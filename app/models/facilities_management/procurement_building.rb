@@ -9,7 +9,7 @@ module FacilitiesManagement
     belongs_to :building, class_name: 'FacilitiesManagement::Building', optional: true
     delegate :full_address, to: :building
 
-    validate :service_code_selection, on: :building_services
+    validate :service_code_selection, on: :buildings_and_services
     validate :services_valid?, on: :procurement_building_services
     validate :services_present?, on: :procurement_building_services_present
     validate :validate_internal_area, on: :gia
