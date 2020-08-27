@@ -60,24 +60,30 @@ class FacilitiesManagement::SpreadsheetImporter
       columns = building_sheet.row(13).count('Complete')
       (2..columns + 1).each do |col|
         building_column = building_sheet.column(col)
-        building = @user.buildings.build(user_email: @user.email,
-                                         building_name: building_column[1],
-                                         description: building_column[2],
-                                         address_line_1: building_column[3],
-                                         address_town: building_column[4],
-                                         address_postcode: building_column[5],
-                                         gia: building_column[6],
-                                         external_area: building_column[7],
-                                         building_type: building_column[8],
-                                         other_building_type: building_column[9],
-                                         security_type: building_column[10],
-                                         other_security_type: building_column[11])
+        building = @user.buildings.build(building_attribues(building_column))
         add_regions(building, building_column)
         store_building(building)
       end
     else
       @errors << :building_incomplete
     end
+  end
+
+  def building_attribues(building_column)
+    {
+      user_email: @user.email,
+      building_name: building_column[1],
+      description: building_column[2],
+      address_line_1: building_column[3],
+      address_town: building_column[4],
+      address_postcode: building_column[5]&.upcase,
+      gia: building_column[6],
+      external_area: building_column[7],
+      building_type: building_column[8],
+      other_building_type: building_column[9],
+      security_type: building_column[10],
+      other_security_type: building_column[11]
+    }
   end
 
   def add_regions(building, building_column)
@@ -474,7 +480,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def normalise_postcode(postcode)
-    postcode.gsub(' ', '').downcase
+    postcode.gsub(' ', '').upcase
   end
 
   def service_codes
