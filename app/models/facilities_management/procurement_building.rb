@@ -60,6 +60,21 @@ module FacilitiesManagement
       building.address_region_code.nil? || building.address_region.nil?
     end
 
+    def sorted_procurement_building_services
+      service_order = FacilitiesManagement::StaticData.work_packages.map { |work_package| work_package['code'] }.freeze
+      procurement_building_services.sort_by { |procurement_building_service| service_order.index(procurement_building_service.code) }
+    end
+
+    def complete?
+      return false if requires_internal_area? && building_internal_area.zero?
+      return false if requires_external_area? && building_external_area.zero?
+
+      volumes_complete = procurement_building_services.reject { |pbs| pbs.requires_external_area? || pbs.uses_only_internal_area? }.all? { |pbs| pbs.uval.present? }
+      standards_complete = procurement_building_services.select(&:requires_service_standard?).all? { |pbs| pbs.service_standard.present? }
+
+      volumes_complete & standards_complete
+    end
+
     private
 
     def service_code_selection

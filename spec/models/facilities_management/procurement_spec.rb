@@ -1375,6 +1375,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
     let(:procurement_building1) { build(:facilities_management_procurement_building) }
     let(:procurement_building2) { build(:facilities_management_procurement_building) }
+
+    before do
+      procurement.update(aasm_state: 'detailed_search')
+    end
   end
 
   describe '.buildings_and_services_status' do
@@ -1441,12 +1445,21 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when Assigning services to buildings task is COMPLETED' do
       before do
         allow(procurement).to receive(:buildings_and_services_status).and_return(:completed)
+
+        procurement_building1.procurement_building_services.delete_all
+        procurement_building2.procurement_building_services.delete_all
+
+        procurement_building1.update(service_codes: ['C.1'])
+        procurement_building2.update(service_codes: ['G.5'])
+
+        procurement_building1.procurement_building_services.first.update(service_standard: 'A')
+        procurement_building2.procurement_building_services.first.update(service_standard: 'A')
       end
 
       context 'when all the buildings service requirements have not yet been COMPLETED' do
         before do
-          procurement_building1.update(gia: nil)
-          procurement_building2.update(gia: nil)
+          procurement_building1.building.update(gia: 0)
+          procurement_building2.building.update(external_area: 0)
         end
 
         it 'shown with the INCOMPLETE status label' do

@@ -459,7 +459,7 @@ module FacilitiesManagement
     end
 
     def procurement_buildings_status
-      procurement_buildings.any? ? :completed : :not_started
+      active_procurement_buildings.any? ? :completed : :not_started
     end
 
     def buildings_and_services_status
@@ -470,9 +470,8 @@ module FacilitiesManagement
 
     def service_requirements_status
       return :cannot_start unless buildings_and_services_status == :completed
-      return :completed if procurement_building_services.any? && procurement_building_services.none? { |pbs| pbs.uval.nil? }
 
-      :incomplete
+      active_procurement_buildings.all?(&:complete?) ? :completed : :incomplete
     end
 
     private

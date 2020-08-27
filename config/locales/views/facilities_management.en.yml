@@ -687,26 +687,34 @@ en:
         we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
       show:
         answer_question: Answer question
-        back_to_detailed_summary: Back to detailed search summary
+        change: Change
+        description: Description
         detail_of_requirement: Detail of requirement
-        gia: Gross internal area (GIA)
-        gia-summary: The gross internal area of the building (in square meters)
         heading: Service requirements
-        lift_data: Total number of lift entrances
-        no_of_appliances_for_testing: The number of appliances to be tested per annum
-        no_of_building_occupants: The number of building occupants
-        no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
-        no_of_hours_of_service_provision: The number of hours of service provision per annum
-        no_of_units_to_be_serviced: The number of units to be serviced per annum
-        service: Service
-        service_hour_question: The number of hours of service provision per annum
-        service_hours: Number of hours per year
-        service_standard: The service standard required
-        size_of_external_area: The size of the external area (in square metres)
-        tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-        total_floors_per_lift: Total number of lift entrances
-        volume_required_heading: Volume required (per annum)
-        volume_required_html: "<b>Volume required <br> (per annum)</b>"
+        help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
+        help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
+        list_item_1: Service volumes - this is where you can check or input the volume required for each service.
+        list_item_2: Service standards - this is where you can select the standard of service required.
+        list_title: 'All the services that you require for this building are listed below, split into two sections:'
+        return_to_requirements: Return to requirements
+        service_name: Service name
+        service_standards: 2. Service standards
+        service_volumes: 1. Service volumes
+        standard: Standard
+        status: 'Status:'
+        the_standard_required: The service standard required
+        unit_of_measure:
+          external_area: External area - number of square metres
+          gia: Gross Internal Area - number of square metres
+          lift_data: Total number of lift entrances
+          no_of_appliances_for_testing: Number of appliances to be tested per annum
+          no_of_building_occupants: The number of building occupants
+          no_of_consoles_to_be_serviced: Number of consoles per annum
+          no_of_units_to_be_serviced: Number of units per annum
+          service_hours: Total number of hours required per annum
+          tones_to_be_collected_and_removed: Number of tonnes per annum
+        unit_of_measure_title: Unit of measure
+        volume_required: Volume required
       volume:
         question:
           no_of_appliances_for_testing: How many appliances to be tested per annum?

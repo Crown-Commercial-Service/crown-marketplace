@@ -5,6 +5,8 @@ module FacilitiesManagement
     before_action :set_building_data
     before_action :set_back_path
     before_action :set_service_question, only: %i[edit update]
+    before_action :set_volume_procurement_building_services, only: :show
+    before_action :set_standards_procurement_building_services, only: :show
 
     def show; end
 
@@ -35,6 +37,18 @@ module FacilitiesManagement
 
     def set_service_question
       @service_question = params[:service_question]
+    end
+
+    def set_volume_procurement_building_services
+      @volume_procurement_building_services = @procurement_building.sorted_procurement_building_services.map do |procurement_building_service|
+        procurement_building_service.required_volume_contexts.map do |context|
+          { procurement_building_service: procurement_building_service, context: context[1].first }
+        end
+      end.flatten
+    end
+
+    def set_standards_procurement_building_services
+      @standards_procurement_building_services = @procurement_building.sorted_procurement_building_services.select(&:requires_service_standard?)
     end
 
     def update_missing_region

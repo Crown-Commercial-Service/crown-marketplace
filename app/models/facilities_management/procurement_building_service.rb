@@ -55,16 +55,8 @@ module FacilitiesManagement
       required_contexts.include?(:volume)
     end
 
-    def requires_ppm_standards?
-      required_contexts.include?(:ppm_standards)
-    end
-
-    def requires_building_standards?
-      required_contexts.include?(:building_standards)
-    end
-
-    def requires_cleaning_standards?
-      required_contexts.include?(:cleaning_standards)
+    def requires_service_standard?
+      (required_contexts.keys & STANDARD_TYPES).any?
     end
 
     def requires_lift_data?
@@ -79,8 +71,26 @@ module FacilitiesManagement
       ['G.5'].include? code
     end
 
+    def requires_internal_area?
+      CCS::FM::Service.full_gia_services.include? code
+    end
+
+    def uses_only_internal_area?
+      CCS::FM::Service.gia_services.include? code
+    end
+
     def required_contexts
       @required_contexts ||= this_service[:context]
+    end
+
+    def required_volume_contexts
+      return {} if required_contexts.nil?
+
+      volume_contexts = @required_contexts.except(*STANDARD_TYPES)
+      volume_contexts[:gia] = [:gia] if requires_internal_area?
+      volume_contexts[:external_area] = [:external_area] if requires_external_area?
+
+      volume_contexts
     end
 
     # Goes through each context, gathering errors of each validation
@@ -128,7 +138,17 @@ module FacilitiesManagement
       FacilitiesManagement::Service.special_da_service?(code)
     end
 
+    def gia
+      procurement_building.building.gia
+    end
+
+    def external_area
+      procurement_building.building.external_area
+    end
+
     private
+
+    STANDARD_TYPES = %i[ppm_standards building_standards cleaning_standards].freeze
 
     # rubocop:disable Metrics/AbcSize
     def validate_lift_data
