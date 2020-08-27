@@ -772,6 +772,7 @@ en:
             standard_A: Standard A - the general or normal service level
             standard_B: Standard B - this is the minimum level of service required
             standard_C: Standard C  - a bespoke service level
+        direct_award_eligible: Direct award eligible
         heading: Which service standard do you want for this service in this building?
         hint_text: To understand the differences between the standards, please read the brief descriptions, or alternatively open the service specification document below and go to the service standards section.
         warning: Please note that only Standard A is suitable for direct award, the other standards require a further competition.
