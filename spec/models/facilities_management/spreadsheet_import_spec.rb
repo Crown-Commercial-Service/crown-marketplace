@@ -4,8 +4,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
   subject(:import) { described_class.new }
 
   describe 'aasm_state' do
-    it 'starts at importing state' do
-      expect(import.aasm_state).to eq('importing')
+    it 'starts at upload state' do
+      expect(import.aasm_state).to eq('upload')
     end
   end
 

@@ -24,12 +24,7 @@ module FacilitiesManagement
 
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
-      if @procurement.detailed_search_bulk_upload?
-        @procurement.set_state_to_detailed_search! if @procurement.latest_spreadsheet_import.succeeded?
-        # So we don't get redirected subsequently
-        redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement,
-                                                                              id: @procurement.latest_spreadsheet_import)
-      end
+      redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
 
       @view_name = set_view_data
       reset_security_policy_document_page
@@ -107,6 +102,8 @@ module FacilitiesManagement
       update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
+
+      exit_detailed_search_bulk_upload && return if params['exit_bulk_upload'].present?
 
       update_procurement && return if params['facilities_management_procurement'].present?
 
@@ -452,6 +449,12 @@ module FacilitiesManagement
         set_step_param
         render :edit
       end
+    end
+
+    def exit_detailed_search_bulk_upload
+      @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
+
+      redirect_to facilities_management_procurement_path(@procurement)
     end
 
     def contract_value_page_details
