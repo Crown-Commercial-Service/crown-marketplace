@@ -1524,7 +1524,15 @@ en:
           none: None
           optional_call_off_extension_period: Optional call-off extension period
           optional_call_off_extensions: Optional call-off extensions
-        return_to_requirements: Return to requirements
+          return_to_requirements: Return to requirements
+        services:
+          caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
+          heading: You have selected
+          return_to_requirements: Return to requirements
+          services:
+            one: service
+            other: services
+          table_caption: Services
       what_happens_next:
         cancel: Cancel and return to procurements dashboard
         continue: Continue
