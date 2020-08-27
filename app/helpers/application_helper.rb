@@ -337,6 +337,7 @@ module ApplicationHelper
   def govuk_tag(status)
     extra_classes = {
       cannot_start: 'govuk-tag--grey',
+      incomplete: 'govuk-tag--red',
       in_progress: 'govuk-tag--blue',
       not_started: 'govuk-tag--grey'
     }
