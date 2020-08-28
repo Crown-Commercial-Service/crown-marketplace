@@ -1455,8 +1455,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
               patch :update, params: { id: procurement.id, next_step: 'buildings_and_services', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
             end
 
-            it 'redirects to edit_facilities_management_procurement_path building services step' do
-              expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id, step: 'buildings_and_services')
+            it 'redirects to services summary page' do
+              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
             end
 
             it 'updates the service codes' do
@@ -1472,8 +1472,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                   patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
-                it 'redirects to edit_facilities_management_procurement_path' do
-                  expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id, step: 'buildings_and_services')
+                it 'redirects to services summary page' do
+                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
@@ -1497,8 +1497,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                   patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
-                it 'redirects to facilities_management_procurement_path' do
-                  expect(response).to redirect_to facilities_management_procurement_path(procurement)
+                it 'redirects to services summary page' do
+                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
