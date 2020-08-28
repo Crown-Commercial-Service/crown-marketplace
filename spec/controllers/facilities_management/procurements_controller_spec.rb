@@ -75,22 +75,26 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       context 'with a procurement which has just bulk uploaded successfully' do
         before do
           procurement.update(aasm_state: 'detailed_search_bulk_upload')
-          procurement.spreadsheet_imports.create(aasm_state: 'succeeded')
+          procurement.create_spreadsheet_import(aasm_state: 'succeeded')
           get :show, params: { id: procurement.id } # First navigation after bulk upload success
         end
 
         it 'redirects to file upload status page on first navigation' do
           expect(response).to redirect_to facilities_management_procurement_spreadsheet_import_path(
-            procurement, procurement.latest_spreadsheet_import
+            procurement, procurement.spreadsheet_import
           )
         end
+      end
 
-        it 'does not redirect on subsequent navigations' do
-          get :show, params: { id: procurement.id } # Subsequent navigation
+      context 'with a procurement which has had bulk uploaded' do
+        before do
+          procurement.update(aasm_state: 'detailed_search')
+          procurement.create_spreadsheet_import(aasm_state: 'succeeded')
+          get :show, params: { id: procurement.id } # First navigation after bulk upload success
+        end
 
-          expect(response).not_to redirect_to facilities_management_procurement_spreadsheet_import_path(
-            procurement, procurement.latest_spreadsheet_import
-          )
+        it 'renders the show page wehn in in detailed search' do
+          expect(response).to render_template(:show)
         end
       end
 
@@ -1511,6 +1515,38 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                 end
               end
             end
+          end
+        end
+      end
+
+      context 'when the user exits bulk upload process' do
+        before do
+          procurement.update(aasm_state: state)
+          patch :update, params: { id: procurement.id, exit_bulk_upload: 'Continue to procurement' }
+          procurement.reload
+        end
+
+        context 'when the procurement is in detailed_search_bulk_upload' do
+          let(:state) { 'detailed_search_bulk_upload' }
+
+          it 'changes the state to detailed_search' do
+            expect(procurement.detailed_search?).to eq true
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+        end
+
+        context 'when the procurement is not in detailed_search_bulk_upload' do
+          let(:state) { 'quick_search' }
+
+          it 'does not change the state' do
+            expect(procurement.quick_search?).to eq true
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to facilities_management_procurement_path(procurement)
           end
         end
       end

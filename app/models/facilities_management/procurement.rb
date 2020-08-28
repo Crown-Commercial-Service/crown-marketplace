@@ -20,7 +20,7 @@ module FacilitiesManagement
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
-    has_many :spreadsheet_imports, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    has_one :spreadsheet_import, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
     has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
@@ -81,10 +81,6 @@ module FacilitiesManagement
 
     def assign_contract_datetime
       self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
-    end
-
-    def latest_spreadsheet_import
-      spreadsheet_imports.order(:created_at).last
     end
 
     def generate_contract_number_fc
@@ -156,6 +152,9 @@ module FacilitiesManagement
       end
 
       event :start_detailed_search_bulk_upload do
+        before do
+          remove_existing_spreadsheet_import if spreadsheet_import.present?
+        end
         transitions from: :detailed_search, to: :detailed_search_bulk_upload
       end
 
@@ -472,6 +471,11 @@ module FacilitiesManagement
       return :cannot_start unless buildings_and_services_status == :completed
 
       active_procurement_buildings.all?(&:complete?) ? :completed : :incomplete
+    end
+
+    def remove_existing_spreadsheet_import
+      spreadsheet_import.remove_spreadsheet_file
+      spreadsheet_import.delete
     end
 
     private
