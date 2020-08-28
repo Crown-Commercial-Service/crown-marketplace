@@ -1,4 +1,5 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+<p class="govuk-caption-m govuk-!-width-two-thirds"><%= t('.help_text') %></p>
 <%= content_for :page_title, pd.heading_details.text %>
   <div class="govuk-!-width-two-thirds">
     <%= form_for @page_data[:model_object], url: facilities_management_building_path(@page_data[:model_object].id), html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
@@ -11,8 +12,8 @@
               <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
               <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                 <%= building_type[:title] %>
+                <%= building_type_caption(building_type) %>
               <% end %>
-              <span class="govuk-hint govuk-radios__hint"><%= building_type[:caption] %></span>
             </div>
           <% end %>
         </div>
@@ -31,7 +32,7 @@
                 <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details(ff.object) %>
                 <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
                   <%= building_type[:title] %>
-                  <span class="govuk-caption-m govuk-!-margin-top-1"><%= building_type[:caption] %></span>
+                  <%= building_type_caption(building_type) %>
                 <% end %>
               </div>
             <% end %>

@@ -36,4 +36,14 @@ module FacilitiesManagement::BuildingsHelper
       building_type_id.capitalize
     end
   end
+
+  def building_type_caption(building_type)
+    content_tag(:span, class: 'govuk-caption-m govuk-!-margin-top-1') do
+      concat(building_type[:caption])
+      if FacilitiesManagement::Building.da_building_type? building_type[:id]
+        concat(tag(:hr, class: 'govuk-section-break govuk-!-margin-top-1'))
+        concat(govuk_tag_with_text(:grey, t('common.da_eligible')))
+      end
+    end
+  end
 end

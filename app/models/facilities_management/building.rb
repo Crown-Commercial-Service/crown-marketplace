@@ -101,6 +101,10 @@ module FacilitiesManagement
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
 
+    def self.da_building_type?(building_type)
+      STANDARD_BUILDING_TYPES.include?(building_type)
+    end
+
     def full_address
       "#{address_line_1 + ', ' if address_line_1.present?}
       #{address_line_2 + ', ' if address_line_2.present?}
