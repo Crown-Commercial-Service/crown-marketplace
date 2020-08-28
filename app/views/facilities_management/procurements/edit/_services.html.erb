@@ -1,4 +1,5 @@
 <% if @procurement.detailed_search? %>
+  <span class="govuk-caption-m govuk-!-font-size-24"><%= @procurement.contract_name %></span>
   <h1 class="govuk-heading-xl govuk-!-margin-top-0"><%= t('.title') %></h1>
   <% content_for :page_title, t('.title') %>
 <% end %>

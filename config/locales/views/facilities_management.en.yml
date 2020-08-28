@@ -1315,9 +1315,9 @@ en:
         services:
           question: Select the facilities management services you need
           service_specification_doc: Read the service specification document
-          subtitle_html: Select all of the facilities management services required within your estate.<br> You will then be able to match up each building with the services it requires.
+          subtitle_html: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
           subtitle_quick_search: Choose all facilities management services required within your estate, even if you want services in just one building.
-          title: All services
+          title: Services
         tupe:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -1461,7 +1461,8 @@ en:
         what_is_fc: What is further competition?
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
-        learn_more: Learn more (opens in a new tab)
+        caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
+        learn_more: Further details (opens in a new tab)
       spreadsheet:
         cancel_and_return_link: Cancel and return to procurement summary
         continue_link: Continue to upload your file
@@ -1524,11 +1525,11 @@ en:
           none: None
           optional_call_off_extension_period: Optional call-off extension period
           optional_call_off_extensions: Optional call-off extensions
-          return_to_requirements: Return to requirements
+        return_to_requirements: Return to requirements
         services:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
+          change: Change
           heading: You have selected
-          return_to_requirements: Return to requirements
           services:
             one: service
             other: services
