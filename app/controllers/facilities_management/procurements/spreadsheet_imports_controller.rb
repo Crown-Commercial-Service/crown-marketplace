@@ -11,7 +11,7 @@ module FacilitiesManagement
       end
 
       def create
-        @procurement.remove_existing_spreadsheet_import
+        @procurement.remove_existing_spreadsheet_import if @procurement.spreadsheet_import.present?
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
         if @spreadsheet_import.save(context: :upload)
           @spreadsheet_import.start_import!
