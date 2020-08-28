@@ -53,10 +53,12 @@ en:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
+              required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
+              required: Gross Internal Area (GIA) must be greater than 0
             other_building_type:
               blank: You must enter your description of a building type
             other_security_type:
@@ -472,6 +474,13 @@ en:
         line_2_of_2: Building and street line 2 of 2 (optional)
         postcode: Postcode
         town_or_city: Town or city
+      area:
+        description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
+        external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
+        external_area_header: What's the size of the external area?
+        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+        gia_header: What’s the size of the internal area of this building?
+        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       details_form:
         address: Address
         address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
@@ -491,13 +500,6 @@ en:
         select_an_address: Select an address
         zero_address_found: 0 addresses found
         zero_regions_found: 0 regions found
-      gia:
-        description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
-        external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
-        external_area_header: What's the size of the external area?
-        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
-        gia_header: What’s the size of the internal area of this building?
-        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -724,6 +726,8 @@ en:
           size_of_external_area: What is the size of the external area (in square metres)?
           tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
     procurement_buildings_services:
+      area:
+        heading: Internal and external areas
       edit:
         return_to_service_requirements: Return to service requirements
         save_and_return: Save and return

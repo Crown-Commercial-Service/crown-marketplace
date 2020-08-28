@@ -33,6 +33,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
   describe 'PATCH update' do
     login_fm_buyer_with_details
 
+    before do
+      procurement_building_service.procurement_building.procurement.update(aasm_state: 'detailed_search')
+    end
+
     context 'when updating lift data' do
       before do
         procurement_building_service.update(code: 'C.5')
@@ -317,6 +321,82 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
           expect(response).to render_template('edit')
         end
       end
+    end
+
+    # rubocop:disable RSpec/NestedGroups
+    context 'when updating the building areas' do
+      let(:code) { 'C.1' }
+      let(:gia) { 100 }
+      let(:external_area) { 100 }
+      let(:codes) { [code] }
+
+      before do
+        procurement_building_service.procurement_building.update(service_codes: codes)
+        procurement_building_service.update(code: code)
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'area' }, facilities_management_building: { gia: gia, external_area: external_area } }
+      end
+
+      context 'when the area updated is invalid' do
+        context 'when gia is nil' do
+          let(:gia) { nil }
+
+          it 'renders the edit template' do
+            expect(response).to render_template('edit')
+          end
+        end
+
+        context 'when external_area is nil' do
+          let(:external_area) { nil }
+
+          it 'renders the edit template' do
+            expect(response).to render_template('edit')
+          end
+        end
+
+        context 'when both gia and external_area is 0' do
+          let(:gia) { 0 }
+          let(:external_area) { 0 }
+
+          it 'renders the edit template' do
+            expect(response).to render_template('edit')
+          end
+        end
+      end
+
+      context 'when gia is 0 but there is a service which requires it' do
+        let(:gia) { 0 }
+
+        it 'renders the edit template' do
+          expect(response).to render_template('edit')
+        end
+
+        it 'has the correct error message' do
+          expect(assigns(:building).errors[:gia].first).to eq 'Gross Internal Area (GIA) must be greater than 0'
+        end
+      end
+
+      context 'when external_area is 0 but there is a service which requires it' do
+        let(:external_area) { 0 }
+        let(:code) { 'G.5' }
+
+        it 'renders the edit template' do
+          expect(response).to render_template('edit')
+        end
+
+        it 'has the correct error message' do
+          expect(assigns(:building).errors[:external_area].first).to eq 'External area must be greater than 0'
+        end
+      end
+
+      context 'when the gia and external area are not 0' do
+        let(:code) { 'G.5' }
+        let(:codes) { ['C.1', 'G.5'] }
+
+        it 'redirects to facilities_management_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
     end
 
     context 'when updating neither lift or service hour data' do
