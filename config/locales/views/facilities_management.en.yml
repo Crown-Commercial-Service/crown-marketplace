@@ -521,7 +521,7 @@ en:
         change_building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
-        manage_building_title: Manage buildings
+        manage_building_title: Buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to building details summary
@@ -559,6 +559,7 @@ en:
       type:
         choose_building_type: Choose the building type that best describes your building
         describe_building: Describe building type
+        help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
         other: Other
         view_more: View more building types
     buyer_account:
