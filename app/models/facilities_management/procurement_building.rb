@@ -72,7 +72,9 @@ module FacilitiesManagement
     end
 
     def valid_on_continue?
-      valid?(:buildings_and_services) && valid?(:gia) && valid?(:external_area)
+      procurement.errors.add(:base, :services_not_present) && (return false) if service_codes.empty?
+
+      valid?(:buildings_and_services) && valid?(:procurement_building_services) && valid?(:gia) && valid?(:external_area)
     end
 
     def requires_service_questions?
@@ -85,12 +87,9 @@ module FacilitiesManagement
 
     def service_code_selection
       return unless active
+      return errors.add(:service_codes, :invalid, building_name: building.building_name, building_id: id) if service_codes.empty?
 
-      if service_codes.empty?
-        errors.add(:service_codes, :invalid, building_name: building.building_name, building_id: id)
-      else
-        service_code_selection_validation
-      end
+      service_code_selection_validation
     end
 
     def cleanup_service_codes
@@ -102,9 +101,7 @@ module FacilitiesManagement
     end
 
     def services_valid?
-      return if procurement_building_services.empty?
-
-      errors.add(:procurement_building_services, :invalid) unless procurement_building_services.all? { |pbs| pbs.valid?(:all) && pbs.answer_store[:questions].all? { |question| !question[:answer].nil? } }
+      errors.add(:procurement_building_services, :invalid) && errors.add(:base, :services_invalid) unless procurement_building_services.all? { |pbs| pbs.answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
 
     def update_procurement_building_services
