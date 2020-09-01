@@ -75,6 +75,12 @@ module FacilitiesManagement
       valid?(:buildings_and_services) && valid?(:gia) && valid?(:external_area)
     end
 
+    def requires_service_questions?
+      return true if requires_internal_area? || requires_external_area?
+
+      procurement_building_services.map(&:required_contexts).any?(&:present?)
+    end
+
     private
 
     def service_code_selection
@@ -166,12 +172,6 @@ module FacilitiesManagement
 
     def add_selection_error(index)
       errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index], building_name: building.building_name, building_id: id)
-    end
-
-    def requires_service_questions?
-      return true if requires_internal_area? || requires_external_area?
-
-      procurement_building_services.map(&:required_contexts).any?(&:present?)
     end
 
     def area_complete?

@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <% @procurement.active_procurement_buildings.each do |procurement_building| %>
+      <% @procurement.active_procurement_buildings.select(&:requires_service_questions?).each do |procurement_building| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= procurement_building.name %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= govuk_tag(procurement_building.complete? ? :completed : :incomplete) %></td>
