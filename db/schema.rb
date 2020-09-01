@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_112653) do
+ActiveRecord::Schema.define(version: 2020_09_01_105149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -84,6 +84,14 @@ ActiveRecord::Schema.define(version: 2020_08_27_112653) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
+  create_table "facilities_management_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_building_services_id", null: false
+    t.integer "number_of_floors"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_building_services_id"], name: "index_fmpbs_procurement_lifts_on_fmp_building_services_id"
+  end
+
   create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_building_id", null: false
     t.string "code", limit: 10
@@ -96,7 +104,6 @@ ActiveRecord::Schema.define(version: 2020_08_27_112653) do
     t.bigint "tones_to_be_collected_and_removed"
     t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
-    t.string "lift_data", default: [], array: true
     t.bigint "service_hours"
     t.text "detail_of_requirement"
     t.uuid "facilities_management_procurement_id"
@@ -726,6 +733,7 @@ ActiveRecord::Schema.define(version: 2020_08_27_112653) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
+  add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_procurement_building_services", column: "facilities_management_procurement_building_services_id"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"

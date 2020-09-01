@@ -571,28 +571,37 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
       context 'when lift_data is an empty collection' do
         it 'validates to false when validating lift data' do
-          procurement_building_service.lift_data = []
+          procurement_building_service.lifts = []
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
 
-      context 'when lift_data has 1001 elements' do
+      context 'when lift_data has 100 elements' do
         it 'validates to false' do
-          procurement_building_service.lift_data = [*0..1001]
+          100.times do
+            procurement_building_service.lifts.build(number_of_floors: 100)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
 
       context 'when lift_data has elements are zero or 100 in value' do
         it 'validates to false' do
-          procurement_building_service.lift_data = [0, 99, 3, 4, 5, 6, 7, 8, 9, 10]
+          [0, 99, 3, 4, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
+            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
 
         it 'has an error collection containing corresponding index positions' do
-          procurement_building_service.lift_data = [0, 3, 300, 4, 5, 6, 7, 8, 9, 10]
+          [3, 300, 4, 0, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
+            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
-          expect(procurement_building_service.errors.details[:lift_data].find_index { |item| item[:position] == 0 }.present?).to eq true
+          expect(procurement_building_service.errors[:'lifts[3].number_of_floors'].any?).to eq true
         end
       end
     end
@@ -675,8 +684,13 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
 
     context 'when code has multiple validations' do
+      let(:lift_data) { [] }
+
       before do
         procurement_building_service.code = 'C.5'
+        lift_data.each do |number_of_floors|
+          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+        end
       end
 
       it 'will be invalid without lift data' do
@@ -684,16 +698,20 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:all)).to eq false
       end
 
-      context 'with just lift data' do
-        it 'will be valid with good data' do
-          procurement_building_service[:lift_data] = %w[1 50]
+      context 'with just valid lift data' do
+        let(:lift_data) { [1, 50] }
+
+        it 'will be valid' do
           expect(procurement_building_service.valid?(:lifts)).to eq true
           expect(procurement_building_service.valid?(:ppm_standards)).to eq false
           expect(procurement_building_service.valid?(:all)).to eq false
         end
+      end
 
-        it 'service_status will show invalid when lift_data invalid' do
-          procurement_building_service[:lift_data] = %w[1 1001]
+      context 'with just invalid lift data' do
+        let(:lift_data) { [1, 1001] }
+
+        it 'service_status will show invalid' do
           service_status = procurement_building_service.services_status
           expect(service_status[:validity][:lifts].empty?).to eq false
           expect(service_status[:validity][:ppm_standards].empty?).to eq false
@@ -717,16 +735,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
 
       context 'with both lift and service_standard data' do
+        let(:lift_data) { [1, 50] }
+
         it 'will be valid with both lift and service standard data' do
           procurement_building_service[:service_standard] = 'B'
-          procurement_building_service[:lift_data] = %w[1 50]
           expect(procurement_building_service.valid?(:lifts)).to eq true
           expect(procurement_building_service.valid?(:all)).to eq true
         end
 
         it 'service_status will indicate validity' do
           procurement_building_service[:service_standard] = 'B'
-          procurement_building_service[:lift_data] = %w[1 50]
           service_status = procurement_building_service.services_status
           expect(service_status[:validity][:lifts].empty?).to eq true
           expect(service_status[:validity][:ppm_standards].empty?).to eq true
@@ -821,7 +839,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     context 'when empty' do
       it 'will be so' do
         procurement_building_service.code = 'C.5'
-        procurement_building_service.lift_data = %w[1 2 3]
+        [1, 2, 3].each do |number_of_floors|
+          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+        end
+
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.services_status[:validity][:lifts].empty?).to eq(true)
       end
@@ -861,18 +882,20 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
   describe '#lift_data' do
     context 'when more than 99 lifts are added' do
       it 'will not be valid' do
-        procurement_building_service.lift_data = Array.new(100, 10)
-        expect(procurement_building_service.valid?(:lifts)).to be false
-        procurement_building_service.lift_data = Array.new(rand(100..200), 10)
+        100.times do
+          procurement_building_service.lifts.build(number_of_floors: 100)
+        end
+
         expect(procurement_building_service.valid?(:lifts)).to be false
       end
     end
 
     context 'when up to 99 lifts are added' do
       it 'will be valid' do
-        procurement_building_service.lift_data = Array.new(rand(1..98), 10)
-        expect(procurement_building_service.valid?(:lifts)).to be true
-        procurement_building_service.lift_data = Array.new(99, 10)
+        99.times do
+          procurement_building_service.lifts.build(number_of_floors: 100)
+        end
+
         expect(procurement_building_service.valid?(:lifts)).to be true
       end
     end
@@ -880,7 +903,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
   describe '#uval' do
     let(:code) { nil }
-    let(:lift_data) { nil }
+    let(:lift_data) { [] }
     let(:no_of_appliances_for_testing) { nil }
     let(:no_of_building_occupants) { nil }
     let(:no_of_consoles_to_be_serviced) { nil }
@@ -890,7 +913,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
              code: code,
-             lift_data: lift_data,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
              no_of_building_occupants: no_of_building_occupants,
              no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
@@ -901,12 +923,18 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
                                           procurement: create(:facilities_management_procurement_no_procurement_buildings)))
     end
 
+    before do
+      lift_data.each do |number_of_floors|
+        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+      end
+    end
+
     context 'when service is C.5' do
       let(:code) { 'C.5' }
-      let(:lift_data) { %w[5 5 2 2] }
+      let(:lift_data) { [5, 5, 2, 2] }
 
       it 'returns lift_data' do
-        expect(procurement_building_service.uval).to eq lift_data.map(&:to_i).inject(&:+)
+        expect(procurement_building_service.uval).to eq lift_data.sum
       end
 
       it 'does not return building GIA' do

@@ -40,11 +40,11 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
     context 'when updating lift data' do
       before do
         procurement_building_service.update(code: 'C.5')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'lifts', lift_data: lifts } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'lifts', lifts_attributes: { '0': { number_of_floors: lifts[0], "_destroy": false }, '1': { number_of_floors: lifts[1], "_destroy": false }, '2': { number_of_floors: lifts[2], "_destroy": false }, '3': { number_of_floors: lifts[3], "_destroy": false } } } }
       end
 
       context 'when the lift data is valid' do
-        let(:lifts) { ['10', '13', '7', '6'] }
+        let(:lifts) { [10, 13, 7, 6] }
 
         it 'redirects to facilities_management_procurement_building_path' do
           expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)

@@ -234,7 +234,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
       next if missing_lifts?(service_volume_column, service_volume_lifts_sheet.column(col)[3])
 
-      procurement_building_service.lift_data = get_lift_data(service_volume_column)
+      extract_lift_data(procurement_building_service, service_volume_column)
     end
   end
 
@@ -244,17 +244,13 @@ class FacilitiesManagement::SpreadsheetImporter
 
   NUMBER_OF_LIFTS = 40
 
-  def get_lift_data(service_volume_column)
-    lifts = []
-
+  def extract_lift_data(procurement_building_service, service_volume_column)
     NUMBER_OF_LIFTS.times do |row|
-      lift_data = service_volume_column[row]
-      break if lift_data.nil?
+      number_of_floors = service_volume_column[row]
+      break if number_of_floors.nil?
 
-      lifts << lift_data.to_i
+      procurement_building_service.lifts.build(number_of_floors: number_of_floors)
     end
-
-    lifts
   end
 
   ########## Importing Service hours ##########
@@ -463,12 +459,19 @@ class FacilitiesManagement::SpreadsheetImporter
     building[:procurement_building][:procurement_building_services].each do |pbs|
       procurement_building_service = procurement_building.procurement_building_services.find_by(code: pbs[:object].code)
 
-      procurement_building_service.assign_attributes(pbs[:object].attributes.slice('no_of_appliances_for_testing', 'no_of_building_occupants', 'no_of_consoles_to_be_serviced', 'tones_to_be_collected_and_removed', 'no_of_units_to_be_serviced', 'service_standard', 'lift_data', 'service_hours', 'detail_of_requirement'))
+      procurement_building_service.assign_attributes(pbs[:object].attributes.slice('no_of_appliances_for_testing', 'no_of_building_occupants', 'no_of_consoles_to_be_serviced', 'tones_to_be_collected_and_removed', 'no_of_units_to_be_serviced', 'service_standard', 'service_hours', 'detail_of_requirement'))
+      save_lift_data(procurement_building_service, pbs[:object]) if procurement_building_service.code == 'C.5'
       procurement_building_service.save
       pbs[:object] = procurement_building_service
     end
 
     building[:procurement_building][:procurement_building_services].each { |pbs| pbs[:object].reload }
+  end
+
+  def save_lift_data(procurement_building_service, object)
+    object.lift_data.each do |number_of_floors|
+      procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+    end
   end
 
   def normalise_postcode(postcode)
