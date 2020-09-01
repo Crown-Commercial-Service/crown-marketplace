@@ -196,7 +196,7 @@ module ProcurementValidator
         # at least one service per building
         errors.add(:base, :services_not_present) && (return false) if pb.procurement_building_services.none?
         # services valid
-        pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services)
+        pb.errors.add(:base, :services_invalid) && errors.add(:base, '') unless pb.valid?(:procurement_building_services)
       end
     end
 

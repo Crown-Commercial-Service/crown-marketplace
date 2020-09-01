@@ -389,6 +389,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         expect(procurement.valid_on_continue?).to eq false
       end
     end
+
+    context 'when a building has services that require questions' do
+      it 'is in the array' do
+        procurement_building = create(:facilities_management_procurement_building, procurement: procurement, service_codes: ['C.5', 'E.4', 'K.8'])
+        expect(procurement.valid_on_continue?).to eq false
+      end
+    end
   end
 
   describe '#update_building_services' do
