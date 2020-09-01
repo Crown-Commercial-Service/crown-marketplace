@@ -3,7 +3,9 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
+
+  SUMMARY = %w[contract_period buildings_and_services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil, further_competition_chosen: false)
     @id = id
@@ -67,7 +69,7 @@ class FacilitiesManagement::ProcurementRouter
     return edit_facilities_management_procurement_path(id: @id, step: previous_step) if @step == 'services'
     return facilities_management_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
-    next_step.nil? ? facilities_management_procurement_path(id: @id) : edit_facilities_management_procurement_path(id: @id, step: next_step)
+    summary_page? ? facilities_management_procurement_summary_path(procurement_id: @id, summary: @step) : facilities_management_procurement_path(id: @id)
   end
 
   def back_link
@@ -78,14 +80,10 @@ class FacilitiesManagement::ProcurementRouter
 
   private
 
-  def next_step
-    return nil if @step.nil?
+  def summary_page?
+    return false if @step.nil?
 
-    return nil unless STEPS.include? @step
-
-    return nil if @step == STEPS.last
-
-    STEPS[STEPS.find_index(@step) + 1]
+    SUMMARY.include? @step
   end
 
   def previous_step

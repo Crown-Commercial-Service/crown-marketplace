@@ -313,5 +313,21 @@ module LayoutHelper
     end
     safe_join(html)
   end
+
+  def form_group_with_error(model, attribute)
+    css_classes = ['govuk-form-group']
+    css_classes += ['govuk-form-group--error'] if model.errors.key?(attribute)
+
+    content_tag :div, class: css_classes, id: "#{attribute}-form-group" do
+      yield
+    end
+  end
+
+  def hint_details(question, hint)
+    capture do
+      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), t('.caption'), @procurement.contract_name, nil, nil)) %>
+<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, t('.heading') %>
 
 <div class="govuk-body">
@@ -24,9 +24,9 @@
     <h2 class="govuk-heading-m govuk-!-margin-bottom-6">
       <%= t('.sub_heading') %>
     </h2>
-    <span class="govuk-inset-text">
-      <%= t('.content_html') %>
-    </span>
+    <div class="govuk-body govuk-!-width-three-quarters">
+      <%= t('.help_html') %>
+    </div>
   </div>
   <hr class="govuk-section-break govuk-section-break--s govuk-!-margin-bottom-3">
   <div class="content browse">
@@ -36,18 +36,11 @@
           <%= t('.buildings') %>
         </h3>
         <div>
-          <span class="govuk-hint">
-            <%= t('.buildings_caption') %>
-          <span>
-          <br>
-          <br>
-          <%= link_to t('.change_buildings'), edit_facilities_management_procurement_path(:step => 'procurement_buildings'), class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
-          <hr class="govuk-section-break govuk-section-break--m">
           <ul>
             <% f.object.active_procurement_buildings.order_by_building_name.each_with_index do |building, i| %>
               <li class="<%= building_tab_class(building, i) %>"  >
                 <a id="<%= 'building-' + building.id %>" class="building-button govuk-!-font-size-19" href="#"><%= building.name %>
-                  <strong class="<%= 'building-services-' + building.id %>">(0 selected)</strong>
+                  <strong class="<%= 'building-services-' + building.id %>">(0 services selected)</strong>
                 </a>
               </li>
             <% end %>
@@ -59,12 +52,6 @@
           <h3 class="govuk-heading-m">
             <%= t('.services') %>
           </h3>
-          <span class="govuk-hint">
-            <%= t('.services_caption') %>
-          <span>
-          <br>
-          <%= link_to t('.change_services'), edit_facilities_management_procurement_path(@procurement.id, step: 'services'), class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
-          <hr class="govuk-section-break govuk-section-break--m">
           <%= f.fields_for :procurement_buildings do |ff| %>
             <% procurement_building = ff.object %>
             <% if procurement_building.active %>

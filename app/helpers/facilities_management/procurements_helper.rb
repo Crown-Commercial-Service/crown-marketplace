@@ -5,7 +5,7 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_name contract_dates estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
+    %i[contract_name contract_period estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
   end
 
   def initial_call_off_period_start_date
@@ -57,9 +57,9 @@ module FacilitiesManagement::ProcurementsHelper
   PROCUREMENT_STATE = { da_draft: 'DA draft',
                         further_competition: 'Further competition',
                         results: 'Results',
-                        quick_search: 'Quick search',
-                        detailed_search: 'Detailed search',
-                        detailed_search_bulk_upload: 'Detailed search - Bulk upload',
+                        quick_search: 'Quick view',
+                        detailed_search: 'Requirements',
+                        detailed_search_bulk_upload: 'Requirements',
                         closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
@@ -128,11 +128,30 @@ module FacilitiesManagement::ProcurementsHelper
     %w[quick_search detailed_search detailed_search_bulk_upload da_draft choose_contract_value results].include? @procurement.aasm_state
   end
 
-  def hint_details(question, hint)
-    capture do
-      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
-      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
-    end
+  def procurement_buildings_missing_regions
+    return false unless @procurement.detailed_search? || @procurement.detailed_search_bulk_upload?
+
+    @procurement.active_procurement_buildings.includes(:building).any? { |procurement_building| procurement_building.building.address_region.nil? }
+  end
+
+  def buildings_with_missing_regions
+    @procurement.active_procurement_buildings.select(&:missing_region?)
+  end
+
+  def convert_summary_to_title
+    "#{@summary_page.gsub('_', ' ').capitalize} summary"
+  end
+
+  def continue_button_text
+    FacilitiesManagement::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
+  end
+
+  def service_name(service_code)
+    @services.select { |s| s['code'] == service_code }.first&.name&.humanize
+  end
+
+  def requires_back_link?
+    %w[contract_name estimated_annual_cost tupe].include? params[:step]
   end
 end
 # rubocop:enable Metrics/ModuleLength

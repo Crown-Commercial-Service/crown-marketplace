@@ -1,9 +1,13 @@
-<div class="govuk-body govuk-grid-row procurement-building-service">
-  <%= form_for @procurement_building, url: facilities_management_procurement_building_path(@procurement_building, service_question: @service_question), method: :put, html: { multipart: true } do |f| %>
-    <div class="govuk-grid-column-full">
-      <%= link_to 'Back', facilities_management_procurement_building_path(@procurement_building), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
-      <%= render partial: 'shared/error_summary_nested_attributes', locals: { nested_attributes: f.object.procurement_building_services } %>
-    </div>
-    <%= render @service_question, f: f %>
-  <% end %>
-</div>
+<% unless @service_question == 'missing_region' %>
+  <div class="govuk-body govuk-grid-row procurement-building-service">
+    <%= form_for @procurement_building, url: facilities_management_procurement_building_path(@procurement_building, service_question: @service_question), method: :put, html: { multipart: true } do |f| %>
+      <div class="govuk-grid-column-full">
+        <%= link_to 'Back', facilities_management_procurement_building_path(@procurement_building), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
+        <%= render partial: 'shared/error_summary_nested_attributes', locals: { nested_attributes: f.object.procurement_building_services } %>
+      </div>
+      <%= render @service_question, f: f %>
+    <% end %>
+  </div>
+<% else %>
+  <%= render @service_question %>
+<% end %>

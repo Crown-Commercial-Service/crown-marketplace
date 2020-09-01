@@ -1,14 +1,14 @@
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
-    before_action :set_procurement, only: %i[show edit update destroy]
+    before_action :set_procurement, only: %i[show summary edit update destroy]
     before_action :authorize_user
     before_action :set_deleted_action_occurred, only: %i[index]
-    before_action :set_edit_state, only: %i[index show edit update destroy]
-    before_action :ready_buildings, only: %i[show edit update]
-    before_action :set_procurement_data, only: %i[show edit update]
+    before_action :set_edit_state, only: %i[index show summary edit update destroy]
+    before_action :ready_buildings, only: %i[show summary edit update]
+    before_action :set_procurement_data, only: %i[show summary edit update]
     before_action :set_new_procurement_data, only: %i[new]
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
-    before_action :build_page_details, only: %i[show edit update destroy]
+    before_action :build_page_details, only: %i[show summary edit update destroy]
 
     def index
       @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -24,20 +24,30 @@ module FacilitiesManagement
 
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
+      redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
+
       @view_name = set_view_data
       reset_security_policy_document_page
     end
 
+    def summary
+      @summary_page = params['summary']
+      redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if @procurement.send("#{@summary_page}_status") == :not_started
+    end
+
     def new
       @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
-      @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: params[:region_codes], service_codes: params[:service_codes])
+      @back_path = back_path
     end
 
     def create
       @procurement = current_user.procurements.build(procurement_params)
 
       if @procurement.save(context: :contract_name)
-        if params[:save_for_later].present?
+        if @procurement.region_codes.empty?
+          @procurement.start_detailed_search!
+          redirect_to facilities_management_procurement_path(@procurement)
+        elsif params[:save_for_later].present?
           redirect_to facilities_management_procurements_path
         else
           redirect_to facilities_management_procurement_path(@procurement, 'what_happens_next': true)
@@ -45,7 +55,7 @@ module FacilitiesManagement
       else
         @errors = @procurement.errors
         set_procurement_data
-        @back_path = helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes)
+        @back_path = back_path
         render :new
       end
     end
@@ -93,6 +103,8 @@ module FacilitiesManagement
 
       update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
 
+      exit_detailed_search_bulk_upload && return if params['exit_bulk_upload'].present?
+
       update_procurement && return if params['facilities_management_procurement'].present?
 
       continue_da_journey if params['continue_da'].present?
@@ -124,11 +136,6 @@ module FacilitiesManagement
       send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
     end
 
-    def summary
-      @page_data = {}
-      @page_data[:model_object] = @procurement
-    end
-
     def da_spreadsheets
       init
       if params[:spreadsheet] == 'prices_spreadsheet'
@@ -154,6 +161,10 @@ module FacilitiesManagement
       else
         @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
       end
+    end
+
+    def back_path
+      helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
@@ -342,8 +353,7 @@ module FacilitiesManagement
         if @procurement.quick_search?
           redirect_to facilities_management_procurement_path(id: @procurement.id)
         else
-          redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: :building_services) && return if params['next_step'].present?
-          redirect_to facilities_management_procurement_path(@procurement)
+          redirect_to facilities_management_procurement_summary_path(@procurement, summary: 'services')
         end
       else
         params[:step] = 'services'
@@ -438,6 +448,12 @@ module FacilitiesManagement
         set_step_param
         render :edit
       end
+    end
+
+    def exit_detailed_search_bulk_upload
+      @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
+
+      redirect_to facilities_management_procurement_path(@procurement)
     end
 
     def contract_value_page_details
@@ -621,6 +637,8 @@ module FacilitiesManagement
     end
 
     def set_new_procurement_data
+      return if params[:region_codes].nil?
+
       set_suppliers(params[:region_codes], params[:service_codes])
       find_regions(params[:region_codes])
       find_services(params[:service_codes])
@@ -633,6 +651,8 @@ module FacilitiesManagement
 
       region_codes = @procurement.region_codes
       service_codes = @procurement.service_codes
+      return if region_codes.nil?
+
       set_suppliers(region_codes, service_codes)
       find_regions(region_codes)
       find_services(service_codes)
@@ -670,7 +690,7 @@ module FacilitiesManagement
 
     def set_deleted_action_occurred
       @deleted = params[:deleted].present?
-      @what_was_deleted = params[:deleted].to_s.downcase if @deleted
+      @what_was_deleted = params[:deleted].to_s if @deleted
     end
 
     def set_edit_state

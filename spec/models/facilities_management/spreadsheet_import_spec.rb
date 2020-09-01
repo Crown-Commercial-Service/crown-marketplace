@@ -1,11 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
-  subject(:import) { described_class.new }
+  subject(:import) { create(:facilities_management_procurement_spreadsheet_import, procurement: create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
 
   describe 'aasm_state' do
-    it 'starts at importing state' do
-      expect(import.aasm_state).to eq('importing')
+    it 'starts at upload state' do
+      expect(import.aasm_state).to eq('upload')
+    end
+
+    context 'when start_import is called' do
+      before do
+        allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
+        import.start_import!
+      end
+
+      it 'starts the worker' do
+        expect(FacilitiesManagement::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
+      end
+
+      it 'set the state to importing' do
+        expect(import.importing?).to be true
+      end
     end
   end
 

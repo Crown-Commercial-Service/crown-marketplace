@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_10_131855) do
+ActiveRecord::Schema.define(version: 2020_08_27_112653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -100,7 +100,11 @@ ActiveRecord::Schema.define(version: 2020_08_10_131855) do
     t.string "lift_data", default: [], array: true
     t.bigint "service_hours"
     t.text "detail_of_requirement"
+    t.uuid "facilities_management_procurement_id"
+    t.index ["code"], name: "index_fm_procurement_building_services_on_code"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
+    t.index ["facilities_management_procurement_id", "facilities_management_procurement_building_id"], name: "idx_fm_pbs_fm_p_fm_pb"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_building_services_on_fm_procurement_id"
   end
 
   create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -124,7 +128,10 @@ ActiveRecord::Schema.define(version: 2020_08_10_131855) do
     t.jsonb "building_json"
     t.text "description"
     t.bigint "external_area"
+    t.index ["active"], name: "index_fm_procurement_buildings_on_active"
+    t.index ["building_id"], name: "index_fm_procurement_buildings_on_building_id"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
+    t.index ["service_codes"], name: "index_fm_procurement_buildings_on_service_codes"
   end
 
   create_table "facilities_management_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -342,6 +349,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_131855) do
     t.boolean "direct_award"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["code", "standard"], name: "index_fm_rates_on_code_and_standard"
     t.index ["code"], name: "index_fm_rates_on_code"
   end
 
@@ -710,6 +718,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_131855) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
+  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"

@@ -11,7 +11,7 @@ module FacilitiesManagement
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
     # Lookup data for 'constants' are taken from this service object
-    services_and_questions = ServicesAndQuestions.new
+    services_and_questions = ServicesAndQuestions
 
     # validates on :volume service question
     validate :validate_volume, on: :volume # this validator will valid the appropriate field for the given service
@@ -26,9 +26,7 @@ module FacilitiesManagement
     validate :validate_detail_of_requirement_max_length, on: :service_hours
 
     # validates on the service_standard service question
-    validate :validate_ppm_standard_presence, on: :ppm_standards
-    validate :validate_building_standard_presence, on: :building_standards
-    validate :validate_cleaning_standard_presence, on: :cleaning_standards
+    validate :validate_standard, on: %i[service_standard ppm_standards building_standards cleaning_standards]
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
@@ -57,16 +55,8 @@ module FacilitiesManagement
       required_contexts.include?(:volume)
     end
 
-    def requires_ppm_standards?
-      required_contexts.include?(:ppm_standards)
-    end
-
-    def requires_building_standards?
-      required_contexts.include?(:building_standards)
-    end
-
-    def requires_cleaning_standards?
-      required_contexts.include?(:cleaning_standards)
+    def requires_service_standard?
+      (required_contexts.keys & STANDARD_TYPES).any?
     end
 
     def requires_lift_data?
@@ -81,8 +71,26 @@ module FacilitiesManagement
       ['G.5'].include? code
     end
 
+    def requires_internal_area?
+      CCS::FM::Service.full_gia_services.include? code
+    end
+
+    def uses_only_internal_area?
+      CCS::FM::Service.gia_services.include? code
+    end
+
     def required_contexts
       @required_contexts ||= this_service[:context]
+    end
+
+    def required_volume_contexts
+      return {} if required_contexts.nil?
+
+      volume_contexts = @required_contexts.except(*STANDARD_TYPES)
+      volume_contexts[:gia] = [:gia] if requires_internal_area?
+      volume_contexts[:external_area] = [:external_area] if requires_external_area?
+
+      volume_contexts
     end
 
     # Goes through each context, gathering errors of each validation
@@ -130,7 +138,17 @@ module FacilitiesManagement
       FacilitiesManagement::Service.special_da_service?(code)
     end
 
+    def gia
+      procurement_building.building.gia
+    end
+
+    def external_area
+      procurement_building.building.external_area
+    end
+
     private
+
+    STANDARD_TYPES = %i[ppm_standards building_standards cleaning_standards].freeze
 
     # rubocop:disable Metrics/AbcSize
     def validate_lift_data
@@ -148,43 +166,24 @@ module FacilitiesManagement
     end
     # rubocop:enable Metrics/AbcSize
 
-    def validate_ppm_standard_presence
-      validate_standard if validation_needed_for?(:ppm_standards)
-    end
-
-    def validate_building_standard_presence
-      validate_standard if validation_needed_for?(:building_standards)
-    end
-
-    def validate_cleaning_standard_presence
-      validate_standard if validation_needed_for?(:cleaning_standards)
-    end
-
-    def validation_needed_for?(context)
-      this_service[:context].keys.include?(context)
-    end
-
     def validate_standard
-      errors.add(:service_standard, "#{I18n.t('activerecord.errors.models.facilities_management/procurement_building_service.attributes.service_standard.blank')} #{name[0, 1].downcase}#{name[1, name.length]}") if service_standard.blank?
+      errors.add(:service_standard, :blank) if service_standard.blank? || SERVICE_STANDARDS.exclude?(service_standard)
     end
 
     # Checks that each field for each question
     # in the collection of VOLUME_QUESTIONS is correctly filled
     # according to it's specified context (:volume) and specific questions
-    # rubocop:disable Rails/Validation, Metrics/AbcSize
+    # rubocop:disable Rails/Validation
     def validate_volume
-      return if this_service.empty?
-
-      return unless this_service[:context].key?(:volume)
-
-      invalid = if ['K.1', 'K.2', 'K.3', 'K.4', 'K.5', 'K.6', 'K.7'].include? this_service[:code]
-                  "invalid_#{this_service[:code].downcase.tr('.', '')}".to_sym
-                else
-                  :invalid
-                end
+      return unless requires_volume?
 
       this_service[:context][:volume].each do |question|
-        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: invalid) if send(this_service[:context][:volume].first).present?
+        if self[question.to_sym].nil?
+          errors.add(question.to_sym, :blank)
+          break
+        end
+
+        validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: :invalid)
       end
     end
 
@@ -193,7 +192,7 @@ module FacilitiesManagement
       errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
     end
 
-    # rubocop:enable Rails/Validation, Metrics/AbcSize
+    # rubocop:enable Rails/Validation
     # gathers the answers for a set of questions
     # in an array of question => answer key-value pairs
     def get_answers(questions)

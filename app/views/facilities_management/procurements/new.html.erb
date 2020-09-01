@@ -1,3 +1,4 @@
+<% if @procurement.service_codes.present? %>
 <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
 <%= form_for @procurement, url: facilities_management_procurements_path, method: :post, html: { specialvalidation:true, novalidate:true, multipart: true } do |f| %>
   <div class="govuk-width-container">
@@ -18,4 +19,8 @@
       </div>
     </div>
   </div>
+<% end %>
+
+<% else %>
+  <%= render partial: 'contract_name' %>
 <% end %>

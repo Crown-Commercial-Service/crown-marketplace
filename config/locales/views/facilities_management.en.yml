@@ -53,10 +53,12 @@ en:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
+              required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0.
               not_an_integer: Enter a whole number for the size of internal area of this building
+              required: Gross Internal Area (GIA) must be greater than 0
             other_building_type:
               blank: You must enter your description of a building type
             other_security_type:
@@ -115,9 +117,10 @@ en:
               blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
               less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
+              not_a_number: The estimated annual cost must be an amount of money
               not_an_integer: Estimated annual cost must be a number between 1 and 999,999,999
             estimated_cost_known:
-              inclusion: Select yes if you know your estimated annual cost, if you do not please select no
+              inclusion: Select one option
               not_present: You must answer the question about ‘Estimated annual cost’
             extensions_required:
               inclusion: Select yes if you want to extend your call-off contract
@@ -213,7 +216,7 @@ en:
               blank: Select at least one service you need to include in your procurement
               invalid: Select at least one service you need to include in your procurement
             tupe:
-              inclusion: Select yes if you know TUPE applies to your contract
+              inclusion: Select one option
               not_present: You must answer the question about ‘TUPE’
             using_buyer_detail_for_authorised_detail:
               inclusion: Select one option
@@ -257,37 +260,36 @@ en:
               blank: Enter the detail of requirement
             lift_data:
               above_maximum: The maximum number of lifts is 99
-              greater_than: The number of floors accessed must be a whole number greater than 0.
-              less_than: Enter a whole number between 1 and 999, like 100.
-              not_an_integer: The number of floors accessed must be a whole number greater than 0.
-              required: The number of floors accessed must be a whole number greater than 0.
-              too_long: Enter a whole number between 1 and 999, like 100.
-              too_short: The number of floors accessed must be a whole number greater than 0.
+              greater_than: The number of floors accessed must be a whole number greater than 0
+              less_than: Enter a whole number between 1 and 999
+              not_an_integer: The number of floors accessed must be a whole number greater than 0
+              required: The number of floors accessed must be a whole number greater than 0
+              too_long: Enter a whole number between 1 and 999
+              too_short: The number of floors accessed must be a whole number greater than 0
             no_of_appliances_for_testing:
-              invalid: The number of appliances to be tested must be a whole number between 1 and 999,999,999.
+              blank: Enter number of portable appliances
+              invalid: The number of portable appliances must be a whole number between 1 and 999,999,999
             no_of_building_occupants:
-              invalid: The number of building occupants must be a whole number between 1 and 999,999,999.
+              blank: Enter number of building occupants
+              invalid: The number of building occupants must be a whole number between 1 and 999,999,999
             no_of_consoles_to_be_serviced:
-              invalid: The number of consoles to be serviced must be a whole number between 1 and 999,999,999.
-              invalid_k1: The number of consoles of classified waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of consoles
+              invalid: The number of consoles must be a whole number between 1 and 999,999,999
             no_of_units_to_be_serviced:
-              invalid: The number of units to be serviced must be a whole number between 1 and 999,999,999.
-              invalid_k7: The number of units of feminine hygiene waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of units
+              invalid: The number of units must be a whole number between 1 and 999,999,999
             service_hours:
               greater_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
               less_than_or_equal_to: Number of hours per year must be a whole number between 1 and 999,999,999
               not_a_number: Enter number of hours per year
               not_an_integer: Number of hours per year must be a whole number between 1 and 999,999,999
             service_standard:
-              blank: Select level of standard for your
+              blank: Select the level of standard
             size_of_external_area:
               invalid: The size of the external area must be a whole number between 1 and 999,999,999.
             tones_to_be_collected_and_removed:
-              invalid_k2: The number of tonnes of general waste must be a whole number between 1 and 999,999,999.
-              invalid_k3: The number of tonnes of recycled waste must be a whole number between 1 and 999,999,999.
-              invalid_k4: The number of tonnes of hazardous waste must be a whole number between 1 and 999,999,999.
-              invalid_k5: The number of tonnes of clinical waste must be a whole number between 1 and 999,999,999.
-              invalid_k6: The number of tonnes of medical waste must be a whole number between 1 and 999,999,999.
+              blank: Enter number of tonnes
+              invalid: The number of tonnes must be a whole number between 1 and 999,999,999
         facilities_management/procurement_contact_detail:
           attributes:
             email:
@@ -472,6 +474,13 @@ en:
         line_2_of_2: Building and street line 2 of 2 (optional)
         postcode: Postcode
         town_or_city: Town or city
+      area:
+        description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
+        external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
+        external_area_header: What's the size of the external area?
+        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+        gia_header: What’s the size of the internal area of this building?
+        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       details_form:
         address: Address
         address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
@@ -491,13 +500,6 @@ en:
         select_an_address: Select an address
         zero_address_found: 0 addresses found
         zero_regions_found: 0 regions found
-      gia:
-        description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
-        external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
-        external_area_header: What's the size of the external area?
-        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
-        gia_header: What’s the size of the internal area of this building?
-        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -519,7 +521,7 @@ en:
         change_building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
-        manage_building_title: Manage buildings
+        manage_building_title: Buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to building details summary
@@ -557,6 +559,7 @@ en:
       type:
         choose_building_type: Choose the building type that best describes your building
         describe_building: Describe building type
+        help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
         other: Other
         view_more: View more building types
     buyer_account:
@@ -655,8 +658,8 @@ en:
     journey:
       choose_locations:
         heading: Regions
-        location_selected: Region selected
-        locations_selected: Regions selected
+        location_selected: region selected
+        locations_selected: regions selected
         no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
@@ -667,74 +670,55 @@ en:
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
-        service_selected: Service selected
+        service_selected: service selected
         service_specification_doc: Read the service specification document
-        services_selected: Services selected
+        services_selected: services selected
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
-      building_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        fabric_standard_a_copy: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
-        fabric_standard_a_title: Standard A - the general or normal service level
-        fabric_standard_b_copy: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
-        fabric_standard_b_title: Standard B - this is the minimum level of service required
-        fabric_standard_c_copy: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-        fabric_standard_c_title: Standard C - this level of service will be bespoke and site or area specific
-        heading: Building fabric maintenance services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: What standard are you applying to all selected building fabric maintenance services?
-      cleaning_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        cleaning_standard_a_copy: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
-        cleaning_standard_a_title: Standard A - the general or normal service level
-        cleaning_standard_b_copy: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
-        cleaning_standard_b_title: Standard B - the highest service level
-        cleaning_standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-        cleaning_standard_c_title: Standard C - a bespoke service level
-        heading: Cleaning services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: What standard are you applying to all selected cleaning services?
-      ppm_standards:
-        back_to_service_information: Back to service requirements
-        caption_html: Read the detailed descriptions of the service standards in the <a href="%{service_info_doc}" target="_blank" class="govuk-link--no-visited-state">service specification document</a>.
-        heading: Planned maintenance (PPM) services standards
-        save_and_return_to_service_information: Save and return to service requirements
-        standard_a_copy: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
-        standard_a_title: Standard A - the general or normal service level
-        standard_b_copy: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
-        standard_b_title: Standard B - this is the minimum level of service required
-        standard_c_copy: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-        standard_c_title: Standard C - a bespoke service level
-        subheading: What standard are you applying to all selected planned maintenance services?
+      missing_region:
+        building_address: Building address
+        building_name: Building name
+        change_link: Change
+        change_link_aria_label: Change region
+        for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
+        heading: Confirm your building's region
+        prompt: Please select a region
+        region: Region
+        return_link: Return to review your buildings
+        select_region: Select region
+        we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
       show:
         answer_question: Answer question
-        back_to_detailed_summary: Back to detailed search summary
+        change: Change
+        description: Description
         detail_of_requirement: Detail of requirement
-        gia: Gross internal area (GIA)
-        gia-summary: The gross internal area of the building (in square meters)
         heading: Service requirements
-        lift_data: Total number of lift entrances
-        no_of_appliances_for_testing: The number of appliances to be tested per annum
-        no_of_building_occupants: The number of building occupants
-        no_of_consoles_to_be_serviced: The number of consoles to be serviced per annum
-        no_of_hours_of_service_provision: The number of hours of service provision per annum
-        no_of_units_to_be_serviced: The number of units to be serviced per annum
-        service: Service
-        service_hour_question: The number of hours of service provision per annum
-        service_hours: Number of hours per year
-        service_standard: The service standard required
-        size_of_external_area: The size of the external area (in square metres)
-        tones_to_be_collected_and_removed: The number of tonnes to be collected and removed per annum
-        total_floors_per_lift: Total number of lift entrances
-        volume_required_heading: Volume required (per annum)
-        volume_required_html: "<b>Volume required <br> (per annum)</b>"
+        help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
+        help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
+        list_item_1: Service volumes - this is where you can check or input the volume required for each service.
+        list_item_2: Service standards - this is where you can select the standard of service required.
+        list_title: 'All the services that you require for this building are listed below, split into two sections:'
+        return_to_requirements: Return to requirements
+        service_name: Service name
+        service_standards: 2. Service standards
+        service_volumes: 1. Service volumes
+        standard: Standard
+        status: 'Status:'
+        the_standard_required: The service standard required
+        unit_of_measure:
+          external_area: External area - number of square metres
+          gia: Gross Internal Area - number of square metres
+          lift_data: Total number of lift entrances
+          no_of_appliances_for_testing: Number of appliances to be tested per annum
+          no_of_building_occupants: The number of building occupants
+          no_of_consoles_to_be_serviced: Number of consoles per annum
+          no_of_units_to_be_serviced: Number of units per annum
+          service_hours: Total number of hours required per annum
+          tones_to_be_collected_and_removed: Number of tonnes per annum
+        unit_of_measure_title: Unit of measure
+        volume_required: Volume required
       volume:
-        back_to_service_information: Back to service requirements
-        caption: To enable us to calculate your prices, you need to provide additional service specific information. You must answer all questions below
-        heading: Service requirement volumes
         question:
           no_of_appliances_for_testing: How many appliances to be tested per annum?
           no_of_building_occupants: How many building occupants?
@@ -742,12 +726,16 @@ en:
           no_of_units_to_be_serviced: How many units to be serviced per annum?
           size_of_external_area: What is the size of the external area (in square metres)?
           tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
-        save_and_return_to_service_information: Save and return to service requirements
-        subheading: Answer additional questions about the services
     procurement_buildings_services:
+      area:
+        heading: Internal and external areas
+      edit:
+        return_to_service_requirements: Return to service requirements
+        save_and_return: Save and return
       lifts:
-        back_to_service_information: Back to service requirements
-        save_and_return_to_service_information: Save and return to service requirements
+        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete.
+        floors: How many lifts are in this building, and how many floors does each lift service?
+        no_of_floors: Number of floors
       service_hours:
         detail_example: See an example
         detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
@@ -762,11 +750,50 @@ en:
         hour_heading: Please enter the total number of hours of this service required per year.
         hour_hint: The hours entered will be used to calculate the cost of this service.
         hour_label: Number of hours per year
-        return_to_service_requirements_summary: Return to service requirements summary
-        save_and_return: Save and return
-      show:
-        back_to_service_information: Back to service requirements
-        save_and_return_to_service_information: Save and return to service requirements
+      service_standards:
+        detail_text:
+          building_standards:
+            standard_A: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
+            standard_B: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
+            standard_C: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
+          cleaning_standards:
+            standard_A: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
+            standard_B: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
+            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          ppm_standards:
+            standard_A: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
+            standard_B: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
+            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+        detail_title:
+          building_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - this is the minimum level of service required
+            standard_C: Standard C - this level of service will be bespoke and site or area specific.
+          cleaning_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - the highest service level
+            standard_C: Standard C  - a bespoke service level
+          ppm_standards:
+            standard_A: Standard A - the general or normal service level
+            standard_B: Standard B - this is the minimum level of service required
+            standard_C: Standard C  - a bespoke service level
+        direct_award_eligible: Direct award eligible
+        heading: Which service standard do you want for this service in this building?
+        hint_text: To understand the differences between the standards, please read the brief descriptions, or alternatively open the service specification document below and go to the service standards section.
+        warning: Please note that only Standard A is suitable for direct award, the other standards require a further competition.
+      volumes:
+        question:
+          no_of_appliances_for_testing: How many portable appliances will require testing each year within this building?
+          no_of_building_occupants: How many building occupants (building users) are there in this building?
+          no_of_consoles_to_be_serviced: How many consoles are to be serviced each year within this building?
+          no_of_units_to_be_serviced: How many units are to be serviced each year within this building?
+          tones_to_be_collected_and_removed: How many tonnes are to be collected, stored and removed each year within this building?
+        unit:
+          no_of_appliances_for_testing: appliances
+          no_of_building_occupants: occupants
+          no_of_consoles_to_be_serviced: consoles
+          no_of_units_to_be_serviced: units
+          tones_to_be_collected_and_removed: tonnes
     procurements:
       about_the_contract:
         contract_details: 1. Contract details
@@ -775,10 +802,19 @@ en:
         estimated_annual_cost: Estimated annual cost
         tupe: TUPE
       about_the_work:
+        assigning_services_to_buildings: Assigning services to buildings
+        buildings: Buildings
         excel: Click here to download an Excel template
+        service_requirements: Service requirements
+        services: Services
+        services_and_buildings: 2. Services and buildings
+        which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+        heading: Do you want the option to extend your call-off contract?
+        remove: Remove
+        unit: years
       choose_contract_value:
         can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
         change_requirements_description: If you wish to change your requirements, click the 'Change requirements' button below.
@@ -795,6 +831,13 @@ en:
         sub_lot_1a_hint: Total contract value up to £7 million
         sub_lot_1b_hint: Total contract value between £7 million and £50 million
         sub_lot_1c_hint: Total contract value over £50 million
+      contract_name:
+        contract_name_info: This will help you to refer to your contracts when talking to suppliers.
+        contract_name_question: What do you want to call your contract?
+        heading: Contract name
+        return_to_what_happens_next: Return to what happens next
+        return_to_your_account: Return to your account
+        save_and_return: Save and return
       contracts:
         awaiting_response:
           else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1177,23 +1220,20 @@ en:
           authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
           change: Change
           new: Enter a new authorised representative
-        building_services:
+        buildings_and_services:
           buildings: Buildings
-          buildings_caption: Add more buildings, by using the ‘Change buildings’ button.
-          caption: Detailed search
-          change_buildings: Change buildings
-          change_services: Change services
-          content_html: Services from search have been applied to all buildings
-          heading: Services
+          heading: Assigning services to buildings
+          help_html: For each building list in the left hand column, please select the required services from the right hand column. To help, we have already applied all your pre-selected services to all your buildings.<br/>To add to, or change your list of buildings or services, click on 'Return to requirements' and select either Services or Buildings in section 2.
           services: Services
-          services_caption: You must have at least one service selected for each building.
-          sub_heading: What facilities management services do you need for each building?
+          sub_heading: Which facilities management services do you require within each building?
           there_is_a_problem: There is a problem
         cancel_and_return: Cancel, and return to the manage procurements page
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
           heading: Contract name
+        contract_period:
+          title: Contract period
         detailed_search: Detailed search
         estimated_annual_cost:
           content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
@@ -1281,9 +1321,9 @@ en:
         services:
           question: Select the facilities management services you need
           service_specification_doc: Read the service specification document
-          subtitle_html: Select all of the facilities management services required within your estate.<br> You will then be able to match up each building with the services it requires.
+          subtitle_html: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
           subtitle_quick_search: Choose all facilities management services required within your estate, even if you want services in just one building.
-          title: All services
+          title: Services
         tupe:
           body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -1363,8 +1403,26 @@ en:
         searches_title: Searches
         sent_offers: Sent offers
         start_new_search: Start a new search
+      initial_call_off_period:
+        description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
+        example: For example, 01 11 2030.
+        heading: Initial call-off period
+        initial_call_off_period_start_date: Initial call-off period start date
+        unit: years
+      missing_regions_summary:
+        before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
+        building_address: Building address
+        building_name: Building name
+        building_region: Region
+        could_you_review: Could you review the building(s) below by clicking into each one and confirming the correct region by selecting from the short list of regions you will see displayed.
+        heading: Review your buildings
+        return_link: Return to procurements dashboard
+        select_region: Select region
       mobilisation_period:
         description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
+        heading: Do you need a mobilisation period?
+        unit: weeks
+        warning: A minimum of 4 weeks required if TUPE is involved.
       new:
         cancel_text: Return to your account
         quick_view_results: Quick view results
@@ -1409,7 +1467,8 @@ en:
         what_is_fc: What is further competition?
         who_are: who can provide the services you require in your location(s)
       service_codes_checkboxes:
-        learn_more: Learn more (opens in a new tab)
+        caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
+        learn_more: Further details (opens in a new tab)
       spreadsheet:
         cancel_and_return_link: Cancel and return to procurement summary
         continue_link: Continue to upload your file
@@ -1434,13 +1493,15 @@ en:
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
         show:
+          continue_to_procurement: Continue to procurement
           dashboard_link: Return to procurements dashboard
           procurement_link: Go to procurement
+          return_to_dashboard: Return to procurements dashboard
+          return_to_upload: Return to upload your spreadsheet
         success:
           about: About the procurement summary
           buildings: buildings
           completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
-          open_procurement_summary: Click the continue button below to open your procurement summary.
           review: If you click into each section you can review your information, and make any amends if required.
           service_requirements: service requirements
           services: services
@@ -1458,6 +1519,27 @@ en:
           warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
         upload_status:
           heading: File upload status
+      summary:
+        buildings_and_services:
+          buildings: Buildings
+          services: Services
+          summary: The summary below shows the buildings within your procurement and the services you have assigned to each building. If you wish to amend or add a new building or service, please click on the 'change' button.
+        contract_period:
+          heading: Contract period
+          initial_call_off_period: Initial call-off period
+          mobilisation_period: Mobilisation period
+          none: None
+          optional_call_off_extension_period: Optional call-off extension period
+          optional_call_off_extensions: Optional call-off extensions
+        return_to_requirements: Return to requirements
+        services:
+          caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
+          change: Change
+          heading: You have selected
+          services:
+            one: service
+            other: services
+          table_caption: Services
       what_happens_next:
         cancel: Cancel and return to procurements dashboard
         continue: Continue

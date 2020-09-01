@@ -1404,6 +1404,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         end.last.data['supplier_name']
       end
 
+      before do
+        procurement_building_service.procurement_building.set_gia
+      end
+
       it 'shows suppliers that do provide the service in UKH1 region' do
         expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
       end
@@ -1438,6 +1442,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
               ([procurement_building_service.code] - l['services']).any?
           end
         end.last.data['supplier_name']
+      end
+
+      before do
+        procurement_building_service.procurement_building.set_gia
       end
 
       it 'shows suppliers that do provide the specific service' do
@@ -1502,7 +1510,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         end.last.data['supplier_name']
       end
 
+      before do
+        procurement.active_procurement_buildings.each(&:set_gia)
+      end
+
       it 'shows suppliers that do provide the specific service' do
+        report = described_class.new(procurement.id)
         expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
       end
 
@@ -1549,11 +1562,17 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         end.last.data['supplier_name']
       end
 
+      before do
+        procurement.active_procurement_buildings.each(&:set_gia)
+      end
+
       it 'shows suppliers that do provide the specific service' do
+        report = described_class.new(procurement.id)
         expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
+        report = described_class.new(procurement.id)
         expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_service)).to eq false
       end
     end
@@ -1586,6 +1605,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                 ([procurement_building_service.code] - l['services']).empty?)
           end
         end.first.data['supplier_name']
+      end
+
+      before do
+        procurement_building_service.procurement_building.set_gia
       end
 
       it 'shows suppliers that do provide the service in lot1b' do

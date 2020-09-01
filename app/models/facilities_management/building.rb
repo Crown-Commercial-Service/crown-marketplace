@@ -101,12 +101,24 @@ module FacilitiesManagement
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
     end
 
+    def self.da_building_type?(building_type)
+      STANDARD_BUILDING_TYPES.include?(building_type)
+    end
+
     def full_address
       "#{address_line_1 + ', ' if address_line_1.present?}
       #{address_line_2 + ', ' if address_line_2.present?}
       #{address_town + ', ' if address_town.present?}
       #{address_region + ', ' if address_region.present?}
       #{address_postcode}"
+    end
+
+    def add_region_code_from_address_region
+      regions = Postcode::PostcodeCheckerV2.find_region address_postcode.delete(' ')
+      region = regions.select { |single_region| single_region[:region] == address_region }.first
+      return if region.nil?
+
+      self.address_region_code = region[:code]
     end
 
     private

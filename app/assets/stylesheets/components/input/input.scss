@@ -36,3 +36,25 @@
   margin: 0;
   padding-left: 40px;
 }
+
+.ccs-unit-label {
+  @include govuk-font(19);
+  background-color: govuk-colour("light-grey");
+  position: absolute;
+  margin: 0 !important;
+  padding: 5.5px 12px;
+  border: solid govuk-colour("black");
+  border-width: 2px 2px 2px 0;
+
+  &--error {
+    background-color: #d4351c;
+    border: solid #d4351c;
+    border-width: 2px 2px 2px 0;
+    color: govuk-colour("white");
+  }
+
+  @include govuk-media-query($until: tablet) {
+    padding: 8px 12px;
+  }
+}
+

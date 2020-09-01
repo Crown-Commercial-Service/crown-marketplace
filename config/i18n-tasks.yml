@@ -129,6 +129,8 @@ ignore_unused:
   - facilities_management.admin.supplier_rates.supplier_framework_rates.*
   - facilities_management.procurements.results.hint-text-unpriced*
   - facilities_management.procurements.results.sub-lot-1*
+  - facilities_management.procurement_buildings_services.service_standards.detail_text.*
+  - facilities_management.procurement_buildings_services.service_standards.detail_title.*
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

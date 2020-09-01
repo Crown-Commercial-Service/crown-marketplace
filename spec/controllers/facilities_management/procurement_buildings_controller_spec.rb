@@ -24,27 +24,49 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
   end
 
   describe 'PATCH #update' do
-    context 'when logged in as the fm buyer that created the procurement' do
-      login_fm_buyer_with_details
+    login_fm_buyer_with_details
 
+    context 'when updating a missing region' do
       before do
-        procurement_building.reload
-        pbs = procurement_building.procurement_building_services.first
-
-        patch :update, params: {
-          id: procurement_building.id,
-          service_question: 'C.1',
-          facilities_management_procurement_building: {
-            procurement_building_services_attributes: {
-              id: pbs.id,
-              service_standard: 'B'
-            }
-          }
-        }
+        patch :update, params: { id: procurement_building.id, add_missing_region: 'Save and return', facilities_management_building: { address_region: address_region } }
       end
 
-      it 'redirects to the procurement building page' do
-        expect(response).to redirect_to("/facilities-management/procurement_buildings/#{procurement_building.id}")
+      context 'when the building has a region' do
+        let(:address_region) { 'Cardiff and Vale of Glamorgan' }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+        end
+      end
+
+      context 'when the building does not have a region' do
+        let(:address_region) { nil }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+  end
+
+  describe 'methods called on show' do
+    login_fm_buyer_with_details
+
+    before do
+      procurement_building.update(service_codes: %w[C.1 E.4 C.2 C.3 C.4 G.3 C.5 K.4 I.3 O.1 N.1])
+      procurement_building.reload
+      get :show, params: { id: procurement_building.id }
+    end
+
+    context 'when set_standards_procurement_building_services is used' do
+      it 'returns the correct procurement_building_services' do
+        expect(assigns(:standards_procurement_building_services).map(&:code)).to eq %w[C.1 C.2 C.3 C.4 C.5 G.3]
+      end
+    end
+
+    context 'when set_volume_procurement_building_services is used' do
+      it 'returns the correct procurement_building_services' do
+        expect(assigns(:volume_procurement_building_services).map { |service_and_context| service_and_context[:procurement_building_service].code }).to eq %w[C.1 C.2 C.3 C.4 C.5 E.4 G.3 G.3 I.3 K.4]
       end
     end
   end

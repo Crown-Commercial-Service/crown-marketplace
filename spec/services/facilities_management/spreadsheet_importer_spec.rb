@@ -4,6 +4,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:spreadsheet_import) do
     FacilitiesManagement::SpreadsheetImport.new.tap do |import|
       import.procurement = procurement
+      import.aasm_state = 'importing'
       import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')
     end
   end
@@ -1584,9 +1585,82 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     context 'when a full spreadsheet with multiple buildings is uploaded with one error' do
       let(:service_hour_data2) { { 'I.1': 0, 'I.4': 3400 } }
 
-      it 'changes the state of the spreadsheet_import to have failed' do
+      it 'changes the state of the spreadsheet_import to failed' do
         spreadsheet_import.reload
         expect(spreadsheet_import.failed?).to be true
+      end
+    end
+
+    context 'when a spreadsheet is uploaded with gaps' do
+      let(:building_data) do
+        [
+          [building1, 'Complete'],
+          empty_building_data,
+          [building2, 'Complete'],
+          empty_building_data,
+          [building3, 'Complete'],
+          empty_building_data
+        ]
+      end
+
+      let(:service_matrix_data) do
+        [
+          { status: 'OK', building_name: name1, services: service_data1 },
+          empty_service_matrix_data,
+          { status: 'OK', building_name: name2, services: service_data2 },
+          empty_service_matrix_data,
+          { status: 'OK', building_name: name3, services: service_data3 },
+          empty_service_matrix_data
+        ]
+      end
+
+      let(:service_volumes_data) do
+        [
+          [name1, service_volume_details1, 'OK'],
+          empty_service_volumes_data,
+          [name2, service_volume_details2, 'OK'],
+          empty_service_volumes_data,
+          [name3, service_volume_details3, 'OK'],
+          empty_service_volumes_data
+        ]
+      end
+
+      let(:lift_data) do
+        [
+          [building1.building_name, lift_details1, 'OK'],
+          empty_lift_data,
+          [building2.building_name, lift_details2, 'OK'],
+          empty_lift_data,
+          [building3.building_name, lift_details3, 'OK'],
+          empty_lift_data
+        ]
+      end
+
+      let(:service_hour_data) do
+        [
+          { status: 'OK', building_name: name1, service_hours: service_hour_data1, detail_of_requirement: detail_of_requirement_data1 },
+          empty_service_hour_data,
+          { status: 'OK', building_name: name2, service_hours: service_hour_data2, detail_of_requirement: detail_of_requirement_data2 },
+          empty_service_hour_data,
+          { status: 'OK', building_name: name3, service_hours: service_hour_data3, detail_of_requirement: detail_of_requirement_data3 },
+          empty_service_hour_data
+        ]
+      end
+
+      let(:empty_building) { create(:facilities_management_building, building_name: '', status: nil, gia: nil, external_area: nil, description: nil, region: nil, building_type: nil, security_type: nil, address_town: nil, address_line_1: nil, address_line_2: nil, address_region: nil, address_region_code: nil, address_postcode: nil) }
+      let(:empty_building_data) { [empty_building, ''] }
+      let(:empty_service_matrix_data) { { status: '', building_name: '', services: [] } }
+      let(:empty_service_volumes_data) { ['', {}, ''] }
+      let(:empty_lift_data) { ['', [], ''] }
+      let(:empty_service_hour_data) { { status: '', building_name: '', service_hours: {}, detail_of_requirement: {} } }
+
+      it 'changes the state of the spreadsheet_import to succeeded' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.succeeded?).to be true
+      end
+
+      it 'imports the correct number of buildings' do
+        expect(procurement.procurement_buildings.count).to eq 3
       end
     end
   end

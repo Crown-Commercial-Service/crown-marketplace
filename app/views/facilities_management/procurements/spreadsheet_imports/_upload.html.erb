@@ -5,21 +5,6 @@
     <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
   <% end %>
 
-  <% if @spreadsheet_import_error.present? %>
-    <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
-      <h2 class="govuk-error-summary__title" id="error-summary-title">
-        <%= t("shared.error_summary.there_is_a_problem") %>
-      </h2>
-      <div class="govuk-error-summary__body">
-        <ul class="govuk-list govuk-error-summary__list">
-          <li>
-            <%= link_to "#{@spreadsheet_import_error}", "##{error_id(:spreadsheet_file)}" %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  <% end %>
-
   <span class="govuk-caption-xl"><%= @spreadsheet_import.procurement.contract_name %></span>
   <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
 
@@ -36,7 +21,7 @@
       </div>
     </details>
   </div>
-  <div class="govuk-form-group <%= 'govuk-form-group--error govuk-!-padding-bottom-3' if  @spreadsheet_import_error.present? %>">
+  <div class="govuk-form-group <%= 'govuk-form-group--error govuk-!-padding-bottom-3' if  @spreadsheet_import.errors.any? %>">
     <div class="govuk-heading-m govuk-!-margin-top-4">
       <%= t('.upload') %>
     <span class="govuk-caption-m govuk-!-margin-top-2"><%= t('.upload_size') %></span>
@@ -46,15 +31,9 @@
     </div>
 
     <div class="govuk-!-margin-top-2 govuk-!-width-two-thirds">
-      <% if @spreadsheet_import_error.present? %>
-        <span id="<%= error_id(:spreadsheet_file)%>" class="govuk-error-message">
-          <%= @spreadsheet_import_error %>
-        </span>
-      <% end %>
-      <% if @spreadsheet_import_error.present? %>
-        <hr class="govuk-section-break govuk-!-margin-top-4">
-      <% end %>
-      <span class="<%= 'govuk-file-upload--error' if @spreadsheet_import_error.present? %>">
+      <%= display_error @spreadsheet_import, :spreadsheet_file%>
+      <%= tag(:hr, class: 'govuk-section-break govuk-!-margin-top-4') if @spreadsheet_import.errors.any? %>
+      <span class="<%= 'govuk-file-upload--error' if @spreadsheet_import.errors.any? %>">
         <%= f.file_field :spreadsheet_file %>
         <%= f.hidden_field :facilities_management_procurement_id, value: @spreadsheet_import.facilities_management_procurement_id %>
       </span>

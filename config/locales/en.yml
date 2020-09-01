@@ -238,6 +238,7 @@ en:
     complete: Complete
     continue: Continue
     create_account: Create account
+    da_eligible: DIRECT AWARD ELIGIBLE
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     feedback: feedback
@@ -470,6 +471,7 @@ en:
       cannot_start: cannot start yet
       completed: completed
       in_progress: in progress
+      incomplete: incomplete
       not_started: not started
     users:
       confirm_new:

@@ -47,29 +47,29 @@ module ProcurementValidator
     #   optional_call_off_extensions_2 (int)
     #   optional_call_off_extensions_3 (int)
     #   optional_call_off_extensions_4 (int)
-    validates :initial_call_off_period, presence: true, on: :contract_dates
-    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { initial_call_off_period.present? }, on: :contract_dates
-    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, less_than_or_equal_to: 7 }, if: -> { initial_call_off_period.present? }, on: :contract_dates
-    validate  :initial_call_off_start_date_yyyy_invalid, on: :contract_dates
-    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: %i[contract_dates all]
-    validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_dates
-    validate  :initial_call_off_start_date_valid_date, if: -> { initial_call_off_period_expects_a_date? && initial_call_off_period_whole_number? }, on: :contract_dates
+    validates :initial_call_off_period, presence: true, on: :contract_period
+    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { initial_call_off_period.present? }, on: :contract_period
+    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, less_than_or_equal_to: 7 }, if: -> { initial_call_off_period.present? }, on: :contract_period
+    validate  :initial_call_off_start_date_yyyy_invalid, on: :contract_period
+    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: %i[contract_period all]
+    validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_period
+    validate  :initial_call_off_start_date_valid_date, if: -> { initial_call_off_period_expects_a_date? && initial_call_off_period_whole_number? }, on: :contract_period
 
-    validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_dates
-    validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }, on: :contract_dates
-    validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_dates
-    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: %i[contract_dates all]
+    validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_period
+    validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }, on: :contract_period
+    validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
+    validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
+    validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_period
+    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: %i[contract_period all]
 
-    validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_dates
-    validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :optional_call_off_extensions_1, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_dates
-    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_2 != 'false' || !optional_call_off_extensions_2.nil?) }, on: :contract_dates
-    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_3 != 'false' || !optional_call_off_extensions_3.nil?) }, on: :contract_dates
-    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_4 != 'false' || !optional_call_off_extensions_4.nil?) }, on: :contract_dates
-    validate :optional_call_off_extensions_too_long, on: :contract_dates
-    validate :optional_call_off_extensions_catch_validation, on: :contract_dates
+    validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_period
+    validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_period
+    validates :optional_call_off_extensions_1, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_period
+    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_2 != 'false' || !optional_call_off_extensions_2.nil?) }, on: :contract_period
+    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_3 != 'false' || !optional_call_off_extensions_3.nil?) }, on: :contract_period
+    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_4 != 'false' || !optional_call_off_extensions_4.nil?) }, on: :contract_period
+    validate :optional_call_off_extensions_too_long, on: :contract_period
+    validate :optional_call_off_extensions_catch_validation, on: :contract_period
 
     #
     # End of validation rules for contract-dates
@@ -81,11 +81,9 @@ module ProcurementValidator
 
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
     validate :presence_of_about_the_contract, on: :all
-    validate :at_least_one_building, on: :all
-    validate :all_services_valid, on: :all
+    validate :buildings_and_services, on: :all
     validate :validate_contract_period_questions, on: :all
     validate :validate_mobilisation_and_tupe, on: :all
-    validate :at_least_one_service_per_building, on: :all
 
     # Validation for the contract_details page
     validate :validate_contract_details, on: :contract_details
@@ -186,16 +184,18 @@ module ProcurementValidator
       errors.add(:initial_call_off_period, :not_present) if initial_call_off_period.blank?
     end
 
-    def at_least_one_building
-      errors.add(:procurement_buildings, :not_present) if active_procurement_buildings.none?
+    def buildings_and_services
+      # at least one building
+      errors.add(:procurement_buildings, :not_present) && errors.add(:base, :services_not_present) && return if active_procurement_buildings.none?
+
+      validate_buildings_and_services
     end
 
-    def at_least_one_service_per_building
-      errors.add(:base, :services_not_present) if active_procurement_buildings.none? || procurement_building_services.none?
-    end
-
-    def all_services_valid
-      active_procurement_buildings.each do |pb|
+    def validate_buildings_and_services
+      active_procurement_buildings.includes(:procurement_building_services).all? do |pb|
+        # at least one service per building
+        errors.add(:base, :services_not_present) && (return false) if pb.procurement_building_services.none?
+        # services valid
         pb.errors.add(:base, :services_invalid) unless pb.valid?(:procurement_building_services)
       end
     end

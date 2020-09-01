@@ -1,8 +1,12 @@
 <% if params[:delete] == 'y' && procurement_can_be_deleted? %>
   <%= render 'delete_procurement' %>
-<% elsif params[:spreadsheet] == 'true' %>
-  <%= render 'spreadsheet' %>
+<% elsif procurement_buildings_missing_regions %>
+  <%= render 'missing_regions_summary' %>
 <% else %>
-  <%= render @view_name %>
+  <% if params[:spreadsheet] == 'true' %>
+    <%= render 'spreadsheet' %>
+  <% else %>
+    <%= render @view_name %>
+  <% end%>
 <% end %>
 <% content_for(:page_title, @page_description.heading_details.text) unless @page_description.nil?  %>

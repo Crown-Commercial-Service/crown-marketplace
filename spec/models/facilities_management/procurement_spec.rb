@@ -211,7 +211,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.save
         procurement.procurement_buildings.create
         procurement.procurement_buildings.first.update_column(:service_codes, ['test'])
-        expect(procurement.valid?(:building_services)).to eq true
+        expect(procurement.valid?(:buildings_and_services)).to eq true
       end
     end
     # rubocop:enable Rails/SkipsModelValidations
@@ -221,7 +221,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.save
         procurement_building = procurement.procurement_buildings.create(active: true)
         allow(procurement_building.building).to receive(:building_name).and_return('asa')
-        expect(procurement_building.valid?(:building_services)).to eq false
+        expect(procurement_building.valid?(:buildings_and_services)).to eq false
       end
     end
   end
@@ -1266,12 +1266,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '.valid_buildings?' do
+  describe '.valid_on_continue?' do
     context 'when the building is missing gia' do
       it 'is not valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['C.1'])
         procurement.active_procurement_buildings.first.building.update(gia: 0)
-        expect(procurement.send(:valid_buildings?)).to eq false
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
@@ -1279,14 +1280,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'is not valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['G.5'])
         procurement.active_procurement_buildings.first.building.update(external_area: 0)
-        expect(procurement.send(:valid_buildings?)).to eq false
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq false
       end
     end
 
     context 'when the building is not missing gia or external_area' do
       it 'is valid' do
         procurement.active_procurement_buildings.first.update(service_codes: ['C.1', 'G.5'])
-        expect(procurement.send(:valid_buildings?)).to eq true
+        procurement.procurement_building_services.update(service_standard: 'A')
+        procurement.reload
+        expect(procurement.valid_on_continue?).to eq true
       end
     end
   end
@@ -1318,6 +1322,159 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         expect(procurement.procurement_buildings.first.gia).not_to eq 1010
         expect(procurement.procurement_buildings.first.external_area).not_to eq 2020
+      end
+    end
+  end
+
+  describe '.services_status' do
+    subject(:status) { procurement.services_status }
+
+    let(:procurement) do
+      create(:facilities_management_procurement_detailed_search, service_codes: service_codes)
+    end
+
+    context 'when user has not yet selected services' do
+      let(:service_codes) { [] }
+
+      it 'shown with the NOT STARTED status label' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when user has already selected services' do
+      let(:service_codes) { %w[C.1 C.2] }
+
+      it 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.procurement_buildings_status' do
+    subject(:status) { procurement.procurement_buildings_status }
+
+    context 'when user has not yet selected buildings' do
+      let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+
+      it 'shown with the NOT STARTED status label' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when user has already selected buildings' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search) }
+
+      it 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  shared_context 'with buildings and services' do
+    let(:procurement) do
+      create(:facilities_management_procurement_detailed_search, procurement_buildings: procurement_buildings)
+    end
+
+    let(:procurement_buildings) { [procurement_building1, procurement_building2] }
+
+    let(:procurement_building1) { build(:facilities_management_procurement_building) }
+    let(:procurement_building2) { build(:facilities_management_procurement_building) }
+
+    before do
+      procurement.update(aasm_state: 'detailed_search')
+    end
+  end
+
+  describe '.buildings_and_services_status' do
+    subject(:status) { procurement.buildings_and_services_status }
+
+    include_context 'with buildings and services'
+
+    context 'when both Services and Buildings tasks are not COMPLETED yet' do
+      before do
+        allow(procurement).to receive(:services_status).and_return(:not_started)
+        allow(procurement).to receive(:procurement_buildings_status).and_return(:not_started)
+      end
+
+      it 'shown with the CANNOT START YET status label' do
+        expect(status).to eq(:cannot_start)
+      end
+    end
+
+    context 'when both Services and Buildings tasks are COMPLETED' do
+      before do
+        allow(procurement).to receive(:services_status).and_return(:completed)
+        allow(procurement).to receive(:procurement_buildings_status).and_return(:completed)
+      end
+
+      context 'when no service has been assigned to any building yet' do
+        before do
+          procurement_building1.procurement_building_services.delete_all
+          procurement_building2.procurement_building_services.delete_all
+        end
+
+        it 'shown with the NOT STARTED status label' do
+          expect(status).to eq(:not_started)
+        end
+      end
+
+      context 'when at least one service is assigned to each and every building' do
+        before do
+          procurement_building1.update(service_codes: ['C.1'])
+          procurement_building2.update(service_codes: ['D.1', 'E.4', 'M.1'])
+        end
+
+        it 'shown with the COMPLETED status label' do
+          expect(status).to eq(:completed)
+        end
+      end
+    end
+  end
+
+  describe '.service_requirements_status' do
+    subject(:status) { procurement.service_requirements_status }
+
+    include_context 'with buildings and services'
+
+    context 'when the Assigning services to buildings task is not COMPLETED yet' do
+      before do
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:not_started)
+      end
+
+      it 'shown with the CANNOT START YET status label' do
+        expect(status).to eq(:cannot_start)
+      end
+    end
+
+    context 'when Assigning services to buildings task is COMPLETED' do
+      before do
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:completed)
+
+        procurement_building1.procurement_building_services.delete_all
+        procurement_building2.procurement_building_services.delete_all
+
+        procurement_building1.update(service_codes: ['C.1'])
+        procurement_building2.update(service_codes: ['G.5'])
+
+        procurement_building1.procurement_building_services.first.update(service_standard: 'A')
+        procurement_building2.procurement_building_services.first.update(service_standard: 'A')
+      end
+
+      context 'when all the buildings service requirements have not yet been COMPLETED' do
+        before do
+          procurement_building1.building.update(gia: 0)
+          procurement_building2.building.update(external_area: 0)
+        end
+
+        it 'shown with the INCOMPLETE status label' do
+          expect(status).to eq(:incomplete)
+        end
+      end
+
+      context 'when all buildings service requirements have been COMPLETED' do
+        it 'shown with the COMPLETED status label' do
+          expect(status).to eq(:completed)
+        end
       end
     end
   end

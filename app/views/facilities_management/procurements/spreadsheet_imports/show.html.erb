@@ -1,8 +1,14 @@
+<%= link_to t('.return_to_upload'), new_facilities_management_procurement_spreadsheet_import_path(@spreadsheet_import.procurement), class: 'govuk-back-link govuk-!-margin-bottom-6' %>
 
 <%= render partial: 'facilities_management/procurements/spreadsheet_imports/upload_status' %>
 
 <% if @spreadsheet_import.importing? %>
   <%= link_to t('.dashboard_link'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>
-  <% else %>
+<% elsif @spreadsheet_import.succeeded? %>
+  <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+    <%= f.submit t('.continue_to_procurement'), name: :exit_bulk_upload, class: 'govuk-button govuk-!-font-size-19 govuk-!-margin-top-4' %>
+  <% end %>
+  <br /><%= link_to t('.return_to_dashboard'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19' %>
+<% else %>
   <%= link_to t('.procurement_link'), facilities_management_procurement_path(@spreadsheet_import.procurement), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>
 <% end %>

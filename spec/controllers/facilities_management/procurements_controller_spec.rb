@@ -72,6 +72,32 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
+      context 'with a procurement which has just bulk uploaded successfully' do
+        before do
+          procurement.update(aasm_state: 'detailed_search_bulk_upload')
+          procurement.create_spreadsheet_import(aasm_state: 'succeeded')
+          get :show, params: { id: procurement.id } # First navigation after bulk upload success
+        end
+
+        it 'redirects to file upload status page on first navigation' do
+          expect(response).to redirect_to facilities_management_procurement_spreadsheet_import_path(
+            procurement, procurement.spreadsheet_import
+          )
+        end
+      end
+
+      context 'with a procurement which has had bulk uploaded' do
+        before do
+          procurement.update(aasm_state: 'detailed_search')
+          procurement.create_spreadsheet_import(aasm_state: 'succeeded')
+          get :show, params: { id: procurement.id } # First navigation after bulk upload success
+        end
+
+        it 'renders the show page wehn in in detailed search' do
+          expect(response).to render_template(:show)
+        end
+      end
+
       context 'with a procurement in the choose contract value state' do
         before do
           procurement.update(aasm_state: 'choose_contract_value')
@@ -250,6 +276,48 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       end
     end
 
+    describe 'GET summary' do
+      context 'when the user wants to edit contract_periods' do
+        context 'when the contract periods are not complete' do
+          before { procurement.update(initial_call_off_period: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+          it 'redirects to the edit page with contract_period step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'contract_period')
+          end
+        end
+
+        context 'when the contract periods are complete' do
+          it 'renders the summary page' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
+
+            expect(response).to render_template(:summary)
+          end
+        end
+      end
+
+      context 'when the user wants to edit buildings_and_services' do
+        context 'when the buildings and services are not complete' do
+          it 'redirects to the edit page with contract_period step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings_and_services')
+          end
+        end
+
+        context 'when the buildings and services are complete' do
+          before { procurement.active_procurement_buildings.first.update(service_codes: ['C.1']) }
+
+          it 'renders the summary page' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+
+            expect(response).to render_template(:summary)
+          end
+        end
+      end
+    end
+
     describe 'GET new' do
       it 'renders the correct template' do
         get :new, params: { region_codes: ['UKC1'], service_codes: ['C.1'] }
@@ -345,9 +413,17 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'POST create' do
       context 'with a valid record' do
-        context 'when Save and continue is selected' do
-          it 'redirects to edit path for the new record' do
+        context 'when Save and continue is selected with no region codes' do
+          it 'redirects to facilities_management_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
+            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id)
+          end
+        end
+
+        context 'when Save and continue is selected with region codes' do
+          it 'redirects to facilities_management_procurement_path for the new record' do
+            post :create, params: { facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
@@ -355,7 +431,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when Save for later is selected' do
           it 'redirects to show path' do
-            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement' } }
+            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             expect(response).to redirect_to facilities_management_procurements_path
           end
         end
@@ -1376,11 +1452,11 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           context 'when next step is present in the params' do
             before do
-              patch :update, params: { id: procurement.id, next_step: 'building_services', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
+              patch :update, params: { id: procurement.id, next_step: 'buildings_and_services', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
             end
 
-            it 'redirects to edit_facilities_management_procurement_path building services step' do
-              expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id, step: 'building_services')
+            it 'redirects to services summary page' do
+              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
             end
 
             it 'updates the service codes' do
@@ -1396,8 +1472,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                   patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
-                it 'redirects to edit_facilities_management_procurement_path' do
-                  expect(response).to redirect_to edit_facilities_management_procurement_path(id: procurement.id, step: 'building_services')
+                it 'redirects to services summary page' do
+                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
@@ -1421,8 +1497,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                   patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
-                it 'redirects to facilities_management_procurement_path' do
-                  expect(response).to redirect_to facilities_management_procurement_path(procurement)
+                it 'redirects to services summary page' do
+                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
@@ -1439,6 +1515,38 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                 end
               end
             end
+          end
+        end
+      end
+
+      context 'when the user exits bulk upload process' do
+        before do
+          procurement.update(aasm_state: state)
+          patch :update, params: { id: procurement.id, exit_bulk_upload: 'Continue to procurement' }
+          procurement.reload
+        end
+
+        context 'when the procurement is in detailed_search_bulk_upload' do
+          let(:state) { 'detailed_search_bulk_upload' }
+
+          it 'changes the state to detailed_search' do
+            expect(procurement.detailed_search?).to eq true
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+        end
+
+        context 'when the procurement is not in detailed_search_bulk_upload' do
+          let(:state) { 'quick_search' }
+
+          it 'does not change the state' do
+            expect(procurement.quick_search?).to eq true
+          end
+
+          it 'redirects to the show page' do
+            expect(response).to redirect_to facilities_management_procurement_path(procurement)
           end
         end
       end

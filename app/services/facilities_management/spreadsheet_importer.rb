@@ -40,86 +40,93 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # We should store and validate all of the uploaded data first before we save it
-  # My thinking is, as was suggested, to use an array which is laid out like follows
-  # [{object: FacilitiesManagement::Building, valid: boolean, errors: Array, procurement_building:
-  #     {object: FacilitiesManagement::ProcurementBuilding, valid: boolean, errors: Array, procurement_building_services:
-  #       [ {object: FacilitiesManagement::ProcurementBuildingService, valid boolean, errors: Array}, ... ]
-  #     }
-  #  }, ...]
-  # If any of the parent objects are invalid then we can leave it out within the data processing
-  # We also need to store the errors so they can be fed back to the user after the upload process has been finished
-
   private
 
-  # Importing buildings
+  ########## Importing buildings ##########
   def import_buildings
     building_sheet = @user_uploaded_spreadsheet.sheet('Building Information')
 
     if sheet_complete?(building_sheet, 13, 'Complete')
-      columns = building_sheet.row(13).count('Complete')
-      (2..columns + 1).each do |col|
-        building_column = building_sheet.column(col)
-        building = @user.buildings.build(user_email: @user.email,
-                                         building_name: building_column[1],
-                                         description: building_column[2],
-                                         address_line_1: building_column[3],
-                                         address_town: building_column[4],
-                                         address_postcode: building_column[5],
-                                         gia: building_column[6],
-                                         external_area: building_column[7],
-                                         building_type: building_column[8],
-                                         other_building_type: building_column[9],
-                                         security_type: building_column[10],
-                                         other_security_type: building_column[11])
-        add_regions(building, building_column)
-        store_building(building)
+      building_columns(building_sheet).each_with_index do |col, index|
+        index += 2
+        if col.blank?
+          @procurement_array << { skip: true }
+        else
+          building_column = building_sheet.column(index)
+          building = @user.buildings.build(building_attribues(building_column))
+          add_regions(building, building_column)
+          store_building(building)
+        end
       end
     else
       @errors << :building_incomplete
     end
   end
 
+  def building_attribues(building_column)
+    {
+      user_email: @user.email,
+      building_name: building_column[1],
+      description: building_column[2],
+      address_line_1: building_column[3],
+      address_town: building_column[4],
+      address_postcode: building_column[5]&.upcase,
+      gia: building_column[6],
+      external_area: building_column[7],
+      building_type: building_column[8],
+      other_building_type: building_column[9],
+      security_type: building_column[10],
+      other_security_type: building_column[11]
+    }
+  end
+
   def add_regions(building, building_column)
     region = Postcode::PostcodeCheckerV2.find_region building_column[5].to_s.delete(' ')
-    (building.address_region_code = region[0]['code']) && (building.address_region = region[0]['region']) if region.count == 1
+    (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.count == 1
   end
 
   def store_building(building)
     building.populate_json_attribute
     validations = validate_building(building)
-    @procurement_array << { object: building, valid: validations[0], errors: validations[1] }
+    @procurement_array << { object: building, valid: validations[0], errors: validations[1], skip: false }
   end
 
   def validate_building(building)
     building.valid?(:all)
 
-    building.errors.delete(:building_name) if building.errors.details[:building_name].any? { |error| error[:error] == :taken }
-    building.errors.delete(:address_region) if building.errors.details[:address_region].any?
-    building.errors.add(:building_name, :taken) unless @procurement_array.none? { |building_value| building_value[:object].building_name == building.building_name }
+    remove_expected_errors building
+
+    building.errors.add(:building_name, :taken) unless @procurement_array.reject { |building_hash| building_hash[:skip] }.none? { |building_value| building_value[:object].building_name == building.building_name }
 
     [building.errors.empty?, building.errors.details]
   end
 
+  def remove_expected_errors(building)
+    building.errors.delete(:building_name) if building.errors.details[:building_name].any? { |error| error[:error] == :taken }
+    building.errors.delete(:address_region) if building.errors.details[:address_region].any?
+  end
+
+  def building_columns(sheet)
+    columns = sheet.row(13)[1..-1]
+    index = columns.reverse.index { |x| x == 'Complete' } + 1
+
+    columns[0..-index]
+  end
+
   # Creating procurement buildings
   def add_procurement_buildings
-    @procurement_array.each do |building|
+    complete_procurement_array.each do |building|
       building[:procurement_building] = { object: FacilitiesManagement::ProcurementBuilding.new(procurement: @procurement, active: true), procurement_building_services: [] }
     end
   end
 
-  # Importing procurement building services with service standard
+  ########## Importing procurement building services with service standard ##########
   SERVICE_CODES = %w[C.1a C.1b C.1c C.2a C.2b C.2c C.3a C.3b C.3c C.4a C.4b C.4c C.6a C.6b C.6c C.7a C.7b C.7c C.11a C.11b C.11c C.12a C.12b C.12c C.13a C.13b C.13c C.5a C.5b C.5c C.14a C.14b C.14c C.8 C.9 C.10 C.15 C.16 C.17 C.18 C.19 C.20 C.21 C.22 D.1 D.2 D.3 D.4 D.5 D.6 E.1 E.2 E.3 E.5 E.6 E.7 E.8 E.4 E.9 F.1 F.2 F.3 F.4 F.5 F.6 F.7 F.8 F.9 F.10 G.1a G.1b G.1c G.2 G.3a G.3b G.3c G.4a G.4b G.4c G.6 G.7 G.15 G.5a G.5b G.5c G.9 G.8 G.10 G.11 G.12 G.13 G.14 G.16 H.4 H.5 H.7 H.1 H.2 H.3 H.6 H.8 H.9 H.10 H.11 H.12 H.13 H.14 H.15 H.16 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 J.7 J.8 J.9 J.10 J.11 J.12 K.2 K.3 K.1 K.7 K.4 K.5 K.6 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.9 L.10 L.11 M.1 N.1 O.1].freeze
 
   def import_service_matrix
     matrix_sheet = @user_uploaded_spreadsheet.sheet('Service Matrix')
-    if sheet_complete?(matrix_sheet, 1, 'OK') && sheet_contains_all_buildings?(matrix_sheet, 2, 1)
-      columns = matrix_sheet.row(1).count('OK')
-      (5..columns + 4).each_with_index do |col, index|
-        get_service_codes(matrix_sheet, col, index)
-      end
-    else
-      @errors << :service_matrix_incomplete
+    spreadsheet_import_loop([matrix_sheet, 1, 'OK'], [matrix_sheet, 2, 1], 5, :service_matrix_incomplete) do |col, building_index|
+      get_service_codes(matrix_sheet, col, building_index)
     end
   end
 
@@ -180,7 +187,7 @@ class FacilitiesManagement::SpreadsheetImporter
 
     procurement_building = procurement_building_hash[:object]
 
-    procurement_building.valid?(:building_services)
+    procurement_building.valid?(:buildings_and_services)
     procurement_building.valid?(:procurement_building_services_present)
     procurement_building.validate_spreadsheet_gia(building.gia, building.building_name)
     procurement_building.validate_spreadsheet_external_area(building.external_area, building.building_name)
@@ -189,25 +196,20 @@ class FacilitiesManagement::SpreadsheetImporter
     procurement_building_hash[:errors] = procurement_building.errors.details
   end
 
-  # Importing Service volumes 1
+  ########## Importing Service volumes 1 ##########
   VOLUME_CODES = %w[E.4 G.1 G.3 K.1 K.2 K.3 K.4 K.5 K.6 K.7].freeze
 
   def import_service_volumes
     service_volume_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 1')
-    if sheet_complete?(service_volume_sheet, 1, 'OK') && sheet_contains_all_buildings?(service_volume_sheet, 3, 4)
-      columns = service_volume_sheet.row(1).count('OK')
-      (5..columns + 4).each_with_index do |col, building_index|
-        service_volume_column = service_volume_sheet.column(col)
-        services = {}
+    spreadsheet_import_loop([service_volume_sheet, 1, 'OK'], [service_volume_sheet, 3, 4], 5, :volumes_incomplete) do |col, building_index|
+      service_volume_column = service_volume_sheet.column(col)
+      services = {}
 
-        VOLUME_CODES.each_with_index do |code, index|
-          services[code] = service_volume_column[index + 3].to_i
-        end
-
-        add_service_volumes(services, building_index)
+      VOLUME_CODES.each_with_index do |code, index|
+        services[code] = service_volume_column[index + 3].to_i
       end
-    else
-      @errors << :volumes_incomplete
+
+      add_service_volumes(services, building_index)
     end
   end
 
@@ -221,23 +223,18 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # Importing Service volumes 2
+  ########## Importing Service volumes 2 ##########
   def import_lift_data
     service_volume_lifts_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 2')
-    if sheet_complete?(service_volume_lifts_sheet, 1, 'OK') && sheet_contains_all_buildings?(service_volume_lifts_sheet, 2, 1)
-      columns = service_volume_lifts_sheet.row(1).count('OK')
-      (6..columns + 5).each_with_index do |col, building_index|
-        procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.select { |pbs| pbs.code == 'C.5' }.first
-        next if procurement_building_service.nil?
+    spreadsheet_import_loop([service_volume_lifts_sheet, 1, 'OK'], [service_volume_lifts_sheet, 2, 1], 6, :lifts_incomplete) do |col, building_index|
+      procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.select { |pbs| pbs.code == 'C.5' }.first
+      next if procurement_building_service.nil?
 
-        service_volume_column = service_volume_lifts_sheet.column(col)[6..-2]
+      service_volume_column = service_volume_lifts_sheet.column(col)[6..-2]
 
-        next if missing_lifts?(service_volume_column, service_volume_lifts_sheet.column(col)[3])
+      next if missing_lifts?(service_volume_column, service_volume_lifts_sheet.column(col)[3])
 
-        procurement_building_service.lift_data = get_lift_data(service_volume_column)
-      end
-    else
-      @errors << :lifts_incomplete
+      procurement_building_service.lift_data = get_lift_data(service_volume_column)
     end
   end
 
@@ -260,24 +257,19 @@ class FacilitiesManagement::SpreadsheetImporter
     lifts
   end
 
-  # Importing Service hours
+  ########## Importing Service hours ##########
   SERVICE_HOUR_CODES = %w[H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6].freeze
 
   def import_service_hours
     service_hours_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 3')
-    if sheet_complete?(service_hours_sheet, 1, 'OK') && sheet_contains_all_buildings?(service_hours_sheet, 3, 4)
-      columns = service_hours_sheet.row(1).count('OK')
-      (5..columns + 4).each_with_index do |col, index|
-        procurement_building_hash = @procurement_array[index][:procurement_building]
-        procurement_building = procurement_building_hash[:object]
-        next if skip_building?(procurement_building)
+    spreadsheet_import_loop([service_hours_sheet, 1, 'OK'], [service_hours_sheet, 3, 4], 5, :service_hours_incomplete) do |col, building_index|
+      procurement_building_hash = @procurement_array[building_index][:procurement_building]
+      procurement_building = procurement_building_hash[:object]
+      next if skip_building?(procurement_building)
 
-        procurement_building_services = procurement_building_hash[:procurement_building_services]
-        service_hours = get_service_hours_from_sheet(service_hours_sheet, col)
-        add_service_hour_data(procurement_building_services.map { |pbs| pbs[:object] }, service_hours)
-      end
-    else
-      @errors << :service_hours_incomplete
+      procurement_building_services = procurement_building_hash[:procurement_building_services]
+      service_hours = get_service_hours_from_sheet(service_hours_sheet, col)
+      add_service_hour_data(procurement_building_services.map { |pbs| pbs[:object] }, service_hours)
     end
   end
 
@@ -302,9 +294,9 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # Once all the services have been imported we should validate them like buildings and procurement_buildings
+  ########## Validation of all the services once they have all been imported ##########
   def validate_procurement_building_services
-    @procurement_array.each do |building|
+    complete_procurement_array.each do |building|
       building[:procurement_building][:procurement_building_services].each do |procurement_building_service_hash|
         procurement_building_service = procurement_building_service_hash[:object]
         procurement_building_service.valid?(:all)
@@ -317,6 +309,7 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
+  ########## Methods to help with checking the spreadsheet before the import ##########
   def downloaded_spreadsheet
     tmpfile = Tempfile.create
     tmpfile.binmode
@@ -373,7 +366,7 @@ class FacilitiesManagement::SpreadsheetImporter
     true
   end
 
-  # Shared methods
+  ########## Shared methods ##########
   def sheet_complete?(sheet, row, message)
     status_indicator = sheet.row(row).compact.reject(&:empty?)
     status_indicator.shift
@@ -381,23 +374,25 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def sheet_contains_all_buildings?(sheet, row, shift_number)
-    buildings = @procurement_array.map { |building| building[:object].building_name }
+    buildings = complete_procurement_array.map { |building| building[:object].building_name }
     sheet_buildings = sheet.row(row).compact.reject(&:empty?)
     sheet_buildings.shift(shift_number)
     buildings == sheet_buildings
   end
 
-  # Validate the import can continue
-  def continue_import?(import_process)
-    case import_process
-    when :import_buildings
-      @procurement_array.first != { error: :building_incomplete }
+  def spreadsheet_import_loop(sheet_variables, building_variables, starting_column, error)
+    if sheet_complete?(*sheet_variables) && sheet_contains_all_buildings?(*building_variables)
+      (starting_column..@procurement_array.count + starting_column - 1).each_with_index do |col, building_index|
+        next if @procurement_array[building_index][:skip]
+
+        yield(col, building_index)
+      end
     else
-      true
+      @errors << error
     end
   end
 
-  # Validate the entire import
+  ########## Validate the entire import ##########
   def imported_spreadsheet_data_valid?
     building_valid = buildings_valid?
     procurement_buildings_valid = procurement_buildings_valid?
@@ -407,24 +402,23 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def buildings_valid?
-    @procurement_array.all? { |building| building[:valid] }
+    complete_procurement_array.all? { |building| building[:valid] }
   end
 
   def procurement_buildings_valid?
-    @procurement_array.all? { |building| building[:procurement_building][:valid] }
+    complete_procurement_array.all? { |building| building[:procurement_building][:valid] }
   end
 
   def procurement_building_services_valid?
-    @procurement_array.all? { |building| building[:procurement_building][:procurement_building_services].all? { |pbs| pbs[:valid] } }
+    complete_procurement_array.all? { |building| building[:procurement_building][:procurement_building_services].all? { |pbs| pbs[:valid] } }
   end
 
-  # Save the entire import
+  ########## Save the entire import ##########
   def save_spreadsheet_data
     delete_existing_procurement_buildings_and_services
 
-    @procurement_array.each_with_index do |building, index|
-      save_building(building[:object], index)
-      building[:object].reload
+    complete_procurement_array.each do |building|
+      save_building(building)
 
       save_procurement_building(building)
 
@@ -438,7 +432,9 @@ class FacilitiesManagement::SpreadsheetImporter
     @procurement.procurement_buildings.each(&:destroy)
   end
 
-  def save_building(building, index)
+  def save_building(building_hash)
+    building = building_hash[:object]
+
     existing_building = @user.buildings.find_by(building_name: building.building_name)
     if existing_building.nil?
       building.save
@@ -449,8 +445,10 @@ class FacilitiesManagement::SpreadsheetImporter
         existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'building_json'))
       end
       existing_building.save
-      @procurement_array[index][:object] = existing_building
+      building_hash[:object] = existing_building
     end
+
+    building_hash[:object].reload
   end
 
   def save_procurement_building(building)
@@ -474,10 +472,15 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def normalise_postcode(postcode)
-    postcode.gsub(' ', '').downcase
+    postcode.gsub(' ', '').upcase
   end
 
   def service_codes
-    @procurement_array.map { |building| building[:procurement_building][:object].service_codes }.flatten.uniq
+    complete_procurement_array.map { |building| building[:procurement_building][:object].service_codes }.flatten.uniq
+  end
+
+  # An array of all the procurement buildings that are complete
+  def complete_procurement_array
+    @complete_procurement_array ||= @procurement_array.reject { |building| building[:skip] }
   end
 end

@@ -145,6 +145,7 @@ group :development, :test do
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
+  gem 'bullet', require: true
 end
 
 group :development do

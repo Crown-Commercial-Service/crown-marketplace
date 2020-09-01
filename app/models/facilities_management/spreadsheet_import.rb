@@ -3,7 +3,7 @@ module FacilitiesManagement
     include AASM
 
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement',
-                             foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_imports
+                             foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_import
 
     has_one_attached :spreadsheet_file
     validate :spreadsheet_file_attached, on: :upload # the 'attached' macro ignores custom error messages hence this validator
@@ -15,17 +15,29 @@ module FacilitiesManagement
     validate :spreadsheet_basic_data_validation, on: :upload
 
     aasm do
-      state :importing, initial: true
-      state :succeeded, :failed
+      state :upload, initial: true
+      state :importing, :succeeded, :failed
+      event :start_import do
+        transitions from: :upload, to: :importing
+        after do
+          FacilitiesManagement::UploadSpreadsheetWorker.perform_async(id)
+        end
+      end
+
       event :succeed do
         transitions from: :importing, to: :succeeded
       end
+
       event :fail do
         transitions from: :importing, to: :failed
         after do
-          spreadsheet_file.purge
+          remove_spreadsheet_file
         end
       end
+    end
+
+    def remove_spreadsheet_file
+      spreadsheet_file.purge
     end
 
     def spreadsheet_file_attached

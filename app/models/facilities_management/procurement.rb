@@ -20,7 +20,7 @@ module FacilitiesManagement
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
-    has_many :spreadsheet_imports, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    has_one :spreadsheet_import, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
     has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
@@ -152,6 +152,9 @@ module FacilitiesManagement
       end
 
       event :start_detailed_search_bulk_upload do
+        before do
+          remove_existing_spreadsheet_import if spreadsheet_import.present?
+        end
         transitions from: :detailed_search, to: :detailed_search_bulk_upload
       end
 
@@ -257,19 +260,11 @@ module FacilitiesManagement
     end
 
     def valid_on_continue?
-      valid?(:all) && valid_services? && valid_buildings?
-    end
-
-    def valid_services?
-      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
-    end
-
-    def valid_buildings?
-      active_procurement_buildings.all? { |pb| pb.valid?(:gia) && pb.valid?(:external_area) }
+      valid?(:all) && active_procurement_buildings.all?(&:valid_on_continue?)
     end
 
     def buildings_standard
-      active_procurement_buildings.map { |pb| pb.building.building_standard }.include?('NON-STANDARD') ? 'NON-STANDARD' : 'STANDARD'
+      active_procurement_buildings.includes(:building).any? { |pb| pb.building.building_standard == 'NON-STANDARD' } ? 'NON-STANDARD' : 'STANDARD'
     end
 
     def services_standard
@@ -279,7 +274,7 @@ module FacilitiesManagement
 
     def priced_at_framework
       # if one service is not priced at framework, returns false
-      procurement_building_services.reject(&:special_da_service?).map { |pbs| pbs.service_missing_framework_price?(rate_model) }.all?(false)
+      procurement_building_services.reject(&:special_da_service?).none? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
@@ -450,6 +445,31 @@ module FacilitiesManagement
       relevant_attributes.all?(&:nil?) ? :not_started : :completed
     end
 
+    def services_status
+      service_codes.any? ? :completed : :not_started
+    end
+
+    def procurement_buildings_status
+      active_procurement_buildings.any? ? :completed : :not_started
+    end
+
+    def buildings_and_services_status
+      return :cannot_start if services_status == :not_started || procurement_buildings_status == :not_started
+
+      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :not_started
+    end
+
+    def service_requirements_status
+      return :cannot_start unless buildings_and_services_status == :completed
+
+      active_procurement_buildings.all?(&:complete?) ? :completed : :incomplete
+    end
+
+    def remove_existing_spreadsheet_import
+      spreadsheet_import.remove_spreadsheet_file
+      spreadsheet_import.delete
+    end
+
     private
 
     def freeze_procurement_data
@@ -463,7 +483,7 @@ module FacilitiesManagement
     end
 
     def copy_procurement_buildings_gia
-      procurement_buildings.each(&:set_gia)
+      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:set_gia) }
     end
 
     def save_data_for_procurement
@@ -477,7 +497,7 @@ module FacilitiesManagement
     def set_suppliers_for_procurement
       procurement_suppliers.destroy_all
       assessed_value_calculator.sorted_list.each do |supplier_data|
-        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
+        procurement_suppliers.create!(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
       end
     end
 

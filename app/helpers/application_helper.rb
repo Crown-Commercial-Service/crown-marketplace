@@ -337,6 +337,7 @@ module ApplicationHelper
   def govuk_tag(status)
     extra_classes = {
       cannot_start: 'govuk-tag--grey',
+      incomplete: 'govuk-tag--red',
       in_progress: 'govuk-tag--blue',
       not_started: 'govuk-tag--grey'
     }
@@ -344,14 +345,18 @@ module ApplicationHelper
     content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
   end
 
-  def govuk_tag_with_text(status, text)
+  def govuk_tag_with_text(colour, text)
     extra_classes = {
       grey: 'govuk-tag--grey',
       blue: 'govuk-tag',
       red: 'govuk-tag--red'
     }
 
-    content_tag :strong, text, class: ['govuk-tag'] << extra_classes[status]
+    content_tag :strong, text, class: ['govuk-tag'] << extra_classes[colour]
+  end
+
+  def da_eligible?(code)
+    CCS::FM::Rate.where.not(framework: nil).map(&:code).include? code
   end
 end
 # rubocop:enable Metrics/ModuleLength
