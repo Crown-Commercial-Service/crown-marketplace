@@ -21,7 +21,7 @@
           <div class="govuk-radios__item govuk-radios--small">
             <%= f.radio_button :service_standard, standard, class: 'govuk-radios__input' %>
             <%= f.label :service_standard, value: standard, class: 'govuk-label govuk-radios__label' do %>
-              Standard <% standard %>
+              Standard <%= standard %>
               <% if da_eligible?(f.object.code) && standard == 'A' %>
                 <br>
                 <%= govuk_tag_with_text(:grey, t('.direct_award_eligible')) %>
