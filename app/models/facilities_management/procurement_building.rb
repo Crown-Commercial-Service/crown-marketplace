@@ -66,13 +66,9 @@ module FacilitiesManagement
     end
 
     def complete?
-      return false if requires_internal_area? && building_internal_area.zero?
-      return false if requires_external_area? && building_external_area.zero?
+      return true unless requires_service_questions?
 
-      volumes_complete = procurement_building_services.reject { |pbs| pbs.requires_external_area? || pbs.uses_only_internal_area? }.all? { |pbs| pbs.uval.present? }
-      standards_complete = procurement_building_services.select(&:requires_service_standard?).all? { |pbs| pbs.service_standard.present? }
-
-      volumes_complete & standards_complete
+      area_complete? && volumes_complete? && standards_complete?
     end
 
     def valid_on_continue?
@@ -170,6 +166,27 @@ module FacilitiesManagement
 
     def add_selection_error(index)
       errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index], building_name: building.building_name, building_id: id)
+    end
+
+    def requires_service_questions?
+      return true if requires_internal_area? || requires_external_area?
+
+      procurement_building_services.map(&:required_contexts).any?(&:present?)
+    end
+
+    def area_complete?
+      return false if requires_internal_area? && building_internal_area.zero?
+      return false if requires_external_area? && building_external_area.zero?
+
+      true
+    end
+
+    def volumes_complete?
+      procurement_building_services.reject { |pbs| pbs.requires_external_area? || pbs.uses_only_internal_area? }.all? { |pbs| pbs.uval.present? }
+    end
+
+    def standards_complete?
+      procurement_building_services.select(&:requires_service_standard?).all? { |pbs| pbs.service_standard.present? }
     end
 
     SERVICE_SELECTION_INVALID_TYPE = %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable invalid_cleaning].freeze
