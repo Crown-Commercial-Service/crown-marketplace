@@ -23,7 +23,7 @@
   </div>
   <div class="govuk-form-group <%= 'govuk-form-group--error govuk-!-padding-bottom-3' if  @spreadsheet_import.errors.any? %>">
     <div class="govuk-heading-m govuk-!-margin-top-4">
-      <%= t('.upload') %>
+      <%= f.label :spreadsheet_file, t('.upload') %>
     <span class="govuk-caption-m govuk-!-margin-top-2"><%= t('.upload_size') %></span>
     </div>
     <div class="govuk-!-margin-top-4 govuk-!-width-two-thirds govuk-body ccs-font-weight-semi-bold">
