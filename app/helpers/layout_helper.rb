@@ -329,5 +329,12 @@ module LayoutHelper
       concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
     end
   end
+
+  def label_details(form, attribute, label_text, hint)
+    capture do
+      concat(form.label(attribute, label_text, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

@@ -1,4 +1,6 @@
 <h1 class="govuk-heading-xl"> <%= t('.heading') %></h1>
+<%= content_for :page_title, t('.heading') %>
+
 <%= render 'what_happens_next_body' %>
 
 <div class="govuk-grid-row">

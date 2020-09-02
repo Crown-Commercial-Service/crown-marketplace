@@ -1488,26 +1488,14 @@ en:
         services_and_buildings_template: Services and buildings template
         uploading: Uploading your spreadsheet
       spreadsheet_imports:
+        failed:
+          procurement_link: Go to procurement
         importing:
+          dashboard_link: Return to procurements dashboard
           processing: We are processing your file upload.
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
-        show:
-          continue_to_procurement: Continue to procurement
-          dashboard_link: Return to procurements dashboard
-          procurement_link: Go to procurement
-          return_to_dashboard: Return to procurements dashboard
-          return_to_upload: Return to upload your spreadsheet
-        success:
-          about: About the procurement summary
-          buildings: buildings
-          completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
-          review: If you click into each section you can review your information, and make any amends if required.
-          service_requirements: service requirements
-          services: services
-          services_to_buildings: assigning services to buildings
-          successful: Your service and building information have been successfully uploaded and the details placed into the relevant sections within your procurement.
-        upload:
+        new:
           check: How to check your spreadsheet is ready
           check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
           description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
@@ -1517,8 +1505,22 @@ en:
           upload: Upload your file
           upload_size: Supported format is .xlsx and maximum file is 2mb
           warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
-        upload_status:
+        show:
           heading: File upload status
+          return_to_upload: Return to upload your spreadsheet
+        succeeded:
+          about: About the procurement summary
+          buildings: buildings
+          completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
+          continue_to_procurement: Continue to procurement
+          return_to_dashboard: Return to procurements dashboard
+          review: If you click into each section you can review your information, and make any amends if required.
+          service_requirements: service requirements
+          services: services
+          services_to_buildings: assigning services to buildings
+          successful: Your service and building information have been successfully uploaded and the details placed into the relevant sections within your procurement.
+        upload:
+          procurement_link: Go to procurement
       summary:
         buildings_and_services:
           buildings: Buildings
