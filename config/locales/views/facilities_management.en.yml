@@ -468,13 +468,27 @@ en:
       or_text: or
       selectall_text: Select all
     buildings:
-      add_address:
-        add_address_header: Address
-        description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-        line_1_of_2: Building and street line 1 of 2
-        line_2_of_2: Building and street line 2 of 2 (optional)
-        postcode: Postcode
-        town_or_city: Town or city
+      action_partials:
+        add_address:
+          add_address_header: Address
+          description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+          line_1_of_2: Building and street line 1 of 2
+          line_2_of_2: Building and street line 2 of 2 (optional)
+          postcode: Postcode
+          town_or_city: Town or city
+        show:
+          caption_addr: Address
+          caption_desc: Description (optional)
+          caption_external_area: External area
+          caption_gia: Gross internal area
+          caption_name: Name
+          caption_region_nuts: Region
+          caption_sec: Security clearance
+          caption_type: Building type
+          complete_text: This building is ready to use in procurements.
+          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+          section-header: Building details summary
+          status: 'Status:'
       area:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
         external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
@@ -482,7 +496,7 @@ en:
         further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
         gia_header: What’s the size of the internal area of this building?
         guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
-      details_form:
+      building_details:
         address: Address
         address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
         building_name_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</h2><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
@@ -518,47 +532,31 @@ en:
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
       page_definitions:
         add_building_address: Add building address
-        building_size: Internal and external areas
-        building_type: Building type
-        change_building_details: Building details
+        building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
+        gia: Internal and external areas
         manage_building_title: Buildings
         return_to_buildings: Return to buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to building details summary
-        security_clearance: Security clearance
+        security: Security clearance
         skip_this_step: Skip this step
+        type: Building type
       security:
-        building_details_summary: Building details summary
         describe_security: Describe security level
-        next_step: 'Next:'
         other: Other
         security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
         select_security: Select the level of security clearance needed
       show:
-        add_address_text: Add address
-        add_name_text: Add name
         answer_question_text: Answer question
-        caption_addr: Address
-        caption_desc: Description (optional)
-        caption_external_area: External area
-        caption_gia: Gross internal area
-        caption_name: Name
-        caption_region_nuts: Region
-        caption_sec: Security clearance
-        caption_type: Building type
         change_text: Change
-        complete_text: This building is ready to use in procurements.
-        incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
         return_to_buildings: Return to buildings
-        section-header: Building details summary
-        status: 'Status:'
       step_footer:
         step_footer: 'Next: %{description}'
       step_title:
-        step_title: Step %{position} of %{total}
+        step_title: Step %{position} of 4
       type:
         choose_building_type: Choose the building type that best describes your building
         describe_building: Describe building type
@@ -1224,6 +1222,19 @@ en:
           authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
           change: Change
           new: Enter a new authorised representative
+        buildings:
+          add_a_building: Add a building
+          building_name_and_address: Building name and address
+          details: Details
+          heading: Buildings
+          how_it_works: How it works
+          my_buildings: My buildings
+          new_buildings: New buildings
+          new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
+          no_saved_buildings: You have no saved buildings. Click on ‘Add a building' to start setting up your building(s)
+          page_details_1: Please select all of the buildings you want to include in your procurement. Only fully set up 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
+          page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
+          status: Status
         buildings_and_services:
           buildings: Buildings
           heading: Assigning services to buildings
@@ -1281,14 +1292,6 @@ en:
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
           lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view the generic version of this schedule now, or alternatively you can review your own version later which will include your inserted pension information.
-        procurement_buildings:
-          building_selected: Building selected
-          buildings_selected: Buildings selected
-          content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.
-          heading: Buildings
-          no_buildings_selected: No buildings selected
-          remove_all: Remove all
-          sub_heading: Select all of the buildings you want to include in your procurement
         procurement_pension_fund:
           name_text: Pension fund name
           percentage_text: Percentage of pensionable pay
@@ -1334,6 +1337,9 @@ en:
           tupe_title: TUPE
           what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer.
           what_you_need_to_know_title: What you need to know about TUPE
+      edit_buildings:
+        show:
+          return_to_buildings: Return to buildings
       edit_procurement:
         cancel_and_return: Cancel and return to Procurements
         save_and_continue: Save and continue
@@ -1526,6 +1532,12 @@ en:
         upload:
           procurement_link: Go to procurement
       summary:
+        buildings:
+          building: building
+          caption: The buildings below have been selected for this procurement. If you wish to add or remove services please click on the ‘change' button.
+          change: Change
+          heading: You have selected
+          table_caption: Buildings
         buildings_and_services:
           buildings: Buildings
           services: Services
@@ -1546,9 +1558,7 @@ en:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
           change: Change
           heading: You have selected
-          services:
-            one: service
-            other: services
+          service: service
           table_caption: Services
       what_happens_next:
         cancel: Cancel and return to procurements dashboard

@@ -530,7 +530,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           context 'when totally bad format' do
             it 'will be invalid' do
               building.address_postcode = 'something'
-              building.valid? :edit
+              building.valid? :building_details
               expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
             end
           end
@@ -538,7 +538,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           context 'when saved with incorrect format' do
             it 'will be invalid' do
               building.address_postcode = '1XX X11'
-              building.valid? :edit
+              building.valid? :building_details
               expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
             end
           end

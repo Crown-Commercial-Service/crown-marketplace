@@ -360,18 +360,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
 
-        context 'when the step is procurement_buildings' do
+        context 'when the step is buildings' do
           before do
             create :facilities_management_building, user: controller.current_user
-            get :edit, params: { id: procurement.id, step: 'procurement_buildings' }
+            get :edit, params: { id: procurement.id, step: 'buildings' }
           end
 
           it 'renders the edit page' do
             expect(response).to render_template('edit')
           end
 
-          it 'sets the buildings_data variable' do
-            expect(assigns(:buildings_data).length).to eq 1
+          it 'sets the procurement_buildings variable' do
+            expect(assigns(:procurement_buildings).length).to eq 1
           end
         end
       end

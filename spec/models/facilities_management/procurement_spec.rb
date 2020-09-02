@@ -186,14 +186,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.destroy_all
-        expect(procurement.valid?(:procurement_buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to eq false
       end
     end
 
     context 'when there are no active procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.first.update(active: false)
-        expect(procurement.valid?(:procurement_buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to eq false
       end
     end
 
@@ -201,7 +201,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'expected to be valid' do
         procurement.save
         procurement.procurement_buildings.create(active: true)
-        expect(procurement.valid?(:procurement_buildings)).to eq true
+        expect(procurement.valid?(:buildings)).to eq true
       end
     end
 
@@ -1355,8 +1355,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '.procurement_buildings_status' do
-    subject(:status) { procurement.procurement_buildings_status }
+  describe '.buildings_status' do
+    subject(:status) { procurement.buildings_status }
 
     context 'when user has not yet selected buildings' do
       let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
@@ -1398,7 +1398,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when both Services and Buildings tasks are not COMPLETED yet' do
       before do
         allow(procurement).to receive(:services_status).and_return(:not_started)
-        allow(procurement).to receive(:procurement_buildings_status).and_return(:not_started)
+        allow(procurement).to receive(:buildings_status).and_return(:not_started)
       end
 
       it 'shown with the CANNOT START YET status label' do
@@ -1409,7 +1409,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when both Services and Buildings tasks are COMPLETED' do
       before do
         allow(procurement).to receive(:services_status).and_return(:completed)
-        allow(procurement).to receive(:procurement_buildings_status).and_return(:completed)
+        allow(procurement).to receive(:buildings_status).and_return(:completed)
       end
 
       context 'when no service has been assigned to any building yet' do

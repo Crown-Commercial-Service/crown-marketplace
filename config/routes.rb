@@ -107,11 +107,8 @@ Rails.application.routes.draw do
     get '/gateway', to: 'gateway#index'
     get '/gateway/validate/:id', to: 'gateway#validate'
     get '/buyer_account', to: 'buyer_account#buyer_account'
-    resources :buildings do
+    resources :buildings, only: %i[index show edit update new create] do
       member do
-        get 'gia'
-        get 'type'
-        get 'security'
         match 'add_address', via: %i[get post patch]
       end
     end
@@ -139,6 +136,11 @@ Rails.application.routes.draw do
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show], controller: 'procurements/spreadsheet_imports'
+      resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
+        member do
+          match 'add_address', via: %i[get post patch]
+        end
+      end
     end
     resources :procurement_buildings, only: %i[show edit update]
     resources :procurement_buildings_services, only: %i[edit update]

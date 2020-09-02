@@ -2,17 +2,16 @@
   <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-2"><%= t('.heading') %></h2>
 
   <p class="govuk-!-font-size-48 govuk-!-font-weight-bold govuk-!-margin-bottom-0"><%= @procurement.service_codes.size %></p>
-  <p class="govuk-!-font-weight-bold"><%= t('.services', count: @procurement.service_codes.size) %></p>
+  <p class="govuk-!-font-weight-bold"><%= t('.service').pluralize(@procurement.service_codes.size) %></p>
 
   <p class="govuk-caption-m"><%= t('.caption') %></p>
 
   <%= link_to t('.change'), edit_facilities_management_procurement_path(@procurement, step: 'services'), class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-6' %>
 
   <table class="govuk-table govuk-!-margin-bottom-8">
-    <caption class="govuk-table__caption govuk-!-font-weight-bold"><%= t('.table_caption') %></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header govuk-!-padding-0"></th>
+        <th scope="col" class="govuk-table__header govuk-!-font-weight-bold"><%= t('.table_caption') %></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">

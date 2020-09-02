@@ -448,12 +448,12 @@ module FacilitiesManagement
       service_codes.any? ? :completed : :not_started
     end
 
-    def procurement_buildings_status
+    def buildings_status
       active_procurement_buildings.any? ? :completed : :not_started
     end
 
     def buildings_and_services_status
-      return :cannot_start if services_status == :not_started || procurement_buildings_status == :not_started
+      return :cannot_start if services_status == :not_started || buildings_status == :not_started
 
       active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :not_started
     end
@@ -467,6 +467,10 @@ module FacilitiesManagement
     def remove_existing_spreadsheet_import
       spreadsheet_import.remove_spreadsheet_file
       spreadsheet_import.delete
+    end
+
+    def sorted_active_procurement_buildings
+      active_procurement_buildings.order_by_building_name
     end
 
     private

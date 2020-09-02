@@ -2,12 +2,18 @@ require 'rubygems'
 
 module FacilitiesManagement
   class BuildingsController < FacilitiesManagement::FrameworkController
-    include BuildingsControllerDefinitions
-    include BuildingsControllerNavigation
-    include BuildingsControllerRegions
+    include Buildings::BuildingsControllerDefinitions
+    include Buildings::BuildingsControllerNavigation
+    include Buildings::BuildingsControllerRegions
+    include SharedBuildingsControllerMethods
 
-    before_action :build_page_data, only: %i[index show new create edit update gia type security add_address]
+    before_action :initialise_page_data
+    before_action :create_new_building, only: :new
+    before_action :define_all_buildings, only: :index
+    before_action :build_page_data, only: %i[show edit update add_address]
     before_action :authorize_user
+    before_action :build_page_description, only: %i[index show new edit add_address]
+    before_action :initialize_building_details, only: :show
 
     def index; end
 
@@ -19,35 +25,16 @@ module FacilitiesManagement
 
     def edit; end
 
-    def gia; end
-
-    def type; end
-
-    def security; end
-
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
     def create
       @page_data[:model_object] = current_user.buildings.build(building_params)
       set_postcode_data
 
-      if params[:add_address].present?
-        rebuild_page_data(@page_data[:model_object])
-        rebuild_page_description('add_address')
-        render action: :add_address and return
-      end
+      create_building_and_add_address && return if params[:add_address].present?
 
-      if params[:step] == 'add_address'
-        render :add_address and return if @page_data[:model_object].invalid?(:add_address)
-
-        resolve_region
-        rebuild_page_data(@page_data[:model_object])
-        render :new and return
-      end
+      add_new_address && return if params[:step] == 'add_address'
 
       if @page_data[:model_object].save(context: :new)
-        redirect_to action: next_step[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return')
-
-        redirect_to facilities_management_building_path(@page_data[:model_object].id)
+        redirect_to next_link(params.key?('save_and_return'), 'new')
       else
         rebuild_page_data(@page_data[:model_object])
         render :new
@@ -58,32 +45,48 @@ module FacilitiesManagement
       @page_data[:model_object].assign_attributes(building_params)
       set_postcode_data
 
-      if params[:add_address].present?
-        rebuild_page_description 'add_address'
-        render action: :add_address and return
-      end
+      update_address && return if params[:step] == 'add_address'
 
-      resolve_region if params[:step] == 'add_address'
-
-      if !@page_data[:model_object].save(context: params[:step].to_sym)
-        rebuild_page_description params[:step]
-        render action: params[:step]
+      if @page_data[:model_object].save(context: params[:step].to_sym)
+        redirect_to next_link(params.key?('save_and_return'), params[:step])
       else
-        redirect_to action: :edit and return if params[:step] == 'add_address'
-
-        redirect_to action: next_step(params[:step])[0], id: @page_data[:model_object].id and return unless params.key?('save_and_return') || next_step(params[:step]).is_a?(Hash)
-
-        redirect_to facilities_management_building_path(@page_data[:model_object].id)
+        rebuild_page_description 'edit'
+        render :edit
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Style/AndOr
-
-    def destroy; end
 
     private
 
     def building_params
       params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :external_area, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
+    end
+
+    def create_building_and_add_address
+      rebuild_page_data(@page_data[:model_object])
+      rebuild_page_description('add_address')
+      render action: :add_address
+    end
+
+    def add_new_address
+      if @page_data[:model_object].valid?(:add_address)
+        resolve_region
+        rebuild_page_data(@page_data[:model_object])
+        render :new
+      else
+        rebuild_page_data(@page_data[:model_object])
+        rebuild_page_description 'add_address'
+        render :add_address
+      end
+    end
+
+    def update_address
+      if @page_data[:model_object].save(context: params[:step].to_sym)
+        resolve_region
+        redirect_to(edit_facilities_management_building_path(@page_data[:model_object].id, step: 'building_details'))
+      else
+        rebuild_page_description 'add_address'
+        render :add_address
+      end
     end
 
     def add_address_form_details
@@ -94,89 +97,26 @@ module FacilitiesManagement
                                     end
     end
 
-    def region_needs_resolution?
-      @page_data[:model_object].address_region_code.blank?
-    end
-
-    def hide_region_section?
-      return false if @page_data[:model_object].address_region.present?
-
-      true if @page_data[:model_object].address_region.blank? && @page_data[:model_object].address_postcode.blank?
-    end
-
-    def hide_region_dropdown?
-      return true if @page_data[:model_object].address_region.present?
-
-      false
-    end
-
-    def hide_postcode_source?
-      @page_data[:model_object].address_line_1.present? || @page_data[:model_object].errors.details.dig(:address, 0)&.dig(:error) == :not_selected
-    end
-
-    def multiple_regions?
-      valid_regions.length > 1
-    end
-
-    def no_regions?
-      valid_regions.length.zero?
-    end
-
-    def multiple_addresses?
-      valid_addresses.length > 1
-    end
-
-    def valid_regions
-      return @valid_regions ||= find_region_query_by_postcode(@page_data[:model_object].address_postcode) if @page_data[:model_object].address_postcode.present?
-
-      []
-    end
-
-    def valid_addresses
-      return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry) if @page_data[:model_object].postcode_entry.present?
-
-      []
-    end
-
-    def set_postcode_data
-      if @page_data[:model_object].postcode_entry
-        valid_postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
-        @page_data[:model_object].postcode_entry = valid_postcode_entry
-        @page_data[:model_object].address_postcode = valid_postcode_entry if params[:add_address].present?
-      end
-
-      @page_data[:model_object].address_postcode = building_params[:address_postcode].upcase if building_params[:address_postcode]
-    end
-
     helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
 
-    def resolve_region
-      return if @page_data[:model_object].blank?
-
-      return if valid_regions.length > 1 || valid_regions.empty?
-
-      @page_data[:model_object].address_region = valid_regions[0][:region]
-      @page_data[:model_object].address_region_code = valid_regions[0][:code]
+    def initialise_page_data
+      @page_data = {}
     end
 
-    def rebuild_page_data(building)
-      @building_page_details    = @page_description = @page_definitions = nil
-      @page_data[:model_object] = building
+    def create_new_building
+      @page_data[:model_object] = Building.new(user: current_user)
+    end
 
-      build_page_description
+    def define_all_buildings
+      @page_data[:model_object] = current_user.buildings.order_by_building_name.page(params[:page])
     end
 
     def build_page_data
-      @page_data                = {}
-      @page_data[:model_object] = Building.find(params[:id]) if params[:id]
-      @page_data[:model_object] = current_user.buildings.page(params[:page]).order(Arel.sql('lower(building_name)')) if action_name == 'index'
-      @page_data[:model_object] = Building.new(user: current_user) if @page_data[:model_object].nil?
-
-      build_page_description
+      @page_data[:model_object] = Building.find(params[:id])
     end
 
-    def id_present?
-      @page_data[:model_object].respond_to?(:id) && @page_data[:model_object][:id].present?
+    def initialize_building_details
+      @building_details = building_details
     end
 
     protected

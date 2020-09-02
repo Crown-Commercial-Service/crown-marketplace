@@ -1,13 +1,14 @@
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
     scope :active, -> { where(active: true) }
-    scope :order_by_building_name, -> { order(:building_name) }
+    scope :order_by_building_name, -> { joins(:building).merge(FacilitiesManagement::Building.order(FacilitiesManagement::Building.arel_table['building_name'].lower.asc)) }
     scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.codes.include?(code) } } }
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_buildings
     has_many :procurement_building_services, foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building, dependent: :destroy
     accepts_nested_attributes_for :procurement_building_services, allow_destroy: true
     belongs_to :building, class_name: 'FacilitiesManagement::Building', optional: true
     delegate :full_address, to: :building
+    delegate :address_no_region, to: :building
 
     validate :service_code_selection, on: :buildings_and_services
     validate :services_valid?, on: :procurement_building_services
@@ -91,6 +92,9 @@ module FacilitiesManagement
     def building_external_area
       procurement.detailed_search? ? building.external_area : external_area
     end
+
+    MAX_PER_PAGE = 100
+    self.per_page = MAX_PER_PAGE
 
     private
 

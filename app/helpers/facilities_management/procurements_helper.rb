@@ -151,7 +151,7 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def requires_back_link?
-    %w[contract_name estimated_annual_cost tupe].include? params[:step]
+    %w[contract_name estimated_annual_cost tupe buildings].include? params[:step]
   end
 
   def address_in_a_line(building)
@@ -160,6 +160,32 @@ module FacilitiesManagement::ProcurementsHelper
 
   def procurement_buildings_requiring_service_info(procurement)
     procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
+  end
+
+  def procurement_building_row(form, building)
+    if building.status == 'Ready'
+      content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
+        content_tag(:div, class: 'govuk-checkboxes__item') do
+          capture do
+            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, sectionid: building.building_name))
+            concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
+              procurement_building_checkbox_text(building)
+            end)
+          end
+        end
+      end
+    else
+      content_tag(:div, class: 'govuk-!-padding-left-7') do
+        procurement_building_checkbox_text(building)
+      end
+    end
+  end
+
+  def procurement_building_checkbox_text(building)
+    capture do
+      concat(content_tag(:legend, building.building_name, class: 'govuk-fieldset__legend'))
+      concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
+    end
   end
 end
 # rubocop:enable Metrics/ModuleLength
