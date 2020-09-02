@@ -1212,7 +1212,7 @@ en:
           no_sent: You do not have any sent offers
       detailed_search_summary:
         detailed_search_description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimate contract cost, supplier shortlist and procurement options.
-        detailed_search_summary_title: Procurement summary
+        detailed_search_summary_title: Requirements
       edit:
         authorised_representative:
           authorised_representative_detail_description: Select an authorised representative
