@@ -179,7 +179,7 @@ module FacilitiesManagement
     end
 
     def volumes_complete?
-      procurement_building_services.reject { |pbs| pbs.requires_external_area? || pbs.uses_only_internal_area? }.all? { |pbs| pbs.uval.present? }
+      procurement_building_services.select(&:requires_unit_of_measure?).all? { |pbs| pbs.uval.present? }
     end
 
     def standards_complete?

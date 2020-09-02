@@ -547,6 +547,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
           'G.5': { service_standard: g5_value },
           'C.5': { service_standard: c5_value1, lift_data: c5_value2 },
           'H.5': { service_hours: h5_value, detail_of_requirement: 'Some details' },
+          'H.16': {},
           'E.4': { no_of_appliances_for_testing: e4_value },
           'K.1': { no_of_consoles_to_be_serviced: k1_value },
           'K.2': { tones_to_be_collected_and_removed: k2_value },

@@ -752,50 +752,50 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    describe '# requires_service_standard?' do
+    describe '#requires_service_standard?' do
       context 'when code requires ppm standards' do
         it 'will be true when C.5' do
           procurement_building_service.code = 'C.5'
-          expect(procurement_building_service. requires_service_standard?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require ppm standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service. requires_service_standard?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '# requires_service_standard?' do
+    describe '#requires_service_standard?' do
       context 'when code requires building standards' do
         it 'will be true when C.7' do
           procurement_building_service.code = 'C.7'
-          expect(procurement_building_service. requires_service_standard?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require building standards' do
         it 'will be false when K.1' do
           procurement_building_service.code = 'K.1'
-          expect(procurement_building_service. requires_service_standard?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '# requires_service_standard?' do
+    describe '#requires_service_standard?' do
       context 'when code requires cleaning standards' do
         it 'will be true when G.5' do
           procurement_building_service.code = 'G.5'
-          expect(procurement_building_service. requires_service_standard?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require cleaning standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service. requires_service_standard?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
@@ -1166,6 +1166,90 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
       it 'returns a hash with correct context' do
         expect(procurement_building_service.required_volume_contexts).to eq(volume: [:no_of_building_occupants], gia: [:gia])
+      end
+    end
+  end
+
+  describe '#requires_unit_of_measure?' do
+    before { procurement_building_service.code = code }
+
+    context 'when the service requires only gia' do
+      let(:code) { 'C.1' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
+      end
+    end
+
+    context 'when the service requires external_area' do
+      let(:code) { 'G.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
+      end
+    end
+
+    context 'when the service requires lift_data' do
+      let(:code) { 'C.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires service_hours' do
+      let(:code) { 'H.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_appliances_for_testing' do
+      let(:code) { 'E.4' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_building_occupants' do
+      let(:code) { 'G.3' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_consoles_to_be_serviced' do
+      let(:code) { 'K.1' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires tones_to_be_collected_and_removed' do
+      let(:code) { 'K.2' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_units_to_be_serviced' do
+      let(:code) { 'K.7' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service does not require a unit of measure' do
+      let(:code) { 'H.16' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
       end
     end
   end

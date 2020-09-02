@@ -51,6 +51,10 @@ module FacilitiesManagement
     REQUIRE_VOLUME_CODES = services_and_questions.get_codes_by_context(:volume)
 
     # A set of methods used to confirm validation
+    def requires_unit_of_measure?
+      requires_volume? || requires_lift_data? || requires_service_hours?
+    end
+
     def requires_volume?
       required_contexts.include?(:volume)
     end
