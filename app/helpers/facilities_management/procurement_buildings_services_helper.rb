@@ -8,12 +8,18 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
     @building_service.this_service[:context].select { |_, attributes| attributes.first == :service_standard }.keys.first
   end
 
-  def specific_lift_error?(model, error_type, index)
-    model.errors.details[:lift_data].find_index { |item| item[:position] == index && item[:error] == error_type }.present?
+  def sort_by_lifts_created_at
+    parts = @building_service.lifts.partition { |o| o.created_at.nil? }
+    parts.last.sort_by(&:created_at) + parts.first
   end
 
-  def any_lift_error?(model, index)
-    model.errors.details[:lift_data].find_index { |item| item[:position] == index }.present?
+  def link_to_lift_add_row(name, form, association, **args)
+    new_object = form.object.send(association).klass.new
+    id = new_object.object_id
+    fields = form.fields_for(association, new_object, child_index: id) do |builder|
+      render("facilities_management/procurement_buildings_services/#{association.to_s.singularize}", ff: builder)
+    end
+    link_to(name, '#', class: 'add-lifts ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
   end
 
   def form_model

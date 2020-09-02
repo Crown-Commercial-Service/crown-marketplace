@@ -545,7 +545,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
           'C.1': { service_standard: c1_value },
           'G.3': { service_standard: g3_value1, no_of_building_occupants: g3_value2 },
           'G.5': { service_standard: g5_value },
-          'C.5': { service_standard: c5_value1, lift_data: c5_value2 },
+          'C.5': { service_standard: c5_value1 },
           'H.5': { service_hours: h5_value, detail_of_requirement: 'Some details' },
           'H.16': {},
           'E.4': { no_of_appliances_for_testing: e4_value },
@@ -560,23 +560,28 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       let(:g3_value2) { 58 }
       let(:g5_value) { 'A' }
       let(:c5_value1) { 'C' }
-      let(:c5_value2) { [1, 2, 3, 4] }
       let(:h5_value) { 406 }
       let(:e4_value) { 123 }
       let(:k1_value) { 234 }
       let(:k2_value) { 345 }
       let(:k7_value) { 456 }
 
+      let(:lift_data) { [1, 2, 3, 4] }
+
       let(:gia) { 100 }
       let(:external_area) { 200 }
 
       before do
         procurement_building.procurement.update(aasm_state: 'detailed_search')
-        service_codes = codes_with_values.map { |key, _| key.to_s }
+        service_codes = codes_with_values.map { |key, _| key.to_s } << 'C.5'
         procurement_building.update(service_codes: service_codes)
         procurement_building.reload
         procurement_building.procurement_building_services.each do |pbs|
           pbs.update(codes_with_values[pbs.code.to_sym])
+        end
+        pbs = procurement_building.procurement_building_services.find_by(code: 'C.5')
+        lift_data.each do |number_of_floors|
+          pbs.lifts.create(number_of_floors: number_of_floors)
         end
         procurement_building.building.update(gia: gia, external_area: external_area)
       end
@@ -598,7 +603,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
 
       context 'when a service requires lift_data and lift_data is empty' do
-        let(:c5_value2) { [] }
+        let(:lift_data) { [] }
 
         it 'returns false' do
           expect(procurement_building.complete?).to eq false

@@ -1,9 +1,9 @@
 <%= content_for :page_title, @building_service.name.html_safe %>
-<%= form_for form_model, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: @partial_prefix != 'lifts', novalidate: true, multipart: true} do |f| %>
+<%= form_for form_model, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: true, novalidate: true, multipart: true} do |f| %>
   <div class="govuk-body govuk-grid-row procurement-building-service">
     <div class="govuk-grid-column-full">
       <%= link_to t('.return_to_service_requirements'), facilities_management_procurement_building_path(@procurement_building.id), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
-      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, render_empty: @partial_prefix == 'lifts' } %>
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
     </div>
     <div class="govuk-grid-column-three-quarters">
       <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement_building.procurement.contract_name, nil, nil, nil)) %>

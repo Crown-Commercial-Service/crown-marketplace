@@ -573,7 +573,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           end
         end
 
-        context 'when a procurment is sent on a bank holiday' do
+        context 'when a procurement is sent on a bank holiday' do
           it 'is expected to expire in two working days' do
             contract.offer_sent_date = DateTime.new(2019, 5, 6, 4, 37, 12).in_time_zone('London')
             expect(contract.contract_expiry_date).to eq DateTime.new(2019, 5, 8, 23, 0, 0).in_time_zone('London')
