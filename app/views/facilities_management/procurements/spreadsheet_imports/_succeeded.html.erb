@@ -24,3 +24,9 @@
     <%= t('.review') %>
   </div>
 </div>
+
+<%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+  <%= f.submit t('.continue_to_procurement'), name: :exit_bulk_upload, class: 'govuk-button govuk-!-font-size-19 govuk-!-margin-top-4' %>
+<% end %>
+<br />
+<%= link_to t('.return_to_dashboard'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19' %>

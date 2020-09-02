@@ -2,10 +2,7 @@
 <% content_for :page_title, 'Contract name' %>
 <div class="govuk-form-group <%='govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="Contract name"
      style="<%= 'padding-left:1em' if @procurement.errors[:contract_name].any?%>">
-  <%= f.label(:contract_name, t('.contract_name_question'), class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0') %>
-  <span class="govuk-caption-m govuk-!-margin-bottom-0">
-    <%= t('.contract_name_info') %>
-  </span>
+  <%= label_details(f, :contract_name, t('.contract_name_question'), t('.contract_name_info')) %>
   <div class="govuk-character-count" data-module="character-count" data-maxlength="100">
     <%= display_errors(@procurement, :contract_name)%>
     <%= f.text_field :contract_name, class: 'govuk-input govuk-input--width-30 js-character-count govuk-!-margin-top-4', required: true, maxlength: 100, "aria-describedby": "facilities_management_procurement_contract_name"%>
