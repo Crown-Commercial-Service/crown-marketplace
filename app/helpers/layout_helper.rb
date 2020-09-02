@@ -246,7 +246,7 @@ module LayoutHelper
     css_classes += ['ccs-character-count'] if char_count
 
     options = {}
-    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+    options.merge!('aria-describedby': builder.object.errors.key?(attribute) ? error_id(attribute) : attribute.to_s)
     options.merge!(class: css_classes)
     options.merge!(option[0].to_h) { |_key, old, new| Array(old).push(new).join(' ') } if option
 
