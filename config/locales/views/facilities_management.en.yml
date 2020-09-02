@@ -1533,6 +1533,10 @@ en:
           optional_call_off_extension_period: Optional call-off extension period
           optional_call_off_extensions: Optional call-off extensions
         return_to_requirements: Return to requirements
+        service_requirements:
+          buildings: Buildings
+          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the services with 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
+          status: Status
         services:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
           change: Change
