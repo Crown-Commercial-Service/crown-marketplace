@@ -153,5 +153,9 @@ module FacilitiesManagement::ProcurementsHelper
   def requires_back_link?
     %w[contract_name estimated_annual_cost tupe].include? params[:step]
   end
+
+  def address_in_a_line(building)
+    [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
+  end
 end
 # rubocop:enable Metrics/ModuleLength
