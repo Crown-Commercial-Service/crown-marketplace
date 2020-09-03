@@ -20,7 +20,7 @@ module FacilitiesManagement
     validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :validate_lift_data, on: :lifts
 
-    # validatiomns on :service_hours
+    # validations on :service_hours
     validates :service_hours, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }, on: :service_hours
     validates :detail_of_requirement, presence: true, on: :service_hours
     validate :validate_detail_of_requirement_max_length, on: :service_hours
@@ -30,6 +30,10 @@ module FacilitiesManagement
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
+
+    # validate gia & external area
+    validate :validate_gia
+    validate :validate_external_area
 
     define_method(:this_service) do
       @this_service ||= services_and_questions.service_detail(code)
@@ -190,6 +194,14 @@ module FacilitiesManagement
     def validate_detail_of_requirement_max_length
       self.detail_of_requirement = ActionController::Base.helpers.strip_tags(detail_of_requirement)
       errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
+    end
+
+    def validate_gia
+      errors.add(:base, :gia_too_small, building_name: name) if requires_internal_area? && procurement_building&.building_internal_area&.zero?
+    end
+
+    def validate_external_area
+      errors.add(:base, :external_area_too_small, building_name: name) if requires_external_area? && procurement_building&.building_external_area&.zero?
     end
 
     # rubocop:enable Rails/Validation

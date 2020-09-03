@@ -256,6 +256,9 @@ en:
               invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
         facilities_management/procurement_building_service:
           attributes:
+            base:
+              external_area_too_small: External area must be greater than 0
+              gia_too_small: Gross internal area must be greater than 0
             detail_of_requirement:
               blank: Enter the detail of requirement
             lift_data:

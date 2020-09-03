@@ -1,3 +1,4 @@
+<%= render 'facilities_management/procurement_buildings/errors_on_show', procurement_building: @procurement_building %>
 <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement_building.procurement.contract_name, nil, nil, nil)) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -29,7 +30,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-l" id="service_volumes">
       <%= t('.service_volumes') %>
     </h2>
   </div>
@@ -46,19 +47,19 @@
   </thead>
   <tbody class="govuk-table__body">
     <% services_with_contexts(@volume_procurement_building_services) do |service, context| %>
-      <% cell_classes = cell_class(context, service.uval)%>
-      <tr class="govuk-table__row">
-        <td class="<%= cell_classes %>"><%= service.name %></td>
+      <% cell_classes = cell_class(context, service.uval, service_has_errors(service, :base))%>
+      <tr class="govuk-table__row <%= 'govuk-form-group--error' if service_has_errors(service, :base) %>">
+        <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_errors(service, :base) %>"><%= service.name %></td>
         <td class="<%= cell_classes %>"><%= t(".unit_of_measure.#{context}") %></td>
         <% if service.send(context).blank? %>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_errors(service, :base) %>"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_errors(service, :base) %>"></td>
         <% else %>
           <% case context %>
           <% when :lift_data, :service_hours %>
             <td class="<%= cell_classes %>"><%= service.uval %></td>
           <% else %>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.send(context) %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_errors(service, :base) %>"><%= service.send(context) %></td>
           <% end %>
           <td class="<%= cell_classes %>"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
         <% end %>
@@ -80,6 +81,11 @@
           </td>
         </tr>
       <% end %>
+    <% if service_has_errors(service, :base) %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="5"><%= display_error(service, :base, false) %></td>
+      </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>

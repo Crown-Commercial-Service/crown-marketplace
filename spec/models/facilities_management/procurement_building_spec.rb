@@ -52,6 +52,58 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe '#valid?(:service_requirenments)' do
+    before do
+      procurement_building.procurement_building_services = [build(:facilities_management_procurement_building_service, code: service_code, service_standard: 'A', procurement_building: procurement_building)]
+      procurement_building.building = build(:facilities_management_building, gia: gia, external_area: external_area)
+      procurement_building.gia = gia
+      procurement_building.external_area = external_area
+      procurement_building.save
+    end
+
+    context 'when it has a service that requires GIA' do
+      let(:service_code) { 'G.1' }
+      let(:external_area) { 1000 }
+
+      context 'when the building does not have it' do
+        let(:gia) { 0 }
+
+        it 'is invalid' do
+          expect(procurement_building.valid?(:service_requirenments)).to eq false
+        end
+      end
+
+      context 'when the building does have it' do
+        let(:gia) { 1000 }
+
+        it 'is valid' do
+          expect(procurement_building.valid?(:service_requirenments)).to eq true
+        end
+      end
+    end
+
+    context 'when it has a service that requires External area' do
+      let(:service_code) { 'G.5' }
+      let(:gia) { 1000 }
+
+      context 'when the building does not have it' do
+        let(:external_area) { 0 }
+
+        it 'is invalid' do
+          expect(procurement_building.valid?(:service_requirenments)).to eq false
+        end
+      end
+
+      context 'when the building does have it' do
+        let(:external_area) { 1000 }
+
+        it 'is valid' do
+          expect(procurement_building.valid?(:service_requirenments)).to eq true
+        end
+      end
+    end
+  end
+
   describe 'update_procurement_building_services' do
     context 'when no procurement_building_services exists' do
       it 'creates a new procurement_building_service' do
