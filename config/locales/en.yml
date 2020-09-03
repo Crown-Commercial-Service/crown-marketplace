@@ -362,6 +362,60 @@ en:
       website_last_tested: This website was last tested on Friday 15 May 2020. The test was carried out by Zoonou Ltd.
       website_text_simple: We’ve also made the website text as simple as possible to understand.
       well_consider: We’ll consider your request and get back to you in five working days.
+    accessibility_statement_ls:
+      CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+      ability_net: AbilityNet
+      ability_net_advice: has advice on making your device easier to use if you have a disability.
+      ability_net_link: https://mcmw.abilitynet.org.uk/
+      accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
+      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard.
+      accessibility_regulations_1: The accessibility regulations
+      accessibility_regulations_2: if they're not essential to providing our services.
+      accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
+      accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018
+      any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
+      call: call 0345 410 2222
+      compliance: No known accessibility non compliance issues.
+      email: email
+      email_link: info@crowncommercial.gov.uk
+      equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
+      equality_link: https://www.equalityadvisoryservice.com/
+      equality_link_text: contact the Equality Advisory and Support Service (EASS)
+      heading: Legal Services (LS) Accessibility Statement
+      heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
+      heading_enforcement: Enforcement procedure
+      heading_how_accessible: How accessible this website is
+      heading_how_we_tested: How we tested this website
+      heading_non_accessible: Non accessible content
+      heading_non_compliance: Non compliance with the accessibility regulations
+      heading_preparation: Preparation of this accessibility statement
+      heading_reporting: Reporting accessibility problems with this website
+      heading_technical_information: Technical information about this website’s accessibility
+      heading_what_to_do: What to do if you cannot access parts of this website
+      if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
+      list_1_change_colours: change colours, contrast levels and fonts
+      list_1_keyboard: navigate most of the website using just a keyboard
+      list_1_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+      list_1_speech: navigate most of the website using speech recognition software
+      list_1_zoom: zoom in up to 300% without the text spilling off the screen
+      list_2_continue: one page has two continue buttons, this results in screen readers repeating "continue"
+      many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards - for example, they may not be structured so they're accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
+      marketplace_link: https://marketplace.service.crowncommercial.gov.uk/legal-services
+      marketplace_link_description: 'This accessibility statement applies to the Legal Services digital service which can be found at the following URL:'
+      non_accessible_content_1: We are aware of an issue with the "select the services you need" page when tabbed in conjunction with NVDA, JAWS and macOS VoiceOver screen reader assistive technologies. The duplicate 'Continue' buttons that are present result in the screen reader stuttering.
+      non_accessible_content_2: It would be expected that only one 'Continue' button would be present on a page to prevent continue being announced twice by screen readers. We will resolve this issue by October 2020.
+      pdfs_and_docs: PDFs and other documents
+      plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
+      some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+      the_complete_journey: The complete Legal Services journey was tested, this included every page a buyer would progress through to complete the procurement activity.
+      this_statement_date: This statement was prepared on 1 July 2020. It will be reviewed and updated as required.
+      this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
+      this_website_partially_1: This website is compliant with the
+      we_are_always_looking: We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact
+      we_know: This website has one accessibility issue.
+      website_last_tested: This website was last tested on 3 April 2020. The test was carried out by Zoonou Ltd.
+      website_text_simple: We've also made the website text as simple as possible to understand.
+      well_consider: We'll consider your request and get back to you in five working days.
     accessibility_statement_mc:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
       ability_net: AbilityNet
@@ -388,7 +442,7 @@ en:
       heading_how_we_tested: How we tested this website
       heading_non_accessible: Non accessible content
       heading_non_compliance: Non compliance with the accessibility regulations
-      heading_preperation: Preparation of this accessibility statement
+      heading_preparation: Preparation of this accessibility statement
       heading_reporting: Reporting accessibility problems with this website
       heading_technical_information: Technical information about this website’s accessibility
       heading_what_to_do: What to do if you cannot access parts of this website
@@ -1257,7 +1311,7 @@ en:
         all_suppliers: A list of all agencies
         answer_calculate_fta_to_perm_fee: To work out what fixed-term worker transfer fee I could be charged
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
-        answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
+        answer_managed_service_provider: An agency to manage all my school's needs; a 'managed service provider - Master Vendor'
         answer_worker: An agency who can provide my school with an individual worker
         page_title: What is your school looking for?
         question: What is your school looking for?

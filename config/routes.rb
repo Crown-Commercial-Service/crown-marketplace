@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/cookies', to: 'home#cookies'
   get '/facilities-management/accessibility-statement', to: 'home#accessibility_statement_fm'
   get '/management-consultancy/accessibility-statement', to: 'home#accessibility_statement_mc'
+  get '/legal-services/accessibility-statement', to: 'home#accessibility_statement_ls'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
@@ -78,7 +79,7 @@ Rails.application.routes.draw do
     get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
     get '/fta-to-perm-fee', to: 'home#fta_to_perm_fee'
     get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
-    get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
+    # get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
     get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
     get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
     get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
