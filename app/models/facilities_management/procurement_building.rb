@@ -11,6 +11,7 @@ module FacilitiesManagement
 
     validate :service_code_selection, on: :buildings_and_services
     validate :services_valid?, on: :procurement_building_services
+    validate :validate_service_requirements, on: :service_requirements
     validate :services_present?, on: :procurement_building_services_present
     validate :validate_internal_area, on: :gia
     validate :validate_external_area, on: :external_area
@@ -83,6 +84,14 @@ module FacilitiesManagement
       procurement_building_services.map(&:required_contexts).any?(&:present?)
     end
 
+    def building_internal_area
+      procurement.detailed_search? ? building.gia : gia
+    end
+
+    def building_external_area
+      procurement.detailed_search? ? building.external_area : external_area
+    end
+
     private
 
     def service_code_selection
@@ -100,6 +109,10 @@ module FacilitiesManagement
       errors.add(:service_codes, :at_least_one, building_name: name) if service_codes.empty?
     end
 
+    def validate_service_requirements
+      procurement_building_services.all? { |pbs| pbs.valid?(:gia) && pbs.valid?(:external_area) }
+    end
+
     def services_valid?
       errors.add(:procurement_building_services, :invalid) && errors.add(:base, :services_invalid) unless procurement_building_services.all? { |pbs| pbs.answer_store[:questions].all? { |question| !question[:answer].nil? } }
     end
@@ -107,7 +120,10 @@ module FacilitiesManagement
     def update_procurement_building_services
       (service_codes + procurement_building_services.map(&:code)).uniq.each do |service_code|
         if service_codes.include?(service_code)
-          procurement_building_services.create(code: service_code, name: Service.find_by(code: service_code).try(:name)) if procurement_building_services.find_by(code: service_code).blank?
+          if procurement_building_services.find_by(code: service_code).blank?
+            service = procurement_building_services.new(code: service_code, name: Service.find_by(code: service_code).try(:name))
+            service.save(validate: false)
+          end
         else
           procurement_building_services.find_by(code: service_code)&.destroy
         end
@@ -149,14 +165,6 @@ module FacilitiesManagement
 
     def validate_external_area
       errors.add(:building, :external_area_too_small, building_name: name) if requires_external_area? && building_external_area.zero?
-    end
-
-    def building_internal_area
-      procurement.detailed_search? ? building.gia : gia
-    end
-
-    def building_external_area
-      procurement.detailed_search? ? building.external_area : external_area
     end
 
     def requires_external_area?
