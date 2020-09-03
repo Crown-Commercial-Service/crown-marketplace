@@ -259,10 +259,10 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
 
-      it 'has the services already on it' do
+      it 'does not have any service codes present' do
         procurement.save
         procurement.find_or_build_procurement_building(building_id)
-        expect(procurement.procurement_buildings.last.service_codes).to eq procurement.service_codes
+        expect(procurement.procurement_buildings.last.service_codes).to be_empty
       end
     end
 
