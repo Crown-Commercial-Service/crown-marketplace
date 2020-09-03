@@ -133,7 +133,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
     context 'when the building name is too long' do
       before do
-        building.building_name = 'a' * 26
+        building.building_name = 'a' * 51
       end
 
       it 'is invalid' do

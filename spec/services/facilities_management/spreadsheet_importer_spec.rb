@@ -145,7 +145,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         context 'when the building name is more than the max characters' do
-          let(:spreadsheet_building) { create(:facilities_management_building, building_name: 'a' * 26) }
+          let(:spreadsheet_building) { create(:facilities_management_building, building_name: 'a' * 51) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
