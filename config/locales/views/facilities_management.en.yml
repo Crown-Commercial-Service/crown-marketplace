@@ -123,7 +123,7 @@ en:
               inclusion: Select one option
               not_present: You must answer the question about ‘Estimated annual cost’
             extensions_required:
-              inclusion: Select yes if you want to extend your call-off contract
+              inclusion: Select one option for call-off contract extension
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
@@ -150,7 +150,7 @@ en:
               blank: Please select one option
               inclusion: Please select one option
             mobilisation_period:
-              blank: Enter mobilisation length
+              blank: Enter mobilisation period length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
@@ -158,10 +158,10 @@ en:
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_period_required:
-              inclusion: Select yes if you need a mobilisation period
+              inclusion: Select one option for mobilisation period
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
-              greater_than: Mobilisation start date must be today or in the future
+              greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
