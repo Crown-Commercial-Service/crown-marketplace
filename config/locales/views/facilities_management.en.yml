@@ -476,7 +476,7 @@ en:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
         external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
         external_area_header: What's the size of the external area?
-        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
         gia_header: What’s the size of the internal area of this building?
         guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       details_form:
@@ -501,13 +501,14 @@ en:
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
-        column_name_header: Name
+        column_name_header: Building name
         column_status_header: Status
         create_new_button: Add a building
-        go_to_procurements_dashboard: Go to procurements dashboard
+        how_it_works: How it works
         link_to_building_summary: View details for
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
+        return_to_your_account: Return to your account
         start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
         start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
         start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
@@ -520,6 +521,7 @@ en:
         create_new_building: Save and continue
         create_single_building: Add a building
         manage_building_title: Buildings
+        return_to_buildings: Return to buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to building details summary
@@ -534,7 +536,6 @@ en:
         select_security: Select the level of security clearance needed
       show:
         add_address_text: Add address
-        add_desc_text: Add description
         add_name_text: Add name
         answer_question_text: Answer question
         caption_addr: Address
@@ -548,8 +549,9 @@ en:
         change_text: Change
         complete_text: This building is ready to use in procurements.
         incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+        return_to_buildings: Return to buildings
         section-header: Building details summary
-        select_one_option_text: Please select one option
+        status: 'Status:'
       step_footer:
         step_footer: 'Next: %{description}'
       step_title:

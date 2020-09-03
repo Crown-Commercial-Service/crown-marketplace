@@ -40,7 +40,7 @@ module BuildingsControllerDefinitions
         secondary_name: 'return_to_buildings',
         secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
         secondary_url: facilities_management_buildings_path,
-        back_text: 'Back',
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
         back_url: facilities_management_buildings_path
       },
       index: {

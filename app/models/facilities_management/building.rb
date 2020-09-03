@@ -47,7 +47,7 @@ module FacilitiesManagement
                       { id: 'Hospitals', title: 'Hospitals', caption: 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.' },
                       { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
 
-    validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 25 }, on: %i[new edit all]
+    validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 50 }, on: %i[new edit all]
     validates :description, length: { maximum: 50 }, on: %i[new edit all]
 
     validates :gia, presence: true, on: %i[gia all]
@@ -120,6 +120,9 @@ module FacilitiesManagement
 
       self.address_region_code = region[:code]
     end
+
+    MAX_PER_PAGE = 100
+    self.per_page = MAX_PER_PAGE
 
     private
 
