@@ -1,4 +1,4 @@
-module BuildingsControllerRegions
+module Buildings::BuildingsControllerRegions
   extend ActiveSupport::Concern
 
   def ensure_postcode_is_valid(postcode)

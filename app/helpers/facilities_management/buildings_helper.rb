@@ -9,6 +9,48 @@ module FacilitiesManagement::BuildingsHelper
     [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
   end
 
+  def building_row_text(attribute, building, text)
+    case attribute
+    when :address
+      address_in_a_line(building)
+    when :gia, :external_area
+      number_with_delimiter(text.to_i, delimiter: ',') + ' sqm'
+    when :building_type
+      type_description(building_type_description(text), building, :other_building_type)
+    when :security_type
+      type_description(text.capitalize, building, :other_security_type)
+    else
+      text
+    end
+  end
+
+  def type_description(text, building, attribute)
+    if text == 'Other'
+      "#{text} — #{building[attribute].truncate(150)}"
+    else
+      text
+    end
+  end
+
+  def edit_link(change_answer, step)
+    link_to((change_answer ? t('facilities_management.buildings.show.answer_question_text') : t('facilities_management.buildings.show.change_text')), edit_facilities_management_building_path(@page_data[:model_object].id, step: step), role: 'link', class: 'govuk-link')
+  end
+
+  def cant_find_address_link
+    add_address_facilities_management_building_path(@page_data[:model_object].id)
+  end
+
+  def continuation_params(page_defs, form, step)
+    case step
+    when 'building_details'
+      [page_defs, form, true, false, true]
+    when 'security'
+      [page_defs, form, false]
+    else
+      [page_defs, form]
+    end
+  end
+
   def margin_if_security_has_other_error(building)
     building.errors.key?(:other_security_type) ? { style: 'margin-left: 1em' } : {}
   end

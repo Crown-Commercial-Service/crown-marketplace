@@ -646,7 +646,7 @@ module FacilitiesManagement
 
     def set_procurement_data
       @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
-      set_buildings if params['step'] == 'procurement_buildings'
+      set_buildings if params['step'] == 'buildings'
       return if @procurement.service_codes.nil? || @procurement.region_codes.nil?
 
       region_codes = @procurement.region_codes
@@ -666,10 +666,15 @@ module FacilitiesManagement
     end
 
     def set_buildings
-      @buildings_data = current_user.buildings.where(status: 'Ready')
-      @buildings_data.each do |building|
-        @procurement.find_or_build_procurement_building(building.id)
+      buildings_data = current_user.buildings
+
+      if buildings_data.length != @procurement.procurement_buildings.length
+        buildings_data.each do |building|
+          @procurement.find_or_build_procurement_building(building.id)
+        end
       end
+
+      @procurement_buildings = @procurement.procurement_buildings.order_by_building_name.page(params[:page])
     end
 
     def find_regions(region_codes)

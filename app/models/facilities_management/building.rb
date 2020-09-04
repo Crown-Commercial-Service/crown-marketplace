@@ -7,6 +7,8 @@ module FacilitiesManagement
 
     attr_accessor :postcode_entry, :address
 
+    scope :order_by_building_name, -> { order(Arel.sql('lower(building_name)')) }
+
     before_save :populate_other_data, :determine_status, :populate_json_attribute
     before_validation :determine_status
     after_find :populate_json_attribute
@@ -47,8 +49,8 @@ module FacilitiesManagement
                       { id: 'Hospitals', title: 'Hospitals', caption: 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.' },
                       { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
 
-    validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 50 }, on: %i[new edit all]
-    validates :description, length: { maximum: 50 }, on: %i[new edit all]
+    validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 50 }, on: %i[new building_details all]
+    validates :description, length: { maximum: 50 }, on: %i[new building_details all]
 
     validates :gia, presence: true, on: %i[gia all]
     validates :gia, numericality: { only_integer: true }, on: %i[gia all]
@@ -59,11 +61,11 @@ module FacilitiesManagement
     validates :address_line_1, presence: true, length: { maximum: 100 }, on: %i[all add_address], if: -> { address_postcode.present? }
     validates :address_line_1, presence: true, length: { maximum: 100 }, on: %i[add_address]
     validates :address_town, presence: true, length: { maximum: 30 }, on: %i[all add_address]
-    validates :address_postcode, presence: true, on: %i[new edit all], if: -> { postcode_entry.blank? }
+    validates :address_postcode, presence: true, on: %i[new building_details all], if: -> { postcode_entry.blank? }
     validates :address_postcode, presence: true, on: %i[add_address]
-    validate :postcode_format, on: %i[new edit all add_address], if: -> { address_postcode.present? }
-    validates :address_region, presence: true, on: %i[new edit all], if: -> { address_postcode.present? && address_line_1.present? }
-    validate :address_selection, on: %i[new edit all]
+    validate :postcode_format, on: %i[new building_details all add_address], if: -> { address_postcode.present? }
+    validates :address_region, presence: true, on: %i[new building_details all], if: -> { address_postcode.present? && address_line_1.present? }
+    validate :address_selection, on: %i[new building_details all]
 
     before_validation proc { convert_other(:building_type) }, on: %i[type all], if: -> { building_type == 'Other' }
     before_validation proc { remove_other(:other_building_type) }, on: %i[type all], unless: -> { building_type == 'other' }
@@ -113,6 +115,10 @@ module FacilitiesManagement
       #{address_postcode}"
     end
 
+    def address_no_region
+      [address_line_1, address_line_2, address_town, address_postcode].reject(&:blank?).join(', ')
+    end
+
     def add_region_code_from_address_region
       regions = Postcode::PostcodeCheckerV2.find_region address_postcode.delete(' ')
       region = regions.select { |single_region| single_region[:region] == address_region }.first
@@ -123,6 +129,14 @@ module FacilitiesManagement
 
     MAX_PER_PAGE = 100
     self.per_page = MAX_PER_PAGE
+
+    def building_status
+      if status == 'Ready'
+        :completed
+      else
+        :incomplete
+      end
+    end
 
     private
 

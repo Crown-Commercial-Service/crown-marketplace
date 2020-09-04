@@ -20,12 +20,12 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-      <%= link_to t('.buildings'), facilities_management_procurement_summary_path(@procurement, summary: 'procurement_buildings'), :class => "govuk-link" %>
+      <%= link_to t('.buildings'), facilities_management_procurement_summary_path(@procurement, summary: 'buildings'), :class => "govuk-link" %>
     </dt>
     <dd class="govuk-summary-list__value">
     </dd>
     <dd class="govuk-summary-list__actions">
-      <%= govuk_tag(procurement.procurement_buildings_status) %>
+      <%= govuk_tag(procurement.buildings_status) %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
