@@ -22,9 +22,10 @@ module SpreadsheetImportHelper
       @package.workbook.add_worksheet(name: name) do |sheet|
         sheet.add_row(['Building Number'] + buildings.map.with_index { |_, i| "Building #{i + 1}" })
         sheet.add_row(['Building Name'] + buildings.map(&:building_name))
-        sheet.add_row(['Building Description'] + buildings.map(&:description))
-        sheet.add_row(['Building Address - Street'] + buildings.map(&:address_line_1))
-        sheet.add_row(['Building Address - Town'] + buildings.map(&:address_town))
+        sheet.add_row(['Building Description (optional)'] + buildings.map(&:description))
+        sheet.add_row(['Building Address - Line 1'] + buildings.map(&:address_line_1))
+        sheet.add_row(['Building Address - Line 2 (optional)'] + buildings.map(&:address_line_2))
+        sheet.add_row(['Building Address - Town or City'] + buildings.map(&:address_town))
         sheet.add_row(['Building Address - Postcode'] + buildings.map(&:address_postcode))
         sheet.add_row(['Building Gross Internal Area (GIA) (sqm)'] + buildings.map(&:gia))
         sheet.add_row(['Building External Area (sqm)'] + buildings.map(&:external_area))
