@@ -118,7 +118,7 @@ module FacilitiesManagement
     end
 
     def services_valid?
-      errors.add(:procurement_building_services, :invalid) && errors.add(:base, :services_invalid) unless procurement_building_services.all? { |pbs| pbs.answer_store[:questions].all? { |question| !question[:answer].nil? } }
+      errors.add(:procurement_building_services, :invalid) && errors.add(:base, :services_invalid) unless complete?
     end
 
     def update_procurement_building_services

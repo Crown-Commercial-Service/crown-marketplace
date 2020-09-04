@@ -331,6 +331,41 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe 'validations on procurement_building_services' do
+    before do
+      procurement_building.update(service_codes: ['C.5'])
+      procurement_building.procurement_building_services.first.update(service_standard: 'B')
+      procurement_building.reload
+    end
+
+    context 'when the service information is complete' do
+      before do
+        pbs = procurement_building.procurement_building_services.first
+        [1, 2, 3, 4].each do |number_of_floors|
+          pbs.lifts.create(number_of_floors: number_of_floors)
+        end
+        procurement_building.reload
+      end
+
+      it 'is valid' do
+        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+      end
+    end
+
+    context 'when the service information is not complete' do
+      before { procurement_building.valid?(:procurement_building_services) }
+
+      it 'is not valid' do
+        expect(procurement_building.errors.any?).to eq true
+      end
+
+      it 'has the correct errors' do
+        expect(procurement_building.errors.details[:procurement_building_services].first[:error]).to eq :invalid
+        expect(procurement_building.errors.details[:base].first[:error]).to eq :services_invalid
+      end
+    end
+  end
+
   describe '#validate_internal_area' do
     context 'when the building has an internal area of 0' do
       before do
