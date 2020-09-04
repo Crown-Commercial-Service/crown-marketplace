@@ -157,5 +157,9 @@ module FacilitiesManagement::ProcurementsHelper
   def address_in_a_line(building)
     [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
   end
+
+  def procurement_buildings_requiring_service_info(procurement)
+    procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
+  end
 end
 # rubocop:enable Metrics/ModuleLength
