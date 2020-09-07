@@ -36,6 +36,8 @@ module ProcurementValidator
 
     validates :local_government_pension_scheme, inclusion: { in: [true, false] }, on: %i[local_government_pension_scheme]
 
+    validates :governing_law, inclusion: { in: %w[english scottish northern_ireland] }, on: %i[governing_law]
+
     #############################################
     # Validation rules for contract-dates
     # these rules need to cover
@@ -205,7 +207,7 @@ module ProcurementValidator
       errors.add(:lot_number, :blank) unless lot_number_in_correct_range
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/PerceivedComplexity
     def validate_contract_details
       errors.add(:payment_method, :not_present_contract_details) if payment_method.nil?
       errors.add(:using_buyer_detail_for_invoice_details, :not_present_contract_details) if using_buyer_detail_for_invoice_details.nil?
@@ -213,10 +215,11 @@ module ProcurementValidator
       errors.add(:using_buyer_detail_for_notices_detail, :not_present_contract_details) if using_buyer_detail_for_notices_detail.nil?
       errors.add(:security_policy_document_required, :not_present_contract_details) if security_policy_document_required.nil?
       errors.add(:local_government_pension_scheme, :not_present_contract_details) if local_government_pension_scheme.nil?
+      errors.add(:governing_law, :not_present_contract_details) if governing_law.nil?
       errors.any?
     end
   end
-  # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def mobilisation_start_date_validation
     mobilisation_start_date = initial_call_off_start_date - mobilisation_period.weeks - 1.day

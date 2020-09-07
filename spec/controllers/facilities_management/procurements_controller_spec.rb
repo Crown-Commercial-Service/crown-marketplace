@@ -235,12 +235,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         context 'when da_journey_state is contract_details' do
-          before { procurement.update(da_journey_state: 'contract_details') }
+          render_views
+          before do
+            procurement.update(da_journey_state: 'contract_details')
+            get :show, params: { id: procurement.id }
+          end
 
           it 'sets the view da to contract_details' do
-            get :show, params: { id: procurement.id }
-
             expect(assigns(:view_da)).to eq 'contract_details'
+          end
+
+          it 'shows governing law question' do
+            expect(response.body).to match(/governing law/i)
           end
         end
 
@@ -396,6 +402,37 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           it 'will have a view_da of payment_method' do
             expect(assigns(:view_da)).to eq 'payment_method'
+          end
+        end
+
+        context 'when selecting the governing law question' do
+          render_views
+          before do
+            get :edit, params: { id: procurement.id, step: 'governing_law' }
+          end
+
+          it 'will render the edit view' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'will have a view name of edit' do
+            expect(assigns(:view_name)).to eq 'edit'
+          end
+
+          it 'will have a view_da of governing_law' do
+            expect(assigns(:view_da)).to eq 'governing_law'
+          end
+
+          it 'has links to documents' do
+            expect(response.body).to match(/core terms/i)
+            expect(response.body).to match(/schedule 24/i)
+            expect(response.body).to match(/schedule 25/i)
+          end
+
+          it 'has governing law options' do
+            expect(response.body).to match(/english law/i)
+            expect(response.body).to match(/scottish law/i)
+            expect(response.body).to match(/northern ireland law/i)
           end
         end
       end
@@ -1058,6 +1095,49 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'renders the edit page' do
             patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'local_government_pension_scheme', local_government_pension_scheme: false } }
             expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+        end
+      end
+
+      context 'when on the governing law page' do
+        before do
+          procurement.update(aasm_state: 'da_draft')
+          procurement.update(da_journey_state: 'contract_details')
+          patch :update, params: {
+            id: procurement.id,
+            facilities_management_procurement: { step: 'governing_law', governing_law: governing_law }
+          }
+        end
+
+        context 'when nothing is selected' do
+          let(:governing_law) { nil }
+
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'has a step of governing_law view' do
+            expect(controller.params[:step]).to eq 'governing_law'
+          end
+        end
+
+        context 'when a valid option is selected' do
+          let(:governing_law) { 'english' }
+
+          it 'redirects to show page' do
+            expect(response).to redirect_to(facilities_management_procurement_path(procurement))
+          end
+
+          it 'updates governing_law' do
+            expect(procurement.reload.governing_law).to eq governing_law
+          end
+        end
+
+        context 'when an invalid option is selected' do
+          let(:governing_law) { 'fried_eggs' }
+
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
           end
         end
       end

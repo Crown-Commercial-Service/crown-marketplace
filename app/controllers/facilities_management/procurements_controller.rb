@@ -615,6 +615,7 @@ module FacilitiesManagement
               :local_government_pension_scheme,
               :lot_number,
               :lot_number_selected_by_customer,
+              :governing_law,
               service_codes: [],
               region_codes: [],
               procurement_buildings_attributes: [:id,
@@ -907,6 +908,14 @@ module FacilitiesManagement
           continuation_text: 'Save and continue',
           return_text: 'Return to contract details',
           return_url: facilities_management_procurement_path(@procurement)
+        },
+        governing_law: {
+          back_url: facilities_management_procurement_path(@procurement),
+          page_title: 'Governing law',
+          continuation_text: 'Save and continue',
+          return_text: 'Return to contract details',
+          return_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details'
         },
         pension_funds: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme'),
