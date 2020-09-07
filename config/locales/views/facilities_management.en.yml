@@ -700,7 +700,7 @@ en:
         list_item_1: Service volumes - this is where you can check or input the volume required for each service.
         list_item_2: Service standards - this is where you can select the standard of service required.
         list_title: 'All the services that you require for this building are listed below, split into two sections:'
-        return_to_requirements: Return to requirements
+        return_to_requirements: Return to service requirements summary
         service_name: Service name
         service_standards: 2. Service standards
         service_volumes: 1. Service volumes
