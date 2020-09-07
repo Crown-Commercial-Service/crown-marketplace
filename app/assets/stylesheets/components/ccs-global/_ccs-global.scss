@@ -751,14 +751,22 @@ ul.ccs-pagination {
       margin-right : 0;
       }
 
-    a {
+    a, button {
       text-decoration : none;
-      color           : $govuk-link-colour !important;
+      color           : $govuk-link-colour;
 
       &[aria-current] {
-        color       : govuk-colour("grey-2") !important;
+        color       : govuk-colour("grey-2");
         font-weight : 600;
+
+        &:hover:not(:focus) {
+          color: govuk-colour("grey-1");
         }
+
+        &:focus {
+          color: #0b0c0c;
+        } 
+      }
 
       b {
         font-size   : 1.4rem;
@@ -766,11 +774,13 @@ ul.ccs-pagination {
         font-weight : 800;
         }
       }
+
+      &:focus {
+        color: #0b0c0c;
+      } 
     }
 
   }
-
-
 
 
 @media print {

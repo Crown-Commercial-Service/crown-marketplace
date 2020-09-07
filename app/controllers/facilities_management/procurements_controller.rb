@@ -60,7 +60,6 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     def edit
       redirect_to facilities_management_procurement_path(@procurement) if params[:step].nil?
 
@@ -69,47 +68,14 @@ module FacilitiesManagement
       set_view_data && (render @view_da && return) unless FacilitiesManagement::ProcurementRouter::STEPS.include?(params[:step]) && @procurement.aasm_state == 'da_draft'
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def update
-      start_bulk_upload && return if params['bulk_upload_spreadsheet'].present?
+      return if updates_for_show_pages
+      return if updates_for_edit_pages
 
-      change_the_contract_value && return if params['change_the_contract_value'].present?
+      update_procurement && return if params.key?(:facilities_management_procurement)
 
-      continue_to_summary && return if params['change_requirements'].present?
-
-      continue_to_results && return if params['continue_to_results'].present?
-
-      continue_from_change_contract_value && return if params['continue_from_change_contract_value'].present?
-
-      set_route_to_market && return if params['set_route_to_market'].present?
-
-      change_contract_details && return if params['change_contract_details'].present?
-
-      continue_to_review_and_generate && return if params['continue_to_review_and_generate'].present?
-
-      return_to_review_contract && return if params['return_to_review_contract'].present?
-
-      continue_to_procurement_pensions && return if params.dig('facilities_management_procurement', 'step') == 'local_government_pension_scheme'
-
-      update_pension_funds && return if params.dig('facilities_management_procurement', 'step') == 'pension_funds'
-
-      continue_to_new_contact_detail && return if ['invoicing_contact_details', 'authorised_representative', 'notices_contact_details'].include? params.dig('facilities_management_procurement', 'step')
-
-      continue_to_new_contact_detail_from_add_address && return if ['new_invoicing_address', 'new_authorised_representative_address', 'new_notices_address'].include? params.dig('facilities_management_procurement', 'step')
-
-      continue_to_contact_detail_from_new_contact_detail && return if ['new_invoicing_contact_details', 'new_authorised_representative_details', 'new_notices_contact_details'].include? params.dig('facilities_management_procurement', 'step')
-
-      update_service_codes && return if params.dig('facilities_management_procurement', 'step') == 'services'
-
-      update_region_codes && return if params.dig('facilities_management_procurement', 'step') == 'regions'
-
-      exit_detailed_search_bulk_upload && return if params['exit_bulk_upload'].present?
-
-      update_procurement && return if params['facilities_management_procurement'].present?
-
-      continue_da_journey if params['continue_da'].present?
+      continue_da_journey if params.key?(:continue_da)
     end
-    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
     # DELETE /procurements/1
     # DELETE /procurements/1.json
@@ -254,14 +220,63 @@ module FacilitiesManagement
       @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services && params[:facilities_management_procurement][:service_codes].nil?
     end
 
+    PARAMS_METHODS_SHOW = {
+      'page': :paginate_procurement_buildings,
+      'bulk_upload_spreadsheet': :start_bulk_upload,
+      'change_the_contract_value': :change_the_contract_value,
+      'change_requirements': :continue_to_summary,
+      'continue_to_results': :continue_to_results,
+      'continue_from_change_contract_value': :continue_from_change_contract_value,
+      'set_route_to_market': :set_route_to_market,
+      'change_contract_details': :change_contract_details,
+      'continue_to_review_and_generate': :continue_to_review_and_generate,
+      'return_to_review_contract': :return_to_review_contract,
+      'exit_bulk_upload': :exit_detailed_search_bulk_upload
+    }.freeze
+
+    PARAMS_METHODS_EDIT = {
+      'local_government_pension_scheme': :continue_to_procurement_pensions,
+      'pension_funds': :update_pension_funds,
+      'invoicing_contact_details': :continue_to_new_contact_detail,
+      'authorised_representative': :continue_to_new_contact_detail,
+      'notices_contact_details': :continue_to_new_contact_detail,
+      'new_invoicing_address': :continue_to_new_contact_detail_from_add_address,
+      'new_authorised_representative_address': :continue_to_new_contact_detail_from_add_address,
+      'new_notices_address': :continue_to_new_contact_detail_from_add_address,
+      'new_invoicing_contact_details': :continue_to_contact_detail_from_new_contact_detail,
+      'new_authorised_representative_details': :continue_to_contact_detail_from_new_contact_detail,
+      'new_notices_contact_details': :continue_to_contact_detail_from_new_contact_detail,
+      'services': :update_service_codes,
+      'regions': :update_region_codes,
+    }.freeze
+
+    def updates_for_show_pages
+      PARAMS_METHODS_SHOW.each do |key, value|
+        next unless params.key?(key)
+
+        send(value)
+        return true
+      end
+      false
+    end
+
+    def updates_for_edit_pages
+      PARAMS_METHODS_EDIT.each do |key, value|
+        next if params.dig('facilities_management_procurement', 'step') != key.to_s
+
+        send(value)
+        return true
+      end
+      false
+    end
+
     def change_the_contract_value
       @procurement.set_state_to_choose_contract_value!
       redirect_to facilities_management_procurement_path(@procurement)
     end
 
     def continue_to_summary
-      @procurement.set_state_to_detailed_search
-      @procurement.save
+      @procurement.set_state_to_detailed_search!
       redirect_to facilities_management_procurement_path(@procurement)
     end
 
@@ -399,13 +414,19 @@ module FacilitiesManagement
         contact_detail_redirection('new_authorised_representative_details', :authorised_contact_detail)
       elsif params.dig('facilities_management_procurement', 'using_buyer_detail_for_notices_detail') == 'false'
         contact_detail_redirection('new_notices_contact_details', :notices_contact_detail)
+      else
+        update_procurement
       end
     end
 
     def contact_detail_redirection(step, contact_detail)
       @procurement.assign_attributes(procurement_params)
 
-      redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: step) if @procurement.send(contact_detail).blank?
+      if @procurement.send(contact_detail).blank?
+        redirect_to edit_facilities_management_procurement_path(id: @procurement.id, step: step)
+      else
+        redirect_to facilities_management_procurement_path(@procurement)
+      end
     end
 
     def continue_to_new_contact_detail_from_add_address
@@ -454,6 +475,46 @@ module FacilitiesManagement
       @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
 
       redirect_to facilities_management_procurement_path(@procurement)
+    end
+
+    def update_procurement_building_selection
+      @procurement.assign_attributes(procurement_params)
+
+      if @procurement.save(context: :buildings)
+        redirect_to facilities_management_procurement_summary_path(@procurement, summary: 'buildings')
+      else
+        params[:step] = 'buildings'
+        set_paginated_buildings_data
+
+        render :edit
+      end
+    end
+
+    def paginate_procurement_buildings
+      update_procurement_building_selection && return if params.key?(:buildings)
+
+      params[:page] = params.keys.select { |key| key.include?('paginate') }.first.split('-').last
+      params[:step] = 'buildings'
+
+      @procurement.assign_attributes(procurement_params)
+      set_paginated_buildings_data
+
+      render :edit
+    end
+
+    def set_paginated_buildings_data
+      active_procurement_buildings = @procurement.procurement_buildings.select(&:active)
+
+      @active_procurement_building_ids = active_procurement_buildings.map(&:id)
+
+      @procurement.active_procurement_buildings.each do |procurement_building|
+        active_procurement_buildings << procurement_building if @active_procurement_building_ids.exclude?(procurement_building.id)
+      end
+
+      @procurement_buildings = @procurement.procurement_buildings.order_by_building_name.page(params[:page])
+      procurement_building_ids = @procurement_buildings.map(&:id)
+
+      @hidden_procurement_buildings = active_procurement_buildings.reject { |procurement_building| procurement_building_ids.include? procurement_building.id }
     end
 
     def contract_value_page_details
@@ -669,13 +730,9 @@ module FacilitiesManagement
     def set_buildings
       buildings_data = current_user.buildings
 
-      if buildings_data.length != @procurement.procurement_buildings.length
-        buildings_data.each do |building|
-          @procurement.find_or_build_procurement_building(building.id)
-        end
-      end
+      @procurement.create_new_procurement_buildings if buildings_data.length != @procurement.procurement_buildings.length
 
-      @procurement_buildings = @procurement.procurement_buildings.order_by_building_name.page(params[:page])
+      set_paginated_buildings_data
     end
 
     def find_regions(region_codes)

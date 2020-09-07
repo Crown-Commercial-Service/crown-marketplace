@@ -197,8 +197,8 @@ en:
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service requirement status must be ‘Complete’
             procurement_buildings:
-              invalid: Select one or more buildings you want to include in your procurement
-              not_present: You must select at least one building
+              invalid: Select at least one building
+              not_present: Select at least one building
             region_codes:
               blank: Select at least one region you need to include in your procurement
               invalid: Select at least one region you need to include in your procurement

@@ -57,7 +57,7 @@
           <% end %>
           </tbody>
         </table>
-        <%= will_paginate @page_data[:model_object], inner_window: 2, outer_window: 1 %>
+        <%= paginate @page_data[:model_object], views_prefix: 'shared' %>
       </div>
     <% end %>
     <%= link_to t('.return_to_your_account'), facilities_management_path, class: "govuk-link", 'aria-label': t('.return_to_your_account') %>

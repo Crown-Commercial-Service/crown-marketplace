@@ -129,9 +129,6 @@ module FacilitiesManagement
       self.address_region_code = region[:code]
     end
 
-    MAX_PER_PAGE = 100
-    self.per_page = MAX_PER_PAGE
-
     def building_status
       if status == 'Ready'
         :completed

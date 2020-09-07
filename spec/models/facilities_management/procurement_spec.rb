@@ -226,21 +226,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#find_or_build_procurement_building' do
-    let(:building_data) do
-      {
-        'name' => 'test',
-        'address' => {
-          'fm-address-line-1' => 'line 1',
-          'fm-address-line-2' => 'line 2',
-          'fm-address-town' => 'town',
-          'fm-address-county' => 'county',
-          'fm-address-postcode' => 'postcode'
-        }
-      }
-    end
-
-    let(:building_id) { SecureRandom.uuid }
+  describe '#create_new_procurement_buildings' do
+    let!(:building) { create(:facilities_management_building, user: procurement.user) }
+    let(:building_id) { building.id }
 
     context 'when procurement building already exists' do
       before do
@@ -249,30 +237,20 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
 
       it 'does not create a new one' do
-        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
+        expect { procurement.create_new_procurement_buildings }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
       end
     end
 
     context 'when procurement building does not exist' do
       it 'creates one' do
         procurement.save
-        expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+        expect { procurement.create_new_procurement_buildings }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
 
       it 'does not have any service codes present' do
         procurement.save
-        procurement.find_or_build_procurement_building(building_id)
+        procurement.create_new_procurement_buildings
         expect(procurement.procurement_buildings.last.service_codes).to be_empty
-      end
-    end
-
-    context 'when the procurement building does exists' do
-      it 'does not change the service codes when they are updated on the procurement' do
-        procurement.save
-        procurement.find_or_build_procurement_building(building_id)
-        procurement.service_codes << 'C.5'
-        procurement.save
-        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(procurement.procurement_buildings.last.service_codes, :count)
       end
     end
   end

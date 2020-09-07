@@ -253,6 +253,16 @@ module FacilitiesManagement
       end
     end
 
+    def create_new_procurement_buildings
+      building_ids = procurement_buildings.map(&:building_id)
+
+      user.buildings.each do |building|
+        next if building_ids.include? building.id
+
+        procurement_buildings.create(building_id: building.id)
+      end
+    end
+
     def find_or_build_procurement_building(building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
       procurement_building.save

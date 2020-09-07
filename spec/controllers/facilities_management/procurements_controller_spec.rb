@@ -1630,6 +1630,126 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
       end
+
+      describe '#pagination' do
+        let(:building1) { procurement.user.buildings.first }
+        let(:building2) { create(:facilities_management_building, user: procurement.user) }
+        let(:building3) { create(:facilities_management_building, user: procurement.user) }
+        let(:building4) { create(:facilities_management_building, user: procurement.user) }
+
+        let(:building1_active) { '1' }
+        let(:building2_active) { '0' }
+        let(:building3_active) { '0' }
+        let(:building4_active) { '0' }
+
+        before do
+          procurement.procurement_buildings.create(building_id: building2.id, active: false)
+          procurement.procurement_buildings.create(building_id: building3.id, active: false)
+          procurement.procurement_buildings.create(building_id: building4.id, active: false)
+        end
+
+        context 'when going to a different page' do
+          before do
+            ids = procurement.procurement_buildings.map(&:id)
+            patch :update, params: { id: procurement.id, blank: 'blank', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { id: ids[0], active: building1_active }, '1': { id: ids[1], active: building2_active }, '2': { id: ids[2], active: building3_active }, '3': { id: ids[3], active: building4_active } } } }
+          end
+
+          context 'when a building as checked' do
+            let(:building2_active) { '1' }
+
+            it 'adds to the active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids).sort).to eq [procurement.procurement_buildings[0].id, procurement.procurement_buildings[1].id].sort
+            end
+
+            it 'adds to the hidden_procurement_buildings' do
+              hidden_procurement_buildings = assigns(:hidden_procurement_buildings)
+              expect(hidden_procurement_buildings).to include procurement.procurement_buildings[0]
+              expect(hidden_procurement_buildings).to include procurement.procurement_buildings[1]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+
+          context 'when a building as un-checked' do
+            let(:building1_active) { '0' }
+
+            it 'takes away from the active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids)).to eq []
+            end
+
+            it 'does not change hidden_procurement_buildings' do
+              expect(assigns(:hidden_procurement_buildings)).to eq [procurement.procurement_buildings[0]]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+
+          context 'when no buildings are checked' do
+            it 'does not change active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids)).to eq [procurement.procurement_buildings[0].id]
+            end
+
+            it 'does not change hidden_procurement_buildings' do
+              expect(assigns(:hidden_procurement_buildings)).to eq [procurement.procurement_buildings[0]]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+        end
+
+        context 'when clicking save and continue' do
+          before do
+            ids = procurement.procurement_buildings.map(&:id)
+            patch :update, params: { id: procurement.id, buildings: 'Save and continue', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { id: ids[0], active: building1_active }, '1': { id: ids[1], active: building2_active }, '2': { id: ids[2], active: building3_active }, '3': { id: ids[3], active: building4_active } } } }
+          end
+
+          context 'when the selection is valid' do
+            let(:building2_active) { '1' }
+
+            before do
+              procurement.reload
+            end
+
+            it 'updates the database' do
+              expect(procurement.active_procurement_buildings.length).to eq 2
+            end
+
+            it 'redirects to the summary page' do
+              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'buildings')
+            end
+          end
+
+          context 'when the selection is not valid' do
+            let(:building1_active) { '0' }
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+
+            it 'stays on same page' do
+              expect(controller.params[:page]).to eq '1'
+            end
+          end
+        end
+      end
     end
 
     describe 'POST destroy' do

@@ -93,9 +93,6 @@ module FacilitiesManagement
       procurement.detailed_search? ? building.external_area : external_area
     end
 
-    MAX_PER_PAGE = 100
-    self.per_page = MAX_PER_PAGE
-
     private
 
     def service_code_selection
