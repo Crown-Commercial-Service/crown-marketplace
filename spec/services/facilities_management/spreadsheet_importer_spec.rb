@@ -88,7 +88,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
       it 'will save the data correctly' do
-        acceptable_attributes = %w[building_name description address_line_1 address_town gia external_area building_type other_building_type security_type other_security_type]
+        acceptable_attributes = %w[building_name description address_line_1 address_line_2 address_town gia external_area building_type other_building_type security_type other_security_type]
         expect(user.buildings.first.attributes.slice(*acceptable_attributes)).to eq spreadsheet_building.attributes.slice(*acceptable_attributes)
       end
 
@@ -234,6 +234,37 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
           it 'has the correct error' do
             expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:errors][:address_line_1].first[:error]).to eq :too_long
+          end
+        end
+      end
+
+      describe 'address_line_2' do
+        let(:spreadsheet_building) { create(:facilities_management_building, address_line_2: address_line_2) }
+        let(:building_data) { [[spreadsheet_building, 'Complete']] }
+
+        context 'when the address_line_2 is blank' do
+          let(:address_line_2) { '' }
+
+          it 'changes the state of the spreadsheet_import to failed' do
+            spreadsheet_import.reload
+            expect(spreadsheet_import.succeeded?).to be true
+          end
+        end
+
+        context 'when the address_line_2 is more than the max characters' do
+          let(:address_line_2) { 'a' * 101 }
+
+          it 'changes the state of the spreadsheet_import to failed' do
+            spreadsheet_import.reload
+            expect(spreadsheet_import.failed?).to be true
+          end
+
+          it 'makes the building invalid' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:valid]).to be false
+          end
+
+          it 'has the correct error' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:errors][:address_line_2].first[:error]).to eq :too_long
           end
         end
       end
@@ -1475,7 +1506,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'will save the building data correctly' do
-        acceptable_attributes = %w[building_name description address_line_1 address_town gia external_area building_type other_building_type security_type other_security_type]
+        acceptable_attributes = %w[building_name description address_line_1 address_line_2 address_town gia external_area building_type other_building_type security_type other_security_type]
         expect(user.buildings.find_by(building_name: name1).attributes.slice(*acceptable_attributes)).to eq building1.attributes.slice(*acceptable_attributes)
         expect(user.buildings.find_by(building_name: name2).attributes.slice(*acceptable_attributes)).to eq building2.attributes.slice(*acceptable_attributes)
         expect(user.buildings.find_by(building_name: name3).attributes.slice(*acceptable_attributes)).to eq building3.attributes.slice(*acceptable_attributes)

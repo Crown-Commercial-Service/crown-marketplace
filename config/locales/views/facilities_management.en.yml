@@ -31,8 +31,10 @@ en:
             address:
               not_selected: You must select an address to save a building
             address_line_1:
-              blank: Building and street name must be 100 characters or less
-              too_short: Building and street name must be 100 characters or less
+              blank: Add a building and street name
+              too_long: Building and street name must be 100 characters or less
+            address_line_2:
+              too_long: Building and street name must be 100 characters or less
             address_postcode:
               blank: Enter a valid postcode, like AA1 1AA
               invalid: Enter a valid postcode, like AA1 1AA
@@ -1513,7 +1515,7 @@ en:
           once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
           submit: Submit
           upload: Upload your file
-          upload_size: Supported format is .xlsx and maximum file is 2mb
+          upload_size: Supported format is .xlsx and maximum file is 10mb
           warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
         show:
           heading: File upload status

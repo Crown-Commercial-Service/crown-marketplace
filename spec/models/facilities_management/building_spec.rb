@@ -469,6 +469,67 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
             building.valid? :all
             expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
           end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_1].first).to eq 'Add a building and street name'
+          end
+        end
+
+        context 'when it is more than the max number of characters' do
+          before do
+            building.address_line_1 = 'a' * 101
+          end
+
+          it 'will be invalid when manually adding an address' do
+            building.valid? :add_address
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will be valid if no postcode given' do
+            building.address_postcode = nil
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1)).to eq []
+          end
+
+          it 'will be invalid if a postcode is given' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_1].first).to eq 'Building and street name must be 100 characters or less'
+          end
+        end
+      end
+
+      describe 'when saving address_line_2' do
+        context 'when it is more than the max number of characters' do
+          before do
+            building.address_line_2 = 'a' * 101
+          end
+
+          it 'will be invalid when manually adding an address' do
+            building.valid? :add_address
+            expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will be valid if no postcode given' do
+            building.address_postcode = nil
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_2)).to eq []
+          end
+
+          it 'will be invalid if a postcode is given' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_2].first).to eq 'Building and street name must be 100 characters or less'
+          end
         end
       end
 

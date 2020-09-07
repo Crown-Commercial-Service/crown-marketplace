@@ -60,6 +60,8 @@ module FacilitiesManagement
 
     validates :address_line_1, presence: true, length: { maximum: 100 }, on: %i[all add_address], if: -> { address_postcode.present? }
     validates :address_line_1, presence: true, length: { maximum: 100 }, on: %i[add_address]
+    validates :address_line_2, length: { maximum: 100 }, on: %i[all add_address], if: -> { address_postcode.present? }
+    validates :address_line_2, length: { maximum: 100 }, on: %i[add_address]
     validates :address_town, presence: true, length: { maximum: 30 }, on: %i[all add_address]
     validates :address_postcode, presence: true, on: %i[new building_details all], if: -> { postcode_entry.blank? }
     validates :address_postcode, presence: true, on: %i[add_address]
