@@ -1,4 +1,4 @@
-.govuk-link:focus, a:focus, .app-step-nav-header__title:focus, .app-step-nav-related__link:focus {
+.govuk-link:focus, a:focus, .app-step-nav-header__title:focus, .app-step-nav-related__link:focus, .button_as_link:focus {
 	outline: 3px solid rgba(0, 0, 0, 0);
 	color: #0b0c0c;
 	background-color: #fd0;
@@ -6,7 +6,7 @@
   text-decoration: none
 }
 
-.govuk-link:focus {
+.govuk-link:focus, .button_as_link:focus {
 	outline: 3px solid rgba(0, 0, 0, 0);
 	background-color: #fd0;
 	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
