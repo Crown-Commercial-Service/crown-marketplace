@@ -96,6 +96,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     @building_service = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
     @procurement_building = @building_service.procurement_building
     @building = @procurement_building.building
+    @procurement = @procurement_building.procurement
   end
 
   def create_first_lift
@@ -105,6 +106,6 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   protected
 
   def authorize_user
-    authorize! :manage, @procurement_building.procurement
+    authorize! :manage, @procurement
   end
 end

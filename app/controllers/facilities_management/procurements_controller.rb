@@ -709,6 +709,7 @@ module FacilitiesManagement
     def set_procurement_data
       @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
       set_buildings if params['step'] == 'buildings'
+      set_procurement_buildings if params['summary'] == 'buildings_and_services'
       return if @procurement.service_codes.nil? || @procurement.region_codes.nil?
 
       region_codes = @procurement.region_codes
@@ -733,6 +734,10 @@ module FacilitiesManagement
       @procurement.create_new_procurement_buildings if buildings_data.length != @procurement.procurement_buildings.length
 
       set_paginated_buildings_data
+    end
+
+    def set_procurement_buildings
+      @procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page])
     end
 
     def find_regions(region_codes)

@@ -303,20 +303,50 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
-      context 'when the user wants to edit buildings_and_services' do
-        context 'when the buildings and services are not complete' do
-          it 'redirects to the edit page with contract_period step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+      context 'when the user wants to edit services' do
+        before { procurement.update(service_codes: service_codes) }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings_and_services')
+        context 'when the services are not complete' do
+          let(:service_codes) { [] }
+
+          it 'redirects to the edit page with services step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'services')
           end
         end
 
-        context 'when the buildings and services are complete' do
-          before { procurement.active_procurement_buildings.first.update(service_codes: ['C.1']) }
+        context 'when the services are complete' do
+          let(:service_codes) { ['C.1'] }
 
           it 'renders the summary page' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
+
+            expect(response).to render_template(:summary)
+          end
+        end
+      end
+
+      context 'when the user wants to edit procurement_buildings' do
+        before do
+          procurement.active_procurement_buildings.each { |pb| pb.update(active: false) } if delete_procurement_buildings
+        end
+
+        context 'when there are no active_procurement_buildings' do
+          let(:delete_procurement_buildings) { true }
+
+          it 'redirects to the edit page with buildings step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings')
+          end
+        end
+
+        context 'when there are active_procurement_buildings' do
+          let(:delete_procurement_buildings) { false }
+
+          it 'renders the summary page' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
 
             expect(response).to render_template(:summary)
           end

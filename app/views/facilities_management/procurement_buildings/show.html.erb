@@ -1,5 +1,5 @@
 <%= render 'facilities_management/procurement_buildings/errors_on_show', procurement_building: @procurement_building %>
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement_building.procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l">
@@ -124,4 +124,4 @@
   </tbody>
 </table>
 
-<%= link_to t('.return_to_requirements'), facilities_management_procurement_summary_path(@procurement_building.procurement, summary: 'service_requirements'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'%>
+<%= link_to t('.return_to_requirements'), facilities_management_procurement_summary_path(@procurement, summary: 'service_requirements'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'%>

@@ -465,7 +465,7 @@ module FacilitiesManagement
     def buildings_and_services_status
       return :cannot_start if services_status == :not_started || buildings_status == :not_started
 
-      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :not_started
+      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :incomplete
     end
 
     def service_requirements_status
@@ -481,6 +481,11 @@ module FacilitiesManagement
 
     def sorted_active_procurement_buildings
       active_procurement_buildings.order_by_building_name
+    end
+
+    def services
+      sort_order = StaticData.work_packages.map { |wp| wp['code'] }
+      Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
     end
 
     private
