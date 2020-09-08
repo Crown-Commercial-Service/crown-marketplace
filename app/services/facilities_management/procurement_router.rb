@@ -38,6 +38,7 @@ class FacilitiesManagement::ProcurementRouter
     'new_notices_address': 'new_notices_address',
     'security_policy_document': 'security_policy_document',
     'local_government_pension_scheme': 'local_government_pension_scheme',
+    'governing_law': 'governing_law',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate_documents',

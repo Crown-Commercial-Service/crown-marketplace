@@ -262,4 +262,27 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
   # rubocop:enable RSpec/NestedGroups
+
+  describe 'governing_law validations' do
+    context 'when no governing law value selected' do
+      it 'is not valid' do
+        procurement.governing_law = nil
+        expect(procurement.valid?(:governing_law)).to be false
+      end
+    end
+
+    context 'when invalid governing law entered' do
+      it 'is not valid' do
+        procurement.governing_law = 'bobbins'
+        expect(procurement.valid?(:governing_law)).to be false
+      end
+    end
+
+    context 'when valid governing law entered' do
+      it 'is valid' do
+        procurement.governing_law = 'english'
+        expect(procurement.valid?(:governing_law)).to be true
+      end
+    end
+  end
 end
