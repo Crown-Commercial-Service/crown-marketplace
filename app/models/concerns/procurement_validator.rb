@@ -220,7 +220,11 @@ module ProcurementValidator
 
   def mobilisation_start_date_validation
     mobilisation_start_date = initial_call_off_start_date - mobilisation_period.weeks - 1.day
-    errors.add(:mobilisation_start_date, :greater_than) if mobilisation_start_date <= Time.zone.today
+    return unless mobilisation_start_date <= Time.zone.today
+
+    errors.add(:mobilisation_start_date, :greater_than)
+    errors.add(:mobilisation_period_required, '')
+    errors.add(:initial_call_off_start_date, '')
   end
 end
 # rubocop:enable Metrics/ModuleLength
