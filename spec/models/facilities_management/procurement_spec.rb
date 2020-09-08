@@ -308,20 +308,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    context 'when the initial_call_off_period is blank' do
-      it 'is expected to not be valid' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
-
-    context 'when the initial_call_off_period is blank' do
-      it 'is expected to not be valid' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
-
     context 'when the tupe is selected and mobilisation length is less than 4 weeks' do
       it 'is expected to not be valid' do
         procurement.tupe = true
@@ -336,6 +322,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.tupe = true
         procurement.mobilisation_period = 5
         expect(procurement.valid?(:all)).to eq true
+      end
+    end
+
+    context 'when the mobilisation period begins in the past' do
+      it 'is expected to not be valid' do
+        procurement.initial_call_off_start_date = Time.zone.today + 3.weeks
+        procurement.mobilisation_period_required = true
+        procurement.mobilisation_period = 4
+        expect(procurement.valid?(:all)).to eq false
       end
     end
 
