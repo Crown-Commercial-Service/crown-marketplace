@@ -13,8 +13,8 @@ end
 
 docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :left
 
-docx.p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v1.0', bold: true, size: 24, font: 'Calibri'
-docx.p 'Crown Copyright 2018', size: 24, font: 'Calibri'
+docx.p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v3.0', bold: true, size: 24, font: 'Calibri'
+docx.p 'Crown Copyright 2020', size: 24, font: 'Calibri'
 
 ['BUYER', 'AND', 'SUPPLIER', 'FACILITIES MANAGEMENT MARKETPLACE CONTRACT', 'REF: RM3830'].each do |sentence|
   docx.p sentence, bold: true, size: 24, font: 'Calibri', align: :center
