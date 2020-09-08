@@ -35,10 +35,14 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   it 'verify for, Building Information, worksheet the NUTS region' do
     expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
     expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa', 'asa'])
-    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Street', '10 Mariners Court', '10 Mariners Court'])
-    expect(wb.sheet('Buildings information').row(8)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
-    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building External Area (sqm)', 4596, 4596])
-    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
+    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '10 Mariners Court', '10 Mariners Court'])
+    expect(wb.sheet('Buildings information').row(5)).to match_array(['Building Address - Line 2', 'Floor 2', 'Floor 2'])
+    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
+    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596, 4596])
+    expect(wb.sheet('Buildings information').row(11)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
+    expect(wb.sheet('Buildings information').row(12)).to match_array(['Building Type (other)', nil, nil])
+    expect(wb.sheet('Buildings information').row(13)).to match_array(['Building Security Clearance', 'Baseline personnel security standard (BPSS)', 'Baseline personnel security standard (BPSS)'])
+    expect(wb.sheet('Buildings information').row(14)).to match_array(['Building Security Clearance (other)', nil, nil])
   end
 
   it 'verify for, service matrix, worksheet headers' do
@@ -69,6 +73,20 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     expect(wb.sheet('Service Information').row(3)).to match_array(['Work Package A - Contract Management', nil, nil])
     expect(wb.sheet('Service Information').row(4)).to match_array(['Work Package A - Contract Management', nil, '1.       Service A:1 - Integration'])
     expect(wb.sheet('Service Information').row(5)).to match_array(['Work Package A - Contract Management', nil, '1.1.    Service A:1 – Integration is Mandatory for Lot 1a-1c.'])
+  end
+
+  context 'when contract is sent' do
+    let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+    before do
+      contract.offer_to_supplier!
+    end
+
+    it 'returns the right Customer & Contract details header' do
+      expect(wb.sheet('Customer & Contract Details').row(1)).to match_array(['Reference number:', contract.contract_number])
+      expect(wb.sheet('Customer & Contract Details').cell(2, 1)).to match('Date/time of production of this document:')
+      expect(wb.sheet('Customer & Contract Details').cell(2, 2)).not_to be_nil
+    end
   end
   # rubocop:enable RSpec/MultipleExpectations
 end
