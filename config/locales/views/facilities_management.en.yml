@@ -612,6 +612,10 @@ en:
         submit: Save and continue
         town_or_city: Town or city
         your_details: Organisation address
+    documents:
+      service_specification_document:
+        name: RM3830 Service requirements and standards.pdf
+        text: Read the service specification document
     home:
       index:
         1_title: 1. Quick search
@@ -678,7 +682,6 @@ en:
         question: Select the facilities management services that you need
         remove_all: Remove all
         service_selected: service selected
-        service_specification_doc: Read the service specification document
         services_selected: services selected
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
