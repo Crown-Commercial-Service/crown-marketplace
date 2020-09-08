@@ -174,7 +174,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_buildings_information(sheet)
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
-    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_external_area, building_type, building_security_clearance].each do |row_type|
+    [building_description, building_address_line1, building_address_line2, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_external_area, building_type, building_type_other, building_security_clearance, building_security_clearance_other].each do |row_type|
       sheet.add_row row_type, style: standard_style, height: standard_row_height
     end
   end
@@ -199,11 +199,21 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     row
   end
 
-  def building_address_street
-    row = ['Building Address - Street']
+  def building_address_line1
+    row = ['Building Address - Line 1']
 
     @active_procurement_buildings.each do |building|
       row << sanitize_string_for_excel(building.address_line_1)
+    end
+
+    row
+  end
+
+  def building_address_line2
+    row = ['Building Address - Line 2']
+
+    @active_procurement_buildings.each do |building|
+      row << sanitize_string_for_excel(building.address_line_2)
     end
 
     row
@@ -274,6 +284,26 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
     @active_procurement_buildings.each do |building|
       row << sanitize_string_for_excel(building.security_type)
+    end
+
+    row
+  end
+
+  def building_type_other
+    row = ['Building Type (other)']
+
+    @active_procurement_buildings.each do |building|
+      row << sanitize_string_for_excel(building.other_building_type)
+    end
+
+    row
+  end
+
+  def building_security_clearance_other
+    row = ['Building Security Clearance (other)']
+
+    @active_procurement_buildings.each do |building|
+      row << sanitize_string_for_excel(building.other_security_type)
     end
 
     row
@@ -382,7 +412,8 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_contract_number(sheet)
-    sheet.add_row ['Reference number & date/time production of this document', "#{@contract.contract_number} #{@contract.offer_sent_date&.in_time_zone('London')&.strftime '- %Y/%m/%d - %l:%M%P'}"]
+    sheet.add_row ['Reference number:', @contract.contract_number.to_s]
+    sheet.add_row ['Date/time of production of this document:', @contract.offer_sent_date&.in_time_zone('London')&.strftime('%Y/%m/%d - %l:%M%P')]
     sheet.add_row []
   end
 
@@ -578,6 +609,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def sanitize_string_for_excel(string)
+    return unless string
     return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
 
     string

@@ -41,7 +41,9 @@ module FacilitiesManagement
         address_region_code: building.address_region_code,
         building_name: building.building_name,
         building_json: building.building_json,
-        description: building.description
+        description: building.description,
+        other_security_type: building.other_security_type,
+        other_building_type: building.other_building_type,
       )
     end
     # rubocop:enable Metrics/AbcSize, Rails/SkipsModelValidations
