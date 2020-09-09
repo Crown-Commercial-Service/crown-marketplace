@@ -1392,7 +1392,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'shown with the NOT STARTED status label' do
-          expect(status).to eq(:not_started)
+          expect(status).to eq(:incomplete)
         end
       end
 
@@ -1453,6 +1453,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'shown with the COMPLETED status label' do
           expect(status).to eq(:completed)
         end
+      end
+    end
+  end
+
+  describe '.services' do
+    context 'when service codes are not in order' do
+      before { procurement.update(service_codes: %w[E.4 D.3 C.6 H.10 G.3 C.11 K.5 L.7 C.1 E.7 I.3 C.5 C.17 C.14]) }
+
+      it 'returns the service codes in the work_package order' do
+        expect(procurement.services.map(&:code)).to eq %w[C.1 C.6 C.11 C.5 C.14 C.17 D.3 E.7 E.4 G.3 H.10 I.3 K.5 L.7]
       end
     end
   end

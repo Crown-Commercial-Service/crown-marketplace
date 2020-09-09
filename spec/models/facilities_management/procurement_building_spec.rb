@@ -149,7 +149,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -170,7 +170,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services'"
       end
 
       context 'when another service is included as well' do
@@ -191,7 +191,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system'"
       end
 
       context 'when another service is included as well' do
@@ -212,7 +212,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -233,7 +233,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -254,7 +254,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services'"
       end
 
       context 'when another service is included as well' do
@@ -275,7 +275,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -296,7 +296,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
       end
 
       context 'when another service is included as well' do

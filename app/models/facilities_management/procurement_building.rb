@@ -99,7 +99,7 @@ module FacilitiesManagement
 
     def service_code_selection
       return unless active
-      return errors.add(:service_codes, :invalid, building_name: building.building_name, building_id: id) if service_codes.empty?
+      return errors.add(:service_codes, :invalid) if service_codes.empty?
 
       service_code_selection_validation
     end
@@ -179,7 +179,7 @@ module FacilitiesManagement
     end
 
     def add_selection_error(index)
-      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index], building_name: building.building_name, building_id: id)
+      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index])
     end
 
     def area_complete?

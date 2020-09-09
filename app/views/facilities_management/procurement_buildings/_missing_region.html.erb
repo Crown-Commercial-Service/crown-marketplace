@@ -2,9 +2,9 @@
 
 <div class="govuk-grid-row" id="building-missing-region">
   <div class="govuk-grid-column-two-thirds">
-    <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement_building.procurement),  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
+    <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement),  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
     <%= render partial: 'shared/error_summary', locals: { errors: @building.errors } %>
-    <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement_building.procurement.contract_name, nil, nil, nil)) %>
+    <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
   </div>
 </div>
 <div class="govuk-grid-row">
@@ -24,27 +24,25 @@
 <%= building_summary t('.building_name'), @procurement_building.name %>
 <%= building_summary t('.building_address'), @procurement_building.full_address %>
 
-<%= form_for @building, url: facilities_management_procurement_building_path(@procurement_building), method: :patch do |f| %>
-  <%= form_group_with_error(f.object, :address_region) do %>
-    <div id="select-region">
-      <%= f.label :address_region, t('.select_region'), class: 'govuk-heading-s'%>
-      <%= display_error f.object, :address_region %>
-      <%= f.select :address_region, regions, { prompt: t('.prompt') }, { class: 'govuk-select govuk-!-width-one-third' } %>
-    </div>
-    <div id="region-selection" hidden>
-      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">
-        <%= t('.region') %>
-      </h3>
-      <span id="building-region" class="govuk-body govuk-!-margin-bottom-2">
-      </span>
-      <br/>
-      <hr class="govuk-section-break govuk-!-margin-bottom-2">
-      <%= link_to t('.change_link'), '#', class: 'govuk-link govuk--link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.change_link_aria_label'), id: 'change-region', tabindex: -1 %>
-    </div>
-  <% end %>
-  <hr class="govuk-section-break govuk-section-break--l">
-  <div>
-    <%= f.submit 'Save and return', class: 'govuk-button', data: { disable_with: false }, name: :add_missing_region, 'aria-label': 'Save and return' %><br/>
-    <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement_building.procurement),  'aria-label': t('.return_link'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+<%= form_group_with_error(f.object, :address_region) do %>
+  <div id="select-region">
+    <%= f.label :address_region, t('.select_region'), class: 'govuk-heading-s'%>
+    <%= display_error f.object, :address_region %>
+    <%= f.select :address_region, regions, { prompt: t('.prompt') }, { class: 'govuk-select govuk-!-width-one-third' } %>
+  </div>
+  <div id="region-selection" hidden>
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">
+      <%= t('.region') %>
+    </h3>
+    <span id="building-region" class="govuk-body govuk-!-margin-bottom-2">
+    </span>
+    <br/>
+    <hr class="govuk-section-break govuk-!-margin-bottom-2">
+    <%= link_to t('.change_link'), '#', class: 'govuk-link govuk--link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.change_link_aria_label'), id: 'change-region', tabindex: -1 %>
   </div>
 <% end %>
+<hr class="govuk-section-break govuk-section-break--l">
+<div>
+  <%= f.submit 'Save and return', class: 'govuk-button', data: { disable_with: false }, name: :add_missing_region, 'aria-label': 'Save and return' %><br/>
+  <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement),  'aria-label': t('.return_link'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
+</div>

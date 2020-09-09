@@ -6,7 +6,7 @@
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement_building.procurement.contract_name, nil, nil, nil)) %>
+      <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
       <h2 class="govuk-heading-l ccs-font-weight-semi-bold">
         <%= page_heading %>
       </h2>

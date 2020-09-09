@@ -251,15 +251,15 @@ en:
               gia_too_small: You have a service in ‘%{building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size
             service_codes:
               at_least_one: You must select at least one service for ‘%{building_name}’ building
-              invalid: Select at least one service for each building
-              invalid_billable: You must select another service to include 'Management of billable works' to '%{building_name}' building
-              invalid_cafm: You must select another service to include 'CAFM system' to '%{building_name}' building
-              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works' to '%{building_name}' building
-              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services' to '%{building_name}' building
-              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
-              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '%{building_name}' building"
-              invalid_helpdesk: You must select another service to include 'Helpdesk services' to '%{building_name}' building
-              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
+              invalid: You must select at least one service for this building
+              invalid_billable: You must select another service to include 'Management of billable works'
+              invalid_cafm: You must select another service to include 'CAFM system'
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works'
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services'
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
+              invalid_helpdesk: You must select another service to include 'Helpdesk services'
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
         facilities_management/procurement_building_service:
           attributes:
             base:
@@ -686,6 +686,14 @@ en:
         start_a_new_procurement_header: Services
         subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
+      buildings_and_services:
+        heading: Assigning services to a building
+        or: or
+        question: Which facilities management services do you require for this building?
+        return_link: Return to buildings and services summary
+        save_and_return: Save and return
+        select_all: Select all
+        select_all_that_apply: Select all that apply
       missing_region:
         building_address: Building address
         building_name: Building name
@@ -1253,13 +1261,6 @@ en:
           page_details_1: Please select all of the buildings you want to include in your procurement. Only fully set up 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
-        buildings_and_services:
-          buildings: Buildings
-          heading: Assigning services to buildings
-          help_html: For each building list in the left hand column, please select the required services from the right hand column. To help, we have already applied all your pre-selected services to all your buildings.<br/>To add to, or change your list of buildings or services, click on 'Return to requirements' and select either Services or Buildings in section 2.
-          services: Services
-          sub_heading: Which facilities management services do you require within each building?
-          there_is_a_problem: There is a problem
         cancel_and_return: Cancel, and return to the manage procurements page
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
@@ -1577,9 +1578,11 @@ en:
           heading: You have selected
           table_caption: Buildings
         buildings_and_services:
-          buildings: Buildings
-          services: Services
-          summary: The summary below shows the buildings within your procurement and the services you have assigned to each building. If you wish to amend or add a new building or service, please click on the 'change' button.
+          buildings: Building name and address
+          no_service_selected: No service selected
+          services: Assigned services
+          status: Status
+          summary: For the list of your buildings below, please click on the ones with an 'INCOMPLETE' status to assign the selected facilities management services for it. Once all the buildings show as 'COMPLETED' please click on the 'return to requirements' link. To add to, or change your list of buildings or services, click on ‘Return to requirements' and select either Services or Buildings in section 2.
         contract_period:
           heading: Contract period
           initial_call_off_period: Initial call-off period

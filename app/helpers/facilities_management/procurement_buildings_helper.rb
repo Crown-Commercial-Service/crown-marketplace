@@ -56,4 +56,12 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   def service_has_errors(service, attribute)
     service.errors[attribute].present?
   end
+
+  def form_object
+    if @step == 'missing_region'
+      @building
+    else
+      @procurement_building
+    end
+  end
 end
