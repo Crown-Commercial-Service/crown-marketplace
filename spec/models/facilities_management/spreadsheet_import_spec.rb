@@ -48,4 +48,520 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
   # end
   # end
   # end
+
+  describe 'methods for processing errors' do
+    before do
+      import.update(import_errors: import_errors)
+    end
+
+    describe '.building_error' do
+      let(:import_errors) { { "Building 1": building_1_errors } }
+
+      context 'when there are no errors on the building' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {}
+          }
+        end
+
+        it 'returns nil' do
+          expect(import.send(:building_error, 1, :building_name)).to eq nil
+        end
+      end
+
+      context 'when there are errors on the building' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: { address_line_1: [{ error: :blank }, { error: :too_long }] }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:building_error, 1, :address_line_1).values).to eq ['Building 1', :address_line_1, %i[blank too_long]]
+        end
+      end
+    end
+
+    describe '.building_errors' do
+      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+
+      context 'when there are no errors on the buildings' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {}
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {}
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {}
+          }
+        end
+
+        it 'returns an empty array' do
+          expect(import.building_errors).to eq []
+        end
+      end
+
+      context 'when there are errors on the buildings' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: { building_name: [{ error: :blank }], other_building_type: [{ error: :too_long }] }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {}
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: { building_type: [{ error: :inclusion }] }
+          }
+        end
+
+        it 'returns an array with the errors' do
+          error_details = import.building_errors
+
+          expect(error_details[0].values).to eq ['Building 1', :building_name, [:blank]]
+          expect(error_details[1].values).to eq ['Building 1', :other_building_type, [:too_long]]
+          expect(error_details[2].values).to eq ['Building 3', :building_type, [:inclusion]]
+        end
+      end
+    end
+
+    describe '.service_matrix_error' do
+      let(:import_errors) { { "Building 1": building_1_errors } }
+
+      context 'when there are no errors on the service matrix' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {}
+          }
+        end
+
+        it 'returns nil' do
+          expect(import.send(:service_matrix_error, 1, :building)).to eq nil
+        end
+      end
+
+      context 'when there are errors on the service matrix' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: { service_codes: [{ error: :invalid }], building: [{ error: :gia_too_small }] }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:service_matrix_error, 1, :building).values).to eq ['Building 1', :building, [:gia_too_small]]
+        end
+      end
+    end
+
+    describe '.service_matrix_errors' do
+      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+
+      context 'when there are no errors on the service matrix' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {}
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {}
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {}
+          }
+        end
+
+        it 'returns an empty array' do
+          expect(import.service_matrix_errors).to eq []
+        end
+      end
+
+      context 'when there are errors on the service matrix' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {}
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: { service_codes: [{ error: :invalid }], building: [{ error: :gia_too_small }] }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: { service_codes: [{ error: :invalid_cafm_billable }] }
+          }
+        end
+
+        it 'returns an array with the errors' do
+          error_details = import.service_matrix_errors
+
+          expect(error_details[0].values).to eq ['Building 2', :service_codes, [:invalid]]
+          expect(error_details[1].values).to eq ['Building 2', :building, [:gia_too_small]]
+          expect(error_details[2].values).to eq ['Building 3', :service_codes, [:invalid_cafm_billable]]
+        end
+      end
+    end
+
+    describe '.service_error on volumes' do
+      let(:import_errors) { { "Building 1": building_1_errors } }
+
+      context 'when there are no errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'E.4': {} }
+          }
+        end
+
+        it 'returns nil' do
+          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing)).to eq nil
+        end
+      end
+
+      context 'when there are errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'E.4': { no_of_appliances_for_testing: [{ error: :blank }] } }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:service_error, 1, 'E.4', :no_of_appliances_for_testing).values).to eq ['Building 1', 'Portable appliance testing', :no_of_appliances_for_testing, [:blank]]
+        end
+      end
+    end
+
+    describe '.service_volume_errors' do
+      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+
+      context 'when there are no errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: {}
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: {}
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: {}
+          }
+        end
+
+        it 'returns an empty array' do
+          expect(import.service_volume_errors).to eq []
+        end
+      end
+
+      context 'when there are errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'G.1': { no_of_building_occupants: [{ error: :invalid }] }, 'K.7': { no_of_units_to_be_serviced: [{ error: :blank }] } }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'E.4': {}, 'G.3': {} }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'K.2': { tones_to_be_collected_and_removed: [{ error: :invalid }] }, 'C.5': {} }
+          }
+        end
+
+        it 'returns an array with the errors' do
+          error_details = import.service_volume_errors
+
+          expect(error_details[0].values).to eq ['Building 1', 'Routine cleaning', :no_of_building_occupants]
+          expect(error_details[1].values).to eq ['Building 1', 'Feminine hygiene waste', :no_of_units_to_be_serviced]
+          expect(error_details[2].values).to eq ['Building 3', 'General waste', :tones_to_be_collected_and_removed]
+        end
+      end
+    end
+
+    describe '.lift_error' do
+      let(:import_errors) { { "Building 1": building_1_errors } }
+
+      context 'when there are no errors on lifts' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': {} }
+          }
+        end
+
+        it 'returns nil' do
+          expect(import.send(:lift_error, 1)).to eq nil
+        end
+      end
+
+      context 'when there are errors on the number of lifts' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': { lifts: [{ error: :required }] } }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:lift_error, 1).values).to eq ['Building 1', 'Lifts, hoists & conveyance systems maintenance', :lifts]
+        end
+      end
+
+      context 'when there are errors on the number of floors in a lift' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': { "lifts[4].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[6].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] } }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:lift_error, 1).values).to eq ['Building 1', 'Lifts, hoists & conveyance systems maintenance', :number_of_floors]
+        end
+      end
+    end
+
+    describe '.lift_errors' do
+      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+
+      context 'when there are no errors on the lifts' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': {}, 'E.4': {} }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': {}, 'I.4': {} }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': {}, 'G.3': {} }
+          }
+        end
+
+        it 'returns an empty array' do
+          expect(import.lift_errors).to eq []
+        end
+      end
+
+      context 'when there are errors on the lifts' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': { "lifts[1].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[3].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] }, 'E.4': {} }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': {}, 'I.4': {} }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'C.5': { lifts: [{ error: :required }] }, 'G.3': {} }
+          }
+        end
+
+        it 'returns an array with the errors' do
+          error_details = import.lift_errors
+
+          expect(error_details[0].values).to eq ['Building 1', 'Lifts, hoists & conveyance systems maintenance', :number_of_floors]
+          expect(error_details[1].values).to eq ['Building 3', 'Lifts, hoists & conveyance systems maintenance', :lifts]
+        end
+      end
+    end
+
+    describe '.service_error on service_hours' do
+      let(:import_errors) { { "Building 1": building_1_errors } }
+
+      context 'when there are no errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'H.4': {} }
+          }
+        end
+
+        it 'returns nil' do
+          expect(import.send(:service_error, 1, 'H.4', :service_hours)).to eq nil
+        end
+      end
+
+      context 'when there are errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'H.4': { detail_of_requirement: [{ error: :blank }] } }
+          }
+        end
+
+        it 'returns the error array' do
+          expect(import.send(:service_error, 1, 'H.4', :detail_of_requirement).values).to eq ['Building 1', 'Handyman services', :detail_of_requirement, [:blank]]
+        end
+      end
+    end
+
+    describe '.service_hour_errors' do
+      let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+
+      context 'when there are no errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'H.4': {}, 'I.4': {} }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'J.4': {} }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'J.1': {}, 'J.4': {} }
+          }
+        end
+
+        it 'returns an empty array' do
+          expect(import.service_hour_errors).to eq []
+        end
+      end
+
+      context 'when there are errors on the service volumes' do
+        let(:building_1_errors) do
+          {
+            building_name: 'Building 1',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'H.4': { service_hours: [{ error: :not_a_number }] }, 'I.4': {} }
+          }
+        end
+        let(:building_2_errors) do
+          {
+            building_name: 'Building 2',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'J.4': { service_hours: [{ error: :greater_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] } }
+          }
+        end
+        let(:building_3_errors) do
+          {
+            building_name: 'Building 3',
+            building_errors: {},
+            procurement_building_errors: {},
+            procurement_building_services_errors: { 'J.1': {}, 'J.4': {} }
+          }
+        end
+
+        it 'returns an array with the errors' do
+          error_details = import.service_hour_errors
+
+          expect(error_details[0].values).to eq ['Building 1', 'Handyman services', :service_hours, [:not_a_number]]
+          expect(error_details[1].values).to eq ['Building 2', 'Emergency response', :service_hours, [:greater_than_or_equal_to]]
+          expect(error_details[2].values).to eq ['Building 2', 'Emergency response', :detail_of_requirement, [:blank]]
+        end
+      end
+    end
+  end
 end

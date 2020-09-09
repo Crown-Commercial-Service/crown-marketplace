@@ -13,7 +13,6 @@ module FacilitiesManagement
     validate :service_code_selection, on: :buildings_and_services
     validate :services_valid?, on: :procurement_building_services
     validate :validate_service_requirements, on: :service_requirements
-    validate :services_present?, on: :procurement_building_services_present
     validate :validate_internal_area, on: :gia
     validate :validate_external_area, on: :external_area
 
@@ -104,10 +103,6 @@ module FacilitiesManagement
 
     def cleanup_service_codes
       self.service_codes = service_codes.reject(&:blank?)
-    end
-
-    def services_present?
-      errors.add(:service_codes, :at_least_one, building_name: name) if service_codes.empty?
     end
 
     def validate_service_requirements

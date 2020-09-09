@@ -28,31 +28,39 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def import_data
     basic_data_validation
-    stop_spreadsheet_import_if_any_errors
-    return if @errors.any?
+    return if spreadsheet_import_stopped?
 
     IMPORT_PROCESS_ORDER.each do |import_process|
       send(import_process)
       break if @errors.any?
     end
 
-    stop_spreadsheet_import_if_any_errors
-    return if @errors.any?
+    return if spreadsheet_import_stopped? || spreadsheet_not_present?
 
-    if imported_spreadsheet_data_valid?
-      save_spreadsheet_data
-      @spreadsheet_import.succeed!
-    else
-      @spreadsheet_import.fail!
-    end
+    imported_spreadsheet_data_valid? ? process_valid_import : process_invalid_import
   end
 
   private
 
-  def stop_spreadsheet_import_if_any_errors
-    return unless @errors.any?
+  def spreadsheet_import_stopped?
+    return false unless @errors.any?
 
-    @spreadsheet_import.fail!
+    @spreadsheet_import.fail! unless spreadsheet_not_present?
+    true
+  end
+
+  def process_valid_import
+    save_spreadsheet_data
+    @spreadsheet_import.succeed! unless spreadsheet_not_present?
+  end
+
+  def process_invalid_import
+    @spreadsheet_import.update(import_errors: collect_errors) unless spreadsheet_not_present?
+    @spreadsheet_import.fail! unless spreadsheet_not_present?
+  end
+
+  def spreadsheet_not_present?
+    FacilitiesManagement::SpreadsheetImport.find_by(id: @spreadsheet_import.id).nil?
   end
 
   ########## Importing buildings ##########
@@ -116,8 +124,18 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def remove_expected_errors(building)
-    building.errors.delete(:building_name) if building.errors.details[:building_name].any? { |error| error[:error] == :taken }
-    building.errors.delete(:address_region) if building.errors.details[:address_region].any?
+    building.errors.delete(:building_name) if error_present?(building.errors, :building_name, :taken)
+    building.errors.delete(:address_region) if error_present?(building.errors, :address_region)
+  end
+
+  def error_present?(errors, attribute, type = nil)
+    if errors.include?(attribute)
+      return true unless type
+
+      errors.details[attribute.to_sym].map { |e| e[:error] }.include? type
+    else
+      false
+    end
   end
 
   def building_columns(sheet)
@@ -202,7 +220,6 @@ class FacilitiesManagement::SpreadsheetImporter
     procurement_building = procurement_building_hash[:object]
 
     procurement_building.valid?(:buildings_and_services)
-    procurement_building.valid?(:procurement_building_services_present)
     procurement_building.validate_spreadsheet_gia(building.gia, building.building_name)
     procurement_building.validate_spreadsheet_external_area(building.external_area, building.building_name)
 
@@ -418,6 +435,19 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def procurement_building_services_valid?
     complete_procurement_array.all? { |building| building[:procurement_building][:procurement_building_services].all? { |pbs| pbs[:valid] } }
+  end
+
+  ########## Collect errors to show to the user ##########
+  def collect_errors
+    complete_procurement_array.map.with_index(1) do |building, index|
+      ["Building #{index}".to_sym,
+       {
+         building_name: building[:object].building_name || "Building #{index}",
+         building_errors: building[:errors],
+         procurement_building_errors: building[:procurement_building][:errors],
+         procurement_building_services_errors: building[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:errors]] }.to_h
+       }]
+    end.to_h
   end
 
   ########## Save the entire import ##########
