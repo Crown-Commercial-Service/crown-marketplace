@@ -9,7 +9,7 @@ module FacilitiesManagement
           I18n.t('attachment_2.annex_a.file_name', scope: base_scope),
           I18n.t('attachment_4.core_terms.file_name', scope: base_scope),
 
-          %w[1 3 4 4A 10 13 5 6 7 8 9].map do |suffix|
+          %w[1 3 4 4A 10 13 5 6 7 8 9 24 25].map do |suffix|
             I18n.t("contract_documents.call_off_schedule_#{suffix}.file_name", scope: base_scope)
           end,
 

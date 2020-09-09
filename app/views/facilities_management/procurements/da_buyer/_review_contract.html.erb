@@ -58,7 +58,7 @@
           </ul>
 
           <ul class="govuk-list govuk-!-margin-top-6 documents">
-            <% %w[1 2 3 4 4A 5 6 7 8 9 10 13].each do |suffix| %>
+            <% %w[1 2 3 4 4A 5 6 7 8 9 10 13 24 25].each do |suffix| %>
               <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
                 <% if suffix == '2' %>
                   <a href="<%= facilities_management_procurement_contract_documents_call_off_schedule_2_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id, format: :docx) %>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>

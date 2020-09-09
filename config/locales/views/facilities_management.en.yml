@@ -1130,6 +1130,12 @@ en:
             call_off_schedule_2:
               file_name: "#"
               title: Call-off Schedule 2 - Staff Transfer
+            call_off_schedule_24:
+              file_name: Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
+              title: Call-Off Schedule 24 (O) - Scottish Law
+            call_off_schedule_25:
+              file_name: Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
+              title: Call-Off Schedule 25 (O) - Northern Ireland Law
             call_off_schedule_3:
               file_name: Call-Off Schedule 3 - Continuous Improvement (DA) v3.0.pdf
               title: Call-off Schedule 3 - Continuous Improvement
