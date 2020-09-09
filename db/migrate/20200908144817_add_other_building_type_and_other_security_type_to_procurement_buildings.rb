@@ -4,7 +4,9 @@ class AddOtherBuildingTypeAndOtherSecurityTypeToProcurementBuildings < ActiveRec
     add_column :facilities_management_procurement_buildings, :other_security_type, :string
 
     # rubocop:disable Rails/SkipsModelValidations
-    FacilitiesManagement::ProcurementBuilding.all.each { |pb| pb.update_columns(other_security_type: pb.building.other_security_type, other_building_type: pb.building.other_building_type) }
+    FacilitiesManagement::ProcurementBuilding.find_in_batches do |array_of_pb|
+      array_of_pb.each { |pb| pb.update_columns(other_security_type: pb.building.other_security_type, other_building_type: pb.building.other_building_type) }
+    end
     # rubocop:enable Rails/SkipsModelValidations
   end
 
