@@ -54,7 +54,7 @@ module ProcurementValidator
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { initial_call_off_period.present? }, on: :contract_period
     validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, less_than_or_equal_to: 7 }, if: -> { initial_call_off_period.present? }, on: :contract_period
     validate  :initial_call_off_start_date_yyyy_invalid, on: :contract_period
-    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: %i[contract_period all]
+    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: :contract_period
     validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_period
     validate  :initial_call_off_start_date_valid_date, if: -> { initial_call_off_period_expects_a_date? && initial_call_off_period_whole_number? }, on: :contract_period
 
@@ -63,7 +63,7 @@ module ProcurementValidator
     validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
     validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
     validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_period
-    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: %i[contract_period all]
+    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_period
 
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_period
     validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_period
@@ -83,10 +83,7 @@ module ProcurementValidator
     validate :security_policy_document_date_valid?, on: :security_policy_document
 
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
-    validate :presence_of_about_the_contract, on: :all
-    validate :buildings_presence, on: :all
-    validate :validate_contract_period_questions, on: :all
-    validate :validate_mobilisation_and_tupe, on: :all
+    validate :all_complete, on: :continue
 
     # Validation for the contract_details page
     validate :validate_contract_details, on: :contract_details
@@ -187,12 +184,65 @@ module ProcurementValidator
       errors.add(:initial_call_off_period, :not_present) if initial_call_off_period.blank?
     end
 
-    def buildings_presence
-      errors.add(:procurement_buildings, :not_present) && errors.add(:base, :services_not_present) if active_procurement_buildings.empty?
+    # Validations for continuing on the requirements summary page
+
+    def all_complete
+      check_contract_details_completed
+      check_contract_period_completed
+      check_service_and_buildings_present
+      check_service_and_buildings_completed
     end
 
-    def validate_mobilisation_and_tupe
-      errors.add(:mobilisation_period, :not_valid_with_tupe) if ((mobilisation_period_required && mobilisation_period < 4) || mobilisation_period_required == false) && tupe == true
+    def check_contract_details_completed
+      errors.add(:base, :estimated_annual_cost_incomplete) unless estimated_annual_cost_status == :completed
+      errors.add(:base, :tupe_incomplete) unless tupe_status == :completed
+    end
+
+    def check_contract_period_completed
+      if contract_period_status == :completed
+        errors.add(:base, :initial_call_off_period_in_past) if contract_period_in_past?
+        errors.add(:base, :mobilisation_period_in_past) if mobilisation_period_in_past?
+        errors.add(:base, :mobilisation_period_required) unless mobilisation_period_valid_when_tupe_required?
+      else
+        errors.add(:base, :contract_period_incomplete)
+      end
+    end
+
+    def check_service_and_buildings_present
+      errors.add(:base, :services_incomplete) unless services_status == :completed
+      errors.add(:base, :buildings_incomplete) unless buildings_status == :completed
+    end
+
+    def check_service_and_buildings_completed
+      if (error_list & %i[services_incomplete buildings_incomplete]).any?
+        errors.add(:base, :buildings_and_services_incomplete)
+        errors.add(:base, :service_requirements_incomplete)
+      elsif buildings_and_services_completed?
+        errors.add(:base, :service_requirements_incomplete) unless service_requirements_completed?
+      else
+        errors.add(:base, :buildings_and_services_incomplete)
+        errors.add(:base, :service_requirements_incomplete)
+      end
+    end
+
+    def contract_period_in_past?
+      initial_call_off_start_date <= Time.now.in_time_zone('London').to_date
+    end
+
+    def mobilisation_period_in_past?
+      return false unless mobilisation_period_required
+
+      (initial_call_off_start_date - mobilisation_period.weeks - 1.day).to_date <= Time.now.in_time_zone('London').to_date
+    end
+
+    def mobilisation_period_valid_when_tupe_required?
+      return true unless tupe
+
+      (mobilisation_period_required && mobilisation_period >= 4)
+    end
+
+    def error_list
+      errors.details[:base].map { |detail| detail[:error] }
     end
 
     def lot_number_in_range
@@ -222,8 +272,7 @@ module ProcurementValidator
   # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def mobilisation_start_date_validation
-    mobilisation_start_date = initial_call_off_start_date - mobilisation_period.weeks - 1.day
-    return unless mobilisation_start_date <= Time.zone.today
+    return unless mobilisation_period_in_past?
 
     errors.add(:mobilisation_start_date, :greater_than)
     errors.add(:mobilisation_period_required, '')

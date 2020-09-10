@@ -65,10 +65,10 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(response).to render_template('show')
         end
 
-        it 'sets the view name to detailed_search_summary' do
+        it 'sets the view name to requirements' do
           get :show, params: { id: procurement.id }
 
-          expect(assigns(:view_name)).to eq 'detailed_search_summary'
+          expect(assigns(:view_name)).to eq 'requirements'
         end
       end
 
@@ -387,8 +387,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             expect(response).to render_template('edit')
           end
 
-          it 'will have a view name of detailed_search_summary' do
-            expect(assigns(:view_name)).to eq 'detailed_search_summary'
+          it 'will have a view name of requirements' do
+            expect(assigns(:view_name)).to eq 'requirements'
           end
 
           it 'will set the view_da to nil' do
@@ -625,7 +625,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'with a valid procurement' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
@@ -641,7 +642,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'with an invalid procurement' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(false)
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
@@ -784,7 +786,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when the procurement is valid' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
 
@@ -806,7 +809,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             procurement.update(da_journey_state: 'sending')
             allow_any_instance_of(procurement.class).to receive(:procurement_suppliers).and_return([obj])
             allow(obj).to receive(:id).and_return(id)
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             allow_any_instance_of(procurement.class).to receive(:offer_to_next_supplier)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
@@ -828,7 +832,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when the procurement is not valid' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(false)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
 

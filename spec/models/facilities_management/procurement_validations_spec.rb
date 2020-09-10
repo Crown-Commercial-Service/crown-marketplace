@@ -285,4 +285,97 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '.contract_period_in_past?' do
+    before do
+      procurement.update(initial_call_off_start_date: initial_call_off_start_date)
+    end
+
+    context 'when initial call off period is in the past' do
+      let(:initial_call_off_start_date) { Time.now.in_time_zone('London') - 10.days }
+
+      it 'returns true' do
+        expect(procurement.send(:contract_period_in_past?)).to eq true
+      end
+    end
+
+    context 'when initial call off period is not in the past' do
+      let(:initial_call_off_start_date) { Time.now.in_time_zone('London') + 10.days }
+
+      it 'returns false' do
+        expect(procurement.send(:contract_period_in_past?)).to eq false
+      end
+    end
+  end
+
+  describe '.mobilisation_period_in_past?' do
+    before do
+      procurement.update(initial_call_off_start_date: Time.now.in_time_zone('London') + 5.weeks)
+      procurement.update(mobilisation_period_required: true)
+      procurement.update(mobilisation_period: mobilisation_period)
+    end
+
+    context 'when mobilisation period is in the past' do
+      let(:mobilisation_period) { 10 }
+
+      it 'returns true' do
+        expect(procurement.send(:mobilisation_period_in_past?)).to eq true
+      end
+    end
+
+    context 'when mobilisation period is not in the past' do
+      let(:mobilisation_period) { 4 }
+
+      it 'returns false' do
+        expect(procurement.send(:mobilisation_period_in_past?)).to eq false
+      end
+    end
+  end
+
+  describe '.mobilisation_period_valid_when_tupe_required?' do
+    let(:mobilisation_period_required) { false }
+    let(:mobilisation_period) { 4 }
+
+    before do
+      procurement.update(tupe: tupe)
+      procurement.update(mobilisation_period_required: mobilisation_period_required)
+      procurement.update(mobilisation_period: mobilisation_period)
+    end
+
+    context 'when tupe is true' do
+      let(:tupe) { true }
+
+      context 'when mobilisation period required is false' do
+        it 'returns false' do
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq false
+        end
+      end
+
+      context 'when mobilisation period required is true and is 3 weeks' do
+        let(:mobilisation_period_required) { true }
+        let(:mobilisation_period) { 3 }
+
+        it 'returns false' do
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq false
+        end
+      end
+
+      context 'when mobilisation period required is true and is 4 weeks' do
+        let(:mobilisation_period_required) { true }
+        let(:mobilisation_period) { 4 }
+
+        it 'returns true' do
+          expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq true
+        end
+      end
+    end
+
+    context 'when tupe is false' do
+      let(:tupe) { false }
+
+      it 'returns true' do
+        expect(procurement.send(:mobilisation_period_valid_when_tupe_required?)).to eq true
+      end
+    end
+  end
 end

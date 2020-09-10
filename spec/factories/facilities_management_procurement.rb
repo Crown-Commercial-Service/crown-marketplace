@@ -24,6 +24,24 @@ FactoryBot.define do
     aasm_state { 'detailed_search' }
   end
 
+  factory :facilities_management_procurement_without_procurement_buildings, class: FacilitiesManagement::Procurement do
+    contract_name { Faker::Name.unique.name }
+    estimated_cost_known { 12345 }
+    tupe { false }
+    aasm_state { 'detailed_search' }
+    initial_call_off_period { 1 }
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    service_codes { ['C.1', 'C.2'] }
+    association :user
+    mobilisation_period_required { true }
+    mobilisation_period { 4 }
+    extensions_required { true }
+    optional_call_off_extensions_1 { 1 }
+    optional_call_off_extensions_2 { 1 }
+    optional_call_off_extensions_3 { 1 }
+    optional_call_off_extensions_4 { 1 }
+  end
+
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
     aasm_state { 'da_draft' }
     procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
