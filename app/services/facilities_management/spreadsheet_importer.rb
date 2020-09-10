@@ -9,13 +9,14 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def basic_data_validation
-    # if !template_valid?
-    #   @errors << :template_invalid
-    if spreadsheet_not_started?
+    if !template_valid?
+      @errors << :template_invalid
+    elsif spreadsheet_not_started?
       @errors << :not_started
     elsif spreadsheet_not_ready?
       @errors << :not_ready if spreadsheet_not_ready?
     end
+
     @errors
   end
 
@@ -46,7 +47,7 @@ class FacilitiesManagement::SpreadsheetImporter
   def import_buildings
     building_sheet = @user_uploaded_spreadsheet.sheet('Building Information')
 
-    if sheet_complete?(building_sheet, BUILDINGS_COMPLETE_ROW, 'Complete')
+    if sheet_complete?(building_sheet, 14, 'Complete')
       building_columns(building_sheet).each_with_index do |col, index|
         index += 2
         if col.blank?
@@ -71,7 +72,7 @@ class FacilitiesManagement::SpreadsheetImporter
       address_line_1: building_column[3],
       address_line_2: building_column[4],
       address_town: building_column[5],
-      address_postcode: building_column[POSTCODE_ROW]&.upcase,
+      address_postcode: building_column[6]&.upcase,
       gia: building_column[7],
       external_area: building_column[8],
       building_type: building_column[9],
@@ -82,7 +83,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def add_regions(building, building_column)
-    region = Postcode::PostcodeCheckerV2.find_region building_column[POSTCODE_ROW].to_s
+    region = Postcode::PostcodeCheckerV2.find_region building_column[6].to_s
     (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.count == 1
   end
 
@@ -108,14 +109,14 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def building_columns(sheet)
-    columns = sheet.row(BUILDINGS_COMPLETE_ROW)[1..-1]
+    columns = sheet.row(14)[1..-1]
     index = columns.reverse.index { |x| x == 'Complete' } + 1
 
     columns[0..-index]
   end
 
-  POSTCODE_ROW = 6
-  BUILDINGS_COMPLETE_ROW = 14
+  # POSTCODE_ROW = 6
+  # BUILDINGS_COMPLETE_ROW = 14
 
   # Creating procurement buildings
   def add_procurement_buildings
