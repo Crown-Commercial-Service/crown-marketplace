@@ -9,9 +9,10 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def basic_data_validation
-    if !template_valid?
-      @errors << :template_invalid
-    elsif spreadsheet_not_started?
+    # if !template_valid?
+    #  @errors << :template_invalid
+
+    if spreadsheet_not_started?
       @errors << :not_started
     elsif spreadsheet_not_ready?
       @errors << :not_ready if spreadsheet_not_ready?
