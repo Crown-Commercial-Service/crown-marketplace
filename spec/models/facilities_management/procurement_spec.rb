@@ -1438,6 +1438,19 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement_building2.procurement_building_services.first.update(service_standard: 'A')
       end
 
+      # rubocop:disable RSpec/AnyInstance
+      context 'when no volumes or standards are required for any services' do
+        before do
+          allow_any_instance_of(FacilitiesManagement::ProcurementBuildingService).to receive(:requires_volume?).and_return(false)
+          allow_any_instance_of(FacilitiesManagement::ProcurementBuildingService).to receive(:requires_service_standard?).and_return(false)
+        end
+
+        it 'shown with the NOT REQUIRED status label' do
+          expect(status).to eq(:not_required)
+        end
+      end
+      # rubocop:enable RSpec/AnyInstance
+
       context 'when all the buildings service requirements have not yet been COMPLETED' do
         before do
           procurement_building1.building.update(gia: 0)

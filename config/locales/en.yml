@@ -1041,6 +1041,7 @@ en:
       completed: completed
       in_progress: in progress
       incomplete: incomplete
+      not_required: not required
       not_started: not started
     users:
       confirm_new:
