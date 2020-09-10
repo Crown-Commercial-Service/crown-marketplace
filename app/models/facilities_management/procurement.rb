@@ -470,6 +470,7 @@ module FacilitiesManagement
 
     def service_requirements_status
       return :cannot_start unless buildings_and_services_status == :completed
+      return :not_required if no_services_requiring_standard? && no_services_requiring_volume?
 
       active_procurement_buildings.all?(&:complete?) ? :completed : :incomplete
     end
@@ -486,6 +487,14 @@ module FacilitiesManagement
     def services
       sort_order = StaticData.work_packages.map { |wp| wp['code'] }
       Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
+    end
+
+    def no_services_requiring_volume?
+      procurement_building_services.none?(&:requires_volume?)
+    end
+
+    def no_services_requiring_standard?
+      procurement_building_services.none?(&:requires_service_standard?)
     end
 
     private

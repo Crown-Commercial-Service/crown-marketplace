@@ -44,7 +44,7 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-      <% if procurement.service_requirements_status == :cannot_start %>
+      <% if %i[cannot_start not_required].include?(procurement.service_requirements_status) %>
         <%= t('.service_requirements') %>
       <% else %>
         <%= link_to t('.service_requirements'), facilities_management_procurement_summary_path(@procurement, summary: 'service_requirements'), :class => "govuk-link" %>

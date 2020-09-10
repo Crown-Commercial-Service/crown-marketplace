@@ -339,7 +339,8 @@ module ApplicationHelper
       cannot_start: 'govuk-tag--grey',
       incomplete: 'govuk-tag--red',
       in_progress: 'govuk-tag--blue',
-      not_started: 'govuk-tag--grey'
+      not_started: 'govuk-tag--grey',
+      not_required: 'govuk-tag--grey'
     }
 
     content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
