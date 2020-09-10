@@ -11,7 +11,7 @@ module FacilitiesManagement
     validates :spreadsheet_file, antivirus: { message: :malicious }, on: :upload
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                                message: :wrong_content_type }, on: :upload
+                                                 message: :wrong_content_type }, on: :upload
     # validate :spreadsheet_basic_data_validation, on: :upload
 
     aasm do
