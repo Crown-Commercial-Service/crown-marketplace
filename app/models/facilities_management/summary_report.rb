@@ -108,8 +108,6 @@ module FacilitiesManagement
       services = case spreadsheet_type
                  when :da
                    da_procurement_building_services(building)
-                 when :fc
-                   fc_procurement_building_services(building)
                  else
                    building.procurement_building_services
                  end
@@ -132,10 +130,6 @@ module FacilitiesManagement
 
     def da_procurement_building_services(building)
       building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
-    end
-
-    def fc_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
     end
 
     def uom_values(spreadsheet_type)

@@ -22,6 +22,12 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   before do
     procurement.active_procurement_buildings.first.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours, detail_of_requirement: detail_of_requirement)
     procurement.active_procurement_buildings.last.procurement_building_services[0].update(code: 'E.4', no_of_appliances_for_testing: no_of_appliances_for_testing)
+
+    procurement.active_procurement_buildings.each do |building|
+      service_codes = building.procurement_building_services.map(&:code)
+
+      building.update(service_codes: service_codes)
+    end
   end
 
   # rubocop:disable RSpec/MultipleExpectations
@@ -48,8 +54,8 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   it 'verify for, service matrix, worksheet headers' do
     expect(wb.sheet('Service Matrix').row(1)).to match_array(['Service Reference', 'Service Name', 'Building 1', 'Building 2'])
     expect(wb.sheet('Service Matrix').row(2)).to match_array([nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Matrix').row(3)).to match_array(['E.4', 'Portable appliance testing', nil, nil])
-    expect(wb.sheet('Service Matrix').row(4)).to match_array(['I.1', 'Reception service', nil, nil])
+    expect(wb.sheet('Service Matrix').row(3)).to match_array(['E.4', 'Portable appliance testing', nil, 'Yes'])
+    expect(wb.sheet('Service Matrix').row(4)).to match_array(['I.1', 'Reception service', 'Yes', nil])
   end
 
   it 'verify for, Volume, worksheet headers' do

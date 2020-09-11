@@ -98,8 +98,4 @@ module FacilitiesManagement::SummaryHelper
   def no_price_message
     "Suggested sub-lot <span style='display:inline-block; position: relative; left: 270px;'><strong>Lot #{@report.current_lot}</strong></span>"
   end
-
-  def calculate_uom_value(val)
-    val[:uom_value].is_a?(Numeric) || val[:uom_value].is_a?(String) ? val[:uom_value].to_f : nil
-  end
 end

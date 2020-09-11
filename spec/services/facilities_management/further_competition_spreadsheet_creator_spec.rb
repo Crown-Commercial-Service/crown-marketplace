@@ -1,13 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
-  let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia) }
+  let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia, assessed_value: 11541.72, lot_number: '1a') }
   let(:spreadsheet_builder) { described_class.new(procurement_with_buildings.id) }
+
+  before do
+    procurement_with_buildings.active_procurement_buildings.first.update(service_codes: ['C.1', 'H.4'])
+    procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'B')
+    procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'H.4').update(service_hours: 208, detail_of_requirement: 'Details of the requirement')
+    procurement_with_buildings.procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name('Abernathy and Sons').id, direct_award_value: 123456)
+  end
 
   context 'and verify FC excel' do
     let(:wb) do
-      first_building = procurement_with_buildings.active_procurement_buildings.first
-      create(:facilities_management_procurement_building_service_with_service_hours, procurement_building: first_building)
       report = FacilitiesManagement::SummaryReport.new(procurement_with_buildings.id)
 
       supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
@@ -21,7 +26,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     it 'verify address formatting' do
       user = procurement_with_buildings.user
-      expect(spreadsheet_builder.get_address(procurement_with_buildings.user.buyer_detail)).to eq(user.buyer_detail.organisation_address_line_1 + ', ' +
+      expect(spreadsheet_builder.send(:get_address, procurement_with_buildings.user.buyer_detail)).to eq(user.buyer_detail.organisation_address_line_1 + ', ' +
                                                                       user.buyer_detail.organisation_address_line_2 + ', ' +
                                                                       user.buyer_detail.organisation_address_town + ', ' +
                                                                       user.buyer_detail.organisation_address_county + '. ' +
@@ -32,7 +37,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     it 'Verify Service Marix headers' do
       expect(wb.sheet('Service Matrix').row(1)).to eq ['Service Reference', 'Service Name', 'Building 1']
       expect(wb.sheet('Service Matrix').row(2)).to eq [nil, nil, 'asa']
-      expect(wb.sheet('Service Matrix').row(3)).to eq ['C.1', 'Mechanical and electrical engineering maintenance - Standard A', 'Yes']
+      expect(wb.sheet('Service Matrix').row(3)).to eq ['C.1', 'Mechanical and electrical engineering maintenance - Standard B', 'Yes']
       expect(wb.sheet('Service Matrix').row(4)).to eq ['H.4', 'Handyman services', 'Yes']
     end
     # rubocop:enable RSpec/MultipleExpectations
@@ -55,14 +60,14 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do
       procurement_with_buildings.procurement_buildings.each(&:set_gia)
-      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil]
-      expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil]
-      expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil]
-      expect(wb.sheet('Shortlist').row(5)).to eq ['Estimated cost', '£11,541.72 ']
-      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a']
-      expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m']
-      expect(wb.sheet('Shortlist').row(9)).to eq ['Suppliers shortlist', 'Further supplier information and contact details can be found here:']
-      expect(wb.sheet('Shortlist').row(10)).to eq ['Abernathy and Sons', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers']
+      expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil, nil]
+      expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil, nil]
+      expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil, nil]
+      expect(wb.sheet('Shortlist').row(5)).to eq ['Estimated cost', '£11,541.72 ', '(Partial estimated cost)']
+      expect(wb.sheet('Shortlist').row(6)).to eq ['Sub-lot recommendation', 'Sub-lot 1a', '(Customer selected)']
+      expect(wb.sheet('Shortlist').row(7)).to eq ['Sub-lot value range', 'Up to £7m', nil]
+      expect(wb.sheet('Shortlist').row(9)).to eq ['Suppliers shortlist', 'Further supplier information and contact details can be found here:', nil]
+      expect(wb.sheet('Shortlist').row(10)).to eq ['Abernathy and Sons', 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', nil]
     end
     # rubocop:enable RSpec/MultipleExpectations
 
