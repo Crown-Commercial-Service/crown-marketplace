@@ -1,4 +1,11 @@
 class FacilitiesManagement::SpreadsheetImporter
+  POSTCODE_ROW = 6
+  BUILDINGS_COMPLETE_ROW = 14
+  # This can be added as more parts of the bulk upload are completed
+  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services].freeze
+  TEMPLATE_FILE_NAME = 'Services and buildings template v1.0.xlsx'.freeze
+  TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
+
   def initialize(spreadsheet_import)
     @spreadsheet_import = spreadsheet_import
     @procurement = @spreadsheet_import.procurement
@@ -16,12 +23,8 @@ class FacilitiesManagement::SpreadsheetImporter
     elsif spreadsheet_not_ready?
       @errors << :not_ready if spreadsheet_not_ready?
     end
-
     @errors
   end
-
-  # This can be added as more parts of the bulk upload are completed
-  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services].freeze
 
   def import_data
     IMPORT_PROCESS_ORDER.each do |import_process|
@@ -47,7 +50,7 @@ class FacilitiesManagement::SpreadsheetImporter
   def import_buildings
     building_sheet = @user_uploaded_spreadsheet.sheet('Building Information')
 
-    if sheet_complete?(building_sheet, 14, 'Complete')
+    if sheet_complete?(building_sheet, BUILDINGS_COMPLETE_ROW, 'Complete')
       building_columns(building_sheet).each_with_index do |col, index|
         index += 2
         if col.blank?
@@ -72,7 +75,7 @@ class FacilitiesManagement::SpreadsheetImporter
       address_line_1: building_column[3],
       address_line_2: building_column[4],
       address_town: building_column[5],
-      address_postcode: building_column[6]&.upcase,
+      address_postcode: building_column[POSTCODE_ROW]&.upcase,
       gia: building_column[7],
       external_area: building_column[8],
       building_type: building_column[9],
@@ -83,7 +86,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def add_regions(building, building_column)
-    region = Postcode::PostcodeCheckerV2.find_region building_column[6].to_s
+    region = Postcode::PostcodeCheckerV2.find_region building_column[POSTCODE_ROW].to_s.delete(' ')
     (building.address_region_code = region[0][:code]) && (building.address_region = region[0][:region]) if region.count == 1
   end
 
@@ -109,14 +112,11 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def building_columns(sheet)
-    columns = sheet.row(14)[1..-1]
+    columns = sheet.row(BUILDINGS_COMPLETE_ROW)[1..-1]
     index = columns.reverse.index { |x| x == 'Complete' } + 1
 
     columns[0..-index]
   end
-
-  # POSTCODE_ROW = 6
-  # BUILDINGS_COMPLETE_ROW = 14
 
   # Creating procurement buildings
   def add_procurement_buildings
@@ -334,9 +334,6 @@ class FacilitiesManagement::SpreadsheetImporter
     instructions_sheet.row(10)[1] == 'Awaiting Data Input'
   end
 
-  TEMPLATE_FILE_NAME = 'Services and buildings template v1.0.xlsx'.freeze
-  TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
-
   def template_valid?
     template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
 
@@ -354,15 +351,15 @@ class FacilitiesManagement::SpreadsheetImporter
       [8, 1], [8, 2], [8, 4] # Lists (hidden)
     ]
 
-    columns.each do |tab, col|
-      next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
+    #columns.each do |tab, col|
+    #  next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
 
-      Rails.logger.info "Bulk upload: column does not match template, sheet (start from 0): #{tab}, col (start from 1): #{col}, procurement id: #{@procurement.id}"
-      return false
-    end
+    #  Rails.logger.info "Bulk upload: column does not match template, sheet (start from 0): #{tab}, col (start from 1): #{col}, procurement id: #{@procurement.id}"
+    #  return false
+    #end
 
     # Special case for list as has number of buildings at the end
-    return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
+    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
 
     true
   end
