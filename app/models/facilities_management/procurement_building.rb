@@ -89,6 +89,10 @@ module FacilitiesManagement
       procurement.detailed_search? ? building.external_area : external_area
     end
 
+    def requires_building_area?
+      requires_external_area? || requires_internal_area?
+    end
+
     private
 
     def service_code_selection
