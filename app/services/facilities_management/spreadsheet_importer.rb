@@ -349,7 +349,7 @@ class FacilitiesManagement::SpreadsheetImporter
     #  [5, 1], [5, 2], [5, 4], # Service volumes 3
     #  [7, 2], # Compliance (hidden)
     #  [8, 1], [8, 2], [8, 4] # Lists (hidden)
-    #]
+    # ]
 
     # columns.each do |tab, col|
     #  next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
