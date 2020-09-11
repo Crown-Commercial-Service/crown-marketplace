@@ -47,6 +47,7 @@ module Buildings::BuildingsControllerDefinitions
         back_url: facilities_management_path
       },
       new: {
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_manage_buildings'),
         caption1: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
         caption3: step_title(:new),
         page_title: I18n.t('facilities_management.buildings.page_definitions.create_single_building'),
@@ -58,6 +59,7 @@ module Buildings::BuildingsControllerDefinitions
         caption3: step_title(:add_address),
         page_title: I18n.t('facilities_management.buildings.page_definitions.add_building_address'),
         continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_building_details'),
         back_url: add_address_back_link
       },
       edit: edit_details,
@@ -66,6 +68,7 @@ module Buildings::BuildingsControllerDefinitions
         continuation_url: facilities_management_buildings_url,
         caption1: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
         page_title: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_manage_buildings')
       }
     }.freeze
   end
@@ -96,6 +99,7 @@ module Buildings::BuildingsControllerDefinitions
     page_description action
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def edit_details
     return if params[:step].nil? || @page_data[:model_object].id.nil?
 
@@ -107,10 +111,11 @@ module Buildings::BuildingsControllerDefinitions
       continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
       secondary_name: 'save_and_return',
       secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-      back_url: facilities_management_building_path(@page_data[:model_object].id)
+      back_url: facilities_management_building_path(@page_data[:model_object], step: 'building_details'),
+      back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_building_details')
     }
 
-    details[:continuation_text] = I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary') if params[:step] == 'security'
+    details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_details_summary') if params[:step] == 'building_details'
 
     if %w[gia type security].include? params[:step]
       details[:return_url] = next_link(false, params[:step])
@@ -118,8 +123,16 @@ module Buildings::BuildingsControllerDefinitions
       details[:back_url] = edit_facilities_management_building_path(@page_data[:model_object].id, step: previous_step(params[:step].to_sym))
     end
 
+    details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_size') if params[:step] == 'type'
+
+    if params[:step] == 'security'
+      details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_type')
+      details[:continuation_text] = I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary')
+    end
+
     details
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def building_details
     {

@@ -553,6 +553,10 @@ en:
         create_single_building: Add a building
         gia: Internal and external areas
         manage_building_title: Buildings
+        return_to_building_details: Return to building details
+        return_to_building_details_summary: Return to building details summary
+        return_to_building_size: Return to building size
+        return_to_building_type: Return to building type
         return_to_buildings: Return to buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
@@ -700,7 +704,7 @@ en:
         heading: Assigning services to a building
         or: or
         question: Which facilities management services do you require for this building?
-        return_link: Return to buildings and services summary
+        return_link:  and services summary
         save_and_return: Save and return
         select_all: Select all
         select_all_that_apply: Select all that apply
