@@ -341,15 +341,15 @@ class FacilitiesManagement::SpreadsheetImporter
 
     # The arrays are [sheet, column] - I've called sheets tabs in the iterator
     # Be aware sheets start from 0 (like an array), but columns start from 1
-    columns = [
-      [1, 1], # Building info
-      [2, 1], [2, 2], [2, 3], # Service matrix
-      [3, 1], [3, 2], [3, 4], # Service volumes 1
-      [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
-      [5, 1], [5, 2], [5, 4], # Service volumes 3
-      [7, 2], # Compliance (hidden)
-      [8, 1], [8, 2], [8, 4] # Lists (hidden)
-    ]
+    #columns = [
+    #  [1, 1], # Building info
+    #  [2, 1], [2, 2], [2, 3], # Service matrix
+    #  [3, 1], [3, 2], [3, 4], # Service volumes 1
+    #  [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
+    #  [5, 1], [5, 2], [5, 4], # Service volumes 3
+    #  [7, 2], # Compliance (hidden)
+    #  [8, 1], [8, 2], [8, 4] # Lists (hidden)
+    #]
 
     #columns.each do |tab, col|
     #  next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
