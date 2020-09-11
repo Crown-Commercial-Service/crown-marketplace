@@ -1505,6 +1505,25 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
     end
+
+    context 'when having service which requires different units of measure' do
+      before do
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:completed)
+
+        procurement_building1.procurement_building_services.delete_all
+        procurement_building2.procurement_building_services.delete_all
+
+        procurement_building1.update(service_codes: ['H.4'])
+        procurement_building2.update(service_codes: ['I.1'])
+
+        procurement_building1.procurement_building_services.first.update(service_hours: 123, detail_of_requirement: 'Some reason')
+        procurement_building2.procurement_building_services.first.update(service_hours: 456, detail_of_requirement: 'Some reason')
+      end
+
+      it 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
   end
 
   describe '.service_requirements_completed?' do
