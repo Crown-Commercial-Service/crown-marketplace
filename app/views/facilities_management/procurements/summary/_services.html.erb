@@ -1,8 +1,10 @@
 <div class="govuk-!-width-three-quarters">
   <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-bottom-2"><%= t('.heading') %></h2>
 
-  <p class="govuk-!-font-size-48 govuk-!-font-weight-bold govuk-!-margin-bottom-0"><%= @procurement.service_codes.size %></p>
-  <p class="govuk-!-font-weight-bold"><%= t('.service').pluralize(@procurement.service_codes.size) %></p>
+  <div id="number-of-services">
+    <p class="govuk-!-font-size-48 govuk-!-font-weight-bold govuk-!-margin-bottom-0"><%= @procurement.service_codes.size %></p>
+    <p class="govuk-!-font-weight-bold"><%= t('.service').pluralize(@procurement.service_codes.size) %></p>
+  </div>
 
   <p class="govuk-caption-m"><%= t('.caption') %></p>
 
