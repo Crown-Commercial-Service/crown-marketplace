@@ -48,7 +48,7 @@
   <tbody class="govuk-table__body">
     <% services_with_contexts(@volume_procurement_building_services) do |service, context| %>
       <% cell_classes = cell_class(context, service.uval, service_has_errors(service, :base))%>
-      <tr class="govuk-table__row <%= 'govuk-form-group--error' if service_has_errors(service, :base) %>">
+      <tr id="<%= question_id(service, context, 'volume') %>" class="govuk-table__row <%= 'govuk-form-group--error' if service_has_errors(service, :base) %>">
         <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_errors(service, :base) %>"><%= service.name %></td>
         <td class="<%= cell_classes %>"><%= t(".unit_of_measure.#{context}") %></td>
         <% if service.send(context).blank? %>
@@ -109,7 +109,7 @@
   </thead>
   <tbody class="govuk-table__body">
     <% @standards_procurement_building_services.each do |service| %>
-      <tr class="govuk-table__row">
+      <tr id="<%= question_id(service, 'service_standard', nil) %>" class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
         <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
         <% if service.service_standard.nil?%>

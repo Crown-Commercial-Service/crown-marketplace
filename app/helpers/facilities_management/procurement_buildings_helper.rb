@@ -64,4 +64,8 @@ module FacilitiesManagement::ProcurementBuildingsHelper
       @procurement_building
     end
   end
+
+  def question_id(service, context, question)
+    [service.code, context, question].compact.join('-')
+  end
 end
