@@ -359,7 +359,7 @@ class FacilitiesManagement::SpreadsheetImporter
     # end
 
     # Special case for list as has number of buildings at the end
-    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
+    return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
 
     true
   end
