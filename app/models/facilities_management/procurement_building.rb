@@ -75,12 +75,6 @@ module FacilitiesManagement
       area_complete? && volumes_complete? && standards_complete?
     end
 
-    def valid_on_continue?
-      procurement.errors.add(:base, :services_not_present) && (return false) if service_codes.empty?
-
-      valid?(:buildings_and_services) && valid?(:procurement_building_services) && valid?(:gia) && valid?(:external_area)
-    end
-
     def requires_service_questions?
       return true if requires_internal_area? || requires_external_area?
 

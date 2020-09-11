@@ -60,7 +60,7 @@ class FacilitiesManagement::ProcurementRouter
       return STATES_TO_VIEWS[@procurement_state.to_sym]
     end
 
-    'detailed_search_summary'
+    'requirements'
   end
 
   def route

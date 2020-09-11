@@ -187,5 +187,42 @@ module FacilitiesManagement::ProcurementsHelper
       concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
     end
   end
+
+  def requirements_errors_list
+    @requirements_errors_list ||= @procurement.errors.details[:base].map.with_index { |detail, index| [detail[:error], @procurement.errors[:base][index]] }.to_h
+  end
+
+  def section_errors(section)
+    if section == 'contract_period'
+      %i[contract_period_incomplete initial_call_off_period_in_past mobilisation_period_in_past mobilisation_period_required]
+    else
+      ["#{section}_incomplete".to_sym]
+    end
+  end
+
+  def section_has_error?(section)
+    return false unless @procurement.errors.any?
+
+    (requirements_errors_list.keys & section_errors(section)).any?
+  end
+
+  def display_all_errors(errors, section_errors)
+    capture do
+      section_errors.each do |attribute|
+        next unless errors[attribute]
+
+        concat(content_tag(:span, errors[attribute].to_s, id: error_id(attribute), class: 'govuk-error-message'))
+      end
+    end
+  end
+
+  def link_url(section)
+    case section
+    when 'contract_period', 'services', 'buildings', 'buildings_and_services', 'service_requirements'
+      facilities_management_procurement_summary_path(@procurement, summary: section)
+    else
+      edit_facilities_management_procurement_path(@procurement, step: section)
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

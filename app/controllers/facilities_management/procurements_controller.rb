@@ -767,7 +767,7 @@ module FacilitiesManagement
     end
 
     def procurement_valid?
-      @procurement.valid_on_continue?
+      @procurement.valid?(:continue)
     end
 
     def set_results_page_definitions

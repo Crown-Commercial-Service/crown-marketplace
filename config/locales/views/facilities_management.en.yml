@@ -108,7 +108,17 @@ en:
         facilities_management/procurement:
           attributes:
             base:
+              buildings_and_services_incomplete: "‘Assigning services to buildings’ task must be ‘COMPLETED’"
+              buildings_incomplete: "‘Buildings’ task must be ‘COMPLETED’"
+              contract_period_incomplete: "‘Contract period’ task must be ‘COMPLETED’"
+              estimated_annual_cost_incomplete: "‘Estimated annual cost’ task must be ‘COMPLETED’"
+              initial_call_off_period_in_past: Initial call-off period start date must not be in the past
+              mobilisation_period_in_past: Mobilisation start date must not be in the past
+              mobilisation_period_required: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              service_requirements_incomplete: "‘Service requirements’ task must be ‘COMPLETED’"
+              services_incomplete: "‘Services’ task must be ‘COMPLETED’"
               services_not_present: You must select at least one service
+              tupe_incomplete: "‘TUPE’ task must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
               not_present: You must answer the question about ‘Contract name’
@@ -814,20 +824,6 @@ en:
           no_of_units_to_be_serviced: units
           tones_to_be_collected_and_removed: tonnes
     procurements:
-      about_the_contract:
-        contract_details: 1. Contract details
-        contract_name: Contract name
-        contract_period: Contract period
-        estimated_annual_cost: Estimated annual cost
-        tupe: TUPE
-      about_the_work:
-        assigning_services_to_buildings: Assigning services to buildings
-        buildings: Buildings
-        excel: Click here to download an Excel template
-        service_requirements: Service requirements
-        services: Services
-        services_and_buildings: 2. Services and buildings
-        which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
@@ -1239,9 +1235,6 @@ en:
           no_searches: You do not have any searches
         sent_offers:
           no_sent: You do not have any sent offers
-      detailed_search_summary:
-        detailed_search_description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimate contract cost, supplier shortlist and procurement options.
-        detailed_search_summary_title: Requirements
       edit:
         authorised_representative:
           authorised_representative_detail_description: Select an authorised representative
@@ -1489,6 +1482,24 @@ en:
         new_name_label: Enter a name or reference to save this search.
         save_headline: Save your search
         save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
+      requirements:
+        contract_details:
+          contract_details: 1. Contract details
+        contract_summary_table:
+          buildings: Buildings
+          buildings_and_services: Assigning services to buildings
+          contract_name: Contract name
+          contract_period: Contract period
+          estimated_annual_cost: Estimated annual cost
+          service_requirements: Service requirements
+          services: Services
+          tupe: TUPE
+        description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimate contract cost, supplier shortlist and procurement options.
+        services_and_buildings:
+          excel: Click here to download an Excel template
+          services_and_buildings: 2. Services and buildings
+          which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
+        title: Requirements
       results:
         any_changes: If you wish to change your requirements, click the 'Change requirements’ button below. Any changes may result in a different outcome.
         any_changes_chosen: If you wish to change the contract value that you selected or your requirements, click the 'Return to estimated contract cost’ button below. Any changes may result in a different outcome.

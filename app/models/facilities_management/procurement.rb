@@ -268,10 +268,6 @@ module FacilitiesManagement
       procurement_building.save
     end
 
-    def valid_on_continue?
-      valid?(:all) && active_procurement_buildings.all?(&:valid_on_continue?)
-    end
-
     def buildings_standard
       active_procurement_buildings.includes(:building).any? { |pb| pb.building.building_standard == 'NON-STANDARD' } ? 'NON-STANDARD' : 'STANDARD'
     end
@@ -465,14 +461,22 @@ module FacilitiesManagement
     def buildings_and_services_status
       return :cannot_start if services_status == :not_started || buildings_status == :not_started
 
-      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? } ? :completed : :incomplete
+      buildings_and_services_completed? ? :completed : :incomplete
+    end
+
+    def buildings_and_services_completed?
+      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? }
     end
 
     def service_requirements_status
       return :cannot_start unless buildings_and_services_status == :completed
       return :not_required if no_services_requiring_standard? && no_services_requiring_volume?
 
-      active_procurement_buildings.all?(&:complete?) ? :completed : :incomplete
+      service_requirements_completed? ? :completed : :incomplete
+    end
+
+    def service_requirements_completed?
+      active_procurement_buildings.all?(&:complete?)
     end
 
     def remove_existing_spreadsheet_import
