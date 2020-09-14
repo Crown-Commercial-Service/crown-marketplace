@@ -25,13 +25,6 @@ module CCS
         return frozen_rate.where(direct_award: true).map(&:code) if frozen_rate.exists?
         return CCS::FM::Rate.all.where(direct_award: true).map(&:code) unless frozen_rate.exists?
       end
-
-      def self.further_competition_services(procurement_id)
-        frozen_rate = CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement_id)
-
-        return frozen_rate.where(direct_award: false).map(&:code) if frozen_rate.exists?
-        return CCS::FM::Rate.all.where(direct_award: false).map(&:code) unless frozen_rate.exists?
-      end
     end
   end
 end

@@ -18,7 +18,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         expect(report.direct_award_value).to be > 0
       end
 
-      expect(report.assessed_value).to eq 838.1929279363201
+      expect(report.assessed_value).to eq 5188.09634636832
     end
   end
 
