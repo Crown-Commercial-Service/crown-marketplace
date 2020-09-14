@@ -27,14 +27,17 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def import_data
+    basic_data_validation
+    stop_spreadsheet_import_if_any_errors
+    return if @errors.any?
+
     IMPORT_PROCESS_ORDER.each do |import_process|
       send(import_process)
       break if @errors.any?
     end
-    if @errors.any?
-      @spreadsheet_import.fail!
-      return
-    end
+
+    stop_spreadsheet_import_if_any_errors
+    return if @errors.any?
 
     if imported_spreadsheet_data_valid?
       save_spreadsheet_data
@@ -45,6 +48,12 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   private
+
+  def stop_spreadsheet_import_if_any_errors
+    return unless @errors.any?
+
+    @spreadsheet_import.fail!
+  end
 
   ########## Importing buildings ##########
   def import_buildings
@@ -342,13 +351,13 @@ class FacilitiesManagement::SpreadsheetImporter
     # The arrays are [sheet, column] - I've called sheets tabs in the iterator
     # Be aware sheets start from 0 (like an array), but columns start from 1
     columns = [
-      # [1, 1], # Building info
-      # [2, 1], [2, 2], [2, 3], # Service matrix
-      # [3, 1], [3, 2], [3, 4], # Service volumes 1
-      # [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
-      # [5, 1], [5, 2], [5, 4], # Service volumes 3
-      # [7, 2], # Compliance (hidden)
-      # [8, 1], [8, 2], [8, 4] # Lists (hidden)
+      [1, 1], # Building info
+      [2, 1], [2, 2], [2, 3], # Service matrix
+      [3, 1], [3, 2], [3, 4], # Service volumes 1
+      [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
+      [5, 1], [5, 2], [5, 4], # Service volumes 3
+      [7, 2], # Compliance (hidden)
+      [8, 1], [8, 2], [8, 4] # Lists (hidden)
     ]
 
     columns.each do |tab, col|
@@ -359,7 +368,7 @@ class FacilitiesManagement::SpreadsheetImporter
     end
 
     # Special case for list as has number of buildings at the end
-    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
+    return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
 
     true
   end
