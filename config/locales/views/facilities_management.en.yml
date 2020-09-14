@@ -600,6 +600,7 @@ en:
         start_procurement_link: Start a procurement
     buyer_details:
       edit:
+        back: Return to your account
         buyer_details: Manage your details
         cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
@@ -619,6 +620,7 @@ en:
         your_details: Personal details
       edit_address:
         add_address: Add address
+        back: Return to manage your details
         building_and_street: Building and street
         county: County (optional)
         manage_details: Manage your details
