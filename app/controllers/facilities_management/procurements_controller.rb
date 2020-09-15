@@ -882,7 +882,8 @@ module FacilitiesManagement
           primary_name: 'continue_da',
           continuation_text: 'Continue to direct award',
           secondary_name: 'continue_to_results',
-          secondary_text: 'Return to results'
+          secondary_text: 'Return to results',
+          back_text: 'Return to direct award pricing'
         },
         did_you_know: {
           page_title: 'Important information',
@@ -896,17 +897,20 @@ module FacilitiesManagement
           page_title: 'Payment method',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
-          return_url: facilities_management_procurement_path(@procurement)
+          return_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details'
         },
         invoicing_contact_details: {
           back_url: facilities_management_procurement_path(@procurement),
           page_title: 'Invoicing contact details',
           continuation_text: 'Continue',
           return_text: 'Return to contract details',
-          return_url: facilities_management_procurement_path(@procurement)
+          return_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details'
         },
         new_invoicing_contact_details: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
+          back_text: 'Return to invoicing contact details',
           page_title: 'New invoicing contact details',
           continuation_text: 'Save and return',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'invoicing_contact_details'),
@@ -914,6 +918,7 @@ module FacilitiesManagement
         },
         new_invoicing_address: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
+          back_text: 'Return to new invoicing contact details',
           page_title: 'Add address',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_invoicing_contact_details'),
           return_text: 'Return to new invoicing contact details',
@@ -925,10 +930,12 @@ module FacilitiesManagement
           page_title: 'Authorised representative details',
           continuation_text: 'Continue',
           return_text: 'Return to contract details',
-          return_url: facilities_management_procurement_path(@procurement)
+          return_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details'
         },
         new_authorised_representative_details: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
+          back_text: 'Return to authorised representative details',
           page_title: 'New authorised representative details',
           continuation_text: 'Save and return',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'authorised_representative'),
@@ -936,6 +943,7 @@ module FacilitiesManagement
         },
         new_authorised_representative_address: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details'),
+          back_text: 'Return to new authorised representative details',
           page_title: 'Add address',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_authorised_representative_details'),
           return_text: 'Return to new authorised representative details',
@@ -947,10 +955,12 @@ module FacilitiesManagement
           page_title: 'Notices contact details',
           continuation_text: 'Continue',
           return_text: 'Return to contract details',
-          return_url: facilities_management_procurement_path(@procurement)
+          return_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details'
         },
         new_notices_contact_details: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'notices_contact_details'),
+          back_text: 'Return to notices contact details',
           page_title: 'New notices contact details',
           continuation_text: 'Save and return',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'notices_contact_details'),
@@ -958,6 +968,7 @@ module FacilitiesManagement
         },
         new_notices_address: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_notices_contact_details'),
+          back_text: 'Return to new notices contact details',
           page_title: 'Add address',
           return_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'new_notices_contact_details'),
           return_text: 'Return to new notices contact details',
@@ -966,6 +977,7 @@ module FacilitiesManagement
         },
         local_government_pension_scheme: {
           back_url: facilities_management_procurement_path(@procurement),
+          back_text: 'Return to contract details',
           page_title: 'Local Government Pension Scheme',
           continuation_text: 'Save and continue',
           return_text: 'Return to contract details',
@@ -981,6 +993,7 @@ module FacilitiesManagement
         },
         pension_funds: {
           back_url: edit_facilities_management_procurement_path(id: @procurement.id, step: 'local_government_pension_scheme'),
+          back_text: 'Return to Local Government Pension Scheme',
           page_title: 'Pension funds',
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',
@@ -989,7 +1002,7 @@ module FacilitiesManagement
         security_policy_document: {
           page_title: t('facilities_management.procurements.edit.security_policy_document.title'),
           back_url: facilities_management_procurement_path(@procurement),
-          back_text: 'Back',
+          back_text: 'Return to contract details',
           caption1: @procurement[:contract_name],
           continuation_text: 'Save and return',
           return_text: 'Return to contract details',

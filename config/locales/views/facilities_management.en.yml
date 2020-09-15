@@ -706,7 +706,7 @@ en:
         heading: Assigning services to a building
         or: or
         question: Which facilities management services do you require for this building?
-        return_link:  and services summary
+        return_link: Return to buildings and services summary
         save_and_return: Save and return
         select_all: Select all
         select_all_that_apply: Select all that apply
