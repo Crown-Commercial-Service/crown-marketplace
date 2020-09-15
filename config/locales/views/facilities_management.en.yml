@@ -113,8 +113,8 @@ en:
               contract_period_incomplete: "‘Contract period’ task must be ‘COMPLETED’"
               estimated_annual_cost_incomplete: "‘Estimated annual cost’ task must be ‘COMPLETED’"
               initial_call_off_period_in_past: Initial call-off period start date must not be in the past
-              mobilisation_period_in_past: Mobilisation start date must not be in the past
-              mobilisation_period_required: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              mobilisation_period_in_past: Mobilisation period start date must not be in the past
+              mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
               service_requirements_incomplete: "‘Service requirements’ task must be ‘COMPLETED’"
               services_incomplete: "‘Services’ task must be ‘COMPLETED’"
               services_not_present: You must select at least one service

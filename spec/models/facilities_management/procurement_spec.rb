@@ -402,7 +402,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
           it 'has the correct errors' do
             expected_error_list = {
-              mobilisation_period_in_past: 'Mobilisation start date must not be in the past'
+              mobilisation_period_in_past: 'Mobilisation period start date must not be in the past'
             }
 
             expect(continue_error_list).to eq expected_error_list
@@ -421,7 +421,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
           it 'has the correct errors' do
             expected_error_list = {
-              mobilisation_period_required: 'Mobilisation length must be a minimum of 4 weeks when TUPE is selected'
+              mobilisation_period_required: 'Mobilisation period length must be a minimum of 4 weeks when TUPE is selected'
             }
 
             expect(continue_error_list).to eq expected_error_list
