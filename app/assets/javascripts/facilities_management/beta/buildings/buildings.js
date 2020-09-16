@@ -523,8 +523,8 @@ LookupHandler.prototype.changeTabbingState = function(state) {
   postcodeInput = document.getElementById('postcode_entry');
   findAddressButton = document.querySelector('button[data-module-element="trigger"]');
   changeInput1 = document.getElementById('change-input-1');
-  addressSelect = document.querySelector('[data-module-element="results-container"]');;
-  cantFindAddress = document.querySelector('[data-module-element="cant-find"]');
+  addressSelect = document.querySelector('[data-module-element="results-container"]');
+  cantFindAddress = document.getElementById('cant-find-address-link');
   changeInput2 = document.getElementById('change-input-2');
   regionSelect = document.querySelector('[data-module-element="region-results-container"]');;
   changeInput3 = document.getElementById('change-input-3');
