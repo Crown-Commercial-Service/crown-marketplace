@@ -137,7 +137,9 @@ Rails.application.routes.draw do
         get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
-      resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports'
+      resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
+        resources :progress, only: :index, defaults: { format: :json }, controller: 'procurements/spreadsheet_imports/progress'
+      end
       resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
         member do
           match 'add_address', via: %i[get post patch]
