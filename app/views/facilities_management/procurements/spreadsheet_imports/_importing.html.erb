@@ -1,14 +1,24 @@
-<div class="govuk-!-width-two-thirds">
-  <h2 class="govuk-heading-m govuk-!-margin-top-4">
-    <%= t('.processing') %>
-  </h2>
-  <p class="govuk-body-l govuk-!-margin-top-2">
-    <%= t('.refresh') %>
-  </p>
-  <p class="govuk-body-l govuk-!-margin-top-2">
-    <%= t('.review') %>
-  </p>
-  <%= warning_text(t('.warning_text')) %>
-  <hr class="govuk-section-break govuk-section-break--xl">
+<div id="bulk-upload-in-progress">
+  <%= hidden_field_tag :procurement_id, params[:procurement_id] %>
+  <%= hidden_field_tag :spreadsheet_import_id, params[:id] %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%=image_tag 'throbber.gif', alt: '', class: 'throbber' %>
+      <h2 class="govuk-heading-xl govuk-!-margin-top-4 govuk-!-font-size-36" style="text-align: center;">
+        <%= t('.processing') %>
+      </h2>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l govuk-!-margin-top-2">
+        <%= t('.review') %>
+      </p>
+      <%= warning_text(t('.warning_text')) %>
+    </div>
+  </div>
 </div>
+<hr class="govuk-section-break govuk-section-break--xl">
 <%= link_to t('.dashboard_link'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>
