@@ -882,8 +882,7 @@ module FacilitiesManagement
           primary_name: 'continue_da',
           continuation_text: 'Continue to direct award',
           secondary_name: 'continue_to_results',
-          secondary_text: 'Return to results',
-          back_text: 'Return to direct award pricing'
+          secondary_text: 'Return to results'
         },
         did_you_know: {
           page_title: 'Important information',
