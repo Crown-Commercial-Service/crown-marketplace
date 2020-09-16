@@ -11,7 +11,7 @@
 </div>
 <div class="govuk-!-width-two-thirds" data-module="find-address" data-element_prefix="postcode">
   <div data-module-part="postcode-source-container" class="<%= ' govuk-visually-hidden' if hide_postcode_source? %>">
-    <%= govuk_form_field(@page_data[:model_object], :address_postcode, f.object_name, t('.address_label_html'), "address_postcode", {}) do |gf| %>
+    <%= postcode_form_field(f, t('.address_label_html')) do |gf| %>
       <%= f.label :address_postcode, "Postcode", for: 'postcode_entry', class: "govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0" %>
       <%= display_potential_errors(@page_data[:model_object], :postcode_entry, "#{f.object_name}_postcode_entry") %>
       <%= f.text_field :postcode_entry,

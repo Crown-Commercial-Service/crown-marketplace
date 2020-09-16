@@ -51,14 +51,6 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
-  def margin_if_security_has_other_error(building)
-    building.errors.key?(:other_security_type) ? { style: 'margin-left: 1em' } : {}
-  end
-
-  def margin_if_type_has_other_error(building)
-    building.errors.key?(:other_building_type) ? { style: 'margin-left: 1em' } : {}
-  end
-
   def open_state_of_building_details(building)
     return false if building[:building_type].blank?
 
@@ -85,6 +77,40 @@ module FacilitiesManagement::BuildingsHelper
       if FacilitiesManagement::Building.da_building_type? building_type[:id]
         concat(tag(:hr, class: 'govuk-section-break govuk-!-margin-top-1'))
         concat(govuk_tag_with_text(:grey, t('common.da_eligible')))
+      end
+    end
+  end
+
+  def postcode_form_field(form, label_text)
+    css_classes = %w[govuk-!-margin-top-3]
+    form_group_css = ['govuk-form-group']
+    form_group_css += ['govuk-form-group--error'] if form.object.errors[:address_postcode].any?
+
+    content_tag :div, class: css_classes, data: { propertyname: 'address_postcode' } do
+      content_tag :div, class: form_group_css, data: {} do
+        concat display_label(:address_postcode, label_text, 'facilities_management_building_address_postcode', 'facilities_management_building_address_postcode-info') if label_text.present?
+        concat display_postcode_errors(form.object)
+        yield
+      end
+    end
+  end
+
+  def display_postcode_errors(model_object)
+    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, :address_postcode)
+    return if collection.empty?
+
+    content_tag :div, class: 'error-collection potenital-error', property_name: 'address_postcode' do
+      postcode_errors(model_object, collection)
+    end
+  end
+
+  def postcode_errors(model_object, error_collection)
+    content_tag :label, class: "govuk-error-message #{'govuk-visually-hidden' unless model_object.errors.any?}",
+                        for: 'postcode_entry',
+                        id: 'address_postcode-error' do
+      error_collection.each do |key, val|
+        tag_validation_type = key == :blank ? :required : key
+        concat(content_tag(:span, val, class: "govuk-error-message #{'govuk-visually-hidden' unless attribute_has_errors(model_object, :address_postcode, key)}", data: { propertyname: 'address_postcode', validation: tag_validation_type }))
       end
     end
   end

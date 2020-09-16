@@ -253,6 +253,7 @@ en:
     passnum: at least one number
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
+    radio_driver: or
     reset_password: Reset password
     send_reset_email: Send reset email
     sign_in: Sign in

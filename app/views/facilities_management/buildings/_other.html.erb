@@ -1,0 +1,13 @@
+<%= form_group_with_error(f.object, other_attribute) do |displayed_error| %>
+  <div class="govuk-radios__item other_container" data-module="other-expando">
+    <%= f.radio_button attribute, 'other', class: 'govuk-radios__input', disabled: disabled %>
+    <%= f.label attribute, t('.other'), value: 'other', class: 'govuk-label govuk-radios__label govuk-label--s' %>
+    <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if not_other %> govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
+      <%= f.label other_attribute, description, class: 'govuk-label' %>
+      <%= displayed_error %>
+      <div class="ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150">
+        <%= govuk_text_area_input f, other_attribute, true, rows: 3, maxlength: 150, class: 'govuk-!-margin-bottom-2', 'tabindex': "#{not_other ? -1 : 0}" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -373,5 +373,9 @@ module ApplicationHelper
       end
     end
   end
+
+  def govuk_radio_driver
+    content_tag(:div, t('common.radio_driver'), class: 'govuk-radios__divider')
+  end
 end
 # rubocop:enable Metrics/ModuleLength

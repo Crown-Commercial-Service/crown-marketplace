@@ -11,9 +11,9 @@
 			<% end %>
 		</div>	
 	<% end %>
-  <%= form_group_with_error(f.object, :service_standard) do %>
+  <%= form_group_with_error(f.object, :service_standard) do |displayed_error| %>
     <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-5">
-      <%= display_errors(f.object, :service_standard)%>
+      <%= displayed_error %>
       <div class="govuk-radios">
         <% FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
           <div class="govuk-radios__item govuk-radios--small">
