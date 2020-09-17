@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_144817) do
+ActiveRecord::Schema.define(version: 2020_09_14_124411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_144817) do
     t.string "spreadsheet_file", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "import_errors", default: {}
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 

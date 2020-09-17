@@ -307,18 +307,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         end
       end
     end
-  end
 
-  describe 'validation on procurement_building_services_present' do
     context 'when there are no services selected' do
       it 'is not valid' do
-        expect(procurement_building.valid?(:procurement_building_services_present)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'returns the correct error message' do
-        procurement_building.valid?(:procurement_building_services_present)
+        procurement_building.valid?(:buildings_and_services)
 
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select at least one service for ‘#{procurement_building.building_name}’ building"
+        expect(procurement_building.errors[:service_codes].first).to eq 'You must select at least one service for this building'
       end
     end
 
@@ -326,7 +324,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is valid' do
         procurement_building.service_codes << 'C.1'
 
-        expect(procurement_building.valid?(:procurement_building_services_present)).to be true
+        expect(procurement_building.valid?(:buildings_and_services)).to be true
       end
     end
   end

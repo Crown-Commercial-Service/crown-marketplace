@@ -49,8 +49,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(:template_valid?).and_return(true)
       end
 
-      # Attention: Ensure the template file DOES NOT have 'Ready to upload' in cell B10.
-      # v2.6 (used at the time of writing) didn't
       let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
       it 'includes not started error' do
@@ -78,6 +76,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:service_codes).and_return(['C.1'])
+      allow(spreadsheet_importer).to receive(:collect_errors).and_return({})
+
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -719,6 +721,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
 
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+
       spreadsheet_importer.import_data
     end
 
@@ -781,7 +786,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
     context 'when more than one standard of the same service for a building has been selected' do
       let(:service_data1) { %w[C.1a C.1b C.12a] }
-      let(:service_data2) { %w[C.12a C.12a] }
+      let(:service_data2) { %w[C.12a] }
       let(:status) { 'OK' }
 
       it 'changes the state of the spreadsheet_import to failed' do
@@ -791,6 +796,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       it 'has the correct error' do
         expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:errors]).to eq(service_codes: [{ error: :multiple_standards_for_one_service }])
+      end
+
+      it 'has the correct import_errors' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.service_matrix_errors.first.values).to eq ['Trumpy Towers', :service_codes, [:multiple_standards_for_one_service]]
       end
     end
   end
@@ -809,6 +819,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
+
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -946,6 +959,14 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           expect(k1_errors).to include(:greater_than)
           expect(k6_errors).to include(:greater_than)
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          error_details = spreadsheet_import.service_volume_errors
+
+          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced]
+          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed]
+        end
       end
 
       context 'when importing one building with a volume as a string' do
@@ -978,6 +999,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
           expect(e4_errors).to include(:greater_than)
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Portable appliance testing', :no_of_appliances_for_testing]
+        end
       end
 
       context 'when importing one building with volumes to large' do
@@ -1009,6 +1035,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
 
           expect(k1_errors).to include(:less_than_or_equal_to)
+        end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced]
         end
       end
 
@@ -1047,6 +1078,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_lift_data validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
+
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -1181,6 +1215,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
           expect(error).to eq :not_a_number
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.lift_errors.first.values).to eq ['Wollaton Hall', 'Lifts, hoists & conveyance systems maintenance', :number_of_floors]
+        end
       end
 
       context 'when importing lifts which include a 0 value' do
@@ -1200,6 +1239,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           error = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:'lifts[0].number_of_floors'].first[:error]
 
           expect(error).to eq :greater_than
+        end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.lift_errors.first.values).to eq ['Wollaton Hall', 'Lifts, hoists & conveyance systems maintenance', :number_of_floors]
         end
       end
 
@@ -1221,6 +1265,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
           expect(error).to eq :required
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.lift_errors.first.values).to eq ['Wollaton Hall', 'Lifts, hoists & conveyance systems maintenance', :lifts]
+        end
       end
 
       context 'when importing lifts which include a value of 1000' do
@@ -1241,6 +1290,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
           expect(error).to eq :less_than
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.lift_errors.first.values).to eq ['Wollaton Hall', 'Lifts, hoists & conveyance systems maintenance', :number_of_floors]
+        end
       end
     end
   end
@@ -1259,6 +1313,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_hours validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
       end
+
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -1361,6 +1418,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         it 'has an error' do
           expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].first[:errors][:service_hours].any?).to eq true
         end
+
+        it 'has the correct import_errors' do
+          spreadsheet_import.reload
+          expect(spreadsheet_import.service_hour_errors[0].values).to eq ['U.A. High', 'Move and space management - internal moves', :service_hours, [:greater_than_or_equal_to]]
+        end
       end
 
       context 'when the service hours are not a number' do
@@ -1416,6 +1478,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
       allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
+
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
       procurement.reload
@@ -1628,6 +1693,11 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         spreadsheet_import.reload
         expect(spreadsheet_import.failed?).to be true
       end
+
+      it 'has the correct import_errors' do
+        spreadsheet_import.reload
+        expect(spreadsheet_import.service_hour_errors).to eq [{ building_name: name2, service_name: 'Reception service', attribute: :service_hours, errors: [:greater_than_or_equal_to] }]
+      end
     end
 
     context 'when a spreadsheet is uploaded with gaps' do
@@ -1700,6 +1770,26 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       it 'imports the correct number of buildings' do
         expect(procurement.procurement_buildings.count).to eq 3
+      end
+    end
+  end
+
+  describe '.spreadsheet_not_present?' do
+    before { spreadsheet_import.save }
+
+    let(:procurement) { build(:facilities_management_procurement_detailed_search) }
+
+    context 'when the spreadsheet_import has been deleted' do
+      before { spreadsheet_import.delete }
+
+      it 'returns true' do
+        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to eq true
+      end
+    end
+
+    context 'when the spreadsheet_import has not been deleted' do
+      it 'returns false' do
+        expect(spreadsheet_importer.send(:spreadsheet_not_present?)).to eq false
       end
     end
   end

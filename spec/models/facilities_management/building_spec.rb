@@ -142,13 +142,13 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
       it 'will have the correct error message' do
         building.valid?(:all)
-        expect(building.errors[:building_name].first).to eq 'Building name must be 25 characters or less'
+        expect(building.errors[:building_name].first).to eq 'Building name must be 50 characters or less'
       end
     end
 
     context 'when the building name is within range' do
       before do
-        building.description = 'a' * 25
+        building.description = 'a' * 50
       end
 
       it 'is valid' do
