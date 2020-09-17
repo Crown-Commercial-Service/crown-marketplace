@@ -49,8 +49,10 @@ module ErrorsHelper
   end
 
   def multiple_validation_errors(model_object, attribute, form_object_name, error_collection)
+    label_for_id = form_object_name.include?(attribute.to_s) ? form_object_name : "#{form_object_name}_#{attribute}"
+
     content_tag :label, class: "govuk-error-message #{'govuk-visually-hidden' unless model_object.errors.any?}",
-                        for: "#{form_object_name}_#{attribute}",
+                        for: label_for_id,
                         id: "#{attribute}-error" do
       error_collection.each do |key, val|
         tag_validation_type = ERROR_TYPE.include?(key) ? ERROR_TYPE[key] : key

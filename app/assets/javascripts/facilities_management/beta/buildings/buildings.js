@@ -589,6 +589,7 @@ LookupHandler.prototype.changeTabbingState = function(state) {
 }
 
 $other_expandos = document.querySelectorAll('[data-module="other-expando"]') ;
+
 nodeListForEach($other_expandos, function (expandoItem) {
 	var innerRadio = expandoItem.querySelector('input[type="radio"]');
 	var innerContent = expandoItem.querySelector('[data-element="other-expando--content"]');

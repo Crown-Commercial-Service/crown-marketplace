@@ -1,54 +1,42 @@
 <p class="govuk-caption-m govuk-!-width-two-thirds"><%= t('.help_text') %></p>
-<%= govuk_grouped_field(f, t('.choose_building_type'), :building_type) do |ff, attr| %>
-  <%= f.hidden_field :building_type %>
-  <div class="govuk_radios">
-    <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
-      <div class="govuk-radios__item">
-        <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
-        <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
-          <%= building_type[:title] %>
-          <%= building_type_caption(building_type) %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="govuk-body" style="margin-left:1ex">
-    or
-  </div>
-  <details class="govuk-details" style="margin-left:1.5ex" data-module="govuk-details"  <%= 'open="true"' if open_state_of_building_details(ff.object) %> >
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">
-        <%= t('.view_more') %>
-      </span>
-    </summary>
-    <div class="govuk-details__text" style="padding-bottom:0; margin-left:0.5ex">
-      <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
+<%= form_group_with_error(f.object, :building_type) do |displayed_error| %>
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+      <%= t('.choose_building_type') %>
+    </legend>
+    <%= displayed_error %>
+    <%= f.hidden_field :building_type %>
+    <div class="govuk_radios">
+      <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
         <div class="govuk-radios__item">
-          <%= ff.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details(ff.object) %>
-          <%= ff.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
+          <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
+          <%= f.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
             <%= building_type[:title] %>
             <%= building_type_caption(building_type) %>
           <% end %>
         </div>
       <% end %>
-      <div class="govuk-radios__divider govuk-!-margin-top-4 govuk-!-margin-bottom-4">or</div>
-      <%= govuk_start_individual_field(f, :other_building_type, {}, false, true, margin_if_type_has_other_error(ff.object), true) do %>
-        <div class="govuk-radios__item" data-module="other-expando">
-          <div class="other_container">
-            <%= ff.radio_button :building_type, 'other', class: 'govuk-radios__input', disabled: !open_state_of_building_details(ff.object) %>
-            <%= ff.label :building_type, value: 'other', class: 'govuk-label govuk-radios__label govuk-label--s' do
-              t('.other')
-            end %>
-            <div data-element="other-expando--content" class="<%= 'govuk-visually-hidden ' if @page_data[:model_object].building_type != 'other'%>govuk-!-margin-top-4 govuk-!-padding-left-4" style="margin-left:-2.4ex; border-left: 5px solid #bfc1c3">
-              <div class="other_input ccs-character-count-container" data-module="ccs-character-count" data-maxlength="150" style="margin-left: 1.5ex">
-                <label class="govuk-label" for="<%= "#{f.object_name}[other_building_type]".gsub(/(\])?\[/, "_").chop %>" id="other_building_type"> <%= t('.describe_building') %></label>
-                <%= display_potential_errors(@page_data[:model_object], :other_building_type, f.object_name) %>
-                <%= govuk_text_area_input(f, :other_building_type, true, rows: 3, maxlength: 150, style: 'margin-bottom: 1ex', "aria-describedby": "facilities_management_building_other_building_type", 'tabindex': "#{@page_data[:model_object].other_building_type.blank? ? -1 : 0}" ) %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
     </div>
-  </details>
+    <%= govuk_radio_driver %>
+    <details class="govuk-details" data-module="govuk-details" <%= 'open' if open_state_of_building_details(f.object) %>>
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t('.view_more') %>
+        </span>
+      </summary>
+      <div class="govuk-details__text govuk-!-padding-bottom-0">
+        <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
+          <div class="govuk-radios__item">
+            <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details(f.object) %>
+            <%= f.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
+              <%= building_type[:title] %>
+              <%= building_type_caption(building_type) %>
+            <% end %>
+          </div>
+        <% end %>
+        <%= govuk_radio_driver %>
+        <%= render partial: 'facilities_management/buildings/other', locals: { f: f, attribute: :building_type, other_attribute: :other_building_type, description: t('.describe_building'), disabled: !open_state_of_building_details(f.object), not_other: f.object.building_type != 'other'}%>
+      </div>
+    </details>
+  </fieldset>
 <% end %>

@@ -546,6 +546,8 @@ en:
         start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
         start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
+      other:
+        other: Other
       page_definitions:
         add_building_address: Add building address
         building_details: Building details
@@ -562,7 +564,6 @@ en:
         type: Building type
       security:
         describe_security: Describe security level
-        other: Other
         security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
         select_security: Select the level of security clearance needed
       show:
@@ -577,7 +578,6 @@ en:
         choose_building_type: Choose the building type that best describes your building
         describe_building: Describe building type
         help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
-        other: Other
         view_more: View more building types
     buyer_account:
       buyer_account:

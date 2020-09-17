@@ -1,4 +1,4 @@
-<%= form_group_with_error(f.object, :service_hours) do %>
+<%= form_group_with_error(f.object, :service_hours) do |displayed_error| %>
   <h3 class="govuk-heading-m">
     <%= t('.hour_heading') %>
   </h3>
@@ -6,13 +6,13 @@
     <%= t('.hour_hint') %>
   </div>
   <div>
-    <%= display_error f.object, :service_hours %>
+    <%= displayed_error %>
     <%= f.label :service_hours, t('.hour_label'), class: 'govuk-label' %>
     <%= f.number_field :service_hours, class: "govuk-input govuk-input--width-5 #{'govuk-input--error' if f.object.errors.key?(:service_hours)}" %>
   </div>
 <% end %>
 
-<%= form_group_with_error(f.object, :detail_of_requirement) do %>
+<%= form_group_with_error(f.object, :detail_of_requirement) do |displayed_error| %>
   <h3 class="govuk-heading-m" id="detail_of_requirement">
     <%= t('.detail_heading') %>
   </h3>
@@ -45,7 +45,7 @@
     <% end %>
   </div>
   <div>
-    <%= display_error f.object, :detail_of_requirement %>
+    <%= displayed_error %>
     <%= f.label :detail_of_requirement, t('.detail_label'), class: 'govuk-label' %>
     <div class="ccs-character-count-container" data-module="ccs-character-count" data-maxlength="500">
       <%= govuk_text_area_input f, :detail_of_requirement, true, rows: 5, maxlength: 500, class: 'govuk-!-margin-bottom-2' %>

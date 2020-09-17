@@ -24,10 +24,10 @@
 <%= building_summary t('.building_name'), @procurement_building.name %>
 <%= building_summary t('.building_address'), @procurement_building.full_address %>
 
-<%= form_group_with_error(f.object, :address_region) do %>
+<%= form_group_with_error(f.object, :address_region) do |displayed_error| %>
   <div id="select-region">
     <%= f.label :address_region, t('.select_region'), class: 'govuk-heading-s'%>
-    <%= display_error f.object, :address_region %>
+    <%= displayed_error %>
     <%= f.select :address_region, regions, { prompt: t('.prompt') }, { class: 'govuk-select govuk-!-width-one-third' } %>
   </div>
   <div id="region-selection" hidden>
