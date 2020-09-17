@@ -38,6 +38,7 @@ module FacilitiesManagement
     def new
       @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
       @back_path = back_path
+      @back_text = 'Return to regions'
     end
 
     def create
