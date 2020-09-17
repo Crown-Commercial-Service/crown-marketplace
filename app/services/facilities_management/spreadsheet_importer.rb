@@ -369,12 +369,12 @@ class FacilitiesManagement::SpreadsheetImporter
     # Be aware sheets start from 0 (like an array), but columns start from 1
     columns = [
       [1, 1], # Building info
-      [2, 1], [2, 2], [2, 3], # Service matrix
-      [3, 1], [3, 2], [3, 4], # Service volumes 1
-      [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
-      [5, 1], [5, 2], [5, 4], # Service volumes 3
-      [7, 2], # Compliance (hidden)
-      [8, 1], [8, 2], [8, 4] # Lists (hidden)
+      # [2, 1], [2, 2], [2, 3], # Service matrix
+      # [3, 1], [3, 2], [3, 4], # Service volumes 1
+      # [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
+      # [5, 1], [5, 2], [5, 4], # Service volumes 3
+      # [7, 2], # Compliance (hidden)
+      # [8, 1], [8, 2], [8, 4] # Lists (hidden)
     ]
 
     columns.each do |tab, col|
@@ -385,7 +385,7 @@ class FacilitiesManagement::SpreadsheetImporter
     end
 
     # Special case for list as has number of buildings at the end
-    return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
+    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
 
     true
   end
