@@ -54,11 +54,13 @@ en:
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
+              not_a_number: External area must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
               required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0.
+              not_a_number: Gross Internal Area (GIA) must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
               required: Gross Internal Area (GIA) must be greater than 0
             other_building_type:
@@ -306,7 +308,7 @@ en:
             number_of_floors:
               greater_than: Enter a whole number between 1 and 999
               less_than: Enter a whole number between 1 and 999
-              not_a_number: The number of floors accessed must be a whole number greater than 0
+              not_a_number: The number of floors accessed must be a whole number and greater than 0
         facilities_management/procurement_contact_detail:
           attributes:
             email:

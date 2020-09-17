@@ -249,6 +249,10 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         it 'will be invalid' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
         end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Gross Internal Area (GIA) must be a whole number'
+        end
       end
     end
 
@@ -272,6 +276,10 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_a_number
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a whole number'
         end
       end
     end

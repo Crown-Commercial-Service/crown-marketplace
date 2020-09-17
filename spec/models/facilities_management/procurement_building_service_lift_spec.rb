@@ -20,7 +20,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingServiceLift, type: :mode
       end
 
       it 'has the correct error message' do
-        expect(lift.errors[:number_of_floors].first).to eq 'The number of floors accessed must be a whole number greater than 0'
+        expect(lift.errors[:number_of_floors].first).to eq 'The number of floors accessed must be a whole number and greater than 0'
       end
     end
 
@@ -53,6 +53,18 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingServiceLift, type: :mode
 
       it 'is valid' do
         expect(lift.errors.any?).to be false
+      end
+    end
+
+    context 'when the number of floors is non numeric' do
+      let(:number_of_floors) { 'a' }
+
+      it 'is not valid' do
+        expect(lift.errors.any?).to be true
+      end
+
+      it 'has the correct error message' do
+        expect(lift.errors[:number_of_floors].first).to eq 'The number of floors accessed must be a whole number and greater than 0'
       end
     end
   end
