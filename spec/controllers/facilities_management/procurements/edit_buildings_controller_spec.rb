@@ -140,7 +140,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
       it 'returns validation message' do
         post :create, params: { procurement_id: procurement_id, facilities_management_building: { building_name: 'name', address_line_1: '', address_town: 'town', address_postcode: 'SW1A 1AA' } }
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('#address-error')
+        expect(response.body).to include('#base-error')
       end
     end
 

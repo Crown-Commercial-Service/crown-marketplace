@@ -5,17 +5,11 @@ module FacilitiesManagement
                foreign_key: :user_id,
                inverse_of: :buildings
 
-    attr_accessor :postcode_entry, :address
-
     scope :order_by_building_name, -> { order(Arel.sql('lower(building_name)')) }
 
     before_save :populate_other_data, :determine_status, :populate_json_attribute
     before_validation :determine_status
     after_find :populate_json_attribute
-
-    after_initialize do |building|
-      building.postcode_entry = building.address_postcode if building.postcode_entry.blank?
-    end
 
     BUILDING_TYPES = [{ id: 'General office - Customer Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },
                       { id: 'General office - Non Customer Facing', title: 'General office - non customer facing', caption: 'General office areas and non-customer facing areas.' },
@@ -63,7 +57,7 @@ module FacilitiesManagement
     validates :address_line_2, length: { maximum: 100 }, on: %i[all add_address], if: -> { address_postcode.present? }
     validates :address_line_2, length: { maximum: 100 }, on: %i[add_address]
     validates :address_town, presence: true, length: { maximum: 30 }, on: %i[all add_address]
-    validates :address_postcode, presence: true, on: %i[new building_details all], if: -> { postcode_entry.blank? }
+    validates :address_postcode, presence: true, on: %i[new building_details all], if: -> { address_postcode.blank? }
     validates :address_postcode, presence: true, on: %i[add_address]
     validate :postcode_format, on: %i[new building_details all add_address], if: -> { address_postcode.present? }
     validates :address_region, presence: true, on: %i[new building_details all], if: -> { address_postcode.present? && address_line_1.present? }
@@ -202,12 +196,12 @@ module FacilitiesManagement
 
     # rubocop:enable Metrics/AbcSize
     def address_selection
-      return if postcode_entry.blank?
+      return if address_postcode.blank?
 
-      pc = UKPostcode.parse(postcode_entry)
-      pc.full_valid? ? errors.delete(:postcode_entry) : errors.add(:postcode_entry, :invalid)
+      pc = UKPostcode.parse(address_postcode)
+      pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
 
-      errors.add(:address, :not_selected) if address_line_1.blank? && pc.full_valid?
+      errors.add(:base, :not_selected) if address_line_1.blank? && pc.full_valid?
     end
 
     def postcode_format

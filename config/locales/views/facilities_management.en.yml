@@ -28,8 +28,6 @@ en:
       models:
         facilities_management/building:
           attributes:
-            address:
-              not_selected: You must select an address to save a building
             address_line_1:
               blank: Add a building and street name
               too_long: Building and street name must be 100 characters or less
@@ -44,8 +42,11 @@ en:
               blank: You must select a region for your address
             address_town:
               blank: Town or city name for this building must be 30 characters or less
+            base:
+              not_selected: You must select an address to save a building
             building_name:
               blank: Enter a name for your building
+              taken: This building name is already in use
               too_long: Building name must be 50 characters or less
             building_type:
               blank: You must select a buiding type or describe your own
@@ -67,9 +68,6 @@ en:
               blank: You must enter your description of a building type
             other_security_type:
               blank: You must describe the security clearance level
-            postcode_entry:
-              blank: You must select an address to save a building
-              invalid: Enter a valid postcode, like AA1 1AA
             security_type:
               blank: You must select a security clearance level
         facilities_management/buyer_detail:
@@ -516,24 +514,8 @@ en:
         gia_header: What’s the size of the internal area of this building?
         guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
       building_details:
-        address: Address
-        address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
         building_name_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</h2><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
-        cant_find_address: I can’t find my building’s address in the list
-        change: Change
         description_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</h2> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
-        find_address: Find address
-        option_with_data_plural: "{%} addresses found"
-        option_with_data_single: 1 address found
-        postcode: Postcode
-        region: Region
-        region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
-        region_option_with_data_plural: "{%} regions found"
-        region_option_with_data_single: 1 region found
-        select_a_region: Select a region
-        select_an_address: Select an address
-        zero_address_found: 0 addresses found
-        zero_regions_found: 0 regions found
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
@@ -569,6 +551,28 @@ en:
         security: Security clearance
         skip_this_step: Skip this step
         type: Building type
+      postcode_lookup_container:
+        address: Address
+        address_plural: addresses found
+        address_singular: address found
+        cant_find_address: I can’t find my building’s address in the list
+        change: Change
+        find_address: Find address
+        option_text: "%{number} %{location} found"
+        please_select_address: Please select an address
+        postcode: Postcode
+        select_an_address: Select an address
+        what_is_address: What is the address?
+        what_is_address_description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+      region_lookup_container:
+        change: Change
+        option_text: "%{number} %{location} found"
+        please_select_a_region: Please select a region
+        region: Region
+        region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
+        region_plural: regions found
+        region_singular: region found
+        select_a_region: Select a region
       security:
         describe_security: Describe security level
         security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.

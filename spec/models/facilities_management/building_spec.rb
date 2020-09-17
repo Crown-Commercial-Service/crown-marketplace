@@ -640,12 +640,12 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       context 'when processing the address selection' do
         before do
           building.address_line_1 = nil
-          building.postcode_entry = building.address_postcode
+          building.address_postcode
           building.valid? :all
         end
 
         it 'will be invalid' do
-          expect(building.errors.details.dig(:address).first.dig(:error)).to eq :not_selected
+          expect(building.errors.details.dig(:base).first.dig(:error)).to eq :not_selected
         end
       end
     end
