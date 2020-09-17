@@ -21,6 +21,8 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { get :new }
+
     it 'returns http success' do
       get :new
       expect(response).to have_http_status(:found)
@@ -28,10 +30,20 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
     context 'when logging in as an mc buyer' do
       login_mc_buyer_with_detail
+
       it 'redirects to the not permitted page' do
         get :new
-
         expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
+
+    context 'when logged in as FM buyer' do
+      login_fm_buyer_with_details
+
+      it 'has correct backlink text and destination' do
+        get :new
+        expect(assigns(:page_description).back_button.text).to eq 'Return to manage buildings'
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
       end
     end
   end
@@ -98,9 +110,16 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
 
       login_fm_buyer_with_details
+
+      before { get :show, params: { id: building.id } }
+
       it 'returns http success' do
-        get :show, params: { id: building.id }
         expect(response).to have_http_status(:ok)
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to manage buildings'
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
       end
     end
 
@@ -133,6 +152,11 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'has the correct title' do
         expect(assigns(:page_description).heading_details.text).to eq 'Building details'
       end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details summary'
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_building_path(building, step: 'building_details')
+      end
     end
 
     context 'when the step is gia' do
@@ -144,6 +168,11 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has the correct title' do
         expect(assigns(:page_description).heading_details.text).to eq 'Internal and external areas'
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
       end
     end
 
@@ -157,6 +186,11 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'has the correct title' do
         expect(assigns(:page_description).heading_details.text).to eq 'Building type'
       end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building size'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'gia')
+      end
     end
 
     context 'when the step is security' do
@@ -168,6 +202,11 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has the correct title' do
         expect(assigns(:page_description).heading_details.text).to eq 'Security clearance'
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building type'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'type')
       end
     end
   end
@@ -376,9 +415,16 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
 
       login_fm_buyer_with_details
+
       it 'will redirect to add_address' do
         get :add_address, params: { id: building.id }
         expect(response).to render_template 'add_address'
+      end
+
+      it 'has correct backlink text and destination' do
+        get :add_address, params: { id: building.id }
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
       end
 
       it 'will display validation error' do

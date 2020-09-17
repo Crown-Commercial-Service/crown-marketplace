@@ -5,6 +5,7 @@ class GenericJourney
     @steps = []
     @params = HashWithIndifferentAccess.new
     @paths = paths
+    @slug = slug
 
     klass = first_step_class
     loop do
@@ -48,6 +49,13 @@ class GenericJourney
     else
       start_path
     end
+  end
+
+  def previous_step_text
+    return 'Return to your account' if @slug == 'choose-services'
+    return 'Return to services' if @slug == 'choose-locations'
+
+    nil
   end
 
   def next_step_path

@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd| %>
   <h2 class="govuk-!-width-two-thirds govuk-body">
     <% if @page_data[:sorted_supplier_list].count > 1 %>
       <%= "There are <b>#{@page_data[:sorted_supplier_list].count} suppliers </b>".html_safe %>

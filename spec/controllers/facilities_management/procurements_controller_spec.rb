@@ -236,17 +236,140 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when da_journey_state is contract_details' do
           render_views
+
           before do
             procurement.update(da_journey_state: 'contract_details')
-            get :show, params: { id: procurement.id }
           end
 
           it 'sets the view da to contract_details' do
+            get :show, params: { id: procurement.id }
             expect(assigns(:view_da)).to eq 'contract_details'
           end
 
           it 'shows governing law question' do
+            get :show, params: { id: procurement.id }
             expect(response.body).to match(/governing law/i)
+          end
+
+          context 'when editing contract details' do
+            before { get :edit, params: { id: procurement.id, step: step } }
+
+            context 'when on Payment method page' do
+              let(:step) { 'payment_method' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Invoicing contact details page' do
+              let(:step) { 'invoicing_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New invoicing contact details page' do
+              let(:step) { 'new_invoicing_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to invoicing contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'invoicing_contact_details')
+              end
+            end
+
+            context 'when on New invoicing address page' do
+              let(:step) { 'new_invoicing_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new invoicing contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_invoicing_contact_details')
+              end
+            end
+
+            context 'when on Authorised representative details page' do
+              let(:step) { 'authorised_representative' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New authorised representative details page' do
+              let(:step) { 'new_authorised_representative_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to authorised representative details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'authorised_representative')
+              end
+            end
+
+            context 'when on New authorised representative details add address page' do
+              let(:step) { 'new_authorised_representative_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new authorised representative details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_authorised_representative_details')
+              end
+            end
+
+            context 'when on Notices contact details page' do
+              let(:step) { 'notices_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New notices contact details page' do
+              let(:step) { 'new_notices_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to notices contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'notices_contact_details')
+              end
+            end
+
+            context 'when on New notices contact details add address page' do
+              let(:step) { 'new_notices_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new notices contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_notices_contact_details')
+              end
+            end
+
+            context 'when on Security policy document page' do
+              let(:step) { 'security_policy_document' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Local government pension scheme page' do
+              let(:step) { 'local_government_pension_scheme' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Governing law page' do
+              let(:step) { 'governing_law' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
           end
         end
 
