@@ -7,19 +7,12 @@
     <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
   </div>
 </div>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
-      <%= t('.heading') %>
-    </h2>
-  </div>
-</div>
 <%= form_group_with_error(@procurement_building, :service_codes) do |displayed_error| %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h3 class='govuk-heading-m'>
+      <h2 class='govuk-heading-m'>
         <%= t('.question') %>
-      </h3>
+      </h2>
       <%= displayed_error %>
       <p class='govuk-hint'>
         <%= t('.select_all_that_apply') %>
