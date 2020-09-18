@@ -138,10 +138,6 @@ module FacilitiesManagement::ProcurementsHelper
     @procurement.active_procurement_buildings.select(&:missing_region?)
   end
 
-  def convert_summary_to_title
-    "#{@summary_page.gsub('_', ' ').capitalize} summary"
-  end
-
   def continue_button_text
     FacilitiesManagement::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
   end
