@@ -695,15 +695,17 @@ en:
         remove_all: Remove all
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       choose_services:
+        caption: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
+        caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         heading: Services
         learn_more: Learn more (opens in a new tab)
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        return_text: Return to your account
         service_selected: service selected
         services_selected: services selected
         start_a_new_procurement_header: Services
-        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
       buildings_and_services:
         heading: Assigning services to a building
