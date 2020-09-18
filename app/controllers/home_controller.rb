@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, except: %i[status index cookies landing_page accessibility_statement_fm accessibility_statement_mc accessibility_statement_ls not_permitted]
+  before_action :authenticate_user!, except: %i[status index cookies landing_page accessibility_statement_fm accessibility_statement_mc accessibility_statement_ls not_permitted healthcheck]
 
   def index
     redirect_to ccs_homepage_url
@@ -27,5 +27,10 @@ class HomeController < ApplicationController
 
   def not_permitted
     @service = params[:service]
+  end
+
+  def healthcheck
+    ps = Sidekiq::ProcessSet.new
+    render layout: false, status: ps.size.positive? ? :ok : :not_found
   end
 end

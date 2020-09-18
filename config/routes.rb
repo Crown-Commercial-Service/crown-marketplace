@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/legal-services/accessibility-statement', to: 'home#accessibility_statement_ls'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
+  get '/healthcheck', to: 'home#healthcheck'
 
   authenticate :user, ->(u) { u.has_role? :ccs_employee } do
     mount Sidekiq::Web => '/sidekiq-log'
