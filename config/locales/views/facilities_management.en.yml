@@ -637,12 +637,12 @@ en:
         text: Read the service specification document
     home:
       index:
-        1_title: 1. Quick search
+        1_title: 1. Quick view suppliers
         1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
         1_you_will_tell_us_html: |
           <li>which services you are looking for</li>
           <li>building locations and information</li>
-        2_title: 2. Detailed search
+        2_title: 2. Start a procurement
         2_we_will_tell_you_html: |
           <li>which sub-lot is suitable</li>
           <li>an estimated contract cost</li>
