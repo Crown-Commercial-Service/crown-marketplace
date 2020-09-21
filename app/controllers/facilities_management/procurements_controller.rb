@@ -1045,6 +1045,8 @@ module FacilitiesManagement
           back_url: facilities_management_procurements_path
         },
         quick_search: {
+          back_text: 'Return to your account',
+          back_url: facilities_management_path,
           caption1: @procurement[:contract_name],
           page_title: 'What happens next'
         },

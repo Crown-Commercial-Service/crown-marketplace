@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         get :new
-        expect(assigns(:page_description).back_button.text).to eq 'Return to manage buildings'
+        expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
         expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       end
 
       it 'has correct backlink text and destination' do
-        expect(assigns(:page_description).back_button.text).to eq 'Return to manage buildings'
+        expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
         expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
       end
     end
