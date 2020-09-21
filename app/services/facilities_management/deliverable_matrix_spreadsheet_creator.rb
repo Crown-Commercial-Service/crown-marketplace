@@ -245,7 +245,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   ##### Methods regarding the building of the 'Customer & Contract Details' worksheet #####
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
-      add_contract_number(sheet) if any_contracts_offered?
+      add_contract_number(sheet) if @contract.contract_number.present?
       add_customer_details(sheet)
       add_contract_requirements(sheet)
     end
@@ -516,10 +516,6 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def find_service_for_building(data_for_service, building_id)
     data_for_service.find { |data| data[:building_id] == building_id }
-  end
-
-  def any_contracts_offered?
-    @procurement.procurement_suppliers.any? { |contract| !contract.unsent? }
   end
 
   def services_require_service_periods?
