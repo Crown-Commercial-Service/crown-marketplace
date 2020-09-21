@@ -1449,11 +1449,11 @@ en:
         deleted: Your item was deleted
         direct_award_title: Direct award
         further_competition: Further competition
+        help_text: Your saved searches and procurements are shown below. Click on the search/contract name to view the details or progress further.
         in-draft-title: In draft
         manage_procurements: Procurements dashboard
         searches_title: Searches
         sent_offers: Sent offers
-        start_new_search: Start a new search
       initial_call_off_period:
         description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
         example: For example, 01 11 2030.
