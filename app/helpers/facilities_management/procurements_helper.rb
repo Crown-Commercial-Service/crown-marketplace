@@ -58,8 +58,8 @@ module FacilitiesManagement::ProcurementsHelper
                         further_competition: 'Further competition',
                         results: 'Results',
                         quick_search: 'Quick view',
-                        detailed_search: 'Requirements',
-                        detailed_search_bulk_upload: 'Requirements',
+                        detailed_search: 'Entering requirements',
+                        detailed_search_bulk_upload: 'Entering requirements',
                         closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
