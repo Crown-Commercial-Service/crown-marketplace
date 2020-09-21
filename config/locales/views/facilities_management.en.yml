@@ -1266,7 +1266,7 @@ en:
           page_details_1: Please select all of the buildings you want to include in your procurement. Only fully set up 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
-        cancel_and_return: Cancel, and return to the manage procurements page
+        cancel_and_return: Return to your account
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
