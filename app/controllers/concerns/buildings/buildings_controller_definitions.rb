@@ -47,7 +47,7 @@ module Buildings::BuildingsControllerDefinitions
         back_url: facilities_management_path
       },
       new: {
-        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_manage_buildings'),
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
         caption1: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
         caption3: step_title(:new),
         page_title: I18n.t('facilities_management.buildings.page_definitions.create_single_building'),
@@ -68,7 +68,7 @@ module Buildings::BuildingsControllerDefinitions
         continuation_url: facilities_management_buildings_url,
         caption1: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
         page_title: (@page_data[:model_object]&.building_name if @page_data[:model_object].respond_to? :building_name),
-        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_manage_buildings')
+        back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings')
       }
     }.freeze
   end

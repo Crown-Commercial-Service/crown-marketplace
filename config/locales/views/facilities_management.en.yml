@@ -1444,6 +1444,7 @@ en:
           what_happens_next_title: What happens next
         return_to_dashboard: Return to procurements dashboard
       index:
+        back: Return to your account
         closed_title: Closed
         contracts_title: Contracts
         deleted: Your item was deleted
