@@ -309,13 +309,13 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'has the correct errors' do
           expected_error_list = {
-            estimated_annual_cost_incomplete: '‘Estimated annual cost’ task must be ‘COMPLETED’',
-            tupe_incomplete: '‘TUPE’ task must be ‘COMPLETED’',
-            contract_period_incomplete: '‘Contract period’ task must be ‘COMPLETED’',
-            services_incomplete: '‘Services’ task must be ‘COMPLETED’',
-            buildings_incomplete: '‘Buildings’ task must be ‘COMPLETED’',
-            buildings_and_services_incomplete: '‘Assigning services to buildings’ task must be ‘COMPLETED’',
-            service_requirements_incomplete: '‘Service requirements’ task must be ‘COMPLETED’'
+            estimated_annual_cost_incomplete: '‘Estimated annual cost’ must be ‘COMPLETED’',
+            tupe_incomplete: '‘TUPE’ must be ‘COMPLETED’',
+            contract_period_incomplete: '‘Contract period’ must be ‘COMPLETED’',
+            services_incomplete: '‘Services’ must be ‘COMPLETED’',
+            buildings_incomplete: '‘Buildings’ must be ‘COMPLETED’',
+            buildings_and_services_incomplete: '‘Assigning services to buildings’ must be ‘COMPLETED’',
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
           }
 
           expect(continue_error_list).to eq expected_error_list
@@ -334,8 +334,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'has the correct errors' do
           expected_error_list = {
-            buildings_and_services_incomplete: '‘Assigning services to buildings’ task must be ‘COMPLETED’',
-            service_requirements_incomplete: '‘Service requirements’ task must be ‘COMPLETED’'
+            buildings_and_services_incomplete: '‘Assigning services to buildings’ must be ‘COMPLETED’',
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
           }
 
           expect(continue_error_list).to eq expected_error_list
@@ -354,7 +354,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'has the correct errors' do
           expected_error_list = {
-            service_requirements_incomplete: '‘Service requirements’ task must be ‘COMPLETED’'
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
           }
 
           expect(continue_error_list).to eq expected_error_list

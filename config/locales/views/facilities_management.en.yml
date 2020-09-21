@@ -110,17 +110,17 @@ en:
         facilities_management/procurement:
           attributes:
             base:
-              buildings_and_services_incomplete: "‘Assigning services to buildings’ task must be ‘COMPLETED’"
-              buildings_incomplete: "‘Buildings’ task must be ‘COMPLETED’"
-              contract_period_incomplete: "‘Contract period’ task must be ‘COMPLETED’"
-              estimated_annual_cost_incomplete: "‘Estimated annual cost’ task must be ‘COMPLETED’"
+              buildings_and_services_incomplete: "‘Assigning services to buildings’ must be ‘COMPLETED’"
+              buildings_incomplete: "‘Buildings’ must be ‘COMPLETED’"
+              contract_period_incomplete: "‘Contract period’ must be ‘COMPLETED’"
+              estimated_annual_cost_incomplete: "‘Estimated annual cost’ must be ‘COMPLETED’"
               initial_call_off_period_in_past: Initial call-off period start date must not be in the past
               mobilisation_period_in_past: Mobilisation period start date must not be in the past
               mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
-              service_requirements_incomplete: "‘Service requirements’ task must be ‘COMPLETED’"
-              services_incomplete: "‘Services’ task must be ‘COMPLETED’"
+              service_requirements_incomplete: "‘Service requirements’ must be ‘COMPLETED’"
+              services_incomplete: "‘Services’ must be ‘COMPLETED’"
               services_not_present: You must select at least one service
-              tupe_incomplete: "‘TUPE’ task must be ‘COMPLETED’"
+              tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
               not_present: You must answer the question about ‘Contract name’
