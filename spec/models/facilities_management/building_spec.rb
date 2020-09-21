@@ -737,5 +737,41 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
   end
+
+  describe 'address methods' do
+    subject(:building) { create(:facilities_management_building) }
+
+    context 'when using full_address' do
+      context 'when all parts of the address are present' do
+        it 'returns the correct address' do
+          expect(building.full_address).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, Essex, SS31 0DR'
+        end
+      end
+
+      context 'when address line 2 is not present' do
+        before { building.address_line_2 = nil }
+
+        it 'returns the correct address' do
+          expect(building.full_address).to eq '10 Mariners Court, Southend-On-Sea, Essex, SS31 0DR'
+        end
+      end
+    end
+
+    context 'when using address_no_region' do
+      context 'when all parts of the address are present' do
+        it 'returns the correct address' do
+          expect(building.address_no_region).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, SS31 0DR'
+        end
+      end
+
+      context 'when address line 2 is not present' do
+        before { building.address_line_2 = nil }
+
+        it 'returns the correct address' do
+          expect(building.address_no_region).to eq '10 Mariners Court, Southend-On-Sea, SS31 0DR'
+        end
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/NestedGroups

@@ -20,7 +20,7 @@
         <td class="govuk-table__cell govuk-!-padding-right-2" valign="top">
           <%= link_to procurement_building.name, edit_facilities_management_procurement_building_path(procurement_building, step: 'buildings_and_services'), class: 'govuk-link-no-visited-state', style: 'text-decoration : none;' %>
           <br/>
-          <%= procurement_building.full_address %>
+          <%= procurement_building.address_no_region %>
         </td>
         <% if procurement_building.service_codes.any? %>
           <td class="govuk-table__cell govuk-!-padding-right-2" valign="top">

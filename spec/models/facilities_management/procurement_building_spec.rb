@@ -623,6 +623,34 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe '#service_selection_complete?' do
+    before { procurement_building.update(service_codes: service_codes) }
+
+    context 'when there are no service codes' do
+      let(:service_codes) { [] }
+
+      it 'returns false' do
+        expect(procurement_building.service_selection_complete?).to eq false
+      end
+    end
+
+    context 'when the selection is invalid' do
+      let(:service_codes) { %w[M.1 N.1 O.1] }
+
+      it 'returns false' do
+        expect(procurement_building.service_selection_complete?).to eq false
+      end
+    end
+
+    context 'when the slection is valid' do
+      let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
+
+      it 'returns true' do
+        expect(procurement_building.service_selection_complete?).to eq true
+      end
+    end
+  end
+
   describe '#complete?' do
     context 'when service require answers' do
       let(:codes_with_values) do
