@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-      <% @procurement.sorted_active_procurement_buildings.each do |procurement_building| %>
+      <% @active_procurement_buildings.each do |procurement_building| %>
         <tr class="govuk-table__row">
           <th class="govuk-table__header govuk-table__cell govuk-border-bottom_none govuk-!-padding-bottom-0"><%= procurement_building.name %></th>
         </tr>
@@ -26,4 +26,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @active_procurement_buildings,  views_prefix: 'shared' %>
 </div>

@@ -755,6 +755,10 @@ ul.ccs-pagination {
       text-decoration : none;
       color           : $govuk-link-colour;
 
+      &:focus {
+        color: #0b0c0c;
+      } 
+
       &[aria-current] {
         color       : govuk-colour("grey-2");
         font-weight : 600;
@@ -774,10 +778,6 @@ ul.ccs-pagination {
         font-weight : 800;
         }
       }
-
-      &:focus {
-        color: #0b0c0c;
-      } 
     }
 
   }

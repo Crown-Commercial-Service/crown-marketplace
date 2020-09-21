@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <% @procurement_buildings.each do |procurement_building| %>
+    <% @active_procurement_buildings.each do |procurement_building| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-padding-right-2" valign="top">
           <%= link_to procurement_building.name, edit_facilities_management_procurement_building_path(procurement_building, step: 'buildings_and_services'), class: 'govuk-link-no-visited-state', style: 'text-decoration : none;' %>
@@ -43,4 +43,4 @@
     <% end %>
   </tbody>
 </table>
-<%= paginate @procurement_buildings, views_prefix: 'shared' %>
+<%= paginate @active_procurement_buildings, views_prefix: 'shared' %>
