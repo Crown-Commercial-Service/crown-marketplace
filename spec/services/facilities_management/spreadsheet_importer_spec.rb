@@ -1777,6 +1777,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   describe '.spreadsheet_not_present?' do
     before { spreadsheet_import.save }
 
+    let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
     context 'when the spreadsheet_import has been deleted' do

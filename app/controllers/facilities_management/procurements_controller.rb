@@ -32,6 +32,7 @@ module FacilitiesManagement
 
     def summary
       @summary_page = params['summary']
+      set_active_procurement_buildings if @summary_page == 'buildings'
       redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if @procurement.send("#{@summary_page}_status") == :not_started
     end
 
@@ -710,7 +711,7 @@ module FacilitiesManagement
     def set_procurement_data
       @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
       set_buildings if params['step'] == 'buildings'
-      set_procurement_buildings if params['summary'] == 'buildings_and_services'
+      set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
       return if @procurement.service_codes.nil? || @procurement.region_codes.nil?
 
       region_codes = @procurement.region_codes
@@ -737,8 +738,8 @@ module FacilitiesManagement
       set_paginated_buildings_data
     end
 
-    def set_procurement_buildings
-      @procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page])
+    def set_active_procurement_buildings
+      @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page])
     end
 
     def find_regions(region_codes)
