@@ -67,5 +67,17 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingServiceLift, type: :mode
         expect(lift.errors[:number_of_floors].first).to eq 'The number of floors accessed must be a whole number and greater than 0'
       end
     end
+
+    context 'when the number of floors is a decimal' do
+      let(:number_of_floors) { 1.5 }
+
+      it 'is not valid' do
+        expect(lift.errors.any?).to be true
+      end
+
+      it 'has the correct error message' do
+        expect(lift.errors[:number_of_floors].first).to eq 'Enter a whole number between 1 and 999'
+      end
+    end
   end
 end

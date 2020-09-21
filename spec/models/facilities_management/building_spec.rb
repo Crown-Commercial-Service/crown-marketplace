@@ -210,6 +210,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         building.valid?(:gia)
         expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
       end
+
+      it 'will have the correct error message' do
+        building.valid?(:gia)
+        expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
+      end
     end
 
     context 'when external area is not present' do
@@ -226,6 +231,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         building.valid?(:gia)
         expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
       end
+
+      it 'will have the correct error message' do
+        building.valid?(:gia)
+        expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
+      end
     end
 
     context 'when gia is invalid' do
@@ -237,6 +247,10 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_an_integer
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Enter a whole number for the size of internal area of this building'
         end
       end
 
@@ -266,6 +280,10 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         it 'will be invalid' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_an_integer
         end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'Enter a whole number for the size of external area of this building'
+        end
       end
 
       context 'when external_area is not an integer' do
@@ -294,6 +312,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       it 'will be invalid' do
         expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
         expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
+      end
+
+      it 'will have the correct error messages' do
+        expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
+        expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
       end
     end
 
