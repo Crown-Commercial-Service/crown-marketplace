@@ -19,7 +19,7 @@
   } %>
   <div class="govuk-clearfix">
     <% if !@procurement.persisted? || @procurement.quick_search?%>
-      <span class="govuk-caption-xl"><%= @procurement.detailed_search? ? t('.detailed_search') : t('.quick_search') %> <%= " - #{@procurement.contract_name}" if @procurement.contract_name? %></span>
+      <span class="govuk-caption-xl"><%= [@procurement.detailed_search? ? t('.detailed_search') : nil, @procurement.contract_name].compact.join(' - ') if @procurement.contract_name? %></span>
       <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-bottom-5">
         <%= site_title[params[:step]] if params[:step] && site_title[params[:step]] %>
         <%= t('.heading') if !params[:step] && !site_title[params[:step]] %>
@@ -49,7 +49,7 @@
       </div>
       <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-5">
         <%= link_to t('.return_to_requirements'), facilities_management_procurement_path(@procurement), class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.return_to_requirements')}" if @procurement.detailed_search? %>
-        <%= link_to t('.cancel_and_return'), facilities_management_procurements_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
+        <%= link_to t('.cancel_and_return'), facilities_management_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
       </div>
     <% end %>
   </div>

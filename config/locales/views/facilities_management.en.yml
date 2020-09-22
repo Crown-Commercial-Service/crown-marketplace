@@ -700,17 +700,20 @@ en:
         no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
+        return_text: Return to your account
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       choose_services:
+        caption: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
+        caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         heading: Services
         learn_more: Learn more (opens in a new tab)
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        return_text: Return to your account
         service_selected: service selected
         services_selected: services selected
         start_a_new_procurement_header: Services
-        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
       buildings_and_services:
         heading: Assigning services to a building
@@ -1270,7 +1273,7 @@ en:
           page_details_1: Please select all of the buildings you want to include in your procurement. Only fully set up 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
-        cancel_and_return: Cancel, and return to the manage procurements page
+        cancel_and_return: Return to your account
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
