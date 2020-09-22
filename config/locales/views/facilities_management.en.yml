@@ -1736,7 +1736,7 @@ en:
           optional_call_off_extensions: Optional call-off extensions
         heading:
           buildings: Buildings summary
-          buildings_and_services: Assign services to buildings summary
+          buildings_and_services: Assigning services to buildings summary
           contract_period: Contract period summary
           service_requirements: Service requirements summary
           services: Services summary
