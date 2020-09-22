@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         size = supplier_assessed_value_list.size
         expect(size).to be > 2
         (1..size - 1).each do |i|
-          expect(supplier_assessed_value_list[i - 1][1]).to be <= supplier_assessed_value_list[i][1]
+          expect(supplier_assessed_value_list[i - 1][:da_value]).to be <= supplier_assessed_value_list[i][:da_value]
         end
       end
 
@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         size = supplier_assessed_value_list.size
         expect(size).to be > 2
         (1..size - 1).each do |i|
-          expect(supplier_assessed_value_list[i - 1][1]).to eq 0
+          expect(supplier_assessed_value_list[i - 1][:da_value]).to eq 0
         end
       end
     end

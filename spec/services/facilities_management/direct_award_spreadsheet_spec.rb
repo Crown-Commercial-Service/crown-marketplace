@@ -18,7 +18,9 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
   describe 'contract rate card worksheet' do
     subject(:rates) { wb.sheet('Contract Rate Card') }
 
-    before { procurement.active_procurement_buildings.each { |apb| apb.update(service_codes: ['C.1']) } }
+    before do
+      procurement.active_procurement_buildings.each { |apb| apb.update(service_codes: ['C.1']) }
+    end
 
     context 'with a procurement in direct_award' do
       it 'verify contract rate card worksheet headers' do

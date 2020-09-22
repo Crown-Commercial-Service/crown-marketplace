@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       results = {}
       supplier_names.each do |supplier_name|
         results[supplier_name] = {}
-        report.calculate_services_for_buildings(supplier_name, true, :da)
+        report.calculate_services_for_buildings(supplier_name, :da)
         results[supplier_name][:direct_award_value] = report.direct_award_value
       end
 
