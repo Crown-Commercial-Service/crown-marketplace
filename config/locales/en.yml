@@ -300,6 +300,55 @@ en:
       - plc
       - LLP
   home:
+    accessibility:
+      accessibility_statement:
+        ability_net: AbilityNet
+        ability_net_advice: has advice on making your device easier to use if you have a disability.
+        ability_net_link: https://mcmw.abilitynet.org.uk/
+        list_1_change_colours: change colours, contrast levels and fonts
+        list_1_keyboard: navigate most of the website using just a keyboard
+        list_1_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+        list_1_speech: navigate most of the website using speech recognition software
+        list_1_zoom: zoom in up to 300% without the text spilling off the screen
+        marketplace_link_description: 'This accessibility statement applies to the %{service} digital service which can be found at the following URL:'
+        this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
+        website_text_simple: We've also made the website text as simple as possible to understand.
+      heading_how_accessible: How accessible this website is
+      heading_how_we_tested: How we tested this website
+      heading_non_accessible: Non accessible content
+      heading_non_compliance: Non compliance with the accessibility regulations
+      not_in_scope:
+        accessibility_regulations_1: The accessibility regulations
+        accessibility_regulations_2: if they're not essential to providing our services.
+        accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
+        accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018
+        any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
+        heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
+        many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards - for example, they may not be structured so they're accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
+        pdfs_and_docs: PDFs and other documents
+        plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
+        some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+      preparation_for_audit:
+        heading_preparation: Preparation of this accessibility statement
+        this_statement_date: This statement was prepared on %{date}. It will be reviewed and updated as required.
+      shared_section:
+        CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+        accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
+        accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard.
+        call: call 0345 410 2222
+        email: email
+        email_link: info@crowncommercial.gov.uk
+        equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
+        equality_link: https://www.equalityadvisoryservice.com/
+        equality_link_text: contact the Equality Advisory and Support Service (EASS)
+        heading_enforcement: Enforcement procedure
+        heading_reporting: Reporting accessibility problems with this website
+        heading_technical_information: Technical information about this website’s accessibility
+        heading_what_to_do: What to do if you cannot access parts of this website
+        if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
+        this_website_partially_1: This website is compliant with the
+        we_are_always_looking: We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact
+        well_consider: We'll consider your request and get back to you in five working days.
     accessibility_statement_fm:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
       ability_net: AbilityNet
@@ -363,111 +412,58 @@ en:
       website_text_simple: We’ve also made the website text as simple as possible to understand.
       well_consider: We’ll consider your request and get back to you in five working days.
     accessibility_statement_ls:
-      CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-      ability_net: AbilityNet
-      ability_net_advice: has advice on making your device easier to use if you have a disability.
-      ability_net_link: https://mcmw.abilitynet.org.uk/
-      accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
-      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard.
-      accessibility_regulations_1: The accessibility regulations
-      accessibility_regulations_2: if they're not essential to providing our services.
-      accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
-      accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018
-      any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
-      call: call 0345 410 2222
       compliance: No known accessibility non compliance issues.
-      email: email
-      email_link: info@crowncommercial.gov.uk
-      equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
-      equality_link: https://www.equalityadvisoryservice.com/
-      equality_link_text: contact the Equality Advisory and Support Service (EASS)
+      date: 1 July 2020
       heading: Legal Services (LS) Accessibility Statement
-      heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
-      heading_enforcement: Enforcement procedure
-      heading_how_accessible: How accessible this website is
-      heading_how_we_tested: How we tested this website
-      heading_non_accessible: Non accessible content
-      heading_non_compliance: Non compliance with the accessibility regulations
-      heading_preparation: Preparation of this accessibility statement
-      heading_reporting: Reporting accessibility problems with this website
-      heading_technical_information: Technical information about this website’s accessibility
-      heading_what_to_do: What to do if you cannot access parts of this website
-      if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
-      list_1_change_colours: change colours, contrast levels and fonts
-      list_1_keyboard: navigate most of the website using just a keyboard
-      list_1_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
-      list_1_speech: navigate most of the website using speech recognition software
-      list_1_zoom: zoom in up to 300% without the text spilling off the screen
       list_2_continue: one page has two continue buttons, this results in screen readers repeating "continue"
-      many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards - for example, they may not be structured so they're accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
       marketplace_link: https://marketplace.service.crowncommercial.gov.uk/legal-services
-      marketplace_link_description: 'This accessibility statement applies to the Legal Services digital service which can be found at the following URL:'
       non_accessible_content_1: We are aware of an issue with the "select the services you need" page when tabbed in conjunction with NVDA, JAWS and macOS VoiceOver screen reader assistive technologies. The duplicate 'Continue' buttons that are present result in the screen reader stuttering.
       non_accessible_content_2: It would be expected that only one 'Continue' button would be present on a page to prevent continue being announced twice by screen readers. We will resolve this issue by October 2020.
-      pdfs_and_docs: PDFs and other documents
-      plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
-      some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+      service: Legal Services
       the_complete_journey: The complete Legal Services journey was tested, this included every page a buyer would progress through to complete the procurement activity.
-      this_statement_date: This statement was prepared on 1 July 2020. It will be reviewed and updated as required.
-      this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
-      this_website_partially_1: This website is compliant with the
-      we_are_always_looking: We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact
       we_know: This website has one accessibility issue.
       website_last_tested: This website was last tested on 3 April 2020. The test was carried out by Zoonou Ltd.
-      website_text_simple: We've also made the website text as simple as possible to understand.
-      well_consider: We'll consider your request and get back to you in five working days.
     accessibility_statement_mc:
-      CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-      ability_net: AbilityNet
-      ability_net_advice: has advice on making your device easier to use if you have a disability.
-      ability_net_link: https://mcmw.abilitynet.org.uk/
-      accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
-      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard.
-      accessibility_regulations_1: The accessibility regulations
-      accessibility_regulations_2: if they're not essential to providing our services.
-      accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
-      accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018
-      any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
-      call: call 0345 410 2222
       compliance: No known accessibility non compliance issues.
-      email: email
-      email_link: info@crowncommercial.gov.uk
-      equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
-      equality_link: https://www.equalityadvisoryservice.com/
-      equality_link_text: contact the Equality Advisory and Support Service (EASS)
+      date: 1 July 2020
       heading: Management Consultancy (MC) Accessibility Statement
-      heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
-      heading_enforcement: Enforcement procedure
-      heading_how_accessible: How accessible this website is
       heading_how_we_tested: How we tested this website
-      heading_non_accessible: Non accessible content
-      heading_non_compliance: Non compliance with the accessibility regulations
-      heading_preparation: Preparation of this accessibility statement
-      heading_reporting: Reporting accessibility problems with this website
-      heading_technical_information: Technical information about this website’s accessibility
-      heading_what_to_do: What to do if you cannot access parts of this website
-      if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
-      list_1_change_colours: change colours, contrast levels and fonts
-      list_1_keyboard: navigate most of the website using just a keyboard
-      list_1_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
-      list_1_speech: navigate most of the website using speech recognition software
-      list_1_zoom: zoom in up to 300% without the text spilling off the screen
-      many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards - for example, they may not be structured so they're accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
       marketplace_link: https://marketplace.service.crowncommercial.gov.uk/management-consultancy
-      marketplace_link_description: 'This accessibility statement applies to the Management Consultancy digital service which can be found at the following URL:'
-      pdfs_and_docs: PDFs and other documents
-      plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
-      some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+      service: Management Consultancy
       the_complete_journey: The complete Management Consultancy journey was tested, this included every page a buyer would progress through to complete the procurement activity.
       the_content: No known accessibility issues.
-      this_statement_date: This statement was prepared on 1 July 2020. It will be reviewed and updated as required.
-      this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
-      this_website_partially_1: This website is compliant with the
-      we_are_always_looking: We're always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact
       we_know: This website should be fully accessible, there are no known issues.
       website_last_tested: This website was last tested on 24 March 2020. The test was carried out by Zoonou Ltd.
-      website_text_simple: We've also made the website text as simple as possible to understand.
-      well_consider: We'll consider your request and get back to you in five working days.
+    accessibility_statement_st:
+      date: 21 September 2020
+      error_identification: Error Identification
+      error_identification_fails: This fails WCAG 2.1 AA success criterion 3.3.1 (error identification). We plan to fix this by December 2020.
+      error_identification_issue: When on the fixed term agency worker results page, error returned on entering invalid salary is not being declared by the assistive screen reader.
+      focus_order: Focus Order
+      focus_order_fails: This fails WCAG 2.1 AA success criterion 2.4.3 (focus order). We plan to fix this by December 2020.
+      focus_order_issue: When viewing the temporary to permanent calculator page if the user submits the form without entering any data, the error messages returned by the system are declared by the assistive screen reader, however the focus shifts to the banner landmark at the top of the page when it should shift to the error message box.
+      heading: Supply Teachers (ST) Accessibility statement
+      info_and_relationships_fails: This fails WCAG 2.1 AA success criterion 1.3.1 (info and relationships). We plan to fix this by December 2020.
+      info_and_relationships_heading: Info and Relationships
+      info_and_relationships_issue_1: When viewing the fixed term agency worker results page, while selecting skip to main content, the emphasis is on the back link, but the screen reader is declaring the content of the entire page. Since the emphasis is on the back link, the screen reader should declare only that particular link.
+      info_and_relationships_issue_2: When viewing managed service provider and agency pages and navigating through the table, the assistive screen reader is declaring the column headers and item 1 of column twice.
+      keyboard: Keyboard
+      keyboard_fails: This fails WCAG 2.1 AA success criterion 2.1.1 (keyboard). We plan to fix this by December 2020.
+      keyboard_issue: When viewing the fixed term agency worker results page using an assistive screen reader, it is reading an error message not displayed anywhere on the page.
+      link_purpose: Link Purpose
+      link_purpose_fails: This fails WCAG 2.1 AA success criterion 2.4.4 (link purpose). We plan to fix this by December 2020.
+      link_purpose_issue: On the login page, when the focus is on the “I’ve forgotten my password” link, this is being declared as a list with one item by the assisted screen reader. Declaring the link as a list may lead to confusion to the user.
+      list_1_error: There is an issue with an error message on the agency workers results page, the error message due to an invalid salary being entered is not declared by the assisted screen reader
+      list_1_focus: There is an issue with focus order on the temporary to permanent calculator page
+      list_1_link: A link is being declared as a list by the assisted screen reader on the login page
+      list_1_results: When viewing the fixed term agency worker results page, while selecting skip to main content, the emphasis is on the back link, but the screen reader is declaring the content of the entire page
+      list_1_screen: When viewing managed service provider and agency pages and navigating through the table, the assistive screen reader is declaring the column headers and item 1 of column twice
+      marketplace_link: https://marketplace.service.crowncommercial.gov.uk/supply-teachers
+      service: Supply Teachers
+      the_content: The content listed below is non-accessible for the following reasons.
+      we_know: 'We know some parts of this website are not fully accessible:'
+      we_tested_the_website_at: 'We tested the website at:'
+      website_last_tested: This website was last tested on 11th July 2020. The test was carried out by Cognizant.
     index:
       facilities_management_link: Find a facilities management supplier
       legal_services_link: Find legal service for the wider public sector
