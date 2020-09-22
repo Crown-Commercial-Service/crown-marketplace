@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_procurement, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_no_procurement_buildings, class: FacilitiesManagement::Procurement do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { 12345 }
     tupe { false }
@@ -7,6 +7,9 @@ FactoryBot.define do
     initial_call_off_start_date { Time.zone.now + 6.months }
     service_codes { ['C.1', 'C.2'] }
     association :user
+  end
+
+  factory :facilities_management_procurement, parent: :facilities_management_procurement_no_procurement_buildings do
     procurement_buildings { build_list :facilities_management_procurement_building, 1 }
   end
 
@@ -24,15 +27,8 @@ FactoryBot.define do
     aasm_state { 'detailed_search' }
   end
 
-  factory :facilities_management_procurement_without_procurement_buildings, class: FacilitiesManagement::Procurement do
-    contract_name { Faker::Name.unique.name }
-    estimated_cost_known { 12345 }
-    tupe { false }
+  factory :facilities_management_procurement_without_procurement_buildings, parent: :facilities_management_procurement_no_procurement_buildings do
     aasm_state { 'detailed_search' }
-    initial_call_off_period { 1 }
-    initial_call_off_start_date { Time.zone.now + 6.months }
-    service_codes { ['C.1', 'C.2'] }
-    association :user
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
@@ -49,10 +45,6 @@ FactoryBot.define do
 
   factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do
     aasm_state { 'further_competition' }
-  end
-
-  factory :facilities_management_procurement_no_procurement_buildings, parent: :facilities_management_procurement do
-    procurement_buildings { [] }
   end
 
   factory :facilities_management_procurement_with_contact_details, parent: :facilities_management_procurement_with_extension_periods do
@@ -107,5 +99,9 @@ FactoryBot.define do
 
   factory :facilities_management_procurement_with_security_document, parent: :facilities_management_procurement do
     security_policy_document_file { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'test_pdf.pdf'), 'application/pdf') }
+  end
+
+  factory :facilities_management_procurement_with_lifts, parent: :facilities_management_procurement_no_procurement_buildings do
+    procurement_buildings { build_list :facilities_management_procurement_building_with_lifts, 1 }
   end
 end

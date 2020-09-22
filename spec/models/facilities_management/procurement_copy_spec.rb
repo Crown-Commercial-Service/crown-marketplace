@@ -96,6 +96,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
+    context 'when considering lifts' do
+      let(:procurement) { create(:facilities_management_procurement_with_lifts, user: user) }
+
+      it 'will have the same lift data' do
+        procurement_lift_data = procurement.procurement_buildings.first.procurement_building_services.first.lift_data
+        procurement_copy_lift_data = procurement_copy.procurement_buildings.first.procurement_building_services.first.lift_data
+
+        expect(procurement_copy_lift_data).to eq procurement_lift_data
+      end
+    end
+
     context 'when a copy has been made of a procurement without full use of contact details' do
       let(:second_procurement) { create(:facilities_management_procurement, user: user) }
       let(:second_procurement_copy) { second_procurement.create_procurement_copy }
