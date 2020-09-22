@@ -1,0 +1,143 @@
+<div class= 'govuk-!-width-three-quarters govuk-body'>
+  <h1 class='govuk-heading-l'>
+    <%= t('.heading') %>
+  </h1>
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <%= render(partial: 'home/accessibility/accessibility_statement', locals: { service: t('.service'), link: t('.marketplace_link'), zoom_required: false })%>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <div>
+    <h2 class='govuk-heading-m'>
+      <%= t('home.accessibility.heading_how_accessible') %>
+    </h2>
+    <p>
+      <%= t('.we_know') %>
+    </p>
+    <ul>
+      <li> <%= t('.list_1_error') %> </li>
+      <li> <%= t('.list_1_results') %> </li>
+      <li> <%= t('.list_1_focus') %> </li>
+      <li> <%= t('.list_1_link') %> </li>
+      <li> <%= t('.list_1_screen') %> </li>
+    </ul>
+  </div>
+
+  <%= render 'home/accessibility/shared_section' %>
+
+  <div>
+    <h2 class='govuk-heading-m'>
+      <%= t('home.accessibility.heading_non_accessible') %>
+    </h2>
+    <p>
+      <%= t('.the_content') %>
+    </p>
+  </div>
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <div>
+    <h2 class='govuk-heading-m'>
+      <%= t('home.accessibility.heading_non_compliance') %>
+    </h2>
+    <div>
+      <h3 class='govuk-heading-s'>
+        <%= t('.info_and_relationships_heading') %>
+      </h3>
+      <p>
+        <%= t('.info_and_relationships_issue_1') %>
+      </p>
+      <p>
+        <%= t('.info_and_relationships_issue_2') %>
+      </p>
+      <p>
+        <%= t('.info_and_relationships_fails') %>
+      </p>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    <div>
+      <h3 class='govuk-heading-s'>
+        <%= t('.keyboard') %>
+      </h3>
+      <p>
+        <%= t('.keyboard_issue') %>
+      </p>
+      <p>
+        <%= t('.keyboard_fails') %>
+      </p>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    <div>
+      <h3 class='govuk-heading-s'>
+        <%= t('.focus_order') %>
+      </h3>
+      <p>
+        <%= t('.focus_order_issue') %>
+      </p>
+      <p>
+        <%= t('.focus_order_fails') %>
+      </p>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    <div>
+      <h3 class='govuk-heading-s'>
+        <%= t('.link_purpose') %>
+      </h3>
+      <p>
+        <%= t('.link_purpose_issue') %>
+      </p>
+      <p>
+        <%= t('.link_purpose_fails') %>
+      </p>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m">
+
+    <div>
+      <h3 class='govuk-heading-s'>
+        <%= t('.error_identification') %>
+      </h3>
+      <p>
+        <%= t('.error_identification_issue') %>
+      </p>
+      <p>
+        <%= t('.error_identification_fails') %>
+      </p>
+    </div>
+  </div>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <%= render 'home/accessibility/not_in_scope' %>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <%= render(partial: 'home/accessibility/preparation_for_audit', locals: { date: t('.date') }) %>
+
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+  <div>
+    <h2 class='govuk-heading-m'>
+      <%= t('home.accessibility.heading_how_we_tested') %>
+    </h3>
+    <p>
+      <%= t('.website_last_tested') %>
+    </p>
+    <p>
+      <%= t('.we_tested_the_website_at') %>
+    </p>
+    <% @links.each do |link| %>
+      <p>
+        <%= link_to link, link, class: 'govuk-link govuk-link--no-visited-state' %>
+      </p>
+    <% end %>
+  </div>
+</div>
