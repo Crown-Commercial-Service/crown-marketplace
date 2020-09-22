@@ -1910,6 +1910,29 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       end
     end
 
+    describe 'GET delete' do
+      context 'when the user wants to delete the procurement' do
+        before do
+          get :delete, params: { procurement_id: procurement.id }
+        end
+
+        it 'renders the delete page' do
+          expect(response).to render_template :delete
+        end
+      end
+
+      context 'when the user tries to delete a procurement that cannot be deleted' do
+        before do
+          procurement.update(aasm_state: 'closed')
+          get :delete, params: { procurement_id: procurement.id }
+        end
+
+        it 'redirects facilities_management_procurements' do
+          expect(response).to redirect_to facilities_management_procurements_path
+        end
+      end
+    end
+
     describe 'POST destroy' do
       context 'when the user deletes the procurement' do
         before do
@@ -1920,8 +1943,19 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.class.where(id: procurement.id)).not_to exist
         end
 
-        it 'redirects facilities_management_procurements_url' do
-          expect(response).to redirect_to facilities_management_procurements_url(deleted: procurement.contract_name)
+        it 'redirects facilities_management_procurements_path' do
+          expect(response).to redirect_to facilities_management_procurements_path(deleted: procurement.contract_name)
+        end
+      end
+
+      context 'when the user tries to delete a procurement that cannot be deleted' do
+        before do
+          procurement.update(aasm_state: 'closed')
+          post :destroy, params: { id: procurement.id }
+        end
+
+        it 'redirects facilities_management_procurements' do
+          expect(response).to redirect_to facilities_management_procurements_path
         end
       end
     end

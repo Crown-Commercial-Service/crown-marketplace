@@ -1,9 +1,9 @@
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
-    before_action :set_procurement, only: %i[show summary edit update destroy]
+    before_action :set_procurement, only: %i[show summary edit update delete destroy]
     before_action :authorize_user
     before_action :set_deleted_action_occurred, only: %i[index]
-    before_action :set_edit_state, only: %i[index show summary edit update destroy]
+    before_action :redirect_from_delete_if_needed, only: %i[delete destroy]
     before_action :ready_buildings, only: %i[show summary edit update]
     before_action :set_procurement_data, only: %i[show summary edit update]
     before_action :set_new_procurement_data, only: %i[new]
@@ -21,8 +21,6 @@ module FacilitiesManagement
     end
 
     def show
-      params[:delete] = 'y' if @delete
-
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
 
       redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
@@ -78,11 +76,11 @@ module FacilitiesManagement
       continue_da_journey if params.key?(:continue_da)
     end
 
-    # DELETE /procurements/1
-    # DELETE /procurements/1.json
+    def delete; end
+
     def destroy
       FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
-      redirect_to facilities_management_procurements_url(deleted: @procurement.contract_name)
+      redirect_to facilities_management_procurements_path(deleted: @procurement.contract_name)
     end
 
     def what_happens_next; end
@@ -132,6 +130,10 @@ module FacilitiesManagement
 
     def back_path
       helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
+    end
+
+    def redirect_from_delete_if_needed
+      redirect_to facilities_management_procurements_path unless @procurement.can_be_deleted?
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
@@ -775,13 +777,7 @@ module FacilitiesManagement
     end
 
     def set_deleted_action_occurred
-      @deleted = params[:deleted].present?
-      @what_was_deleted = params[:deleted].to_s if @deleted
-    end
-
-    def set_edit_state
-      @delete = params[:delete] == 'y' || params[:delete] == 'true'
-      @change = !@delete && action_name == 'edit'
+      @what_was_deleted = params[:deleted].to_s if params[:deleted].present?
     end
 
     def procurement_valid?
