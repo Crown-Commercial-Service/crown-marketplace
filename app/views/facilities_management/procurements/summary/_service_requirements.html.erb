@@ -10,7 +10,7 @@
       </tr>
       </thead>
       <tbody class="govuk-table__body">
-      <% procurement_buildings_requiring_service_info(@procurement).each do |procurement_building| %>
+      <% @active_procurement_buildings.each do |procurement_building| %>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-padding-right-2">
             <%= link_to procurement_building.name, facilities_management_procurement_building_path(procurement_building), class: 'ccs-no-underline' %>
@@ -22,5 +22,6 @@
       <% end %>
       </tbody>
     </table>
+    <%= paginate @active_procurement_buildings, views_prefix: 'shared' %>
   </div>
 </div>

@@ -9,6 +9,7 @@ module FacilitiesManagement
     before_action :set_new_procurement_data, only: %i[new]
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
     before_action :build_page_details, only: %i[show summary edit update destroy]
+    before_action :set_summary_data, only: :summary
 
     def index
       @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -31,8 +32,6 @@ module FacilitiesManagement
     end
 
     def summary
-      @summary_page = params['summary']
-      set_active_procurement_buildings if @summary_page == 'buildings'
       redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if @procurement.send("#{@summary_page}_status") == :not_started
     end
 
@@ -738,8 +737,25 @@ module FacilitiesManagement
       set_paginated_buildings_data
     end
 
+    def set_summary_data
+      @summary_page = params['summary']
+
+      case @summary_page
+      when 'buildings'
+        set_active_procurement_buildings
+      when 'service_requirements'
+        set_procurement_buildings_requireing_service_info
+      end
+    end
+
     def set_active_procurement_buildings
       @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page])
+    end
+
+    def set_procurement_buildings_requireing_service_info
+      active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
+
+      @active_procurement_buildings = Kaminari.paginate_array(active_procurement_buildings).page(params[:page])
     end
 
     def find_regions(region_codes)
