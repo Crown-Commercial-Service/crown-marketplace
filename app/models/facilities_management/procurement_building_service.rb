@@ -37,6 +37,10 @@ module FacilitiesManagement
     validate :validate_gia
     validate :validate_external_area
 
+    amoeba do
+      include_association :lifts
+    end
+
     define_method(:this_service) do
       @this_service ||= services_and_questions.service_detail(code)
     end
