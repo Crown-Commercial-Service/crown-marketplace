@@ -11,7 +11,7 @@ docx.page_numbers true do
   label ''
 end
 
-docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :left
+docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :right
 
 docx.p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v3.0', bold: true, size: 24, font: 'Calibri'
 docx.p 'Crown Copyright 2020', size: 24, font: 'Calibri'
