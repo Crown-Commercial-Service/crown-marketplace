@@ -1263,6 +1263,9 @@ en:
           details: Details
           heading: Buildings
           how_it_works: How it works
+          how_it_works_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
+          how_it_works_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
+          how_it_works_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
           my_buildings: My buildings
           new_buildings: New buildings
           new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
