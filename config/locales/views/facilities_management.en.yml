@@ -1709,7 +1709,7 @@ en:
           no_service_selected: No service selected
           services: Assigned services
           status: Status
-          summary: Please click on each of your buildings listed below and select the services you require within this building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on 'Buildings' in section 2.
+          summary: Please click on each of your buildings listed below and select the services you require within each building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on 'Buildings' in section 2.
         contract_period:
           heading: Contract period
           initial_call_off_period: Initial call-off period
