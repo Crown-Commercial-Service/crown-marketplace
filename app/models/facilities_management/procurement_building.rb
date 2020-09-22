@@ -68,6 +68,10 @@ module FacilitiesManagement
       procurement_building_services.sort_by { |procurement_building_service| service_order.index(procurement_building_service.code) }
     end
 
+    def service_selection_complete?
+      service_codes.any? && service_code_selection_error_code.nil?
+    end
+
     def complete?
       return true unless requires_service_questions?
 
@@ -132,28 +136,38 @@ module FacilitiesManagement
       end
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
     def service_code_selection_validation
+      add_selection_error(service_code_selection_error_code)
+    end
+
+    # rubocop:disable Metrics/CyclomaticComplexity
+    def service_code_selection_error_code
       case service_codes.sort
       when ['O.1']
-        add_selection_error(0)
+        0
       when ['N.1']
-        add_selection_error(1)
+        1
       when ['M.1']
-        add_selection_error(2)
+        2
       when ['M.1', 'O.1']
-        add_selection_error(3)
+        3
       when ['N.1', 'O.1']
-        add_selection_error(4)
+        4
       when ['M.1', 'N.1']
-        add_selection_error(5)
+        5
       when ['M.1', 'N.1', 'O.1']
-        add_selection_error(6)
+        6
       else
-        add_selection_error(7) if service_codes.include?('G.1') && service_codes.include?('G.3')
+        7 if service_codes.include?('G.1') && service_codes.include?('G.3')
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+
+    def add_selection_error(index)
+      return unless index
+
+      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index])
+    end
 
     def validate_internal_area
       errors.add(:building, :gia_too_small, building_name: name) if requires_internal_area? && building_internal_area.zero?
@@ -169,10 +183,6 @@ module FacilitiesManagement
 
     def requires_internal_area?
       (CCS::FM::Service.full_gia_services & service_codes).any?
-    end
-
-    def add_selection_error(index)
-      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index])
     end
 
     def area_complete?

@@ -378,4 +378,163 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe 'validation for special service choices' do
+    before { procurement.service_codes = service_codes }
+
+    context 'when the only service code selected is O.1' do
+      let(:service_codes) { ['O.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service code selected is N.1' do
+      let(:service_codes) { ['N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service code selected is M.1' do
+      let(:service_codes) { ['M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1 and M.1' do
+      let(:service_codes) { ['O.1', 'M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1 and N.1' do
+      let(:service_codes) { ['O.1', 'N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only M.1 and N.1' do
+      let(:service_codes) { ['M.1', 'N.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected are only O.1, N.1 and M.1' do
+      let(:service_codes) { ['O.1', 'N.1', 'M.1'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be false
+      end
+
+      it 'will have the correct error message' do
+        procurement.valid?(:service_codes)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'"
+      end
+
+      context 'when another service is included as well' do
+        before { procurement.service_codes << 'C.1' }
+
+        it 'will be valid' do
+          expect(procurement.valid?(:service_codes)).to be true
+        end
+      end
+    end
+
+    context 'when the only service codes selected include G.1 and G.3' do
+      let(:service_codes) { ['G.1', 'G.3'] }
+
+      it 'will not be valid' do
+        expect(procurement.valid?(:service_codes)).to be true
+      end
+    end
+  end
 end

@@ -233,6 +233,13 @@ en:
             service_codes:
               blank: Select at least one service you need to include in your procurement
               invalid: Select at least one service you need to include in your procurement
+              invalid_billable: You must select another service to include 'Management of billable works'
+              invalid_cafm: You must select another service to include 'CAFM system'
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works'
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services'
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'
+              invalid_helpdesk: You must select another service to include 'Helpdesk services'
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
             tupe:
               inclusion: Select one option
               not_present: You must answer the question about ‘TUPE’

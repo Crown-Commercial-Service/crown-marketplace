@@ -110,11 +110,7 @@ module FacilitiesManagement
     end
 
     def full_address
-      "#{address_line_1 + ', ' if address_line_1.present?}
-      #{address_line_2 + ', ' if address_line_2.present?}
-      #{address_town + ', ' if address_town.present?}
-      #{address_region + ', ' if address_region.present?}
-      #{address_postcode}"
+      [address_line_1, address_line_2, address_town, address_region, address_postcode].reject(&:blank?).join(', ')
     end
 
     def address_no_region

@@ -465,7 +465,7 @@ module FacilitiesManagement
     end
 
     def buildings_and_services_completed?
-      active_procurement_buildings.all? { |procurement_building| procurement_building.service_codes.any? }
+      active_procurement_buildings.all?(&:service_selection_complete?)
     end
 
     def service_requirements_status

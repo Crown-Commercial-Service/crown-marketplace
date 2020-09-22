@@ -1397,6 +1397,39 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '.buildings_and_services_completed' do
+    include_context 'with buildings and services'
+
+    before do
+      procurement_building1.update(service_codes: service_codes)
+      procurement_building2.update(service_codes: %w[C.1 C.2])
+    end
+
+    context 'when one building has no service codes' do
+      let(:service_codes) { [] }
+
+      it 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when one building has an invalid selection' do
+      let(:service_codes) { %w[M.1 N.1 O.1] }
+
+      it 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when both buildings have a valid selection' do
+      let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
+
+      it 'returns true' do
+        expect(procurement.buildings_and_services_completed?).to eq true
+      end
+    end
+  end
+
   describe '.buildings_and_services_status' do
     subject(:status) { procurement.buildings_and_services_status }
 

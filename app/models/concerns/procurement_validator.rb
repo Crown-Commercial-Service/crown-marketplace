@@ -22,7 +22,7 @@ module ProcurementValidator
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :buildings
 
-    validate :service_codes_not_empty, on: %i[services]
+    validate :service_code_selection, on: %i[services service_codes]
 
     validates :tupe, inclusion: { in: [true, false] }, on: %i[tupe]
 
@@ -158,8 +158,43 @@ module ProcurementValidator
       errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
     end
 
-    def service_codes_not_empty
-      errors.add(:service_codes, :invalid) if defined?(service_codes) && service_codes.empty?
+    def service_code_selection
+      return errors.add(:service_codes, :invalid) if service_codes.blank?
+
+      service_code_selection_validation
+    end
+
+    def service_code_selection_validation
+      add_selection_error(service_code_selection_error_code)
+    end
+
+    # rubocop:disable Metrics/CyclomaticComplexity
+    def service_code_selection_error_code
+      case service_codes.sort
+      when ['O.1']
+        0
+      when ['N.1']
+        1
+      when ['M.1']
+        2
+      when ['M.1', 'O.1']
+        3
+      when ['N.1', 'O.1']
+        4
+      when ['M.1', 'N.1']
+        5
+      when ['M.1', 'N.1', 'O.1']
+        6
+      end
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity
+
+    SERVICE_SELECTION_INVALID_TYPE = %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable].freeze
+
+    def add_selection_error(index)
+      return unless index
+
+      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index])
     end
 
     def security_policy_document_date_valid?
