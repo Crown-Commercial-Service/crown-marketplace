@@ -57,10 +57,6 @@ module FacilitiesManagement
 
     private
 
-    def building_params
-      params.require(:facilities_management_building).permit(:building_name, :description, :postcode, :region, :region_code, :gia, :external_area, :region, :building_type, :other_building_type, :security_type, :other_security_type, :address_town, :address_line_1, :address_line_2, :address_postcode, :address_region, :address_region_code, :postcode_entry)
-    end
-
     def create_building_and_add_address
       rebuild_page_data(@page_data[:model_object])
       rebuild_page_description('add_address')

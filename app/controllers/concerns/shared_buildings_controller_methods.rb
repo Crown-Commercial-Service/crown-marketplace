@@ -1,6 +1,27 @@
 module SharedBuildingsControllerMethods
   extend ActiveSupport::Concern
 
+  private
+
+  def building_params
+    params.require(:facilities_management_building).permit(
+      :building_name,
+      :description,
+      :gia,
+      :external_area,
+      :building_type,
+      :other_building_type,
+      :security_type,
+      :other_security_type,
+      :address_line_1,
+      :address_line_2,
+      :address_town,
+      :address_postcode,
+      :address_region,
+      :address_region_code
+    )
+  end
+
   def region_needs_resolution?
     @page_data[:model_object].address_region_code.blank?
   end
@@ -40,18 +61,12 @@ module SharedBuildingsControllerMethods
   end
 
   def valid_addresses
-    return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].postcode_entry) if @page_data[:model_object].postcode_entry.present?
+    return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].address_postcode) if @page_data[:model_object].address_postcode.present?
 
     []
   end
 
   def set_postcode_data
-    if @page_data[:model_object].postcode_entry
-      valid_postcode_entry = ensure_postcode_is_valid(@page_data[:model_object].postcode_entry)
-      @page_data[:model_object].postcode_entry = valid_postcode_entry
-      @page_data[:model_object].address_postcode = valid_postcode_entry if params[:add_address].present?
-    end
-
     @page_data[:model_object].address_postcode = building_params[:address_postcode].upcase if building_params[:address_postcode]
   end
 

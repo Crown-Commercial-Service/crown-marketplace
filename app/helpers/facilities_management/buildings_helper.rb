@@ -81,37 +81,35 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
-  def postcode_form_field(form, label_text)
-    css_classes = %w[govuk-!-margin-top-3]
-    form_group_css = ['govuk-form-group']
-    form_group_css += ['govuk-form-group--error'] if form.object.errors[:address_postcode].any?
-
-    content_tag :div, class: css_classes, data: { propertyname: 'address_postcode' } do
-      content_tag :div, class: form_group_css, data: {} do
-        concat display_label(:address_postcode, label_text, 'facilities_management_building_address_postcode', 'facilities_management_building_address_postcode-info') if label_text.present?
-        concat display_postcode_errors(form.object)
-        yield
-      end
-    end
+  def postcode_search_visible?
+    @postcode_search_visible ||= @page_data[:model_object].address_postcode.blank? || @page_data[:model_object].errors[:address_postcode].any?
   end
 
-  def display_postcode_errors(model_object)
-    collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, :address_postcode)
-    return if collection.empty?
-
-    content_tag :div, class: 'error-collection potenital-error', property_name: 'address_postcode' do
-      postcode_errors(model_object, collection)
-    end
+  def postcode_change_visible?
+    @postcode_change_visible ||= @page_data[:model_object].address_postcode.present? && @page_data[:model_object].address_line_1.blank?
   end
 
-  def postcode_errors(model_object, error_collection)
-    content_tag :label, class: "govuk-error-message #{'govuk-visually-hidden' unless model_object.errors.any?}",
-                        for: 'postcode_entry',
-                        id: 'address_postcode-error' do
-      error_collection.each do |key, val|
-        tag_validation_type = key == :blank ? :required : key
-        concat(content_tag(:span, val, class: "govuk-error-message #{'govuk-visually-hidden' unless attribute_has_errors(model_object, :address_postcode, key)}", data: { propertyname: 'address_postcode', validation: tag_validation_type }))
-      end
-    end
+  def select_an_address_visible?
+    @select_an_address_visible ||= postcode_change_visible?
+  end
+
+  def full_address_visible?
+    @full_address_visible ||= @page_data[:model_object].address_line_1.present?
+  end
+
+  def select_a_region_visible?
+    @select_a_region_visible ||= @page_data[:model_object].address_line_1.present? && @page_data[:model_object].address_region.blank?
+  end
+
+  def full_region_visible?
+    @full_region_visible ||= @page_data[:model_object].address_region.present?
+  end
+
+  def hidden_class(visible)
+    'govuk-visually-hidden' unless visible
+  end
+
+  def input_visible?(visible)
+    visible ? 0 : -1
   end
 end
