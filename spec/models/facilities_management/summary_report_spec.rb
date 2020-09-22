@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:building_id) { procurement.procurement_buildings.first.building.id }
     let(:service_code) { 'C.1' }
 
-    before { report.calculate_services_for_buildings(supplier_name, remove_cafm_help) }
+    before { report.calculate_services_for_buildings(supplier_name) }
 
     context 'when supplier_name provided' do
       let(:supplier_name) { 'Wolf-Wiza' }

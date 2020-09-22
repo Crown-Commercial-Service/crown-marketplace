@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
       supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
-        report.calculate_services_for_buildings(supplier_name, true, :fc)
+        report.calculate_services_for_buildings(supplier_name, :fc)
       end
       spreadsheet = spreadsheet_builder.build
       IO.write('/tmp/further_competition_procurement_summary.xlsx', spreadsheet.to_stream.read)

@@ -25,11 +25,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @report_results_no_cafmhelp_removed = {}
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
 
-    @report.calculate_services_for_buildings @supplier_name, true, :da, false
+    @report.calculate_services_for_buildings @supplier_name, :da, true
     @data = @report.results
-    @report.calculate_services_for_buildings @supplier_name, false, :da, false
+    @report.calculate_services_for_buildings @supplier_name, :da, false
     @data_no_cafmhelp_removed = @report.results
-    @uvals_contract = @active_procurement_buildings.map { |b| @report.uvals_for_building(b, :da)[0] }.flatten
+    @uvals_contract = @active_procurement_buildings.map { |b| @report.uvals_for_building(b, @procurement.procurement_building_services, :da)[0] }.flatten
   end
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)

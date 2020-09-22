@@ -491,7 +491,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
-      allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
+      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_uuid, da_value: da_value_test }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test1 }])
     end
 
     context 'when no eligible suppliers' do
@@ -747,7 +747,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       let(:da_value_test3) { 2000 }
 
       before do
-        allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: '1', da_value: da_value_test2 }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test }, { supplier_name: 'test2', supplier_id: '3', da_value: da_value_test3 }, { supplier_name: 'test3', supplier_id: '4', da_value: da_value_test1 }])
         allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
         allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
@@ -1273,6 +1273,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:building) { create :facilities_management_building_london }
 
     before do
+      procurement.send(:copy_procurement_buildings_gia)
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
       procurement.save
     end

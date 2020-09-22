@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_124411) do
+ActiveRecord::Schema.define(version: 2020_09_21_160551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2020_09_14_124411) do
     t.text "detail_of_requirement"
     t.uuid "facilities_management_procurement_id"
     t.index ["code"], name: "index_fm_procurement_building_services_on_code"
+    t.index ["facilities_management_procurement_building_id", "code"], name: "idx_fm_pbs_on_fm_pb_and_code"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
     t.index ["facilities_management_procurement_id", "facilities_management_procurement_building_id"], name: "idx_fm_pbs_fm_p_fm_pb"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_building_services_on_fm_procurement_id"
