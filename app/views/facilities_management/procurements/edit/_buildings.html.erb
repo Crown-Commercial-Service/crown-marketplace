@@ -18,7 +18,16 @@
       <%= t('.new_buildings_details')%>
     </p>
     <%= link_to t('.add_a_building'), new_facilities_management_procurement_edit_building_path(procurement_id: @procurement.id), class: 'govuk-button govuk-button--secondary' %>
-    <%= govuk_details(t('.how_it_works')) do %>
+    <%= govuk_details(t('.how_it_works'), true) do %>
+      <p>
+        <%= t('.how_it_works_1') %>
+      </p>
+      <p>
+        <%= t('.how_it_works_2') %>
+      </p>
+      <p>
+        <%= t('.how_it_works_3') %>
+      </p>
     <% end %>
   </div>
 </div>
