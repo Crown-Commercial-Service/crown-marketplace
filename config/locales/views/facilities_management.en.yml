@@ -55,12 +55,14 @@ en:
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
+              less_than_or_equal_to: External area must be a number between 0 and 999,999,999
               not_a_number: External area must be a whole number
               not_an_integer: Enter a whole number for the size of external area of this building
               required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0.
+              less_than_or_equal_to: Internal area must be a number between 0 and 999,999,999
               not_a_number: Gross Internal Area (GIA) must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
               required: Gross Internal Area (GIA) must be greater than 0
@@ -1604,12 +1606,14 @@ en:
             external_area:
               blank: The building external area must be a number between 1 and 999,999,999
               combined_area: The building external area must be greater than 0, if the gross internal area is 0
+              less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
               not_an_integer: The building external area must be a number between 1 and 999,999,999
               required: The building external area must be a number between 1 and 999,999,999
               too_long: The building external area must be a number between 1 and 999,999,999
             gia:
               blank: The building gross internal area must be a number between 1 and 999,999,999
               combined_area: The building town/city cannot be blank
+              less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
               not_an_integer: The building gross internal area must be a number between 1 and 999,999,999
               required: The building gross internal area must be a number between 1 and 999,999,999
               too_long: The building gross internal area must be a number between 1 and 999,999,999

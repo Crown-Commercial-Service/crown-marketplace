@@ -25,11 +25,11 @@ module FacilitiesManagement
       end
 
       event :succeed do
-        transitions from: :importing, to: :succeeded
+        transitions from: %i[upload importing], to: :succeeded
       end
 
       event :fail do
-        transitions from: :importing, to: :failed
+        transitions from: %i[upload importing], to: :failed
         after do
           remove_spreadsheet_file
         end

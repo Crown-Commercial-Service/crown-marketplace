@@ -47,9 +47,9 @@ module FacilitiesManagement
     validates :description, length: { maximum: 50 }, on: %i[new building_details all]
 
     validates :gia, presence: true, on: %i[gia all]
-    validates :gia, numericality: { only_integer: true }, on: %i[gia all]
+    validates :gia, numericality: { only_integer: true, less_than_or_equal_to: 999999999 }, on: %i[gia all]
     validates :external_area, presence: true, on: %i[gia all]
-    validates :external_area, numericality: { only_integer: true }, on: %i[gia all]
+    validates :external_area, numericality: { only_integer: true, less_than_or_equal_to: 999999999 }, on: %i[gia all]
     validate  :combined_external_area_and_gia_greater_than_zero, on: %i[gia all]
 
     validates :address_line_1, presence: true, length: { maximum: 100 }, on: %i[all add_address], if: -> { address_postcode.present? }
