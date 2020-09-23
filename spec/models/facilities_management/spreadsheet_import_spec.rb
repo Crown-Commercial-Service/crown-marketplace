@@ -66,30 +66,72 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
     end
   end
 
-  # describe 'spreadsheet_file' do
-  #  context 'when not attached' do
-  #    before { import.valid?(:upload) }
+  describe 'spreadsheet_file' do
+    context 'when not attached' do
+      before { import.valid?(:upload) }
 
-  #    it 'must be uploaded error' do
-  #      # expect(import.errors.full_messages.grep(/Select your/).size).to eq(1)
-  #    end
-  #  end
+      it 'must be uploaded error' do
+        expect(import.errors.full_messages.grep(/Select your/).size).to eq(1)
+      end
+    end
 
-  # context 'when wrong type of file' do
-  #  before do
-  #    import.spreadsheet_file.attach(io: File.open(Rails.root.join('Gemfile')), filename: 'Gemfile')
-  #    import.valid?(:upload)
-  #  end
+    context 'when wrong type of file' do
+      before do
+        import.spreadsheet_file.attach(io: File.open(Rails.root.join('Gemfile')), filename: 'Gemfile')
+        import.valid?(:upload)
+      end
 
-  # it 'wrong extension error message' do
-  #   expect(import.errors.full_messages.grep(/must be a XLSX/).size).to eq(1)
-  # end
+      it 'wrong extension error message' do
+        expect(import.errors[:spreadsheet_file]).to include 'The selected file must be a XLSX'
+      end
 
-  # it 'wrong content type message' do
-  #   expect(import.errors.full_messages.grep(/expected content type/).size).to eq(1)
-  # end
-  # end
-  # end
+      it 'wrong content type message' do
+        expect(import.errors[:spreadsheet_file]).to include 'The selected file does not contain the expected content type'
+      end
+    end
+
+    context 'when considering basic validations' do
+      before do
+        import.spreadsheet_file.attach(io: File.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH), filename: 'test.xlsx')
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:template_valid?).and_return(template_valid_result)
+        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_started?).and_return(spreadsheet_not_started_result)
+        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_ready?).and_return(spreadsheet_not_ready_result)
+        # rubocop:enable RSpec/AnyInstance
+        import.valid?(:upload)
+      end
+
+      context 'when the file does not match the template' do
+        let(:template_valid_result) { false }
+        let(:spreadsheet_not_started_result) { false }
+        let(:spreadsheet_not_ready_result) { false }
+
+        it 'has the correct error message' do
+          expect(import.errors[:spreadsheet_file].first).to eq "The selected file must use the 'Services and buildings template'"
+        end
+      end
+
+      context 'when the file is not started' do
+        let(:template_valid_result) { true }
+        let(:spreadsheet_not_started_result) { true }
+        let(:spreadsheet_not_ready_result) { false }
+
+        it 'has the correct error message' do
+          expect(import.errors[:spreadsheet_file].first).to eq "The selected file is using the 'Services and buildings template', but is empty"
+        end
+      end
+
+      context 'when the file is not ready' do
+        let(:template_valid_result) { true }
+        let(:spreadsheet_not_started_result) { false }
+        let(:spreadsheet_not_ready_result) { true }
+
+        it 'has the correct error message' do
+          expect(import.errors[:spreadsheet_file].first).to eq "The selected file could not be uploaded. Cell B10 must be 'Ready' on the Instructions tab of your template"
+        end
+      end
+    end
+  end
 
   describe 'methods for processing errors' do
     before do

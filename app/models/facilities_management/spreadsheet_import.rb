@@ -11,6 +11,7 @@ module FacilitiesManagement
     validates :spreadsheet_file, antivirus: { message: :malicious }, on: :upload
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', message: :wrong_content_type }, on: :upload
+    validate :spreadsheet_basic_data_validation, on: :upload
 
     serialize :import_errors
 
@@ -38,24 +39,6 @@ module FacilitiesManagement
 
     def remove_spreadsheet_file
       spreadsheet_file.purge
-    end
-
-    def spreadsheet_file_attached
-      errors.add(:spreadsheet_file, :not_attached) unless spreadsheet_file.attached?
-    end
-
-    def spreadsheet_file_ext_validation
-      return unless spreadsheet_file.attached?
-
-      errors.add(:spreadsheet_file, :wrong_extension) unless spreadsheet_file.blob.filename.to_s.end_with?('.xlsx')
-    end
-
-    def spreadsheet_basic_data_validation
-      return if errors.any?
-
-      FacilitiesManagement::SpreadsheetImporter.new(self).basic_data_validation.each do |error_symbol|
-        errors.add(:spreadsheet_file, error_symbol)
-      end
     end
 
     def state_to_string
@@ -190,6 +173,23 @@ module FacilitiesManagement
       FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:service_hours).map do |code|
         [code, %i[service_hours detail_of_requirement]]
       end.to_h
+    end
+
+    def spreadsheet_file_attached
+      errors.add(:spreadsheet_file, :not_attached) unless spreadsheet_file.attached?
+    end
+
+    def spreadsheet_file_ext_validation
+      return unless spreadsheet_file.attached?
+
+      errors.add(:spreadsheet_file, :wrong_extension) unless spreadsheet_file.blob.filename.to_s.end_with?('.xlsx')
+    end
+
+    def spreadsheet_basic_data_validation
+      return if errors.any?
+
+      error_symbol = FacilitiesManagement::SpreadsheetImporter.new(self).basic_data_validation
+      errors.add(:spreadsheet_file, error_symbol) if error_symbol
     end
   end
 end

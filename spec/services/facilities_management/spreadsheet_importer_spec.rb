@@ -14,7 +14,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:spreadsheet_importer) { described_class.new(spreadsheet_import) }
 
   describe '#basic_data_validation' do
-    subject(:errors) { spreadsheet_importer.basic_data_validation }
+    subject(:basic_data_validation_error) { spreadsheet_importer.basic_data_validation }
 
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
@@ -24,12 +24,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       context 'when uploaded file is true to template' do
         let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
-        it 'has one error' do
-          expect(errors.size).to eq 1
-        end
-
         it 'the error is not_started' do
-          expect(errors.first).to eq :not_started
+          expect(basic_data_validation_error).to eq :not_started
         end
       end
 
@@ -39,7 +35,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         it 'includes template invalid error' do
-          expect(errors).to include(:template_invalid)
+          expect(basic_data_validation_error).to eq :template_invalid
         end
       end
     end
@@ -52,7 +48,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
       it 'includes not started error' do
-        expect(errors).to include(:not_started)
+        expect(basic_data_validation_error).to eq :not_started
       end
     end
   end
@@ -62,9 +58,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     before do
       fake_spreadsheet.add_building_sheet(building_data)
       fake_spreadsheet.write
-
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       # Stub out import methods not under test
       (described_class::IMPORT_PROCESS_ORDER - [:import_buildings]).each do |other_import_method|
@@ -749,9 +742,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
       fake_spreadsheet.write
 
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
-
       # Stub out import methods not under test
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
@@ -847,9 +837,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_matrix_sheet(service_matrix_data)
       fake_spreadsheet.add_service_volumes_1(service_volumes_data)
       fake_spreadsheet.write
-
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       # Stub out import methods not under test
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes validate_procurement_building_services]).each do |other_import_method|
@@ -1107,9 +1094,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_volumes_2(service_details)
       fake_spreadsheet.write
 
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-
       # Stub out import methods not under test
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_lift_data validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
@@ -1342,9 +1326,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_hours_sheet(service_hour_data)
       fake_spreadsheet.write
 
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
-
       # Stub out import methods not under test
       (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_hours validate_procurement_building_services]).each do |other_import_method|
         allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
@@ -1511,9 +1492,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_volumes_2(lift_data)
       fake_spreadsheet.add_service_hours_sheet(service_hour_data)
       fake_spreadsheet.write
-
-      allow(spreadsheet_importer).to receive(:basic_data_validation).and_return([])
-      allow(spreadsheet_import).to receive(:spreadsheet_basic_data_validation).and_return(true)
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
