@@ -196,56 +196,41 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when GIA is not present' do
+    context 'when saving GIA' do
       before do
-        building.gia = nil
+        building.gia = gia
       end
 
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-        expect(building.valid?(:gia)).to eq false
-      end
+      context 'when gia is not present' do
+        let(:gia) { nil }
 
-      it 'will have gia errors' do
-        building.valid?(:gia)
-        expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
-      end
+        before { building.valid? :gia }
 
-      it 'will have the correct error message' do
-        building.valid?(:gia)
-        expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
-      end
-    end
-
-    context 'when external area is not present' do
-      before do
-        building.external_area = nil
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-        expect(building.valid?(:gia)).to eq false
-      end
-
-      it 'will have external area errors' do
-        building.valid?(:gia)
-        expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
-      end
-
-      it 'will have the correct error message' do
-        building.valid?(:gia)
-        expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
-      end
-    end
-
-    context 'when gia is invalid' do
-      context 'when gia is a float' do
-        before do
-          building.gia = 434.2
-          building.valid? :gia
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have gia errors' do
+          expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
+        end
+      end
+
+      context 'when gia is a float' do
+        let(:gia) { 434.2 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_an_integer
         end
 
@@ -255,12 +240,16 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when gia is not an integer' do
-        before do
-          building.gia = 'some words'
-          building.valid? :gia
+        let(:gia) { 'some words' }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
         end
 
@@ -268,16 +257,62 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           expect(building.errors[:gia].first).to eq 'Gross Internal Area (GIA) must be a whole number'
         end
       end
-    end
 
-    context 'when external area is invalid' do
-      context 'when external_area is a float' do
-        before do
-          building.external_area = 434.2
-          building.valid? :gia
+      context 'when gia is too large' do
+        let(:gia) { 1000000000 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have the correct error' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :less_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
+        end
+      end
+    end
+
+    context 'when saving external area' do
+      before do
+        building.external_area = external_area
+      end
+
+      context 'when external_area is not present' do
+        let(:external_area) { nil }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have gia errors' do
+          expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
+        end
+      end
+
+      context 'when external_area is a float' do
+        let(:external_area) { 434.2 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_an_integer
         end
 
@@ -287,17 +322,40 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when external_area is not an integer' do
-        before do
-          building.external_area = 'some words'
-          building.valid? :gia
+        let(:external_area) { 'some words' }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_a_number
         end
 
         it 'will have the correct error message' do
           expect(building.errors[:external_area].first).to eq 'External area must be a whole number'
+        end
+      end
+
+      context 'when external_area is too large' do
+        let(:external_area) { 1000000000 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
+          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :less_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
         end
       end
     end

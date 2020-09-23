@@ -22,6 +22,48 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         expect(import.importing?).to be true
       end
     end
+
+    context 'when succeed is called' do
+      context 'when in upload' do
+        before { import.succeed! }
+
+        it 'changes the state to succeeded' do
+          expect(import.succeeded?).to be true
+        end
+      end
+
+      context 'when in importing' do
+        before do
+          import.update(aasm_state: 'importing')
+          import.succeed!
+        end
+
+        it 'changes the state to succeeded' do
+          expect(import.succeeded?).to be true
+        end
+      end
+    end
+
+    context 'when fail is called' do
+      context 'when in upload' do
+        before { import.fail! }
+
+        it 'changes the state to failed' do
+          expect(import.failed?).to be true
+        end
+      end
+
+      context 'when in importing' do
+        before do
+          import.update(aasm_state: 'importing')
+          import.fail!
+        end
+
+        it 'changes the state to failed' do
+          expect(import.failed?).to be true
+        end
+      end
+    end
   end
 
   # describe 'spreadsheet_file' do

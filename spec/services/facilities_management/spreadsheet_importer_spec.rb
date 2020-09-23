@@ -429,6 +429,42 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           end
         end
 
+        context 'when the gia is too large' do
+          let(:spreadsheet_building) { create(:facilities_management_building, gia: 1000000000) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
+
+          it 'changes the state of the spreadsheet_import to failed' do
+            spreadsheet_import.reload
+            expect(spreadsheet_import.failed?).to be true
+          end
+
+          it 'makes the building invalid' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:valid]).to be false
+          end
+
+          it 'has the correct error' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:errors][:gia].first[:error]).to eq :less_than_or_equal_to
+          end
+        end
+
+        context 'when the external_area is too large' do
+          let(:spreadsheet_building) { create(:facilities_management_building, external_area: 1000000000) }
+          let(:building_data) { [[spreadsheet_building, 'Complete']] }
+
+          it 'changes the state of the spreadsheet_import to failed' do
+            spreadsheet_import.reload
+            expect(spreadsheet_import.failed?).to be true
+          end
+
+          it 'makes the building invalid' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:valid]).to be false
+          end
+
+          it 'has the correct error' do
+            expect(spreadsheet_importer.instance_variable_get(:@procurement_array).first[:errors][:external_area].first[:error]).to eq :less_than_or_equal_to
+          end
+        end
+
         context 'when the gia and external area are zero' do
           let(:spreadsheet_building) { create(:facilities_management_building, gia: 0, external_area: 0) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
