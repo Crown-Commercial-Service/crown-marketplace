@@ -124,6 +124,7 @@ Rails.application.routes.draw do
     get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
     resources :procurements do
+      get 'delete'
       get 'further_competition_spreadsheet'
       get 'summary', to: 'procurements#summary'
       post 'da_spreadsheets'

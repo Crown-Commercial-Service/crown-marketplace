@@ -1248,17 +1248,44 @@ en:
           waiting_html: waiting<br/>on<br/>response
       dashboard_tables:
         closed:
+          contract_name: Contract name
+          date_closed: Date closed
           no_closed: You do not have any closed contracts
+          supplier: Supplier
         contracts:
+          contract_name: Contract name
+          end_date: End date
           no_live: You do not have any live contracts
+          start_date: Start date
+          supplier: Supplier
         further_competition:
+          date_saved: Date saved
+          name: Name
           no_fc: You do not have any further competition contracts
         in_draft:
+          contract_name: Contract name
+          delete: Delete
           no_drafts: You do not have any offers in the draft
+          saved: Saved
+          supplier: Supplier
         searches:
+          delete: Delete
+          name: Name
           no_searches: You do not have any searches
+          saved: Saved
+          stage: Stage
         sent_offers:
+          action_required: ACTION REQUIRED
+          contract_name: Contract name
           no_sent: You do not have any sent offers
+          sent: Sent
+          stage: Stage
+          supplier: Supplier
+      delete:
+        are_you_sure: Are you sure you want to delete '%{contract_name}'? This action cannot be un-done.
+        cancel: Cancel
+        cancel_delete: Cancel delete
+        confirm_delete: Confirm delete
       edit:
         authorised_representative:
           authorised_representative_detail_description: Select an authorised representative
@@ -1399,10 +1426,6 @@ en:
       edit_buildings:
         show:
           return_to_buildings: Return to buildings
-      edit_procurement:
-        cancel_and_return: Cancel and return to Procurements
-        save_and_continue: Save and continue
-        save_for_later: Save for later
       filter_details:
         change_add_region: Change
         change_add_service: Change
@@ -1473,6 +1496,7 @@ en:
         manage_procurements: Procurements dashboard
         searches_title: Searches
         sent_offers: Sent offers
+        was_deleted: "'%{contract_name}' was deleted."
       initial_call_off_period:
         description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
         example: For example, 01 11 2030.

@@ -501,6 +501,10 @@ module FacilitiesManagement
       procurement_building_services.none?(&:requires_service_standard?)
     end
 
+    def can_be_deleted?
+      %w[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results da_draft].include? aasm_state
+    end
+
     private
 
     def freeze_procurement_data

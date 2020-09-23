@@ -124,10 +124,6 @@ module FacilitiesManagement::ProcurementsHelper
     end
   end
 
-  def procurement_can_be_deleted?
-    %w[quick_search detailed_search detailed_search_bulk_upload da_draft choose_contract_value results].include? @procurement.aasm_state
-  end
-
   def procurement_buildings_missing_regions
     return false unless @procurement.detailed_search? || @procurement.detailed_search_bulk_upload?
 
