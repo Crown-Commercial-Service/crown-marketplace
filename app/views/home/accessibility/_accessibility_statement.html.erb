@@ -1,0 +1,24 @@
+<div>
+  <p>
+    <%= t('.marketplace_link_description', service: service) %> <br>
+    <%= link_to link, link, class: 'govuk-link govuk-link--no-visited-state' %>
+  </p>
+  <p>
+    <%= t('.this_website') %>
+  </p>
+  <ul>
+    <li> <%= t('.list_1_change_colours') %> </li>
+    <% if zoom_required %>
+      <li> <%= t('.list_1_zoom') %> </li>
+    <% end %>
+    <li> <%= t('.list_1_keyboard') %> </li>
+    <li> <%= t('.list_1_speech') %> </li>
+    <li> <%= t('.list_1_listen') %> </li>
+  </ul>
+  <p>
+    <%= t('.website_text_simple') %>
+  </p>
+  <p>
+    <%= link_to t('.ability_net'), t('.ability_net_link'), class: 'govuk-link govuk-link--no-visited-state' %> <%= t('.ability_net_advice') %>
+  </p>
+</div>
