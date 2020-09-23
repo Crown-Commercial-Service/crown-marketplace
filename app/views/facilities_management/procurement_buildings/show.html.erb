@@ -30,7 +30,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l" id="service_volumes">
+    <h2 class="govuk-heading-m" id="service_volumes">
       <%= t('.service_volumes') %>
     </h2>
   </div>
@@ -92,33 +92,41 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-m">
       <%= t('.service_standards') %>
     </h2>
   </div>
 </div>
 <hr class="govuk-section-break govuk-section-break--visible">
 <table class="govuk-table govuk-!-width-full">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 35%"><%= t('.service_name') %></th>
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 40%"><%= t('.description') %></th>
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 15%"><%= t('.standard') %></th>
-      <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 10%"></td>
-    </tr>
-  </thead>
+  <% if @standards_procurement_building_services.any? %>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 35%"><%= t('.service_name') %></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 40%"><%= t('.description') %></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 15%"><%= t('.standard') %></th>
+        <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 10%"></td>
+      </tr>
+    </thead>
+  <% end %>
   <tbody class="govuk-table__body">
-    <% @standards_procurement_building_services.each do |service| %>
-      <tr id="<%= question_id(service, 'service_standard', nil) %>" class="govuk-table__row">
-        <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
-        <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
-        <% if service.service_standard.nil?%>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-        <% else %>
-          <td class="govuk-table__cell govuk-!-padding-right-2"> <%= "Standard #{service.service_standard}" %> </td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
-        <% end %>
+    <% if @standards_procurement_building_services.any? %>
+      <% @standards_procurement_building_services.each do |service| %>
+        <tr id="<%= question_id(service, 'service_standard', nil) %>" class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
+          <% if service.service_standard.nil?%>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <% else %>
+            <td class="govuk-table__cell govuk-!-padding-right-2"> <%= "Standard #{service.service_standard}" %> </td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell govuk-!-padding-right-2 govuk-caption-m"><%= t('.no_data') %></td>
       </tr>
     <% end %>
   </tbody>

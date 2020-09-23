@@ -748,8 +748,9 @@ en:
         help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
         help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
         list_item_1: Service volumes - this is where you can check or input the volume required for each service.
-        list_item_2: Service standards - this is where you can select the standard of service required.
+        list_item_2: Service standards - if applicable, this is where you can select the standard of service required.
         list_title: 'All the services that you require for this building are listed below, split into two sections:'
+        no_data: No input required
         return_to_requirements: Return to service requirements summary
         service_name: Service name
         service_standards: 2. Service standards
