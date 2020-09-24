@@ -17,19 +17,15 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def basic_data_validation
     if !template_valid?
-      @errors << :template_invalid
+      :template_invalid
     elsif spreadsheet_not_started?
-      @errors << :not_started
+      :not_started
     elsif spreadsheet_not_ready?
-      @errors << :not_ready if spreadsheet_not_ready?
+      :not_ready
     end
-    @errors
   end
 
   def import_data
-    basic_data_validation
-    return if spreadsheet_import_stopped?
-
     IMPORT_PROCESS_ORDER.each do |import_process|
       send(import_process)
       break if @errors.any?
