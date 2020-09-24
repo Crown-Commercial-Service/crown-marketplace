@@ -7,8 +7,9 @@ class ProcurementCsvExport
   # TODO: These should probably be under I18n in en.yml
   STATE_DESCRIPTIONS = {
     # Procurement
-    'quick_search' => 'Quick search',
-    'detailed_search' => 'Detailed search',
+    'quick_search' => 'Quick view',
+    'detailed_search' => 'Entering requirements',
+    'detailed_search_bulk_upload' => 'Entering requirements',
     'choose_contract_value' => 'Choose contract value',
     'results' => 'Results',
     'da_draft' => 'DA draft',
@@ -38,8 +39,8 @@ class ProcurementCsvExport
     'Buyer contact job title',
     'Buyer contact email address', # 10
     'Buyer contact telephone number',
-    'Quick search services',
-    'Quick search regions',
+    'Quick view services',
+    'Quick view regions',
     'Customer Estimated Contract Value (GBP)',
     'Tupe involved', # 15
     'Initial call-off - period length, start date, end date',
