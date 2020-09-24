@@ -74,7 +74,7 @@ module FacilitiesManagement
     def service_volume_errors
       (1..errors_from_import.count).map do |index|
         service_volume_codes_with_attributes.map do |code, attribute|
-          service_error(index, code, attribute, false)
+          service_error(index, code, attribute, true)
         end.compact
       end.flatten(1)
     end
@@ -111,12 +111,12 @@ module FacilitiesManagement
       error_hash(error_building_name(building_index), nil, attribute, error_types(error_details))
     end
 
-    def service_error(building_index, code, attribute, error_required = true)
+    def service_error(building_index, code, attribute, volume_error = false)
       error_details = service_error_detail(building_index, code)
 
       return unless error_details && error_details[attribute]
 
-      error_list = error_required ? error_types(error_details[attribute]) : nil
+      error_list = volume_error ? [volume_error(error_types(error_details[attribute]))] : error_types(error_details[attribute])
 
       error_hash(error_building_name(building_index), service_name(code), attribute, error_list)
     end
@@ -155,6 +155,10 @@ module FacilitiesManagement
 
     def error_types(error_details)
       error_details.map { |e| e[:error] }.uniq
+    end
+
+    def volume_error(error_list)
+      error_list.include?(:blank) ? :blank : :invalid
     end
 
     def service_name(code)

@@ -987,8 +987,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           spreadsheet_import.reload
           error_details = spreadsheet_import.service_volume_errors
 
-          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced]
-          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed]
+          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:invalid]]
+          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed, [:invalid]]
         end
       end
 
@@ -1025,7 +1025,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
         it 'has the correct import_errors' do
           spreadsheet_import.reload
-          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Portable appliance testing', :no_of_appliances_for_testing]
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Portable appliance testing', :no_of_appliances_for_testing, [:invalid]]
         end
       end
 
@@ -1062,7 +1062,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
         it 'has the correct import_errors' do
           spreadsheet_import.reload
-          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced]
+          expect(spreadsheet_import.service_volume_errors.first.values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:invalid]]
         end
       end
 

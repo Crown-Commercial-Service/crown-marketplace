@@ -396,7 +396,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
             building_name: 'Building 1',
             building_errors: {},
             procurement_building_errors: {},
-            procurement_building_services_errors: { 'G.1': { no_of_building_occupants: [{ error: :invalid }] }, 'K.7': { no_of_units_to_be_serviced: [{ error: :blank }] } }
+            procurement_building_services_errors: { 'G.1': { no_of_building_occupants: [{ error: :greater_than }] }, 'K.7': { no_of_units_to_be_serviced: [{ error: :blank }] } }
           }
         end
         let(:building_2_errors) do
@@ -412,16 +412,16 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
             building_name: 'Building 3',
             building_errors: {},
             procurement_building_errors: {},
-            procurement_building_services_errors: { 'K.2': { tones_to_be_collected_and_removed: [{ error: :invalid }] }, 'C.5': {} }
+            procurement_building_services_errors: { 'K.2': { tones_to_be_collected_and_removed: [{ error: :less_than_or_equal_to }] }, 'C.5': {} }
           }
         end
 
         it 'returns an array with the errors' do
           error_details = import.service_volume_errors
 
-          expect(error_details[0].values).to eq ['Building 1', 'Routine cleaning', :no_of_building_occupants]
-          expect(error_details[1].values).to eq ['Building 1', 'Feminine hygiene waste', :no_of_units_to_be_serviced]
-          expect(error_details[2].values).to eq ['Building 3', 'General waste', :tones_to_be_collected_and_removed]
+          expect(error_details[0].values).to eq ['Building 1', 'Routine cleaning', :no_of_building_occupants, [:invalid]]
+          expect(error_details[1].values).to eq ['Building 1', 'Feminine hygiene waste', :no_of_units_to_be_serviced, [:blank]]
+          expect(error_details[2].values).to eq ['Building 3', 'General waste', :tones_to_be_collected_and_removed, [:invalid]]
         end
       end
     end
