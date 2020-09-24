@@ -26,47 +26,54 @@ class ProcurementCsvExport
     'not_signed' => 'DA not signed'
   }.freeze
 
+  SPREADSHEET_IMPORT_STATE_DESCRIPTIONS = {
+    'importing' => 'In progress',
+    'failed' => 'Failed',
+    'succeeded' => 'Completed'
+  }.freeze
+
   # TODO: These should probably be under I18n in en.yml
   COLUMN_LABELS = [
     'Contract name',
     'Date created',
     'Date last updated',
     'Stage/Status',
-    'Buyer organisation', # 5
+    'Upload status', # 5
+    'Buyer organisation',
     'Buyer organisation address',
     'Buyer sector',
     'Buyer contact name',
-    'Buyer contact job title',
-    'Buyer contact email address', # 10
+    'Buyer contact job title', # 10
+    'Buyer contact email address',
     'Buyer contact telephone number',
     'Quick view services',
     'Quick view regions',
-    'Customer Estimated Contract Value (GBP)',
-    'Tupe involved', # 15
+    'Customer Estimated Contract Value (GBP)', # 15
+    'Tupe involved',
     'Initial call-off - period length, start date, end date',
     'Mobilisation - period length, start date, end date',
     'Optional call-off extensions',
-    'Number of Buildings',
-    'Building Types', # 20
+    'Number of Buildings', # 20
+    'Building Types',
     'Services',
     'Building GIAs',
     'Building regions',
-    'Assessed Value (GBP)',
-    'Recommended Sub-lot', # 25
+    'Assessed Value (GBP)', # 25
+    'Recommended Sub-lot',
     'Eligible for DA',
     'Shortlisted Suppliers',
     'Unpriced services',
-    'Route to market selected',
-    'DA Suppliers (ranked)', # 30
+    'Route to market selected', # 30
+    'DA Suppliers (ranked)',
     'DA Suppliers costs (GBP ranked)',
     'DA Awarded Supplier',
     'DA Awarded Supplier cost (GBP)',
-    'Contract number',
-    'DA Supplier decline reason', # 35
+    'Contract number', # 35
+    'DA Supplier decline reason',
     'DA Buyer withdraw reason',
     'DA Buyer not-sign reason',
     'DA Buyer contract signed/not-signed date',
-    'DA Buyer confirmed contract dates'
+    'DA Buyer confirmed contract dates' # 40
   ].freeze
 
   def self.call(start_date, end_date)
@@ -84,41 +91,42 @@ class ProcurementCsvExport
       localised_datetime(contract.procurement.created_at),
       contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
       procurement_status(contract.procurement, contract),
-      contract.procurement.user.buyer_detail.organisation_name, # 5
+      nil, # 5
+      contract.procurement.user.buyer_detail.organisation_name,
       [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
       contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
       contract.procurement.user.buyer_detail.full_name,
-      contract.procurement.user.buyer_detail.job_title,
-      contract.procurement.user.email, # 10
+      contract.procurement.user.buyer_detail.job_title, # 10
+      contract.procurement.user.email,
       string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
       expand_services(contract.procurement.service_codes),
       expand_regions(contract.procurement.region_codes),
-      estimated_annual_cost(contract.procurement),
-      yes_no(contract.procurement.tupe), # 15
+      estimated_annual_cost(contract.procurement), # 15
+      yes_no(contract.procurement.tupe),
       format_period_start_end(contract.procurement),
       mobilisation_period(contract.procurement),
       call_off_extensions(contract.procurement),
-      blank_if_zero(contract.procurement.active_procurement_buildings.size),
-      building_types(contract.procurement), # 20
+      blank_if_zero(contract.procurement.active_procurement_buildings.size), # 20
+      building_types(contract.procurement),
       expand_services_and_standards(contract.procurement.procurement_building_service_codes_and_standards),
       building_gias(contract.procurement),
       expand_regions(contract.procurement.active_procurement_building_region_codes),
-      delimited_with_pence(contract.procurement.assessed_value),
-      format_lot_number(contract.procurement.lot_number), # 25
+      delimited_with_pence(contract.procurement.assessed_value), # 25
+      format_lot_number(contract.procurement.lot_number),
       yes_no(contract.procurement.eligible_for_da),
       shortlisted_suppliers(contract.procurement),
       expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
-      route_to_market(contract.procurement),
-      da_suppliers(contract.procurement), # 30
+      route_to_market(contract.procurement), # 30
+      da_suppliers(contract.procurement),
       da_suppliers_costs(contract.procurement),
       contract.supplier.data['supplier_name'],
       delimited_with_pence(contract.direct_award_value),
-      contract.contract_number,
-      contract.reason_for_declining, # 35
+      contract.contract_number, # 35
+      contract.reason_for_declining,
       contract.reason_for_closing,
       contract.reason_for_not_signing,
       localised_date(contract.contract_signed_date),
-      [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
+      [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ') # 40
     ]
   end
 
@@ -128,41 +136,42 @@ class ProcurementCsvExport
       localised_datetime(procurement.created_at),
       localised_datetime(procurement.updated_at),
       procurement_status(procurement, nil),
-      procurement.user.buyer_detail.organisation_name, # 5
+      spreadsheet_import_status(procurement), # 5
+      procurement.user.buyer_detail.organisation_name,
       [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
       procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
       procurement.user.buyer_detail.full_name,
-      procurement.user.buyer_detail.job_title,
-      procurement.user.email, # 10
+      procurement.user.buyer_detail.job_title, # 10
+      procurement.user.email,
       string_as_formula(procurement.user.buyer_detail.telephone_number),
       expand_services(procurement.service_codes),
       expand_regions(procurement.region_codes),
-      estimated_annual_cost(procurement),
-      yes_no(procurement.tupe), # 15
+      estimated_annual_cost(procurement), # 15
+      yes_no(procurement.tupe),
       format_period_start_end(procurement),
       mobilisation_period(procurement),
       call_off_extensions(procurement),
-      blank_if_zero(procurement.active_procurement_buildings.size),
-      building_types(procurement), # 20
+      blank_if_zero(procurement.active_procurement_buildings.size), # 20
+      building_types(procurement),
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
       expand_regions(procurement.active_procurement_building_region_codes),
-      delimited_with_pence(procurement.assessed_value),
-      format_lot_number(procurement.lot_number), # 25
+      delimited_with_pence(procurement.assessed_value), # 25
+      format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
       shortlisted_suppliers(procurement),
       expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-      route_to_market(procurement),
-      procurement.eligible_for_da? ? da_suppliers(procurement) : nil, # 30
+      route_to_market(procurement), # 30
+      procurement.eligible_for_da? ? da_suppliers(procurement) : nil,
       procurement.eligible_for_da? ? da_suppliers_costs(procurement) : nil,
       nil,
       nil,
-      procurement.further_competition? ? procurement.contract_number : nil,
-      nil, # 35
+      procurement.further_competition? ? procurement.contract_number : nil, # 35
       nil,
       nil,
       nil,
-      nil
+      nil,
+      nil # 40
     ]
   end
   # rubocop:enable Metrics/AbcSize
@@ -184,6 +193,7 @@ class ProcurementCsvExport
       .includes(user: :buyer_detail)
       .includes(:active_procurement_buildings)
       .includes(:procurement_building_services)
+      .includes(:spreadsheet_import)
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: CONTRACT_BEARING_STATES)
   end
@@ -348,5 +358,12 @@ class ProcurementCsvExport
   def self.building_gias(procurement)
     gias = procurement.active_procurement_buildings.map(&:gia).compact
     gias.one? ? string_as_formula(gias.join) : gias.join(LIST_ITEM_SEPARATOR)
+  end
+
+  def self.spreadsheet_import_status(procurement)
+    return nil unless procurement.spreadsheet_import &&
+                      %w[detailed_search detailed_search_bulk_upload].include?(procurement.aasm_state)
+
+    SPREADSHEET_IMPORT_STATE_DESCRIPTIONS[procurement.spreadsheet_import.aasm_state]
   end
 end
