@@ -118,7 +118,11 @@ module FacilitiesManagement
     end
 
     def da_procurement_building_services(procurement_building_services)
-      procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
+      procurement_building_services.select { |u| u.code.in? procurement_da_services }
+    end
+
+    def procurement_da_services
+      @procurement_da_services ||= CCS::FM::Service.direct_award_services(@procurement.id)
     end
 
     def uom_values(spreadsheet_type)
