@@ -87,7 +87,7 @@ module FacilitiesManagement
 
     def start_bulk_upload
       @procurement.start_detailed_search_bulk_upload! if @procurement.may_start_detailed_search_bulk_upload?
-      if params['bulk_upload_spreadsheet'] == 'Save for later'
+      if params['bulk_upload_spreadsheet'] == t('facilities_management.procurements.spreadsheet.save_and_return_link')
         redirect_to facilities_management_procurements_path
       else
         redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
