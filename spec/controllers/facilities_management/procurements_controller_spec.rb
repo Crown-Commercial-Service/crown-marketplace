@@ -690,7 +690,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       context 'when in bulk upload and saving for later' do
         before do
           procurement.update(aasm_state: 'detailed_search_bulk_upload')
-          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'Save for later' }
+          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'Save and return to procurements dashboard' }
         end
 
         it 'will remain in the bulk upload state' do

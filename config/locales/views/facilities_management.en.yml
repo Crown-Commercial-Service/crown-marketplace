@@ -878,7 +878,7 @@ en:
         heading: Contract name
         return_to_what_happens_next: Return to what happens next
         return_to_your_account: Return to your account
-        save_and_return: Save and return
+        save_and_continue: Save and continue
       contracts:
         awaiting_response:
           else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1584,21 +1584,22 @@ en:
         caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         learn_more: Further details (opens in a new tab)
       spreadsheet:
-        cancel_and_return_link: Cancel and return to procurement summary
+        cancel_and_return_link: Cancel and return to requirements
         continue_link: Continue to upload your file
         download_the_template: Download the template
-        footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to procurement summary' button below.
+        footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to requirements' hyperlink on the bottom of the page.
         heading: Services and buildings - spreadsheet
         instructions: Instructions
         link: Click on the link to download the blank template ready for you to complete. The spreadsheet contains full instructions to help you input your building information and service requirements.
-        list_2_description: The spreadsheet has a status indicator which will help you check its ready for uploading.<br/> Once you are ready, you can click on the 'continue and upload file' button below, or alternatively you can upload your spreadsheet at a later date - just click the 'save for later' button below. When ready, come back to this portal, log in and click on 'continue a procurement' on your 'my account' page. This will open your procurement dashboard in which you can select this procurement again and you will be presented with a spreadsheet upload page. You can then select the correct Excel file from your computer and proceed to upload.
+        list_2_description_1: The spreadsheet has a status indicator which will help you check its ready for uploading.
+        list_2_description_2: Once you are ready, you can click on the 'continue and upload file' button below, or alternatively you can upload your spreadsheet at a later date - just click the 'save  and return to procurements dashboard' button below. When ready, come back to this portal, log in and click on 'continue a procurement' on your 'my account' page. This will open your procurement dashboard in which you can select this procurement again and you will be presented with a spreadsheet upload page. You can then select the correct excel file from your computer and proceed to upload.
         list_3_description: Once you have uploaded your spreadsheet successfully, you will then be able to continue to see your results
         list_description: Take your time completing the spreadsheet - there is no system deadline. You will need the following types of information to complete the spreadsheet.
         list_information_1: building details - address, size, what its used for, security access requirements
         list_information_2: services - which services you wish to buy in each building
         list_information_3: service requirements - for example, what standard of service, which hours of the day, or how many lifts are in the building
         results: Results
-        save_for_later_link: Save for later
+        save_and_return_link: Save and return to procurements dashboard
         services_and_buildings_template: Services and buildings template
         uploading: Uploading your spreadsheet
       spreadsheet_imports:
