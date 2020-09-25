@@ -1630,13 +1630,13 @@ en:
             external_area:
               blank: The building external area must be a number between 1 and 999,999,999
               combined_area: The building external area must be greater than 0, if the gross internal area is 0
-              less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
+              less_than_or_equal_to: The building external area must be a number between 1 and 999,999,999
               not_an_integer: The building external area must be a number between 1 and 999,999,999
               required: The building external area must be a number between 1 and 999,999,999
               too_long: The building external area must be a number between 1 and 999,999,999
             gia:
               blank: The building gross internal area must be a number between 1 and 999,999,999
-              combined_area: The building town/city cannot be blank
+              combined_area: The building gross internal area must be greater than 0, if the external area is 0
               less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
               not_an_integer: The building gross internal area must be a number between 1 and 999,999,999
               required: The building gross internal area must be a number between 1 and 999,999,999
@@ -1681,14 +1681,19 @@ en:
               multiple_standards_for_one_service: The building has multiple service standards selected. Please choose one of these service standards only
           service_volume_errors:
             no_of_appliances_for_testing:
+              blank: The building has service(s) that requires the input of the number of appliances for testing
               invalid: The volume must be a number between 1 and 999,999,999
             no_of_building_occupants:
-              invalid: The building has service(s) that requires the input of the number of building occupants
+              blank: The building has service(s) that requires the input of the number of building occupants
+              invalid: The volume must be a number between 1 and 999,999,999
             no_of_consoles_to_be_serviced:
+              blank: The building has service(s) that requires the input of the number of consoles to be serviced
               invalid: The volume must be a number between 1 and 999,999,999
             no_of_units_to_be_serviced:
+              blank: The building has service(s) that requires the input of the number of units to be serviced
               invalid: The volume must be a number between 1 and 999,999,999
             tones_to_be_collected_and_removed:
+              blank: The building has service(s) that requires the input of the number of tonnes to be collected and removed
               invalid: The volume must be a number between 1 and 999,999,999
         failed:
           building_name: Building name
