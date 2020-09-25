@@ -91,7 +91,7 @@ class ProcurementCsvExport
       localised_datetime(contract.procurement.created_at),
       contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
       procurement_status(contract.procurement, contract),
-      nil, # 5
+      spreadsheet_import_status(contract.procurement), # 5
       contract.procurement.user.buyer_detail.organisation_name,
       [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
       contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
@@ -183,6 +183,7 @@ class ProcurementCsvExport
       .includes(procurement: [user: :buyer_detail])
       .includes(procurement: :active_procurement_buildings)
       .includes(procurement: :procurement_building_services)
+      .includes(procurement: :spreadsheet_import)
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: 'unsent')
       .select { |contract| CONTRACT_BEARING_STATES.include?(contract.procurement.aasm_state) }
@@ -361,8 +362,7 @@ class ProcurementCsvExport
   end
 
   def self.spreadsheet_import_status(procurement)
-    return nil unless procurement.spreadsheet_import &&
-                      %w[detailed_search detailed_search_bulk_upload].include?(procurement.aasm_state)
+    return nil unless procurement.spreadsheet_import
 
     SPREADSHEET_IMPORT_STATE_DESCRIPTIONS[procurement.spreadsheet_import.aasm_state]
   end
