@@ -114,3 +114,8 @@ EXPOSE 8080
 RUN chmod +x ./bin/docker-entrypoint.sh
 
 ENTRYPOINT ./bin/docker-entrypoint.sh
+
+RUN apk add nginx
+RUN mkdir -p /run/nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+CMD ["nginx","-g","daemon off;"]
