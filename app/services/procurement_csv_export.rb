@@ -86,40 +86,41 @@ class ProcurementCsvExport
 
   # rubocop:disable Metrics/AbcSize
   def self.create_contract_row(contract)
+    procurement = contract.procurement
     [
-      contract.procurement.contract_name,
-      localised_datetime(contract.procurement.created_at),
-      contract.unsent? ? localised_datetime(contract.procurement.updated_at) : localised_datetime(contract.updated_at),
-      procurement_status(contract.procurement, contract),
-      spreadsheet_import_status(contract.procurement), # 5
-      contract.procurement.user.buyer_detail.organisation_name,
-      [contract.procurement.user.buyer_detail.organisation_address_line_1, contract.procurement.user.buyer_detail.organisation_address_line_2, contract.procurement.user.buyer_detail.organisation_address_town, contract.procurement.user.buyer_detail.organisation_address_county, contract.procurement.user.buyer_detail.organisation_address_postcode].join(', '),
-      contract.procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
-      contract.procurement.user.buyer_detail.full_name,
-      contract.procurement.user.buyer_detail.job_title, # 10
-      contract.procurement.user.email,
-      string_as_formula(contract.procurement.user.buyer_detail.telephone_number),
-      expand_services(contract.procurement.service_codes),
-      expand_regions(contract.procurement.region_codes),
-      estimated_annual_cost(contract.procurement), # 15
-      yes_no(contract.procurement.tupe),
-      format_period_start_end(contract.procurement),
-      mobilisation_period(contract.procurement),
-      call_off_extensions(contract.procurement),
-      blank_if_zero(contract.procurement.active_procurement_buildings.size), # 20
-      building_types(contract.procurement),
-      expand_services_and_standards(contract.procurement.procurement_building_service_codes_and_standards),
-      building_gias(contract.procurement),
-      expand_regions(contract.procurement.active_procurement_building_region_codes),
-      delimited_with_pence(contract.procurement.assessed_value), # 25
-      format_lot_number(contract.procurement.lot_number),
-      yes_no(contract.procurement.eligible_for_da),
-      shortlisted_suppliers(contract.procurement),
-      expand_services(unpriced_services(contract.procurement.procurement_building_service_codes)),
-      route_to_market(contract.procurement), # 30
-      da_suppliers(contract.procurement),
-      da_suppliers_costs(contract.procurement),
-      contract.supplier.data['supplier_name'],
+      procurement.contract_name,
+      localised_datetime(procurement.created_at),
+      contract.unsent? ? localised_datetime(procurement.updated_at) : localised_datetime(contract.updated_at),
+      procurement_status(procurement, contract),
+      spreadsheet_import_status(procurement), # 5
+      procurement.user.buyer_detail.organisation_name,
+      [procurement.user.buyer_detail.organisation_address_line_1, procurement.user.buyer_detail.organisation_address_line_2, procurement.user.buyer_detail.organisation_address_town, procurement.user.buyer_detail.organisation_address_county, procurement.user.buyer_detail.organisation_address_postcode].join(', '),
+      procurement.user.buyer_detail.central_government ? 'Central government' : 'Wider public sector',
+      procurement.user.buyer_detail.full_name,
+      procurement.user.buyer_detail.job_title, # 10
+      procurement.user.email,
+      string_as_formula(procurement.user.buyer_detail.telephone_number),
+      expand_services(procurement.service_codes),
+      expand_regions(procurement.region_codes),
+      estimated_annual_cost(procurement), # 15
+      yes_no(procurement.tupe),
+      format_period_start_end(procurement),
+      mobilisation_period(procurement),
+      call_off_extensions(procurement),
+      blank_if_zero(procurement.active_procurement_buildings.size), # 20
+      building_types(procurement),
+      expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
+      building_gias(procurement),
+      expand_regions(procurement.active_procurement_building_region_codes),
+      delimited_with_pence(procurement.assessed_value), # 25
+      format_lot_number(procurement.lot_number),
+      yes_no(procurement.eligible_for_da),
+      shortlisted_suppliers(procurement),
+      expand_services(unpriced_services(procurement.procurement_building_service_codes)),
+      route_to_market(procurement), # 30
+      da_suppliers(procurement),
+      da_suppliers_costs(procurement),
+      supplier_names[contract.supplier_id],
       delimited_with_pence(contract.direct_award_value),
       contract.contract_number, # 35
       contract.reason_for_declining,
@@ -180,10 +181,6 @@ class ProcurementCsvExport
 
   def self.find_contracts(start_date, end_date)
     FacilitiesManagement::ProcurementSupplier
-      .includes(procurement: [user: :buyer_detail])
-      .includes(procurement: :active_procurement_buildings)
-      .includes(procurement: :procurement_building_services)
-      .includes(procurement: :spreadsheet_import)
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: 'unsent')
       .select { |contract| CONTRACT_BEARING_STATES.include?(contract.procurement.aasm_state) }
@@ -191,10 +188,6 @@ class ProcurementCsvExport
 
   def self.find_procurements(start_date, end_date)
     FacilitiesManagement::Procurement
-      .includes(user: :buyer_detail)
-      .includes(:active_procurement_buildings)
-      .includes(:procurement_building_services)
-      .includes(:spreadsheet_import)
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: CONTRACT_BEARING_STATES)
   end
@@ -220,8 +213,12 @@ class ProcurementCsvExport
     return if service_codes.nil?
 
     service_codes.compact.map do |code|
-      "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'};\n"
+      "#{code} #{service_codes_with_name[code] || 'service description not found'};\n"
     end.join
+  end
+
+  def self.service_codes_with_name
+    @service_codes_with_name ||= FacilitiesManagement::Service.all.map { |service| [service.code, service.name] }.to_h
   end
 
   def self.expand_services_and_standards(list)
@@ -229,7 +226,7 @@ class ProcurementCsvExport
 
     list.compact.sort_by(&:join).map do |code, standard|
       [
-        "#{code} #{FacilitiesManagement::Service.find_by(code: code)&.name || 'service description not found'}",
+        "#{code} #{service_codes_with_name[code] || 'service description not found'}",
         standard.present? ? " - Standard #{standard}" : '',
         LIST_ITEM_SEPARATOR
       ].join
@@ -240,14 +237,22 @@ class ProcurementCsvExport
     return if region_codes.nil?
 
     region_codes.compact.map do |code|
-      "#{code} #{FacilitiesManagement::Region.find_by(code: code)&.name || 'region description not found'};\n"
+      "#{code} #{regions_with_name[code] || 'region description not found'};\n"
     end.join
+  end
+
+  def self.regions_with_name
+    @regions_with_name ||= FacilitiesManagement::Region.all.map { |region| [region.code, region.name] }.to_h
   end
 
   def self.unpriced_services(service_codes)
     service_codes.select do |service_code|
-      CCS::FM::Rate.framework_rate_for(service_code).nil? || CCS::FM::Rate.benchmark_rate_for(service_code).nil?
+      ccs_fm_rates[service_code][:framework].nil? || ccs_fm_rates[service_code][:benchmark].nil?
     end
+  end
+
+  def self.ccs_fm_rates
+    @ccs_fm_rates ||= CCS::FM::Rate.select(:code, :framework, :benchmark).map { |rate| [rate.code, { framework: rate.framework, benchmark: rate.benchmark }] }.to_h
   end
 
   def self.format_period_start_end(procurement)
@@ -298,8 +303,7 @@ class ProcurementCsvExport
   #
   # This will preserve leading zeros in telephone numbers.
   # Works in Apple Numbers - tested.
-  # Works in Microsoft Excel according to:
-  #   https://stackoverflow.com/questions/308324/csv-for-excel-including-both-leading-zeros-and-commas
+  # Works in Microsoft Excel - tested.
   def self.string_as_formula(string)
     return nil if string.blank?
 
@@ -340,7 +344,7 @@ class ProcurementCsvExport
 
   def self.da_suppliers(procurement)
     procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| s.supplier.data['supplier_name'] } .join(LIST_ITEM_SEPARATOR)
+               .map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
   end
 
   def self.da_suppliers_costs(procurement)
@@ -349,15 +353,15 @@ class ProcurementCsvExport
   end
 
   def self.shortlisted_suppliers(procurement)
-    procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] } .join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_types(procurement)
-    procurement.active_procurement_buildings.map(&:building_type).compact.uniq.join(LIST_ITEM_SEPARATOR)
+    procurement.active_procurement_buildings.distinct(:building_type).pluck(:building_type).compact.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_gias(procurement)
-    gias = procurement.active_procurement_buildings.map(&:gia).compact
+    gias = procurement.active_procurement_building_gross_internal_areas
     gias.one? ? string_as_formula(gias.join) : gias.join(LIST_ITEM_SEPARATOR)
   end
 
@@ -365,5 +369,9 @@ class ProcurementCsvExport
     return nil unless procurement.spreadsheet_import
 
     SPREADSHEET_IMPORT_STATE_DESCRIPTIONS[procurement.spreadsheet_import.aasm_state]
+  end
+
+  def self.supplier_names
+    @supplier_names ||= CCS::FM::Supplier.all.select(:supplier_id, :data).map { |supplier| [supplier.supplier_id, supplier.data['supplier_name']] }.to_h
   end
 end
