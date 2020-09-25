@@ -1,5 +1,5 @@
 <%= link_to 'Return to services and buildings template', facilities_management_procurement_path(id: @spreadsheet_import.procurement.id, 'spreadsheet': true), class: 'govuk-back-link' %>
-  <%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_imports_path, method: :post, html: { novalidate: true, multipart: true } do |f| %>
+<%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_imports_path, method: :post, html: { novalidate: true, multipart: true } do |f| %>
 
   <%= govuk_form_group_with_optional_error(@spreadsheet_import, :name) do %>
     <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
@@ -48,8 +48,8 @@
     </strong>
   </div>
 
-      <div class="govuk-!-margin-top-4">
-        <%= f.submit 'Upload my services and buildings', class: "govuk-button govuk-!-margin-top-4", 'aria-label': t('.submit') %>
-        <%= link_to 'Cancel and return to services and buildings template', facilities_management_procurement_path(id: @spreadsheet_import.procurement.id, 'spreadsheet': true), class: 'govuk-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-left-4' %>
-      </div>
-  <% end %>
+  <div class="govuk-!-margin-top-4">
+    <%= f.submit t('.upload_and_continue'), class: "govuk-button govuk-!-margin-top-4", aria: { label: t('.upload_and_continue') }, data: { disable_with: false } %>
+    <%= f.submit t('.cancel_and_return'), name: :cancel_and_return, class: 'govuk-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-left-4', data: { disable_with: false }, aria: { label: t('.cancel_and_return') } %>
+  </div>
+<% end %>

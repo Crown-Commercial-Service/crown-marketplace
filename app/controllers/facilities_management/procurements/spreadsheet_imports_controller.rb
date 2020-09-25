@@ -13,6 +13,9 @@ module FacilitiesManagement
 
       def create
         @procurement.remove_existing_spreadsheet_import if @procurement.spreadsheet_import.present?
+
+        (cancel_and_return && return) if params[:cancel_and_return].present?
+
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
         if @spreadsheet_import.save(context: :upload)
           @spreadsheet_import.start_import!
@@ -61,6 +64,12 @@ module FacilitiesManagement
           service_hour_errors: @spreadsheet_import.service_hour_errors,
           other_errors: @spreadsheet_import.import_errors.empty? ? [:other_errors] : []
         }
+      end
+
+      def cancel_and_return
+        @procurement.spreadsheet_import.destroy if @procurement.spreadsheet_import.present?
+
+        redirect_to facilities_management_procurement_path(id: @procurement.id, 'spreadsheet': true)
       end
 
       protected
