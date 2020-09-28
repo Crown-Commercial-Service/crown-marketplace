@@ -34,4 +34,8 @@ module Buildings::BuildingsControllerNavigation
       edit_facilities_management_building_path(@page_data[:model_object].id, step: next_step(step.to_sym).to_s)
     end
   end
+
+  def update_address_link
+    edit_facilities_management_building_path(@page_data[:model_object].id, step: 'building_details')
+  end
 end
