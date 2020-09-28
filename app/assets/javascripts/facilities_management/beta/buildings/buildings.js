@@ -107,12 +107,11 @@ FindAddressComponent.prototype.errorShow = function (show, input, attribute, inp
   var form = document.getElementById(attribute + "-form-group");
 
   if(show) {
-    $(form).addClass("govuk-form-group--error")
     anyArbitraryName.global_formValidators[0].toggleError($(input), true, "invalid")
   } else {
-    $(form).removeClass("govuk-form-group--error");
-    $(document.getElementById("error_facilities_management_building_" + attribute)).remove();
+    anyArbitraryName.global_formValidators[0].toggleError($(input), false, "invalid")
     $(document.querySelector("span[id='" + attribute + "-error']")).remove();
+    $(document.querySelectorAll("label[id='" + attribute + "-error'] > span")).addClass('govuk-visually-hidden')
     $(input).removeClass("govuk-" + inputError +"--error");
   }
 }
