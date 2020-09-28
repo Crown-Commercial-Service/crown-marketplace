@@ -409,6 +409,15 @@ module FacilitiesManagement
       end
     end
 
+    def active_procurement_building_external_areas
+      if building_data_frozen?
+        active_procurement_buildings.pluck(:external_area).compact
+      else
+        attribute = 'facilities_management_buildings.external_area'
+        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+      end
+    end
+
     def building_data_frozen?
       !(quick_search? || detailed_search? || detailed_search_bulk_upload?)
     end
