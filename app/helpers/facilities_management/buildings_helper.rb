@@ -86,7 +86,7 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def postcode_change_visible?
-    @postcode_change_visible ||= @page_data[:model_object].address_postcode.present? && @page_data[:model_object].address_line_1.blank?
+    @postcode_change_visible ||= @page_data[:model_object].address_postcode.present? && @page_data[:model_object].errors[:address_postcode].none? && @page_data[:model_object].address_line_1.blank?
   end
 
   def select_an_address_visible?
