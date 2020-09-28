@@ -56,7 +56,7 @@ class ProcurementCsvExport
     'Number of Buildings', # 20
     'Building Types',
     'Services',
-    'Building GIAs',
+    'Building GIA sum total',
     'Building regions',
     'Assessed Value (GBP)', # 25
     'Recommended Sub-lot',
@@ -361,8 +361,7 @@ class ProcurementCsvExport
   end
 
   def self.building_gias(procurement)
-    gias = procurement.active_procurement_building_gross_internal_areas
-    gias.one? ? string_as_formula(gias.join) : gias.join(LIST_ITEM_SEPARATOR)
+    procurement.active_procurement_building_gross_internal_areas.map(&:to_i).reduce(0, :+)
   end
 
   def self.spreadsheet_import_status(procurement)
