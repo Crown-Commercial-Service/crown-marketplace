@@ -57,23 +57,24 @@ class ProcurementCsvExport
     'Building Types',
     'Services',
     'Building GIA sum total',
-    'Building regions',
-    'Assessed Value (GBP)', # 25
+    'Building external area sum total',
+    'Building regions', # 25
+    'Assessed Value (GBP)',
     'Recommended Sub-lot',
     'Eligible for DA',
     'Shortlisted Suppliers',
-    'Unpriced services',
-    'Route to market selected', # 30
+    'Unpriced services', # 30
+    'Route to market selected',
     'DA Suppliers (ranked)',
     'DA Suppliers costs (GBP ranked)',
     'DA Awarded Supplier',
-    'DA Awarded Supplier cost (GBP)',
-    'Contract number', # 35
+    'DA Awarded Supplier cost (GBP)', # 35
+    'Contract number',
     'DA Supplier decline reason',
     'DA Buyer withdraw reason',
     'DA Buyer not-sign reason',
-    'DA Buyer contract signed/not-signed date',
-    'DA Buyer confirmed contract dates' # 40
+    'DA Buyer contract signed/not-signed date', # 40
+    'DA Buyer confirmed contract dates'
   ].freeze
 
   def self.call(start_date, end_date)
@@ -111,6 +112,7 @@ class ProcurementCsvExport
       building_types(procurement),
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
+      building_total_external_area(procurement),
       expand_regions(procurement.active_procurement_building_region_codes),
       delimited_with_pence(procurement.assessed_value), # 25
       format_lot_number(procurement.lot_number),
@@ -156,6 +158,7 @@ class ProcurementCsvExport
       building_types(procurement),
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
+      building_total_external_area(procurement),
       expand_regions(procurement.active_procurement_building_region_codes),
       delimited_with_pence(procurement.assessed_value), # 25
       format_lot_number(procurement.lot_number),
@@ -362,6 +365,10 @@ class ProcurementCsvExport
 
   def self.building_gias(procurement)
     procurement.active_procurement_building_gross_internal_areas.map(&:to_i).reduce(0, :+)
+  end
+
+  def self.building_total_external_area(procurement)
+    procurement.active_procurement_building_external_areas.map(&:to_i).reduce(0, :+)
   end
 
   def self.spreadsheet_import_status(procurement)
