@@ -108,9 +108,7 @@ FindAddressComponent.prototype.errorShow = function (show, input, attribute, inp
 
   if(show) {
     $(form).addClass("govuk-form-group--error")
-    anyArbitraryName.global_formValidators[0].testError(
-      anyArbitraryName.global_formValidators[0].validationFunctions["required"],
-      $(input), "invalid");
+    anyArbitraryName.global_formValidators[0].toggleError($(input), true, "invalid")
   } else {
     $(form).removeClass("govuk-form-group--error");
     $(document.getElementById("error_facilities_management_building_" + attribute)).remove();
