@@ -388,11 +388,29 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.where(code: FacilitiesManagement::ServicesAndQuestions.get_codes_by_question(:service_standard)).map { |s| [s.code, s.service_standard] } .uniq
     end
 
     def active_procurement_building_region_codes
-      active_procurement_buildings.map { |proc_building| proc_building&.building&.address_region_code } .uniq
+      if building_data_frozen?
+        active_procurement_buildings.distinct(:address_region_code).pluck(:address_region_code)
+      else
+        attribute = 'facilities_management_buildings.address_region_code'
+        active_procurement_buildings.joins(:building).select(attribute).distinct(attribute).pluck(attribute)
+      end
+    end
+
+    def active_procurement_building_gross_internal_areas
+      if building_data_frozen?
+        active_procurement_buildings.pluck(:gia).compact
+      else
+        attribute = 'facilities_management_buildings.gia'
+        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+      end
+    end
+
+    def building_data_frozen?
+      !(quick_search? || detailed_search? || detailed_search_bulk_upload?)
     end
 
     def procurement_building_services_not_used_in_calculation

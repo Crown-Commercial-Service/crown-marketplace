@@ -85,11 +85,11 @@ module FacilitiesManagement
     end
 
     def building_internal_area
-      procurement.detailed_search? ? building.gia : gia
+      procurement.building_data_frozen? ? gia : building.gia
     end
 
     def building_external_area
-      procurement.detailed_search? ? building.external_area : external_area
+      procurement.building_data_frozen? ? external_area : building.external_area
     end
 
     def requires_building_area?

@@ -1609,75 +1609,49 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '.can_be_deleted?' do
-    context 'when the procurement is in quick_search' do
-      before { procurement.update(aasm_state: 'quick_search') }
+    state_with_results = {
+      quick_search: true,
+      detailed_search: true,
+      detailed_search_bulk_upload: true,
+      choose_contract_value: true,
+      results: true,
+      da_draft: true,
+      direct_award: false,
+      further_competition: false,
+      closed: false
+    }
 
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
+    state_with_results.each do |state, result|
+      context "when the procurement is in #{state}" do
+        before { procurement.update(aasm_state: state) }.to_s
+
+        it "#{result ? 'can' : 'cannot'} be deleted" do
+          expect(procurement.can_be_deleted?).to be result
+        end
       end
     end
+  end
 
-    context 'when the procurement is in detailed_search' do
-      before { procurement.update(aasm_state: 'detailed_search') }
+  describe '.building_data_frozen?' do
+    state_with_results = {
+      quick_search: false,
+      detailed_search: false,
+      detailed_search_bulk_upload: false,
+      choose_contract_value: true,
+      results: true,
+      da_draft: true,
+      direct_award: true,
+      further_competition: true,
+      closed: true
+    }
 
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
-      end
-    end
+    state_with_results.each do |state, result|
+      context "when the procurement is in #{state}" do
+        before { procurement.update(aasm_state: state) }.to_s
 
-    context 'when the procurement is in detailed_search_bulk_upload' do
-      before { procurement.update(aasm_state: 'detailed_search_bulk_upload') }
-
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
-      end
-    end
-
-    context 'when the procurement is in choose_contract_value' do
-      before { procurement.update(aasm_state: 'choose_contract_value') }
-
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
-      end
-    end
-
-    context 'when the procurement is in results' do
-      before { procurement.update(aasm_state: 'results') }
-
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
-      end
-    end
-
-    context 'when the procurement is in da_draft' do
-      before { procurement.update(aasm_state: 'da_draft') }
-
-      it 'can be deleted' do
-        expect(procurement.can_be_deleted?).to be true
-      end
-    end
-
-    context 'when the procurement is in direct_award' do
-      before { procurement.update(aasm_state: 'direct_award') }
-
-      it 'cannot be deleted' do
-        expect(procurement.can_be_deleted?).to be false
-      end
-    end
-
-    context 'when the procurement is in further_competition' do
-      before { procurement.update(aasm_state: 'further_competition') }
-
-      it 'cannot be deleted' do
-        expect(procurement.can_be_deleted?).to be false
-      end
-    end
-
-    context 'when the procurement is in closed' do
-      before { procurement.update(aasm_state: 'closed') }
-
-      it 'cannot be deleted' do
-        expect(procurement.can_be_deleted?).to be false
+        it "the building data #{result ? 'is' : 'is not'} frozen" do
+          expect(procurement.building_data_frozen?).to be result
+        end
       end
     end
   end
