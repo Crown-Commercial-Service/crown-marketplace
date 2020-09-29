@@ -1632,6 +1632,7 @@ en:
               blank: The building external area must be a number between 1 and 999,999,999
               combined_area: The building external area must be greater than 0, if the gross internal area is 0
               less_than_or_equal_to: The building external area must be a number between 1 and 999,999,999
+              not_a_number: The building external area must be a number between 1 and 999,999,999
               not_an_integer: The building external area must be a number between 1 and 999,999,999
               required: The building external area must be a number between 1 and 999,999,999
               too_long: The building external area must be a number between 1 and 999,999,999
@@ -1639,6 +1640,7 @@ en:
               blank: The building gross internal area must be a number between 1 and 999,999,999
               combined_area: The building gross internal area must be greater than 0, if the external area is 0
               less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
+              not_a_number: The building gross internal area must be a number between 1 and 999,999,999
               not_an_integer: The building gross internal area must be a number between 1 and 999,999,999
               required: The building gross internal area must be a number between 1 and 999,999,999
               too_long: The building gross internal area must be a number between 1 and 999,999,999

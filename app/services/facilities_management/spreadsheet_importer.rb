@@ -254,10 +254,10 @@ class FacilitiesManagement::SpreadsheetImporter
   def import_lift_data
     service_volume_lifts_sheet = @user_uploaded_spreadsheet.sheet('Service Volumes 2')
     spreadsheet_import_loop([service_volume_lifts_sheet, 1, 'OK'], [service_volume_lifts_sheet, 2, 1], 6, :lifts_incomplete) do |col, building_index|
-      procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.select { |pbs| pbs.code == 'C.5' }.first
+      procurement_building_service = @procurement_array[building_index][:procurement_building][:procurement_building_services].map { |pbs| pbs[:object] }.find { |pbs| pbs.code == 'C.5' }
       next if procurement_building_service.nil?
 
-      service_volume_column = service_volume_lifts_sheet.column(col)[6..-2]
+      service_volume_column = service_volume_lifts_sheet.column(col)[6..45]
 
       next if missing_lifts?(service_volume_column, service_volume_lifts_sheet.column(col)[3])
 
