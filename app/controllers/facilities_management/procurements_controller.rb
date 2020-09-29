@@ -22,7 +22,7 @@ module FacilitiesManagement
 
     def show
       redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
-
+      exit_detailed_search_bulk_upload(spreadsheet: true) && return if params[:spreadsheet] == 'cancel'
       redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
 
       @view_name = set_view_data
@@ -474,10 +474,14 @@ module FacilitiesManagement
       end
     end
 
-    def exit_detailed_search_bulk_upload
+    def exit_detailed_search_bulk_upload(spreadsheet: false)
       @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
 
-      redirect_to facilities_management_procurement_path(@procurement)
+      if spreadsheet
+        redirect_to facilities_management_procurement_path(@procurement, spreadsheet: true)
+      else
+        redirect_to facilities_management_procurement_path(@procurement)
+      end
     end
 
     def update_procurement_building_selection
