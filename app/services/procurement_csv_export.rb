@@ -113,23 +113,23 @@ class ProcurementCsvExport
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
       building_total_external_area(procurement),
-      expand_regions(procurement.active_procurement_building_region_codes),
-      delimited_with_pence(procurement.assessed_value), # 25
+      expand_regions(procurement.active_procurement_building_region_codes), # 25
+      delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
       shortlisted_suppliers(procurement),
-      expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-      route_to_market(procurement), # 30
+      expand_services(unpriced_services(procurement.procurement_building_service_codes)), # 30
+      route_to_market(procurement),
       da_suppliers(procurement),
       da_suppliers_costs(procurement),
       supplier_names[contract.supplier_id],
-      delimited_with_pence(contract.direct_award_value),
-      contract.contract_number, # 35
+      delimited_with_pence(contract.direct_award_value), # 35
+      contract.contract_number,
       contract.reason_for_declining,
       contract.reason_for_closing,
       contract.reason_for_not_signing,
-      localised_date(contract.contract_signed_date),
-      [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ') # 40
+      localised_date(contract.contract_signed_date), # 40
+      [localised_date(contract.contract_start_date), localised_date(contract.contract_end_date)].compact.join(' - ')
     ]
   end
 
@@ -159,23 +159,23 @@ class ProcurementCsvExport
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
       building_total_external_area(procurement),
-      expand_regions(procurement.active_procurement_building_region_codes),
-      delimited_with_pence(procurement.assessed_value), # 25
+      expand_regions(procurement.active_procurement_building_region_codes), # 25
+      delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
       shortlisted_suppliers(procurement),
-      expand_services(unpriced_services(procurement.procurement_building_service_codes)),
-      route_to_market(procurement), # 30
+      expand_services(unpriced_services(procurement.procurement_building_service_codes)), # 30
+      route_to_market(procurement),
       procurement.eligible_for_da? ? da_suppliers(procurement) : nil,
       procurement.eligible_for_da? ? da_suppliers_costs(procurement) : nil,
       nil,
-      nil,
-      procurement.further_competition? ? procurement.contract_number : nil, # 35
-      nil,
-      nil,
+      nil, # 35
+      procurement.further_competition? ? procurement.contract_number : nil,
       nil,
       nil,
-      nil # 40
+      nil,
+      nil, # 40
+      nil
     ]
   end
   # rubocop:enable Metrics/AbcSize
