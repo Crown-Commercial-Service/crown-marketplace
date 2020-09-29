@@ -26,64 +26,14 @@ module FacilitiesManagement
     def edit; end
 
     def create
-      @page_data[:model_object] = current_user.buildings.build(building_params)
-      set_postcode_data
-
-      create_building_and_add_address && return if params[:add_address].present?
-
-      add_new_address && return if params[:step] == 'add_address'
-
-      if @page_data[:model_object].save(context: :new)
-        redirect_to next_link(params.key?('save_and_return'), 'new')
-      else
-        rebuild_page_data(@page_data[:model_object])
-        render :new
-      end
+      create_building_action
     end
 
     def update
-      @page_data[:model_object].assign_attributes(building_params)
-      set_postcode_data
-
-      update_address && return if params[:step] == 'add_address'
-
-      if @page_data[:model_object].save(context: params[:step].to_sym)
-        redirect_to next_link(params.key?('save_and_return'), params[:step])
-      else
-        rebuild_page_description 'edit'
-        render :edit
-      end
+      update_building_action
     end
 
     private
-
-    def create_building_and_add_address
-      rebuild_page_data(@page_data[:model_object])
-      rebuild_page_description('add_address')
-      render action: :add_address
-    end
-
-    def add_new_address
-      if @page_data[:model_object].valid?(:add_address)
-        resolve_region
-        rebuild_page_data(@page_data[:model_object])
-        render :new
-      else
-        rebuild_page_data(@page_data[:model_object])
-        rebuild_page_description 'add_address'
-        render :add_address
-      end
-    end
-
-    def update_address
-      if @page_data[:model_object].save(context: params[:step].to_sym)
-        resolve_region
-        redirect_to(edit_facilities_management_building_path(@page_data[:model_object].id, step: 'building_details'))
-      else
-        rebuild_page_description 'add_address'
-        render :add_address
-      end
-    end
 
     def add_address_form_details
       @add_address_form_details ||= if id_present?
@@ -93,26 +43,10 @@ module FacilitiesManagement
                                     end
     end
 
-    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?, :no_regions?, :multiple_addresses?, :hide_region_section?, :hide_region_dropdown?, :hide_postcode_source?
-
-    def initialise_page_data
-      @page_data = {}
-    end
-
-    def create_new_building
-      @page_data[:model_object] = Building.new(user: current_user)
-    end
+    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?
 
     def define_all_buildings
       @page_data[:model_object] = current_user.buildings.order_by_building_name.page(params[:page])
-    end
-
-    def build_page_data
-      @page_data[:model_object] = Building.find(params[:id])
-    end
-
-    def initialize_building_details
-      @building_details = building_details
     end
 
     protected

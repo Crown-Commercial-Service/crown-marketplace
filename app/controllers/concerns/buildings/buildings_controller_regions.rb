@@ -20,7 +20,7 @@ module Buildings::BuildingsControllerRegions
   end
 
   def find_region_query_by_postcode(postcode)
-    get_region_postcode(postcode).to_a.map { |r| r.to_h.deep_symbolize_keys }
+    get_region_postcode(postcode)
   rescue StandardError => e
     Rails.logger.error("Region lookup error:\n#{e.message}")
     []
