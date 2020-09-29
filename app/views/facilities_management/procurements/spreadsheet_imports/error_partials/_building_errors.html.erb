@@ -8,12 +8,10 @@
   </thead>
   <tbody class="govuk-table__body">
     <% error_list.each do |errors| %>
-      <% errors[:errors].each do |error|%>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= errors[:building_name] %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= error_message(:building_errors, errors[:attribute], error) %></td>
-        </tr>
-      <% end %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell govuk-!-padding-right-2"><%= errors[:building_name] %></td>
+        <td class="govuk-table__cell govuk-!-padding-right-2"><%= error_message(:building_errors, errors[:attribute], errors[:errors].first) %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

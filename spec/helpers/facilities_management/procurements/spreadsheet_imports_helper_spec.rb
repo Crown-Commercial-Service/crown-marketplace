@@ -100,6 +100,10 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsHelper, typ
           expect(helper.error_message(model, attribute, :less_than_or_equal_to)).to eq 'The building external area must be a number between 1 and 999,999,999'
         end
 
+        it 'returns the correct error message for not_a_number' do
+          expect(helper.error_message(model, attribute, :not_a_number)).to eq 'The building external area must be a number between 1 and 999,999,999'
+        end
+
         it 'returns the correct error message for not_an_integer' do
           expect(helper.error_message(model, attribute, :not_an_integer)).to eq 'The building external area must be a number between 1 and 999,999,999'
         end
@@ -126,6 +130,10 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsHelper, typ
 
         it 'returns the correct error message for less_than_or_equal_to' do
           expect(helper.error_message(model, attribute, :less_than_or_equal_to)).to eq 'The building gross internal area must be a number between 1 and 999,999,999'
+        end
+
+        it 'returns the correct error message for not_a_number' do
+          expect(helper.error_message(model, attribute, :not_a_number)).to eq 'The building gross internal area must be a number between 1 and 999,999,999'
         end
 
         it 'returns the correct error message for not_an_integer' do
