@@ -316,10 +316,11 @@ module LayoutHelper
 
   def form_group_with_error(model, attribute)
     css_classes = ['govuk-form-group']
-    css_classes += ['govuk-form-group--error'] if model.errors.key?(attribute)
+    any_errors = model.errors.key?(attribute)
+    css_classes += ['govuk-form-group--error'] if any_errors
 
     content_tag :div, class: css_classes, id: "#{attribute}-form-group" do
-      yield(display_error(model, attribute))
+      yield(display_error(model, attribute), any_errors)
     end
   end
 

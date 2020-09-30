@@ -146,8 +146,8 @@ Rails.application.routes.draw do
     end
     resources :procurement_buildings, only: %i[show edit update]
     resources :procurement_buildings_services, only: %i[edit update]
-    resources :buyer_details, only: %i[show edit update] do
-      get 'edit_address'
+    resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
+      get 'edit-address', as: :edit_address
     end
     namespace :supplier do
       get '/', to: 'home#index'
