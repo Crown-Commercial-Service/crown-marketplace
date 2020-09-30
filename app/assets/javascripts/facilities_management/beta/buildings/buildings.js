@@ -86,6 +86,10 @@ FindAddressComponent.prototype.setupEventListeners = function () {
   this.changePostcodeLink.addEventListener("click", this.changePostcode.bind(this));
   this.changeAddressLink.addEventListener("click", this.changeAddress.bind(this));
   this.changeRegionLink.addEventListener("click", this.changeRegion.bind(this));
+
+  $('#new_facilities_management_building').submit(function() {
+    module.errorShow(false, module.searchAddress, "address_postcode", "input");
+  })
 };
 
 FindAddressComponent.prototype.lookupInput = function (e) {
@@ -109,8 +113,9 @@ FindAddressComponent.prototype.errorShow = function (show, input, attribute, inp
   if(show) {
     anyArbitraryName.global_formValidators[0].toggleError($(input), true, "invalid")
   } else {
-    anyArbitraryName.global_formValidators[0].toggleError($(input), false, "invalid")
+    $(form).removeClass("govuk-form-group--error");
     $(document.querySelector("span[id='" + attribute + "-error']")).remove();
+    $(document.getElementById("error_facilities_management_building_" + attribute)).remove();
     $(document.querySelectorAll("label[id='" + attribute + "-error'] > span")).addClass('govuk-visually-hidden')
     $(input).removeClass("govuk-" + inputError +"--error");
   }
