@@ -45,6 +45,6 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
 
   bundle exec rails server
 else
-  bundle exec nginx -g "daemon on;"
+#  bundle exec nginx -g "daemon on;"
   bundle exec sidekiq -C ./config/sidekiq.yml -e production
 fi
