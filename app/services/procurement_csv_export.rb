@@ -26,6 +26,8 @@ class ProcurementCsvExport
     'not_signed' => 'DA not signed'
   }.freeze
 
+  EARLY_STATES = %w[quick_search detailed_search detailed_search_bulk_upload].freeze
+
   SPREADSHEET_IMPORT_STATE_DESCRIPTIONS = {
     'importing' => 'In progress',
     'failed' => 'Failed',
@@ -118,7 +120,7 @@ class ProcurementCsvExport
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
       shortlisted_suppliers(procurement),
-      expand_services(unpriced_services(procurement.procurement_building_service_codes)), # 30
+      expand_services_and_standards(unpriced_services(procurement.procurement_building_service_codes_and_standards)), # 30
       route_to_market(procurement),
       da_suppliers(procurement),
       da_suppliers_costs(procurement),
@@ -164,7 +166,7 @@ class ProcurementCsvExport
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
       shortlisted_suppliers(procurement),
-      expand_services(unpriced_services(procurement.procurement_building_service_codes)), # 30
+      EARLY_STATES.include?(procurement.aasm_state) ? nil : expand_services_and_standards(unpriced_services(procurement.procurement_building_service_codes_and_standards)), # 30
       route_to_market(procurement),
       procurement.eligible_for_da? ? da_suppliers(procurement) : nil,
       procurement.eligible_for_da? ? da_suppliers_costs(procurement) : nil,
@@ -248,14 +250,17 @@ class ProcurementCsvExport
     @regions_with_name ||= FacilitiesManagement::Region.all.map { |region| [region.code, region.name] }.to_h
   end
 
-  def self.unpriced_services(service_codes)
-    service_codes.select do |service_code|
-      ccs_fm_rates[service_code][:framework].nil? || ccs_fm_rates[service_code][:benchmark].nil?
+  def self.unpriced_services(list)
+    list.select do |service_code, standard|
+      rate = ccs_fm_rates[[service_code, standard]]
+      rate.nil? ? false : (rate[:framework].nil? || rate[:benchmark].nil?)
     end
   end
 
   def self.ccs_fm_rates
-    @ccs_fm_rates ||= CCS::FM::Rate.select(:code, :framework, :benchmark).map { |rate| [rate.code, { framework: rate.framework, benchmark: rate.benchmark }] }.to_h
+    @ccs_fm_rates ||= CCS::FM::Rate.select(:code, :standard, :framework, :benchmark)
+                                   .map { |rate| [[rate.code, rate.standard], { framework: rate.framework, benchmark: rate.benchmark }] }
+                                   .to_h
   end
 
   def self.format_period_start_end(procurement)
