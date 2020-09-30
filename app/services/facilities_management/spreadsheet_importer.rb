@@ -233,7 +233,7 @@ class FacilitiesManagement::SpreadsheetImporter
       services = {}
 
       VOLUME_CODES.each_with_index do |code, index|
-        services[code] = service_volume_column[index + 3].to_i
+        services[code] = service_volume_column[index + 3]
       end
 
       add_service_volumes(services, building_index)
@@ -303,7 +303,7 @@ class FacilitiesManagement::SpreadsheetImporter
   def get_service_hours_from_sheet(sheet, col)
     service_hour_column = sheet.column(col)[3..-1]
     SERVICE_HOUR_CODES.map.with_index do |code, index|
-      [code, { service_hours: service_hour_column[index * 2].to_i, detail_of_requirement: ActionController::Base.helpers.strip_tags(service_hour_column[index * 2 + 1].to_s) }]
+      [code, { service_hours: service_hour_column[index * 2], detail_of_requirement: ActionController::Base.helpers.strip_tags(service_hour_column[index * 2 + 1].to_s) }]
     end.to_h
   end
 
@@ -435,15 +435,22 @@ class FacilitiesManagement::SpreadsheetImporter
 
   ########## Collect errors to show to the user ##########
   def collect_errors
-    complete_procurement_array.map.with_index(1) do |building, index|
+    @procurement_array.map.with_index(1) do |building, index|
       ["Building #{index}".to_sym,
-       {
-         building_name: building[:object].building_name || "Building #{index}",
-         building_errors: building[:errors],
-         procurement_building_errors: building[:procurement_building][:errors],
-         procurement_building_services_errors: building[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:errors]] }.to_h
-       }]
-    end.to_h
+       if building[:skip]
+         {
+           skip: true
+         }
+       else
+         {
+           skip: false,
+           building_name: building[:object].building_name || "Building #{index}",
+           building_errors: building[:errors],
+           procurement_building_errors: building[:procurement_building][:errors],
+           procurement_building_services_errors: building[:procurement_building][:procurement_building_services].map { |pbs| [pbs[:object].code.to_sym, pbs[:errors]] }.to_h
+         }
+       end]
+    end.compact.to_h
   end
 
   ########## Save the entire import ##########

@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {}
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -206,7 +206,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {}
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -265,8 +265,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_1_errors) do
           {
             building_name: 'Building 1',
-            building_errors: {},
-            procurement_building_errors: {}
+            skip: true
           }
         end
         let(:building_2_errors) do
@@ -293,8 +292,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_1_errors) do
           {
             building_name: 'Building 1',
-            building_errors: {},
-            procurement_building_errors: {}
+            skip: true
           }
         end
         let(:building_2_errors) do
@@ -371,9 +369,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: {}
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -402,9 +398,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: { 'E.4': {}, 'G.3': {} }
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -490,9 +484,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: { 'C.5': {}, 'I.4': {} }
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -521,9 +513,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_2_errors) do
           {
             building_name: 'Building 2',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: { 'C.5': {}, 'I.4': {} }
+            skip: true
           }
         end
         let(:building_3_errors) do
@@ -601,9 +591,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_3_errors) do
           {
             building_name: 'Building 3',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: { 'J.1': {}, 'J.4': {} }
+            skip: true
           }
         end
 
@@ -632,9 +620,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         let(:building_3_errors) do
           {
             building_name: 'Building 3',
-            building_errors: {},
-            procurement_building_errors: {},
-            procurement_building_services_errors: { 'J.1': {}, 'J.4': {} }
+            skip: true
           }
         end
 

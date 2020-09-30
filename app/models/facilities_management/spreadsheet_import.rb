@@ -56,44 +56,58 @@ module FacilitiesManagement
     SERVICE_MATRIX_ATTRIBUTES = %i[service_codes building].freeze
 
     def building_errors
-      (1..errors_from_import.count).map do |index|
+      error_loop do |index|
         BUILDING_ATTRIBUTES.map do |attribute|
           building_error(index, attribute)
         end.compact
-      end.flatten(1)
+      end
     end
 
     def service_matrix_errors
-      (1..errors_from_import.count).map do |index|
+      error_loop do |index|
         SERVICE_MATRIX_ATTRIBUTES.map do |attribute|
           service_matrix_error(index, attribute)
         end.compact
-      end.flatten(1)
+      end
     end
 
     def service_volume_errors
-      (1..errors_from_import.count).map do |index|
+      error_loop do |index|
         service_volume_codes_with_attributes.map do |code, attribute|
           service_error(index, code, attribute, true)
         end.compact
-      end.flatten(1)
+      end
     end
 
     def lift_errors
       (1..errors_from_import.count).map do |index|
+        next if skip_building?(index)
+
         lift_error(index)
       end.compact
     end
 
     def service_hour_errors
-      (1..errors_from_import.count).map do |index|
+      error_loop do |index|
         service_hour_codes_with_attributes.map do |code, attributes|
           attributes.map { |attribute| service_error(index, code, attribute) }.compact
         end.compact.flatten(1)
-      end.flatten(1)
+      end
     end
 
     private
+
+    def error_loop
+      (1..errors_from_import.count).map do |index|
+        next if skip_building?(index)
+
+        yield(index)
+      end.compact.flatten(1)
+    end
+
+    def skip_building?(index)
+      errors_from_import[:"Building #{index}"][:skip]
+    end
 
     def building_error(building_index, attribute)
       error_details = error_detail(building_index, :building_errors, attribute)
