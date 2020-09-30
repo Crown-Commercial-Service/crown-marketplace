@@ -979,16 +979,16 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
           k1_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.1' }.first[:errors][:no_of_consoles_to_be_serviced].map { |errors| errors[:error] }
           k6_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'K.6' }.first[:errors][:tones_to_be_collected_and_removed].map { |errors| errors[:error] }
 
-          expect(k1_errors).to include(:greater_than)
-          expect(k6_errors).to include(:greater_than)
+          expect(k1_errors).to include(:blank)
+          expect(k6_errors).to include(:blank)
         end
 
         it 'has the correct import_errors' do
           spreadsheet_import.reload
           error_details = spreadsheet_import.service_volume_errors
 
-          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:invalid]]
-          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed, [:invalid]]
+          expect(error_details[0].values).to eq ['Wollaton Hall', 'Classified waste', :no_of_consoles_to_be_serviced, [:blank]]
+          expect(error_details[1].values).to eq ['Wollaton Hall', 'Medical waste', :tones_to_be_collected_and_removed, [:blank]]
         end
       end
 
@@ -1020,7 +1020,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         it 'has the correct error' do
           e4_errors = spreadsheet_importer.instance_variable_get(:@procurement_array).first[:procurement_building][:procurement_building_services].select { |pbs| pbs[:object].code == 'E.4' }.first[:errors][:no_of_appliances_for_testing].map { |errors| errors[:error] }
 
-          expect(e4_errors).to include(:greater_than)
+          expect(e4_errors).to include(:not_a_number)
         end
 
         it 'has the correct import_errors' do
@@ -1438,7 +1438,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
         it 'has the correct import_errors' do
           spreadsheet_import.reload
-          expect(spreadsheet_import.service_hour_errors[0].values).to eq ['U.A. High', 'Move and space management - internal moves', :service_hours, [:greater_than_or_equal_to]]
+          expect(spreadsheet_import.service_hour_errors[0].values).to eq ['U.A. High', 'Move and space management - internal moves', :service_hours, [:not_a_number]]
         end
       end
 
