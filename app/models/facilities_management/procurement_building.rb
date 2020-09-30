@@ -60,7 +60,7 @@ module FacilitiesManagement
     end
 
     def missing_region?
-      building.address_region_code.nil? || building.address_region.nil?
+      building.address_region_code.blank? || building.address_region.blank?
     end
 
     def sorted_procurement_building_services

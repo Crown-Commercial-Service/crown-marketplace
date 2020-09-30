@@ -124,14 +124,14 @@ module FacilitiesManagement::ProcurementsHelper
     end
   end
 
-  def procurement_buildings_missing_regions
+  def procurement_buildings_missing_regions?
     return false unless @procurement.detailed_search? || @procurement.detailed_search_bulk_upload?
 
-    @procurement.active_procurement_buildings.includes(:building).any? { |procurement_building| procurement_building.building.address_region.nil? }
+    @procurement.active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region').any?(&:blank?)
   end
 
   def buildings_with_missing_regions
-    @procurement.active_procurement_buildings.select(&:missing_region?)
+    @buildings_with_missing_regions ||= @procurement.active_procurement_buildings.order_by_building_name.select(&:missing_region?)
   end
 
   def continue_button_text
