@@ -1,8 +1,9 @@
 :concurrency: 5
 :queues:
-  - default
-  - st
-  - mc
-  - ls
-  - fm
-  - rollbar
+  - [default, 2]
+  - [st, 1]
+  - [mc, 1]
+  - [ls, 1]
+  - [fm, 3]
+  - [bulkupload, 1]
+  - [rollbar, 3]

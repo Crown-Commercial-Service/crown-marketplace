@@ -1,7 +1,7 @@
 module FacilitiesManagement
   class UploadSpreadsheetWorker
     include Sidekiq::Worker
-    sidekiq_options queue: 'fm', retry: true
+    sidekiq_options queue: 'bulkupload', retry: true
 
     def perform(id)
       spreadsheet_import = SpreadsheetImport.find(id)
