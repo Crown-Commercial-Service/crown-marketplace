@@ -83,6 +83,7 @@ module ProcurementValidator
     validate :security_policy_document_date_valid?, on: :security_policy_document
 
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
+    validate :all_buildings_have_regions, on: :continue
     validate :all_complete, on: :continue
 
     # Validation for the contract_details page
@@ -221,7 +222,13 @@ module ProcurementValidator
 
     # Validations for continuing on the requirements summary page
 
+    def all_buildings_have_regions
+      errors.add(:base, :missing_regions) if procurement_buildings_missing_regions?
+    end
+
     def all_complete
+      return if errors.any?
+
       check_contract_details_completed
       check_contract_period_completed
       check_service_and_buildings_present

@@ -427,6 +427,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
             expect(continue_error_list).to eq expected_error_list
           end
         end
+
+        context 'when a building is missing a region' do
+          before { procurement.procurement_buildings.first.building.update(address_region_code: nil) }
+
+          it 'is not valid' do
+            expect(procurement.valid?(:continue)).to eq false
+          end
+        end
       end
       # rubocop:enable RSpec/NestedGroups
     end
@@ -1651,6 +1659,42 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it "the building data #{result ? 'is' : 'is not'} frozen" do
           expect(procurement.building_data_frozen?).to be result
+        end
+      end
+    end
+  end
+
+  describe '.procurement_buildings_missing_regions?' do
+    context 'when the procurement is in a quick_search state' do
+      before { procurement.update(aasm_state: 'quick_search') }
+
+      it 'returns false' do
+        expect(procurement.procurement_buildings_missing_regions?).to eq false
+      end
+    end
+
+    context 'when the procurement is in detailed_search' do
+      before { procurement.update(aasm_state: 'detailed_search') }
+
+      context 'when a building address region is nil' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: nil) }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is empty' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: '') }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is present' do
+        it 'returns false' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq false
         end
       end
     end

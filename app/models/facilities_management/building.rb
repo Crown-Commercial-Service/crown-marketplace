@@ -60,8 +60,9 @@ module FacilitiesManagement
     validates :address_postcode, presence: true, on: %i[new building_details all], if: -> { address_postcode.blank? }
     validates :address_postcode, presence: true, on: %i[add_address]
     validate :postcode_format, on: %i[new building_details all add_address], if: -> { address_postcode.present? }
-    validates :address_region, presence: true, on: %i[new building_details all], if: -> { address_postcode.present? && address_line_1.present? }
     validate :address_selection, on: %i[new building_details all]
+    validates :address_region, presence: true, on: %i[new building_details all], if: -> { address_postcode.present? && address_line_1.present? }
+    validates :address_region_code, presence: true, on: %i[new building_details all], if: -> { address_postcode.present? && address_line_1.present? }
 
     before_validation proc { convert_other(:building_type) }, on: %i[type all], if: -> { building_type == 'Other' }
     before_validation proc { remove_other(:other_building_type) }, on: %i[type all], unless: -> { building_type == 'other' }
