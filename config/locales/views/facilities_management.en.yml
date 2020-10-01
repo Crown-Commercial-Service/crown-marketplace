@@ -1655,7 +1655,7 @@ en:
               inclusion: The building security clearance must be from the selection
           lift_errors:
             lifts:
-              invalid: The number of lifts must be a number between 1 and 40
+              invalid: There is a problem with your number of lifts or floors
             number_of_floors:
               invalid: The number of floors must be a number between 1 and 999
           service_hour_errors:
