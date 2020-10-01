@@ -712,7 +712,7 @@ en:
         caption: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
         caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         heading: Services
-        learn_more: Learn more (opens in a new tab)
+        learn_more: Further details (opens in a new tab)
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
@@ -1420,10 +1420,12 @@ en:
           subtitle_quick_search: Choose all facilities management services required within your estate, even if you want services in just one building.
           title: Services
         tupe:
-          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.<br/> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
+          tupe_link: https://www.gov.uk/transfers-takeovers
+          tupe_link_text: Find out when TUPE applies
           tupe_title: TUPE
-          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer.
+          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
           what_you_need_to_know_title: What you need to know about TUPE
       edit_buildings:
         show:
@@ -1548,7 +1550,7 @@ en:
           service_requirements: Service requirements
           services: Services
           tupe: TUPE
-        description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimate contract cost, supplier shortlist and procurement options.
+        description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimated contract cost, supplier shortlist and procurement options.
         services_and_buildings:
           excel: Click here to download an Excel template
           services_and_buildings: 2. Services and buildings
