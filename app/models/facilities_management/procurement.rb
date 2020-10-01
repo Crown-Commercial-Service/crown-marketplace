@@ -401,30 +401,21 @@ module FacilitiesManagement
       procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
     end
 
-    def active_procurement_building_region_codes
+    def active_procurement_buildings_with_attribute_distinct(attribute)
       if building_data_frozen?
-        active_procurement_buildings.distinct(:address_region_code).pluck(:address_region_code)
+        active_procurement_buildings.distinct(attribute).pluck(attribute)
       else
-        attribute = 'facilities_management_buildings.address_region_code'
-        active_procurement_buildings.joins(:building).select(attribute).distinct(attribute).pluck(attribute)
+        full_attribute = "facilities_management_buildings.#{attribute}"
+        active_procurement_buildings.joins(:building).select(full_attribute).distinct(full_attribute).pluck(full_attribute)
       end
     end
 
-    def active_procurement_building_gross_internal_areas
+    def active_procurement_buildings_with_attribute(attribute)
       if building_data_frozen?
-        active_procurement_buildings.pluck(:gia).compact
+        active_procurement_buildings.pluck(attribute).compact
       else
-        attribute = 'facilities_management_buildings.gia'
-        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
-      end
-    end
-
-    def active_procurement_building_external_areas
-      if building_data_frozen?
-        active_procurement_buildings.pluck(:external_area).compact
-      else
-        attribute = 'facilities_management_buildings.external_area'
-        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+        full_attribute = "facilities_management_buildings.#{attribute}"
+        active_procurement_buildings.joins(:building).select(full_attribute).pluck(full_attribute)
       end
     end
 
