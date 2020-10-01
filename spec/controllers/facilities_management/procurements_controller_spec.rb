@@ -11,8 +11,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     it 'will redirect to buyer details' do
       get :show, params: { id: procurement.id }
 
-      expect(response.status).to eq(302)
-      expect(response.headers.any? { |h, v| h == 'Location' && v.include?('buyer_details') }).to eq(true)
+      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: controller.current_user.buyer_detail.id)
     end
   end
 

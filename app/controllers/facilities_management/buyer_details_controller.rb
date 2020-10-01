@@ -2,43 +2,44 @@ module FacilitiesManagement
   class BuyerDetailsController < FacilitiesManagement::FrameworkController
     before_action :set_buyer_detail
 
-    def show
-      render :edit
-    end
-
     def edit; end
 
     def edit_address; end
 
     def update
-      assign_params_protect_postcode
-      if @buyer_detail.save(context: context_from_params)
-        redirect_to_return_url if params['facilities_management_buyer_detail']['return_details'].present?
+      assign_params
 
-        return if params['facilities_management_buyer_detail']['return_details'].present?
+      context = context_from_params
 
-        redirect_to params[:context] ? edit_facilities_management_buyer_detail_path : facilities_management_path
+      if @buyer_detail.save(context: context)
+        redirect_to redirect_path(context)
       else
-        render params[:context] ? :edit_address : :edit
+        render render_template(context)
       end
     end
 
     private
 
-    def assign_params_protect_postcode
-      old_postcode = @buyer_detail[:organisation_address_postcode]
+    def assign_params
       @buyer_detail.assign_attributes(buyer_detail_params)
-      @buyer_detail[:organisation_address_postcode] = old_postcode if params[:'buyer-details-postcode-lookup-results'] == 'status-option'
     end
 
-    def redirect_to_return_url
-      redirect_details = Rack::Utils.parse_nested_query(params['facilities_management_buyer_detail']['return_details'])
-      redirect_path = redirect_details['url']
-      redirect_params = redirect_details['params']
+    def redirect_path(context)
+      case context
+      when :update
+        facilities_management_path
+      when :update_address
+        edit_facilities_management_buyer_detail_path(current_user)
+      end
+    end
 
-      redirect_to("#{redirect_path}?#{redirect_params.to_query}") && return if redirect_path.present?
-
-      false
+    def render_template(context)
+      case context
+      when :update
+        :edit
+      when :update_address
+        :edit_address
+      end
     end
 
     def buyer_detail_params
