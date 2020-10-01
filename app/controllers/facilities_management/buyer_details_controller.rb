@@ -59,7 +59,7 @@ module FacilitiesManagement
     end
 
     def set_buyer_detail
-      @buyer_detail = current_user.buyer_detail
+      @buyer_detail = FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)
     end
 
     def context_from_params

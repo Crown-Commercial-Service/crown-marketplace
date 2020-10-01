@@ -28,6 +28,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
         expect(response).to render_template('edit')
       end
     end
+
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        get :edit, params: { id: procurement_building_service.id }
+
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
   end
 
   describe 'PATCH update' do

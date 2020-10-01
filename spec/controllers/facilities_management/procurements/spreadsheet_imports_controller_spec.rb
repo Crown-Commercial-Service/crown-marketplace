@@ -7,14 +7,26 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
   login_fm_buyer_with_details
 
   describe 'GET new' do
-    before { get :new, params: { procurement_id: procurement.id } }
+    context 'when logging in with buyer detail' do
+      before { get :new, params: { procurement_id: procurement.id } }
 
-    it 'renders the correct template' do
-      expect(response).to render_template(:new)
+      it 'renders the correct template' do
+        expect(response).to render_template(:new)
+      end
+
+      it 'creates a new spreadsheet_import' do
+        expect(assigns(:spreadsheet_import).present?).to eq true
+      end
     end
 
-    it 'creates a new spreadsheet_import' do
-      expect(assigns(:spreadsheet_import).present?).to eq true
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      before { get :new, params: { procurement_id: procurement.id } }
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
     end
   end
 

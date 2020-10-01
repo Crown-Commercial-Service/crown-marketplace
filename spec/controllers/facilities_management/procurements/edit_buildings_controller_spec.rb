@@ -23,6 +23,16 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
         expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
+
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        get :new, params: { procurement_id: procurement_id }
+
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
   end
 
   describe 'building steps' do

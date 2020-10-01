@@ -24,5 +24,15 @@ RSpec.describe FacilitiesManagement::Procurements::Contracts::SentController, ty
         expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
+
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        get :index, params: { procurement_id: procurement.id, contract_id: contract.id }
+
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
   end
 end

@@ -7,7 +7,7 @@ module FacilitiesManagement
         expect(response).to have_http_status(:found)
       end
 
-      context 'when logged in' do
+      context 'when logged in with buyer details' do
         login_fm_buyer_with_details
 
         it 'is expected to not be nil' do
@@ -20,6 +20,16 @@ module FacilitiesManagement
           get :buyer_account
 
           expect(assigns(:current_login_email)).not_to be_nil
+        end
+      end
+
+      context 'when logged in without buyer details' do
+        login_fm_buyer
+
+        it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+          get :buyer_account
+
+          expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
         end
       end
 
