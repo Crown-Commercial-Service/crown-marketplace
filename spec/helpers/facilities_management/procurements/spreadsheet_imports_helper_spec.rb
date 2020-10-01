@@ -193,7 +193,7 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsHelper, typ
         let(:attribute) { :lifts }
 
         it 'returns the correct error message for invalid' do
-          expect(helper.error_message(model, attribute, :invalid)).to eq 'The number of lifts must be a number between 1 and 40'
+          expect(helper.error_message(model, attribute, :invalid)).to eq 'There is a problem with your number of lifts or floors'
         end
       end
 

@@ -266,7 +266,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def missing_lifts?(lifts, number_of_lifts)
-    lifts.compact.count != number_of_lifts
+    (NUMBER_OF_LIFTS - lifts.reverse.index(&:present?)) != number_of_lifts || lifts.compact.count != number_of_lifts
   end
 
   NUMBER_OF_LIFTS = 40
