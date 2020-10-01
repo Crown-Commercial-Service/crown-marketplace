@@ -4,25 +4,51 @@ module FacilitiesManagement
   RSpec.describe BuyerDetailsController, type: :controller do
     render_views
 
-    describe 'GET edit' do
-      login_fm_buyer_with_details
+    describe 'GET edit with buyer' do
+      context 'when logged in with buyer details' do
+        login_fm_buyer_with_details
 
-      before { get :edit, params: { id: subject.current_user.id } }
+        before { get :edit, params: { id: subject.current_user.id } }
 
-      it 'renders edit template' do
-        expect(response).to have_http_status(:ok)
-        expect(response).to render_template(:edit)
+        it 'renders edit template' do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when logged in without buyer details' do
+        login_fm_buyer
+
+        before { get :edit, params: { id: subject.current_user.id } }
+
+        it 'renders edit template' do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template(:edit)
+        end
       end
     end
 
     describe 'GET edit_address' do
-      login_fm_buyer_with_details
+      context 'when logged in with buyer details' do
+        login_fm_buyer_with_details
 
-      before { get :edit_address, params: { buyer_detail_id: subject.current_user.id } }
+        before { get :edit_address, params: { buyer_detail_id: subject.current_user.id } }
 
-      it 'renders edit template' do
-        expect(response).to have_http_status(:ok)
-        expect(response).to render_template(:edit_address)
+        it 'renders edit template' do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template(:edit_address)
+        end
+      end
+
+      context 'when logged in without buyer details' do
+        login_fm_buyer
+
+        before { get :edit_address, params: { buyer_detail_id: subject.current_user.id } }
+
+        it 'renders edit template' do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template(:edit_address)
+        end
       end
     end
 
