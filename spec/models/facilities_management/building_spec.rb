@@ -635,42 +635,56 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when saving address_region' do
-        before { building.address_region = address_region }
+      context 'when saving address region selection' do
+        before do
+          building.address_region = address_region
+          building.address_region_code = address_region_code
+          building.valid?(:all)
+        end
 
-        context 'when blank' do
+        let(:address_region) { 'Shropshire and Staffordshire' }
+        let(:address_region_code) { 'UKG2' }
+
+        context 'when address_region is blank' do
           let(:address_region) { nil }
 
           it 'will be invalid if postcode and line 1 present' do
-            expect(building.valid?(:all)).to eq false
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
           end
         end
 
-        context 'when the region is present' do
-          let(:address_region) { 'Shropshire and Staffordshire' }
-
-          it 'will be valid if postcode and line 1 present' do
-            expect(building.valid?(:all)).to eq true
-          end
-        end
-      end
-
-      context 'when saving address_region_code' do
-        before { building.address_region_code = address_region_code }
-
-        context 'when region code is blank' do
+        context 'when address_region_code is blank' do
           let(:address_region_code) { nil }
 
           it 'will be invalid if postcode and line 1 present' do
-            expect(building.valid?(:all)).to eq false
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
           end
         end
 
-        context 'when region code is present' do
-          let(:address_region_code) { 'UKG2' }
+        context 'when both are blank' do
+          let(:address_region) { nil }
+          let(:address_region_code) { nil }
 
           it 'will be invalid if postcode and line 1 present' do
-            expect(building.valid?(:all)).to eq true
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
+          end
+        end
+
+        context 'when neither are blank' do
+          it 'will be valid if postcode and line 1 present' do
+            expect(building.errors[:address_region].present?).to eq false
           end
         end
       end
