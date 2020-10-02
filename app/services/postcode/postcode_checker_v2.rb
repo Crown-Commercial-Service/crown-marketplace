@@ -71,10 +71,14 @@ module Postcode
     end
 
     def self.extract_regions(postcode_structure)
-      result = execute_find_region_query(postcode_structure[:full_postcode].delete(' ')).map { |code| code.transform_keys(&:to_sym) }
+      result = process_result(execute_find_region_query(postcode_structure[:full_postcode].delete(' ')))
       return result if result.length == 1
 
-      execute_find_region_query(postcode_structure[:out_code]).map { |code| code.transform_keys(&:to_sym) }.reject { |region| region[:code].nil? || region[:region].nil? }
+      process_result(execute_find_region_query(postcode_structure[:out_code]))
+    end
+
+    def self.process_result(result)
+      result.map { |code| code.transform_keys(&:to_sym) }.reject { |region| region[:code].nil? || region[:region].nil? }
     end
 
     def self.execute_find_region_query(postcode)
