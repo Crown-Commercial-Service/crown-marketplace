@@ -789,7 +789,7 @@ en:
       lift:
         no_of_floors: Number of floors
       lifts:
-        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete.
+        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.'
         floors: How many lifts are in this building, and how many floors does each lift service?
       service_hours:
         detail_example: See an example
@@ -1307,7 +1307,7 @@ en:
           new_buildings: New buildings
           new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
           no_saved_buildings: You have no saved buildings. Click on ‘Add a building' to start setting up your building(s)
-          page_details_1: Please select all of the buildings you want to include in your procurement. Only fully set up 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
+          page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
         cancel_and_return: Return to your account
@@ -1783,7 +1783,7 @@ en:
         return_to_requirements: Return to requirements
         service_requirements:
           buildings: Buildings
-          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the services with 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
+          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the buildings with an 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
           status: Status
         services:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
