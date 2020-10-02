@@ -49,45 +49,4 @@ RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
       end
     end
   end
-
-  describe '.procurement_buildings_missing_regions?' do
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
-    let(:user) { create(:user) }
-
-    before { @procurement = procurement }
-
-    context 'when the procurement is in a quick_search state' do
-      before { procurement.update(aasm_state: 'quick_search') }
-
-      it 'returns false' do
-        expect(helper.procurement_buildings_missing_regions?).to eq false
-      end
-    end
-
-    context 'when the procurement is in detailed_search' do
-      before { procurement.update(aasm_state: 'detailed_search') }
-
-      context 'when a building address region is nil' do
-        before { procurement.active_procurement_buildings.first.building.update(address_region: nil) }
-
-        it 'returns true' do
-          expect(helper.procurement_buildings_missing_regions?).to eq true
-        end
-      end
-
-      context 'when a building address region is empty' do
-        before { procurement.active_procurement_buildings.first.building.update(address_region: '') }
-
-        it 'returns true' do
-          expect(helper.procurement_buildings_missing_regions?).to eq true
-        end
-      end
-
-      context 'when a building address region is present' do
-        it 'returns false' do
-          expect(helper.procurement_buildings_missing_regions?).to eq false
-        end
-      end
-    end
-  end
 end

@@ -122,6 +122,7 @@ class FacilitiesManagement::SpreadsheetImporter
   def remove_expected_errors(building)
     building.errors.delete(:building_name) if error_present?(building.errors, :building_name, :taken)
     building.errors.delete(:address_region) if error_present?(building.errors, :address_region)
+    building.errors.delete(:address_region_code) if error_present?(building.errors, :address_region_code)
   end
 
   def error_present?(errors, attribute, type = nil)

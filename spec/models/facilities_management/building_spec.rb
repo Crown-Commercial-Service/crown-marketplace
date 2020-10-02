@@ -636,14 +636,41 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when saving address_region' do
+        before { building.address_region = address_region }
+
         context 'when blank' do
-          before do
-            building.address_region = nil
-          end
+          let(:address_region) { nil }
 
           it 'will be invalid if postcode and line 1 present' do
-            building.valid? :all
-            expect(building.errors.details.dig(:address_region).first.dig(:error)).to eq :blank
+            expect(building.valid?(:all)).to eq false
+          end
+        end
+
+        context 'when the region is present' do
+          let(:address_region) { 'Shropshire and Staffordshire' }
+
+          it 'will be valid if postcode and line 1 present' do
+            expect(building.valid?(:all)).to eq true
+          end
+        end
+      end
+
+      context 'when saving address_region_code' do
+        before { building.address_region_code = address_region_code }
+
+        context 'when region code is blank' do
+          let(:address_region_code) { nil }
+
+          it 'will be invalid if postcode and line 1 present' do
+            expect(building.valid?(:all)).to eq false
+          end
+        end
+
+        context 'when region code is present' do
+          let(:address_region_code) { 'UKG2' }
+
+          it 'will be invalid if postcode and line 1 present' do
+            expect(building.valid?(:all)).to eq true
           end
         end
       end

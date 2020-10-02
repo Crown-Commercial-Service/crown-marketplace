@@ -32,7 +32,7 @@
       <%= display_error @spreadsheet_import, :spreadsheet_file%>
       <%= tag(:hr, class: 'govuk-section-break govuk-!-margin-top-4') if @spreadsheet_import.errors.any? %>
       <span class="<%= 'govuk-file-upload--error' if @spreadsheet_import.errors.any? %>">
-        <%= f.file_field :spreadsheet_file %>
+        <%= f.file_field :spreadsheet_file, class: 'govuk-file-upload' %>
         <%= f.hidden_field :facilities_management_procurement_id, value: @spreadsheet_import.facilities_management_procurement_id %>
       </span>
     </div>

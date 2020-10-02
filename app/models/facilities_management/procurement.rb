@@ -534,6 +534,12 @@ module FacilitiesManagement
       %w[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results da_draft].include? aasm_state
     end
 
+    def procurement_buildings_missing_regions?
+      return false unless detailed_search? || detailed_search_bulk_upload?
+
+      active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region_code').any?(&:blank?)
+    end
+
     private
 
     def freeze_procurement_data
