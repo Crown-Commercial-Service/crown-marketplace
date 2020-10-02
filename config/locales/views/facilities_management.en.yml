@@ -281,9 +281,6 @@ en:
               invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
         facilities_management/procurement_building_service:
           attributes:
-            base:
-              external_area_too_small: External area must be greater than 0
-              gia_too_small: Gross internal area must be greater than 0
             detail_of_requirement:
               blank: Enter the detail of requirement
             no_of_appliances_for_testing:
@@ -746,6 +743,8 @@ en:
         change: Change
         description: Description
         detail_of_requirement: Detail of requirement
+        external_area_error: External area must be greater than 0
+        gia_error: Gross internal area must be greater than 0
         heading: Service requirements
         help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
         help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.

@@ -53,10 +53,6 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     end
   end
 
-  def service_has_errors(service, attribute)
-    service.errors[attribute].present?
-  end
-
   def form_object
     if @step == 'missing_region'
       @building
@@ -67,5 +63,24 @@ module FacilitiesManagement::ProcurementBuildingsHelper
 
   def question_id(service, context, question)
     [service.code, context, question].compact.join('-')
+  end
+
+  def internal_area_incomplete?
+    @internal_area_incomplete ||= @procurement_building.internal_area_incomplete?
+  end
+
+  def external_area_incomplete?
+    @external_area_incomplete ||= @procurement_building.external_area_incomplete?
+  end
+
+  def service_has_errors(context)
+    case context
+    when :gia
+      internal_area_incomplete?
+    when :external_area
+      external_area_incomplete?
+    else
+      false
+    end
   end
 end

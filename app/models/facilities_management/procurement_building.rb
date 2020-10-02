@@ -12,7 +12,6 @@ module FacilitiesManagement
 
     validate :service_code_selection, on: :buildings_and_services
     validate :services_valid?, on: :procurement_building_services
-    validate :validate_service_requirements, on: :service_requirements
     validate :validate_internal_area, on: :gia
     validate :validate_external_area, on: :external_area
 
@@ -96,6 +95,14 @@ module FacilitiesManagement
       requires_external_area? || requires_internal_area?
     end
 
+    def internal_area_incomplete?
+      requires_internal_area? && building_internal_area.zero?
+    end
+
+    def external_area_incomplete?
+      requires_external_area? && building_external_area.zero?
+    end
+
     private
 
     def service_code_selection
@@ -107,10 +114,6 @@ module FacilitiesManagement
 
     def cleanup_service_codes
       self.service_codes = service_codes.reject(&:blank?)
-    end
-
-    def validate_service_requirements
-      procurement_building_services.all? { |pbs| pbs.valid?(:gia) && pbs.valid?(:external_area) }
     end
 
     def services_valid?
@@ -170,11 +173,11 @@ module FacilitiesManagement
     end
 
     def validate_internal_area
-      errors.add(:building, :gia_too_small, building_name: name) if requires_internal_area? && building_internal_area.zero?
+      errors.add(:building, :gia_too_small, building_name: name) if internal_area_incomplete?
     end
 
     def validate_external_area
-      errors.add(:building, :external_area_too_small, building_name: name) if requires_external_area? && building_external_area.zero?
+      errors.add(:building, :external_area_too_small, building_name: name) if external_area_incomplete?
     end
 
     def requires_external_area?
@@ -186,8 +189,8 @@ module FacilitiesManagement
     end
 
     def area_complete?
-      return false if requires_internal_area? && building_internal_area.zero?
-      return false if requires_external_area? && building_external_area.zero?
+      return false if internal_area_incomplete?
+      return false if external_area_incomplete?
 
       true
     end

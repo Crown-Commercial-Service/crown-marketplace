@@ -52,12 +52,12 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
-  describe '#valid?(:service_requirenments)' do
+  describe 'area completeness' do
     before do
+      procurement_building.procurement.update(aasm_state: 'detailed_search')
       procurement_building.procurement_building_services = [build(:facilities_management_procurement_building_service, code: service_code, service_standard: 'A', procurement_building: procurement_building)]
       procurement_building.building = build(:facilities_management_building, gia: gia, external_area: external_area)
-      procurement_building.gia = gia
-      procurement_building.external_area = external_area
+      procurement_building.service_codes = [service_code]
       procurement_building.save
     end
 
@@ -68,16 +68,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       context 'when the building does not have it' do
         let(:gia) { 0 }
 
-        it 'is invalid' do
-          expect(procurement_building.valid?(:service_requirenments)).to eq false
+        it 'is incomplete' do
+          expect(procurement_building.internal_area_incomplete?).to eq true
         end
       end
 
       context 'when the building does have it' do
         let(:gia) { 1000 }
 
-        it 'is valid' do
-          expect(procurement_building.valid?(:service_requirenments)).to eq true
+        it 'is not incomplete' do
+          expect(procurement_building.internal_area_incomplete?).to eq false
         end
       end
     end
@@ -89,16 +89,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       context 'when the building does not have it' do
         let(:external_area) { 0 }
 
-        it 'is invalid' do
-          expect(procurement_building.valid?(:service_requirenments)).to eq false
+        it 'is incomplete' do
+          expect(procurement_building.external_area_incomplete?).to eq true
         end
       end
 
       context 'when the building does have it' do
         let(:external_area) { 1000 }
 
-        it 'is valid' do
-          expect(procurement_building.valid?(:service_requirenments)).to eq true
+        it 'is not incomplete' do
+          expect(procurement_building.external_area_incomplete?).to eq false
         end
       end
     end
