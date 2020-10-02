@@ -44,5 +44,13 @@ RSpec.describe Postcode::PostcodeCheckerV2 do
         expect(described_class.extract_regions(postcode_postcode_structure)).to eq [{ code: 'UKI4', region: 'Inner London - East' }]
       end
     end
+
+    context 'when full postocde results returns an invalid region' do
+      let(:full_postcode_results) { ActiveRecord::Result.new(['code', 'region'], [['*N_A', nil]]) }
+
+      it 'usues the outcode the get the results' do
+        expect(described_class.extract_regions(postcode_postcode_structure)).to eq [{ code: 'UKI3', region: 'Inner London - West' }, { code: 'UKI4', region: 'Inner London - East' }]
+      end
+    end
   end
 end
