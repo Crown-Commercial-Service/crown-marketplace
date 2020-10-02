@@ -5,7 +5,7 @@ module SupplyTeachers
     helper :telephone_number
 
     def master_vendors
-      @back_path = source_journey.current_step_path
+      @back_path = source_journey.previous_step_path
       @suppliers = Supplier.with_master_vendor_rates
     end
 

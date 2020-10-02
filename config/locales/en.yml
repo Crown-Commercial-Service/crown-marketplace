@@ -1316,7 +1316,7 @@ en:
         all_suppliers: A list of all agencies
         answer_calculate_fta_to_perm_fee: To work out what fixed-term worker transfer fee I could be charged
         answer_calculate_temp_to_perm_fee: To calculate the fee my school will be charged if I make an agency worker permanent
-        answer_managed_service_provider: An agency to manage all my school's needs - a ‘managed service provider’
+        answer_managed_service_provider: An agency to manage all my school's needs; a 'managed service provider - Master Vendor'
         answer_worker: An agency who can provide my school with an individual worker
         page_title: What is your school looking for?
         question: What is your school looking for?

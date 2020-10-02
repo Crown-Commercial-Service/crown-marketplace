@@ -135,20 +135,6 @@ RSpec.describe SupplyTeachers::JourneyController, type: :controller do
       end
     end
 
-    context 'when looking for a neutral vendor' do
-      let(:managed_service_provider) { 'neutral_vendor' }
-
-      it 'redirects to neutral vendors path' do
-        expect(response).to redirect_to(
-          supply_teachers_neutral_vendors_path(
-            journey: 'supply-teachers',
-            managed_service_provider: managed_service_provider,
-            looking_for: 'managed_service_provider'
-          )
-        )
-      end
-    end
-
     context 'when answer is blank' do
       let(:managed_service_provider) { '' }
 

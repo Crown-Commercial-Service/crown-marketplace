@@ -40,9 +40,6 @@ RSpec.feature 'Managed service providers', type: :feature do
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
-    choose 'Master vendor'
-    click_on I18n.t('common.submit')
-
     expect(page).to have_css('h1', text: 'Master vendor managed service')
     expect(page).to have_css('h2', text: supplier.name)
 
@@ -52,70 +49,15 @@ RSpec.feature 'Managed service providers', type: :feature do
     expect(page).to have_rates(job_type: 'Employed directly', percentages: [40.0, 40.0, 40.0])
   end
 
-  scenario 'Buyer wants to hire a neutral vendor managed service' do
-    supplier = create(:supply_teachers_supplier, name: 'neutral-vendor-supplier')
-
-    create(:supply_teachers_neutral_vendor_rate,
-           supplier: supplier, job_type: 'nominated', mark_up: 0.30)
-    create(:supply_teachers_neutral_vendor_rate,
-           supplier: supplier, job_type: 'daily_fee', daily_fee: 1.23, mark_up: nil)
-
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
-    click_on I18n.t('common.submit')
-
-    choose 'Neutral vendor'
-    click_on I18n.t('common.submit')
-
-    expect(page).to have_css('h1', text: 'Neutral vendor managed service')
-    expect(page).to have_css('h2', text: 'neutral-vendor-supplier')
-
-    expect(page).to have_text(/A 30.0% mark-up is charged/)
-    expect(page).to have_text(/A £1.23 daily fee is charged/)
-  end
-
   scenario 'Buyer changes mind about hiring a managed service provider' do
     visit_supply_teachers_start
 
     choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
     click_on I18n.t('common.submit')
 
-    choose 'Master vendor'
-    click_on I18n.t('common.submit')
-
-    click_on I18n.t('layouts.application.back')
     click_on I18n.t('layouts.application.back')
 
     expect(page).to have_checked_field(I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider'))
-  end
-
-  scenario 'Buyer changes mind about hiring a master vendor managed service' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
-    click_on I18n.t('common.submit')
-
-    choose 'Master vendor'
-    click_on I18n.t('common.submit')
-
-    click_on I18n.t('layouts.application.back')
-
-    expect(page).to have_checked_field('Master vendor')
-  end
-
-  scenario 'Buyer changes mind about hiring a neutral vendor managed service' do
-    visit_supply_teachers_start
-
-    choose I18n.t('supply_teachers.journey.looking_for.answer_managed_service_provider')
-    click_on I18n.t('common.submit')
-
-    choose 'Neutral vendor'
-    click_on I18n.t('common.submit')
-
-    click_on I18n.t('layouts.application.back')
-
-    expect(page).to have_checked_field('Neutral vendor')
   end
 
   private
