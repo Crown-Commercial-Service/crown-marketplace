@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_080425) do
+ActiveRecord::Schema.define(version: 2020_09_21_160551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.string "other_security_type"
     t.bigint "external_area"
     t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
+    t.index "lower(building_name)", name: "index_fm_buildings_on_lower_building_name"
     t.index ["building_json"], name: "idx_buildings_gin", using: :gin
     t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
@@ -84,6 +85,14 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
+  create_table "facilities_management_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_building_services_id", null: false
+    t.integer "number_of_floors"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_building_services_id"], name: "index_fmpbs_procurement_lifts_on_fmp_building_services_id"
+  end
+
   create_table "facilities_management_procurement_building_services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_building_id", null: false
     t.string "code", limit: 10
@@ -96,9 +105,14 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.bigint "tones_to_be_collected_and_removed"
     t.bigint "no_of_units_to_be_serviced"
     t.string "service_standard", limit: 1
-    t.string "lift_data", default: [], array: true
-    t.jsonb "service_hours"
+    t.bigint "service_hours"
+    t.text "detail_of_requirement"
+    t.uuid "facilities_management_procurement_id"
+    t.index ["code"], name: "index_fm_procurement_building_services_on_code"
+    t.index ["facilities_management_procurement_building_id", "code"], name: "idx_fm_pbs_on_fm_pb_and_code"
     t.index ["facilities_management_procurement_building_id"], name: "index_fm_procurements_on_fm_procurement_building_id"
+    t.index ["facilities_management_procurement_id", "facilities_management_procurement_building_id"], name: "idx_fm_pbs_fm_p_fm_pb"
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_building_services_on_fm_procurement_id"
   end
 
   create_table "facilities_management_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -122,7 +136,12 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.jsonb "building_json"
     t.text "description"
     t.bigint "external_area"
+    t.string "other_building_type"
+    t.string "other_security_type"
+    t.index ["active"], name: "index_fm_procurement_buildings_on_active"
+    t.index ["building_id"], name: "index_fm_procurement_buildings_on_building_id"
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_procurement_id"
+    t.index ["service_codes"], name: "index_fm_procurement_buildings_on_service_codes"
   end
 
   create_table "facilities_management_procurement_contact_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -212,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.string "contract_number"
     t.string "contract_datetime"
     t.boolean "lot_number_selected_by_customer", default: false
+    t.string "governing_law"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -233,6 +253,16 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
+  end
+
+  create_table "facilities_management_spreadsheet_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id", null: false
+    t.string "aasm_state", limit: 15
+    t.string "spreadsheet_file", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "import_errors", default: {}
+    t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
   create_table "facilities_management_supplier_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -331,6 +361,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
     t.boolean "direct_award"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["code", "standard"], name: "index_fm_rates_on_code_and_standard"
     t.index ["code"], name: "index_fm_rates_on_code"
   end
 
@@ -708,7 +739,9 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
+  add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_procurement_building_services", column: "facilities_management_procurement_building_services_id"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
+  add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"
@@ -716,6 +749,7 @@ ActiveRecord::Schema.define(version: 2020_08_07_080425) do
   add_foreign_key "facilities_management_procurements", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
+  add_foreign_key "facilities_management_spreadsheet_imports", "facilities_management_procurements"
   add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "fm_frozen_rate_cards", "facilities_management_procurements"
   add_foreign_key "fm_frozen_rates", "facilities_management_procurements"

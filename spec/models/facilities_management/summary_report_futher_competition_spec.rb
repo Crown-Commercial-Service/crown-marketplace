@@ -14,11 +14,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_names.each do |supplier_name|
-        report.calculate_services_for_buildings(supplier_name, true, :fc)
+        report.calculate_services_for_buildings(supplier_name, :fc)
         expect(report.direct_award_value).to be > 0
       end
 
-      expect(report.assessed_value).to eq 838.1929279363201
+      expect(report.assessed_value).to eq 5188.09634636832
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:code) { nil }
     let(:code1) { nil }
     let(:code2) { nil }
-    let(:lift_data) { nil }
+    let(:lift_data) { [] }
     let(:estimated_annual_cost) { 7000000 }
     let(:estimated_cost_known) { true }
     let(:service_standard) { 'A' }
@@ -34,7 +34,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       create(:facilities_management_procurement_building_service,
              code: code,
              service_standard: service_standard,
-             lift_data: lift_data,
              procurement_building: create(:facilities_management_procurement_building_no_services,
                                           building_id: create(:facilities_management_building_london).id,
                                           procurement: create(:facilities_management_procurement_no_procurement_buildings,
@@ -55,12 +54,16 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:report) { described_class.new(procurement_building_service_2.procurement_building.procurement.id) }
 
     before do
+      lift_data.each do |number_of_floors|
+        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+      end
+
       report.calculate_services_for_buildings
     end
 
     context 'when framework price for at least one service is missing' do
       let(:code) { 'C.5' }
-      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:lift_data) { %w[999 999 999 999] }
       let(:code1) { 'G.9' } # no fw price
       let(:code2) { 'C.7' } # no fw price
 
@@ -101,7 +104,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when at least one service missing framework price and at least one service is missing benchmark price' do
       let(:code) { 'C.5' }
-      let(:lift_data) { %w[1000 1000 1000 1000] }
+      let(:lift_data) { %w[999 999 999 999] }
       let(:code1) { 'G.9' } # no fw price
       let(:code2) { 'G.8' } # no fw & no bm price
 

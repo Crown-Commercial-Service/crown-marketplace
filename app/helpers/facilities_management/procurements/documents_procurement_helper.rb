@@ -2,30 +2,21 @@ module FacilitiesManagement
   module Procurements
     class DocumentsProcurementHelper
       def self.review_docs
+        base_scope = %i[facilities_management procurements da_buyer review_contract]
+
         @review_your_contract_static_files = [
-          'Attachment 1 - About the Direct Award.docx',
-          'Attachment 2 - Statement of Requirements - Annex A - Standards and Processes (DA).docx',
-          'Core Terms v3.0.2 (DA).docx',
-          'Call-Off Schedule 1 Transparency Reports (DA).docx',
-          'Call-Off Schedule 3 - Continuous Improvement (DA).docx',
-          'Call-Off Schedule 4 - Facilities Management (DA).docx',
-          'Call-Off Schedule 4A - Billable Works and Projects (DA).docx',
-          'Call-Off Schedule 10 - Exit Management (DA).docx',
-          'Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx',
-          'Call-Off Schedule 5 - Call-Off Pricing (DA).docx',
-          'Call-Off Schedule 6 - TUPE Surcharge (DA).docx',
-          'Call-Off Schedule 7 - Key Staff (DA).docx',
-          'Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx',
-          'Call-Off Schedule 9 - Security (DA).docx',
-          'Joint Schedule 1 - Definitions (DA).docx',
-          'Joint Schedule 10 - Rectification Plan (DA).docx',
-          'Joint Schedule 11 - Processing Data (DA).docx',
-          'Joint Schedule 2 - Variation Form (DA).docx',
-          'Joint Schedule 3 - Insurance Requirements (DA).docx',
-          'Joint Schedule 5 - Corporate Social Responsibility (DA).docx',
-          'Joint Schedule 6 - Key Subcontractors (DA).docx',
-          'Joint Schedule 7 - Financial Distress (DA).docx'
-        ]
+          I18n.t('attachment_1.file_name', scope: base_scope),
+          I18n.t('attachment_2.annex_a.file_name', scope: base_scope),
+          I18n.t('attachment_4.core_terms.file_name', scope: base_scope),
+
+          %w[1 3 4 4A 10 13 5 6 7 8 9 24 25].map do |suffix|
+            I18n.t("contract_documents.call_off_schedule_#{suffix}.file_name", scope: base_scope)
+          end,
+
+          %w[1 10 11 2 3 5 6 7].map do |suffix|
+            I18n.t("contract_documents.joint_schedule_#{suffix}.file_name", scope: base_scope)
+          end
+        ].flatten
       end
 
       # rubocop:disable Metrics/AbcSize

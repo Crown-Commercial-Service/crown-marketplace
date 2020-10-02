@@ -5,446 +5,603 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
   describe '#validations' do
     context 'when code = C.1' do
+      before { procurement_building_service.code = 'C.1' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.1'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.1'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.1'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.2' do
+      before { procurement_building_service.code = 'C.2' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.2'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.2'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.2'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.3' do
+      before { procurement_building_service.code = 'C.3' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.3'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.3'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.3'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.4' do
+      before { procurement_building_service.code = 'C.4' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.4'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.4'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.4'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.5' do
+      before { procurement_building_service.code = 'C.5' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.5'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.5'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.5'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.6' do
+      before { procurement_building_service.code = 'C.6' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.6'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.6'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.6'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.11' do
+      before { procurement_building_service.code = 'C.11' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.11'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.11'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.11'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.12' do
+      before { procurement_building_service.code = 'C.12' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.12'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.12'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.12'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.13' do
+      before { procurement_building_service.code = 'C.13' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.13'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.13'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.13'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = C.14' do
+      before { procurement_building_service.code = 'C.14' }
+
       it 'is valid if service_standard is present' do
-        procurement_building_service.code = 'C.14'
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq true
       end
 
       it 'is not valid if service_standard is not present on ppm_standards context' do
-        procurement_building_service.code = 'C.14'
         expect(procurement_building_service.valid?(:ppm_standards)).to eq false
       end
 
       it 'does not validate if service_standards is not present and not on ppm_standards context' do
-        procurement_building_service.code = 'C.14'
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
     end
 
     context 'when code = E.4' do
+      before { procurement_building_service.code = 'E.4' }
+
       it 'validates no_of_appliances_for_testing grater than 0 if value is present' do
-        procurement_building_service.code = 'E.4'
         procurement_building_service.no_of_appliances_for_testing = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_appliances_for_testing if value is not present' do
-        procurement_building_service.code = 'E.4'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
       it 'is valid if no_of_appliances_for_testing is present and greater than 0' do
-        procurement_building_service.code = 'E.4'
         procurement_building_service.no_of_appliances_for_testing = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'validates no_of_appliances_for_testing less than 10000000000 if value is present' do
-        procurement_building_service.code = 'E.4'
-        procurement_building_service.no_of_appliances_for_testing = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
+      context 'when the no_of_appliances_for_testing if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_appliances_for_testing].first).to eq 'Enter number of portable appliances'
+        end
+      end
+
+      context 'when the no_of_appliances_for_testing is more than the max value' do
+        before { procurement_building_service.no_of_appliances_for_testing = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_appliances_for_testing].first).to eq 'The number of portable appliances must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = G.1' do
+      before { procurement_building_service.code = 'G.1' }
+
       it 'validates no_of_building_occupants grater than 0 if value is present' do
-        procurement_building_service.code = 'G.1'
         procurement_building_service.no_of_building_occupants = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
-        procurement_building_service.code = 'G.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
       it 'is valid if no_of_building_occupants is present and greater than 0' do
-        procurement_building_service.code = 'G.1'
         procurement_building_service.no_of_building_occupants = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'validates no_of_building_occupants less than 10000000000 if value is present' do
-        procurement_building_service.code = 'G.1'
-        procurement_building_service.no_of_building_occupants = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
+      context 'when the no_of_building_occupants if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_building_occupants].first).to eq 'Enter number of building occupants'
+        end
+      end
+
+      context 'when the no_of_building_occupants is more than the max value' do
+        before { procurement_building_service.no_of_building_occupants = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_building_occupants].first).to eq 'The number of building occupants must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = G.3' do
+      before { procurement_building_service.code = 'G.3' }
+
       it 'validates no_of_building_occupants grater than 0 if value is present' do
-        procurement_building_service.code = 'G.3'
         procurement_building_service.no_of_building_occupants = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_building_occupants if value is not present' do
-        procurement_building_service.code = 'G.3'
+      it 'is valid if no_of_building_occupants is present and greater than 0' do
+        procurement_building_service.no_of_building_occupants = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'is valid if no_of_building_occupants is present and greater than 0' do
-        procurement_building_service.code = 'G.3'
-        procurement_building_service.no_of_building_occupants = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
+      context 'when the no_of_building_occupants if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_building_occupants].first).to eq 'Enter number of building occupants'
+        end
+      end
+
+      context 'when the no_of_building_occupants is more than the max value' do
+        before { procurement_building_service.no_of_building_occupants = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_building_occupants].first).to eq 'The number of building occupants must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.1' do
+      before { procurement_building_service.code = 'K.1' }
+
       it 'validates no_of_consoles_to_be_serviced grater than 0 if value is present' do
-        procurement_building_service.code = 'K.1'
         procurement_building_service.no_of_consoles_to_be_serviced = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_consoles_to_be_serviced if value is not present' do
-        procurement_building_service.code = 'K.1'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
       it 'is valid if no_of_consoles_to_be_serviced is present and greater than 0' do
-        procurement_building_service.code = 'K.1'
         procurement_building_service.no_of_consoles_to_be_serviced = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'validates no_of_consoles_to_be_serviced less than 10000000000 if value is present' do
-        procurement_building_service.code = 'K.1'
-        procurement_building_service.no_of_consoles_to_be_serviced = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
+      context 'when the no_of_consoles_to_be_serviced if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_consoles_to_be_serviced].first).to eq 'Enter number of consoles'
+        end
+      end
+
+      context 'when the no_of_consoles_to_be_serviced is more than the max value' do
+        before { procurement_building_service.no_of_consoles_to_be_serviced = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_consoles_to_be_serviced].first).to eq 'The number of consoles must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.2' do
+      before { procurement_building_service.code = 'K.2' }
+
       it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
-        procurement_building_service.code = 'K.2'
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
-        procurement_building_service.code = 'K.2'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
       it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
-        procurement_building_service.code = 'K.2'
         procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'validates tones_to_be_collected_and_removed less than 10000000000 if value is present' do
-        procurement_building_service.code = 'K.2'
-        procurement_building_service.tones_to_be_collected_and_removed = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
+      context 'when the tones_to_be_collected_and_removed if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'Enter number of tonnes'
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is more than the max value' do
+        before { procurement_building_service.tones_to_be_collected_and_removed = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'The number of tonnes must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.3' do
+      before { procurement_building_service.code = 'K.3' }
+
       it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
-        procurement_building_service.code = 'K.3'
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
-        procurement_building_service.code = 'K.3'
+      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
+        procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
-        procurement_building_service.code = 'K.3'
-        procurement_building_service.tones_to_be_collected_and_removed = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
+      context 'when the tones_to_be_collected_and_removed if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'Enter number of tonnes'
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is more than the max value' do
+        before { procurement_building_service.tones_to_be_collected_and_removed = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'The number of tonnes must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.7' do
+      before { procurement_building_service.code = 'K.7' }
+
       it 'validates no_of_units_to_be_serviced grater than 0 if value is present' do
-        procurement_building_service.code = 'K.7'
         procurement_building_service.no_of_units_to_be_serviced = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate no_of_units_to_be_serviced if value is not present' do
-        procurement_building_service.code = 'K.7'
-        expect(procurement_building_service.valid?(:volume)).to eq true
-      end
-
       it 'is valid if no_of_units_to_be_serviced is present and greater than 0' do
-        procurement_building_service.code = 'K.7'
         procurement_building_service.no_of_units_to_be_serviced = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'validates no_of_units_to_be_serviced less than 10000000000 if value is present' do
-        procurement_building_service.code = 'K.7'
-        procurement_building_service.no_of_units_to_be_serviced = 10000000000
-        expect(procurement_building_service.valid?(:volume)).to eq false
+      context 'when the no_of_units_to_be_serviced if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_units_to_be_serviced].first).to eq 'Enter number of units'
+        end
+      end
+
+      context 'when the no_of_units_to_be_serviced is more than the max value' do
+        before { procurement_building_service.no_of_units_to_be_serviced = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:no_of_units_to_be_serviced].first).to eq 'The number of units must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.4' do
+      before { procurement_building_service.code = 'K.4' }
+
       it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
-        procurement_building_service.code = 'K.4'
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
-        procurement_building_service.code = 'K.4'
+      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
+        procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
-        procurement_building_service.code = 'K.4'
-        procurement_building_service.tones_to_be_collected_and_removed = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
+      context 'when the tones_to_be_collected_and_removed if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'Enter number of tonnes'
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is more than the max value' do
+        before { procurement_building_service.tones_to_be_collected_and_removed = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'The number of tonnes must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.5' do
+      before { procurement_building_service.code = 'K.5' }
+
       it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
-        procurement_building_service.code = 'K.5'
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
-        procurement_building_service.code = 'K.5'
+      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
+        procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
-        procurement_building_service.code = 'K.5'
-        procurement_building_service.tones_to_be_collected_and_removed = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
+      context 'when the tones_to_be_collected_and_removed if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'Enter number of tonnes'
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is more than the max value' do
+        before { procurement_building_service.tones_to_be_collected_and_removed = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'The number of tonnes must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = K.6' do
-      it 'validates tones_to_be_collected_and_removed greater than 0 if value is present' do
-        procurement_building_service.code = 'K.6'
+      before { procurement_building_service.code = 'K.6' }
+
+      it 'validates tones_to_be_collected_and_removed grater than 0 if value is present' do
         procurement_building_service.tones_to_be_collected_and_removed = -1
         expect(procurement_building_service.valid?(:volume)).to eq false
       end
 
-      it 'does not validate tones_to_be_collected_and_removed if value is not present' do
-        procurement_building_service.code = 'K.6'
+      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
+        procurement_building_service.tones_to_be_collected_and_removed = 2
         expect(procurement_building_service.valid?(:volume)).to eq true
       end
 
-      it 'is valid if tones_to_be_collected_and_removed is present and greater than 0' do
-        procurement_building_service.code = 'K.6'
-        procurement_building_service.tones_to_be_collected_and_removed = 2
-        expect(procurement_building_service.valid?(:volume)).to eq true
+      context 'when the tones_to_be_collected_and_removed if value is not present' do
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'Enter number of tonnes'
+        end
+      end
+
+      context 'when the tones_to_be_collected_and_removed is more than the max value' do
+        before { procurement_building_service.tones_to_be_collected_and_removed = 10000000000 }
+
+        it 'is not valid' do
+          expect(procurement_building_service.valid?(:volume)).to eq false
+        end
+
+        it 'has the correct error message' do
+          procurement_building_service.valid?(:volume)
+          expect(procurement_building_service.errors[:tones_to_be_collected_and_removed].first).to eq 'The number of tonnes must be a whole number between 1 and 999,999,999'
+        end
       end
     end
 
     context 'when code = C.5' do
+      before do
+        procurement_building_service.code = 'C.5'
+      end
+
       context 'when lift_data is blank' do
         it 'validates to true for normal context' do
-          procurement_building_service.code = 'C.5'
           expect(procurement_building_service.valid?).to eq true
         end
 
         it 'validates to false when validating lift data' do
-          procurement_building_service.code = 'C.5'
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
 
       context 'when lift_data is an empty collection' do
         it 'validates to false when validating lift data' do
-          procurement_building_service.code = 'C.5'
-          procurement_building_service.lift_data = []
+          procurement_building_service.lifts = []
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
 
-      context 'when lift_data has 1001 elements' do
+      context 'when lift_data has 100 elements' do
         it 'validates to false' do
-          procurement_building_service.code = 'C.5'
-          procurement_building_service.lift_data = [*0..1001]
+          100.times do
+            procurement_building_service.lifts.build(number_of_floors: 100)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
       end
 
       context 'when lift_data has elements are zero or 100 in value' do
         it 'validates to false' do
-          procurement_building_service.code = 'C.5'
-          procurement_building_service.lift_data = [0, 99, 3, 4, 5, 6, 7, 8, 9, 10]
+          [0, 99, 3, 4, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
+            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
         end
 
         it 'has an error collection containing corresponding index positions' do
-          procurement_building_service.code = 'C.5'
-          procurement_building_service.lift_data = [0, 3, 300, 4, 5, 6, 7, 8, 9, 10]
+          [3, 300, 4, 0, 5, 6, 7, 8, 9, 10].each do |number_of_floors|
+            procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+          end
+
           expect(procurement_building_service.valid?(:lifts)).to eq false
-          expect(procurement_building_service.errors.details[:lift_data].find_index { |item| item[:position] == 0 }.present?).to eq true
+          expect(procurement_building_service.errors[:'lifts[3].number_of_floors'].any?).to eq true
         end
       end
     end
@@ -497,9 +654,43 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
+    context 'when code requires standard' do
+      before do
+        procurement_building_service.code = 'C.1'
+      end
+
+      it 'will be invalid when service standard is not an option' do
+        procurement_building_service.service_standard = 'D'
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'will be valid' do
+        procurement_building_service.service_standard = 'B'
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq true
+      end
+
+      it 'will be invalid when service_standard is blank' do
+        procurement_building_service.service_standard = nil
+        expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+        expect(procurement_building_service.valid?(:all)).to eq false
+      end
+
+      it 'will have the correct error message' do
+        procurement_building_service.service_standard = nil
+        procurement_building_service.valid?(:ppm_standards)
+        expect(procurement_building_service.errors[:service_standard].first).to eq 'Select the level of standard'
+      end
+    end
+
     context 'when code has multiple validations' do
+      let(:lift_data) { [] }
+
       before do
         procurement_building_service.code = 'C.5'
+        lift_data.each do |number_of_floors|
+          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+        end
       end
 
       it 'will be invalid without lift data' do
@@ -507,16 +698,20 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         expect(procurement_building_service.valid?(:all)).to eq false
       end
 
-      context 'with just lift data' do
-        it 'will be valid with good data' do
-          procurement_building_service[:lift_data] = %w[1 50]
+      context 'with just valid lift data' do
+        let(:lift_data) { [1, 50] }
+
+        it 'will be valid' do
           expect(procurement_building_service.valid?(:lifts)).to eq true
           expect(procurement_building_service.valid?(:ppm_standards)).to eq false
           expect(procurement_building_service.valid?(:all)).to eq false
         end
+      end
 
-        it 'service_status will show invalid when lift_data invalid' do
-          procurement_building_service[:lift_data] = %w[1 1001]
+      context 'with just invalid lift data' do
+        let(:lift_data) { [1, 1001] }
+
+        it 'service_status will show invalid' do
           service_status = procurement_building_service.services_status
           expect(service_status[:validity][:lifts].empty?).to eq false
           expect(service_status[:validity][:ppm_standards].empty?).to eq false
@@ -540,16 +735,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
 
       context 'with both lift and service_standard data' do
+        let(:lift_data) { [1, 50] }
+
         it 'will be valid with both lift and service standard data' do
           procurement_building_service[:service_standard] = 'B'
-          procurement_building_service[:lift_data] = %w[1 50]
           expect(procurement_building_service.valid?(:lifts)).to eq true
           expect(procurement_building_service.valid?(:all)).to eq true
         end
 
         it 'service_status will indicate validity' do
           procurement_building_service[:service_standard] = 'B'
-          procurement_building_service[:lift_data] = %w[1 50]
           service_status = procurement_building_service.services_status
           expect(service_status[:validity][:lifts].empty?).to eq true
           expect(service_status[:validity][:ppm_standards].empty?).to eq true
@@ -575,50 +770,50 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    describe '#requires_ppm_standards?' do
+    describe '#requires_service_standard?' do
       context 'when code requires ppm standards' do
         it 'will be true when C.5' do
           procurement_building_service.code = 'C.5'
-          expect(procurement_building_service.requires_ppm_standards?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require ppm standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service.requires_ppm_standards?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '#requires_building_standards?' do
+    describe '#requires_service_standard?' do
       context 'when code requires building standards' do
         it 'will be true when C.7' do
           procurement_building_service.code = 'C.7'
-          expect(procurement_building_service.requires_building_standards?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require building standards' do
         it 'will be false when K.1' do
           procurement_building_service.code = 'K.1'
-          expect(procurement_building_service.requires_building_standards?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
 
-    describe '#requires_cleaning_standards?' do
+    describe '#requires_service_standard?' do
       context 'when code requires cleaning standards' do
         it 'will be true when G.5' do
           procurement_building_service.code = 'G.5'
-          expect(procurement_building_service.requires_cleaning_standards?).to eq true
+          expect(procurement_building_service.requires_service_standard?).to eq true
         end
       end
 
       context 'when code doesn\'t require cleaning standards' do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
-          expect(procurement_building_service.requires_cleaning_standards?).to eq false
+          expect(procurement_building_service.requires_service_standard?).to eq false
         end
       end
     end
@@ -644,7 +839,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     context 'when empty' do
       it 'will be so' do
         procurement_building_service.code = 'C.5'
-        procurement_building_service.lift_data = %w[1 2 3]
+        [1, 2, 3].each do |number_of_floors|
+          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
+        end
+
         procurement_building_service.service_standard = 'A'
         expect(procurement_building_service.services_status[:validity][:lifts].empty?).to eq(true)
       end
@@ -681,69 +879,23 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     end
   end
 
-  # rubocop:disable RSpec/BeforeAfterAll
-  describe '#service_hours' do
-    let(:mock_ar_class) { build_mock_ar }
-    let(:record) { mock_ar_class.create(service_hours: {}) }
-
-    before(:all) do
-      ActiveRecord::Base.connection.drop_table :pbs_mock if ActiveRecord::Base.connection.data_source_exists? 'pbs_mock'
-      ActiveRecord::Base.connection.create_table :pbs_mock do |t|
-        t.jsonb :service_hours, null: true
-      end
-    end
-
-    after(:all) do
-      ActiveRecord::Base.connection.drop_table :pbs_mock
-    end
-
-    def build_mock_ar
-      Class.new(ApplicationRecord) do
-        self.table_name = 'pbs_mock'
-        serialize :service_hours, FacilitiesManagement::ServiceHours
-
-        attr_accessor :id
-      end
-    end
-
-    context 'when saving' do
-      let(:sh) { FacilitiesManagement::ServiceHours.new }
-
-      before do
-        sh[:tuesday][:service_choice] = :all_day
-        sh[:wednesday][:start_hour] = '10'
-        sh[:wednesday][:start_minute] = '00'
-        sh[:wednesday][:start_ampm] = 'am'
-        sh[:wednesday][:end_hour] = '10'
-        sh[:wednesday][:end_minute] = '00'
-        sh[:wednesday][:end_ampm] = 'pm'
-      end
-
-      it 'will produce a hash' do
-        record[:service_hours] = sh
-        record.save
-        result = ActiveRecord::Base.connection.execute('select service_hours from pbs_mock')
-        expect(result).not_to eq nil
-      end
-    end
-  end
-  # rubocop:enable RSpec/BeforeAfterAll
-
   describe '#lift_data' do
     context 'when more than 99 lifts are added' do
       it 'will not be valid' do
-        procurement_building_service.lift_data = Array.new(100, 10)
-        expect(procurement_building_service.valid?(:lifts)).to be false
-        procurement_building_service.lift_data = Array.new(rand(100..200), 10)
+        100.times do
+          procurement_building_service.lifts.build(number_of_floors: 100)
+        end
+
         expect(procurement_building_service.valid?(:lifts)).to be false
       end
     end
 
     context 'when up to 99 lifts are added' do
       it 'will be valid' do
-        procurement_building_service.lift_data = Array.new(rand(1..98), 10)
-        expect(procurement_building_service.valid?(:lifts)).to be true
-        procurement_building_service.lift_data = Array.new(99, 10)
+        99.times do
+          procurement_building_service.lifts.build(number_of_floors: 100)
+        end
+
         expect(procurement_building_service.valid?(:lifts)).to be true
       end
     end
@@ -751,7 +903,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
   describe '#uval' do
     let(:code) { nil }
-    let(:lift_data) { nil }
+    let(:lift_data) { [] }
     let(:no_of_appliances_for_testing) { nil }
     let(:no_of_building_occupants) { nil }
     let(:no_of_consoles_to_be_serviced) { nil }
@@ -761,7 +913,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     let(:procurement_building_service) do
       create(:facilities_management_procurement_building_service,
              code: code,
-             lift_data: lift_data,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
              no_of_building_occupants: no_of_building_occupants,
              no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
@@ -772,12 +923,18 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
                                           procurement: create(:facilities_management_procurement_no_procurement_buildings)))
     end
 
+    before do
+      lift_data.each do |number_of_floors|
+        procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+      end
+    end
+
     context 'when service is C.5' do
       let(:code) { 'C.5' }
-      let(:lift_data) { %w[5 5 2 2] }
+      let(:lift_data) { [5, 5, 2, 2] }
 
       it 'returns lift_data' do
-        expect(procurement_building_service.uval).to eq lift_data.map(&:to_i).inject(&:+)
+        expect(procurement_building_service.uval).to eq lift_data.sum
       end
 
       it 'does not return building GIA' do
@@ -842,10 +999,10 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
     context 'when J.6' do
       let(:code) { 'J.6' }
 
-      let(:service_hours) { { "monday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "tuesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "wednesday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "thursday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "friday": { "service_choice": 'hourly', "start_hour": 10, "start_minute": 0, "start_ampm": 'AM', "end_hour": 5, "end_minute": 0, "end_ampm": 'PM', "uom": 7.0 }, "saturday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "sunday": { "service_choice": 'not_required', "start_hour": '', "start_minute": '', "start_ampm": 'AM', "end_hour": '', "end_minute": '', "end_ampm": 'AM', "uom": 0.0 }, "personnel": 1, "uom": 0 } }
+      let(:service_hours) { 1820 }
 
       it 'returns total_hours_annually' do
-        expect(procurement_building_service.uval).to eq 1820
+        expect(procurement_building_service.uval).to eq service_hours
       end
     end
 
@@ -854,6 +1011,273 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
 
       it 'returns building GIA' do
         expect(procurement_building_service.uval).to eq 1002
+      end
+    end
+  end
+
+  describe '#service_hours' do
+    before { procurement_building_service.detail_of_requirement = 'Some detail' }
+
+    context 'when the service_hours is blank' do
+      before { procurement_building_service.service_hours = nil }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Enter number of hours per year'
+      end
+    end
+
+    context 'when the service_hours is zero' do
+      before { procurement_building_service.service_hours = 0 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is 1 billion' do
+      before { procurement_building_service.service_hours = 1000000000 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is not an interger' do
+      before { procurement_building_service.service_hours = 506.78 }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:service_hours].first).to eq 'Number of hours per year must be a whole number between 1 and 999,999,999'
+      end
+    end
+
+    context 'when the service_hours is an integer within the range' do
+      it 'is valid' do
+        procurement_building_service.service_hours = rand(1..1000)
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the service_hours is 1' do
+      it 'is valid' do
+        procurement_building_service.service_hours = 1
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the service_hours is 999,999,999' do
+      it 'is valid' do
+        procurement_building_service.service_hours = 999999999
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+  end
+
+  describe '#detail_of_requirement' do
+    before { procurement_building_service.service_hours = 806 }
+
+    context 'when the detail_of_requirement is blank' do
+      before { procurement_building_service.detail_of_requirement = nil }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:detail_of_requirement].first).to eq 'Enter the detail of requirement'
+      end
+    end
+
+    context 'when the detail_of_requirement is blank' do
+      before { procurement_building_service.detail_of_requirement = '' }
+
+      it 'is not valid' do
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building_service.valid?(:service_hours)
+        expect(procurement_building_service.errors[:detail_of_requirement].first).to eq 'Enter the detail of requirement'
+      end
+    end
+
+    context 'when the detail_of_requirement is more than the max number of characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = 'a' * 501
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+    end
+
+    context 'when the detail_of_requirement is only carriage return characters' do
+      it 'is not valid' do
+        procurement_building_service.detail_of_requirement = "\r\n" * 10
+        expect(procurement_building_service.valid?(:service_hours)).to eq false
+      end
+    end
+
+    context 'when the detail_of_requirement is within the range of characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = 'This is the detail of the requirement'
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+
+    context 'when the detail_of_requirement is within the range of with carriage return characters' do
+      it 'is valid' do
+        procurement_building_service.detail_of_requirement = ('a' * 490) + ("\r\n" * 10)
+        expect(procurement_building_service.valid?(:service_hours)).to eq true
+      end
+    end
+  end
+
+  describe '#required_volume_contexts' do
+    let(:procurement_building_service) do
+      create(:facilities_management_procurement_building_service,
+             code: code,
+             procurement_building: create(:facilities_management_procurement_building_no_services, procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+    end
+
+    context 'when the service does not have any required contexts' do
+      let(:code) { 'O.1' }
+
+      it 'returns an empty hash' do
+        expect(procurement_building_service.required_volume_contexts).to eq({})
+      end
+    end
+
+    context 'when the service does have one required context' do
+      let(:code) { 'C.5' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq lifts: [:lift_data]
+      end
+    end
+
+    context 'when the service requires gia' do
+      let(:code) { 'C.1' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq gia: [:gia]
+      end
+    end
+
+    context 'when the service requires external area' do
+      let(:code) { 'G.5' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq external_area: [:external_area]
+      end
+    end
+
+    context 'when the service requires a volume and gia' do
+      let(:code) { 'G.3' }
+
+      it 'returns a hash with correct context' do
+        expect(procurement_building_service.required_volume_contexts).to eq(volume: [:no_of_building_occupants], gia: [:gia])
+      end
+    end
+  end
+
+  describe '#requires_unit_of_measure?' do
+    before { procurement_building_service.code = code }
+
+    context 'when the service requires only gia' do
+      let(:code) { 'C.1' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
+      end
+    end
+
+    context 'when the service requires external_area' do
+      let(:code) { 'G.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
+      end
+    end
+
+    context 'when the service requires lift_data' do
+      let(:code) { 'C.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires service_hours' do
+      let(:code) { 'H.5' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_appliances_for_testing' do
+      let(:code) { 'E.4' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_building_occupants' do
+      let(:code) { 'G.3' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_consoles_to_be_serviced' do
+      let(:code) { 'K.1' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires tones_to_be_collected_and_removed' do
+      let(:code) { 'K.2' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service requires no_of_units_to_be_serviced' do
+      let(:code) { 'K.7' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq true
+      end
+    end
+
+    context 'when the service does not require a unit of measure' do
+      let(:code) { 'H.16' }
+
+      it 'returns false' do
+        expect(procurement_building_service.requires_unit_of_measure?).to eq false
       end
     end
   end

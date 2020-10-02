@@ -10,14 +10,18 @@ module Base
     end
 
     def create
-      self.resource ||= User.new
-      @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
-      @result.call
-
-      if @result.success?
-        @result.challenge? ? redirect_to(challenge_path) : super
+      if Rails.env.development?
+        super
       else
-        result_unsuccessful_path
+        self.resource ||= User.new
+        @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
+        @result.call
+
+        if @result.success?
+          @result.challenge? ? redirect_to(challenge_path) : super
+        else
+          result_unsuccessful_path
+        end
       end
     end
 

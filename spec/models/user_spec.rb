@@ -55,8 +55,8 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'when user is a buyer and has complete details' do
-      it 'will return false' do
+    context 'when user is a buyer and has incomplete details' do
+      before do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new
         user.buyer_detail.full_name = 'Test name'
@@ -65,7 +65,28 @@ RSpec.describe User, type: :model do
         user.buyer_detail.organisation_name = 'org name'
         user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
         user.buyer_detail.central_government = false
+      end
 
+      it 'will return true' do
+        expect(user.fm_buyer_details_incomplete?).to eq true
+      end
+    end
+
+    context 'when user is a buyer and has complete details' do
+      before do
+        user.roles = %i[buyer fm_access]
+        user.buyer_detail = FacilitiesManagement::BuyerDetail.new
+        user.buyer_detail.full_name = 'Test name'
+        user.buyer_detail.job_title = 'Job title'
+        user.buyer_detail.telephone_number = '3434'
+        user.buyer_detail.organisation_name = 'org name'
+        user.buyer_detail.organisation_address_line_1 = 'Address line 1'
+        user.buyer_detail.organisation_address_town = 'Address town'
+        user.buyer_detail.organisation_address_postcode = 'SW1W 9SZ'
+        user.buyer_detail.central_government = false
+      end
+
+      it 'will return false' do
         expect(user.fm_buyer_details_incomplete?).to eq false
       end
     end

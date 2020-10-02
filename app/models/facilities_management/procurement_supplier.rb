@@ -22,10 +22,10 @@ module FacilitiesManagement
     validates :contract_response, inclusion: { in: [true, false] }, on: :contract_response
 
     validates :reason_for_declining, presence: true, if: -> { contract_response == false }, on: :contract_response
-    validate :reason_for_declining_length, if: -> { contract_response == false }, on: :contract_response
+    validate proc { text_area_max_length(:reason_for_declining, 500) }, if: -> { contract_response == false }, on: :contract_response
 
     validates :reason_for_closing, presence: true, on: :reason_for_closing
-    validate :reason_for_closing_length, on: :reason_for_closing
+    validate proc { text_area_max_length(:reason_for_closing, 500) }, on: :reason_for_closing
 
     acts_as_gov_uk_date :contract_start_date, :contract_end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
@@ -33,7 +33,7 @@ module FacilitiesManagement
     validates :contract_signed, inclusion: { in: [true, false] }, on: :confirmation_of_signed_contract
 
     validates :reason_for_not_signing, presence: true, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
-    validate :reason_for_not_signing_length, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
+    validate proc { text_area_max_length(:reason_for_not_signing, 100) }, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
 
     validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
     validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
@@ -210,16 +210,8 @@ module FacilitiesManagement
       errors.add(date, :not_a_date) unless real_date?(date)
     end
 
-    def reason_for_declining_length
-      errors.add(:reason_for_declining, :too_long) if !reason_for_declining.nil? && reason_for_declining.gsub("\r\n", "\r").length > 500
-    end
-
-    def reason_for_closing_length
-      errors.add(:reason_for_closing, :too_long) if !reason_for_closing.nil? && reason_for_closing.gsub("\r\n", "\r").length > 500
-    end
-
-    def reason_for_not_signing_length
-      errors.add(:reason_for_not_signing, :too_long) if !reason_for_not_signing.nil? && reason_for_not_signing.gsub("\r\n", "\r").length > 100
+    def text_area_max_length(attribute, maximum)
+      errors.add(attribute, :too_long) if self[attribute].present? && self[attribute].gsub("\r\n", "\r").length > maximum
     end
 
     def time_delta_in_days(start_date, end_date)

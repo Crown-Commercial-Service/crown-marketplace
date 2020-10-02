@@ -2,10 +2,10 @@
 
 <div class="govuk-body govuk-grid-row buyer-details">
   <div class="govuk-grid-column-two-thirds" id="buyer-details-add-address-form">
-    <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(@buyer_detail, context: :update_address), method: :patch, html: { multipart: true } do |f| %>
-      <%= link_to 'Back', edit_facilities_management_buyer_detail_path(@buyer_detail), class: "govuk-back-link govuk-!-margin-bottom-2" %>
+    <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path(@buyer_detail, context: :update_address), method: :patch, html: { multipart: true, special_validation: true} do |f| %>
+      <%= link_to t('.back'), edit_facilities_management_buyer_detail_path(@buyer_detail), class: "govuk-back-link govuk-!-margin-bottom-2" %>
 
-      <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: true} %>
+      <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors, render_empty: false } %>
 
       <div class="govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-1">
         <%= current_user.email %>
@@ -20,30 +20,31 @@
         <h2 class="govuk-heading-m">
           <%= t('.your_details') %>
         </h2>
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_line_1].any? %>">
-          <%= display_error(f.object, :organisation_address_line_1) %>
+        <%= form_group_with_error(f.object, :organisation_address_line_1) do |displayed_error, any_errors| %>
           <%= f.label :organisation_address_line_1, t('.building_and_street'), class: 'govuk-label' %>
-          <%= f.text_field :organisation_address_line_1, class: 'govuk-input', maxlength: 255 %>
-        </div>
-        <div class="govuk-form-group">
+          <%= displayed_error %>
+          <%= f.text_field :organisation_address_line_1, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
+        <% end %>
+        <%= form_group_with_error(f.object, :organisation_address_line_2) do |displayed_error, any_errors| %>
           <%= f.label :organisation_address_line_2, class: 'govuk-visually-hidden' %>
-          <%= f.text_field :organisation_address_line_2, class: 'govuk-input', maxlength: 255 %>
-        </div>
-        <div class="govuk-form-group <%= "govuk-form-group--error" if f.object.errors[:organisation_address_town].any? %>">
+          <%= displayed_error %>
+          <%= f.text_field :organisation_address_line_2, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
+        <% end %>
+        <%= form_group_with_error(f.object, :organisation_address_town) do |displayed_error, any_errors| %>
           <%= f.label :organisation_address_town, t('.town_or_city'), class: 'govuk-label' %>
-          <%= display_error(f.object, :organisation_address_town) %>
-          <%= f.text_field :organisation_address_town, class: 'govuk-input', maxlength: 255 %>
-        </div>
-        <div class="govuk-form-group">
+          <%= displayed_error %>
+          <%= f.text_field :organisation_address_town, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
+        <% end %>
+        <%= form_group_with_error(f.object, :organisation_address_county) do |displayed_error, any_errors| %>
           <%= f.label :organisation_address_county, t('.county'), class: 'govuk-label' %>
-          <%= display_error(f.object, :organisation_address_county) %>
-          <%= f.text_field :organisation_address_county, class: 'govuk-input', maxlength: 255 %>
-        </div>
-        <div class="govuk-form-group govuk-!-width-one-half <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>">
+          <%= displayed_error %>
+          <%= f.text_field :organisation_address_county, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 255 %>
+        <% end %>
+        <%= form_group_with_error(f.object, :organisation_address_postcode) do |displayed_error, any_errors| %>
           <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label' %>
-          <%= display_error(f.object, :organisation_address_postcode) %>
-          <%= f.text_field :organisation_address_postcode, class: 'govuk-input', maxlength: 10 %>
-        </div>
+          <%= displayed_error %>
+          <%= f.text_field :organisation_address_postcode, class: "govuk-input govuk-input--width-10 #{'govuk-input--error' if any_errors}", maxlength: 10 %>
+        <% end %>
       </fieldset>
       <div class="govuk-!-margin-top-4">
         <%= f.submit t('.submit'), class: "govuk-button", 'aria-label': t('.submit') %>

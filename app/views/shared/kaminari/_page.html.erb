@@ -7,6 +7,12 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<li>
-  <%= link_to page, url, {remote: remote, rel: page.rel, aria: {current: ("true" if page.current?)}} %>
-</li>
+<% if page.current? %>
+  <li aria-current="true">
+    <%= page %>
+  </li>
+<% else %>
+  <li>
+    <%= link_to page, url, {remote: remote, rel: page.rel} %>
+  </li>
+<% end %>

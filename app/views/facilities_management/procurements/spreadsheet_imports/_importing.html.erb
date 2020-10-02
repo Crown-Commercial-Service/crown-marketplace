@@ -1,0 +1,20 @@
+<div class="govuk-!-width-two-thirds">
+  <h2 class="govuk-heading-m govuk-!-margin-top-4">
+    <%= t('.processing') %>
+  </h2>
+  <p class="govuk-body-l govuk-!-margin-top-2">
+    <%= t('.refresh') %>
+  </p>
+  <p class="govuk-body-l govuk-!-margin-top-2">
+    <%= t('.review') %>
+  </p>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      <%= t('.warning_text') %>
+    </strong>
+  </div>
+  <hr class="govuk-section-break govuk-section-break--xl">
+</div>
+<%= link_to t('.dashboard_link'), facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-top-4' %>

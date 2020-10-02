@@ -3,23 +3,21 @@ require 'caxlsx_rails'
 require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
-  include FacilitiesManagement::SummaryHelper
   include ActionView::Helpers::SanitizeHelper
 
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
-    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
     @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
   end
 
   def buildings_data
-    @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.building_id, service_codes: b.procurement_building_services.map(&:code) } }
+    @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.building_id, service_codes: b.service_codes } }
   end
 
   # rubocop:disable Metrics/AbcSize
   def services_data
-    uniq_buildings_service_codes ||= @active_procurement_buildings.map { |pb| pb.procurement_building_services.map(&:code) }.flatten.uniq
+    uniq_buildings_service_codes ||= buildings_data.map { |pb| pb[:service_codes] }.flatten.uniq
     services ||= FacilitiesManagement::StaticData.work_packages.select { |wp| uniq_buildings_service_codes.include? wp['code'] }
     @services_data ||= services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
   end
@@ -27,13 +25,13 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def units_of_measure_values
     @units_of_measure_values ||= @active_procurement_buildings.map do |building|
-      @report.da_procurement_building_services(building).map do |procurement_building_service|
+      da_procurement_building_services(building).map do |procurement_building_service|
         {
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
           service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
+          detail_of_requirement: procurement_building_service.detail_of_requirement
         }
       end
     end
@@ -43,35 +41,17 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     @package.to_stream.read
   end
 
-  # rubocop:disable Metrics/AbcSize
   def build
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
         first_column_style = s.add_style sz: 12, b: true, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
         standard_column_style = s.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
 
-        p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
-          add_header_row(sheet, ['Buildings information'])
-          add_building_name_row(sheet, ['Building name'], :left)
-          add_buildings_information(sheet)
-          style_buildings_information_sheet(sheet, first_column_style)
-        end
+        add_buildings_worksheet(p, first_column_style)
 
-        p.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-          add_header_row(sheet, ['Service Reference', 'Service Name'])
-          add_building_name_row(sheet, ['', ''], :center)
-          add_service_matrix(sheet)
-          style_service_matrix_sheet(sheet, standard_column_style)
-        end
+        add_service_matrix_worksheet(p, standard_column_style)
 
-        if volume_services_included?
-          p.workbook.add_worksheet(name: 'Volume') do |sheet|
-            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
-            add_building_name_row(sheet, ['', '', ''], :center)
-            number_volume_services = add_volumes_information_da(sheet)
-            style_volume_sheet(sheet, standard_column_style, number_volume_services)
-          end
-        end
+        add_volume_worksheet(p, standard_column_style) if volume_services_included?
 
         add_service_periods_worksheet(p, standard_column_style, units_of_measure_values) if services_require_service_periods?
 
@@ -81,196 +61,61 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
-
-  def list_of_allowed_volume_services
-    # FM-736 requirement
-    %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.4 K.5 K.6 K.7]
-  end
 
   private
 
-  def add_service_periods_worksheet(package, standard_column_style, units)
-    package.workbook.add_worksheet(name: 'Service Periods') do |sheet|
-      add_header_row(sheet, ['Service Reference', 'Service Name', 'Specific Service Periods'])
-      add_building_name_row(sheet, ['', '', ''], :center)
-      rows_added = add_service_periods(sheet, units)
-      style_service_periods_matrix_sheet(sheet, standard_column_style, rows_added) if sheet.rows.size > 1
+  ##### Methods regarding the building of the 'Buildings information' worksheet #####
+  def add_buildings_worksheet(package, first_column_style)
+    package.workbook.add_worksheet(name: 'Buildings information') do |sheet|
+      add_header_row(sheet, ['Buildings information'])
+      add_building_name_row(sheet, ['Building name'], :left)
+      add_buildings_information(sheet)
+      style_buildings_information_sheet(sheet, first_column_style)
     end
   end
 
-  def add_customer_and_contract_details(package)
-    package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
-      add_contract_number(sheet) if any_contracts_offered?
-      add_customer_details(sheet)
-      add_contract_requirements(sheet)
-    end
-  end
-
-  def any_contracts_offered?
-    @procurement.procurement_suppliers.any? { |contract| !contract.unsent? }
-  end
-
-  def add_service_details_sheet(package)
-    service_descriptions_sheet = Roo::Spreadsheet.open(Rails.root.join('app', 'assets', 'files', 'FMServiceDescriptions.xlsx'), extension: :xlsx)
-    service_descriptions = service_descriptions_sheet.sheet('Service Descriptions')
-
-    package.workbook.add_worksheet(name: 'Service Information') do |sheet|
-      (service_descriptions.first_row..service_descriptions.last_row).each do |row_number|
-        sanitized_row = service_descriptions.row(row_number).map { |cell| strip_tags(cell) }
-        sheet.add_row sanitized_row, widths: [nil, 20, 200]
-      end
-
-      apply_service_information_sheet_styling(sheet)
-    end
-  end
-
-  def standard_row_height
-    35
-  end
-
-  def add_header_row(sheet, initial_values)
-    header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
-    header_row = initial_values
-    (1..@active_procurement_buildings.count).each { |x| header_row << "Building #{x}" }
-    sheet.add_row header_row, style: header_row_style, height: standard_row_height
-  end
-
-  def add_building_name_row(sheet, initial_values, float)
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: float }
-
-    row = initial_values
-
-    @active_procurement_buildings.each { |building| row << sanitize_string_for_excel(building.building_name) }
-
-    sheet.add_row row, style: standard_style, height: standard_row_height
-  end
-
-  def style_buildings_information_sheet(sheet, style)
-    sheet['A1:A10'].each { |c| c.style = style }
-    sheet.column_widths(*([50] * sheet.column_info.count))
-  end
-
-  def style_service_matrix_sheet(sheet, style)
-    column_widths = [15, 100]
-    @active_procurement_buildings.count.times { column_widths << 50 }
-    sheet["A3:B#{services_data.count + 2}"].each { |c| c.style = style }
-    sheet.column_widths(*column_widths)
-  end
-
-  def style_service_periods_matrix_sheet(sheet, style, rows_added)
-    column_widths = [15, 100]
-    @active_procurement_buildings.count.times { column_widths << 50 }
-    sheet["A3:B#{rows_added + 2}"].each { |c| c.style = style }
-    sheet.column_widths(*column_widths)
-  end
+  BUILDING_TITLES_AND_ATTRIBUTES =
+    {
+      'Building Description': :description,
+      'Building Address - Line 1': :address_line_1,
+      'Building Address - Line 2': :address_line_2,
+      'Building Address - Town': :address_town,
+      'Building Address - Postcode': :address_postcode,
+      'Building Location (NUTS Region)': :address_region,
+      'Building Gross Internal Area (GIA) (sqm)': :gia,
+      'Building External Area (sqm)': :external_area,
+      'Building Type': :building_type,
+      'Building Type (other)': :other_building_type,
+      'Building Security Clearance': :security_type,
+      'Building Security Clearance (other)': :other_security_type
+    }.freeze
 
   def add_buildings_information(sheet)
     standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
-    [building_description, building_address_street, building_address_town, building_address_postcode, building_nuts_region, building_gia, building_external_area, building_type, building_security_clearance].each do |row_type|
-      sheet.add_row row_type, style: standard_style, height: standard_row_height
+    BUILDING_TITLES_AND_ATTRIBUTES.each do |title, attribute|
+      sheet.add_row building_row(title.to_s, attribute), style: standard_style, height: standard_row_height
     end
   end
 
-  def building_name
-    row = ['Building Name']
+  def building_row(title, attribute)
+    row = [title]
 
     @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building_name)
+      row << sanitize_string_for_excel(building[attribute].to_s)
     end
 
     row
   end
 
-  def building_description
-    row = ['Building Description']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.description)
+  ##### Methods regarding the building of the 'Service Matrix' worksheet #####
+  def add_service_matrix_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
+      add_header_row(sheet, ['Service Reference', 'Service Name'])
+      add_building_name_row(sheet, ['', ''], :center)
+      add_service_matrix(sheet)
+      style_service_matrix_sheet(sheet, standard_column_style)
     end
-
-    row
-  end
-
-  def building_address_street
-    row = ['Building Address - Street']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.address_line_1)
-    end
-
-    row
-  end
-
-  def building_address_town
-    row = ['Building Address - Town']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.address_town)
-    end
-
-    row
-  end
-
-  def building_address_postcode
-    row = ['Building Address - Postcode']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.address_postcode)
-    end
-
-    row
-  end
-
-  def building_nuts_region
-    row = ['Building Location (NUTS Region)']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.address_region)
-    end
-
-    row
-  end
-
-  def building_gia
-    row = ['Building Gross Internal Area (GIA) (sqm)']
-
-    @active_procurement_buildings.each do |building|
-      row << building.gia
-    end
-
-    row
-  end
-
-  def building_external_area
-    row = ['Building External Area (sqm)']
-
-    @active_procurement_buildings.each do |building|
-      row << building.external_area
-    end
-
-    row
-  end
-
-  def building_type
-    row = ['Building Type']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.building_type)
-    end
-
-    row
-  end
-
-  def building_security_clearance
-    row = ['Building Security Clearance']
-
-    @active_procurement_buildings.each do |building|
-      row << sanitize_string_for_excel(building.security_type)
-    end
-
-    row
   end
 
   def add_service_matrix(sheet)
@@ -288,23 +133,37 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     end
   end
 
+  ##### Methods regarding the building of the 'Volume' worksheet #####
+  def add_volume_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Volume') do |sheet|
+      add_header_row(sheet, ['Service Reference', 'Service Name', 'Metric per annum'])
+      add_building_name_row(sheet, ['', '', ''], :center)
+      number_volume_services = add_volumes_information_da(sheet)
+      style_volume_sheet(sheet, standard_column_style, number_volume_services)
+    end
+  end
+
   # rubocop:disable Metrics/AbcSize
   def add_volumes_information_da(sheet)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
 
     added_rows = 0
-    allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
+    allowed_volume_services = services_data.keep_if { |service| ALLOWED_VOLUME_SERVICES.include? service['code'] }
 
-    allowed_volume_services.each do |s|
-      next if CCS::FM::Service.gia_services.include? s['code']
+    allowed_volume_services.each do |service|
+      next if CCS::FM::Service.gia_services.include? service['code']
 
-      new_row = [s['code'], s['name'], s['metric']]
-      @active_procurement_buildings.each do |b|
-        uvs = units_of_measure_values.flatten.select { |u| b.building_id == u[:building_id] }
-        suv = uvs.find { |u| s['code'] == u[:service_code] }
+      new_row = [service['code'], service['name'], service['metric']]
+      data_for_service = data_for_service_code(units_of_measure_values, service['code'])
 
-        new_row << calculate_uom_value(suv) if suv
-        new_row << nil unless suv
+      @active_procurement_buildings.each do |building|
+        service_measure = find_service_for_building(data_for_service, building.building_id)
+
+        new_row << if service_measure.nil?
+                     nil
+                   else
+                     service_measure[:uom_value].to_f
+                   end
       end
 
       added_rows += 1
@@ -315,26 +174,30 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
   # rubocop:enable Metrics/AbcSize
 
-  def style_volume_sheet(sheet, style, number_volume_services)
-    column_widths = [15, 100, 50, 50]
-    @active_procurement_buildings.count.times { column_widths << 20 }
+  ##### Methods regarding the building of the 'Service Periods' worksheet #####
+  def add_service_periods_worksheet(package, standard_column_style, units)
+    package.workbook.add_worksheet(name: 'Service Periods') do |sheet|
+      hint_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }, fg_color: '6E6E6E'
+      hint_center_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
 
-    last_column_name = ('A'..'ZZ').to_a[2 + buildings_data.count]
-    sheet["A2:#{last_column_name}#{number_volume_services + 2}"].each { |c| c.style = style } if number_volume_services.positive?
-    sheet.column_widths(*column_widths)
+      add_header_row(sheet, ['Service Reference', 'Service Name', 'Metric per Annum'])
+      add_building_name_row(sheet, ['', '', ''], :center)
+      add_service_periods(sheet, units)
+      style_service_periods_matrix_sheet(sheet, standard_column_style, hint_style, hint_center_style) if sheet.rows.size > 1
+    end
   end
 
   def add_service_periods(sheet, units)
-    rows_added = 0
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }, fg_color: '6E6E6E'
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :left }
 
-    hours_required_services.each_with_index do |service, index|
-      rows_added += add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_personnel_row(sheet, service, buildings_data, units, standard_style)
-      rows_added += add_break_row(sheet, index, hours_required_services.size - 1)
+    services_requiring_hours = hours_required_services
+    services_requiring_hours.each_with_index do |service, index|
+      data_for_service = data_for_service_code(units, service['code'])
+
+      add_service_hour_row(sheet, service, buildings_data, data_for_service, standard_style)
+      add_detail_of_requirement_row(sheet, service, buildings_data, data_for_service, standard_style)
+      add_break_row(sheet, index, services_requiring_hours.size - 1)
     end
-
-    rows_added
   end
 
   def hours_required_services
@@ -343,96 +206,55 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     services_data.select { |service| allowed_services.include? service['code'] }
   end
 
-  def add_service_periods_rows(sheet, service, buildings_data, units, standard_style)
-    rows_added = 0
-    Date::DAYNAMES.rotate(1).each do |day|
-      row_values = [service['code'], service['name'], day]
-      buildings_data.each do |building|
-        service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
-
-        row_values << add_service_measure_row_value(service_measure, day)
-      end
-
-      rows_added += 1
-      sheet.add_row row_values, style: standard_style, height: standard_row_height
-    end
-    rows_added
-  end
-
-  def add_service_measure_row_value(service_measure, day)
-    return nil if service_measure.nil? || service_measure[:service_hours].nil?
-
-    day_symbol = day.downcase.to_sym
-    case service_measure[:service_hours][day_symbol]['service_choice']
-    when 'not_required'
-      'Not required'
-    when 'all_day'
-      'All day (24 hours)'
-    when 'hourly'
-      determine_start_hourly_text(service_measure, day_symbol) + ' to ' + determine_end_hourly_text(service_measure, day_symbol) + next_day(service_measure[:service_hours][day_symbol])
-    else
-      'unknown??' + service_measure[:uom_value][day_symbol]['service_choice']
-    end
-  end
-
-  def add_personnel_row(sheet, service, buildings_data, units, standard_style)
-    personnel_row_values = [service['code'], service['name'], 'No. of personnel']
+  def add_service_hour_row(sheet, service, buildings_data, data_for_service, standard_style)
+    row_values = [service['code'], service['name'], 'Number of hours required']
 
     buildings_data.each do |building|
-      service_measure = units.flatten.select { |measure| measure[:service_code] == service['code'] && measure[:building_id] == building[:building_id] }.first
+      service_measure = find_service_for_building(data_for_service, building[:building_id])
 
-      personnel_row_values << if service_measure.nil?
-                                nil
-                              else
-                                service_measure[:service_hours][:personnel]
-                              end
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      service_measure[:uom_value]
+                    end
     end
 
-    sheet.add_row personnel_row_values, style: standard_style, height: standard_row_height
-    1
+    sheet.add_row row_values, style: standard_style, height: standard_row_height
+  end
+
+  def add_detail_of_requirement_row(sheet, service, buildings_data, data_for_service, standard_style)
+    row_values = [service['code'], service['name'], 'Detail of requirement']
+
+    buildings_data.each do |building|
+      service_measure = find_service_for_building(data_for_service, building[:building_id])
+
+      row_values << if service_measure.nil?
+                      ''
+                    else
+                      sanitize_string_for_excel(service_measure[:detail_of_requirement])
+                    end
+    end
+
+    sheet.add_row row_values, style: standard_style
   end
 
   def add_break_row(sheet, index, max)
-    if index < max
-      sheet.add_row [], height: standard_row_height
-      1
-    else
-      0
+    sheet.add_row [], height: standard_row_height if index < max
+  end
+
+  ##### Methods regarding the building of the 'Customer & Contract Details' worksheet #####
+  def add_customer_and_contract_details(package)
+    package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
+      add_contract_number(sheet) if @contract.contract_number.present?
+      add_customer_details(sheet)
+      add_contract_requirements(sheet)
     end
   end
 
-  def next_day(service_hour_choice)
-    service_hour_choice[:next_day] ? ' (next day)' : ''
-  end
-
-  def service_measure_invalid_type?(service_measure)
-    invalid = false
-    invalid = true if service_measure.nil? || service_measure[:uom_value].instance_of?(String) || service_measure[:uom_value].instance_of?(Integer)
-
-    invalid
-  end
-
-  def determine_start_hourly_text(service_measure, day_symbol)
-    start_hour = format('%01d', service_measure[:service_hours][day_symbol]['start_hour'])
-    start_minute = format('%02d', service_measure[:service_hours][day_symbol]['start_minute'])
-    start_ampm = service_measure[:service_hours][day_symbol]['start_ampm'].downcase
-    start_hour + ':' + start_minute + start_ampm
-  end
-
-  def determine_end_hourly_text(service_measure, day_symbol)
-    end_hour = format('%01d', service_measure[:service_hours][day_symbol]['end_hour'])
-    end_minute = format('%02d', service_measure[:service_hours][day_symbol]['end_minute'])
-    end_ampm = service_measure[:service_hours][day_symbol]['end_ampm'].downcase
-    end_hour + ':' + end_minute + end_ampm
-  end
-
   def add_contract_number(sheet)
-    sheet.add_row ['Reference number & date/time production of this document', "#{@contract.contract_number} #{@contract.offer_sent_date&.in_time_zone('London')&.strftime '- %Y/%m/%d - %l:%M%P'}"]
+    sheet.add_row ['Reference number:', @contract.contract_number.to_s]
+    sheet.add_row ['Date/time of production of this document:', @contract.offer_sent_date&.in_time_zone('London')&.strftime('%Y/%m/%d - %l:%M%P')]
     sheet.add_row []
-  end
-
-  def calculate_contract_number
-    FacilitiesManagement::ContractNumberGenerator.new(procurement_state: :direct_award, used_numbers: []).new_number
   end
 
   def add_customer_details(sheet)
@@ -492,6 +314,74 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def add_tupe(sheet)
     sheet.add_row []
     sheet.add_row ['TUPE involved', @procurement.tupe? ? 'Yes' : 'No']
+  end
+
+  ##### Methods regarding the building of the 'Service Descriptions' worksheet #####
+  def add_service_details_sheet(package)
+    service_descriptions_sheet = Roo::Spreadsheet.open(Rails.root.join('app', 'assets', 'files', 'FMServiceDescriptions.xlsx'), extension: :xlsx)
+    service_descriptions = service_descriptions_sheet.sheet('Service Descriptions')
+
+    package.workbook.add_worksheet(name: 'Service Information') do |sheet|
+      (service_descriptions.first_row..service_descriptions.last_row).each do |row_number|
+        sanitized_row = service_descriptions.row(row_number).map { |cell| strip_tags(cell) }
+        sheet.add_row sanitized_row, widths: [nil, 20, 200]
+      end
+
+      apply_service_information_sheet_styling(sheet)
+    end
+  end
+
+  ##### Methods shared between worksheets #####
+  def add_header_row(sheet, initial_values)
+    header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+    header_row = initial_values
+    (1..@active_procurement_buildings.count).each { |x| header_row << "Building #{x}" }
+    sheet.add_row header_row, style: header_row_style, height: standard_row_height
+  end
+
+  def add_building_name_row(sheet, initial_values, float)
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: float }
+
+    row = initial_values
+
+    @active_procurement_buildings.each { |building| row << sanitize_string_for_excel(building.building_name) }
+
+    sheet.add_row row, style: standard_style, height: standard_row_height
+  end
+
+  ##### Methods regarding the styling of the worksheets #####
+  def standard_row_height
+    35
+  end
+
+  def style_buildings_information_sheet(sheet, style)
+    sheet['A1:A10'].each { |c| c.style = style }
+    sheet.column_widths(*([50] * sheet.column_info.count))
+  end
+
+  def style_service_matrix_sheet(sheet, style)
+    column_widths = [15, 100]
+    @active_procurement_buildings.count.times { column_widths << 50 }
+    sheet["A3:B#{services_data.count + 2}"].each { |c| c.style = style }
+    sheet.column_widths(*column_widths)
+  end
+
+  def style_service_periods_matrix_sheet(sheet, style, hint_style, hint_center_style)
+    column_widths = [15, 100]
+    @active_procurement_buildings.count.times { column_widths << 50 }
+    update_cell_styles(sheet, "D2:#{sheet.rows[2].cells.last.r}", hint_center_style)
+    update_cell_styles(sheet, "A3:#{sheet.rows.last.cells.last.r}", hint_style)
+    update_cell_styles(sheet, "A3:#{sheet.rows.last.cells[2].r}", style)
+    sheet.column_widths(*column_widths)
+  end
+
+  def style_volume_sheet(sheet, style, number_volume_services)
+    column_widths = [15, 100, 50, 50]
+    @active_procurement_buildings.count.times { column_widths << 20 }
+
+    last_column_name = ('A'..'ZZZ').to_a[2 + buildings_data.count]
+    sheet["A2:#{last_column_name}#{number_volume_services + 2}"].each { |c| c.style = style } if number_volume_services.positive?
+    sheet.column_widths(*column_widths)
   end
 
   def apply_service_information_sheet_styling(sheet)
@@ -606,23 +496,42 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     ]
   end
 
-  def services_require_service_periods?
-    return false if @services_data.empty?
+  def update_cell_styles(sheet, cells, style)
+    sheet[cells].each { |cell| cell.style = style }
+  end
 
-    (@services_data.map { |sd| sd['code'] }.uniq & services_with_service_hours).size.positive?
+  ##### Methods which help throughout the class #####
+  ALLOWED_VOLUME_SERVICES = %w[C.5 E.4 G.1 G.3 G.5 H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6 K.1 K.2 K.3 K.4 K.5 K.6 K.7].freeze
+  SERVICE_HOUR_SERVICES = %w[H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6].freeze
+
+  def da_procurement_building_services(building)
+    procurement_building_service_codes = CCS::FM::Service.direct_award_services(@procurement.id)
+
+    building.procurement_building_services.select { |u| u.code.in? procurement_building_service_codes }
+  end
+
+  def data_for_service_code(units, code)
+    units.flatten.select { |measure| measure[:service_code] == code }
+  end
+
+  def find_service_for_building(data_for_service, building_id)
+    data_for_service.find { |data| data[:building_id] == building_id }
+  end
+
+  def services_require_service_periods?
+    return false if services_data.empty?
+
+    (services_data.map { |sd| sd['code'] }.uniq & SERVICE_HOUR_SERVICES).size.positive?
   end
 
   def volume_services_included?
-    return false if @services_data.empty?
+    return false if services_data.empty?
 
-    (@services_data.map { |sd| sd['code'] }.uniq & list_of_allowed_volume_services).size.positive?
-  end
-
-  def services_with_service_hours
-    %w[H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6]
+    (services_data.map { |sd| sd['code'] }.uniq & ALLOWED_VOLUME_SERVICES).size.positive?
   end
 
   def sanitize_string_for_excel(string)
+    return unless string
     return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
 
     string

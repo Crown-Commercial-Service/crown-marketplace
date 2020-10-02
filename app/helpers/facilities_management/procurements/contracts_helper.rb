@@ -91,6 +91,7 @@ module FacilitiesManagement::Procurements::ContractsHelper
         continuation_text: show_continuation_text,
         return_text: 'Return to procurements dashboard',
         secondary_text: show_secondary_text,
+        back_text: 'Return to procurements dashboard',
       },
       edit: {
         back_url: facilities_management_procurement_contract_path(@procurement),

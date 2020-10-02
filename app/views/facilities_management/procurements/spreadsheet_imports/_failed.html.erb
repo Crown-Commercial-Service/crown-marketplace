@@ -1,0 +1,57 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters govuk-body-l">
+    <%= t('.description')%>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-body-l">
+    <h2 class="govuk-heading-m">
+      <%= t('.what_next')%>
+    </h2>
+    <p>
+      <%= t('.here_are_steps')%>
+    </p>
+    <ol class="govuk-list govuk-list--number">
+      <li><%= t('.step_1')%></li>
+      <li><%= t('.step_2')%></li>
+      <li><%= t('.step_3')%></li>
+    </ol>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds govuk-body-l">
+    <h2 class="govuk-heading-m">
+      <%= t('.list_of_issues')%>
+    </h2>
+    <p class="govuk-hint">
+      <%= t('.hint_text')%>
+    </p>
+  </div>
+</div>
+
+<% @error_lists.each do |attribute, error_list| %>
+  <% if error_list.any? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-body-l">
+        <h3 class="govuk-heading-m">
+          <%= t(".title.#{attribute}") %>
+        </h3>
+        <%= govuk_details(pluralize(error_count(error_list, attribute), 'Issue'), false) do %>
+          <%= render(partial: "facilities_management/procurements/spreadsheet_imports/error_partials/#{attribute}", locals: { error_list: error_list }) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_import_path, method: :delete, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+      <%= f.submit t('.start_again'), class: 'govuk-button', 'aria-label': t('.start_again') %>
+      <br/>
+      <%= link_to t('.return_to_procurement_dashboard'), facilities_management_procurements_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.return_to_procurement_dashboard') %>
+    <% end %>
+  </div>
+</div>

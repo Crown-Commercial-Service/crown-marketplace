@@ -242,6 +242,7 @@ en:
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
+    da_eligible: DIRECT AWARD ELIGIBLE
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     feedback: feedback
@@ -252,6 +253,7 @@ en:
     passnum: at least one number
     passsymbol_html: at least one symbol (eg </span>?<span class="ccs-remove">, </span>!<span class="ccs-remove">, </span>&pound;<span class="ccs-remove">, </span>&percnt;)
     pdf_html: <abbr title="PDF">PDF</abbr>
+    radio_driver: or
     reset_password: Reset password
     send_reset_email: Send reset email
     sign_in: Sign in
@@ -1031,6 +1033,13 @@ en:
         enter_your_password: Enter your password
         please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         problems_signing_in: Problems signing in
+    tags:
+      cannot_start: cannot start yet
+      completed: completed
+      in_progress: in progress
+      incomplete: incomplete
+      not_required: not required
+      not_started: not started
     users:
       confirm_new:
         confirmation_code: Confirmation code

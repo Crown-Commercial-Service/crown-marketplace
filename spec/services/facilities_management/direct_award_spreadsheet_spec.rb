@@ -18,6 +18,10 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
   describe 'contract rate card worksheet' do
     subject(:rates) { wb.sheet('Contract Rate Card') }
 
+    before do
+      procurement.active_procurement_buildings.each { |apb| apb.update(service_codes: ['C.1']) }
+    end
+
     context 'with a procurement in direct_award' do
       it 'verify contract rate card worksheet headers' do
         expect(rates.row(1)).to match_array(['Bogan-Koch', nil, nil, nil])

@@ -751,14 +751,18 @@ ul.ccs-pagination {
       margin-right : 0;
       }
 
-    a {
-      text-decoration : none;
-      color           : $govuk-link-colour !important;
+    &[aria-current] {
+      color       : govuk-colour("black");
+      font-weight : bold;
+    }
 
-      &[aria-current] {
-        color       : govuk-colour("grey-2") !important;
-        font-weight : 600;
-        }
+    a, button {
+      text-decoration : none;
+      color           : $govuk-link-colour;
+
+      &:focus {
+        color: #0b0c0c;
+      } 
 
       b {
         font-size   : 1.4rem;
@@ -769,8 +773,6 @@ ul.ccs-pagination {
     }
 
   }
-
-
 
 
 @media print {

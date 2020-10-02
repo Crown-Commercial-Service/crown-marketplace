@@ -1,22 +1,15 @@
 <fieldset class="govuk-fieldset">
-  <legend class="govuk-fieldset__legend">
-    <h1 class="govuk-heading-xl govuk-!-padding-top-0 govuk-!-margin-0"><%= t('.tupe_title') %></h1>
-  </legend>
+  <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.tupe_title'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, t('.tupe_title') %>
 <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:tupe].any? %>" data-propertyname="TUPE"
     style="<%= 'padding-left:1em' if @procurement.errors[:tupe].any?%>">
-  <div class="govuk-!-margin-top-3">
-  <span class="govuk-heading-s govuk-!-margin-bottom-0">
-    <%= t('.first_question') %>
-  </span>
-    <span class="govuk-caption-m govuk-!-margin-top-0">
-    <%= t('.body_text_html') %>
-  </span>
-  </div>
 
-  <div class="govuk-!-margin-top-3">
+  <%= hint_details(t('.first_question'), t('.body_text_html')) %>
+
+  <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-4">
     <%= govuk_details(t('.what_you_need_to_know_title'), true) do %>
       <%= t('.what_you_need_to_know_html') %>
+      <%= link_to t('.tupe_link_text'), t('.tupe_link'), class: 'govuk-link', tabIndex: -1 %>
     <% end %>
   </div>
 

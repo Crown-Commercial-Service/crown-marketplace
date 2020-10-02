@@ -168,6 +168,30 @@
           <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :local_government_pension_scheme, false) %></td>
         </tr>
       <% end %>
+
+      <tr class="govuk-table__row <%= 'govuk-no-border govuk-form-group--error' if @procurement.errors[:governing_law].any? %>">
+        <th scope="row" class="ccs-font-weight-semi-bold govuk-table__header <%= 'govuk-!-padding-left-2' if @procurement.errors[:governing_law].any? %>"><%= t('.governing_law') %></th>
+        <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.governing_law.nil? %>">
+          <% case @procurement.governing_law %>
+          <% when 'english' %>
+            <%= t('facilities_management.procurements.edit.governing_law.english') %>
+          <% when 'scottish' %>
+            <%= t('facilities_management.procurements.edit.governing_law.scottish') %>
+          <% when 'northern_ireland' %>
+            <%= t('facilities_management.procurements.edit.governing_law.northern_ireland') %>
+          <% else %>
+            <%= link_to 'Answer question', edit_facilities_management_procurement_path(id: @procurement.id, step: 'governing_law') %>
+          <% end %>
+        </td>
+        <td class="govuk-table__cell govuk-!-padding-left-2">
+          <%= link_to 'Change', edit_facilities_management_procurement_path(id: @procurement.id, step: 'governing_law') unless @procurement.governing_law.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+        </td>
+      </tr>
+      <% if @procurement.errors[:governing_law].any? %>
+        <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 <%= 'govuk-form-group--error' if @procurement.errors[:governing_law].any? %>">
+          <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="3"><%= display_error(@procurement, :governing_law, false) %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

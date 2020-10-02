@@ -22,24 +22,22 @@
   text-decoration : underline;
   margin         : 1ex 0;
   color           : $govuk-link-colour;
-
-  &:focus {
-    outline          : 3px solid #ffbf47;
-    outline-offset   : 0;
-    background-color : #ffbf47;
-    color            : $govuk-link-hover-colour;
-    }
+  background-color: inherit;
 
   &:link {
     color : $govuk-link-colour
-    }
+  }
 
   &:visited {
     color : $govuk-link-visited-colour
-    }
-
-  &:hover,
-  &:active {
-    color : $govuk-link-hover-colour
-    }
   }
+
+  &:hover:not(:focus),
+  &:active:not(:focus) {
+    color : $govuk-link-hover-colour
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

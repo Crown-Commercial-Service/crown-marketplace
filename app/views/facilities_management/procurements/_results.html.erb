@@ -85,7 +85,7 @@
             <% end %>
           </div>
           <div class="govuk-radios__item">
-            <%= f.radio_button :route_to_market, 'further_competition', class: 'govuk-radios__input' %>
+            <%= f.radio_button :route_to_market, 'further_competition_chosen', class: 'govuk-radios__input' %>
             <%= f.label :route_to_market, value: 'further_competition', class: 'govuk-label govuk-radios__label' do %>
               <%= t('.further_competition_html') %>
             <% end %>
@@ -100,7 +100,7 @@
     <% end if @page_data[:model_object].eligible_for_da %>
     <%= contained_content(t('.available_routes_to_market')) do %>
       <h5 class="govuk-heading govuk-heading-s">Further competition </h5>
-      <%= f.hidden_field :route_to_market, value: 'further_competition' %>
+      <%= f.hidden_field :route_to_market, value: 'further_competition_chosen' %>
       <%= govuk_details t('.what_is_fc') do %>
         <ul class="govuk-list govuk-list--bullet">
           <%= t('.fc_list_html') %>

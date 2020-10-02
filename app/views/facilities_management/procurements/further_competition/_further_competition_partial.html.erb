@@ -1,3 +1,4 @@
+<% unless fc_chosen %>
   <div class="">
     <h2 class="govuk-heading-xl govuk-!-font-weight-bold"> <%= t('.summary_header') %></h2>
     <p class="govuk-body"> <%= "Your procurement summary reference number is #{@procurement_reference}"%>.</p>
@@ -31,6 +32,7 @@
       </a>
     </div>
   </div>
+<% end %>
 
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l"><%= t('.what_happens_next_title') %></h2>
@@ -234,7 +236,11 @@
     </div>
     <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-4">
       <p class="govuk-!-font-weight-bold">
+        <% if fc_chosen %>
+          <%= t('.save_as_fc_instructions') %>
+        <% else %>
           <%= t('.make_a_copy')%>
+        <% end %>
       </p>
     </div>
   </div>

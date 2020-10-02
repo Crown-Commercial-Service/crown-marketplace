@@ -1,10 +1,11 @@
+# rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::ProcurementsHelper
   def journey_step_url_former(journey_step:, region_codes: nil, service_codes: nil)
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
   end
 
   def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_name contract_dates estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
+    %i[contract_name contract_period estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
   end
 
   def initial_call_off_period_start_date
@@ -56,8 +57,9 @@ module FacilitiesManagement::ProcurementsHelper
   PROCUREMENT_STATE = { da_draft: 'DA draft',
                         further_competition: 'Further competition',
                         results: 'Results',
-                        quick_search: 'Quick search',
-                        detailed_search: 'Detailed search',
+                        quick_search: 'Quick view',
+                        detailed_search: 'Entering requirements',
+                        detailed_search_bulk_upload: 'Entering requirements',
                         closed: 'closed' }.freeze
 
   def procurement_state(procurement_state)
@@ -121,4 +123,92 @@ module FacilitiesManagement::ProcurementsHelper
       error[:service_codes].first.to_s
     end
   end
+
+  def buildings_with_missing_regions
+    @buildings_with_missing_regions ||= @procurement.active_procurement_buildings.order_by_building_name.select(&:missing_region?)
+  end
+
+  def continue_button_text
+    FacilitiesManagement::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
+  end
+
+  def service_name(service_code)
+    @services.select { |s| s['code'] == service_code }.first&.name&.humanize
+  end
+
+  def requires_back_link?
+    %w[contract_name estimated_annual_cost tupe buildings].include? params[:step]
+  end
+
+  def address_in_a_line(building)
+    [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
+  end
+
+  def procurement_buildings_requiring_service_info(procurement)
+    procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
+  end
+
+  def procurement_building_row(form, building, procurement_building_id)
+    if building.status == 'Ready'
+      content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
+        content_tag(:div, class: 'govuk-checkboxes__item') do
+          capture do
+            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, sectionid: building.building_name, checked: @active_procurement_building_ids.include?(procurement_building_id)))
+            concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
+              procurement_building_checkbox_text(building)
+            end)
+          end
+        end
+      end
+    else
+      content_tag(:div, class: 'govuk-!-padding-left-7') do
+        procurement_building_checkbox_text(building)
+      end
+    end
+  end
+
+  def procurement_building_checkbox_text(building)
+    capture do
+      concat(content_tag(:legend, building.building_name, class: 'govuk-fieldset__legend'))
+      concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
+    end
+  end
+
+  def requirements_errors_list
+    @requirements_errors_list ||= @procurement.errors.details[:base].map.with_index { |detail, index| [detail[:error], @procurement.errors[:base][index]] }.to_h
+  end
+
+  def section_errors(section)
+    if section == 'contract_period'
+      %i[contract_period_incomplete initial_call_off_period_in_past mobilisation_period_in_past mobilisation_period_required]
+    else
+      ["#{section}_incomplete".to_sym]
+    end
+  end
+
+  def section_has_error?(section)
+    return false unless @procurement.errors.any?
+
+    (requirements_errors_list.keys & section_errors(section)).any?
+  end
+
+  def display_all_errors(errors, section_errors)
+    capture do
+      section_errors.each do |attribute|
+        next unless errors[attribute]
+
+        concat(content_tag(:span, errors[attribute].to_s, id: error_id(attribute), class: 'govuk-error-message'))
+      end
+    end
+  end
+
+  def link_url(section)
+    case section
+    when 'contract_period', 'services', 'buildings', 'buildings_and_services', 'service_requirements'
+      facilities_management_procurement_summary_path(@procurement, summary: section)
+    else
+      edit_facilities_management_procurement_path(@procurement, step: section)
+    end
+  end
 end
+# rubocop:enable Metrics/ModuleLength

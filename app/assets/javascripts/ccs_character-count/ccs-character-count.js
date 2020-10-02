@@ -87,6 +87,7 @@ CCSCharacterCount.prototype.getDataset = function (element) {
 
 CCSCharacterCount.prototype.count = function (text) {
 	var length;
+
 	if (this.options.maxwords) {
 		var tokens = text.match(/\S+/g) || [];
 		length = tokens.length;

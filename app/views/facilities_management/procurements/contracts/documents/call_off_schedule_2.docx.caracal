@@ -11,10 +11,19 @@ docx.page_numbers true do
   label ''
 end
 
-docx.img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :left
+c1 =  Caracal::Core::Models::TableCellModel.new do
+        vertical_align 'center'
 
-docx.p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v1.0', bold: true, size: 24, font: 'Calibri'
-docx.p 'Crown Copyright 2018', size: 24, font: 'Calibri'
+        p 'Call-Off Schedule 2 (Staff Transfer) Direct Award v3.0', bold: true, size: 24, font: 'Calibri'
+        p 'Crown Copyright 2020', size: 24, font: 'Calibri'
+      end
+c2 =  Caracal::Core::Models::TableCellModel.new do
+        width 2500
+
+        img File.join(Rails.root, 'app', 'assets', 'images', 'ccs-bidpack-logo.png'), width: 90, height: 75, align: :right
+      end
+
+docx.table [[c1, c2]], border_line: nil
 
 ['BUYER', 'AND', 'SUPPLIER', 'FACILITIES MANAGEMENT MARKETPLACE CONTRACT', 'REF: RM3830'].each do |sentence|
   docx.p sentence, bold: true, size: 24, font: 'Calibri', align: :center
