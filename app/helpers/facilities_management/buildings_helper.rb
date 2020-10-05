@@ -51,11 +51,15 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
-  def open_state_of_building_details(building)
-    return false if building[:building_type].blank?
+  def open_state_of_building_details
+    @open_state_of_building_details ||= should_building_details_be_open?
+  end
 
-    if building.building_type == 'other' || building.errors.key?(:other_building_type) ||
-       FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:title] }.exclude?(building[:building_type])
+  def should_building_details_be_open?
+    return false if @page_data[:model_object][:building_type].blank?
+
+    if @page_data[:model_object].building_type == 'other' || @page_data[:model_object].errors.key?(:other_building_type) ||
+       FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:id] }.exclude?(@page_data[:model_object][:building_type])
       true
     else
       false
