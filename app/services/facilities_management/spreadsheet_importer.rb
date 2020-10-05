@@ -42,7 +42,7 @@ class FacilitiesManagement::SpreadsheetImporter
       @spreadsheet_import.update(import_errors: { other_errors: { generic_error: 'generic error' } })
       @spreadsheet_import.fail!
 
-      raise StandardError 'spreadsheet import failed'
+      raise StandardError.new 'spreadsheet import failed'
     end
   end
 
