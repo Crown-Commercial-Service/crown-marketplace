@@ -57,11 +57,8 @@
                   <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label ccs-font-weight-semi-bold" %>
                   <%= f.file_field :security_policy_document_file %>
                   <% end %>
-                  <div class="govuk-warning-text govuk-!-margin-top-3">
-                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong class="govuk-warning-text__text">
-                      <%= t('.guidance') %>
-                    </strong>
+                  <div class="govuk-!-margin-top-3">
+                    <%= warning_text(t('.guidance')) %>
                   </div>
                 </div>
               </div>

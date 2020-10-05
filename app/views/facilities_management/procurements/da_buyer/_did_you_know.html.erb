@@ -30,13 +30,8 @@
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
     </div>
 
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        If you wish to change any of the above criteria, you will need to consider switching to a further competition.
-      </strong>
-    </div>
+    <%= warning_text(t('.warning_text')) %>
+
     <%= form_for @page_data[:model_object], url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
       <%= govuk_continuation_buttons(pd, f) %>
     <% end %>

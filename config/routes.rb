@@ -116,9 +116,6 @@ Rails.application.routes.draw do
     get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
     match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
     match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
-    match '/summary', to: 'summary#index', via: %i[get post]
-    post '/summary/guidance', to: 'summary#guidance'
-    post '/summary/suppliers', to: 'summary#sorted_suppliers'
     get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
     get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
     get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
