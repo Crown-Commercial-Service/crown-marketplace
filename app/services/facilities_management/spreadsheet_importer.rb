@@ -38,11 +38,11 @@ class FacilitiesManagement::SpreadsheetImporter
       return if spreadsheet_import_stopped? || spreadsheet_not_present?
 
       imported_spreadsheet_data_valid? ? process_valid_import : process_invalid_import
-    rescue
+    rescue StandardError => e
       @spreadsheet_import.update(import_errors: { other_errors: { generic_error: 'generic error' } })
       @spreadsheet_import.fail!
 
-      raise StandardError.new 'spreadsheet import failed'
+      Rollbar.log('error', e)
     end
   end
 
