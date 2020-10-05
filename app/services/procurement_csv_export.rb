@@ -365,7 +365,8 @@ class ProcurementCsvExport
   end
 
   def self.building_types(procurement)
-    procurement.active_procurement_buildings.distinct(:building_type).pluck(:building_type).compact.join(LIST_ITEM_SEPARATOR)
+    procurement.active_procurement_buildings.map { |pb| pb.building_type || pb.building.building_type }
+               .uniq.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_gias(procurement)
