@@ -788,7 +788,7 @@ en:
       lift:
         no_of_floors: Number of floors
       lifts:
-        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.'
+        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.
         floors: How many lifts are in this building, and how many floors does each lift service?
       service_hours:
         detail_example: See an example
