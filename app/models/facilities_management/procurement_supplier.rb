@@ -196,6 +196,17 @@ module FacilitiesManagement
       supplier.data['contact_email']
     end
 
+    def closed_date
+      case aasm_state
+      when 'not_signed'
+        contract_signed_date
+      when 'expired', 'declined'
+        supplier_response_date
+      else
+        contract_closed_date
+      end
+    end
+
     private
 
     # Custom Validation
