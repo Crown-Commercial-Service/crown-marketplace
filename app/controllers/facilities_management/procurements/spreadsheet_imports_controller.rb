@@ -53,14 +53,18 @@ module FacilitiesManagement
       end
 
       def initialize_errors
-        @error_lists = {
-          building_errors: @spreadsheet_import.building_errors,
-          service_matrix_errors: @spreadsheet_import.service_matrix_errors,
-          service_volume_errors: @spreadsheet_import.service_volume_errors,
-          lift_errors: @spreadsheet_import.lift_errors,
-          service_hour_errors: @spreadsheet_import.service_hour_errors,
-          other_errors: @spreadsheet_import.import_errors.empty? ? [:other_errors] : []
-        }
+        @error_lists = if !@spreadsheet_import.import_errors.empty? && @spreadsheet_import.import_errors[:other_errors][:generic_error].present?
+                         { other_errors: @spreadsheet_import.import_errors[:other_errors] }
+                       else
+                         {
+                           building_errors: @spreadsheet_import.building_errors,
+                           service_matrix_errors: @spreadsheet_import.service_matrix_errors,
+                           service_volume_errors: @spreadsheet_import.service_volume_errors,
+                           lift_errors: @spreadsheet_import.lift_errors,
+                           service_hour_errors: @spreadsheet_import.service_hour_errors,
+                           other_errors: @spreadsheet_import.import_errors.empty? ? [:other_errors] : []
+                         }
+                       end
       end
 
       protected

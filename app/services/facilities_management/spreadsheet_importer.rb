@@ -25,16 +25,27 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
+  # rubocop:disable Style/RedundantBegin
+
   def import_data
-    IMPORT_PROCESS_ORDER.each do |import_process|
-      send(import_process)
-      break if @errors.any?
+    begin
+      IMPORT_PROCESS_ORDER.each do |import_process|
+        send(import_process)
+        break if @errors.any?
+      end
+
+      return if spreadsheet_import_stopped? || spreadsheet_not_present?
+
+      imported_spreadsheet_data_valid? ? process_valid_import : process_invalid_import
+    rescue StandardError => e
+      @spreadsheet_import.update(import_errors: { other_errors: { generic_error: 'generic error' } })
+      @spreadsheet_import.fail!
+
+      Rollbar.log('error', e)
     end
-
-    return if spreadsheet_import_stopped? || spreadsheet_not_present?
-
-    imported_spreadsheet_data_valid? ? process_valid_import : process_invalid_import
   end
+
+  # rubocop:enable Style/RedundantBegin
 
   private
 

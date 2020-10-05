@@ -1702,13 +1702,20 @@ en:
         failed:
           building_name: Building name
           building_number: Building number
-          description: Your service and building information failed to  upload and we have provided a list of  issues to help you to fix these.
           error_description: Error description
+          service_name: Service name
+        failed_generic:
+          description: Your service and building information failed to upload.
+          generic_message: This is due to issues with your spreadsheet.
+          return_to_procurement_dashboard: Return to procurements dashboard
+          start_again: Start your upload again
+          what_next: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
+        failed_non_generic:
+          description: Your service and building information failed to upload and we have provided a list of  issues to help you to fix these.
           here_are_steps: Here are the steps you need to take next.
           hint_text: The information below is sorted in order of the ‘Services and buildings template’ tabs. If one of the tabs is missing, it means that there are no issues on that tab.
           list_of_issues: List of issues
           return_to_procurement_dashboard: Return to procurements dashboard
-          service_name: Service name
           start_again: Start your upload again
           step_1: Review all issues listed below
           step_2: Fix and edit your services and buildings template
