@@ -25,7 +25,6 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # rubocop:disable Style/RescueStandardError
   # rubocop:disable Style/RedundantBegin
 
   def import_data
@@ -46,7 +45,6 @@ class FacilitiesManagement::SpreadsheetImporter
     end
   end
 
-  # rubocop:enable Style/RescueStandardError
   # rubocop:enable Style/RedundantBegin
 
   private
