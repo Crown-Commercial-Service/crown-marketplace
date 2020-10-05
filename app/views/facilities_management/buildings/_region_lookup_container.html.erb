@@ -38,7 +38,7 @@
       <div class="govuk-body govuk-!-margin-bottom-2" id="region-text">
         <%= f.object.address_region %>
       </div>
-      <%= link_to t('.change'), '#select-a-region', class: "govuk-link #{'govuk-visually-hidden' unless multiple_regions?}", id: 'change-input-3', tabindex: input_visible?(full_region_visible? && !multiple_regions?) %>
+      <%= link_to t('.change'), '#select-a-region', class: "govuk-link #{'govuk-visually-hidden' unless multiple_regions?}", id: 'change-input-3', tabindex: input_visible?(full_region_visible? && multiple_regions?) %>
     </div>
 
     <div id="hidden-region-fields">
