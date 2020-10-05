@@ -26,9 +26,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
 
     @report.calculate_services_for_buildings @supplier_name, :da, true
-    @data = @report.results
+    ids = @active_procurement_buildings.joins(:building).pluck('facilities_management_buildings.id')
+    @data = @report.results.sort_by { |id, _| ids.index(id) }.to_h
+
     @report.calculate_services_for_buildings @supplier_name, :da, false
-    @data_no_cafmhelp_removed = @report.results
+    @data_no_cafmhelp_removed = @report.results.sort_by { |id, _| ids.index(id) }.to_h
   end
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
