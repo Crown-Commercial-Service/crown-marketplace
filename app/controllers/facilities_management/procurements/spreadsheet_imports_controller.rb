@@ -53,7 +53,7 @@ module FacilitiesManagement
       end
 
       def initialize_errors
-        @error_lists = if !@spreadsheet_import.import_errors.empty? && @spreadsheet_import.import_errors[:other_errors][:generic_error].present?
+        @error_lists = if @spreadsheet_import.import_errors.any? && @spreadsheet_import.import_errors[:other_errors] && @spreadsheet_import.import_errors[:other_errors][:generic_error].present?
                          { other_errors: @spreadsheet_import.import_errors[:other_errors] }
                        else
                          {
