@@ -1033,6 +1033,7 @@ en:
         enter_your_password: Enter your password
         please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
         problems_signing_in: Problems signing in
+        session_expired: Sorry, your session has timed out due to 30 minutes of inactivity. To continue using this service, you need to sign in again.
     tags:
       cannot_start: cannot start yet
       completed: completed
