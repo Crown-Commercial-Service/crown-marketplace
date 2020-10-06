@@ -34,8 +34,10 @@
     </div>
   </ol>
 </div>
-<div class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-width-two-thirds">
-  <%= t('.footer_information') %>
+<div class="govuk-body govuk-!-margin-top-2 govuk-!-width-two-thirds">
+  <strong class="govuk-!-font-weight-bold">
+    <%= t('.footer_information') %>
+  </strong>
 </div>
 <div>
   <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :patch do |f| %>
