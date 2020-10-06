@@ -38,6 +38,6 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
     raise ActionController::RoutingError, 'not found' if management_report.blank?
 
-    authorize! :view, management_report
+    authorize! :view, management_report if management_report.present?
   end
 end
