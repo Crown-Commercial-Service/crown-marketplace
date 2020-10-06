@@ -3,8 +3,8 @@
     <div class="govuk-body govuk-!-font-size-20 govuk-!-width-two-thirds">
         <%= t('.lead_in') %>
     </div>
-    <a href="<%= asset_path('Call-Off Schedule 2 - Staff Transfer (DA).docx', skip_pipeline: true)%>?format=doc" class="supplier-record__file-download" type="<%= t('common.type_doc') %>" download>
-        <%= t('.attachment_2') %> <span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
+    <a href="<%= asset_path(t('.attachment_2.file_name'), skip_pipeline: true)%>?format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
+        <%= t('.attachment_2.name') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
     </a>
     <h1 class="govuk-heading-m">
         <%= t('.form_title') %>
