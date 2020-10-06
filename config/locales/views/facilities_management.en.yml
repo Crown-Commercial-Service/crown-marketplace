@@ -1740,12 +1740,13 @@ en:
           review: After a successful upload, you can continue to review your procurement.
           warning_text: If it has been more than 5 mins, and the upload status has not changed after you have refreshed your browser click on the 'Return to upload your spreadsheet' link above to go back to retry the upload.
         new:
+          cancel_and_return: Cancel and return to services and buildings template
           check: How to check your spreadsheet is ready
           check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
           description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
           heading: Upload your spreadsheet
           once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
-          submit: Submit
+          submit: Upload my services and buildings
           upload: Upload your file
           upload_size: Supported format is .xlsx and maximum file is 10mb
           warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
