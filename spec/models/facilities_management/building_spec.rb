@@ -131,6 +131,24 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
+    context 'when the building name is duplicated but with added spaces' do
+      let(:duplicate_building) { create(:facilities_management_building, user: building.user) }
+
+      before do
+        building.update(building_name: 'building name 111')
+        duplicate_building.building_name = "  building    name \t  \n 111 \r"
+      end
+
+      it 'is not valid' do
+        expect(duplicate_building.valid?(:all)).to eq false
+      end
+
+      it 'is taken' do
+        duplicate_building.valid?(:all)
+        expect(duplicate_building.errors.details[:building_name].first[:error]).to eq :taken
+      end
+    end
+
     context 'when the building name is too long' do
       before do
         building.building_name = 'a' * 51

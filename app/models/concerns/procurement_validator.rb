@@ -113,7 +113,7 @@ module ProcurementValidator
     end
 
     def remove_excess_whitespace_from_name
-      self.contract_name = contract_name&.split&.join(' ')
+      contract_name&.squish!
     end
 
     #############################################
