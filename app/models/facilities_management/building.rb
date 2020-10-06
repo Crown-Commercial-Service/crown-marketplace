@@ -43,6 +43,7 @@ module FacilitiesManagement
                       { id: 'Hospitals', title: 'Hospitals', caption: 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.' },
                       { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
 
+    validate :remove_excess_spaces_from_building_name, on: %i[new building_details all]
     validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 50 }, on: %i[new building_details all]
     validates :description, length: { maximum: 50 }, on: %i[new building_details all]
 
@@ -139,6 +140,10 @@ module FacilitiesManagement
                     else
                       'Incomplete'
                     end
+    end
+
+    def remove_excess_spaces_from_building_name
+      building_name&.squish!
     end
 
     def building_ready?
