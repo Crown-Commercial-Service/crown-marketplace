@@ -1395,7 +1395,7 @@ en:
           payment_description: Please select the payment method that will be used
         pension_funds:
           attachment_2:
-            file_name: Call-off Schedule 2 - staff transfer (DA) v3.0.pdf
+            file_name: Call-Off Schedule 2 - Staff Transfer (DA) v3.0.pdf
             name: Call-off Schedule 2 - staff transfer
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
