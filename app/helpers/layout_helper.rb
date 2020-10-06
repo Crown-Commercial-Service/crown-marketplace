@@ -337,5 +337,12 @@ module LayoutHelper
       concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
     end
   end
+
+  def numbered_list_helper(heading, &block)
+    capture do
+      concat(content_tag(:h2, heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
+      concat(content_tag(:div, class: 'govuk-body govuk-!-padding-left-5', &block))
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

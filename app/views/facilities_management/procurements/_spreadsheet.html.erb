@@ -5,34 +5,30 @@
   <%= t('.instructions') %>
 </div>
 <div class="govuk-!-width-two-thirds">
-  <ol class="govuk-list govuk-list--number">
-    <li class="govuk-!-font-weight-bold govuk-!-font-size-24"><%= t('.download_the_template') %></li>
-    <div class="govuk-!-margin-top-2">
-      <%= t('.link') %>
-      <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-3">
-        <a href="<%= asset_path(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_NAME, skip_pipeline: true) %>?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
-          <%= t('.services_and_buildings_template') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
-        </a>
-      </div>
-      <%= t('.list_description', class: 'govuk-!-margin-top-4') %>
+  <%= numbered_list_helper(t('.download_the_template')) do %>
+    <%= t('.link') %>
+    <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-3">
+      <a href="<%= asset_path(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_NAME, skip_pipeline: true) %>?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
+        <%= t('.services_and_buildings_template') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
+      </a>
     </div>
+    <%= t('.list_description', class: 'govuk-!-margin-top-4') %>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-4">
       <li> <%= t('.list_information_1') %> </li>
       <li> <%= t('.list_information_2') %> </li>
       <li> <%= t('.list_information_3') %></li>
     </ul>
+  <% end %>
 
-    <li class="govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-4"><%= t('.uploading') %></li>
-    <div class="govuk-!-margin-top-2">
-      <%= t('.list_2_description_1') %>
-      <br/>
-      <%= t('.list_2_description_2') %>
-    </div>
-    <li class="govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-4"><%= t('.results') %></li>
-    <div class="govuk-!-margin-top-2">
-      <%= t('.list_3_description') %>
-    </div>
-  </ol>
+  <%= numbered_list_helper(t('.uploading')) do %>
+    <%= t('.list_2_description_1') %>
+    <br/>
+    <%= t('.list_2_description_2') %>
+  <% end %>
+
+  <%= numbered_list_helper(t('.results')) do %>
+    <%= t('.list_3_description') %>
+  <% end %>
 </div>
 <div class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-2 govuk-!-width-two-thirds">
   <%= t('.footer_information') %>
