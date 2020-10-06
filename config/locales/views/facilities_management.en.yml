@@ -3,16 +3,6 @@ en:
   activemodel:
     errors:
       models:
-        facilities_management/admin/management_report:
-          attributes:
-            end_date:
-              blank: You must enter a ‘To’ date
-              invalid: Enter a valid ‘To’ date
-              less_than_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
-              not_a_date: Enter a valid date
-            start_date:
-              blank: You must enter a ‘From’ date
-              invalid: Enter a valid ‘From’ date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -26,6 +16,17 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/admin/management_report:
+          attributes:
+            end_date:
+              blank: You must enter a ‘To’ date
+              invalid: Enter a valid ‘To’ date
+              must_be_before_start_date: The ‘To’ date must be the same or after the ‘From’ date
+              not_a_date: Enter a valid 'To' date
+            start_date:
+              blank: You must enter a ‘From’ date
+              invalid: Enter a valid ‘From’ date
+              not_a_date: Enter a valid 'From' date
         facilities_management/building:
           attributes:
             address_line_1:
@@ -413,14 +414,27 @@ en:
           dashboard_supplier_data: Supplier data
           dashboard_supplier_framework_data: Supplier framework data
           dashboard_supplier_prices: Manage supplier services, prices and regions
-      management_report:
-        breadcrumb_text_management_report: Management report
-        download_btn_text: Generate and download report
-        heading_sub: Download management data
-        heading_sub_detail: To generate a download file, please input your date range.
-        heading_title: Management report
-        return_link: Return to admin dashboard
-        there_is_a_problem: There is a problem
+      management_reports:
+        completed:
+          file_generated_date: Created on %{created_at}
+        generating_csv:
+          generating: Generating report
+          guidance: The report will be available for download shortly. Please click refresh on your browser until the report file is available for download.
+        new:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate and download report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          heading_title: Management report
+          return_link: Return to admin dashboard
+          there_is_a_problem: There is a problem
+        show:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate another report
+          heading_sub: Download management data
+          heading_sub_detail: 'Report for date range: %{start_date} - %{end_date}'
+          heading_title: Management report
+          return_link: Return to admin dashboard
       sessions:
         new:
           admin_sign_in_header: Sign in to your administration dashboard
