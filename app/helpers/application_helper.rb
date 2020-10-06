@@ -381,5 +381,17 @@ module ApplicationHelper
   def govuk_radio_driver
     content_tag(:div, t('common.radio_driver'), class: 'govuk-radios__divider')
   end
+
+  def warning_text(text)
+    content_tag(:div, class: 'govuk-warning-text') do
+      concat(content_tag(:span, '!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
+      concat(
+        content_tag(:strong, class: 'govuk-warning-text__text') do
+          concat(content_tag(:span, 'Warning', class: 'govuk-warning-text__assistive'))
+          concat(text)
+        end
+      )
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength
