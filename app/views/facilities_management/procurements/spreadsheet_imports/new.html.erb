@@ -45,7 +45,7 @@
   </div>
 
   <div class="govuk-!-margin-top-4">
-    <%= f.submit 'Upload my services and buildings', class: "govuk-button govuk-!-margin-top-4", 'aria-label': t('.submit') %>
-    <%= link_to 'Cancel and return to services and buildings template', facilities_management_procurement_path(id: @spreadsheet_import.procurement.id, 'spreadsheet': 'cancel'), class: 'govuk-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-left-4' %>
+    <%= f.submit t('.submit'), class: "govuk-button govuk-!-margin-top-4", 'aria-label': t('.submit') %>
+    <%= link_to t('.cancel_and_return'), facilities_management_procurement_path(id: @spreadsheet_import.procurement.id, 'spreadsheet': 'cancel'), class: 'govuk-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-left-4' %>
   </div>
 <% end %>
