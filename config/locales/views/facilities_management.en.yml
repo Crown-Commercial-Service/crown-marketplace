@@ -1608,7 +1608,7 @@ en:
       spreadsheet:
         cancel_and_return_link: Cancel and return to requirements
         continue_link: Continue to upload your file
-        download_the_template: Download the template
+        download_the_template: 1. Download the template
         footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to requirements' hyperlink on the bottom of the page.
         heading: Services and buildings - spreadsheet
         instructions: Instructions
@@ -1620,10 +1620,10 @@ en:
         list_information_1: building details - address, size, what its used for, security access requirements
         list_information_2: services - which services you wish to buy in each building
         list_information_3: service requirements - for example, what standard of service, which hours of the day, or how many lifts are in the building
-        results: Results
+        results: 3. Results
         save_and_return_link: Save and return to procurements dashboard
         services_and_buildings_template: Services and buildings template
-        uploading: Uploading your spreadsheet
+        uploading: 2. Uploading your spreadsheet
       spreadsheet_imports:
         error_partials:
           other_errors:
