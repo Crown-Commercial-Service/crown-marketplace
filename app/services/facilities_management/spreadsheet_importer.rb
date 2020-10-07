@@ -94,7 +94,7 @@ class FacilitiesManagement::SpreadsheetImporter
   def building_attribues(building_column)
     {
       user_email: @user.email,
-      building_name: building_column[1],
+      building_name: building_column[1].to_s,
       description: building_column[2],
       address_line_1: building_column[3],
       address_line_2: building_column[4],
