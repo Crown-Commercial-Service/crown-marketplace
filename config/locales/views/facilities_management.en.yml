@@ -1754,7 +1754,7 @@ en:
           processing: We are processing your file upload.
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
-          warning_text: If it has been more than 5 mins, and the upload status has not changed after you have refreshed your browser click on the 'Return to upload your spreadsheet' link above to go back to retry the upload.
+          warning_text: If it has been more than 5 mins, and the upload status has not changed after you have refreshed your browser, click on the 'Return to upload your spreadsheet' link above to go back to retry the upload.
         new:
           cancel_and_return: Cancel and return to services and buildings template
           check: How to check your spreadsheet is ready
