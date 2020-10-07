@@ -71,6 +71,9 @@ Rails.application.routes.draw do
         concerns :authenticatable
       end
     end
+
+    get 'active'  => 'base/sessions#active'
+    get 'timeout' => 'base/sessions#timeout'
   end
 
   namespace 'supply_teachers', path: 'supply-teachers' do
