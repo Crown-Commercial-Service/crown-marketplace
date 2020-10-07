@@ -1,5 +1,6 @@
 <%= render 'facilities_management/procurement_buildings/errors_on_show' %>
 <%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
+<%= content_for :page_title, t(".heading") %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l">

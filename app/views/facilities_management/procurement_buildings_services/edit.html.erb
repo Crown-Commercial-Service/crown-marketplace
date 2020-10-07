@@ -1,4 +1,4 @@
-<%= content_for :page_title, @building_service.name.html_safe %>
+<%= content_for :page_title, page_heading.html_safe %>
 <%= form_for form_model, url: facilities_management_procurement_buildings_service_path(@building_service.id), method: :put, html: {specialvalidation: true, novalidate: true, multipart: true} do |f| %>
   <div class="govuk-body govuk-grid-row procurement-building-service">
     <div class="govuk-grid-column-full">
