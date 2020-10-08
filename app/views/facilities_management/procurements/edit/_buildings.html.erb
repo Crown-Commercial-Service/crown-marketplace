@@ -52,15 +52,16 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <%= f.fields_for :procurement_buildings, @procurement_buildings do |pb_field|%>
+          <%= f.fields_for :procurement_buildings, @procurement_buildings, include_id: false do |pb_field|%>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-padding-right-2">
-                <fieldset class="govuk-fieldset <%= 'govuk-form-group--error' if f.object.errors.any? && pb_field.object.building.status == 'Ready' %>">
+                <div class="govuk-fieldset <%= 'govuk-form-group--error' if f.object.errors.any? && pb_field.object.building.status == 'Ready' %>">
                   <%= procurement_building_row(pb_field, pb_field.object.building, pb_field.object.id) %>
-                </fieldset>
+                </div>
+                <%= pb_field.hidden_field(:id) %>
               </td>
               <td class="govuk-table__cell govuk-!-padding-right-2"><%= govuk_tag(*pb_field.object.building.building_status)%></td>
-              <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.details'), facilities_management_procurement_edit_building_path(pb_field.object.building.id, procurement_id: @procurement.id), class: "govuk-link govuk-link--no-visited-state" %></td>
+              <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.details'), facilities_management_procurement_edit_building_path(pb_field.object.building.id, procurement_id: @procurement.id), class: "govuk-link govuk-link--no-visited-state", aria: { label: t('.details_link_aria_label', building_name: pb_field.object.name) } %></td>
             </tr>
           <% end %>
         </tbody>
