@@ -57,7 +57,7 @@ class ProcurementCsvExport
     'Optional call-off extensions',
     'Number of Buildings', # 20
     'Building Types',
-    'Services',
+    'Building services',
     'Building GIA sum total',
     'Building external area sum total',
     'Building regions', # 25

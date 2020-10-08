@@ -388,9 +388,7 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.where(
-        code: FacilitiesManagement::ServicesAndQuestions.get_codes_by_question(:service_standard)
-      ).map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
     end
 
     def active_procurement_building_region_codes
