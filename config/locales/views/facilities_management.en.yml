@@ -42,7 +42,8 @@ en:
             address_region:
               blank: You must select a region for your address
             address_town:
-              blank: Town or city name for this building must be 30 characters or less
+              blank: Enter the town or city
+              too_long: Town or city name for this building must be 30 characters or less
             base:
               not_selected: You must select an address to save a building
             building_name:
