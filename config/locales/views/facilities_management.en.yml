@@ -1316,6 +1316,7 @@ en:
           add_a_building: Add a building
           building_name_and_address: Building name and address
           details: Details
+          details_link_aria_label: Details for "%{building_name}"
           heading: Buildings
           how_it_works: How it works
           how_it_works_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
