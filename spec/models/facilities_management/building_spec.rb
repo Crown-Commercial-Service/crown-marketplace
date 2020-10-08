@@ -641,14 +641,32 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       context 'when saving address_town' do
+        before do
+          building.address_town = addresss_town
+          building.valid? :all
+        end
+
         context 'when blank' do
-          before do
-            building.address_town = nil
-            building.valid? :all
-          end
+          let(:addresss_town) { nil }
 
           it 'will be invalid' do
-            expect(building.errors.details.dig(:address_town).first.dig(:error)).to eq :blank
+            expect(building.errors[:address_town].any?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_town].first).to eq 'Enter the town or city'
+          end
+        end
+
+        context 'when too long' do
+          let(:addresss_town) { 'a' * 31 }
+
+          it 'will be invalid' do
+            expect(building.errors[:address_town].any?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_town].first).to eq 'Town or city name for this building must be 30 characters or less'
           end
         end
       end
