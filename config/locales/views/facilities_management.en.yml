@@ -1788,7 +1788,7 @@ en:
       summary:
         buildings:
           building: building
-          caption: The buildings below have been selected for this procurement. If you wish to add or remove services please click on the ‘change' button.
+          caption: The buildings below have been selected for this procurement. If you wish to add or remove buildings please click on the ‘change' button.
           change: Change
           heading: You have selected
           table_caption: Buildings
