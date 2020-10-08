@@ -39,6 +39,7 @@ end
 RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
   config.extend ControllerMacros, type: :controller
   config.include SpreadsheetImportHelper, type: :service
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

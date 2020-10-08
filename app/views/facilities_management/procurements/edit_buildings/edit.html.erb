@@ -1,0 +1,12 @@
+<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
+<%= content_for :page_title, pd.heading_details.text %>
+
+  <%= form_for @page_data[:model_object], url: facilities_management_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: @procurement), method: :put, html: { specialvalidation: params[:step] != 'building_details', novalidate: true, multipart: true } do |f| %>
+    <input type="hidden" name="step" value="<%= params[:step]%>"/>
+    <div class="govuk-!-width-two-thirds">
+      <%= render partial: "facilities_management/buildings/#{params[:step]}", locals: { f: f } %>
+    </div>
+    <%= govuk_continuation_buttons(*continuation_params(pd, f, params[:step])) %>
+    <span class="govuk-caption-m govuk-!-margin-top-3"><%= step_footer(params[:step].to_sym) %></span>
+  <% end %>
+<% end %>

@@ -21,6 +21,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
         expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
+
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        get :show, params: { id: procurement_building.id }
+
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
   end
 
   describe 'PATCH #update' do
@@ -28,7 +38,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
 
     context 'when updating a missing region' do
       before do
-        patch :update, params: { id: procurement_building.id, add_missing_region: 'Save and return', facilities_management_building: { address_region: address_region } }
+        patch :update, params: { id: procurement_building.id, step: 'missing_region', facilities_management_building: { address_region: address_region } }
       end
 
       context 'when the building has a region' do
@@ -44,6 +54,28 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
 
         it 'renders the edit page' do
           expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context 'when updating service selections' do
+      before do
+        patch :update, params: { id: procurement_building.id, step: 'buildings_and_services', facilities_management_procurement_building: { service_codes: service_codes } }
+      end
+
+      context 'when no services are selected' do
+        let(:service_codes) { [''] }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when services are selected' do
+        let(:service_codes) { ['', 'C.1'] }
+
+        it 'redirects to the procurement summary page' do
+          expect(response).to redirect_to facilities_management_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
         end
       end
     end

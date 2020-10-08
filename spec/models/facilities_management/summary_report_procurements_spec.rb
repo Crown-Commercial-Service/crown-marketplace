@@ -7,14 +7,19 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:report) { described_class.new(procurement.id) }
 
+  let(:lift_data) { [] }
+
   before do
+    procurement.send(:copy_procurement_buildings_gia)
+    lift_data&.each do |number_of_floors|
+      procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+    end
     report.calculate_services_for_buildings
   end
 
   describe '#assessed_value' do
     let(:code) { nil }
     let(:service_standard) { nil }
-    let(:lift_data) { nil }
     let(:no_of_appliances_for_testing) { nil }
     let(:no_of_building_occupants) { nil }
     let(:no_of_consoles_to_be_serviced) { nil }
@@ -27,7 +32,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       create(:facilities_management_procurement_building_service,
              code: code,
              service_standard: service_standard,
-             lift_data: lift_data,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
              no_of_building_occupants: no_of_building_occupants,
              no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced,
@@ -37,7 +41,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
              procurement_building: create(:facilities_management_procurement_building_no_services,
                                           procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
     end
-    # building gia = 1002
 
     context 'when one building and one service' do
       context 'when service is C.1 standard A' do
@@ -139,9 +142,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         let(:service_standard) { 'A' }
 
         it 'returns the right assessed value' do
-          procurement = procurement_building_service.procurement_building.procurement
-          report = FacilitiesManagement::SummaryReport.new(procurement.id)
-          report.calculate_services_for_buildings
           expect(report.assessed_value.round(2)).to eq 351.64
         end
       end
@@ -149,7 +149,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       context 'when service is C.5' do
         let(:code) { 'C.5' }
         let(:service_standard) { 'A' }
-        let(:lift_data) { %w[5 5 2 2] }
+        let(:lift_data) { [5, 5, 2, 2] }
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 3628.42
@@ -943,6 +943,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is K.4' do
         let(:code) { 'K.4' }
+        let(:tones_to_be_collected_and_removed) { 0 }
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 0.00
@@ -951,6 +952,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is K.5' do
         let(:code) { 'K.5' }
+        let(:tones_to_be_collected_and_removed) { 0 }
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 0.00
@@ -959,6 +961,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when service is K.6' do
         let(:code) { 'K.6' }
+        let(:tones_to_be_collected_and_removed) { 0 }
 
         it 'returns the right assessed value' do
           expect(report.assessed_value.round(2)).to eq 0.00
@@ -1582,7 +1585,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         create(:facilities_management_procurement_building_service,
                code: 'C.5',
                service_standard: 'A',
-               lift_data: %w[1000 1000 1000 1000],
                procurement_building: create(:facilities_management_procurement_building_no_services,
                                             procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period: 7)))
       end
@@ -1590,7 +1592,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         CCS::FM::Supplier.all.select do |s|
           s.data['lots'].find do |l|
             (l['lot_number'] == '1b') &&
-              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
+              ([procurement_building_service.procurement_building.address_region_code] - l['regions']).empty? &&
               ([procurement_building_service.code] - l['services']).empty?
           end
         end.first.data['supplier_name']
@@ -1601,14 +1603,19 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
           s.data['lots'].find do |l|
             (l['lot_number'] == '1a') &&
               !((l['lot_number'] == '1b') &&
-                ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
+                ([procurement_building_service.procurement_building.address_region_code] - l['regions']).empty? &&
                 ([procurement_building_service.code] - l['services']).empty?)
           end
         end.first.data['supplier_name']
       end
 
+      let(:lift_data) { [999, 999, 999, 999] }
+
       before do
         procurement_building_service.procurement_building.set_gia
+        lift_data.each do |number_of_floors|
+          procurement_building_service.lifts.create(number_of_floors: number_of_floors)
+        end
       end
 
       it 'shows suppliers that do provide the service in lot1b' do

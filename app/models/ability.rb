@@ -25,6 +25,7 @@ class Ability
   def admin_tool_specific_auth(user)
     can :read, :all
     can :manage, FacilitiesManagement::Admin if user.has_role? :fm_access
+    can :manage, FacilitiesManagement::Admin::ManagementReport if user.has_role? :fm_access
   end
 
   def fm_supplier_specific_auth(user)

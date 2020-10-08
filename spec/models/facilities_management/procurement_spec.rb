@@ -186,14 +186,14 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when there are no procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.destroy_all
-        expect(procurement.valid?(:procurement_buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to eq false
       end
     end
 
     context 'when there are no active procurement_buildings on the procurement_buildings step' do
       it 'expected to be invalid' do
         procurement.procurement_buildings.first.update(active: false)
-        expect(procurement.valid?(:procurement_buildings)).to eq false
+        expect(procurement.valid?(:buildings)).to eq false
       end
     end
 
@@ -201,7 +201,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'expected to be valid' do
         procurement.save
         procurement.procurement_buildings.create(active: true)
-        expect(procurement.valid?(:procurement_buildings)).to eq true
+        expect(procurement.valid?(:buildings)).to eq true
       end
     end
 
@@ -226,21 +226,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#find_or_build_procurement_building' do
-    let(:building_data) do
-      {
-        'name' => 'test',
-        'address' => {
-          'fm-address-line-1' => 'line 1',
-          'fm-address-line-2' => 'line 2',
-          'fm-address-town' => 'town',
-          'fm-address-county' => 'county',
-          'fm-address-postcode' => 'postcode'
-        }
-      }
-    end
-
-    let(:building_id) { SecureRandom.uuid }
+  describe '#create_new_procurement_buildings' do
+    let!(:building) { create(:facilities_management_building, user: procurement.user) }
+    let(:building_id) { building.id }
 
     context 'when procurement building already exists' do
       before do
@@ -249,145 +237,206 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
 
       it 'does not create a new one' do
-        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
+        expect { procurement.create_new_procurement_buildings }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
       end
     end
 
     context 'when procurement building does not exist' do
       it 'creates one' do
         procurement.save
-        expect { procurement.find_or_build_procurement_building(building_id) }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
+        expect { procurement.create_new_procurement_buildings }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
       end
 
-      it 'has the services already on it' do
+      it 'does not have any service codes present' do
         procurement.save
-        procurement.find_or_build_procurement_building(building_id)
-        expect(procurement.procurement_buildings.last.service_codes).to eq procurement.service_codes
-      end
-    end
-
-    context 'when the procurement building does exists' do
-      it 'does not change the service codes when they are updated on the procurement' do
-        procurement.save
-        procurement.find_or_build_procurement_building(building_id)
-        procurement.service_codes << 'C.5'
-        procurement.save
-        expect { procurement.find_or_build_procurement_building(building_id) }.not_to change(procurement.procurement_buildings.last.service_codes, :count)
+        procurement.create_new_procurement_buildings
+        expect(procurement.procurement_buildings.last.service_codes).to be_empty
       end
     end
   end
 
-  describe 'validations on :all' do
-    before { procurement.initial_call_off_start_date = DateTime.now.in_time_zone('London') + 1.day }
+  describe 'validations on :continue' do
+    let(:procurement) { create(:facilities_management_procurement_without_procurement_buildings, user: user) }
+    let(:building) { create(:facilities_management_building, user: user) }
 
-    context 'when the contract name is blank' do
-      it 'is expected to not be valid' do
-        procurement.contract_name = ''
-        expect(procurement.valid?(:all)).to eq false
+    context 'with valid scenarios' do
+      before do
+        procurement.update(service_codes: service_codes)
+        procurement.procurement_buildings.create(building_id: building.id, service_codes: service_codes, active: true)
+      end
+
+      context 'when all status are completed' do
+        let(:service_codes) { ['E.4'] }
+
+        before do
+          procurement.procurement_building_services.each do |procurement_building_service|
+            procurement_building_service.update(no_of_appliances_for_testing: 59)
+          end
+        end
+
+        it 'returns true' do
+          expect(procurement.valid?(:continue)).to eq true
+        end
+      end
+
+      context 'when all status are completed and service requirements are not_required' do
+        let(:service_codes) { ['C.19', 'D.3'] }
+
+        it 'returns true' do
+          expect(procurement.valid?(:continue)).to eq true
+        end
       end
     end
 
-    context 'when the estimated_annual_cost is blank' do
-      it 'is expected to not be valid' do
-        procurement.estimated_cost_known = nil
-        expect(procurement.valid?(:all)).to eq false
+    context 'with invalid scenarios' do
+      def continue_error_list
+        procurement.errors.details[:base].map.with_index { |detail, index| [detail[:error], procurement.errors[:base][index]] }.to_h
       end
-    end
 
-    context 'when the tupe is blank' do
-      it 'is expected to not be valid' do
-        procurement.tupe = nil
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
+      context 'when all statuses are not_started or cannot_start' do
+        before do
+          %i[estimated_cost_known tupe initial_call_off_period initial_call_off_start_date mobilisation_period_required extensions_required].each do |attribute|
+            procurement[attribute] = nil
+          end
+          procurement.service_codes = []
+          procurement.save
+          procurement.valid?(:continue)
+        end
 
-    context 'when the initial_call_off_period is blank' do
-      it 'is expected to not be valid' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
+        it 'is not valid' do
+          expect(procurement.errors.any?).to eq true
+        end
 
-    context 'when the initial_call_off_period is blank' do
-      it 'is expected to not be valid' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
+        it 'has the correct errors' do
+          expected_error_list = {
+            estimated_annual_cost_incomplete: '‘Estimated annual cost’ must be ‘COMPLETED’',
+            tupe_incomplete: '‘TUPE’ must be ‘COMPLETED’',
+            contract_period_incomplete: '‘Contract period’ must be ‘COMPLETED’',
+            services_incomplete: '‘Services’ must be ‘COMPLETED’',
+            buildings_incomplete: '‘Buildings’ must be ‘COMPLETED’',
+            buildings_and_services_incomplete: '‘Assigning services to buildings’ must be ‘COMPLETED’',
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
+          }
 
-    context 'when the initial_call_off_period is blank' do
-      it 'is expected to not be valid' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid?(:all)).to eq false
+          expect(continue_error_list).to eq expected_error_list
+        end
       end
-    end
 
-    context 'when the tupe is selected and mobilisation length is less than 4 weeks' do
-      it 'is expected to not be valid' do
-        procurement.tupe = true
-        procurement.mobilisation_period_required = true
-        procurement.mobilisation_period = 3
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
+      context 'when all other statuses are completed and buildings_and_services is incomplete' do
+        before do
+          procurement.procurement_buildings.create(building_id: building.id, active: true)
+          procurement.valid?(:continue)
+        end
 
-    context 'when the tupe is selected and mobilisation length is more than 4 weeks' do
-      it 'is expected to be valid' do
-        procurement.tupe = true
-        procurement.mobilisation_period = 5
-        expect(procurement.valid?(:all)).to eq true
-      end
-    end
+        it 'is not valid' do
+          expect(procurement.errors.any?).to eq true
+        end
 
-    context 'when the there are no procurement buildings' do
-      it 'is expected not to be valid' do
-        procurement.procurement_buildings.destroy_all
-        expect(procurement.valid?(:all)).to eq false
-      end
-    end
+        it 'has the correct errors' do
+          expected_error_list = {
+            buildings_and_services_incomplete: '‘Assigning services to buildings’ must be ‘COMPLETED’',
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
+          }
 
-    context 'when the there is a procurement building but no procurement_building_services' do
-      it 'is expected not to be valid' do
-        procurement.procurement_buildings.first.procurement_building_services.destroy_all
-        expect(procurement.valid?(:all)).to eq false
+          expect(continue_error_list).to eq expected_error_list
+        end
       end
-    end
 
-    context 'when the there is a procurement building with two procurement_building_services' do
-      it 'is expected to be valid' do
-        expect(procurement.valid?(:all)).to eq true
-      end
-    end
-  end
+      context 'when all other statuses are completed and service_requirements_status is incomplete' do
+        before do
+          procurement.procurement_buildings.create(building_id: building.id, service_codes: procurement.service_codes, active: true)
+          procurement.valid?(:continue)
+        end
 
-  describe '#valid_on_continue?' do
-    context 'when valid on all' do
-      it 'is expected to return false' do
-        expect(procurement.valid_on_continue?).to eq false
-      end
-    end
-  end
+        it 'is not valid' do
+          expect(procurement.errors.any?).to eq true
+        end
 
-  describe '#valid_on_continue' do
-    context 'when valid on all' do
-      it 'is expected to return true' do
-        procurement.save
-        expect(procurement.valid_on_continue?).to eq false
-      end
-    end
+        it 'has the correct errors' do
+          expected_error_list = {
+            service_requirements_incomplete: '‘Service requirements’ must be ‘COMPLETED’'
+          }
 
-    context 'when procurement not valid' do
-      it 'is expected to return false' do
-        procurement.initial_call_off_period = nil
-        expect(procurement.valid_on_continue?).to eq false
+          expect(continue_error_list).to eq expected_error_list
+        end
       end
-    end
 
-    context 'when procurement_building does not have procurement_building_services' do
-      it 'is expected to return false' do
-        procurement.procurement_buildings.first.procurement_building_services.destroy_all
-        expect(procurement.valid_on_continue?).to eq false
+      # rubocop:disable RSpec/NestedGroups
+      context 'when all services are completed' do
+        before do
+          procurement.procurement_buildings.create(building_id: building.id, service_codes: procurement.service_codes, active: true)
+
+          procurement.procurement_building_services.each do |procurement_building_service|
+            procurement_building_service.update(service_standard: 'A')
+          end
+        end
+
+        context 'and initial call off start date is in the past' do
+          before do
+            procurement.update(initial_call_off_start_date: Time.now.in_time_zone('London') - 10.days, mobilisation_period_required: false)
+            procurement.valid?(:continue)
+          end
+
+          it 'is not valid' do
+            expect(procurement.errors.any?).to eq true
+          end
+
+          it 'has the correct errors' do
+            expected_error_list = {
+              initial_call_off_period_in_past: 'Initial call-off period start date must not be in the past'
+            }
+
+            expect(continue_error_list).to eq expected_error_list
+          end
+        end
+
+        context 'and mobilisation period is in the past' do
+          before do
+            procurement.update(initial_call_off_start_date: Time.now.in_time_zone('London') + 2.days)
+            procurement.valid?(:continue)
+          end
+
+          it 'is not valid' do
+            expect(procurement.errors.any?).to eq true
+          end
+
+          it 'has the correct errors' do
+            expected_error_list = {
+              mobilisation_period_in_past: 'Mobilisation period start date must not be in the past'
+            }
+
+            expect(continue_error_list).to eq expected_error_list
+          end
+        end
+
+        context 'and mobilisation period is not valid for tupe' do
+          before do
+            procurement.update(tupe: true, mobilisation_period_required: false)
+            procurement.valid?(:continue)
+          end
+
+          it 'is not valid' do
+            expect(procurement.errors.any?).to eq true
+          end
+
+          it 'has the correct errors' do
+            expected_error_list = {
+              mobilisation_period_required: 'Mobilisation period length must be a minimum of 4 weeks when TUPE is selected'
+            }
+
+            expect(continue_error_list).to eq expected_error_list
+          end
+        end
+
+        context 'when a building is missing a region' do
+          before { procurement.procurement_buildings.first.building.update(address_region_code: nil) }
+
+          it 'is not valid' do
+            expect(procurement.valid?(:continue)).to eq false
+          end
+        end
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -450,7 +499,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
-      allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test], [:test1, da_value_test1]])
+      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_uuid, da_value: da_value_test }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test1 }])
     end
 
     context 'when no eligible suppliers' do
@@ -706,7 +755,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       let(:da_value_test3) { 2000 }
 
       before do
-        allow(obj).to receive(:sorted_list).and_return([[:test, da_value_test2], [:test1, da_value_test], [:test2, da_value_test3], [:test3, da_value_test1]])
+        allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: '1', da_value: da_value_test2 }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test }, { supplier_name: 'test2', supplier_id: '3', da_value: da_value_test3 }, { supplier_name: 'test3', supplier_id: '4', da_value: da_value_test1 }])
         allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
         allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
         allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
@@ -1232,6 +1281,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:building) { create :facilities_management_building_london }
 
     before do
+      procurement.send(:copy_procurement_buildings_gia)
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
       procurement.save
     end
@@ -1262,35 +1312,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       it 'does not set state to results' do
         expect(procurement.aasm_state).not_to eq 'results'
-      end
-    end
-  end
-
-  describe '.valid_on_continue?' do
-    context 'when the building is missing gia' do
-      it 'is not valid' do
-        procurement.active_procurement_buildings.first.update(service_codes: ['C.1'])
-        procurement.active_procurement_buildings.first.building.update(gia: 0)
-        procurement.reload
-        expect(procurement.valid_on_continue?).to eq false
-      end
-    end
-
-    context 'when the building is missing external_area' do
-      it 'is not valid' do
-        procurement.active_procurement_buildings.first.update(service_codes: ['G.5'])
-        procurement.active_procurement_buildings.first.building.update(external_area: 0)
-        procurement.reload
-        expect(procurement.valid_on_continue?).to eq false
-      end
-    end
-
-    context 'when the building is not missing gia or external_area' do
-      it 'is valid' do
-        procurement.active_procurement_buildings.first.update(service_codes: ['C.1', 'G.5'])
-        procurement.procurement_building_services.update(service_standard: 'A')
-        procurement.reload
-        expect(procurement.valid_on_continue?).to eq true
       end
     end
   end
@@ -1350,8 +1371,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '.procurement_buildings_status' do
-    subject(:status) { procurement.procurement_buildings_status }
+  describe '.buildings_status' do
+    subject(:status) { procurement.buildings_status }
 
     context 'when user has not yet selected buildings' do
       let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
@@ -1385,6 +1406,39 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '.buildings_and_services_completed' do
+    include_context 'with buildings and services'
+
+    before do
+      procurement_building1.update(service_codes: service_codes)
+      procurement_building2.update(service_codes: %w[C.1 C.2])
+    end
+
+    context 'when one building has no service codes' do
+      let(:service_codes) { [] }
+
+      it 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when one building has an invalid selection' do
+      let(:service_codes) { %w[M.1 N.1 O.1] }
+
+      it 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when both buildings have a valid selection' do
+      let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
+
+      it 'returns true' do
+        expect(procurement.buildings_and_services_completed?).to eq true
+      end
+    end
+  end
+
   describe '.buildings_and_services_status' do
     subject(:status) { procurement.buildings_and_services_status }
 
@@ -1393,7 +1447,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when both Services and Buildings tasks are not COMPLETED yet' do
       before do
         allow(procurement).to receive(:services_status).and_return(:not_started)
-        allow(procurement).to receive(:procurement_buildings_status).and_return(:not_started)
+        allow(procurement).to receive(:buildings_status).and_return(:not_started)
       end
 
       it 'shown with the CANNOT START YET status label' do
@@ -1404,7 +1458,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when both Services and Buildings tasks are COMPLETED' do
       before do
         allow(procurement).to receive(:services_status).and_return(:completed)
-        allow(procurement).to receive(:procurement_buildings_status).and_return(:completed)
+        allow(procurement).to receive(:buildings_status).and_return(:completed)
       end
 
       context 'when no service has been assigned to any building yet' do
@@ -1414,7 +1468,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
 
         it 'shown with the NOT STARTED status label' do
-          expect(status).to eq(:not_started)
+          expect(status).to eq(:incomplete)
         end
       end
 
@@ -1460,6 +1514,22 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement_building2.procurement_building_services.first.update(service_standard: 'A')
       end
 
+      context 'when no volumes or standards are required for any services' do
+        before do
+          procurement.update(service_codes: ['C.19', 'D.3'])
+
+          procurement_building1.procurement_building_services.delete_all
+          procurement_building2.procurement_building_services.delete_all
+
+          procurement_building1.update(service_codes: ['C.19'])
+          procurement_building2.update(service_codes: ['D.3'])
+        end
+
+        it 'shown with the NOT REQUIRED status label' do
+          expect(status).to eq(:not_required)
+        end
+      end
+
       context 'when all the buildings service requirements have not yet been COMPLETED' do
         before do
           procurement_building1.building.update(gia: 0)
@@ -1474,6 +1544,157 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when all buildings service requirements have been COMPLETED' do
         it 'shown with the COMPLETED status label' do
           expect(status).to eq(:completed)
+        end
+      end
+    end
+
+    context 'when having service which requires different units of measure' do
+      before do
+        allow(procurement).to receive(:buildings_and_services_status).and_return(:completed)
+
+        procurement_building1.procurement_building_services.delete_all
+        procurement_building2.procurement_building_services.delete_all
+
+        procurement_building1.update(service_codes: ['H.4'])
+        procurement_building2.update(service_codes: ['I.1'])
+
+        procurement_building1.procurement_building_services.first.update(service_hours: 123, detail_of_requirement: 'Some reason')
+        procurement_building2.procurement_building_services.first.update(service_hours: 456, detail_of_requirement: 'Some reason')
+      end
+
+      it 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.service_requirements_completed?' do
+    context 'when the building is missing gia' do
+      before do
+        procurement.active_procurement_buildings.first.update(service_codes: ['C.1'])
+        procurement.active_procurement_buildings.first.building.update(gia: 0)
+        procurement.reload
+      end
+
+      it 'is not completed' do
+        expect(procurement.service_requirements_completed?).to eq false
+      end
+    end
+
+    context 'when the building is missing external_area' do
+      before do
+        procurement.active_procurement_buildings.first.update(service_codes: ['G.5'])
+        procurement.active_procurement_buildings.first.building.update(external_area: 0)
+        procurement.reload
+      end
+
+      it 'is not completed' do
+        expect(procurement.service_requirements_completed?).to eq false
+      end
+    end
+
+    context 'when the building is not missing gia or external_area' do
+      before do
+        procurement.active_procurement_buildings.first.update(service_codes: ['C.1', 'G.5'])
+        procurement.procurement_building_services.update(service_standard: 'A')
+        procurement.reload
+      end
+
+      it 'is not completed' do
+        expect(procurement.service_requirements_completed?).to eq true
+      end
+    end
+  end
+
+  describe '.services' do
+    context 'when service codes are not in order' do
+      before { procurement.update(service_codes: %w[E.4 D.3 C.6 H.10 G.3 C.11 K.5 L.7 C.1 E.7 I.3 C.5 C.17 C.14]) }
+
+      it 'returns the service codes in the work_package order' do
+        expect(procurement.services.map(&:code)).to eq %w[C.1 C.6 C.11 C.5 C.14 C.17 D.3 E.7 E.4 G.3 H.10 I.3 K.5 L.7]
+      end
+    end
+  end
+
+  describe '.can_be_deleted?' do
+    state_with_results = {
+      quick_search: true,
+      detailed_search: true,
+      detailed_search_bulk_upload: true,
+      choose_contract_value: true,
+      results: true,
+      da_draft: true,
+      direct_award: false,
+      further_competition: false,
+      closed: false
+    }
+
+    state_with_results.each do |state, result|
+      context "when the procurement is in #{state}" do
+        before { procurement.update(aasm_state: state) }.to_s
+
+        it "#{result ? 'can' : 'cannot'} be deleted" do
+          expect(procurement.can_be_deleted?).to be result
+        end
+      end
+    end
+  end
+
+  describe '.building_data_frozen?' do
+    state_with_results = {
+      quick_search: false,
+      detailed_search: false,
+      detailed_search_bulk_upload: false,
+      choose_contract_value: true,
+      results: true,
+      da_draft: true,
+      direct_award: true,
+      further_competition: true,
+      closed: true
+    }
+
+    state_with_results.each do |state, result|
+      context "when the procurement is in #{state}" do
+        before { procurement.update(aasm_state: state) }.to_s
+
+        it "the building data #{result ? 'is' : 'is not'} frozen" do
+          expect(procurement.building_data_frozen?).to be result
+        end
+      end
+    end
+  end
+
+  describe '.procurement_buildings_missing_regions?' do
+    context 'when the procurement is in a quick_search state' do
+      before { procurement.update(aasm_state: 'quick_search') }
+
+      it 'returns false' do
+        expect(procurement.procurement_buildings_missing_regions?).to eq false
+      end
+    end
+
+    context 'when the procurement is in detailed_search' do
+      before { procurement.update(aasm_state: 'detailed_search') }
+
+      context 'when a building address region is nil' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: nil) }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is empty' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: '') }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is present' do
+        it 'returns false' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq false
         end
       end
     end

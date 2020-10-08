@@ -11,8 +11,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     it 'will redirect to buyer details' do
       get :show, params: { id: procurement.id }
 
-      expect(response.status).to eq(302)
-      expect(response.headers.any? { |h, v| h == 'Location' && v.include?('buyer_details') }).to eq(true)
+      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: controller.current_user.buyer_detail.id)
     end
   end
 
@@ -65,10 +64,10 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(response).to render_template('show')
         end
 
-        it 'sets the view name to detailed_search_summary' do
+        it 'sets the view name to requirements' do
           get :show, params: { id: procurement.id }
 
-          expect(assigns(:view_name)).to eq 'detailed_search_summary'
+          expect(assigns(:view_name)).to eq 'requirements'
         end
       end
 
@@ -235,12 +234,141 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         context 'when da_journey_state is contract_details' do
-          before { procurement.update(da_journey_state: 'contract_details') }
+          render_views
+
+          before do
+            procurement.update(da_journey_state: 'contract_details')
+          end
 
           it 'sets the view da to contract_details' do
             get :show, params: { id: procurement.id }
-
             expect(assigns(:view_da)).to eq 'contract_details'
+          end
+
+          it 'shows governing law question' do
+            get :show, params: { id: procurement.id }
+            expect(response.body).to match(/governing law/i)
+          end
+
+          context 'when editing contract details' do
+            before { get :edit, params: { id: procurement.id, step: step } }
+
+            context 'when on Payment method page' do
+              let(:step) { 'payment_method' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Invoicing contact details page' do
+              let(:step) { 'invoicing_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New invoicing contact details page' do
+              let(:step) { 'new_invoicing_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to invoicing contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'invoicing_contact_details')
+              end
+            end
+
+            context 'when on New invoicing address page' do
+              let(:step) { 'new_invoicing_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new invoicing contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_invoicing_contact_details')
+              end
+            end
+
+            context 'when on Authorised representative details page' do
+              let(:step) { 'authorised_representative' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New authorised representative details page' do
+              let(:step) { 'new_authorised_representative_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to authorised representative details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'authorised_representative')
+              end
+            end
+
+            context 'when on New authorised representative details add address page' do
+              let(:step) { 'new_authorised_representative_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new authorised representative details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_authorised_representative_details')
+              end
+            end
+
+            context 'when on Notices contact details page' do
+              let(:step) { 'notices_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on New notices contact details page' do
+              let(:step) { 'new_notices_contact_details' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to notices contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'notices_contact_details')
+              end
+            end
+
+            context 'when on New notices contact details add address page' do
+              let(:step) { 'new_notices_address' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to new notices contact details'
+                expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_procurement_path(procurement, step: 'new_notices_contact_details')
+              end
+            end
+
+            context 'when on Security policy document page' do
+              let(:step) { 'security_policy_document' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Local government pension scheme page' do
+              let(:step) { 'local_government_pension_scheme' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
+
+            context 'when on Governing law page' do
+              let(:step) { 'governing_law' }
+
+              it 'has correct backlink text and destination' do
+                expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
+                expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_path(procurement)
+              end
+            end
           end
         end
 
@@ -297,20 +425,50 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
 
-      context 'when the user wants to edit buildings_and_services' do
-        context 'when the buildings and services are not complete' do
-          it 'redirects to the edit page with contract_period step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+      context 'when the user wants to edit services' do
+        before { procurement.update(service_codes: service_codes) }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings_and_services')
+        context 'when the services are not complete' do
+          let(:service_codes) { [] }
+
+          it 'redirects to the edit page with services step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'services')
           end
         end
 
-        context 'when the buildings and services are complete' do
-          before { procurement.active_procurement_buildings.first.update(service_codes: ['C.1']) }
+        context 'when the services are complete' do
+          let(:service_codes) { ['C.1'] }
 
           it 'renders the summary page' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings_and_services' }
+            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
+
+            expect(response).to render_template(:summary)
+          end
+        end
+      end
+
+      context 'when the user wants to edit procurement_buildings' do
+        before do
+          procurement.active_procurement_buildings.each { |pb| pb.update(active: false) } if delete_procurement_buildings
+        end
+
+        context 'when there are no active_procurement_buildings' do
+          let(:delete_procurement_buildings) { true }
+
+          it 'redirects to the edit page with buildings step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings')
+          end
+        end
+
+        context 'when there are active_procurement_buildings' do
+          let(:delete_procurement_buildings) { false }
+
+          it 'renders the summary page' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
 
             expect(response).to render_template(:summary)
           end
@@ -351,8 +509,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             expect(response).to render_template('edit')
           end
 
-          it 'will have a view name of detailed_search_summary' do
-            expect(assigns(:view_name)).to eq 'detailed_search_summary'
+          it 'will have a view name of requirements' do
+            expect(assigns(:view_name)).to eq 'requirements'
           end
 
           it 'will set the view_da to nil' do
@@ -360,18 +518,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
 
-        context 'when the step is procurement_buildings' do
+        context 'when the step is buildings' do
           before do
             create :facilities_management_building, user: controller.current_user
-            get :edit, params: { id: procurement.id, step: 'procurement_buildings' }
+            get :edit, params: { id: procurement.id, step: 'buildings' }
           end
 
           it 'renders the edit page' do
             expect(response).to render_template('edit')
           end
 
-          it 'sets the buildings_data variable' do
-            expect(assigns(:buildings_data).length).to eq 1
+          it 'sets the procurement_buildings variable' do
+            expect(assigns(:procurement_buildings).length).to eq 1
           end
         end
       end
@@ -396,6 +554,37 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
           it 'will have a view_da of payment_method' do
             expect(assigns(:view_da)).to eq 'payment_method'
+          end
+        end
+
+        context 'when selecting the governing law question' do
+          render_views
+          before do
+            get :edit, params: { id: procurement.id, step: 'governing_law' }
+          end
+
+          it 'will render the edit view' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'will have a view name of edit' do
+            expect(assigns(:view_name)).to eq 'edit'
+          end
+
+          it 'will have a view_da of governing_law' do
+            expect(assigns(:view_da)).to eq 'governing_law'
+          end
+
+          it 'has links to documents' do
+            expect(response.body).to match(/core terms/i)
+            expect(response.body).to match(/schedule 24/i)
+            expect(response.body).to match(/schedule 25/i)
+          end
+
+          it 'has governing law options' do
+            expect(response.body).to match(/english law/i)
+            expect(response.body).to match(/scottish law/i)
+            expect(response.body).to match(/northern ireland law/i)
           end
         end
       end
@@ -500,7 +689,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       context 'when in bulk upload and saving for later' do
         before do
           procurement.update(aasm_state: 'detailed_search_bulk_upload')
-          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'Save for later' }
+          patch :update, params: { id: procurement.id, bulk_upload_spreadsheet: 'Save and return to procurements dashboard' }
         end
 
         it 'will remain in the bulk upload state' do
@@ -558,7 +747,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'with a valid procurement' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
@@ -574,7 +764,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'with an invalid procurement' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(false)
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
@@ -717,7 +908,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when the procurement is valid' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
 
@@ -739,7 +931,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             procurement.update(da_journey_state: 'sending')
             allow_any_instance_of(procurement.class).to receive(:procurement_suppliers).and_return([obj])
             allow(obj).to receive(:id).and_return(id)
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(true)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(true)
             allow_any_instance_of(procurement.class).to receive(:offer_to_next_supplier)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
@@ -761,7 +954,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
         context 'when the procurement is not valid' do
           before do
-            allow_any_instance_of(procurement.class).to receive(:valid_on_continue?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).and_return(false)
+            allow_any_instance_of(procurement.class).to receive(:valid?).with(:continue).and_return(false)
             patch :update, params: { id: procurement.id, continue_da: 'Save and continue' }
           end
 
@@ -1058,6 +1252,49 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'renders the edit page' do
             patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'local_government_pension_scheme', local_government_pension_scheme: false } }
             expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          end
+        end
+      end
+
+      context 'when on the governing law page' do
+        before do
+          procurement.update(aasm_state: 'da_draft')
+          procurement.update(da_journey_state: 'contract_details')
+          patch :update, params: {
+            id: procurement.id,
+            facilities_management_procurement: { step: 'governing_law', governing_law: governing_law }
+          }
+        end
+
+        context 'when nothing is selected' do
+          let(:governing_law) { nil }
+
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
+          end
+
+          it 'has a step of governing_law view' do
+            expect(controller.params[:step]).to eq 'governing_law'
+          end
+        end
+
+        context 'when a valid option is selected' do
+          let(:governing_law) { 'english' }
+
+          it 'redirects to show page' do
+            expect(response).to redirect_to(facilities_management_procurement_path(procurement))
+          end
+
+          it 'updates governing_law' do
+            expect(procurement.reload.governing_law).to eq governing_law
+          end
+        end
+
+        context 'when an invalid option is selected' do
+          let(:governing_law) { 'fried_eggs' }
+
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
           end
         end
       end
@@ -1550,6 +1787,149 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
         end
       end
+
+      describe '#pagination' do
+        let(:building1) { procurement.user.buildings.first }
+        let(:building2) { create(:facilities_management_building, user: procurement.user) }
+        let(:building3) { create(:facilities_management_building, user: procurement.user) }
+        let(:building4) { create(:facilities_management_building, user: procurement.user) }
+
+        let(:building1_active) { '1' }
+        let(:building2_active) { '0' }
+        let(:building3_active) { '0' }
+        let(:building4_active) { '0' }
+
+        before do
+          procurement.procurement_buildings.create(building_id: building2.id, active: false)
+          procurement.procurement_buildings.create(building_id: building3.id, active: false)
+          procurement.procurement_buildings.create(building_id: building4.id, active: false)
+        end
+
+        context 'when going to a different page' do
+          before do
+            ids = procurement.procurement_buildings.map(&:id)
+            patch :update, params: { id: procurement.id, blank: 'blank', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { id: ids[0], active: building1_active }, '1': { id: ids[1], active: building2_active }, '2': { id: ids[2], active: building3_active }, '3': { id: ids[3], active: building4_active } } } }
+          end
+
+          context 'when a building as checked' do
+            let(:building2_active) { '1' }
+
+            it 'adds to the active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids).sort).to eq [procurement.procurement_buildings[0].id, procurement.procurement_buildings[1].id].sort
+            end
+
+            it 'adds to the hidden_procurement_buildings' do
+              hidden_procurement_buildings = assigns(:hidden_procurement_buildings)
+              expect(hidden_procurement_buildings).to include procurement.procurement_buildings[0]
+              expect(hidden_procurement_buildings).to include procurement.procurement_buildings[1]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+
+          context 'when a building as un-checked' do
+            let(:building1_active) { '0' }
+
+            it 'takes away from the active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids)).to eq []
+            end
+
+            it 'does not change hidden_procurement_buildings' do
+              expect(assigns(:hidden_procurement_buildings)).to eq [procurement.procurement_buildings[0]]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+
+          context 'when no buildings are checked' do
+            it 'does not change active_procurement_buildigns_ids' do
+              expect(assigns(:active_procurement_building_ids)).to eq [procurement.procurement_buildings[0].id]
+            end
+
+            it 'does not change hidden_procurement_buildings' do
+              expect(assigns(:hidden_procurement_buildings)).to eq [procurement.procurement_buildings[0]]
+            end
+
+            it 'updates the page param' do
+              expect(controller.params[:page]).to eq '2'
+            end
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+          end
+        end
+
+        context 'when clicking save and continue' do
+          before do
+            ids = procurement.procurement_buildings.map(&:id)
+            patch :update, params: { id: procurement.id, buildings: 'Save and continue', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { id: ids[0], active: building1_active }, '1': { id: ids[1], active: building2_active }, '2': { id: ids[2], active: building3_active }, '3': { id: ids[3], active: building4_active } } } }
+          end
+
+          context 'when the selection is valid' do
+            let(:building2_active) { '1' }
+
+            before do
+              procurement.reload
+            end
+
+            it 'updates the database' do
+              expect(procurement.active_procurement_buildings.length).to eq 2
+            end
+
+            it 'redirects to the summary page' do
+              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'buildings')
+            end
+          end
+
+          context 'when the selection is not valid' do
+            let(:building1_active) { '0' }
+
+            it 'renders the edit page' do
+              expect(response).to render_template :edit
+            end
+
+            it 'stays on same page' do
+              expect(controller.params[:page]).to eq '1'
+            end
+          end
+        end
+      end
+    end
+
+    describe 'GET delete' do
+      context 'when the user wants to delete the procurement' do
+        before do
+          get :delete, params: { procurement_id: procurement.id }
+        end
+
+        it 'renders the delete page' do
+          expect(response).to render_template :delete
+        end
+      end
+
+      context 'when the user tries to delete a procurement that cannot be deleted' do
+        before do
+          procurement.update(aasm_state: 'closed')
+          get :delete, params: { procurement_id: procurement.id }
+        end
+
+        it 'redirects facilities_management_procurements' do
+          expect(response).to redirect_to facilities_management_procurements_path
+        end
+      end
     end
 
     describe 'POST destroy' do
@@ -1562,8 +1942,19 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.class.where(id: procurement.id)).not_to exist
         end
 
-        it 'redirects facilities_management_procurements_url' do
-          expect(response).to redirect_to facilities_management_procurements_url(deleted: procurement.contract_name)
+        it 'redirects facilities_management_procurements_path' do
+          expect(response).to redirect_to facilities_management_procurements_path(deleted: procurement.contract_name)
+        end
+      end
+
+      context 'when the user tries to delete a procurement that cannot be deleted' do
+        before do
+          procurement.update(aasm_state: 'closed')
+          post :destroy, params: { id: procurement.id }
+        end
+
+        it 'redirects facilities_management_procurements' do
+          expect(response).to redirect_to facilities_management_procurements_path
         end
       end
     end

@@ -1,16 +1,15 @@
 class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesManagement::FrameworkController
   before_action :set_building_and_service_data
   before_action :authorize_user
-  before_action :set_back_path
   before_action :set_partial
-  before_action :set_lift_count
+  before_action :create_first_lift, if: -> { @partial_prefix == 'lifts' }, only: :edit
 
   def edit; end
 
   def update
     case params[:facilities_management_procurement_building_service][:service_question]
     when 'lifts'
-      update_lifts
+      update_procurement_building_service(lift_params, :lifts)
     when 'service_hours'
       update_procurement_building_service(service_hours_params, :service_hours)
     when 'volumes'
@@ -25,17 +24,6 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   end
 
   private
-
-  def update_lifts
-    @building_service.assign_attributes(lift_params)
-    @building_service.lift_data&.reject!(&:blank?)
-    if @building_service.save(context: :lifts)
-      redirect_to facilities_management_procurement_building_path(@procurement_building)
-    else
-      set_lift_count
-      render :edit
-    end
-  end
 
   def update_procurement_building_service(pbs_params, context)
     @building_service.assign_attributes(pbs_params)
@@ -71,19 +59,13 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     @building.errors.empty?
   end
 
-  def set_lift_count
-    @lift_count = 1 if @building_service[:lift_data].blank?
-
-    @lift_count = @building_service[:lift_data]&.length if @building_service[:lift_data]&.any?
-  end
-
   def set_partial
     @partial_prefix = params[:service_question]
   end
 
   def lift_params
     params.require(:facilities_management_procurement_building_service)
-          .permit(:lift_data, lift_data: [])
+          .permit(lifts_attributes: %i[id number_of_floors _destroy])
   end
 
   def service_hours_params
@@ -114,16 +96,16 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
     @building_service = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
     @procurement_building = @building_service.procurement_building
     @building = @procurement_building.building
-    @building_data = @building.building_json
+    @procurement = @procurement_building.procurement
   end
 
-  def set_back_path
-    @back_link = :back
+  def create_first_lift
+    @building_service.lifts.build if @building_service.lifts.empty?
   end
 
   protected
 
   def authorize_user
-    authorize! :manage, @procurement_building.procurement
+    authorize! :manage, @procurement
   end
 end

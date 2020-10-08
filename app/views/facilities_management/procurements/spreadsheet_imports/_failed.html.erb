@@ -1,1 +1,5 @@
-Your upload has failed.
+<% if @error_lists.size == 1 && @error_lists[:other_errors][:generic_error].present? %>
+  <%= render partial: 'failed_generic'%>
+<% else %>
+  <%= render partial: 'failed_non_generic'%>
+<% end %>

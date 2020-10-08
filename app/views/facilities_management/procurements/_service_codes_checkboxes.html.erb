@@ -3,13 +3,11 @@
     <%= heading %>
   </h2>
 </fieldset>
-<p class="govuk-caption-m govuk-!-margin-top-0">
+<p class="govuk-caption-m govuk-!-margin-top-0" id="service-caption">
   <%= subtitle %>
 </p>
 <p class="govuk-!-margin-bottom-1">
-  <a href="<%= Marketplace.service_information_doc %>?format=doc" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>" class="govuk-!-padding-left-8 supplier-record__file-download" type="<%= t('common.type_doc') %>">
-    <%= service_specification_doc %><span class="govuk-visually-hidden"><%= t('common.doc_html') %></span>
-  </a>
+  <%= service_specification_document %>
 </p>
 <p class="govuk-caption-m govuk-!-margin-top-0"><%= t('.caption2') %></p>
 <%= display_error @procurement, :service_codes %>

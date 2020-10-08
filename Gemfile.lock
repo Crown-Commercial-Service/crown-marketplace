@@ -84,6 +84,7 @@ GEM
       unf
     ast (2.4.1)
     attr_required (1.0.1)
+    auto-session-timeout (0.9.6)
     aws-eventstream (1.1.0)
     aws-partitions (1.318.0)
     aws-sdk-cognitoidentityprovider (1.23.0)
@@ -562,6 +563,7 @@ DEPENDENCIES
   activerecord-postgis-adapter (>= 5.2.2)
   amoeba (>= 3.1.0)
   asset_sync
+  auto-session-timeout (~> 0.9.6)
   aws-sdk-cognitoidentityprovider (~> 1.23.0)
   aws-sdk-s3 (~> 1)
   axlsx!

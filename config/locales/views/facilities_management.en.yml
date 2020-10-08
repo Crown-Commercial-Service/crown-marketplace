@@ -3,16 +3,6 @@ en:
   activemodel:
     errors:
       models:
-        facilities_management/admin/management_report:
-          attributes:
-            end_date:
-              blank: You must enter a ‘To’ date
-              invalid: Enter a valid ‘To’ date
-              less_than_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
-              not_a_date: Enter a valid date
-            start_date:
-              blank: You must enter a ‘From’ date
-              invalid: Enter a valid ‘From’ date
         facilities_management/journey/choose_locations:
           attributes:
             region_codes:
@@ -26,13 +16,24 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/admin/management_report:
+          attributes:
+            end_date:
+              blank: You must enter a ‘To’ date
+              invalid: Enter a valid ‘To’ date
+              must_be_before_start_date: The ‘To’ date must be the same or after the ‘From’ date
+              not_a_date: Enter a valid 'To' date
+            start_date:
+              blank: You must enter a ‘From’ date
+              invalid: Enter a valid ‘From’ date
+              not_a_date: Enter a valid 'From' date
         facilities_management/building:
           attributes:
-            address:
-              not_selected: You must select an address to save a building
             address_line_1:
-              blank: Building and street name must be 100 characters or less
-              too_short: Building and street name must be 100 characters or less
+              blank: Add a building and street name
+              too_long: Building and street name must be 100 characters or less
+            address_line_2:
+              too_long: Building and street name must be 100 characters or less
             address_postcode:
               blank: Enter a valid postcode, like AA1 1AA
               invalid: Enter a valid postcode, like AA1 1AA
@@ -42,9 +43,12 @@ en:
               blank: You must select a region for your address
             address_town:
               blank: Town or city name for this building must be 30 characters or less
+            base:
+              not_selected: You must select an address to save a building
             building_name:
               blank: Enter a name for your building
-              too_long: Building name must be 25 characters or less
+              taken: This building name is already in use
+              too_long: Building name must be 50 characters or less
             building_type:
               blank: You must select a buiding type or describe your own
             description:
@@ -52,20 +56,21 @@ en:
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0.
-              not_an_integer: Enter a whole number for the size of internal area of this building
+              less_than_or_equal_to: External area must be a number between 0 and 999,999,999
+              not_a_number: External area must be a whole number
+              not_an_integer: Enter a whole number for the size of external area of this building
               required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0.
+              less_than_or_equal_to: Internal area must be a number between 0 and 999,999,999
+              not_a_number: Gross Internal Area (GIA) must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
               required: Gross Internal Area (GIA) must be greater than 0
             other_building_type:
               blank: You must enter your description of a building type
             other_security_type:
               blank: You must describe the security clearance level
-            postcode_entry:
-              blank: You must select an address to save a building
-              invalid: Enter a valid postcode, like AA1 1AA
             security_type:
               blank: You must select a security clearance level
         facilities_management/buyer_detail:
@@ -106,7 +111,17 @@ en:
         facilities_management/procurement:
           attributes:
             base:
+              buildings_and_services_incomplete: "‘Assigning services to buildings’ must be ‘COMPLETED’"
+              buildings_incomplete: "‘Buildings’ must be ‘COMPLETED’"
+              contract_period_incomplete: "‘Contract period’ must be ‘COMPLETED’"
+              estimated_annual_cost_incomplete: "‘Estimated annual cost’ must be ‘COMPLETED’"
+              initial_call_off_period_in_past: Initial call-off period start date must not be in the past
+              mobilisation_period_in_past: Mobilisation period start date must not be in the past
+              mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
+              service_requirements_incomplete: "‘Service requirements’ must be ‘COMPLETED’"
+              services_incomplete: "‘Services’ must be ‘COMPLETED’"
               services_not_present: You must select at least one service
+              tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
               not_present: You must answer the question about ‘Contract name’
@@ -123,7 +138,11 @@ en:
               inclusion: Select one option
               not_present: You must answer the question about ‘Estimated annual cost’
             extensions_required:
-              inclusion: Select yes if you want to extend your call-off contract
+              inclusion: Select one option for call-off contract extension
+            governing_law:
+              blank: Select one option
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Governing law’
             initial_call_off_end_date:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
@@ -150,7 +169,7 @@ en:
               blank: Please select one option
               inclusion: Please select one option
             mobilisation_period:
-              blank: Enter mobilisation length
+              blank: Enter mobilisation period length
               greater_than: Mobilisation length must be between 1 and 52 weeks
               greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
               less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
@@ -158,10 +177,10 @@ en:
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_period_required:
-              inclusion: Select yes if you need a mobilisation period
+              inclusion: Select one option for mobilisation period
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
-              greater_than: Mobilisation start date must be today or in the future
+              greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
             name:
               blank: Enter the name for the search
               invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
@@ -191,8 +210,8 @@ en:
             procurement_building_services:
               invalid_html: You have to answer one or more questions on "%{building_name}". Service requirement status must be ‘Complete’
             procurement_buildings:
-              invalid: Select one or more buildings you want to include in your procurement
-              not_present: You must select at least one building
+              invalid: Select at least one building
+              not_present: Select at least one building
             region_codes:
               blank: Select at least one region you need to include in your procurement
               invalid: Select at least one region you need to include in your procurement
@@ -215,6 +234,13 @@ en:
             service_codes:
               blank: Select at least one service you need to include in your procurement
               invalid: Select at least one service you need to include in your procurement
+              invalid_billable: You must select another service to include 'Management of billable works'
+              invalid_cafm: You must select another service to include 'CAFM system'
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works'
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services'
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'
+              invalid_helpdesk: You must select another service to include 'Helpdesk services'
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
             tupe:
               inclusion: Select one option
               not_present: You must answer the question about ‘TUPE’
@@ -245,27 +271,19 @@ en:
               gia_too_small: You have a service in ‘%{building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size
             service_codes:
               at_least_one: You must select at least one service for ‘%{building_name}’ building
-              invalid: Select at least one service for each building
-              invalid_billable: You must select another service to include 'Management of billable works' to '%{building_name}' building
-              invalid_cafm: You must select another service to include 'CAFM system' to '%{building_name}' building
-              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works' to '%{building_name}' building
-              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services' to '%{building_name}' building
-              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
-              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '%{building_name}' building"
-              invalid_helpdesk: You must select another service to include 'Helpdesk services' to '%{building_name}' building
-              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works' to '%{building_name}' building
+              invalid: You must select at least one service for this building
+              invalid_billable: You must select another service to include 'Management of billable works'
+              invalid_cafm: You must select another service to include 'CAFM system'
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works'
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services'
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
+              invalid_helpdesk: You must select another service to include 'Helpdesk services'
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
         facilities_management/procurement_building_service:
           attributes:
             detail_of_requirement:
               blank: Enter the detail of requirement
-            lift_data:
-              above_maximum: The maximum number of lifts is 99
-              greater_than: The number of floors accessed must be a whole number greater than 0
-              less_than: Enter a whole number between 1 and 999
-              not_an_integer: The number of floors accessed must be a whole number greater than 0
-              required: The number of floors accessed must be a whole number greater than 0
-              too_long: Enter a whole number between 1 and 999
-              too_short: The number of floors accessed must be a whole number greater than 0
             no_of_appliances_for_testing:
               blank: Enter number of portable appliances
               invalid: The number of portable appliances must be a whole number between 1 and 999,999,999
@@ -290,6 +308,13 @@ en:
             tones_to_be_collected_and_removed:
               blank: Enter number of tonnes
               invalid: The number of tonnes must be a whole number between 1 and 999,999,999
+        facilities_management/procurement_building_service_lift:
+          attributes:
+            number_of_floors:
+              greater_than: Enter a whole number between 1 and 999
+              less_than: Enter a whole number between 1 and 999
+              not_a_number: The number of floors accessed must be a whole number and greater than 0
+              not_an_integer: Enter a whole number between 1 and 999
         facilities_management/procurement_contact_detail:
           attributes:
             email:
@@ -386,14 +411,27 @@ en:
           dashboard_supplier_data: Supplier data
           dashboard_supplier_framework_data: Supplier framework data
           dashboard_supplier_prices: Manage supplier services, prices and regions
-      management_report:
-        breadcrumb_text_management_report: Management report
-        download_btn_text: Generate and download report
-        heading_sub: Download management data
-        heading_sub_detail: To generate a download file, please input your date range.
-        heading_title: Management report
-        return_link: Return to admin dashboard
-        there_is_a_problem: There is a problem
+      management_reports:
+        completed:
+          file_generated_date: Created on %{created_at}
+        generating_csv:
+          generating: Generating report
+          guidance: The report will be available for download shortly. Please click refresh on your browser until the report file is available for download.
+        new:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate and download report
+          heading_sub: Download management data
+          heading_sub_detail: To generate a download file, please input your date range.
+          heading_title: Management report
+          return_link: Return to admin dashboard
+          there_is_a_problem: There is a problem
+        show:
+          breadcrumb_text_management_report: Management report
+          download_btn_text: Generate another report
+          heading_sub: Download management data
+          heading_sub_detail: 'Report for date range: %{start_date} - %{end_date}'
+          heading_title: Management report
+          return_link: Return to admin dashboard
       sessions:
         new:
           admin_sign_in_header: Sign in to your administration dashboard
@@ -467,118 +505,129 @@ en:
       or_text: or
       selectall_text: Select all
     buildings:
-      add_address:
-        add_address_header: Address
-        description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-        line_1_of_2: Building and street line 1 of 2
-        line_2_of_2: Building and street line 2 of 2 (optional)
-        postcode: Postcode
-        town_or_city: Town or city
+      action_partials:
+        add_address:
+          add_address_header: Address
+          description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+          line_1_of_2: Building and street line 1 of 2
+          line_2_of_2: Building and street line 2 of 2 (optional)
+          postcode: Postcode
+          town_or_city: Town or city
+        show:
+          caption_addr: Address
+          caption_desc: Description (optional)
+          caption_external_area: External area
+          caption_gia: Gross internal area
+          caption_name: Name
+          caption_region_nuts: Region
+          caption_sec: Security clearance
+          caption_type: Building type
+          complete_text: This building is ready to use in procurements.
+          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+          section-header: Building details summary
+          status: 'Status:'
       area:
         description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
         external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
         external_area_header: What's the size of the external area?
-        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link</a>.'
+        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
         gia_header: What’s the size of the internal area of this building?
         guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
-      details_form:
-        address: Address
-        address_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">What is the address?</h2><span class="govuk-caption-m govuk-!-margin-top-0">We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.</span>
+      building_details:
         building_name_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</h2><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
-        cant_find_address: I can’t find my building’s address in the list
-        change: Change
         description_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</h2> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
-        find_address: Find address
-        option_with_data_plural: "{%} addresses found"
-        option_with_data_single: 1 address found
-        postcode: Postcode
-        region: Region
-        region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
-        region_option_with_data_plural: "{%} regions found"
-        region_option_with_data_single: 1 region found
-        select_a_region: Select a region
-        select_an_address: Select an address
-        zero_address_found: 0 addresses found
-        zero_regions_found: 0 regions found
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
-        column_name_header: Name
+        column_name_header: Building name
         column_status_header: Status
         create_new_button: Add a building
-        go_to_procurements_dashboard: Go to procurements dashboard
+        how_it_works: How it works
         link_to_building_summary: View details for
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
+        return_to_your_account: Return to your account
         start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
         start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
         start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
+      other:
+        other: Other
       page_definitions:
         add_building_address: Add building address
-        building_size: Internal and external areas
-        building_type: Building type
-        change_building_details: Building details
+        building_details: Building details
         create_new_building: Save and continue
         create_single_building: Add a building
+        gia: Internal and external areas
         manage_building_title: Buildings
+        return_to_building_details: Return to building details
+        return_to_building_details_summary: Return to building details summary
+        return_to_building_size: Return to building size
+        return_to_building_type: Return to building type
+        return_to_buildings: Return to buildings
         return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
         save_and_return_to_detailed_summary: Save and return to building details summary
-        security_clearance: Security clearance
+        security: Security clearance
         skip_this_step: Skip this step
+        type: Building type
+      postcode_lookup_container:
+        address: Address
+        address_plural: addresses found
+        address_singular: address found
+        cant_find_address: I can’t find my building’s address in the list
+        change: Change
+        find_address: Find address
+        option_text: "%{number} %{location} found"
+        please_select_address: Please select an address
+        postcode: Postcode
+        select_an_address: Select an address
+        what_is_address: What is the address?
+        what_is_address_description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+      region_lookup_container:
+        change: Change
+        option_text: "%{number} %{location} found"
+        please_select_a_region: Please select a region
+        region: Region
+        region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
+        region_plural: regions found
+        region_singular: region found
+        select_a_region: Select a region
       security:
-        building_details_summary: Building details summary
         describe_security: Describe security level
-        next_step: 'Next:'
-        other: Other
         security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
         select_security: Select the level of security clearance needed
       show:
-        add_address_text: Add address
-        add_desc_text: Add description
-        add_name_text: Add name
         answer_question_text: Answer question
-        caption_addr: Address
-        caption_desc: Description (optional)
-        caption_external_area: External area
-        caption_gia: Gross internal area
-        caption_name: Name
-        caption_region_nuts: Region
-        caption_sec: Security clearance
-        caption_type: Building type
         change_text: Change
-        complete_text: This building is ready to use in procurements.
-        incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
-        section-header: Building details summary
-        select_one_option_text: Please select one option
+        return_to_buildings: Return to buildings
       step_footer:
         step_footer: 'Next: %{description}'
       step_title:
-        step_title: Step %{position} of %{total}
+        step_title: Step %{position} of 4
       type:
         choose_building_type: Choose the building type that best describes your building
         describe_building: Describe building type
         help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
-        other: Other
         view_more: View more building types
     buyer_account:
       buyer_account:
         buyer_account_dashboard: Buyer account dashboard
         buyer_account_title: Your account
         manage_account_desc: Update and edit your contact details
-        manage_account_link: Manage my account
+        manage_account_link: Manage my details
         manage_buildings: Manage my buildings
         manage_buildings_desc: Set up and manage your buildings for use in procurements
         manage_procurements_desc: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
         manage_procurements_link: Continue a procurement
         new_procurement_desc: Quickly view suppliers who can provide services to your locations
         quick_view: Quick view suppliers
-        return_to_page: To return to this page at any time, just click on 'My account' in the top right hand corner of your screen.
+        return_to_page: To return to this page at any time, just click on 'My account'.
         start_procurement_desc: See shortlisted suppliers, estimated contract costs, and explore direct award or further competition options
         start_procurement_link: Start a procurement
     buyer_details:
       edit:
+        back: Return to your account
         buyer_details: Manage your details
         cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
@@ -598,6 +647,7 @@ en:
         your_details: Personal details
       edit_address:
         add_address: Add address
+        back: Return to manage your details
         building_and_street: Building and street
         county: County (optional)
         manage_details: Manage your details
@@ -605,14 +655,18 @@ en:
         submit: Save and continue
         town_or_city: Town or city
         your_details: Organisation address
+    documents:
+      service_specification_document:
+        name: RM3830 Service requirements and standards.pdf
+        text: Read the service specification document
     home:
       index:
-        1_title: 1. Quick search
+        1_title: 1. Quick view suppliers
         1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
         1_you_will_tell_us_html: |
           <li>which services you are looking for</li>
           <li>building locations and information</li>
-        2_title: 2. Detailed search
+        2_title: 2. Start a procurement
         2_we_will_tell_you_html: |
           <li>which sub-lot is suitable</li>
           <li>an estimated contract cost</li>
@@ -663,19 +717,29 @@ en:
         no_locations_selected: No regions selected
         question: Where are your buildings located?
         remove_all: Remove all
+        return_text: Return to your account
         subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
       choose_services:
+        caption: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
+        caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         heading: Services
-        learn_more: Learn more (opens in a new tab)
+        learn_more: Further details (opens in a new tab)
         no_services_selected: No services selected
         question: Select the facilities management services that you need
         remove_all: Remove all
+        return_text: Return to your account
         service_selected: service selected
-        service_specification_doc: Read the service specification document
         services_selected: services selected
         start_a_new_procurement_header: Services
-        subtitle: Choose all facilities management services required within your estate, even if you want services in just one building.
     procurement_buildings:
+      buildings_and_services:
+        heading: Assigning services to a building
+        or: or
+        question: Which of your services are required within this building?
+        return_link: Return to assigning services to buildings summary page
+        save_and_return: Save and return
+        select_all: Select all
+        select_all_that_apply: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on 'services' in section 2.
       missing_region:
         building_address: Building address
         building_name: Building name
@@ -693,13 +757,16 @@ en:
         change: Change
         description: Description
         detail_of_requirement: Detail of requirement
+        external_area_error: External area must be greater than 0
+        gia_error: Gross internal area must be greater than 0
         heading: Service requirements
         help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
         help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
         list_item_1: Service volumes - this is where you can check or input the volume required for each service.
-        list_item_2: Service standards - this is where you can select the standard of service required.
+        list_item_2: Service standards - if applicable, this is where you can select the standard of service required.
         list_title: 'All the services that you require for this building are listed below, split into two sections:'
-        return_to_requirements: Return to requirements
+        no_data: No input required
+        return_to_requirements: Return to service requirements summary
         service_name: Service name
         service_standards: 2. Service standards
         service_volumes: 1. Service volumes
@@ -732,10 +799,11 @@ en:
       edit:
         return_to_service_requirements: Return to service requirements
         save_and_return: Save and return
-      lifts:
-        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete.
-        floors: How many lifts are in this building, and how many floors does each lift service?
+      lift:
         no_of_floors: Number of floors
+      lifts:
+        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.
+        floors: How many lifts are in this building, and how many floors does each lift service?
       service_hours:
         detail_example: See an example
         detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
@@ -795,20 +863,6 @@ en:
           no_of_units_to_be_serviced: units
           tones_to_be_collected_and_removed: tonnes
     procurements:
-      about_the_contract:
-        contract_details: 1. Contract details
-        contract_name: Contract name
-        contract_period: Contract period
-        estimated_annual_cost: Estimated annual cost
-        tupe: TUPE
-      about_the_work:
-        assigning_services_to_buildings: Assigning services to buildings
-        buildings: Buildings
-        excel: Click here to download an Excel template
-        service_requirements: Service requirements
-        services: Services
-        services_and_buildings: 2. Services and buildings
-        which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
       call_off_extensions:
         add_extension_period: Add another extension period
         description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
@@ -837,7 +891,7 @@ en:
         heading: Contract name
         return_to_what_happens_next: Return to what happens next
         return_to_your_account: Return to your account
-        save_and_return: Save and return
+        save_and_continue: Save and continue
       contracts:
         awaiting_response:
           else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
@@ -1014,6 +1068,7 @@ en:
           contract_details_description: Please provide further information that will help us put your contract together.
         contract_details_summary:
           authorised_representative: Authorised representative details
+          governing_law: Governing law
           invoicing_contact_details: Invoicing contact details
           local_government_pension_scheme: Local Government Pension Scheme
           notices_contact_details: Notices contact details
@@ -1028,13 +1083,13 @@ en:
         did_you_know:
           contract_documents:
             call_off_schedule_5:
-              document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
+              file_name: Call-Off Schedule 5 - Call-Off Pricing (DA) v3.0.pdf
               title: call-off schedule 5 - call-off pricing.
             joint_schedule_3:
-              document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
+              file_name: Joint Schedule 3 - Insurance Requirements (DA) v3.0.pdf
               title: joint schedule 3 - insurance requirements.
             service_requirements_and_standards:
-              document_name: RM3830 Service requirements and standards.docx
+              file_name: RM3830 Service requirements and standards.pdf
               title: service requirements and standards
           indexation_body_html: Your supplier will have the opportunity to adjust their pricing using the CPI index data on the first anniversary of your contract start date. Further information on this can be found in
           indexation_heading: Indexation
@@ -1046,6 +1101,7 @@ en:
           services_body_html_1: The service specifications and service standards cannot be amended within a direct award. Please check within the
           services_body_html_2: that you’re happy with the details for the services you are buying.
           services_heading: Services
+          warning_text: If you wish to change any of the above criteria, you will need to consider switching to a further competition.
         pricing:
           lowest_price_supplier: lowest priced supplier
           pricing_description_1: Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.
@@ -1073,12 +1129,13 @@ en:
           supplier: Supplier
         review_contract:
           attachment_1:
-            document_name: Attachment 1 - About the Direct Award.docx
+            file_name: Attachment 1 - About the Direct Award v3.0.pdf
             guidance: This document tells the supplier important information about the contract you have offered.
             heading: Attachment 1
             title: About the direct award
           attachment_2:
             annex_a:
+              file_name: Attachment 2 - Statement of Requirements - Annex A - Standards and Processes (DA) v3.0.pdf
               guidance: This document sets out the processes, standards and service delivery response times the suppliers must adhere to in delivery of the services.
               title: Annex A - standards & processes
             heading: Attachment 2
@@ -1092,6 +1149,7 @@ en:
               title: Price matrix
           attachment_4:
             core_terms:
+              file_name: Core Terms (DA) v3.0.2.pdf
               guidance: The Core Terms are based on CCS’s standard commercial terms under The Public Sector Contract.
               title: Core terms
             heading: Attachment 4 - Contract (Order form and Schedules)
@@ -1105,64 +1163,70 @@ en:
             guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended.
           contract_documents:
             call_off_schedule_1:
-              document_name: Call-Off Schedule 1 Transparency Reports (DA).docx
+              file_name: Call-Off Schedule 1 Transparency Reports (DA) v3.0.pdf
               title: Call-off Schedule 1 - Transparency Reports
             call_off_schedule_10:
-              document_name: Call-Off Schedule 10 - Exit Management (DA).docx
+              file_name: Call-Off Schedule 10 - Exit Management (DA) v3.0.pdf
               title: Call-off Schedule 10 - Exit Management
             call_off_schedule_13:
-              document_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA).docx
+              file_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA) v3.0.pdf
               title: Call-off Schedule 13 - Mobilisation Plan and Testing
             call_off_schedule_2:
-              document_name: "#"
+              file_name: "#"
               title: Call-off Schedule 2 - Staff Transfer
+            call_off_schedule_24:
+              file_name: Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
+              title: Call-Off Schedule 24 (O) - Scottish Law
+            call_off_schedule_25:
+              file_name: Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
+              title: Call-Off Schedule 25 (O) - Northern Ireland Law
             call_off_schedule_3:
-              document_name: Call-Off Schedule 3 - Continuous Improvement (DA).docx
+              file_name: Call-Off Schedule 3 - Continuous Improvement (DA) v3.0.pdf
               title: Call-off Schedule 3 - Continuous Improvement
             call_off_schedule_4:
-              document_name: Call-Off Schedule 4 - Facilities Management (DA).docx
+              file_name: Call-Off Schedule 4 - Facilities Management (DA) v3.0.pdf
               title: Call-off Schedule 4 - Facilities Management
             call_off_schedule_4A:
-              document_name: Call-Off Schedule 4A - Billable Works and Projects (DA).docx
+              file_name: Call-Off Schedule 4A - Billable Works and Projects (DA) v3.0.pdf
               title: Call-off Schedule 4A - Billable Work and Projects
             call_off_schedule_5:
-              document_name: Call-Off Schedule 5 - Call-Off Pricing (DA).docx
+              file_name: Call-Off Schedule 5 - Call-Off Pricing (DA) v3.0.pdf
               title: Call-off Schedule 5 - Call-off Pricing
             call_off_schedule_6:
-              document_name: Call-Off Schedule 6 - TUPE Surcharge (DA).docx
+              file_name: Call-Off Schedule 6 - TUPE Surcharge (DA) v3.0.pdf
               title: Call-off Schedule 6 - TUPE Surcharge
             call_off_schedule_7:
-              document_name: Call-Off Schedule 7 - Key Staff (DA).docx
+              file_name: Call-Off Schedule 7 - Key Staff (DA) v3.0.pdf
               title: Call-off Schedule 7 - Key Staff
             call_off_schedule_8:
-              document_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA).docx
+              file_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA) v3.0.pdf
               title: Call-off Schedule 8 - Business Continuity and Disaster Recovery
             call_off_schedule_9:
-              document_name: Call-Off Schedule 9 - Security (DA).docx
+              file_name: Call-Off Schedule 9 - Security (DA) v3.0.pdf
               title: Call-off Schedule 9 - Security
             joint_schedule_1:
-              document_name: Joint Schedule 1 - Definitions (DA).docx
+              file_name: Joint Schedule 1 - Definitions (DA) v3.0.pdf
               title: Joint Schedule 1 - Definitions
             joint_schedule_10:
-              document_name: Joint Schedule 10 - Rectification Plan (DA).docx
+              file_name: Joint Schedule 10 - Rectification Plan (DA) v3.0.pdf
               title: Joint Schedule 10 - Rectification Plan
             joint_schedule_11:
-              document_name: Joint Schedule 11 - Processing Data (DA).docx
+              file_name: Joint Schedule 11 - Processing Data (DA) v3.0.pdf
               title: Joint Schedule 11 - Processing Data
             joint_schedule_2:
-              document_name: Joint Schedule 2 - Variation Form (DA).docx
+              file_name: Joint Schedule 2 - Variation Form (DA) v3.0.pdf
               title: Joint Schedule 2 - Variation Form
             joint_schedule_3:
-              document_name: Joint Schedule 3 - Insurance Requirements (DA).docx
+              file_name: Joint Schedule 3 - Insurance Requirements (DA) v3.0.pdf
               title: Joint Schedule 3 - Insurance Requirements
             joint_schedule_5:
-              document_name: Joint Schedule 5 - Corporate Social Responsibility (DA).docx
+              file_name: Joint Schedule 5 - Corporate Social Responsibility (DA) v3.0.pdf
               title: Joint Schedule 5 - Corporate Social Responsibility
             joint_schedule_6:
-              document_name: Joint Schedule 6 - Key Subcontractors (DA).docx
+              file_name: Joint Schedule 6 - Key Subcontractors (DA) v3.0.pdf
               title: Joint Schedule 6 - Key Subcontractors
             joint_schedule_7:
-              document_name: Joint Schedule 7 - Financial Distress (DA).docx
+              file_name: Joint Schedule 7 - Financial Distress (DA) v3.0.pdf
               title: Joint Schedule 7 - Financial Distress
           documents:
             heading: 1. Contract documents
@@ -1177,6 +1241,10 @@ en:
           sending_contract:
             guidance: Following your review of the contract documents in section 1 above, please click on the button below to create a zipped folder of the documents ready to send as an offer to the supplier.
             heading: 2. Sending the contract
+        sending_the_contract:
+          click_confirm_and_continue: Click on the 'Confirm and send contract to supplier' button below to send your contract offer to the supplier.
+          contract_ready_to_send_html: Your contract is now ready to send to <b>%{supplier_name}</b>.
+          warning_text: The supplier has 2 working days to respond to your offer.
         what_next:
           heading: Below outlines the steps you will follow to direct award your contract.
           step_1_content_1: we will inform you about some key contract information on the next page
@@ -1200,34 +1268,67 @@ en:
           waiting_html: waiting<br/>on<br/>response
       dashboard_tables:
         closed:
+          contract_name: Contract name
+          date_closed: Date closed
           no_closed: You do not have any closed contracts
+          supplier: Supplier
         contracts:
+          contract_name: Contract name
+          end_date: End date
           no_live: You do not have any live contracts
+          start_date: Start date
+          supplier: Supplier
         further_competition:
+          date_saved: Date saved
+          name: Name
           no_fc: You do not have any further competition contracts
         in_draft:
+          contract_name: Contract name
+          delete: Delete
           no_drafts: You do not have any offers in the draft
+          saved: Saved
+          supplier: Supplier
         searches:
+          delete: Delete
+          name: Name
           no_searches: You do not have any searches
+          saved: Saved
+          stage: Stage
         sent_offers:
+          action_required: ACTION REQUIRED
+          contract_name: Contract name
           no_sent: You do not have any sent offers
-      detailed_search_summary:
-        detailed_search_description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimate contract cost, supplier shortlist and procurement options.
-        detailed_search_summary_title: Procurement summary
+          sent: Sent
+          stage: Stage
+          supplier: Supplier
+      delete:
+        are_you_sure: Are you sure you want to delete '%{contract_name}'? This action cannot be un-done.
+        cancel: Cancel
+        cancel_delete: Cancel delete
+        confirm_delete: Confirm delete
       edit:
         authorised_representative:
           authorised_representative_detail_description: Select an authorised representative
           authorised_representative_detail_description_header: The authorised representative is appointed by the buyer, to represent the buyer, within the contract when required.
           change: Change
           new: Enter a new authorised representative
-        buildings_and_services:
-          buildings: Buildings
-          heading: Assigning services to buildings
-          help_html: For each building list in the left hand column, please select the required services from the right hand column. To help, we have already applied all your pre-selected services to all your buildings.<br/>To add to, or change your list of buildings or services, click on 'Return to requirements' and select either Services or Buildings in section 2.
-          services: Services
-          sub_heading: Which facilities management services do you require within each building?
-          there_is_a_problem: There is a problem
-        cancel_and_return: Cancel, and return to the manage procurements page
+        buildings:
+          add_a_building: Add a building
+          building_name_and_address: Building name and address
+          details: Details
+          heading: Buildings
+          how_it_works: How it works
+          how_it_works_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
+          how_it_works_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
+          how_it_works_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
+          my_buildings: My buildings
+          new_buildings: New buildings
+          new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
+          no_saved_buildings: You have no saved buildings. Click on ‘Add a building' to start setting up your building(s)
+          page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
+          page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
+          status: Status
+        cancel_and_return: Return to your account
         contract_name:
           contract_name_info: This will help you to refer to your contracts when talking to suppliers.
           contract_name_question: What do you want to call your contract?
@@ -1240,6 +1341,26 @@ en:
           do_you_know: Do you know your current or estimated annual cost?
           heading: Estimated annual cost
           label: Enter the estimated annual cost, excluding VAT
+        governing_law:
+          contract_documents:
+            call_off_24:
+              description: This is the Scottish Law optional schedule
+              file_name: Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
+              title: Call-off Schedule 24 - Scottish Law
+            call_off_25:
+              description: This is the Northern Ireland Law optional schedule
+              file_name: Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
+              title: Call-off Schedule 25 - Northern Ireland Law
+            core_terms:
+              description: Clause 35 within the Core Terms states the position on English Law
+              file_name: Core Terms (DA) v3.0.2.pdf
+              title: Core Terms
+          description_html: "<p>As a default position this contract and any issues arising out of, or connected to it, are governed by English Law. Alternatively, you may opt to select either Scottish law or Northern Ireland Law to govern your contract. If you do opt to choose either Scottish or Northern Ireland Law, the relevant optional schedule will be included within your contract, and reflected in your order form.</p> <p>The optional schedule (Call-off Schedule 24 or 25) will adapt the Core Terms and Schedules so that the Call-off Contract is under either Scottish or Northern Ireland Law.</p> <p>For further information, please click on the schedules below:</p>\n"
+          english: English Law
+          header: Which law would you like to govern your call-off contract?
+          northern_ireland: Northern Ireland Law
+          prompt: 'Please indicate below which law is to govern this Call-off Contract:'
+          scottish: Scottish Law
         heading: Results
         invoicing_contact_details:
           change: Change
@@ -1273,18 +1394,12 @@ en:
           government_procurement_card: Government procurement card
           payment_description: Please select the payment method that will be used
         pension_funds:
-          attachment_2: Call-off Schedule 2 - staff transfer
+          attachment_2:
+            file_name: Call-Off Schedule 2 - Staff Transfer (DA) v3.0.pdf
+            name: Call-off Schedule 2 - staff transfer
           description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
           form_title: List of pension funds
           lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view the generic version of this schedule now, or alternatively you can review your own version later which will include your inserted pension information.
-        procurement_buildings:
-          building_selected: Building selected
-          buildings_selected: Buildings selected
-          content: Only buildings with completed information will appear in the list below. The buildings shown are your saved buildings that are ready for using. To add more buildings or finish setting up an incomplete building, please click on the link below.
-          heading: Buildings
-          no_buildings_selected: No buildings selected
-          remove_all: Remove all
-          sub_heading: Select all of the buildings you want to include in your procurement
         procurement_pension_fund:
           name_text: Pension fund name
           percentage_text: Percentage of pensionable pay
@@ -1325,15 +1440,16 @@ en:
           subtitle_quick_search: Choose all facilities management services required within your estate, even if you want services in just one building.
           title: Services
         tupe:
-          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.</br> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
+          body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.<br/> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
           first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
+          tupe_link: https://www.gov.uk/transfers-takeovers
+          tupe_link_text: Find out when TUPE applies (opens in a new tab)
           tupe_title: TUPE
-          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees</br> when the business or commercial contract that they are working on changes to new ownership. It ensures</br> that employees who find themselves transferred to a new business, retain exactly the same hours and rate</br> of pay as they were contracted to with the old employer.
+          what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
           what_you_need_to_know_title: What you need to know about TUPE
-      edit_procurement:
-        cancel_and_return: Cancel and return to Procurements
-        save_and_continue: Save and continue
-        save_for_later: Save for later
+      edit_buildings:
+        show:
+          return_to_buildings: Return to buildings
       filter_details:
         change_add_region: Change
         change_add_service: Change
@@ -1393,16 +1509,18 @@ en:
           what_happens_next_title: What happens next
         return_to_dashboard: Return to procurements dashboard
       index:
+        back: Return to your account
         closed_title: Closed
         contracts_title: Contracts
         deleted: Your item was deleted
         direct_award_title: Direct award
         further_competition: Further competition
+        help_text: Your saved searches and procurements are shown below. Click on the search/contract name to view the details or progress further.
         in-draft-title: In draft
         manage_procurements: Procurements dashboard
         searches_title: Searches
         sent_offers: Sent offers
-        start_new_search: Start a new search
+        was_deleted: "'%{contract_name}' was deleted."
       initial_call_off_period:
         description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
         example: For example, 01 11 2030.
@@ -1440,6 +1558,24 @@ en:
         new_name_label: Enter a name or reference to save this search.
         save_headline: Save your search
         save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
+      requirements:
+        contract_details:
+          contract_details: 1. Contract details
+        contract_summary_table:
+          buildings: Buildings
+          buildings_and_services: Assigning services to buildings
+          contract_name: Contract name
+          contract_period: Contract period
+          estimated_annual_cost: Estimated annual cost
+          service_requirements: Service requirements
+          services: Services
+          tupe: TUPE
+        description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimated contract cost, supplier shortlist and procurement options.
+        services_and_buildings:
+          excel: Click here to download an Excel template
+          services_and_buildings: 2. Services and buildings
+          which_you_can_upload: which you can complete and then upload, or click on the links below to complete your information.
+        title: Requirements
       results:
         any_changes: If you wish to change your requirements, click the 'Change requirements’ button below. Any changes may result in a different outcome.
         any_changes_chosen: If you wish to change the contract value that you selected or your requirements, click the 'Return to estimated contract cost’ button below. Any changes may result in a different outcome.
@@ -1470,60 +1606,195 @@ en:
         caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
         learn_more: Further details (opens in a new tab)
       spreadsheet:
-        cancel_and_return_link: Cancel and return to procurement summary
+        cancel_and_return_link: Cancel and return to requirements
         continue_link: Continue to upload your file
-        download_the_template: Download the template
-        footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to procurement summary' button below.
+        download_the_template: 1. Download the template
+        footer_information: Note - if you would prefer to go back and input your requirements via the guided questions online, please click on the 'Cancel and return to requirements' link.
         heading: Services and buildings - spreadsheet
         instructions: Instructions
         link: Click on the link to download the blank template ready for you to complete. The spreadsheet contains full instructions to help you input your building information and service requirements.
-        list_2_description: The spreadsheet has a status indicator which will help you check its ready for uploading.<br/> Once you are ready, you can click on the 'continue and upload file' button below, or alternatively you can upload your spreadsheet at a later date - just click the 'save for later' button below. When ready, come back to this portal, log in and click on 'continue a procurement' on your 'my account' page. This will open your procurement dashboard in which you can select this procurement again and you will be presented with a spreadsheet upload page. You can then select the correct Excel file from your computer and proceed to upload.
+        list_2_description_1: The spreadsheet has a status indicator which will help you check its ready for uploading.
+        list_2_description_2: Once you are ready, you can click on the 'continue and upload file' button below, or alternatively you can upload your spreadsheet at a later date - just click the 'save  and return to procurements dashboard' button below. When ready, come back to this portal, log in and click on 'continue a procurement' on your 'my account' page. This will open your procurement dashboard in which you can select this procurement again and you will be presented with a spreadsheet upload page. You can then select the correct excel file from your computer and proceed to upload.
         list_3_description: Once you have uploaded your spreadsheet successfully, you will then be able to continue to see your results
         list_description: Take your time completing the spreadsheet - there is no system deadline. You will need the following types of information to complete the spreadsheet.
         list_information_1: building details - address, size, what its used for, security access requirements
         list_information_2: services - which services you wish to buy in each building
         list_information_3: service requirements - for example, what standard of service, which hours of the day, or how many lifts are in the building
-        results: Results
-        save_for_later_link: Save for later
+        results: 3. Results
+        save_and_return_link: Save and return to procurements dashboard
         services_and_buildings_template: Services and buildings template
-        uploading: Uploading your spreadsheet
+        uploading: 2. Uploading your spreadsheet
       spreadsheet_imports:
+        error_partials:
+          other_errors:
+            other_description: Your spreadsheet is incomplete and not ready for upload. Please refer to the instructions tab within your services and buildings template for further assistance.
+        errors:
+          building_errors:
+            address_line_1:
+              blank: The building address line 1 cannot be blank
+              too_long: The building address line 1 cannot be more than 100 characters
+            address_line_2:
+              too_long: The building address line 2 cannot be more than 100 characters
+            address_postcode:
+              blank: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+              invalid: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+              too_short: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+            address_town:
+              blank: The building town/city cannot be blank
+              too_long: The building town/city cannot be more than 30 characters
+            building_name:
+              taken: The building name cannot be duplicated
+              too_long: The building name cannot be more than 50 characters
+            building_type:
+              blank: The building type must be from the selection
+              inclusion: The building type must be from the selection
+            description:
+              too_long: The building description cannot be more than 50 characters
+            external_area:
+              blank: The building external area must be a number between 1 and 999,999,999
+              combined_area: The building external area must be greater than 0, if the gross internal area is 0
+              less_than_or_equal_to: The building external area must be a number between 1 and 999,999,999
+              not_a_number: The building external area must be a number between 1 and 999,999,999
+              not_an_integer: The building external area must be a number between 1 and 999,999,999
+              required: The building external area must be a number between 1 and 999,999,999
+              too_long: The building external area must be a number between 1 and 999,999,999
+            gia:
+              blank: The building gross internal area must be a number between 1 and 999,999,999
+              combined_area: The building gross internal area must be greater than 0, if the external area is 0
+              less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
+              not_a_number: The building gross internal area must be a number between 1 and 999,999,999
+              not_an_integer: The building gross internal area must be a number between 1 and 999,999,999
+              required: The building gross internal area must be a number between 1 and 999,999,999
+              too_long: The building gross internal area must be a number between 1 and 999,999,999
+            other_building_type:
+              blank: The building type-other cannot be blank
+              too_long: The building type-other cannot be more than 150 characters
+            other_security_type:
+              blank: The building security clearance-other cannot be blank
+              too_long: The building security clearance-other cannot be more than 150 characters
+            security_type:
+              blank: The building security clearance must be from the selection
+              inclusion: The building security clearance must be from the selection
+          lift_errors:
+            lifts:
+              invalid: There is a problem with your number of lifts or floors
+            number_of_floors:
+              invalid: The number of floors must be a number between 1 and 999
+          service_hour_errors:
+            detail_of_requirement:
+              blank: The detail of requirement cannot be blank
+              too_long: The detail of requirement cannot be more than 500 characters
+            service_hours:
+              greater_than_or_equal_to: The number of hours required must be a number between 1 and 999,999,999
+              less_than_or_equal_to: The number of hours required must be a number between 1 and 999,999,999
+              not_a_number: The number of hours required must be a number between 1 and 999,999,999
+              not_an_integer: The number of hours required must be a number between 1 and 999,999,999
+          service_matrix_errors:
+            building:
+              external_area_too_small: The building has service(s) that require an external area greater than 0 sqm
+              gia_too_small: The building has service(s) that require a gross internal area greater than 0 sqm
+            service_codes:
+              invalid: The building does not have any services selected
+              invalid_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_cafm: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_cafm_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_cafm_helpdesk: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_cafm_helpdesk_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_cleaning: "'Mobile cleaning’ and ‘Routine cleaning’ are the same, but differ by delivery method. Please choose one of these services only"
+              invalid_helpdesk: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              invalid_helpdesk_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+              multiple_standards_for_one_service: The building has multiple service standards selected. Please choose one of these service standards only
+          service_volume_errors:
+            no_of_appliances_for_testing:
+              blank: The building has service(s) that requires the input of the number of appliances for testing
+              invalid: The volume must be a number between 1 and 999,999,999
+            no_of_building_occupants:
+              blank: The building has service(s) that requires the input of the number of building occupants
+              invalid: The volume must be a number between 1 and 999,999,999
+            no_of_consoles_to_be_serviced:
+              blank: The building has service(s) that requires the input of the number of consoles to be serviced
+              invalid: The volume must be a number between 1 and 999,999,999
+            no_of_units_to_be_serviced:
+              blank: The building has service(s) that requires the input of the number of units to be serviced
+              invalid: The volume must be a number between 1 and 999,999,999
+            tones_to_be_collected_and_removed:
+              blank: The building has service(s) that requires the input of the number of tonnes to be collected and removed
+              invalid: The volume must be a number between 1 and 999,999,999
+        failed:
+          building_name: Building name
+          building_number: Building number
+          error_description: Error description
+          service_name: Service name
+        failed_generic:
+          description: Your service and building information failed to upload.
+          generic_message: This is due to issues with your spreadsheet.
+          return_to_procurement_dashboard: Return to procurements dashboard
+          start_again: Start your upload again
+          what_next: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
+        failed_non_generic:
+          description: Your service and building information failed to upload and we have provided a list of  issues to help you to fix these.
+          here_are_steps: Here are the steps you need to take next.
+          hint_text: The information below is sorted in order of the ‘Services and buildings template’ tabs. If one of the tabs is missing, it means that there are no issues on that tab.
+          list_of_issues: List of issues
+          return_to_procurement_dashboard: Return to procurements dashboard
+          start_again: Start your upload again
+          step_1: Review all issues listed below
+          step_2: Fix and edit your services and buildings template
+          step_3: Re-upload your file, by clicking on the ‘Start your upload again’ button at the bottom of this page
+          title:
+            building_errors: Building information
+            lift_errors: Service volumes 2
+            other_errors: Other
+            service_hour_errors: Service volumes 3
+            service_matrix_errors: Service matrix
+            service_volume_errors: Service volumes 1
+          what_next: What to do next
         importing:
+          dashboard_link: Return to procurements dashboard
           processing: We are processing your file upload.
           refresh: Please click refresh on your browser for this screen or on your procurements dashboard, until the status of your upload changes.
           review: After a successful upload, you can continue to review your procurement.
+          warning_text: If it has been more than 5 mins, and the upload status has not changed after you have refreshed your browser, click on the 'Return to upload your spreadsheet' link above to go back to retry the upload.
+        new:
+          cancel_and_return: Cancel and return to services and buildings template
+          check: How to check your spreadsheet is ready
+          check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
+          description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
+          heading: Upload your spreadsheet
+          once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
+          submit: Upload my services and buildings
+          upload: Upload your file
+          upload_size: Supported format is .xlsx and maximum file is 10mb
+          warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
         show:
-          continue_to_procurement: Continue to procurement
-          dashboard_link: Return to procurements dashboard
-          procurement_link: Go to procurement
-          return_to_dashboard: Return to procurements dashboard
+          heading: File upload status
           return_to_upload: Return to upload your spreadsheet
-        success:
+        succeeded:
           about: About the procurement summary
           buildings: buildings
           completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
+          continue_to_procurement: Continue to procurement
+          return_to_dashboard: Return to procurements dashboard
           review: If you click into each section you can review your information, and make any amends if required.
           service_requirements: service requirements
           services: services
           services_to_buildings: assigning services to buildings
           successful: Your service and building information have been successfully uploaded and the details placed into the relevant sections within your procurement.
         upload:
-          check: How to check your spreadsheet is ready
-          check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
-          description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
-          heading: Upload your spreadsheet
-          once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
-          submit: Submit
-          upload: Upload your file
-          upload_size: Supported format is .xlsx and maximum file is 2mb
-          warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
-        upload_status:
-          heading: File upload status
+          procurement_link: Go to procurement
       summary:
+        buildings:
+          building: building
+          caption: The buildings below have been selected for this procurement. If you wish to add or remove services please click on the ‘change' button.
+          change: Change
+          heading: You have selected
+          table_caption: Buildings
         buildings_and_services:
-          buildings: Buildings
-          services: Services
-          summary: The summary below shows the buildings within your procurement and the services you have assigned to each building. If you wish to amend or add a new building or service, please click on the 'change' button.
+          buildings: Building name and address
+          no_service_selected: No service selected
+          services: Assigned services
+          status: Status
+          summary: Please click on each of your buildings listed below and select the services you require within each building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on 'Buildings' in section 2.
         contract_period:
           heading: Contract period
           initial_call_off_period: Initial call-off period
@@ -1531,14 +1802,22 @@ en:
           none: None
           optional_call_off_extension_period: Optional call-off extension period
           optional_call_off_extensions: Optional call-off extensions
+        heading:
+          buildings: Buildings summary
+          buildings_and_services: Assigning services to buildings summary
+          contract_period: Contract period summary
+          service_requirements: Service requirements summary
+          services: Services summary
         return_to_requirements: Return to requirements
+        service_requirements:
+          buildings: Buildings
+          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the buildings with an 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
+          status: Status
         services:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
           change: Change
           heading: You have selected
-          services:
-            one: service
-            other: services
+          service: service
           table_caption: Services
       what_happens_next:
         cancel: Cancel and return to procurements dashboard

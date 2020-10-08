@@ -31,8 +31,8 @@ module FacilitiesManagement::Supplier::ContractsHelper
       },
       show: {
         back_url: facilities_management_supplier_dashboard_index_path,
-        back_label: 'Back',
-        back_text: 'Back',
+        back_label: 'Return to dashboard',
+        back_text: 'Return to dashboard',
         page_title: 'Contract summary',
         caption1: @procurement.contract_name,
         continuation_text: 'Respond to this offer',
@@ -43,8 +43,8 @@ module FacilitiesManagement::Supplier::ContractsHelper
       },
       edit: {
         back_url: facilities_management_supplier_contract_path(@contract.id),
-        back_label: 'Back',
-        back_text: 'Back',
+        back_label: 'Return to contract summary',
+        back_text: 'Return to contract summary',
         page_title: 'Respond to the contract offer',
         caption1: @procurement.contract_name,
         continuation_text: 'Confirm and continue',

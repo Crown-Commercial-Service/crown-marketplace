@@ -32,6 +32,10 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
   fi
 
   if [ "$APP_RUN_NUTS_IMPORT" = 'TRUE' ]; then
+    bundle exec rails db:run_postcodes_to_nuts
+  fi
+
+  if [ "$APP_RUN_NUTS_IMPORT_IN_BG" = 'TRUE' ]; then
     bundle exec rails db:run_postcodes_to_nuts_worker
   fi
 
@@ -45,5 +49,6 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
 
   bundle exec rails server
 else
+  bundle exec nginx -g "daemon on;"
   bundle exec sidekiq -C ./config/sidekiq.yml -e production
 fi

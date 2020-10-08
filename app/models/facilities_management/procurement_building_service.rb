@@ -10,6 +10,9 @@ module FacilitiesManagement
     scope :has_service_questions, -> { where(code: [SERVICES_DEFINITION.pluck(:code)]) }
     belongs_to :procurement_building, class_name: 'FacilitiesManagement::ProcurementBuilding', foreign_key: :facilities_management_procurement_building_id, inverse_of: :procurement_building_services
 
+    has_many :lifts, class_name: 'FacilitiesManagement::ProcurementBuildingServiceLift', foreign_key: :facilities_management_procurement_building_services_id, inverse_of: :procurement_building_service, dependent: :destroy, index_errors: true
+    accepts_nested_attributes_for :lifts, allow_destroy: true, reject_if: :more_than_max_lifts?
+
     # Lookup data for 'constants' are taken from this service object
     services_and_questions = ServicesAndQuestions
 
@@ -17,10 +20,9 @@ module FacilitiesManagement
     validate :validate_volume, on: :volume # this validator will valid the appropriate field for the given service
 
     # validates on :lifts
-    validates :lift_data, length: { minimum: 1, maximum: 1000 }, on: :lifts
     validate :validate_lift_data, on: :lifts
 
-    # validatiomns on :service_hours
+    # validations on :service_hours
     validates :service_hours, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }, on: :service_hours
     validates :detail_of_requirement, presence: true, on: :service_hours
     validate :validate_detail_of_requirement_max_length, on: :service_hours
@@ -30,6 +32,10 @@ module FacilitiesManagement
 
     # validates the entire row for all contexts - any appropriately invalid will validate as false
     validate :validate_services, on: :all
+
+    amoeba do
+      include_association :lifts
+    end
 
     define_method(:this_service) do
       @this_service ||= services_and_questions.service_detail(code)
@@ -51,6 +57,10 @@ module FacilitiesManagement
     REQUIRE_VOLUME_CODES = services_and_questions.get_codes_by_context(:volume)
 
     # A set of methods used to confirm validation
+    def requires_unit_of_measure?
+      requires_volume? || requires_lift_data? || requires_service_hours?
+    end
+
     def requires_volume?
       required_contexts.include?(:volume)
     end
@@ -116,7 +126,7 @@ module FacilitiesManagement
       if requires_volume?
         send(required_contexts[:volume].first)
       elsif requires_lift_data?
-        lift_data.map(&:to_i).inject(&:+)
+        lifts.sum(:number_of_floors) unless lifts.empty?
       elsif requires_service_hours?
         service_hours
       elsif requires_external_area?
@@ -146,25 +156,27 @@ module FacilitiesManagement
       procurement_building.building.external_area
     end
 
+    def lift_data
+      lifts.map(&:number_of_floors)
+    end
+
+    MAX_NUMBER_OF_LIFTS = 99
+
     private
 
     STANDARD_TYPES = %i[ppm_standards building_standards cleaning_standards].freeze
 
-    # rubocop:disable Metrics/AbcSize
     def validate_lift_data
-      errors.add(:lift_data, :required, position: 0) if lift_data.blank?
+      errors.add(:lifts, :required) if lifts.empty?
 
-      errors.add(:lift_data, :above_maximum) if lift_data.size > 99
+      errors.add(:lifts, :above_maximum) if lifts.size > MAX_NUMBER_OF_LIFTS
 
-      Array(lift_data).each_with_index do |value, index|
-        errors.add(:lift_data.to_sym, :greater_than, position: index) if value.to_i.zero?
-
-        errors.add(:lift_data.to_sym, :less_than, position: index) if value.to_i >= 1000
-
-        errors.add(:lift_data.to_sym, :not_an_integer, position: index) unless value.to_i.to_s == value
-      end
+      lifts.all?(&:valid?)
     end
-    # rubocop:enable Metrics/AbcSize
+
+    def more_than_max_lifts?
+      lifts.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_LIFTS
+    end
 
     def validate_standard
       errors.add(:service_standard, :blank) if service_standard.blank? || SERVICE_STANDARDS.exclude?(service_standard)

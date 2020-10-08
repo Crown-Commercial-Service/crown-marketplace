@@ -23,10 +23,13 @@
                   </h2>
                 </fieldset>
                 <p class="govuk-caption-m">
-                  <%= t('.subtitle') %>
+                  <%= t('.caption') %>
                 </p>
                 <p>
-                  <a href="<%= Marketplace.service_information_doc %>" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= t('.service_specification_doc') %></a>
+                  <%= service_specification_document %>
+                </p>
+                <p class="govuk-caption-m">
+                  <%= t('.caption2') %>
                 </p>
               </div>
               <div class="govuk-grid-column-full" style="padding-left:0">
@@ -101,7 +104,8 @@
           <% params[:region_codes]&.split(" ") do |region_code| %>
             <%= hidden_field_tag "region_codes[]", region_code %>
           <% end %>
-          <%= submit_tag t('common.submit'), class: "govuk-button", 'aria-label': "#{t('common.submit')}" %>
+          <%= submit_tag t('common.submit'), class: "govuk-button govuk-!-margin-bottom-4", 'aria-label': "#{t('common.submit')}" %>
+          <p><%= link_to t('.return_text'), facilities_management_buyer_account_path, class: 'govuk-link' %></p>
         </div>
         <div class="govuk-grid-column-one-third govuk-!-margin-top-9">
           <div class="basket">

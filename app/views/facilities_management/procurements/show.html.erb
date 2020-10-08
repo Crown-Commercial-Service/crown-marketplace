@@ -1,6 +1,6 @@
 <% if params[:delete] == 'y' && procurement_can_be_deleted? %>
   <%= render 'delete_procurement' %>
-<% elsif procurement_buildings_missing_regions %>
+<% elsif @procurement.detailed_search? && @procurement.procurement_buildings_missing_regions? %>
   <%= render 'missing_regions_summary' %>
 <% else %>
   <% if params[:spreadsheet] == 'true' %>

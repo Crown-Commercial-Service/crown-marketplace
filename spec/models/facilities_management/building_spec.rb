@@ -133,7 +133,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
     context 'when the building name is too long' do
       before do
-        building.building_name = 'a' * 26
+        building.building_name = 'a' * 51
       end
 
       it 'is invalid' do
@@ -142,13 +142,13 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
       it 'will have the correct error message' do
         building.valid?(:all)
-        expect(building.errors[:building_name].first).to eq 'Building name must be 25 characters or less'
+        expect(building.errors[:building_name].first).to eq 'Building name must be 50 characters or less'
       end
     end
 
     context 'when the building name is within range' do
       before do
-        building.description = 'a' * 25
+        building.description = 'a' * 50
       end
 
       it 'is valid' do
@@ -196,82 +196,166 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when GIA is not present' do
+    context 'when saving GIA' do
       before do
-        building.gia = nil
+        building.gia = gia
       end
 
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-        expect(building.valid?(:gia)).to eq false
-      end
+      context 'when gia is not present' do
+        let(:gia) { nil }
 
-      it 'will have gia errors' do
-        building.valid?(:gia)
-        expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
-      end
-    end
+        before { building.valid? :gia }
 
-    context 'when external area is not present' do
-      before do
-        building.external_area = nil
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-        expect(building.valid?(:gia)).to eq false
-      end
-
-      it 'will have external area errors' do
-        building.valid?(:gia)
-        expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
-      end
-    end
-
-    context 'when gia is invalid' do
-      context 'when gia is a float' do
-        before do
-          building.gia = 434.2
-          building.valid? :gia
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have gia errors' do
+          expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
+        end
+      end
+
+      context 'when gia is a float' do
+        let(:gia) { 434.2 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_an_integer
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Enter a whole number for the size of internal area of this building'
         end
       end
 
       context 'when gia is not an integer' do
-        before do
-          building.gia = 'some words'
-          building.valid? :gia
+        let(:gia) { 'some words' }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Gross Internal Area (GIA) must be a whole number'
+        end
+      end
+
+      context 'when gia is too large' do
+        let(:gia) { 1000000000 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :less_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
         end
       end
     end
 
-    context 'when external area is invalid' do
-      context 'when external_area is a float' do
-        before do
-          building.external_area = 434.2
-          building.valid? :gia
+    context 'when saving external area' do
+      before do
+        building.external_area = external_area
+      end
+
+      context 'when external_area is not present' do
+        let(:external_area) { nil }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have gia errors' do
+          expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
+        end
+      end
+
+      context 'when external_area is a float' do
+        let(:external_area) { 434.2 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_an_integer
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'Enter a whole number for the size of external area of this building'
         end
       end
 
       context 'when external_area is not an integer' do
-        before do
-          building.external_area = 'some words'
-          building.valid? :gia
+        let(:external_area) { 'some words' }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
         end
 
-        it 'will be invalid' do
+        it 'will have the correct error' do
           expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_a_number
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a whole number'
+        end
+      end
+
+      context 'when external_area is too large' do
+        let(:external_area) { 1000000000 }
+
+        before { building.valid? :gia }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
+          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :less_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
         end
       end
     end
@@ -286,6 +370,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       it 'will be invalid' do
         expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
         expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
+      end
+
+      it 'will have the correct error messages' do
+        expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
+        expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
       end
     end
 
@@ -469,6 +558,67 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
             building.valid? :all
             expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
           end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_1].first).to eq 'Add a building and street name'
+          end
+        end
+
+        context 'when it is more than the max number of characters' do
+          before do
+            building.address_line_1 = 'a' * 101
+          end
+
+          it 'will be invalid when manually adding an address' do
+            building.valid? :add_address
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will be valid if no postcode given' do
+            building.address_postcode = nil
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1)).to eq []
+          end
+
+          it 'will be invalid if a postcode is given' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_1].first).to eq 'Building and street name must be 100 characters or less'
+          end
+        end
+      end
+
+      describe 'when saving address_line_2' do
+        context 'when it is more than the max number of characters' do
+          before do
+            building.address_line_2 = 'a' * 101
+          end
+
+          it 'will be invalid when manually adding an address' do
+            building.valid? :add_address
+            expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will be valid if no postcode given' do
+            building.address_postcode = nil
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_2)).to eq []
+          end
+
+          it 'will be invalid if a postcode is given' do
+            building.valid? :all
+            expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          end
+
+          it 'will have the correct error message' do
+            building.valid? :all
+            expect(building.errors[:address_line_2].first).to eq 'Building and street name must be 100 characters or less'
+          end
         end
       end
 
@@ -485,15 +635,56 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when saving address_region' do
-        context 'when blank' do
-          before do
-            building.address_region = nil
-          end
+      context 'when saving address region selection' do
+        before do
+          building.address_region = address_region
+          building.address_region_code = address_region_code
+          building.valid?(:all)
+        end
+
+        let(:address_region) { 'Shropshire and Staffordshire' }
+        let(:address_region_code) { 'UKG2' }
+
+        context 'when address_region is blank' do
+          let(:address_region) { nil }
 
           it 'will be invalid if postcode and line 1 present' do
-            building.valid? :all
-            expect(building.errors.details.dig(:address_region).first.dig(:error)).to eq :blank
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
+          end
+        end
+
+        context 'when address_region_code is blank' do
+          let(:address_region_code) { nil }
+
+          it 'will be invalid if postcode and line 1 present' do
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
+          end
+        end
+
+        context 'when both are blank' do
+          let(:address_region) { nil }
+          let(:address_region_code) { nil }
+
+          it 'will be invalid if postcode and line 1 present' do
+            expect(building.errors[:address_region].present?).to eq true
+          end
+
+          it 'will have the correct error message' do
+            expect(building.errors[:address_region].first).to eq 'You must select a region for your address'
+          end
+        end
+
+        context 'when neither are blank' do
+          it 'will be valid if postcode and line 1 present' do
+            expect(building.errors[:address_region].present?).to eq false
           end
         end
       end
@@ -530,7 +721,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           context 'when totally bad format' do
             it 'will be invalid' do
               building.address_postcode = 'something'
-              building.valid? :edit
+              building.valid? :building_details
               expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
             end
           end
@@ -538,7 +729,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           context 'when saved with incorrect format' do
             it 'will be invalid' do
               building.address_postcode = '1XX X11'
-              building.valid? :edit
+              building.valid? :building_details
               expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
             end
           end
@@ -548,12 +739,12 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       context 'when processing the address selection' do
         before do
           building.address_line_1 = nil
-          building.postcode_entry = building.address_postcode
+          building.address_postcode
           building.valid? :all
         end
 
         it 'will be invalid' do
-          expect(building.errors.details.dig(:address).first.dig(:error)).to eq :not_selected
+          expect(building.errors.details.dig(:base).first.dig(:error)).to eq :not_selected
         end
       end
     end
@@ -642,6 +833,42 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
       it 'does change the building region' do
         expect(building.address_region_code).to eq 'UKM50'
+      end
+    end
+  end
+
+  describe 'address methods' do
+    subject(:building) { create(:facilities_management_building) }
+
+    context 'when using full_address' do
+      context 'when all parts of the address are present' do
+        it 'returns the correct address' do
+          expect(building.full_address).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, Essex, SS31 0DR'
+        end
+      end
+
+      context 'when address line 2 is not present' do
+        before { building.address_line_2 = nil }
+
+        it 'returns the correct address' do
+          expect(building.full_address).to eq '10 Mariners Court, Southend-On-Sea, Essex, SS31 0DR'
+        end
+      end
+    end
+
+    context 'when using address_no_region' do
+      context 'when all parts of the address are present' do
+        it 'returns the correct address' do
+          expect(building.address_no_region).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, SS31 0DR'
+        end
+      end
+
+      context 'when address line 2 is not present' do
+        before { building.address_line_2 = nil }
+
+        it 'returns the correct address' do
+          expect(building.address_no_region).to eq '10 Mariners Court, Southend-On-Sea, SS31 0DR'
+        end
       end
     end
   end

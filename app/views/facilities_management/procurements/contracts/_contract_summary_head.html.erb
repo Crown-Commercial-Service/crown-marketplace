@@ -1,10 +1,4 @@
-<div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        <%= warning_title %>
-    </strong>
-</div>
+<%= warning_text(warning_title) %>
 <h2 class="govuk-heading-s <%= 'govuk-!-width-two-thirds' if @contract.aasm_state == 'expired' || (@contract.closed? && @contract.last_offer?) || (@contract.closed? && @contract.reason_for_closing.nil?) %>">
     <%= warning_message.html_safe %>
 </h2>

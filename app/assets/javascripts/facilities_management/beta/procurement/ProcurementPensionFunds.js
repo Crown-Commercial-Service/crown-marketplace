@@ -1,4 +1,4 @@
-function PensionFundFund() {
+function PensionFund() {
     var maxPensionFunds = 99;
 
     function getNumberOfPensions() {
@@ -62,5 +62,5 @@ function PensionFundFund() {
 }
 
 $(function () {
-  new PensionFundFund();
+  new PensionFund();
 });

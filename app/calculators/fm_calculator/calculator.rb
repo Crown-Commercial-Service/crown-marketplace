@@ -73,41 +73,41 @@ module FMCalculator
 
     # London location variance based on being in london and a framework rate multiplied by subtotal1
     def variance(subtotal1)
-      if @london_flag
-        if @supplier_name
-          subtotal1 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
-        else
-          subtotal1 * @framework_rates['M144'].to_f
-        end
-      else
-        0
-      end
+      @variance ||= if @london_flag
+                      if @supplier_name
+                        subtotal1 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
+                      else
+                        subtotal1 * @framework_rates['M144'].to_f
+                      end
+                    else
+                      0
+                    end
     end
 
     # if cafm flag is set then subtotal * framework rate
     def cafm(subtotal2)
-      if @cafm_flag
-        if @supplier_name
-          subtotal2 * @rate_card_prices[:'M.1'][@building_type].to_f
-        else
-          subtotal2 * @framework_rates['M136']
-        end
-      else
-        0
-      end
+      @cafm ||= if @cafm_flag
+                  if @supplier_name
+                    subtotal2 * @rate_card_prices[:'M.1'][@building_type].to_f
+                  else
+                    subtotal2 * @framework_rates['M136']
+                  end
+                else
+                  0
+                end
     end
 
     # if helpdesk_flag is set then multiply by subtotal2
     def helpdesk(subtotal2)
-      if @helpdesk_flag
-        if @supplier_name
-          subtotal2 * @rate_card_prices[:'N.1'][@building_type].to_f
-        else
-          subtotal2 * @framework_rates['N138']
-        end
-      else
-        0
-      end
+      @helpdesk ||= if @helpdesk_flag
+                      if @supplier_name
+                        subtotal2 * @rate_card_prices[:'N.1'][@building_type].to_f
+                      else
+                        subtotal2 * @framework_rates['N138']
+                      end
+                    else
+                      0
+                    end
     end
 
     # mobilisation = subtotal3 * framework_rate
@@ -122,55 +122,55 @@ module FMCalculator
     # if tupe_flag set then calculate tupe risk premium = subtotal3 * framework rate
     def tupe(subtotal3)
       # note: @tube_flag is now; true or false, not "Y" or "N"
-      if @tupe_flag
-        if @supplier_name
-          subtotal3 * @rate_card_variances[:'TUPE Risk Premium (DA %)'].to_f
-        else
-          subtotal3 * @framework_rates['M148']
-        end
-      else
-        0
-      end
+      @tupe ||= if @tupe_flag
+                  if @supplier_name
+                    subtotal3 * @rate_card_variances[:'TUPE Risk Premium (DA %)'].to_f
+                  else
+                    subtotal3 * @framework_rates['M148']
+                  end
+                else
+                  0
+                end
     end
 
     # Management overhead
     def manage(year1)
-      if @supplier_name
-        year1 * @rate_card_variances[:'Management Overhead %']
-      else
-        year1 * @framework_rates['M140']
-      end
+      @manage ||= if @supplier_name
+                    year1 * @rate_card_variances[:'Management Overhead %']
+                  else
+                    year1 * @framework_rates['M140']
+                  end
     end
 
     # Corporate overhead
     def corporate(year1)
-      if @supplier_name
-        year1 * @rate_card_variances[:'Corporate Overhead %']
-      else
-        year1 * @framework_rates['M141']
-      end
+      @corporate ||= if @supplier_name
+                       year1 * @rate_card_variances[:'Corporate Overhead %']
+                     else
+                       year1 * @framework_rates['M141']
+                     end
     end
 
     # framework profit
     def profit(year1total)
-      if @supplier_name
-        year1total * @rate_card_variances[:'Profit %']
-      else
-        year1total * @framework_rates['M142']
-      end
+      @profit ||= if @supplier_name
+                    year1total * @rate_card_variances[:'Profit %']
+                  else
+                    year1total * @framework_rates['M142']
+                  end
     end
 
     # subsequent year(s) total charges
     def subyearstotal(year1totalcharges, mobilisation)
-      if @supplier_name
-        @subsequent_length_years *
-          (year1totalcharges -
-            (((mobilisation + (mobilisation * @rate_card_variances[:'Management Overhead %']) +
-              (mobilisation * @rate_card_variances[:'Corporate Overhead %'])) *
-                (@rate_card_variances[:'Profit %'] + 1))))
-      else
-        @subsequent_length_years * (year1totalcharges - (((mobilisation + (mobilisation * @framework_rates['M140']) + (mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
-      end
+      @subyearstotal ||= if @supplier_name
+                           @subsequent_length_years *
+                             (year1totalcharges -
+                               (((mobilisation + (mobilisation * @rate_card_variances[:'Management Overhead %']) +
+                                 (mobilisation * @rate_card_variances[:'Corporate Overhead %'])) *
+                                 (@rate_card_variances[:'Profit %'] + 1))))
+                         else
+                           @subsequent_length_years * (year1totalcharges - (((mobilisation + (mobilisation * @framework_rates['M140']) + (mobilisation * @framework_rates['M141'])) * (@framework_rates['M142'] + 1))))
+                         end
     end
 
     # benchmarked costs start = benchmark rates * unit of mesasure volume

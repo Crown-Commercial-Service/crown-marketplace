@@ -1,4 +1,6 @@
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement_building.procurement.contract_name, nil, nil, nil)) %>
+<%= render 'facilities_management/procurement_buildings/errors_on_show' %>
+<%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
+<%= content_for :page_title, t(".heading") %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l">
@@ -29,7 +31,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-m" id="service_volumes">
       <%= t('.service_volumes') %>
     </h2>
   </div>
@@ -46,19 +48,20 @@
   </thead>
   <tbody class="govuk-table__body">
     <% services_with_contexts(@volume_procurement_building_services) do |service, context| %>
-      <% cell_classes = cell_class(context, service.uval)%>
-      <tr class="govuk-table__row">
-        <td class="<%= cell_classes %>"><%= service.name %></td>
+      <% service_has_error = service_has_errors(context) %>
+      <% cell_classes = cell_class(context, service.uval, service_has_error)%>
+      <tr id="<%= question_id(service, context, 'volume') %>" class="govuk-table__row <%= 'govuk-form-group--error' if service_has_error %>">
+        <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_error %>"><%= service.name %></td>
         <td class="<%= cell_classes %>"><%= t(".unit_of_measure.#{context}") %></td>
         <% if service.send(context).blank? %>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"></td>
         <% else %>
           <% case context %>
           <% when :lift_data, :service_hours %>
             <td class="<%= cell_classes %>"><%= service.uval %></td>
           <% else %>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.send(context) %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"><%= service.send(context) %></td>
           <% end %>
           <td class="<%= cell_classes %>"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
         <% end %>
@@ -80,42 +83,59 @@
           </td>
         </tr>
       <% end %>
+    <% if service_has_error %>
+      <tr class="govuk-table__row govuk-!-margin-0 govuk-!-padding-0 govuk-form-group--error">
+        <td class="govuk-table__cell govuk-!-margin-0 govuk-!-padding-0 govuk-!-padding-left-2" colspan="5">
+          <span class="govuk-error-message">
+            <%= t(".#{context}_error") %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-m">
       <%= t('.service_standards') %>
     </h2>
   </div>
 </div>
 <hr class="govuk-section-break govuk-section-break--visible">
 <table class="govuk-table govuk-!-width-full">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 35%"><%= t('.service_name') %></th>
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 40%"><%= t('.description') %></th>
-      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 15%"><%= t('.standard') %></th>
-      <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 10%"></td>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @standards_procurement_building_services.each do |service| %>
+  <% if @standards_procurement_building_services.any? %>
+    <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
-        <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
-        <% if service.service_standard.nil?%>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-        <% else %>
-          <td class="govuk-table__cell govuk-!-padding-right-2"> <%= "Standard #{service.service_standard}" %> </td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
-        <% end %>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 35%"><%= t('.service_name') %></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 40%"><%= t('.description') %></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold" scope="col" style="width: 15%"><%= t('.standard') %></th>
+        <td class="govuk-table__header govuk-!-font-weight-bold" style="width: 10%"></td>
+      </tr>
+    </thead>
+  <% end %>
+  <tbody class="govuk-table__body">
+    <% if @standards_procurement_building_services.any? %>
+      <% @standards_procurement_building_services.each do |service| %>
+        <tr id="<%= question_id(service, 'service_standard', nil) %>" class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
+          <% if service.service_standard.nil?%>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"></td>
+          <% else %>
+            <td class="govuk-table__cell govuk-!-padding-right-2"> <%= "Standard #{service.service_standard}" %> </td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell govuk-!-padding-right-2 govuk-caption-m"><%= t('.no_data') %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.return_to_requirements'), facilities_management_procurement_summary_path(@procurement_building.procurement, summary: 'service_requirements'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'%>
+<%= link_to t('.return_to_requirements'), facilities_management_procurement_summary_path(@procurement, summary: 'service_requirements'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'%>

@@ -15,12 +15,10 @@
   </div>
 </div>
 
-<% @buildings = buildings_with_missing_regions %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m">
-      Review <%= pluralize(@buildings.count, 'building') %> with missing <%= 'region'.pluralize(@buildings.count) %>
+      Review <%= pluralize(buildings_with_missing_regions.count, 'building') %> with missing <%= 'region'.pluralize(buildings_with_missing_regions.count) %>
     </h2>
     <p>
       <%= t('.could_you_review') %>
@@ -39,11 +37,11 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @buildings.each do |building| %>
+        <% buildings_with_missing_regions.each do |building| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-padding-right-2"><%= building.name %></td>
             <td class="govuk-table__cell govuk-!-padding-right-2"><%= building.full_address %></td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.select_region'), edit_facilities_management_procurement_building_path(building, service_question: 'missing_region'), class: 'govuk-link govuk-link--no-visited-state' %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.select_region'), edit_facilities_management_procurement_building_path(building, step: 'missing_region'), class: 'govuk-link govuk-link--no-visited-state' %></td>
           </tr>
         <% end %>
       </tbody>

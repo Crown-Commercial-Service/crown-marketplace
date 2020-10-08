@@ -63,6 +63,7 @@ if ENV["fm"]
         service_hours: rand(200..2000),
         detail_of_requirement: 'test'
       )
+      [25, 12, 64].each { |number_of_floors| pbs.lifts.create(number_of_floors: number_of_floors) } if pbs.code == 'C.5'
     end
     puts "Building ##{index} created"
   end

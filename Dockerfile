@@ -33,6 +33,10 @@ ARG APP_RUN_NUTS_IMPORT
 LABEL app_run_nuts_import=$APP_RUN_NUTS_IMPORT
 ENV APP_RUN_NUTS_IMPORT=$APP_RUN_NUTS_IMPORT
 
+ARG APP_RUN_NUTS_IMPORT_IN_BG
+LABEL app_run_nuts_import_in_bg=$APP_RUN_NUTS_IMPORT_IN_BG
+ENV APP_RUN_NUTS_IMPORT_IN_BG=$APP_RUN_NUTS_IMPORT_IN_BG
+
 ARG APP_UPDATE_NUTS_NOW
 LABEL app_update_nuts_now=$APP_UPDATE_NUTS_NOW
 ENV APP_UPDATE_NUTS_NOW=$APP_UPDATE_NUTS_NOW
@@ -111,6 +115,10 @@ ENV RAILS_LOG_TO_STDOUT=true
 
 # Compile assets
 RUN GOOGLE_GEOCODING_API_KEY=dummy SECRET_KEY_BASE=dummy APP_RUN_PRECOMPILE_ASSETS="FALSE" bundle exec rails assets:precompile
+
+RUN apk add nginx
+RUN mkdir -p /run/nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Run the web app on port 8080
 ENV PORT=8080

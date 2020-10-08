@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   render_views
   describe 'GET #index' do
@@ -11,6 +12,8 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { get :new }
+
     it 'returns http success' do
       get :new
       expect(response).to have_http_status(:found)
@@ -18,30 +21,23 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   end
 
   describe 'building steps' do
-    context 'when create' do
+    context 'when new' do
       it 'step title is correct' do
-        expect(controller.step_title(:create)).to eq(I18n.t('facilities_management.buildings.step_title.step_title', position: 1, total: 4))
+        expect(controller.step_title(:new)).to eq(I18n.t('facilities_management.buildings.step_title.step_title', position: 1))
       end
 
       it 'step footer is correct' do
-        controller.action_name = 'gia'
-        expect(controller.step_footer).to eq(I18n.t('facilities_management.buildings.step_footer.step_footer', description: BuildingsControllerNavigation::STEPS[:type][:desc]))
-      end
-    end
-
-    context 'with maximum step number' do
-      it 'wil be correct' do
-        expect(controller.maximum_step_number).to eq(4)
+        expect(controller.step_footer(:gia)).to eq(I18n.t('facilities_management.buildings.step_footer.step_footer', description: Buildings::BuildingsControllerNavigation::STEPS[:type][:description]))
       end
     end
 
     context 'with next_step' do
       it 'will be edit' do
-        expect(controller.next_step('security')).to eq(BuildingsControllerNavigation::STEPS[:edit])
+        expect(controller.next_step(:security)).to eq :show
       end
 
       it 'will be type' do
-        expect(controller.next_step('gia')[1]).to eq(BuildingsControllerNavigation::STEPS[:type])
+        expect(controller.next_step(:gia)).to eq :type
       end
     end
   end
@@ -86,9 +82,16 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
 
       login_fm_buyer_with_details
+
+      before { get :show, params: { id: building.id } }
+
       it 'returns http success' do
-        get :show, params: { id: building.id }
         expect(response).to have_http_status(:ok)
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
       end
     end
 
@@ -105,49 +108,77 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    context 'when logging in as the fm buyer that created the building' do
-      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+    let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
 
-      login_fm_buyer_with_details
+    login_fm_buyer_with_details
+
+    before { get :edit, params: { id: building.id, step: step } }
+
+    context 'when the step is building_details' do
+      let(:step) { 'building_details' }
+
       it 'returns http success' do
-        get :edit, params: { id: building.id }
         expect(response).to have_http_status(:ok)
       end
-    end
-  end
 
-  describe 'GET #gia' do
-    context 'when logging in as the fm buyer that created the building' do
-      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+      it 'has the correct title' do
+        expect(assigns(:page_description).heading_details.text).to eq 'Building details'
+      end
 
-      login_fm_buyer_with_details
-      it 'returns http success' do
-        get :gia, params: { id: building.id }
-        expect(response).to have_http_status(:ok)
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details summary'
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_building_path(building, step: 'building_details')
       end
     end
-  end
 
-  describe 'GET #type' do
-    context 'when logging in as the fm buyer that created the building' do
-      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+    context 'when the step is gia' do
+      let(:step) { 'gia' }
 
-      login_fm_buyer_with_details
       it 'returns http success' do
-        get :type, params: { id: building.id }
         expect(response).to have_http_status(:ok)
       end
+
+      it 'has the correct title' do
+        expect(assigns(:page_description).heading_details.text).to eq 'Internal and external areas'
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
+      end
     end
-  end
 
-  describe 'GET #security' do
-    context 'when logging in as the fm buyer that created the building' do
-      let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
+    context 'when the step is type' do
+      let(:step) { 'type' }
 
-      login_fm_buyer_with_details
       it 'returns http success' do
-        get :security, params: { id: building.id }
         expect(response).to have_http_status(:ok)
+      end
+
+      it 'has the correct title' do
+        expect(assigns(:page_description).heading_details.text).to eq 'Building type'
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building size'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'gia')
+      end
+    end
+
+    context 'when the step is security' do
+      let(:step) { 'security' }
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'has the correct title' do
+        expect(assigns(:page_description).heading_details.text).to eq 'Security clearance'
+      end
+
+      it 'has correct backlink text and destination' do
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building type'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'type')
       end
     end
   end
@@ -166,7 +197,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'returns validation message' do
         post :create, params: { facilities_management_building: { building_name: 'name', address_line_1: '', address_town: 'town', address_postcode: 'SW1A 1AA' } }
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('#address-error')
+        expect(response.body).to include('#base-error')
       end
     end
 
@@ -211,7 +242,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'will redirect to building' do
         post :create, params: { save_and_return: '', facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
         expect(response).to have_http_status(:found)
-        id = response.headers['Location'][-36, 36]
+        id = controller.current_user.buildings.first.id
         expect(response.headers['Location']).to redirect_to(facilities_management_building_path(id))
       end
     end
@@ -247,27 +278,27 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     login_fm_buyer_with_details
     context 'when saving without a postcode' do
       it 'will reject the empty password with a postcode.blank message' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_postcode: '', postcode_entry: '', address_region: '', address_region_code: '' } }
+        patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_postcode: '', address_region: '', address_region_code: '' } }
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_postcode.blank'))
       end
 
       it 'will reject the empty password with a address not_selected message' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: '', address_town: '', address_line_2: '', address_postcode: '', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
+        patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_line_1: '', address_town: '', address_line_2: '', address_postcode: 'SW1A 1AA', address_region: '', address_region_code: '' } }
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address.not_selected'))
+        expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.base.not_selected'))
       end
 
       it 'will reject an empty region for when none can be selected' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 1', address_town: 'town', address_line_2: 'line 2', address_postcode: 'SW1A 1AA', postcode_entry: 'SW1A 1AA', address_region: '', address_region_code: '' } }
+        patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_line_1: 'line 1', address_town: 'town', address_line_2: 'line 2', address_postcode: 'SW1A 1AA', address_region: '', address_region_code: '' } }
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(I18n.t('activerecord.errors.models.facilities_management/building.attributes.address_region.blank'))
       end
 
       it 'will not reject an empty region for when none can be selected' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', postcode_entry: 'SW1A 1AA', address_region: 'test', address_region_code: 'test_code' } }
+        patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', address_region: 'test', address_region_code: 'test_code' } }
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to gia_facilities_management_building_path
+        expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'gia')
         building.reload
         expect(building[:address_postcode]).to eq('SW2A 1AA')
       end
@@ -275,7 +306,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
     context 'when postcode is in lowercase' do
       it 'will cast postcode to uppercase' do
-        patch :update, params: { id: building.id, step: 'edit', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'sw2a 1aa', postcode_entry: 'sw2a 1aa', address_region: 'test', address_region_code: 'test_code' } }
+        patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'sw2a 1aa', address_region: 'test', address_region_code: 'test_code' } }
         building.reload
         expect(building[:address_postcode]).to eq('SW2A 1AA')
       end
@@ -299,17 +330,9 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         it 'redirects to next step' do
           patch :update, params: { id: building.id, step: 'gia', facilities_management_building: { gia: '5432' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to type_facilities_management_building_path
+          expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'type')
           building.reload
           expect(building.gia).to eq(5432)
-        end
-      end
-
-      context 'when saving a manual address' do
-        it 'will render add_address' do
-          patch :update, params: { id: building.id, add_address: 'add_address', step: 'edit', facilities_management_building: { postcode_entry: 'SW1A 1AA', building_name: 'name', address_line_1: 'line 1', address_postcode: 'SW1A 1AA' } }
-          expect(response).to have_http_status(:ok)
-          expect(response).to render_template(:add_address)
         end
       end
     end
@@ -330,15 +353,9 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         it 'returns validation message' do
           patch :update, params: { id: building.id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to security_facilities_management_building_path
+          expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'security')
           building.reload
           expect(building.building_type).to eq('other')
-        end
-
-        it 'does not override the postcode' do
-          patch :update, params: { id: building.id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
-          building.reload
-          expect(building.address_postcode).not_to eq nil
         end
       end
     end
@@ -370,9 +387,16 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       let(:building) { create(:facilities_management_building, user_id: subject.current_user.id) }
 
       login_fm_buyer_with_details
+
       it 'will redirect to add_address' do
         get :add_address, params: { id: building.id }
         expect(response).to render_template 'add_address'
+      end
+
+      it 'has correct backlink text and destination' do
+        get :add_address, params: { id: building.id }
+        expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
       end
 
       it 'will display validation error' do
@@ -384,7 +408,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'will render the edit page' do
         patch :update, params: { id: building.id, step: 'add_address', facilities_management_building: { address_line_1: 'line1', address_town: 'town', address_postcode: 'SW1A 1AA' } }
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to(edit_facilities_management_building_path)
+        expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'building_details')
         building.reload
         expect(building.address_town).to eq('town')
       end

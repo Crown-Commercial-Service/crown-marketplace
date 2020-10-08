@@ -5,7 +5,7 @@ class FacilitiesManagement::ProcurementRouter
 
   STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
 
-  SUMMARY = %w[contract_period buildings_and_services].freeze
+  SUMMARY = %w[contract_period services buildings buildings_and_services].freeze
 
   def initialize(id:, procurement_state:, step: nil, da_journey_state: nil, further_competition_chosen: false)
     @id = id
@@ -38,6 +38,7 @@ class FacilitiesManagement::ProcurementRouter
     'new_notices_address': 'new_notices_address',
     'security_policy_document': 'security_policy_document',
     'local_government_pension_scheme': 'local_government_pension_scheme',
+    'governing_law': 'governing_law',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate_documents',
@@ -59,7 +60,7 @@ class FacilitiesManagement::ProcurementRouter
       return STATES_TO_VIEWS[@procurement_state.to_sym]
     end
 
-    'detailed_search_summary'
+    'requirements'
   end
 
   def route

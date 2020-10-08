@@ -3,9 +3,9 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     object_value == value
   end
 
-  def cell_class(context, answer)
+  def cell_class(context, answer, errors)
     css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
-    css_class << 'govuk-border-bottom_none' if context == :service_hours && answer.present?
+    css_class << 'govuk-border-bottom_none' if errors || (context == :service_hours && answer.present?)
     css_class.join(' ')
   end
 
@@ -50,6 +50,37 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   def services_with_contexts(volume_procurement_building_services)
     volume_procurement_building_services.each do |service_with_context|
       yield(service_with_context[:procurement_building_service], service_with_context[:context])
+    end
+  end
+
+  def form_object
+    if @step == 'missing_region'
+      @building
+    else
+      @procurement_building
+    end
+  end
+
+  def question_id(service, context, question)
+    [service.code, context, question].compact.join('-')
+  end
+
+  def internal_area_incomplete?
+    @internal_area_incomplete ||= @procurement_building.internal_area_incomplete?
+  end
+
+  def external_area_incomplete?
+    @external_area_incomplete ||= @procurement_building.external_area_incomplete?
+  end
+
+  def service_has_errors(context)
+    case context
+    when :gia
+      internal_area_incomplete?
+    when :external_area
+      external_area_incomplete?
+    else
+      false
     end
   end
 end

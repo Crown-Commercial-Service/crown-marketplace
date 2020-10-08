@@ -52,6 +52,58 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe 'area completeness' do
+    before do
+      procurement_building.procurement.update(aasm_state: 'detailed_search')
+      procurement_building.procurement_building_services = [build(:facilities_management_procurement_building_service, code: service_code, service_standard: 'A', procurement_building: procurement_building)]
+      procurement_building.building = build(:facilities_management_building, gia: gia, external_area: external_area)
+      procurement_building.service_codes = [service_code]
+      procurement_building.save
+    end
+
+    context 'when it has a service that requires GIA' do
+      let(:service_code) { 'G.1' }
+      let(:external_area) { 1000 }
+
+      context 'when the building does not have it' do
+        let(:gia) { 0 }
+
+        it 'is incomplete' do
+          expect(procurement_building.internal_area_incomplete?).to eq true
+        end
+      end
+
+      context 'when the building does have it' do
+        let(:gia) { 1000 }
+
+        it 'is not incomplete' do
+          expect(procurement_building.internal_area_incomplete?).to eq false
+        end
+      end
+    end
+
+    context 'when it has a service that requires External area' do
+      let(:service_code) { 'G.5' }
+      let(:gia) { 1000 }
+
+      context 'when the building does not have it' do
+        let(:external_area) { 0 }
+
+        it 'is incomplete' do
+          expect(procurement_building.external_area_incomplete?).to eq true
+        end
+      end
+
+      context 'when the building does have it' do
+        let(:external_area) { 1000 }
+
+        it 'is not incomplete' do
+          expect(procurement_building.external_area_incomplete?).to eq false
+        end
+      end
+    end
+  end
+
   describe 'update_procurement_building_services' do
     context 'when no procurement_building_services exists' do
       it 'creates a new procurement_building_service' do
@@ -97,7 +149,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -118,7 +170,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services'"
       end
 
       context 'when another service is included as well' do
@@ -139,7 +191,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system'"
       end
 
       context 'when another service is included as well' do
@@ -160,7 +212,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -181,7 +233,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -202,7 +254,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services'"
       end
 
       context 'when another service is included as well' do
@@ -223,7 +275,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works' to '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
@@ -244,7 +296,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'will have the correct error message' do
         procurement_building.valid?(:buildings_and_services)
-        expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only for '#{procurement_building.building_name}' building"
+        expect(procurement_building.errors[:service_codes].first).to eq "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
       end
 
       context 'when another service is included as well' do
@@ -255,18 +307,16 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         end
       end
     end
-  end
 
-  describe 'validation on procurement_building_services_present' do
     context 'when there are no services selected' do
       it 'is not valid' do
-        expect(procurement_building.valid?(:procurement_building_services_present)).to be false
+        expect(procurement_building.valid?(:buildings_and_services)).to be false
       end
 
       it 'returns the correct error message' do
-        procurement_building.valid?(:procurement_building_services_present)
+        procurement_building.valid?(:buildings_and_services)
 
-        expect(procurement_building.errors[:service_codes].first).to eq "You must select at least one service for ‘#{procurement_building.building_name}’ building"
+        expect(procurement_building.errors[:service_codes].first).to eq 'You must select at least one service for this building'
       end
     end
 
@@ -274,7 +324,42 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       it 'is valid' do
         procurement_building.service_codes << 'C.1'
 
-        expect(procurement_building.valid?(:procurement_building_services_present)).to be true
+        expect(procurement_building.valid?(:buildings_and_services)).to be true
+      end
+    end
+  end
+
+  describe 'validations on procurement_building_services' do
+    before do
+      procurement_building.update(service_codes: ['C.5'])
+      procurement_building.procurement_building_services.first.update(service_standard: 'B')
+      procurement_building.reload
+    end
+
+    context 'when the service information is complete' do
+      before do
+        pbs = procurement_building.procurement_building_services.first
+        [1, 2, 3, 4].each do |number_of_floors|
+          pbs.lifts.create(number_of_floors: number_of_floors)
+        end
+        procurement_building.reload
+      end
+
+      it 'is valid' do
+        expect(procurement_building.valid?(:procurement_building_services)).to eq true
+      end
+    end
+
+    context 'when the service information is not complete' do
+      before { procurement_building.valid?(:procurement_building_services) }
+
+      it 'is not valid' do
+        expect(procurement_building.errors.any?).to eq true
+      end
+
+      it 'has the correct errors' do
+        expect(procurement_building.errors.details[:procurement_building_services].first[:error]).to eq :invalid
+        expect(procurement_building.errors.details[:base].first[:error]).to eq :services_invalid
       end
     end
   end
@@ -538,6 +623,34 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
     end
   end
 
+  describe '#service_selection_complete?' do
+    before { procurement_building.update(service_codes: service_codes) }
+
+    context 'when there are no service codes' do
+      let(:service_codes) { [] }
+
+      it 'returns false' do
+        expect(procurement_building.service_selection_complete?).to eq false
+      end
+    end
+
+    context 'when the selection is invalid' do
+      let(:service_codes) { %w[M.1 N.1 O.1] }
+
+      it 'returns false' do
+        expect(procurement_building.service_selection_complete?).to eq false
+      end
+    end
+
+    context 'when the slection is valid' do
+      let(:service_codes) { %w[M.1 N.1 O.1 C.1] }
+
+      it 'returns true' do
+        expect(procurement_building.service_selection_complete?).to eq true
+      end
+    end
+  end
+
   describe '#complete?' do
     context 'when service require answers' do
       let(:codes_with_values) do
@@ -545,8 +658,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
           'C.1': { service_standard: c1_value },
           'G.3': { service_standard: g3_value1, no_of_building_occupants: g3_value2 },
           'G.5': { service_standard: g5_value },
-          'C.5': { service_standard: c5_value1, lift_data: c5_value2 },
+          'C.5': { service_standard: c5_value1 },
           'H.5': { service_hours: h5_value, detail_of_requirement: 'Some details' },
+          'H.16': {},
           'E.4': { no_of_appliances_for_testing: e4_value },
           'K.1': { no_of_consoles_to_be_serviced: k1_value },
           'K.2': { tones_to_be_collected_and_removed: k2_value },
@@ -559,23 +673,28 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       let(:g3_value2) { 58 }
       let(:g5_value) { 'A' }
       let(:c5_value1) { 'C' }
-      let(:c5_value2) { [1, 2, 3, 4] }
       let(:h5_value) { 406 }
       let(:e4_value) { 123 }
       let(:k1_value) { 234 }
       let(:k2_value) { 345 }
       let(:k7_value) { 456 }
 
+      let(:lift_data) { [1, 2, 3, 4] }
+
       let(:gia) { 100 }
       let(:external_area) { 200 }
 
       before do
         procurement_building.procurement.update(aasm_state: 'detailed_search')
-        service_codes = codes_with_values.map { |key, _| key.to_s }
+        service_codes = codes_with_values.map { |key, _| key.to_s } << 'C.5'
         procurement_building.update(service_codes: service_codes)
         procurement_building.reload
         procurement_building.procurement_building_services.each do |pbs|
           pbs.update(codes_with_values[pbs.code.to_sym])
+        end
+        pbs = procurement_building.procurement_building_services.find_by(code: 'C.5')
+        lift_data.each do |number_of_floors|
+          pbs.lifts.create(number_of_floors: number_of_floors)
         end
         procurement_building.building.update(gia: gia, external_area: external_area)
       end
@@ -597,7 +716,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
       end
 
       context 'when a service requires lift_data and lift_data is empty' do
-        let(:c5_value2) { [] }
+        let(:lift_data) { [] }
 
         it 'returns false' do
           expect(procurement_building.complete?).to eq false
@@ -709,6 +828,148 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
 
       it 'returns true' do
         expect(procurement_building.send(:requires_service_questions?)).to be true
+      end
+    end
+  end
+
+  describe '#validate_internal_area' do
+    context 'when the building has an internal area of 0' do
+      before do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'C.1'
+        procurement_building.building.gia = 0
+      end
+
+      it 'is not valid on gia' do
+        expect(procurement_building.valid?(:gia)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building.valid?(:gia)
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires internal area, please go to 'Manage buildings' to update the building internal area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      it 'is valid on gia' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'C.1'
+        expect(procurement_building.valid?(:gia)).to eq true
+      end
+    end
+  end
+
+  describe '#validate_external_area' do
+    context 'when the building has an external area of 0' do
+      before do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'G.5'
+        procurement_building.building.external_area = 0
+      end
+
+      it 'is not valid on external_area' do
+        expect(procurement_building.valid?(:external_area)).to eq false
+      end
+
+      it 'has the correct error message' do
+        procurement_building.valid?(:external_area)
+        expect(procurement_building.errors.messages[:building].first).to eq "You have a service in ‘#{procurement_building.building.building_name}’ building that requires external area, please go to 'Manage buildings' to update the building external area size"
+      end
+    end
+
+    context 'when the building has an internal area' do
+      it 'is valid on external_area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        procurement_building.service_codes << 'G.5'
+        expect(procurement_building.valid?(:external_area)).to eq true
+      end
+    end
+  end
+
+  describe '#requires_internal_area?' do
+    context 'when a service requires an internal area' do
+      it 'will be true' do
+        procurement_building.service_codes = CCS::FM::Service.full_gia_services.sample(4)
+        expect(procurement_building.send(:requires_internal_area?)).to eq true
+      end
+    end
+
+    context 'when a service does not require an internal area' do
+      it 'will be false' do
+        procurement_building.service_codes = ['G.5']
+        expect(procurement_building.send(:requires_internal_area?)).to eq false
+      end
+    end
+  end
+
+  describe '#requires_external_area?' do
+    context 'when a service requires an external area' do
+      it 'will be true' do
+        procurement_building.service_codes = ['G.5']
+        expect(procurement_building.send(:requires_external_area?)).to eq true
+      end
+    end
+
+    context 'when a service does not require an external area' do
+      it 'will be false' do
+        procurement_building.service_codes = ['C.1']
+        expect(procurement_building.send(:requires_external_area?)).to eq false
+      end
+    end
+  end
+
+  describe '#building_internal_area' do
+    before do
+      procurement_building.building.update(gia: 500)
+      procurement_building.update(gia: 1000)
+    end
+
+    context 'when the building is in a detailed search' do
+      it 'uses the building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        expect(procurement_building.send(:building_internal_area)).to eq 500
+      end
+    end
+
+    context 'when the building is in a results state' do
+      it 'uses the procurement_building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'results')
+        expect(procurement_building.send(:building_internal_area)).to eq 1000
+      end
+    end
+
+    context 'when the building is in a da_draft state' do
+      it 'uses the procurement_building gia for the internal area' do
+        procurement_building.procurement.update(aasm_state: 'da_draft')
+        expect(procurement_building.send(:building_internal_area)).to eq 1000
+      end
+    end
+  end
+
+  describe '#building_external_area' do
+    before do
+      procurement_building.building.update(external_area: 1000)
+      procurement_building.update(external_area: 500)
+    end
+
+    context 'when the building is in a detailed search' do
+      it 'uses the building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'detailed_search')
+        expect(procurement_building.send(:building_external_area)).to eq 1000
+      end
+    end
+
+    context 'when the building is in a results state' do
+      it 'uses the procurement_building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'results')
+        expect(procurement_building.send(:building_external_area)).to eq 500
+      end
+    end
+
+    context 'when the building is in a da_draft state' do
+      it 'uses the procurement_building external_area for the external area' do
+        procurement_building.procurement.update(aasm_state: 'da_draft')
+        expect(procurement_building.send(:building_external_area)).to eq 500
       end
     end
   end
