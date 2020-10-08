@@ -547,7 +547,8 @@ en:
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
         return_to_your_account: Return to your account
-        start_paragraph: Set up the buildings in which you want facilities management services to be delivered.
+        start_a_procurement_link_text: Start a procurement
+        start_paragraph_html: You can set up your buildings individually using the 'Add a building' button, or alternatively, if you have a larger estate, there is an option to upload your building information using an excel spreadsheet when inputting your requirements - click on '%{start_a_procurement_link}' within your account for further information about this method. Your uploaded buildings will then also appear within this screen for future use.
         start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
         start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
