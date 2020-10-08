@@ -153,7 +153,7 @@ module FacilitiesManagement::ProcurementsHelper
       content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
         content_tag(:div, class: 'govuk-checkboxes__item') do
           capture do
-            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, sectionid: building.building_name, checked: @active_procurement_building_ids.include?(procurement_building_id)))
+            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @active_procurement_building_ids.include?(procurement_building_id)))
             concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
               procurement_building_checkbox_text(building)
             end)
@@ -169,7 +169,7 @@ module FacilitiesManagement::ProcurementsHelper
 
   def procurement_building_checkbox_text(building)
     capture do
-      concat(content_tag(:legend, building.building_name, class: 'govuk-fieldset__legend'))
+      concat(content_tag(:span, building.building_name, class: 'govuk-fieldset__legend'))
       concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
     end
   end
@@ -209,6 +209,10 @@ module FacilitiesManagement::ProcurementsHelper
     else
       edit_facilities_management_procurement_path(@procurement, step: section)
     end
+  end
+
+  def section_id(section)
+    section.downcase.gsub(' ', '-') + '-tag'
   end
 end
 # rubocop:enable Metrics/ModuleLength
