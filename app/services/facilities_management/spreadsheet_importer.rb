@@ -3,7 +3,7 @@ class FacilitiesManagement::SpreadsheetImporter
   BUILDINGS_COMPLETE_ROW = 14
   # This can be added as more parts of the bulk upload are completed
   IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services].freeze
-  TEMPLATE_FILE_NAME = 'Services and buildings template v1.1.xlsx'.freeze
+  TEMPLATE_FILE_NAME = 'Services and buildings template v1.0.xlsx'.freeze
   TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
 
   def initialize(spreadsheet_import)
