@@ -400,16 +400,16 @@ class FacilitiesManagement::SpreadsheetImporter
 
   ########## Shared methods ##########
   def sheet_complete?(sheet, row, message)
-    status_indicator = sheet.row(row).compact.reject(&:empty?)
+    status_indicator = sheet.row(row).compact.reject(&:blank?)
     status_indicator.shift
     status_indicator.count(message).positive? && status_indicator.reject { |status| status == message }.empty?
   end
 
   def sheet_contains_all_buildings?(sheet, row, shift_number)
     buildings = complete_procurement_array.map { |building| building[:object].building_name }
-    sheet_buildings = sheet.row(row).compact.reject(&:empty?)
+    sheet_buildings = sheet.row(row).compact.reject(&:blank?)
     sheet_buildings.shift(shift_number)
-    buildings == sheet_buildings
+    (buildings.map(&:to_s).sort - sheet_buildings.map(&:to_s).sort).empty?
   end
 
   def spreadsheet_import_loop(sheet_variables, building_variables, starting_column, error)
