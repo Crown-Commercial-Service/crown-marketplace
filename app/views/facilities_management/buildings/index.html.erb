@@ -4,7 +4,7 @@
     <%= link_to t('.create_new_button'), new_facilities_management_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
     <div class="govuk-!-width-two-thirds">
       <p class="govuk-!-margin-bottom-2">
-        <%= t('.start_paragraph') %>
+        <%= t('.start_paragraph_html', start_a_procurement_link: link_to(t('.start_a_procurement_link_text'), facilities_management_what_happens_next_path, class: 'govuk-link govuk-link--no-visited-state')) %>
       </p>
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
