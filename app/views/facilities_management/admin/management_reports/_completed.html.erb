@@ -2,5 +2,5 @@
   <%= @management_report.management_report_csv.filename %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
 </a>
 <div class="govuk-grid-row govuk-!-padding-bottom-9">
-  <p class="govuk-!-font-weight-regular govuk-hint govuk-!-padding-left-9"><%= t('.file_generated_date', created_at: @management_report.created_at.strftime('%d %B, %l:%M %P')) %></p>
+  <p class="govuk-!-font-weight-regular govuk-hint govuk-!-padding-left-9"><%= t('.file_generated_date', created_at: @management_report.created_at.in_time_zone("London").strftime('%d %B, %l:%M %P')) %></p>
 </div>
