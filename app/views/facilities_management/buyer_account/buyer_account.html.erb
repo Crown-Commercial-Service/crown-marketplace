@@ -54,6 +54,12 @@
         <p class="fm-buyer-account-panel__body"><%= t('.manage_account_desc') %></p>
     </div>
   </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= link_to t('.further_information_link_description'), t('.further_information_link'), class: 'govuk-!-font-size-19 fm-buyer-account-panel__title govuk-link--no-visited-state', target: '_blank' %>
+      <p class="fm-buyer-account-panel__body"><%= t('.further_information_help') %></p>
+    </div>
+  </div>
   <div class="govuk-!-margin-top-6 ">
     <strong class="govuk-heading-s">
       <%= t('.return_to_page') %>
