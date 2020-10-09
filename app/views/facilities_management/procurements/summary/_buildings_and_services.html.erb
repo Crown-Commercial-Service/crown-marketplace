@@ -3,7 +3,7 @@
     <%= t('.status') %> <span class=govuk-!-padding-left-2><%= govuk_tag(@procurement.buildings_and_services_status) %></span>
   </div>
   <div class="govuk-grid-column-full govuk-hint">
-    <%= t('.summary') %>
+    <%= t('.summary_html', buildings_link: link_to(t('.buildings_link_text'), facilities_management_procurement_summary_path(@procurement, summary: 'buildings'), class: 'govuk-link govuk-link--no-visited-state')) %>
   </div>
 </div>
 
