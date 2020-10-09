@@ -707,9 +707,8 @@ en:
         usagelist_html: |
           <li>quickly view suppliers who can provide services to your locations</li>
           <li>see an estimated contract cost</li>
-          <li>create and offer a direct award contract</li>
+          <li>compliantly create and offer a direct award contract</li>
           <li>shortlist suppliers ready for further competition</li>
-          <li>compliantly place a direct award contract with a supplier</li>
         we_will_tell_you: We will tell you
         you_can_progress: 'You can progress through these three steps:'
         you_will_tell_us: You will tell us
