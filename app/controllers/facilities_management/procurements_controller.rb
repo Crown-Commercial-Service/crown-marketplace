@@ -551,7 +551,7 @@ module FacilitiesManagement
       @page_data = {}
       @page_data[:model_object] = @procurement
       @page_data[:no_suppliers] = @procurement.procurement_suppliers.count
-      @page_data[:supplier_collection] = @procurement.procurement_suppliers.map { |s| s.supplier.data['supplier_name'] }.shuffle
+      @page_data[:supplier_collection] = @procurement.procurement_suppliers.sort_by { |s| s.supplier.data['supplier_name'] }.map { |s| s.supplier.data['supplier_name'] }
       @page_data[:estimated_cost] = @procurement.assessed_value
       @page_data[:selected_sublot] = @procurement.lot_number
       @page_data[:buildings] = @active_procurement_buildings.order_by_building_name

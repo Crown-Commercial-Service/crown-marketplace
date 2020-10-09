@@ -22,7 +22,10 @@ module CCS
       end
 
       def self.selected_suppliers(for_lot, for_regions, for_services)
-        CCS::FM::Supplier.all.select do |s|
+        # This sort by will deal with suppliers that don't have a supplier_name and place them at the end.
+        # It only seems to come up in the specs, but it does come up for some reason
+
+        CCS::FM::Supplier.all.sort_by { |s| [s.data['supplier_name'] ? 1 : 0, s.data['supplier_name']] }.select do |s|
           s.data['lots'].find do |l|
             l['lot_number'] == for_lot &&
               (for_regions - l['regions']).empty? &&
