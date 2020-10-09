@@ -185,27 +185,27 @@ module FMCalculator
     end
 
     # benchmark variation if london_flag set
-    def benchvariation(benchsubtotal1)
+    def benchvariation(benchsubtotal2)
       if @london_flag
-        @benchvariance = benchsubtotal1 * @benchmark_rates['M144'].to_f
+        @benchvariance = benchsubtotal2 * @benchmark_rates['M144'].to_f
       else
         0
       end
     end
 
     # benchmark cafm if flag set
-    def benchcafm(benchsubtotal2)
+    def benchcafm(benchsubtotal1)
       if @cafm_flag
-        @benchmark_rates['M136'] * benchsubtotal2
+        @benchmark_rates['M136'] * benchsubtotal1
       else
         0
       end
     end
 
     # benchmark helpsdesk costs if helpdesk_flag set
-    def benchhelpdesk(benchsubtotal2)
+    def benchhelpdesk(benchsubtotal1)
       if @helpdesk_flag
-        @benchhelpdesk = benchsubtotal2 * @benchmark_rates['N138']
+        @benchhelpdesk = benchsubtotal1 * @benchmark_rates['N138']
       else
         0
       end
@@ -279,8 +279,8 @@ module FMCalculator
     # entry point to calculate bench marked sum
     def benchmarkedcostssum
       benchsubtotal1 = benchmarkedcosts + benchclean
-      benchsubtotal2 = benchsubtotal1 + benchvariation(benchsubtotal1)
-      benchsubtotal3 = benchsubtotal2 + benchcafm(benchsubtotal2) + benchhelpdesk(benchsubtotal2)
+      benchsubtotal2 = benchsubtotal1 + benchcafm(benchsubtotal1) + benchhelpdesk(benchsubtotal1)
+      benchsubtotal3 = benchsubtotal2 + benchvariation(benchsubtotal2)
       bench_mobilisation = benchmobilisation(benchsubtotal3)
       benchyear1 = benchsubtotal3 + bench_mobilisation + benchtupe(benchsubtotal3)
       benchyear1total = benchyear1 + benchmanage(benchyear1) + benchcorporate(benchyear1)
