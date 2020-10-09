@@ -71,13 +71,13 @@ module FMCalculator
         end
     end
 
-    # London location variance based on being in london and a framework rate multiplied by subtotal1
-    def variance(subtotal1)
+    # London location variance based on being in london and a framework rate multiplied by subtotal2
+    def variance(subtotal2)
       @variance ||= if @london_flag
                       if @supplier_name
-                        subtotal1 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
+                        subtotal2 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
                       else
-                        subtotal1 * @framework_rates['M144'].to_f
+                        subtotal2 * @framework_rates['M144'].to_f
                       end
                     else
                       0
@@ -85,12 +85,12 @@ module FMCalculator
     end
 
     # if cafm flag is set then subtotal * framework rate
-    def cafm(subtotal2)
+    def cafm(subtotal1)
       @cafm ||= if @cafm_flag
                   if @supplier_name
-                    subtotal2 * @rate_card_prices[:'M.1'][@building_type].to_f
+                    subtotal1 * @rate_card_prices[:'M.1'][@building_type].to_f
                   else
-                    subtotal2 * @framework_rates['M136']
+                    subtotal1 * @framework_rates['M136']
                   end
                 else
                   0
@@ -98,12 +98,12 @@ module FMCalculator
     end
 
     # if helpdesk_flag is set then multiply by subtotal2
-    def helpdesk(subtotal2)
+    def helpdesk(subtotal1)
       @helpdesk ||= if @helpdesk_flag
                       if @supplier_name
-                        subtotal2 * @rate_card_prices[:'N.1'][@building_type].to_f
+                        subtotal1 * @rate_card_prices[:'N.1'][@building_type].to_f
                       else
-                        subtotal2 * @framework_rates['N138']
+                        subtotal1 * @framework_rates['N138']
                       end
                     else
                       0
@@ -249,8 +249,8 @@ module FMCalculator
     # rubocop:disable Metrics/AbcSize
     def sumunitofmeasure
       subtotal1 = uomd + clean
-      subtotal2 = subtotal1 + variance(subtotal1)
-      subtotal3 = subtotal2 + cafm(subtotal2) + helpdesk(subtotal2)
+      subtotal2 = subtotal1 + cafm(subtotal1) + helpdesk(subtotal1)
+      subtotal3 = subtotal2 + variance(subtotal2)
       mobilisation = mobilisation(subtotal3)
       year1 = subtotal3 + mobilisation
 
@@ -259,9 +259,9 @@ module FMCalculator
 
       results[:subtotal1] = subtotal1
       results[:year1totalcharges] = year1totalcharges
-      results[:cafm] = cafm(subtotal2)
-      results[:helpdesk] = helpdesk(subtotal2)
-      results[:variance] = variance(subtotal1)
+      results[:cafm] = cafm(subtotal1)
+      results[:helpdesk] = helpdesk(subtotal1)
+      results[:variance] = variance(subtotal2)
       results[:tupe] = tupe(subtotal3)
       results[:manage] = manage(year1)
       results[:corporate] = corporate(year1 + results[:tupe])
