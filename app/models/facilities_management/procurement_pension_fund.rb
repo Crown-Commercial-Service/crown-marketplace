@@ -19,7 +19,7 @@ module FacilitiesManagement
     end
 
     def remove_excess_whitespace_from_name
-      self.name = name&.split&.join(' ')
+      name&.squish!
     end
   end
 end
