@@ -9,10 +9,10 @@
           <% if %i[cannot_start not_required].include?(status) %>
             <%= t(".#{section}") %>
           <% else %>
-            <%= link_to t(".#{section}"), link_url(section), class: "govuk-link", aria: { label: "#{t(".#{section}")}, status #{status.to_s.gsub('_',' ')}" } %>
+            <%= link_to t(".#{section}"), link_url(section), class: "govuk-link", aria: { describedby: "#{section_id(section)}" } %>
           <% end %>
         </td>
-        <td class="govuk-table__cell <%= 'govuk-border-bottom_none' if section_has_error %>" style="text-align: right" id="<%= section.downcase.gsub(' ','-') + "-tag" %>">
+        <td class="govuk-table__cell <%= 'govuk-border-bottom_none' if section_has_error %>" style="text-align: right" id="<%= section_id(section) %>">
           <%= govuk_tag(status) %>
         </td>
       </tr>
