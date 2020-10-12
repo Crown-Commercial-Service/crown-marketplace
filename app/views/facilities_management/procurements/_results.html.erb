@@ -43,10 +43,14 @@
   <% end %>
   <h2 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-0"><%= t('.suppliers_shortlisted_html', count: @page_data[:no_suppliers]) %></h2>
   <h2 class="govuk-heading govuk-heading-s govuk-!-margin-top-0"><%= t('.who_are') %></h2>
-  <% @page_data[:supplier_collection].each do |s| %>
-    <p><%= s %></p>
-    <%= '<hr class="govuk-!-width-one-third govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(@page_data[:supplier_collection].last) %>
-  <% end %>
+  <ul class="govuk-list">
+    <% @page_data[:supplier_collection].each do |s| %>
+      <li class="govuk-!-width-one-third">
+        <%= s %>
+        <%= '<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(@page_data[:supplier_collection].last) %>
+      </li>
+    <% end %>
+  </ul>
   <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
   <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
   <div class="govuk-!-margin-bottom-4">
