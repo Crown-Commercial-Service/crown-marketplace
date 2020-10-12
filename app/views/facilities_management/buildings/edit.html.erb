@@ -1,7 +1,7 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
 <%= content_for :page_title, pd.heading_details.text %>
 
-  <%= form_for @page_data[:model_object], url: facilities_management_building_url(@page_data[:model_object].id), method: :put, html: { specialvalidation: params[:step] != 'building_details', novalidate: true, multipart: true } do |f| %>
+  <%= form_for @page_data[:model_object], url: facilities_management_building_url(@page_data[:model_object].id), method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
     <input type="hidden" name="step" value="<%= params[:step]%>"/>
     <div class="govuk-!-width-two-thirds">
       <%= render partial: params[:step], locals: { f: f } %>
