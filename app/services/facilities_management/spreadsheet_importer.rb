@@ -81,7 +81,6 @@ class FacilitiesManagement::SpreadsheetImporter
           @procurement_array << { skip: true }
         else
           building_column = building_sheet.column(index)
-          binding.pry
           building = @user.buildings.build(building_attribues(building_column))
           add_regions(building, building_column)
           store_building(building)
