@@ -15,7 +15,7 @@ module FacilitiesManagement
           @notice_contact_detail = @procurement.using_buyer_detail_for_notices_detail? ? @buyer_detail : @procurement.notices_contact_detail
 
           respond_to do |format|
-            format.docx { headers['Content-Disposition'] = 'attachment; filename="Attachment 4 - Order Form and Call-off Schedule (DA).docx"' }
+            format.docx { headers['Content-Disposition'] = 'attachment; filename="Attachment 4 - Order Form and Call-Off Schedules (DA) v3.0.docx"' }
           end
         end
 
@@ -36,7 +36,7 @@ module FacilitiesManagement
           @pension_funds = @procurement.procurement_pension_funds
 
           respond_to do |format|
-            format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA).docx"' }
+            format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA) v3.0.docx"' }
           end
         end
 
