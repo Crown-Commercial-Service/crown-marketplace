@@ -27,7 +27,8 @@ module FacilitiesManagement
           caption3: step_title(:add_address),
           page_title: I18n.t('facilities_management.buildings.page_definitions.add_building_address'),
           continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
-          back_url: add_address_back_link
+          back_url: add_address_back_link,
+          back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_building_details')
         },
         edit: edit_details,
         show: {
@@ -58,7 +59,8 @@ module FacilitiesManagement
         continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
         secondary_name: 'save_and_return',
         secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-        back_url: facilities_management_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: @procurement.id)
+        back_url: facilities_management_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: @procurement.id),
+        back_text: edit_back_text
       }
 
       details[:continuation_text] = I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary') if params[:step] == 'security'
