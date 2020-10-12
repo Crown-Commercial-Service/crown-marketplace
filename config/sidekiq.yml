@@ -1,8 +1,5 @@
 :concurrency: 5
 :queues:
   - default
-  - st
-  - mc
   - ls
-  - fm
   - rollbar
