@@ -51,7 +51,7 @@ en:
               taken: This building name is already in use
               too_long: Building name must be 50 characters or less
             building_type:
-              blank: You must select a buiding type or describe your own
+              blank: You must select a building type or describe your own
             description:
               too_long: Building description must be 50 characters or less
             external_area:
