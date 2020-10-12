@@ -184,7 +184,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def partial_estimated_text
-    if some_services_without_price_outside_variance?
+    if estimated_cost_not_calculated?
       '(Estimated cost not calculated)'
     elsif @procurement.all_services_missing_framework_and_benchmark_price?
       estimation_text_for_all_services_missing
@@ -193,6 +193,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     else
       ''
     end
+  end
+
+  def estimated_cost_not_calculated?
+    some_services_without_price_outside_variance? || @procurement.assessed_value < 0.005
   end
 
   def some_services_without_price_outside_variance?
