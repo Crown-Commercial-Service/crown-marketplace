@@ -48,10 +48,10 @@ module FacilitiesManagement
             zip.print IO.read(Rails.root + files_path + file)
           end
 
-          zip.put_next_entry 'Attachment 4 - Order Form and Call-off Schedule (DA).docx'
+          zip.put_next_entry 'Attachment 4 - Order Form and Call-Off Schedules (DA) v3.0.docx'
           zip.print generate_doc(contract_id)
 
-          zip.put_next_entry 'Call-Off Schedule 2 - Staff Transfer (DA).docx'
+          zip.put_next_entry 'Call-Off Schedule 2 - Staff Transfer (DA) v3.0.docx'
           zip.print generate_doc_call_off_schedule_2(contract_id)
         end
 
