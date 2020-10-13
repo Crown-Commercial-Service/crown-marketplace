@@ -23,6 +23,6 @@ module WorkingDays
   end
 
   def self.uk_bank_holidays
-    FacilitiesManagement::StaticData.bank_holidays.map { |country| country[1]['events'].map { |date| DateTime.parse(date['date']).in_time_zone('London') } }.flatten.uniq
+    @uk_bank_holidays ||= FacilitiesManagement::StaticData.bank_holidays.map { |country| country[1]['events'].map { |date| DateTime.parse(date['date']).in_time_zone('London') } }.flatten.uniq
   end
 end

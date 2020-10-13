@@ -440,6 +440,18 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '#all_complete' do
+    context 'when the procurement is beyond requirements' do
+      %i[choose_contract_value results da_draft direct_award further_competition closed].each do |state|
+        before { procurement.update(aasm_state: state) }
+
+        it "will be nil for a state of #{state}" do
+          expect(procurement.send(:all_complete)).to be_nil
+        end
+      end
+    end
+  end
+
   describe '#update_building_services' do
     before do
       procurement.procurement_buildings.first.procurement_building_services.destroy_all
