@@ -423,7 +423,15 @@ module FacilitiesManagement
     end
 
     def procurement_building_services_not_used_in_calculation
-      procurement_building_services.reject(&:special_da_service?).select { |service| unused_service?(service) }.map(&:name).uniq
+      names = []
+      services = procurement_building_services.select(:code, :service_standard, :name).uniq.reject(&:special_da_service?).pluck(:code, :service_standard, :name).uniq
+
+      services.each do |service|
+        pbs = FacilitiesManagement::ProcurementBuildingService.new(code: service[0], service_standard: service[1], name: service[2])
+        names << pbs.name if pbs.service_missing_framework_price?(rate_model) && pbs.service_missing_benchmark_price?(rate_model)
+      end
+
+      names
     end
 
     def unused_service?(service)
@@ -435,11 +443,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_framework_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     def any_services_missing_benchmark_price?
-      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def all_services_unpriced_and_no_buyer_input?
@@ -447,7 +455,7 @@ module FacilitiesManagement
     end
 
     def all_services_missing_framework_price?
-      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     def all_services_missing_framework_and_benchmark_price?
@@ -558,12 +566,12 @@ module FacilitiesManagement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
       self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
-
       set_suppliers_for_procurement
     end
 
     def set_suppliers_for_procurement
       procurement_suppliers.destroy_all
+
       assessed_value_calculator.sorted_list.each do |supplier_data|
         procurement_suppliers.create!(supplier_id: supplier_data[:supplier_id], direct_award_value: supplier_data[:da_value])
       end
@@ -603,7 +611,7 @@ module FacilitiesManagement
     end
 
     def all_services_missing_benchmark_price?
-      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def contract_value_needed?
