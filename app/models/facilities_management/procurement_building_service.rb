@@ -126,7 +126,7 @@ module FacilitiesManagement
       if requires_volume?
         send(required_contexts[:volume].first)
       elsif requires_lift_data?
-        lifts.sum(:number_of_floors) unless lifts.empty?
+        sum_number_of_floors unless lifts.empty?
       elsif requires_service_hours?
         service_hours
       elsif requires_external_area?
@@ -146,6 +146,10 @@ module FacilitiesManagement
 
     def special_da_service?
       FacilitiesManagement::Service.special_da_service?(code)
+    end
+
+    def sum_number_of_floors
+      lifts.sum(:number_of_floors)
     end
 
     def gia

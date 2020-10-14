@@ -4,6 +4,7 @@ module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
     include ProcurementValidator
+    include ServiceQuestionsConcern
 
     # buyer
     belongs_to :user,
@@ -478,17 +479,19 @@ module FacilitiesManagement
     end
 
     def services_status
-      service_codes.any? ? :completed : :not_started
+      @services_status ||= service_codes.any? ? :completed : :not_started
     end
 
     def buildings_status
-      active_procurement_buildings.any? ? :completed : :not_started
+      @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
     end
 
     def buildings_and_services_status
-      return :cannot_start if services_status == :not_started || buildings_status == :not_started
-
-      buildings_and_services_completed? ? :completed : :incomplete
+      @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
+                                           :cannot_start
+                                         else
+                                           buildings_and_services_completed? ? :completed : :incomplete
+                                         end
     end
 
     def buildings_and_services_completed?
@@ -497,13 +500,18 @@ module FacilitiesManagement
 
     def service_requirements_status
       return :cannot_start unless buildings_and_services_status == :completed
-      return :not_required if no_services_requiring_standard? && no_services_requiring_unit_of_measure?
+      return :not_required unless services_require_questions?
 
       service_requirements_completed? ? :completed : :incomplete
     end
 
     def service_requirements_completed?
-      active_procurement_buildings.all?(&:complete?)
+      gia_complete? &&
+        external_area_complete? &&
+        services_requiring_lift_data_complete? &&
+        services_requiring_volumes_complete? &&
+        services_requiring_service_hours_complete? &&
+        services_requiring_service_standard_complete?
     end
 
     def remove_existing_spreadsheet_import
@@ -520,12 +528,8 @@ module FacilitiesManagement
       Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
     end
 
-    def no_services_requiring_unit_of_measure?
-      procurement_building_services.none?(&:requires_unit_of_measure?) && procurement_buildings.none?(&:requires_building_area?)
-    end
-
-    def no_services_requiring_standard?
-      procurement_building_services.none?(&:requires_service_standard?)
+    def services_require_questions?
+      (service_codes & services_requiring_questions).any?
     end
 
     def can_be_deleted?
@@ -608,6 +612,42 @@ module FacilitiesManagement
 
     def contract_value_needed?
       all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?
+    end
+
+    def gia_complete?
+      building_area_complete?(:gia, services_requiring_gia)
+    end
+
+    def external_area_complete?
+      building_area_complete?(:external_area, services_requiring_external_area)
+    end
+
+    def building_area_complete?(attribute, codes)
+      full_attribute = "facilities_management_buildings.#{attribute}"
+
+      active_procurement_buildings.where('service_codes && ARRAY[?]::text[]', codes).joins(:building).select(full_attribute).pluck(full_attribute).all?(&:positive?)
+    end
+
+    def services_requiring_lift_data_complete?
+      procurement_building_services.where(code: services_requiring_lift_data).all? { |service| service.sum_number_of_floors.positive? }
+    end
+
+    def services_requiring_volumes_complete?
+      volume_contexts.all? do |context|
+        service_question_complete_for_codes?(service_quesions.get_codes_by_question(context), context)
+      end
+    end
+
+    def services_requiring_service_hours_complete?
+      service_question_complete_for_codes?(services_requiring_service_hours, :service_hours)
+    end
+
+    def services_requiring_service_standard_complete?
+      service_question_complete_for_codes?(services_requiring_service_standards, :service_standard)
+    end
+
+    def service_question_complete_for_codes?(codes, context)
+      procurement_building_services.where(code: codes).pluck(context).all?(&:present?)
     end
   end
 end
