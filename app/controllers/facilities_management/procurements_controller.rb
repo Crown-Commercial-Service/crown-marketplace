@@ -640,7 +640,7 @@ module FacilitiesManagement
     end
 
     def closed_contracts
-      current_user.procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| sent_offer.contract_closed_date }&.reverse
+      current_user.procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| [sent_offer.contract_closed_date ? 1 : 0, sent_offer.contract_closed_date] }&.reverse
     end
 
     def procurement_route_params
