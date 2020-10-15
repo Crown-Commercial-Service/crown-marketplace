@@ -298,28 +298,33 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
         context 'when contract_response is false and no reason is given' do
           it 'will not be valid' do
-            contract.contract_response = false
-            expect(contract.contract_response).to be false
             expect(contract.valid?(:contract_response)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:contract_response)
+            expect(contract.errors[:reason_for_declining].first).to eq 'Enter a reason for declining this contract offer'
           end
         end
 
         context 'when contract_response is false and a reason is given' do
+          before { contract.reason_for_declining = 'This is test string' }
+
           it 'will be valid' do
-            contract.reason_for_declining = 'This is test string'
-            expect(contract.contract_response).to be false
-            expect(contract.reason_for_declining).to match 'This is test string'
             expect(contract.valid?(:contract_response)).to be true
           end
         end
 
         context 'when contract_response is false and a reason is given that is more than 500 characters' do
+          before { contract.reason_for_declining = (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
+
           it 'will not be valid' do
-            closed_reason = (0...501).map { ('a'..'z').to_a[rand(26)] }.join
-            contract.reason_for_declining = closed_reason
-            expect(contract.contract_response).to be false
-            expect(contract.reason_for_declining).to match closed_reason
             expect(contract.valid?(:contract_response)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:contract_response)
+            expect(contract.errors[:reason_for_declining].first).to eq 'Reason for declining must be 500 characters or less'
           end
         end
       end
@@ -333,141 +338,241 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           it 'will not be valid' do
             expect(contract.valid?(:confirmation_of_signed_contract)).to be false
           end
+
+          it 'will have the correct error message' do
+            contract.valid?(:confirmation_of_signed_contract)
+            expect(contract.errors[:contract_signed].first).to eq 'Select one option'
+          end
         end
 
         context 'when the supplier has not signed' do
-          context 'when no signing date is selected' do
+          before do
+            contract.contract_signed = false
+            contract.reason_for_not_signing = reason_for_not_signing
+          end
+
+          context 'when reason for closing is nil' do
+            let(:reason_for_not_signing) { nil }
+
             it 'will not be valid' do
-              contract.contract_signed = false
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will not be valid with no reason for closing' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = nil
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:reason_for_not_signing].first).to eq 'Enter a reason why this contract will not be signed'
+            end
+          end
+
+          context 'when reason for closing is more than max characters' do
+            let(:reason_for_not_signing) { (0...101).map { ('a'..'z').to_a[rand(26)] }.join }
+
+            it 'will not be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will be valid with a reason for closing' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = 'reason'
-              expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:reason_for_not_signing].first).to eq 'Reason for not signing must be 100 characters or less'
             end
+          end
 
-            it 'will be not valid with a reason for closing above 100 characters' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
-              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-            end
+          context 'when reason for closing is less than max characters' do
+            let(:reason_for_not_signing) { 'In my younger and more vulnerable years my father gave me some advice' }
 
-            it 'will be valid with a reason for closing below 100 characters' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = 'In my younger and more vulnerable years my father gave me some advice'
+            it 'will be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be true
             end
           end
         end
 
         context 'when the supplier has signed' do
-          context 'when a contract start date has been added' do
-            before do
-              contract.contract_signed = true
-            end
+          before do
+            contract.contract_signed = true
+          end
 
-            context 'when a start date has been added without an end date' do
-              it 'will not be valid' do
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-              end
+          context 'when entering individual date data' do
+            before do
+              contract.contract_start_date_dd = contract_start_date_dd
+              contract.contract_start_date_mm = contract_start_date_mm
+              contract.contract_start_date_yyyy = contract_start_date_yyyy
+              contract.contract_end_date_dd = contract_end_date_dd
+              contract.contract_end_date_mm = contract_end_date_mm
+              contract.contract_end_date_yyyy = contract_end_date_yyyy
             end
 
             context 'when the values entered are not numbers' do
+              let(:string) { (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join }
+              let(:contract_start_date_dd) { string.split('').shuffle.join }
+              let(:contract_start_date_mm) { string.split('').shuffle.join }
+              let(:contract_start_date_yyyy) { string.split('').shuffle.join }
+              let(:contract_end_date_dd) { string.split('').shuffle.join }
+              let(:contract_end_date_mm) { string.split('').shuffle.join }
+              let(:contract_end_date_yyyy) { string.split('').shuffle.join }
+
               it 'will not be valid' do
-                string = (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join
-                contract.contract_start_date_dd = string.split('').shuffle.join
-                contract.contract_start_date_mm = string.split('').shuffle.join
-                contract.contract_start_date_yyyy = string.split('').shuffle.join
-                contract.contract_end_date_dd = string.split('').shuffle.join
-                contract.contract_end_date_mm = string.split('').shuffle.join
-                contract.contract_end_date_yyyy = string.split('').shuffle.join
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
+                expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
               end
             end
 
             context 'when the values entered are numbers' do
+              let(:contract_start_date_dd) { '1' }
+              let(:contract_start_date_mm) { '11' }
+              let(:contract_start_date_yyyy) { '2012' }
+              let(:contract_end_date_dd) { '1' }
+              let(:contract_end_date_mm) { '11' }
+              let(:contract_end_date_yyyy) { '2025' }
+
               it 'will be valid' do
-                contract.contract_start_date_dd = '1'
-                contract.contract_start_date_mm = '11'
-                contract.contract_start_date_yyyy = '2012'
-                contract.contract_end_date_dd = '1'
-                contract.contract_end_date_mm = '11'
-                contract.contract_end_date_yyyy = '2025'
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
               end
             end
 
             context 'when the values entered are not real dates' do
+              let(:contract_start_date_dd) { '29' }
+              let(:contract_start_date_mm) { '2' }
+              let(:contract_start_date_yyyy) { '2019' }
+              let(:contract_end_date_dd) { '15' }
+              let(:contract_end_date_mm) { '2' }
+              let(:contract_end_date_yyyy) { '2025' }
+
               it 'will not be valid' do
-                contract.contract_start_date_dd = '29'
-                contract.contract_start_date_mm = '2'
-                contract.contract_start_date_yyyy = '2019'
-                contract.contract_end_date_dd = '15'
-                contract.contract_end_date_mm = '2'
-                contract.contract_end_date_yyyy = '2025'
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
+                expect(contract.errors[:contract_end_date].first).to eq nil
               end
             end
 
             context 'when the values entered are not real dates' do
+              let(:contract_start_date_dd) { '01' }
+              let(:contract_start_date_mm) { '01' }
+              let(:contract_start_date_yyyy) { '2020' }
+              let(:contract_end_date_dd) { '30' }
+              let(:contract_end_date_mm) { '2' }
+              let(:contract_end_date_yyyy) { '2020' }
+
               it 'will not be valid' do
-                contract.contract_start_date_dd = '01'
-                contract.contract_start_date_mm = '01'
-                contract.contract_start_date_yyyy = '2020'
-                contract.contract_end_date_dd = '30'
-                contract.contract_end_date_mm = '2'
-                contract.contract_end_date_yyyy = '2020'
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-                expect(contract.errors.messages[:contract_end_date]).to include('Enter a valid end date')
-              end
-            end
-
-            context 'when both a start and end date have been added' do
-              it 'will be valid' do
-                contract.contract_signed = true
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1.day
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
               end
 
-              context 'when the end date is before the start date' do
-                it 'will be valid' do
-                  contract.contract_signed = true
-                  contract.contract_start_date = DateTime.now.in_time_zone('London')
-                  contract.contract_end_date = DateTime.now.in_time_zone('London') - 1.day
-                  expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-                end
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq nil
+                expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
               end
             end
           end
 
-          context 'when a contract end date has been added' do
+          context 'when entering the dates' do
+            before do
+              contract.contract_start_date = contract_start_date
+              contract.contract_end_date = contract_end_date
+            end
+
+            context 'when a start date has been added without an end date' do
+              let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+              let(:contract_end_date) { nil }
+
+              it 'will not be valid' do
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq nil
+                expect(contract.errors[:contract_end_date].first).to eq 'Enter contract end date'
+              end
+            end
+
             context 'when an end date has been added without a start date' do
+              let(:contract_start_date) { nil }
+              let(:contract_end_date) { DateTime.now.in_time_zone('London') }
+
               it 'will not be valid' do
-                contract.contract_signed = true
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq 'Enter contract start date'
+                expect(contract.errors[:contract_end_date].first).to eq nil
+              end
+            end
+
+            context 'when the end date is before the start date' do
+              let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+              let(:contract_end_date) { DateTime.now.in_time_zone('London') - 1.day }
+
+              it 'will not be valid' do
+                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+              end
+
+              it 'will have the correct error message' do
+                contract.valid?(:confirmation_of_signed_contract)
+                expect(contract.errors[:contract_start_date].first).to eq nil
+                expect(contract.errors[:contract_end_date].first).to eq 'The contract end date must be after the contract start date'
               end
             end
 
             context 'when both a start and end date have been added' do
+              let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+              let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
+
               it 'will be valid' do
-                contract.contract_signed = true
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
                 expect(contract.valid?(:confirmation_of_signed_contract)).to be true
               end
             end
           end
+        end
+      end
+    end
+
+    describe '#reason_for_closing' do
+      let(:contract) { procurement.procurement_suppliers[0] }
+
+      before { contract.reason_for_closing = reason_for_closing }
+
+      context 'when no reason is given' do
+        let(:reason_for_closing) { nil }
+
+        it 'will not be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be false
+        end
+
+        it 'will have the correct error message' do
+          contract.valid?(:reason_for_closing)
+          expect(contract.errors[:reason_for_closing].first).to eq 'Enter a reason for closing this procurement'
+        end
+      end
+
+      context 'when a reason is given' do
+        let(:reason_for_closing) { 'This is test string' }
+
+        it 'will be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be true
+        end
+      end
+
+      context 'when a reason is given that is more than 500 characters' do
+        let(:reason_for_closing) { (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
+
+        it 'will not be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be false
+        end
+
+        it 'will have the correct error message' do
+          contract.valid?(:reason_for_closing)
+          expect(contract.errors[:reason_for_closing].first).to eq 'Reason for closing must be 500 characters or less'
         end
       end
     end
