@@ -64,12 +64,12 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
       list_standards = get_sorted_list_unique_standards_per_building data_for_service
 
       list_standards.each do |standard|
-        row_values = []
-        buildings_data.each_with_index do |building, index|
+        service_name = determine_service_name(service['name'], standard)
+        row_values = [service['code'], service_name]
+
+        row_values += buildings_data.map do |building|
           unit_of_measure = find_service_for_building(data_for_service, building[:building_id])
-          service_name = determine_service_name(service['name'], standard)
-          row_values << service['code'] << service_name if index.zero?
-          row_values << determine_service_matrix_cell_text(unit_of_measure, standard)
+          determine_service_matrix_cell_text(unit_of_measure, standard)
         end
         sheet.add_row row_values, style: standard_style, height: standard_row_height
         rows_added += 1
@@ -110,14 +110,10 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
       new_row = [service['code'], service['name'], service['metric']]
       data_for_service = data_for_service_code(units_of_measure_values, service['code'])
 
-      @active_procurement_buildings.each do |building|
+      new_row += @active_procurement_buildings.map do |building|
         service_measure = find_service_for_building(data_for_service, building.building_id)
 
-        new_row << if service_measure.nil?
-                     nil
-                   else
-                     service_measure[:uom_value].to_f
-                   end
+        service_measure[:uom_value].to_f unless service_measure.nil?
       end
 
       sheet.add_row new_row, style: number_column_style
