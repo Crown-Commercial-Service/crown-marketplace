@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   let(:lift_data) { [] }
 
   before do
-    procurement.send(:copy_procurement_buildings_gia)
+    procurement.send(:copy_procurement_buildings_data)
     lift_data&.each do |number_of_floors|
       procurement_building_service.lifts.create(number_of_floors: number_of_floors)
     end
@@ -1408,7 +1408,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       before do
-        procurement_building_service.procurement_building.set_gia
+        procurement_building_service.procurement_building.freeze_building_data
       end
 
       it 'shows suppliers that do provide the service in UKH1 region' do
@@ -1448,7 +1448,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       before do
-        procurement_building_service.procurement_building.set_gia
+        procurement_building_service.procurement_building.freeze_building_data
       end
 
       it 'shows suppliers that do provide the specific service' do
@@ -1514,7 +1514,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       before do
-        procurement.active_procurement_buildings.each(&:set_gia)
+        procurement.active_procurement_buildings.each(&:freeze_building_data)
       end
 
       it 'shows suppliers that do provide the specific service' do
@@ -1566,7 +1566,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       before do
-        procurement.active_procurement_buildings.each(&:set_gia)
+        procurement.active_procurement_buildings.each(&:freeze_building_data)
       end
 
       it 'shows suppliers that do provide the specific service' do
@@ -1612,7 +1612,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:lift_data) { [999, 999, 999, 999] }
 
       before do
-        procurement_building_service.procurement_building.set_gia
+        procurement_building_service.procurement_building.freeze_building_data
         lift_data.each do |number_of_floors|
           procurement_building_service.lifts.create(number_of_floors: number_of_floors)
         end

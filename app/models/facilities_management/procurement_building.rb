@@ -25,12 +25,11 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/AbcSize, Rails/SkipsModelValidations
-    def set_gia
+    def freeze_building_data
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
       update_columns(
         gia: building.gia,
         external_area: building.external_area,
-        region: building.region,
         building_type: building.building_type,
         security_type: building.security_type,
         address_town: building.address_town,
@@ -40,7 +39,6 @@ module FacilitiesManagement
         address_region: building.address_region,
         address_region_code: building.address_region_code,
         building_name: building.building_name,
-        building_json: building.building_json,
         description: building.description,
         other_security_type: building.other_security_type,
         other_building_type: building.other_building_type,
