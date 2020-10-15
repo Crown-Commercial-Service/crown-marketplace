@@ -6,7 +6,6 @@ FactoryBot.define do
     external_area { 4596 }
     building_name { 'asa' }
     description { 'non-json description' }
-    region { 'Essex' }
     building_type { 'General office - Customer Facing' }
     security_type { 'Baseline personnel security standard (BPSS)' }
     address_town { 'Southend-On-Sea' }
@@ -15,7 +14,6 @@ FactoryBot.define do
     address_region { 'Essex' }
     address_region_code { 'UKH1' }
     address_postcode { 'SS31 0DR' }
-    building_json { building.building_json }
   end
 
   factory :facilities_management_procurement_building, parent: :facilities_management_procurement_building_no_services do
@@ -24,13 +22,20 @@ FactoryBot.define do
 
   factory :facilities_management_procurement_building_london, parent: :facilities_management_procurement_building do
     building { create :facilities_management_building_london }
+    description { 'london building' }
+    address_line_1 { '100 New Barn Street' }
+    address_town { 'London' }
+    address_line_2 { '' }
+    address_region { 'Newham' }
+    address_region_code { 'UKI3' }
+    address_postcode { 'E13 8JW' }
   end
 
   factory :facilities_management_procurement_building_for_further_competition, parent: :facilities_management_procurement_building_london do
     procurement_building_services { build_list :facilities_management_procurement_building_service, 2 }
   end
 
-  factory :facilities_management_procurement_building_for_further_competition_with_gia, parent: :facilities_management_procurement_building do
+  factory :facilities_management_procurement_building_for_further_competition_with_gia, parent: :facilities_management_procurement_building_london do
     building { create :facilities_management_building_london }
   end
 
