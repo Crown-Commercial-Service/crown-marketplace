@@ -2,7 +2,7 @@ module FacilitiesManagement
   class SummaryReport
     include FacilitiesManagement::SummaryHelper
 
-    attr_reader :sum_uom, :sum_benchmark, :building_data, :contract_length_years, :start_date, :tupe_flag,
+    attr_reader :sum_uom, :sum_benchmark, :contract_length_years, :start_date, :tupe_flag,
                 :posted_services, :posted_locations, :subregions, :results
 
     def initialize(procurement_id)
@@ -41,7 +41,7 @@ module FacilitiesManagement
       @active_procurement_buildings.includes(:procurement_building_services).find_each do |building|
         procurement_building_services = building.procurement_building_services
         result = uvals_for_building(building, procurement_building_services, spreadsheet_type)
-        vals_per_building = services(building, result[1].deep_symbolize_keys!, result[0], remove_cafm_help, supplier_name)
+        vals_per_building = services(building, result, remove_cafm_help, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
         if supplier_name
           # for da spreadsheet
@@ -114,7 +114,7 @@ module FacilitiesManagement
         }
       end
 
-      [building_uvals, building.building_json]
+      building_uvals
     end
 
     def da_procurement_building_services(procurement_building_services)
@@ -175,8 +175,8 @@ module FacilitiesManagement
     end
     # rubocop:enable Rails/FindEach
 
-    def copy_params(procurement_building, building_data, uvals)
-      @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
+    def copy_params(procurement_building, uvals)
+      @london_flag = building_in_london?(procurement_building.address_region_code)
       @gia = procurement_building.gia
       @external_area = procurement_building.external_area
       @helpdesk_flag = uvals.any? { |uval| uval[:service_code] == 'N.1' }
@@ -186,12 +186,12 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building, building_data, uvals, remove_cafm_help, supplier_name = nil)
+    def services(building, uvals, remove_cafm_help, supplier_name = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
       results = {}
 
-      copy_params building, building_data, uvals
+      copy_params building, uvals
 
       uvals_remove_cafm_help = remove_cafm_help == true ? uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' } : uvals
       uvals_remove_cafm_help.each do |v|
@@ -219,7 +219,7 @@ module FacilitiesManagement
                                                @rates,
                                                @rate_card,
                                                supplier_name,
-                                               building_data)
+                                               building)
         sum_uom += calc_fm.sumunitofmeasure
         if supplier_name
           results[v[:service_code]] = calc_fm.results

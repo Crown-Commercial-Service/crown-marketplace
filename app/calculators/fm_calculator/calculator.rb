@@ -18,8 +18,7 @@ module FMCalculator
     @framework_rates = nil
 
     # rubocop:disable Metrics/ParameterLists (with a s)
-    # rubocop:disable Metrics/AbcSize
-    def initialize(contract_length_years, service_ref, service_standard, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building_data = nil)
+    def initialize(contract_length_years, service_ref, service_standard, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -42,12 +41,9 @@ module FMCalculator
         @rate_card_prices = rate_card.data[:Prices][@supplier_name]
       end
 
-      @building_data = building_data
-      @building_type = @building_data[:'fm-building-type'] || @building_data[:'building-type'] if building_data
-      @building_type = @building_type.to_sym if @building_type
+      @building_type = building.building_type.to_sym if building
       @results = {}
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/ParameterLists (with a s)
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
