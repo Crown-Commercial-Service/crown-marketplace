@@ -555,15 +555,15 @@ module FacilitiesManagement
     def freeze_procurement_data
       return unless detailed_search?
 
-      copy_procurement_buildings_gia
+      copy_procurement_buildings_data
       copy_fm_rates_to_frozen
       copy_fm_rate_cards_to_frozen
       calculate_initial_assesed_value
       save_data_for_procurement
     end
 
-    def copy_procurement_buildings_gia
-      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:set_gia) }
+    def copy_procurement_buildings_data
+      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:freeze_building_data) }
     end
 
     def save_data_for_procurement

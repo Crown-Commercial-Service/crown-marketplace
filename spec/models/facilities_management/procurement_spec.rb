@@ -1293,7 +1293,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:building) { create :facilities_management_building_london }
 
     before do
-      procurement.send(:copy_procurement_buildings_gia)
+      procurement.send(:copy_procurement_buildings_data)
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
       procurement.save
     end
