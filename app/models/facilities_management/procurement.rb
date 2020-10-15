@@ -255,12 +255,11 @@ module FacilitiesManagement
     end
 
     def create_new_procurement_buildings
-      building_ids = procurement_buildings.map(&:building_id)
+      procurement_building_ids = procurement_buildings.map(&:building_id)
+      building_ids = user.buildings.pluck(:id)
 
-      user.buildings.each do |building|
-        next if building_ids.include? building.id
-
-        procurement_buildings.create(building_id: building.id)
+      (building_ids - (building_ids & procurement_building_ids)).each do |building_id|
+        procurement_buildings.create(building_id: building_id)
       end
     end
 
