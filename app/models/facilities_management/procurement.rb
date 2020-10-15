@@ -576,7 +576,7 @@ module FacilitiesManagement
     def set_suppliers_for_procurement
       procurement_suppliers.destroy_all
 
-      assessed_value_calculator.sorted_list.each do |supplier_data|
+      assessed_value_calculator.sorted_list(eligible_for_da).each do |supplier_data|
         procurement_suppliers.create!(supplier_id: supplier_data[:supplier_id], direct_award_value: supplier_data[:da_value])
       end
     end
