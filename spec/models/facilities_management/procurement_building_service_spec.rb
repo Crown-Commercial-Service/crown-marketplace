@@ -712,9 +712,9 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         let(:lift_data) { [1, 1001] }
 
         it 'service_status will show invalid' do
-          service_status = procurement_building_service.services_status
-          expect(service_status[:validity][:lifts].empty?).to eq false
-          expect(service_status[:validity][:ppm_standards].empty?).to eq false
+          expect(procurement_building_service.valid?(:lifts)).to eq false
+          expect(procurement_building_service.valid?(:ppm_standards)).to eq false
+          expect(procurement_building_service.valid?(:all)).to eq false
         end
       end
 
@@ -725,13 +725,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           expect(procurement_building_service.valid?(:ppm_standards)).to eq true
           expect(procurement_building_service.valid?(:all)).to eq false
         end
-
-        it 'service status data will show it' do
-          procurement_building_service[:service_standard] = 'B'
-          service_status = procurement_building_service.services_status
-          expect(service_status[:validity][:lifts].empty?).to eq false
-          expect(service_status[:validity][:ppm_standards].empty?).to eq true
-        end
       end
 
       context 'with both lift and service_standard data' do
@@ -741,13 +734,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           procurement_building_service[:service_standard] = 'B'
           expect(procurement_building_service.valid?(:lifts)).to eq true
           expect(procurement_building_service.valid?(:all)).to eq true
-        end
-
-        it 'service_status will indicate validity' do
-          procurement_building_service[:service_standard] = 'B'
-          service_status = procurement_building_service.services_status
-          expect(service_status[:validity][:lifts].empty?).to eq true
-          expect(service_status[:validity][:ppm_standards].empty?).to eq true
         end
       end
     end
@@ -831,50 +817,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
           procurement_building_service.code = 'K.1'
           expect(procurement_building_service.requires_external_area?).to eq false
         end
-      end
-    end
-  end
-
-  describe '#validate_services' do
-    context 'when empty' do
-      it 'will be so' do
-        procurement_building_service.code = 'C.5'
-        [1, 2, 3].each do |number_of_floors|
-          procurement_building_service.lifts.build(number_of_floors: number_of_floors)
-        end
-
-        procurement_building_service.service_standard = 'A'
-        expect(procurement_building_service.services_status[:validity][:lifts].empty?).to eq(true)
-      end
-    end
-  end
-
-  describe '#services_status' do
-    context 'when analysing an empty service record' do
-      it 'will return a hash indicating na/false' do
-        expect(procurement_building_service.services_status).to include(:context)
-        expect(procurement_building_service.services_status[:context]).to eq :na
-      end
-
-      it 'will return a hash indicating na/false when the code isn\'t initialised' do
-        procurement_building_service.code = nil
-        expect(procurement_building_service.services_status).to include(:context)
-        expect(procurement_building_service.services_status[:context]).to eq :na
-      end
-
-      it 'will return a hash indicating unknown/false when the code isn\'t valid' do
-        procurement_building_service.code = 'bad.code'
-        expect(procurement_building_service.services_status).to include(:context)
-        expect(procurement_building_service.services_status[:context]).to eq :unknown
-      end
-    end
-
-    context 'when analysing a service record with a valid code' do
-      it 'will return a hash with the correct contexts and false for G.1' do
-        procurement_building_service.code = 'G.1'
-        result = procurement_building_service.services_status
-        expect(result[:contexts]).to include(:cleaning_standards)
-        expect(result[:validity][:cleaning_standards].empty?).to eq(false)
       end
     end
   end

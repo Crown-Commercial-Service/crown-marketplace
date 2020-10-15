@@ -36,29 +36,26 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   def add_computed_row(sheet, sorted_building_keys, label, vals)
     standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
-    new_row = []
     sum = 0
-    sorted_building_keys.each do |k|
-      new_row << vals[k]
+    new_row = sorted_building_keys.map do |k|
       sum += vals[k]
+      vals[k]
     end
-    new_row = ([label, nil, sum] << new_row).flatten
+    new_row = [label, nil, sum] + new_row
     sheet.add_row new_row, style: standard_style
   end
 
   # rubocop:disable Metrics/AbcSize
-
   def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
     standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     new_row = [label, nil, nil]
-
-    sorted_building_keys.each do |_k|
-      new_row << '' if just_one == false
-    end
-
     row_styles = [standard_column_style, standard_column_style, standard_style]
-    sorted_building_keys.each { |_k| row_styles << standard_style } unless just_one
+
+    unless just_one
+      new_row += [''] * sorted_building_keys.count
+      row_styles += [standard_style] * sorted_building_keys.count
+    end
 
     sheet.add_row new_row, style: row_styles
 
@@ -77,7 +74,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
     cell_refs
   end
-
   # rubocop:enable Metrics/AbcSize
 
   def create_spreadsheet
@@ -99,8 +95,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-      # selected_building_types.each { |building_type| new_row << building_type }
-      @building_types_with_service_codes.each { |building_type_with_service_code| new_row << building_type_with_service_code[:building_type] }
+      new_row += @building_types_with_service_codes.map { |building_type_with_service_code| building_type_with_service_code[:building_type] }
       sheet.add_row new_row, style: header_row_style
 
       add_supplier_rates_to_rate_card(sheet) if @supplier_name
@@ -108,7 +103,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
-
   def add_supplier_rates_to_rate_card(sheet)
     all_units_of_measurement = CCS::FM::UnitsOfMeasurement.all
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -120,18 +114,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                              .flatten.uniq
                              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-      new_row = []
 
       # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
       # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
-      @building_types_with_service_codes.each do |building_type_with_service_codes|
-        unless building_type_with_service_codes[:service_codes].include? s
-          new_row << nil
 
-          next
-        end
-
-        new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_type_with_service_codes[:building_type].to_sym]
+      new_row = @building_types_with_service_codes.map do |building_type_with_service_codes|
+        @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_type_with_service_codes[:building_type].to_sym] if building_type_with_service_codes[:service_codes].include? s
       end
 
       unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
@@ -144,9 +132,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       styles = [standard_column_style, standard_column_style, standard_column_style]
 
-      CCS::FM::RateCard.building_types.count.times do
-        styles << percentage_style if ['M.1', 'N.1'].include? s
-        styles << price_style unless ['M.1', 'N.1'].include? s
+      styles += CCS::FM::RateCard.building_types.count.times.map do
+        if ['M.1', 'N.1'].include? s
+          percentage_style
+        else
+          price_style
+        end
       end
 
       sheet.add_row new_row, style: styles
@@ -155,7 +146,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     add_table_headings_for_pricing_variables(sheet)
     add_pricing_variables_to_rate_card_sheet(sheet)
   end
-
   # rubocop:enable Metrics/AbcSize
 
   def add_pricing_variables_to_rate_card_sheet(sheet)
@@ -184,10 +174,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   def assign_service_codes_for_each_building_type
     selected_building_types = @active_procurement_buildings.pluck(:building_type).uniq
-    @building_types_with_service_codes = []
-    selected_building_types.each do |building_type|
+    @building_types_with_service_codes = selected_building_types.map do |building_type|
       service_codes = @active_procurement_buildings.select { |apb| apb.building_type == building_type }.pluck(:service_codes).flatten.uniq
-      @building_types_with_service_codes << { building_type: building_type, service_codes: service_codes }
+      { building_type: building_type, service_codes: service_codes }
     end
   end
 
@@ -206,13 +195,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row
       sheet.add_row ['Table 1. Baseline service costs for year 1']
       new_row = ['Service Reference', 'Service Name', 'Total']
-      @active_procurement_buildings.each.with_index do |_k, idx|
-        new_row << 'Building ' + (idx + 1).to_s
-      end
+      new_row += (1..@active_procurement_buildings.count).map { |index| "Building #{index}" }
+
       sheet.add_row new_row, style: header_row_style
 
       building_name_row = ['', '', '']
-      @active_procurement_buildings.each { |building| building_name_row << sanitize_string_for_excel(building.building_name) }
+      building_name_row += @active_procurement_buildings.map { |building| sanitize_string_for_excel(building.building_name) }
       sheet.add_row building_name_row, style: header_row_style
 
       sorted_building_keys = @data.keys
@@ -243,42 +231,40 @@ class FacilitiesManagement::DirectAwardSpreadsheet
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
         new_row = [s, @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][:'Service Name']]
 
-        new_row2 = []
         sum = 0
 
         # this logic is to fix issue that the excel service prices were not aligned to the correct
         # building column, so insert nil into cell if no service data to align.
 
-        sorted_building_keys.each do |k|
-          new_row2 << nil if @data[k][s].nil?
+        new_row2 = sorted_building_keys.map do |k|
+          service_data = @data[k][s]
+          if service_data.nil?
+            nil
+          else
+            sum += service_data[:subtotal1]
+            sum_building[k] += service_data[:subtotal1]
 
-          # If there's no service data for this service in this building, just move on
+            sum_building_cafm[k] += service_data[:cafm]
+            sum_building_helpdesk[k] += service_data[:helpdesk]
+            sum_building_variance[k] += service_data[:variance]
+            sum_building_tupe[k] += service_data[:tupe]
+            sum_building_manage[k] += service_data[:manage]
+            sum_building_corporate[k] += service_data[:corporate]
+            sum_building_profit[k] += service_data[:profit]
+            sum_building_mobilisation[k] += service_data[:mobilisation]
 
-          next unless @data[k][s]
-
-          new_row2 << @data[k][s][:subtotal1]
-          sum += @data[k][s][:subtotal1]
-          sum_building[k] += @data[k][s][:subtotal1]
-
-          sum_building_cafm[k] += @data[k][s][:cafm]
-          sum_building_helpdesk[k] += @data[k][s][:helpdesk]
-          sum_building_variance[k] += @data[k][s][:variance]
-          sum_building_tupe[k] += @data[k][s][:tupe]
-          sum_building_manage[k] += @data[k][s][:manage]
-          sum_building_corporate[k] += @data[k][s][:corporate]
-          sum_building_profit[k] += @data[k][s][:profit]
-          sum_building_mobilisation[k] += @data[k][s][:mobilisation]
+            service_data[:subtotal1]
+          end
         end
 
         sumsum += sum
-        new_row = (new_row << sum << new_row2).flatten
+        new_row += [sum] + new_row2
         sheet.add_row new_row, style: standard_style
       end
 
       new_row = ['Planned Deliverables sub total', nil, sumsum]
-      sorted_building_keys.each do |k|
-        new_row << sum_building[k]
-      end
+      new_row += sorted_building_keys.map { |k| sum_building[k] }
+
       sheet.add_row new_row, style: standard_style
 
       sheet.add_row
@@ -314,16 +300,14 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
-      max_years =
-        sorted_building_keys.collect { |k| @data[k].first[1][:contract_length_years] }.max
+      max_years = sorted_building_keys.collect { |k| @data[k].first[1][:contract_length_years] }.max
 
       if max_years > 1
-        new_row = []
         sumsum = 0
-        sorted_building_keys.each do |k|
+        new_row = sorted_building_keys.map do |k|
           sum = @data[k].sum { |s| s[1][:subyearstotal] }
-          new_row << sum
           sumsum += sum
+          sum
         end
 
         (2..max_years).each do |i|
@@ -374,7 +358,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet["A#{service_count + 18}:B#{service_count + 22}"].each { |c| c.style = standard_column_style }
     end
   end
-
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/AbcSize

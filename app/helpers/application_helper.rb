@@ -118,9 +118,7 @@ module ApplicationHelper
   end
 
   def model_has_error?(model_object, error_type, *attributes)
-    result = false
-    attributes.each { |a| result |= (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
-    result
+    attributes.any? { |a| (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
   end
 
   def display_errors(journey, *attributes)

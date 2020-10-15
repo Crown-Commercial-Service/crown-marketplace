@@ -254,23 +254,25 @@ module FacilitiesManagement
     }.freeze
 
     def updates_for_show_pages
-      PARAMS_METHODS_SHOW.each do |key, value|
-        next unless params.key?(key)
+      update_step = (params.keys.map(&:to_sym) & PARAMS_METHODS_SHOW.keys).first
 
-        send(value)
-        return true
+      if update_step
+        send(PARAMS_METHODS_SHOW[update_step])
+        true
+      else
+        false
       end
-      false
     end
 
     def updates_for_edit_pages
-      PARAMS_METHODS_EDIT.each do |key, value|
-        next if params.dig('facilities_management_procurement', 'step') != key.to_s
+      update_step = params.dig('facilities_management_procurement', 'step')&.to_sym
 
-        send(value)
-        return true
+      if PARAMS_METHODS_EDIT.key?(update_step)
+        send(PARAMS_METHODS_EDIT[update_step])
+        true
+      else
+        false
       end
-      false
     end
 
     def change_the_contract_value
@@ -736,9 +738,7 @@ module FacilitiesManagement
     end
 
     def set_buildings
-      buildings_data = current_user.buildings
-
-      @procurement.create_new_procurement_buildings if buildings_data.length != @procurement.procurement_buildings.length
+      @procurement.create_new_procurement_buildings if current_user.buildings.count != @procurement.procurement_buildings.count
 
       set_paginated_buildings_data
     end
