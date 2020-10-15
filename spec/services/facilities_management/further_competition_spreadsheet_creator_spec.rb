@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     # rubocop:disable RSpec/MultipleExpectations
     it 'Verify Shortlist headers' do
-      procurement_with_buildings.procurement_buildings.each(&:set_gia)
+      procurement_with_buildings.procurement_buildings.each(&:freeze_building_data)
       expect(wb.sheet('Shortlist').row(1)).to eq ['Reference number:', nil, nil]
       expect(wb.sheet('Shortlist').row(2)).to eq ['Date/time production of this document:', nil, nil]
       expect(wb.sheet('Shortlist').row(4)).to eq ['Cost and sub-lot recommendation', nil, nil]
@@ -75,8 +75,8 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     it 'Verify Buildings information headers' do
       expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1'])
       expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa'])
-      expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '10 Mariners Court'])
-      expect(wb.sheet('Buildings information').row(5)).to match_array(['Building Address - Line 2', 'Floor 2'])
+      expect(wb.sheet('Buildings information').row(3)).to match_array(['Building Description', 'london building'])
+      expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '100 New Barn Street'])
       expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002])
       expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596])
       expect(wb.sheet('Buildings information').row(11)).to match_array(['Building Type', 'General office - Customer Facing'])

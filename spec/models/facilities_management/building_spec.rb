@@ -34,69 +34,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         building.reload
       end
 
-      it 'json should be empty' do
-        expect(building.building_json).to eq nil
-      end
-
       it 'default status should be Incomplete' do
         expect(building.status).to eq('Incomplete')
-      end
-    end
-  end
-
-  describe 'with ActiveRecord data in the object' do
-    subject(:building) { create(:facilities_management_building) }
-
-    before do
-      building.save
-      building.reload
-    end
-
-    context 'when saving data supplied at the record' do
-      it 'will load the building' do
-        new_building = FacilitiesManagement::Building.find_by(id: building.id)
-        expect(new_building.id).to eq(building.id)
-        expect(new_building.building_name).to eq(building.building_name)
-      end
-
-      it 'will load the building and populate JSON property' do
-        new_building = FacilitiesManagement::Building.find_by(id: building.id)
-        expect(new_building.id).to eq(building.id)
-        expect(new_building.building_json[:name]).to eq(building.building_name)
-        expect(new_building[:building_json]['name']).to eq(building.building_name)
-      end
-    end
-
-    context 'when saving a new record with name, address, the JSON should match' do
-      context 'with complete address, will save show in JSON' do
-        it 'will save line 1 correctly' do
-          expect(building.building_json[:address]['fm-address-line-1'.to_sym]).to eq(building.address_line_1)
-        end
-
-        it 'will save line 2 correctly' do
-          expect(building.building_json[:address]['fm-address-line-2'.to_sym]).to eq(building.address_line_2)
-        end
-
-        it 'will save region correctly' do
-          expect(building.building_json[:address]['fm-address-region'.to_sym]).to eq(building.address_region)
-        end
-
-        it 'will save postcode correctly' do
-          expect(building.building_json[:address]['fm-address-postcode'.to_sym]).to eq(building.address_postcode)
-        end
-
-        it 'will save region-code correctly' do
-          expect(building.building_json[:address]['fm-address-region-code'.to_sym]).to eq(building.address_region_code)
-        end
-      end
-    end
-
-    context 'when updating fields, they are reflected in the json' do
-      it 'change the gia, it will be in the json' do
-        building.gia = 2012
-        building.save
-        building.reload
-        expect(building.building_json[:gia]).to eq(2012)
       end
     end
   end
