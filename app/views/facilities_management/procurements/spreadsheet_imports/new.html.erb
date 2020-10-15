@@ -1,4 +1,4 @@
-<%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_imports_path, method: :post, html: { novalidate: true, multipart: true } do |f| %>
+<%= form_for @spreadsheet_import, url: facilities_management_procurement_spreadsheet_imports_path, method: :post, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
   <%= govuk_form_group_with_optional_error(@spreadsheet_import, :name) do %>
     <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
   <% end %>
