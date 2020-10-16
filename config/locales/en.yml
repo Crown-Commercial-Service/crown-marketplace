@@ -380,15 +380,11 @@ en:
       heading_technical_information: Technical information about this website’s accessibility
       heading_what_to_do: What to do if you cannot access parts of this website
       if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
-      insufficient_contrast: Copy has insufficient contrast against background
-      insufficient_contrast_issue: When viewing the “Compliance”, “Service Requirements” and “Service Standards” sheets, red text is present against a white background which does not meet the recommended contrast ratio.
-      insufficient_contrast_this_falls: This fails WCAG 2.1AA success criterion 1.4.3 (contrast ratio). We plan to fix this by December 2020.
       list_1_change_colours: change colours, contrast levels and fonts
       list_1_navigate_keyboard: navigate most of the website using just a keyboard
       list_1_navigate_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
       list_1_navigate_speach: navigate most of the website using speech recognition software
       list_2_contrast: the contrast on some text may not be enough
-      list_2_contrast_ratio: contrast ratio is not sufficient on certain pages
       list_2_page_view: page view is not optimised for viewing on mobile devices
       list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
       many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
