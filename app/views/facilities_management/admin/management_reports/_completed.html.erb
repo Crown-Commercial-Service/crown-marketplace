@@ -1,6 +1,0 @@
-<a href="<%= rails_blob_path(@management_report.management_report_csv, disposition: 'attachment', management_report_id: @management_report.id) %>&format=csv" class="supplier-record__file-download management-report-download" type="<%= t('common.type_csv')%>" download>
-  <%= @management_report.management_report_csv.filename %> <span class="govuk-visually-hidden"><%= t('common.csv_html') %></span>
-</a>
-<div class="govuk-grid-row govuk-!-padding-bottom-9">
-  <p class="govuk-!-font-weight-regular govuk-hint govuk-!-padding-left-9"><%= t('.file_generated_date', created_at: @management_report.created_at.strftime('%d %B, %l:%M %P')) %></p>
-</div>

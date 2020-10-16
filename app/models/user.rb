@@ -25,12 +25,6 @@ class User < ApplicationRecord
            inverse_of: :user,
            dependent: :destroy
 
-  has_many :management_reports,
-           foreign_key: :user_id,
-           inverse_of: :user,
-           class_name: 'FacilitiesManagement::Admin::ManagementReport',
-           dependent: :nullify
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable

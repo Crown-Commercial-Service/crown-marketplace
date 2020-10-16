@@ -16,14 +16,6 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
   protected
 
   def authorize_user
-    if params[:management_report_id].present?
-      authorize_management_report_view
-    else
-      authorize_contract_procurement_view
-    end
-  end
-
-  def authorize_contract_procurement_view
     contract = FacilitiesManagement::ProcurementSupplier.find_by(id: params[:contract_id])
     procurement = FacilitiesManagement::Procurement.find_by(id: params[:procurement_id])
 
@@ -31,13 +23,5 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
     authorize! :view, contract if contract.present?
     authorize! :view, procurement if procurement.present?
-  end
-
-  def authorize_management_report_view
-    management_report = FacilitiesManagement::Admin::ManagementReport.find_by(id: params[:management_report_id])
-
-    raise ActionController::RoutingError, 'not found' if management_report.blank?
-
-    authorize! :view, management_report if management_report.present?
   end
 end
