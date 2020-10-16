@@ -407,6 +407,7 @@ class FacilitiesManagement::SpreadsheetImporter
     buildings = complete_procurement_array.map { |building| building[:object].building_name }
     sheet_buildings = sheet.row(row).compact.reject(&:blank?)
     sheet_buildings.shift(shift_number)
+    sheet_buildings.map(&:squish!)
     (buildings.map(&:to_s).sort - sheet_buildings.map(&:to_s).sort).empty?
   end
 
