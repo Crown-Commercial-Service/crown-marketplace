@@ -1,22 +1,8 @@
 module FacilitiesManagement
   module Admin
-    class ManagementReportsController < FacilitiesManagement::Admin::FrameworkController
-      def new
-        @management_report = FacilitiesManagement::Admin::ManagementReport.new
-      end
-
-      def show
-        @management_report = FacilitiesManagement::Admin::ManagementReport.find(params[:id])
-      end
-
-      def create
-        @management_report = current_user.management_reports.build(management_report_params)
-
-        if @management_report.save
-          redirect_to facilities_management_admin_management_report_path(@management_report)
-        else
-          render :new
-        end
+    class ManagementReportController < FacilitiesManagement::Admin::FrameworkController
+      def index
+        @management_report = FacilitiesManagement::Admin::ManagementReport.new(nil, nil)
       end
 
       def update

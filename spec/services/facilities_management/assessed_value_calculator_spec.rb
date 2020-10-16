@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
   describe '.sorted_list' do
     context 'with verify sorted list' do
       it 'has the correct value for lot1a' do
-        supplier_assessed_value_list = described_class.new(procurement_lot1a.id).sorted_list
+        supplier_assessed_value_list = described_class.new(procurement_lot1a.id).sorted_list(true)
 
         size = supplier_assessed_value_list.size
         expect(size).to be > 2
@@ -18,7 +18,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
       end
 
       it 'has the correct value for lot1c' do
-        supplier_assessed_value_list = described_class.new(procurement_lot1c.id).sorted_list
+        supplier_assessed_value_list = described_class.new(procurement_lot1c.id).sorted_list(true)
 
         size = supplier_assessed_value_list.size
         expect(size).to be > 2
