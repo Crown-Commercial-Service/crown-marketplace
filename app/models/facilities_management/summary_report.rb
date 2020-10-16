@@ -1,7 +1,5 @@
 module FacilitiesManagement
   class SummaryReport
-    include FacilitiesManagement::SummaryHelper
-
     attr_reader :sum_uom, :sum_benchmark, :contract_length_years, :start_date, :tupe_flag,
                 :posted_services, :posted_locations, :subregions, :results
 
@@ -136,7 +134,6 @@ module FacilitiesManagement
       end
 
       @procurement_building_services.each do |s|
-        # selected_services.each do |s|
         next unless CCS::FM::Service.gia_services.include? s.code
 
         pc = s.procurement_building
@@ -166,14 +163,9 @@ module FacilitiesManagement
 
     private
 
-    # rubocop:disable Rails/FindEach
     def regions
-      # Get nuts regions
-      @subregions = {}
-      FacilitiesManagement::Region.all.each { |x| @subregions[x.code] = x.name }
-      @subregions.select! { |k, _v| posted_locations.include? k }
+      @subregions = FacilitiesManagement::Region.where(code: posted_locations).map { |region| [region.code, region.name] }.to_h
     end
-    # rubocop:enable Rails/FindEach
 
     def copy_params(procurement_building, uvals)
       @london_flag = building_in_london?(procurement_building.address_region_code)

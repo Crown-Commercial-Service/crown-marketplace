@@ -25,16 +25,12 @@ module FacilitiesManagement
       # for suppliers
       def sublot_region
         # Get nuts regions
-        h = {}
-        Nuts1Region.all.each { |x| h[x.code] = x.name }
-        @regions = h
-        h = {}
-        FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
+        @regions = Nuts1Region.all.map { |x| [x.code, x.name] }.to_h
         @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
         @supplier_lot = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
         @sublot_region_name = 'Sub-lot ' + params['lot_type'] + ' regions'
         @selected_supplier_regions = FacilitiesManagement::Supplier::SupplierRegionsHelper.supllier_selected_regions(@supplier_lot)
-        @subregions = h
+        @subregions = FacilitiesManagement::Region.all.map { |x| [x.code, x.name] }.to_h
       end
 
       def update_sublot_regions

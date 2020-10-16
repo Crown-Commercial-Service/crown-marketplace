@@ -40,13 +40,12 @@ module FacilitiesManagement
       private
 
       def setup_checkboxes(supplier_services)
-        @supplier_rate_data_checkboxes = {}
-        @full_services.each do |service|
-          service['work_package'].each do |work_pckg|
+        @supplier_rate_data_checkboxes = @full_services.map do |service|
+          service['work_package'].map do |work_pckg|
             code = work_pckg['code']
-            @supplier_rate_data_checkboxes[code] = supplier_services.include?(code)
-          end
-        end
+            [code, supplier_services.include?(code)]
+          end.to_h
+        end.inject(:merge)
       end
     end
   end
