@@ -1504,7 +1504,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     let(:user) { create(:user) }
 
     let(:name1) { 'The TARDIS' }
-    let(:name2) { 'Time Lord Council' }
+    let(:name2) { 'Time   Lord   Council' }
+    let(:normalised_name2) { 'Time Lord Council' }
     let(:name3) { 'Powell Estate' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
     let(:building2) { create(:facilities_management_building, building_name: name2) }
@@ -1595,7 +1596,9 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       it 'will save the building data correctly' do
         acceptable_attributes = %w[building_name description address_line_1 address_line_2 address_town gia external_area building_type other_building_type security_type other_security_type]
         expect(user.buildings.find_by(building_name: name1).attributes.slice(*acceptable_attributes)).to eq building1.attributes.slice(*acceptable_attributes)
-        expect(user.buildings.find_by(building_name: name2).attributes.slice(*acceptable_attributes)).to eq building2.attributes.slice(*acceptable_attributes)
+        building2_data = building2.attributes.slice(*acceptable_attributes)
+        building2_data['building_name'] = normalised_name2
+        expect(user.buildings.find_by(building_name: normalised_name2).attributes.slice(*acceptable_attributes)).to eq building2_data
         expect(user.buildings.find_by(building_name: name3).attributes.slice(*acceptable_attributes)).to eq building3.attributes.slice(*acceptable_attributes)
       end
 
@@ -1637,12 +1640,12 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       context 'when considering building2' do
-        let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == name2 }.first }
+        let(:procurement_building) { procurement.procurement_buildings.select { |pb| pb.name == normalised_name2 }.first }
         let(:procurement_building_services) { procurement_building.procurement_building_services }
 
         it 'will save the procurement_buildings data correctly' do
           expect(procurement_building.service_codes.sort).to eq(service_data2.map { |code| extract_code(code) }.sort)
-          expect(procurement_building.name).to eq name2
+          expect(procurement_building.name).to eq normalised_name2
         end
 
         it 'will save the procurement_building_service standards data correctly' do
@@ -1710,7 +1713,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
 
       it 'has the correct import_errors' do
         spreadsheet_import.reload
-        expect(spreadsheet_import.service_hour_errors).to eq [{ building_name: name2, service_name: 'Reception service', attribute: :service_hours, errors: [:greater_than_or_equal_to] }]
+        expect(spreadsheet_import.service_hour_errors).to eq [{ building_name: normalised_name2, service_name: 'Reception service', attribute: :service_hours, errors: [:greater_than_or_equal_to] }]
       end
     end
 
