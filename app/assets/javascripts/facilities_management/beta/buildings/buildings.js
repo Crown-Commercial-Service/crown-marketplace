@@ -1,4 +1,4 @@
-function FindAddressComponent() {  
+function FindAddressComponent() {
   this.init();
 }
 
@@ -31,39 +31,39 @@ FindAddressComponent.prototype.setupSelectBoxes = function () {
   var selectAddress = this.selectAddress.bind(this)
   var selectRegion = this.selectRegion.bind(this);
 
-  this.addressDropDown.addEventListener("blur", function(e){
+  this.addressDropDown.addEventListener("blur", function (e) {
     e.preventDefault();
     selectAddress();
   });
 
-  this.regionDropDown.addEventListener("blur", function(e){
+  this.regionDropDown.addEventListener("blur", function (e) {
     e.preventDefault();
     selectRegion();
   });
 
-  if (! (/Windows/.test(navigator.userAgent)) ) {
+  if (!(/Windows/.test(navigator.userAgent))) {
     $(this.addressDropDown).on("change", selectAddress);
     $(this.regionDropDown).on("change", selectRegion);
   } else {
-    $(this.addressDropDown).on("click", function(e) {
+    $(this.addressDropDown).on("click", function (e) {
       if (this.selectedIndex > 0) {
         selectAddress();
       }
     });
-    $(this.addressDropDown).on("keypress", function(e) {
-      if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+    $(this.addressDropDown).on("keypress", function (e) {
+      if (e.keyCode === 13 && this.selectedIndex > 0) {
         e.preventDefault();
         e.stopPropagation();
         selectAddress();
       }
     });
-    $(this.regionDropDown).on("click", function(e) {
+    $(this.regionDropDown).on("click", function (e) {
       if (this.selectedIndex > 0) {
         selectRegion();
       }
     });
-    $(this.regionDropDown).on("keypress", function(e) {
-      if (e.keyCode === 13 && this.selectedIndex > 0 ) {
+    $(this.regionDropDown).on("keypress", function (e) {
+      if (e.keyCode === 13 && this.selectedIndex > 0) {
         e.preventDefault();
         e.stopPropagation();
         selectRegion();
@@ -76,9 +76,9 @@ FindAddressComponent.prototype.setupEventListeners = function () {
   var module = this;
 
   this.findAddressBtn.addEventListener("click", module.lookupInput.bind(this));
-  
+
   this.searchAddress.addEventListener("keypress", function (e) {
-    if ( e.keyCode === 13 ) {
+    if (e.keyCode === 13) {
       module.lookupInput(e);
     }
   });
@@ -87,7 +87,7 @@ FindAddressComponent.prototype.setupEventListeners = function () {
   this.changeAddressLink.addEventListener("click", this.changeAddress.bind(this));
   this.changeRegionLink.addEventListener("click", this.changeRegion.bind(this));
 
-  $('#new_facilities_management_building').submit(function() {
+  $('#new_facilities_management_building').submit(function () {
     module.errorShow(false, module.searchAddress, "address_postcode", "input");
   })
 };
@@ -110,14 +110,14 @@ FindAddressComponent.prototype.lookupInput = function (e) {
 FindAddressComponent.prototype.errorShow = function (show, input, attribute, inputError) {
   var form = document.getElementById(attribute + "-form-group");
 
-  if(show) {
+  if (show) {
     anyArbitraryName.global_formValidators[0].toggleError($(input), true, "invalid")
   } else {
     $(form).removeClass("govuk-form-group--error");
     $(document.querySelector("span[id='" + attribute + "-error']")).remove();
     $(document.getElementById("error_facilities_management_building_" + attribute)).remove();
     $(document.querySelectorAll("label[id='" + attribute + "-error'] > span")).addClass('govuk-visually-hidden')
-    $(input).removeClass("govuk-" + inputError +"--error");
+    $(input).removeClass("govuk-" + inputError + "--error");
   }
 }
 
@@ -175,7 +175,7 @@ FindAddressComponent.prototype.addAddressOptions = function (addresses) {
 FindAddressComponent.prototype.setBlankOption = function (search, results, dropDownText) {
   var module = this
 
-  if (results === 0){
+  if (results === 0) {
     var text = $(search).data("withdata-text-plural")
     text = "0 " + text
 
@@ -195,15 +195,15 @@ FindAddressComponent.prototype.setBlankOption = function (search, results, dropD
 
 FindAddressComponent.prototype.setBlankOptionText = function (search, optionalText, text) {
   var option = document.createElement("option");
-  option.appendChild( document.createTextNode(text) );
+  option.appendChild(document.createTextNode(text));
 
   $(search).find("optgroup").attr("label", optionalText);
   search.appendChild(option);
 }
 
-FindAddressComponent.prototype.selectAddress = function(){
+FindAddressComponent.prototype.selectAddress = function () {
   var selectedOption = null;
-  
+
   if (this.addressDropDown.selectedIndex <= 0) return;
 
   this.errorShow(false, this.addressDropDown, "base", "select");
@@ -221,9 +221,9 @@ FindAddressComponent.prototype.selectAddress = function(){
 
 FindAddressComponent.prototype.clearResultsList = function (list) {
   if (list.options.length > 0) {
-      for (var i = list.options.length; i >= 0; i--) {
-          list.remove(i);
-      }
+    for (var i = list.options.length; i >= 0; i--) {
+      list.remove(i);
+    }
   }
 };
 
@@ -253,13 +253,13 @@ FindAddressComponent.prototype.processRegion = function (regions) {
 
   if (regions.length > 0) {
     for (var i = 0; i < regions.length; i++) {
-        var region = regions[i];
-        newOption = document.createElement("option");
-        newOption.value = region.code;
-        newOption.innerText = region.region;
-        newOption.dataset.address_region = region.region;
-        newOption.dataset.address_region_code = region.code;
-        this.regionDropDown.add(newOption);
+      var region = regions[i];
+      newOption = document.createElement("option");
+      newOption.value = region.code;
+      newOption.innerText = region.region;
+      newOption.dataset.address_region = region.region;
+      newOption.dataset.address_region_code = region.code;
+      this.regionDropDown.add(newOption);
     }
   }
 
@@ -279,7 +279,7 @@ FindAddressComponent.prototype.selectOneRegion = function () {
 FindAddressComponent.prototype.selectRegion = function () {
   var selectedOption = null;
 
-  if (this.regionDropDown.selectedIndex <= 0) return;  
+  if (this.regionDropDown.selectedIndex <= 0) return;
 
   this.errorShow(false, this.regionDropDown, "address_region", "select");
 
@@ -315,13 +315,13 @@ FindAddressComponent.prototype.changeRegion = function (e) {
   this.viewStates(4);
 }
 
-FindAddressComponent.prototype.removeAddress = function() {
+FindAddressComponent.prototype.removeAddress = function () {
   $("#address-line-1").val("");
   $("#address-line-2").val("");
   $("#address-town").val("");
 }
 
-FindAddressComponent.prototype.removeRegion = function() {
+FindAddressComponent.prototype.removeRegion = function () {
   $(this.regionDropDown).prop('selectedIndex', 0);
   $("#address-region").val("");
   $("#address-region-code").val("");
@@ -334,15 +334,15 @@ FindAddressComponent.prototype.viewStates = function (state) {
   this.showOrHideInputs(state === 2, this.postcodeChange);
   this.showOrHideInputs(state === 2, this.selectAnAddress);
 
-  this.showOrHideInputs([3, 4, 5, 6].includes(state), this.fullAddress);
+  this.showOrHideInputs([3, 4, 5, 6].indexOf(state) !== -1, this.fullAddress);
 
   this.showOrHideInputs(state === 4, this.selectARegion);
-  
-  this.showOrHideInputs([5, 6].includes(state), this.fullRegion);
+
+  this.showOrHideInputs([5, 6].indexOf(state) !== -1, this.fullRegion);
 
   this.showOrHideInputs(state === 5, this.changeRegionLink);
 
-  switch(state) {
+  switch (state) {
     case 1:
       this.searchAddress.focus();
       break;
@@ -364,8 +364,8 @@ FindAddressComponent.prototype.viewStates = function (state) {
   }
 }
 
-FindAddressComponent.prototype.showOrHideInputs = function(show, section) {
-  if (show){
+FindAddressComponent.prototype.showOrHideInputs = function (show, section) {
+  if (show) {
     $(section).removeClass("govuk-visually-hidden");
     var tabindex = 0
   } else {
@@ -373,15 +373,15 @@ FindAddressComponent.prototype.showOrHideInputs = function(show, section) {
     var tabindex = -1
   }
 
-  if (section.hasAttribute("tabindex")){
+  if (section.hasAttribute("tabindex")) {
     section.tabIndex = tabindex
   }
 
   var inputs = $(section).find("[tabindex]")
 
   for (var i = 0; i < inputs.length; i++) {
-      var input = inputs[i];
-      input.tabIndex = tabindex;
+    var input = inputs[i];
+    input.tabIndex = tabindex;
   }
 }
 
@@ -389,12 +389,12 @@ function OtherExpantionComponent() {
   this.expandOther(document.querySelector("[data-module='other-expando']"));
 }
 
-OtherExpantionComponent.prototype.expandOther = function(expandoItem) {
+OtherExpantionComponent.prototype.expandOther = function (expandoItem) {
   var innerRadio = expandoItem.querySelector("input[type='radio']");
   var innerContent = expandoItem.querySelector("[data-element='other-expando--content']");
   var other_area;
 
-  if (document.querySelector("input[name=step]").value === "type"){
+  if (document.querySelector("input[name=step]").value === "type") {
     other_area = document.getElementById("facilities_management_building_other_building_type");
   } else {
     other_area = document.getElementById("facilities_management_building_other_security_type");
@@ -402,8 +402,8 @@ OtherExpantionComponent.prototype.expandOther = function(expandoItem) {
 
   if (null !== innerRadio && null !== innerContent) {
     var radioName = innerRadio.name;
-    $("input[name=\"" + radioName + "\"]").change ( function (e) {
-      if ( $(innerRadio).is(":checked")) {
+    $("input[name=\"" + radioName + "\"]").change(function (e) {
+      if ($(innerRadio).is(":checked")) {
         $(innerContent).removeClass("govuk-visually-hidden");
         other_area.tabIndex = "0";
       } else {
@@ -414,7 +414,7 @@ OtherExpantionComponent.prototype.expandOther = function(expandoItem) {
   }
 }
 
-$(function(){
+$(function () {
   if (document.querySelectorAll("[data-module='find-address']").length) {
     new FindAddressComponent();
   }
