@@ -11,7 +11,6 @@ FactoryBot.define do
     external_area { 4596 }
     building_name { 'asa' }
     description { 'non-json description' }
-    region { 'Essex' }
     building_type { 'General office - Customer Facing' }
     security_type { 'Baseline personnel security standard (BPSS)' }
     address_town { 'Southend-On-Sea' }
@@ -24,7 +23,6 @@ FactoryBot.define do
 
   factory :facilities_management_building_london, parent: :facilities_management_building do
     description { 'london building' }
-    region { 'London' }
     address_line_1 { '100 New Barn Street' }
     address_town { 'London' }
     address_line_2 { '' }

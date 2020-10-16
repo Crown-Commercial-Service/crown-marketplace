@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_082742) do
+ActiveRecord::Schema.define(version: 2020_10_15_102942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,8 +38,6 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "user_email", null: false
-    t.jsonb "building_json"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
@@ -47,7 +45,6 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
     t.text "building_name"
     t.text "description"
     t.integer "gia"
-    t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
@@ -60,10 +57,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
     t.string "other_building_type"
     t.string "other_security_type"
     t.bigint "external_area"
-    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index "lower(building_name)", name: "index_fm_buildings_on_lower_building_name"
-    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
-    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
@@ -111,7 +105,6 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
     t.datetime "updated_at", null: false
     t.bigint "no_of_appliances_for_testing"
     t.bigint "no_of_building_occupants"
-    t.bigint "size_of_external_area"
     t.bigint "no_of_consoles_to_be_serviced"
     t.bigint "tones_to_be_collected_and_removed"
     t.bigint "no_of_units_to_be_serviced"
@@ -134,7 +127,6 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
     t.boolean "active"
     t.uuid "building_id"
     t.integer "gia"
-    t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
@@ -144,7 +136,6 @@ ActiveRecord::Schema.define(version: 2020_10_01_082742) do
     t.text "address_region"
     t.text "address_region_code"
     t.text "building_name"
-    t.jsonb "building_json"
     t.text "description"
     t.bigint "external_area"
     t.string "other_building_type"

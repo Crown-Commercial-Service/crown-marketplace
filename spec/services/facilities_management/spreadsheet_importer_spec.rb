@@ -1770,7 +1770,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         ]
       end
 
-      let(:empty_building) { create(:facilities_management_building, building_name: '', status: nil, gia: nil, external_area: nil, description: nil, region: nil, building_type: nil, security_type: nil, address_town: nil, address_line_1: nil, address_line_2: nil, address_region: nil, address_region_code: nil, address_postcode: nil) }
+      let(:empty_building) { create(:facilities_management_building, building_name: '', status: nil, gia: nil, external_area: nil, description: nil, building_type: nil, security_type: nil, address_town: nil, address_line_1: nil, address_line_2: nil, address_region: nil, address_region_code: nil, address_postcode: nil) }
       let(:empty_building_data) { [empty_building, ''] }
       let(:empty_service_matrix_data) { { status: '', building_name: '', services: [] } }
       let(:empty_service_volumes_data) { ['', {}, ''] }
