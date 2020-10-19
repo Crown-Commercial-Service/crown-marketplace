@@ -237,4 +237,31 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
     end
   end
+
+  describe 'GET edit' do
+    let(:procurement) { create(:facilities_management_procurement, user: controller.current_user) }
+    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement) }
+    let(:ineligible_contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }
+
+    context 'with an eligible contract' do
+      login_fm_buyer_with_details
+
+      it 'returns the edit template' do
+        get :edit, params: { procurement_id: procurement.id, id: contract.id }
+
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'with an ineligible contract' do
+      login_fm_buyer_with_details
+      before { contract.update(aasm_state: 'declined') }
+
+      it 'redirects to the sent contract page for the last sent contract' do
+        get :edit, params: { procurement_id: procurement.id, id: ineligible_contract.id }
+
+        expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: contract.id)
+      end
+    end
+  end
 end
