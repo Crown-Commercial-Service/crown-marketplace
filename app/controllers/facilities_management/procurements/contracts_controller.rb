@@ -12,7 +12,9 @@ module FacilitiesManagement
 
       def show; end
 
-      def edit; end
+      def edit
+        return send_to_last_sent_contract_page if @procurement.procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
+      end
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
@@ -72,6 +74,11 @@ module FacilitiesManagement
         @procurement.offer_to_next_supplier
         @procurement.save
         redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
+      end
+
+      def send_to_last_sent_contract_page
+        last_contract = @procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last
+        redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
       end
 
       def no_more_suppliers
