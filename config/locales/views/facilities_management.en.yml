@@ -19,14 +19,14 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
-              blank: You must enter a ‘To’ date
+              date_before_or_equal_to: The ‘To’ date must be today or in the past
               invalid: Enter a valid ‘To’ date
               must_be_before_start_date: The ‘To’ date must be the same or after the ‘From’ date
-              not_a_date: Enter a valid 'To' date
+              not_a_date: Enter a valid ‘To’ date
             start_date:
-              blank: You must enter a ‘From’ date
+              date_before_or_equal_to: The ‘From’ date must be today or in the past
               invalid: Enter a valid ‘From’ date
-              not_a_date: Enter a valid 'From' date
+              not_a_date: Enter a valid ‘From’ date
         facilities_management/building:
           attributes:
             address_line_1:
