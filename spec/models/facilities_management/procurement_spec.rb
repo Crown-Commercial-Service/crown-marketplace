@@ -1715,4 +1715,40 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '.unsent_direct_award_offers' do
+    let(:contract1) { procurement.procurement_suppliers.create(direct_award_value: 10000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state1) }
+    let(:contract2) { procurement.procurement_suppliers.create(direct_award_value: 100000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state2) }
+    let(:contract3) { procurement.procurement_suppliers.create(direct_award_value: 1499999, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state3) }
+    let(:contract4) { procurement.procurement_suppliers.create(direct_award_value: 1500000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state4) }
+
+    let(:state1) { 'unsent' }
+    let(:state2) { 'unsent' }
+    let(:state3) { 'unsent' }
+    let(:state4) { 'unsent' }
+
+    context 'when there are 4 unsent offers with 3 in range' do
+      it 'returns the three in range' do
+        expect(procurement.unsent_direct_award_offers).to match [contract1, contract2, contract3]
+      end
+    end
+
+    context 'when there are 4 offers with 3 unsent, and 3 in range' do
+      let(:state1) { 'declined' }
+
+      it 'returns the 2 unsent in range' do
+        expect(procurement.unsent_direct_award_offers).to match [contract2, contract3]
+      end
+    end
+
+    context 'when there are 4 offers with 0 unsent, and 3 in range' do
+      let(:state1) { 'declined' }
+      let(:state2) { 'expired' }
+      let(:state3) { 'declined' }
+
+      it 'returns no offers' do
+        expect(procurement.unsent_direct_award_offers).to match []
+      end
+    end
+  end
 end

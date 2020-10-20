@@ -13,7 +13,14 @@ module FacilitiesManagement
       def show; end
 
       def edit
-        return send_to_last_sent_contract_page if @procurement.procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).empty?
+        case params[:name]
+        when 'next_supplier'
+          next_supplier_options
+        when 'withdraw'
+          redirect_to facilities_management_procurement_contract_path if @contract.cannot_withdraw?
+        when 'signed'
+          redirect_to facilities_management_procurement_contract_path unless @contract.accepted?
+        end
       end
 
       # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -70,15 +77,19 @@ module FacilitiesManagement
       end
 
       def send_offer_to_next_supplier
-        next_contract = @procurement.procurement_suppliers.unsent.where(direct_award_value: 0..0.15e7).first
+        next_contract = @procurement.unsent_direct_award_offers.first
         @procurement.offer_to_next_supplier
         @procurement.save
         redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
       end
 
-      def send_to_last_sent_contract_page
-        last_contract = @procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last
-        redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
+      def next_supplier_options
+        if @contract.cannot_offer_to_next_supplier?
+          redirect_to facilities_management_procurement_contract_path
+        elsif @procurement.unsent_direct_award_offers.empty?
+          last_contract = @procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last
+          redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
+        end
       end
 
       def no_more_suppliers
