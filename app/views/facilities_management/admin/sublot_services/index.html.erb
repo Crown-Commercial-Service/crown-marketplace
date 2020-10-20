@@ -15,7 +15,7 @@
   <%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %>
 </p>
 
-<%= form_tag facilities_management_admin_update_sublot_services_path, class: 'ccs-form', method: :put, specialvalidation: true, novalidate: true, local: false do %>
+<%= form_with url: facilities_management_admin_update_sublot_services_path, class: 'ccs-form', method: :put, local: 'false' do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
@@ -52,6 +52,6 @@
       </table>
     </fieldset>
   <% end %>
-  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <%= f.submit t('facilities_management.admin.supplier_framework_data.sublot_data.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') }%>
   <a href="<%= facilities_management_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard" ><%= t('facilities_management.admin.supplier_framework_data.sublot_data.return_button') %></a>
 <% end %>
