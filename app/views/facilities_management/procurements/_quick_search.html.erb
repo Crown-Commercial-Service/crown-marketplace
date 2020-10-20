@@ -18,7 +18,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <%= link_to t('.save_and_continue'), facilities_management_procurement_path(@procurement, 'what_happens_next': true ), class: 'govuk-button govuk-!-margin-right-4', 'aria-label': t('.save_and_continue') %>
-        <%= f.submit t('.save_for_later'), name: 'save_for_later', data: {disable_with:false}, class: 'govuk-button govuk-button--secondary', 'aria-label': t('.save_for_later') %>
+        <%= link_to t('.save_for_later'), facilities_management_procurements_path, class: 'govuk-button govuk-button--secondary', 'aria-label': t('.save_for_later') %>
         <br />
         <%= link_to t('.cancel_text'), facilities_management_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.cancel_text') %>
       </div>

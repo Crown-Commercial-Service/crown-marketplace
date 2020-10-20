@@ -119,7 +119,6 @@
     <% end %>
     </p>
     <%= govuk_continuation_buttons(pd, f) %>
-    <a href="javascript:window.print()" class="govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon">Print
-      this page</a>
+    <%= link_to t('.print_page'), 'javascript:window.print()', class: 'govuk-clearfix govuk-!-margin-top-6 govuk-link govuk-link--no-visited-state ccs-print-icon' %>
   <% end %>
 <% end %>
