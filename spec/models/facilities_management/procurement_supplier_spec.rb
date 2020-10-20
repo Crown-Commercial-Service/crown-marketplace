@@ -782,4 +782,132 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       end
     end
   end
+
+  describe '.cannot_offer_to_next_supplier?' do
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user, aasm_state: procurement_state) }
+    let(:user) { create(:user) }
+    let(:procurement_state) { 'direct_award' }
+
+    context 'when the contract is sent' do
+      let(:state) { 'sent' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is accepted' do
+      let(:state) { 'accepted' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is signed' do
+      let(:state) { 'signed' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+      let(:procurement_state) { 'closed' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+  end
+
+  describe '.cannot_withdraw?' do
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user, aasm_state: procurement_state) }
+    let(:user) { create(:user) }
+    let(:procurement_state) { 'direct_award' }
+
+    context 'when the contract is sent' do
+      let(:state) { 'sent' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is accepted' do
+      let(:state) { 'accepted' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is signed' do
+      let(:state) { 'signed' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq true
+      end
+    end
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+      let(:procurement_state) { 'closed' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq true
+      end
+    end
+  end
 end
