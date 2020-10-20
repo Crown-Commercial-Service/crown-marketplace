@@ -187,9 +187,9 @@ module FacilitiesManagement
     end
 
     def last_offer?
-      return false unless procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7, aasm_state: %w[unsent sent]).empty?
+      return false unless procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE, aasm_state: %w[unsent sent]).empty?
 
-      procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last == self
+      procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last == self
     end
 
     def supplier_email
@@ -205,6 +205,14 @@ module FacilitiesManagement
       else
         contract_closed_date
       end
+    end
+
+    def cannot_offer_to_next_supplier?
+      procurement.closed? || sent? || accepted? || signed?
+    end
+
+    def cannot_withdraw?
+      procurement.closed? || signed?
     end
 
     private

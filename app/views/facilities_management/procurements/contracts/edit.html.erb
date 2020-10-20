@@ -20,7 +20,7 @@
                 <%= link_to(pd.navigation_details.secondary_text, facilities_management_procurement_contract_path(@procurement), role: 'button', class: 'govuk-button govuk-button--secondary', 'aria-label': "#{pd.navigation_details.secondary_text}") %> <br />
                 <%= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19') %>
             </div>
-        <% else %>
+        <% when 'signed' %>
             <%= render partial: 'confirmation_of_signed_contract', :locals=>{:f=>f} %>
             <div class= 'govuk-!-margin-top-5'>
                 <%= f.submit t('.save_and_continue'), class: 'govuk-!-margin-right-4 govuk-button', name: :sign_procurement, 'aria-label': t('.save_and_continue') %>

@@ -108,4 +108,72 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       end
     end
   end
+
+  describe 'GET edit' do
+    let(:procurement) { create(:facilities_management_procurement, user: create(:user)) }
+    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state) }
+
+    login_fm_supplier
+
+    before do
+      controller.current_user.email = contract.supplier.data['contact_email']
+      get :edit, params: { id: contract.id }
+    end
+
+    context 'when the contract is sent' do
+      let(:state) { 'sent' }
+
+      it 'renders the edit page' do
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'when the contract is accepted' do
+      let(:state) { 'accepted' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+
+    context 'when the contract is signed' do
+      let(:state) { 'signed' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+      end
+    end
+  end
 end

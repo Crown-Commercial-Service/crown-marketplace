@@ -9,7 +9,9 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
 
   def show; end
 
-  def edit; end
+  def edit
+    redirect_to facilities_management_supplier_contract_path unless @contract.sent?
+  end
 
   def update
     @contract.assign_attributes(contract_params)
@@ -40,7 +42,7 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
   end
 
   def set_procurement
-    @procurement = FacilitiesManagement::Procurement.find(@contract.procurement.id)
+    @procurement = @contract.procurement
   end
 
   protected
