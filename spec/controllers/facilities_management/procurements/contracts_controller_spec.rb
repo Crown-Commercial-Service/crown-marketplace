@@ -241,26 +241,226 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
   describe 'GET edit' do
     let(:procurement) { create(:facilities_management_procurement, user: controller.current_user) }
     let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement) }
-    let(:ineligible_contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }
 
-    context 'with an eligible contract' do
-      login_fm_buyer_with_details
+    login_fm_buyer_with_details
 
-      it 'returns the edit template' do
-        get :edit, params: { procurement_id: procurement.id, id: contract.id }
+    context 'when offering to next supplier' do
+      let(:ineligible_contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }
 
-        expect(response).to render_template(:edit)
+      context 'with an eligible contract' do
+        it 'returns the edit template' do
+          get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'next_supplier' }
+
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'with an ineligible contract' do
+        before { contract.update(aasm_state: 'declined') }
+
+        it 'redirects to the sent contract page for the last sent contract' do
+          get :edit, params: { procurement_id: procurement.id, id: ineligible_contract.id, name: 'next_supplier' }
+
+          expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: contract.id)
+        end
       end
     end
 
-    context 'with an ineligible contract' do
-      login_fm_buyer_with_details
-      before { contract.update(aasm_state: 'declined') }
+    context 'when going to next_supplier page' do
+      let(:procurement_state) { 'direct_award' }
 
-      it 'redirects to the sent contract page for the last sent contract' do
-        get :edit, params: { procurement_id: procurement.id, id: ineligible_contract.id }
+      before do
+        create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 1000000)
+        procurement.update(aasm_state: procurement_state)
+        contract.update(aasm_state: state)
+        get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'next_supplier' }
+      end
 
-        expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: contract.id)
+      context 'when the contract is sent' do
+        let(:state) { 'sent' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is accepted' do
+        let(:state) { 'accepted' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is signed' do
+        let(:state) { 'signed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is not_signed' do
+        let(:state) { 'not_signed' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is declined' do
+        let(:state) { 'declined' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is expired' do
+        let(:state) { 'expired' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is withdrawn' do
+        let(:state) { 'withdrawn' }
+        let(:procurement_state) { 'closed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+    end
+
+    context 'when withdrawing the contract' do
+      let(:procurement_state) { 'direct_award' }
+
+      before do
+        procurement.update(aasm_state: procurement_state)
+        contract.update(aasm_state: state)
+        get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'withdraw' }
+      end
+
+      context 'when the contract is sent' do
+        let(:state) { 'sent' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is accepted' do
+        let(:state) { 'accepted' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is signed' do
+        let(:state) { 'signed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is not_signed' do
+        let(:state) { 'not_signed' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is declined' do
+        let(:state) { 'declined' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is expired' do
+        let(:state) { 'expired' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is withdrawn' do
+        let(:state) { 'withdrawn' }
+        let(:procurement_state) { 'closed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+    end
+
+    context 'when signing the contract' do
+      before do
+        contract.update(aasm_state: state)
+        get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'signed' }
+      end
+
+      context 'when the contract is sent' do
+        let(:state) { 'sent' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is accepted' do
+        let(:state) { 'accepted' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the contract is signed' do
+        let(:state) { 'signed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is not_signed' do
+        let(:state) { 'not_signed' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is declined' do
+        let(:state) { 'declined' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is expired' do
+        let(:state) { 'expired' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
+      end
+
+      context 'when the contract is withdrawn' do
+        let(:state) { 'withdrawn' }
+
+        it 'redirects to the contract summary' do
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        end
       end
     end
   end
