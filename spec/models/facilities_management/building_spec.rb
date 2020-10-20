@@ -317,21 +317,44 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when external_area and gia are both zero' do
+    context 'when considering combined_external_area_and_gia_greater_than_zero' do
       before do
-        building.gia = 0
-        building.external_area = 0
+        building.gia = gia
+        building.external_area = external_area
         building.valid? :gia
       end
 
-      it 'will be invalid' do
-        expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
-        expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
+      context 'when external_area and gia are both zero' do
+        let(:gia) { 0 }
+        let(:external_area) { 0 }
+
+        it 'will be invalid' do
+          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
+          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
+        end
+
+        it 'will have the correct error messages' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
+          expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
+        end
       end
 
-      it 'will have the correct error messages' do
-        expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
-        expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
+      context 'when there is an error on gia' do
+        let(:gia) { nil }
+        let(:external_area) { 0 }
+
+        it 'external area will have no error messages' do
+          expect(building.errors[:external_area].empty?).to be true
+        end
+      end
+
+      context 'when there is an error on external_area' do
+        let(:gia) { 0 }
+        let(:external_area) { nil }
+
+        it 'external area will have no error messages' do
+          expect(building.errors[:gia].empty?).to be true
+        end
       end
     end
 
