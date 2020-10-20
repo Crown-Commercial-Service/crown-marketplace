@@ -4,7 +4,7 @@
       <%= t('.header') %>
     </h1>
     <div class="govuk-panel__body">
-      The ‘<%= @procurement.contract_name %>’ (<%= @contract.contract_number %>) contract was sent to <%= @supplier.data['supplier_name'] %>.
+      <%= t('.procurement_sent_to', contract_name: @procurement.contract_name, contract_number: @contract.contract_number, supplier_name: @supplier.data['supplier_name']) %>
     </div>
   </div>
 

@@ -421,11 +421,15 @@ en:
         new:
           breadcrumb_text_management_report: Management report
           download_btn_text: Generate and download report
+          from: From
+          from_example: For example, 15 06 2020
           heading_sub: Download management data
           heading_sub_detail: To generate a download file, please input your date range.
           heading_title: Management report
           return_link: Return to admin dashboard
           there_is_a_problem: There is a problem
+          to: To
+          to_example: For example, 30 06 2020
         show:
           breadcrumb_text_management_report: Management report
           download_btn_text: Generate another report
@@ -890,6 +894,9 @@ en:
         sub_lot_1a_hint: Total contract value up to £7 million
         sub_lot_1b_hint: Total contract value between £7 million and £50 million
         sub_lot_1c_hint: Total contract value over £50 million
+      continue_button_footer:
+        continue_to_results: Continue to results
+        return_to_dashboard: Return to procurements dashboard
       contract_name:
         contract_name_info: This will help you to refer to your contracts when talking to suppliers.
         contract_name_question: What do you want to call your contract?
@@ -948,6 +955,7 @@ en:
         closing_direct_award_offer:
           are_you_sure_1: Are you sure you wish to close the
           are_you_sure_2: procurement?
+          characters_remaining: You have 500 characters remaining
           closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
           once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
           reason: Please provide a reason for closing this procurement
@@ -984,7 +992,10 @@ en:
           reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
           withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
         edit:
+          close_this_procurement: Close this procurement
+          confirm_and_send: Confirm and send offer to supplier
           page_title: Close this procurement
+          save_and_continue: Save and continue
         next_supplier:
           about_the_price: About the price
           about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
@@ -1048,6 +1059,7 @@ en:
             declines_list_2_sub_4: "- stop the process"
             further_information: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
             header: Your contract was sent
+            procurement_sent_to: The ‘%{contract_name}’ (%{contract_number}) contract was sent to %{supplier_name}.
             what_happens_next: What happens next
             what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
         show:
@@ -1068,6 +1080,14 @@ en:
           sent_1: This contract offer expires on
           sent_2: The supplier has not yet responded.
           signed: You confirmed that the contract period is between
+      copy_procurement:
+        new:
+          characters_remaining: You have 100 characters remaining
+          heading: Create a new procurement using the service requirements and buildings you have previously entered.
+          label: What do you want to call your contract?
+          once_saved: 'Once saved under a new contract name:'
+          you_will_be_able: you will be able to choose from the contract options of direct award (if eligible) or further competition
+          you_will_have_option: you will have the option to amend your requirements (if needed), and re-run your results
       da_buyer:
         contract_details:
           contract_details_description: Please provide further information that will help us put your contract together.
@@ -1132,6 +1152,13 @@ en:
           optional_call_off_extensions_4: Optional call-off extension period 4
           route_to_market: Route to market
           supplier: Supplier
+        review_and_generate_documents:
+          click_generate_documents: Click the 'Generate documents' button below to proceed and create all the documents that will form your direct award call-off contract.
+          contract_details: 2. Contract details
+          generate_your_documents: 3. Generate your direct award documents
+          once_satisfied: Once you are satisfied that all the information is correct please use the generate documents button in section 3 to generate your call off documents. You will then be asked to review the generated contract and associated documents.
+          please_review: Please review the full details of your requirements below in sections 1 and 2. If you wish to make any amendments, please use the change button relevant to that section.
+          requirements: 1. Requirements
         review_contract:
           attachment_1:
             file_name: Attachment 1 - About the Direct Award v3.0.pdf
@@ -1599,6 +1626,7 @@ en:
         hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
         hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
         hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
+        print_page: Print this page
         sub-lot-1a: Sub-lot 1a
         sub-lot-1b: Sub-lot 1b
         sub-lot-1c: Sub-lot 1c
@@ -1899,10 +1927,13 @@ en:
         contract_summary_foot:
           respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
         edit:
+          characters_remaining: You have 500 characters remaining
           contract_name: 'Contract name:'
           contract_number: 'Contract number:'
           form_title: Do you accept the contract offer from
+          'no': 'No'
           reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
+          'yes': 'Yes'
         procurement_requirements_head:
           buyer: Buyer
         received_contract_offer:
