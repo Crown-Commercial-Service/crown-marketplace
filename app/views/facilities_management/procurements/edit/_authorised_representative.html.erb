@@ -30,7 +30,7 @@
                         <%= @procurement.authorised_contact_detail.name + ", " +  @procurement.authorised_contact_detail.job_title %>
                         <span class="govuk-caption-m govuk-!-margin-top-2 ">
                             <%= @procurement.authorised_contact_detail.contact_address %>
-                            </br>
+                            <br/>
                             <div class="govuk-!-margin-top-2" >
                             <%= link_to t('.change'), edit_facilities_management_procurement_path(:step => 'new_authorised_representative_details') %>
                             </div>

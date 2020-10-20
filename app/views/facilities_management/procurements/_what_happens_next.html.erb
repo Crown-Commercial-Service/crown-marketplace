@@ -4,7 +4,7 @@
     <div class="govuk-grid-column-full">
       <%= form_for @procurement, url: facilities_management_procurement_path(@procurement), method: :patch, html: {  specialvalidation:true, novalidate: true, multipart: true } do |f| %>
         <%= f.hidden_field :contract_name %>
-        <%= f.submit t('.continue'), data: {disable_with:false}, name: 'start_detailed_search', class: 'govuk-button govuk-!-margin-right-4', 'aria-label': t('.continue') %>
+        <%= f.submit t('.continue'), name: 'start_detailed_search', class: 'govuk-button govuk-!-margin-right-4', 'aria-label': t('.continue') %>
         <%= link_to t('.cancel'), facilities_management_procurements_path, class: 'govuk-button govuk-button--secondary', 'aria-label': t('.cancel') %>
         <br />
         <%= link_to t('.return'), facilities_management_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.return') %>
