@@ -9,16 +9,16 @@
     </div>
   <% end %>
 <% else %>
-  <%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd| %>
+  <%= govuk_page_content(@page_description, @procurement, false, true) do |pd| %>
     <% unless @procurement.lot_number_selected_by_customer %>
       <h1 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds"><%= t('.sub-text') %></h1>
-      <h1 class="govuk-heading govuk-heading-l"><%= t('.full-sub-lot') %>&nbsp;<%= @page_data[:selected_sublot] %></h1>
+      <h1 class="govuk-heading govuk-heading-l"><%= t('.full-sub-lot') %>&nbsp;<%= @procurement.lot_number %></h1>
       <h2 class="govuk-heading govuk-heading-m"><%= t('.estimated_cost') %>
       <br/><span class="govuk-heading govuk-heading-l">
-        <% if @page_data[:model_object].eligible_for_da %>
-          <%= number_to_currency(@page_data[:supplier_prices].min, precision: 2) %>
+        <% if @procurement.eligible_for_da %>
+          <%= number_to_currency(lowest_supplier_price, precision: 2) %>
         <% else %>
-          <%= number_to_currency(@page_data[:estimated_cost], precision: 2) %>
+          <%= number_to_currency(@procurement.assessed_value, precision: 2) %>
         <% end %>
       </span></h2>
       <details class="govuk-details govuk-!-width-two-thirds govuk-!-margin-bottom-6" data-module="govuk-details">
@@ -52,31 +52,31 @@
         <%= t(".hint-text-unpriced-sub-lot-#{@procurement.lot_number}") %>
       </div>
     <% end %>
-    <h2 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-0"><%= t('.suppliers_shortlisted_html', count: @page_data[:no_suppliers]) %></h2>
+    <h2 class="govuk-heading govuk-heading-m govuk-!-margin-bottom-0"><%= t('.suppliers_shortlisted_html', count: number_of_suppliers) %></h2>
     <h2 class="govuk-heading govuk-heading-s govuk-!-margin-top-0"><%= t('.who_are') %></h2>
     <ul class="govuk-list">
-      <% @page_data[:supplier_collection].each do |s| %>
+      <% suppliers.each do |s| %>
         <li class="govuk-!-width-one-third">
           <%= s %>
-          <%= '<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(@page_data[:supplier_collection].last) %>
+          <%= '<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">'.html_safe unless s.equal?(suppliers.last) %>
         </li>
       <% end %>
     </ul>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-width-two-thirds"/>
     <h2 class="govuk-heading govuk-heading-m"><%= t('.building_services_summary') %></h2>
     <div class="govuk-!-margin-bottom-4">
-      <%= govuk_details "#{'Building'.pluralize(@page_data[:buildings].length)} (#{@page_data[:buildings].length})", true do %>
+      <%= govuk_details "#{'Building'.pluralize(active_procurement_buildings.length)} (#{active_procurement_buildings.length})", true do %>
         <ul class="govuk-list govuk-list--bullet">
-          <% @page_data[:buildings].each do |b| %>
+          <% active_procurement_buildings.each do |b| %>
             <li><%= b.building_name %></li>
           <% end %>
         </ul>
       <% end %>
     </div>
     <div>
-      <%= govuk_details "#{'Service'.pluralize(@page_data[:services].uniq.length)} (#{@page_data[:services].uniq.length})", true do %>
+      <%= govuk_details "#{'Service'.pluralize(procurement_services.length)} (#{procurement_services.length})", true do %>
         <ul class="govuk-list govuk-list--bullet">
-          <% @page_data[:services].uniq.each do |s| %>
+          <% procurement_services.each do |s| %>
             <li><%= s %></li>
           <% end %>
         </ul>
@@ -112,7 +112,7 @@
             </div>
           </div>
         <% end %>
-      <% end if @page_data[:model_object].eligible_for_da %>
+      <% end if @procurement.eligible_for_da %>
       <%= contained_content(t('.available_routes_to_market')) do %>
         <h5 class="govuk-heading govuk-heading-s">Further competition </h5>
         <%= f.hidden_field :route_to_market, value: 'further_competition_chosen' %>
@@ -121,7 +121,7 @@
             <%= t('.fc_list_html') %>
           </ul>
         <% end %>
-      <% end unless @page_data[:model_object].eligible_for_da %>
+      <% end unless @procurement.eligible_for_da %>
       <p class="govuk-body-m govuk-!-width-two-thirds">
       <% if @procurement.lot_number_selected_by_customer? %>
         <%= t('.any_changes_chosen') %>
