@@ -1,4 +1,4 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object], false, true) do |pd| %>
+<%= govuk_page_content(@page_description, @procurement, false, true) do |pd| %>
   <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id, step: :continue_to_change_contract_value), method: :patch, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
     <%= f.hidden_field :lot_number_selected_by_customer, value: true %>
     <% if @procurement.all_services_unpriced_and_no_buyer_input? %>
@@ -42,9 +42,9 @@
       </div>
       <div class='govuk-body'>
         <div class='govuk-!-font-size-24'>
-          <%= govuk_details("#{@page_details[:unpriced_services].size} #{t('.service').pluralize(@page_details[:unpriced_services].size)} not included", true) do %>
+          <%= govuk_details("#{unpriced_services.size} #{t('.service').pluralize(unpriced_services.size)} not included", true) do %>
             <ul class="govuk-list govuk-list--bullet">
-              <% @page_details[:unpriced_services].each do |service| %>
+              <% unpriced_services.each do |service| %>
                 <li><%= service %></li>
               <% end %>
             </ul>

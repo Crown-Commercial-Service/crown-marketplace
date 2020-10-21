@@ -1751,4 +1751,86 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '.contract_detail_incomplete?' do
+    let(:result) { procurement.contract_detail_incomplete?(contact_detail) }
+
+    context 'when considering invoice_contact_detail' do
+      let(:contact_detail) { :invoice_contact_detail }
+
+      context 'when there is no invoice_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is invoice_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_invoice_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is invoice_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_invoice_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when considering authorised_contact_detail' do
+      let(:contact_detail) { :authorised_contact_detail }
+
+      context 'when there is no authorised_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is authorised_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_authorised_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is authorised_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_authorised_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when considering authorised_contact_detail' do
+      let(:contact_detail) { :notices_contact_detail }
+
+      context 'when there is no notices_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is notices_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_notices_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is notices_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_notices_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+  end
 end

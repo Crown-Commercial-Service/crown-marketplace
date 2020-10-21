@@ -141,6 +141,10 @@ module FacilitiesManagement
         end
       end
 
+      event :return_to_results do
+        transitions from: :da_draft, to: :results, after: :start_da_journey
+      end
+
       event :set_state_to_detailed_search do
         before do
           remove_buyer_choice
@@ -211,6 +215,7 @@ module FacilitiesManagement
       next_event = aasm(:da_journey).events(reject: :start_da_journey, permitted: true).first
       aasm(:da_journey).fire!(next_event.name) if next_event.present?
     end
+
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -551,6 +556,10 @@ module FacilitiesManagement
       return false unless detailed_search? || detailed_search_bulk_upload?
 
       active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region_code').any?(&:blank?)
+    end
+
+    def contract_detail_incomplete?(contact_detail)
+      send(contact_detail).present? && send(contact_detail).name.nil?
     end
 
     private
