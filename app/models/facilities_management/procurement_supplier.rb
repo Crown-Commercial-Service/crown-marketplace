@@ -196,6 +196,10 @@ module FacilitiesManagement
       supplier.data['contact_email']
     end
 
+    def supplier_name
+      supplier.data['supplier_name']
+    end
+
     def closed_date
       case aasm_state
       when 'not_signed'
@@ -273,13 +277,12 @@ module FacilitiesManagement
       date&.in_time_zone('London')&.strftime '%d/%m/%Y'
     end
 
-    # rubocop:disable Metrics/AbcSize
     def send_email_to_buyer(email_type)
       template_name = email_type
       email_to = procurement.user.email
 
       gov_notify_template_arg = {
-        'da-offer-1-supplier-1': supplier.data['supplier_name'],
+        'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-reference': contract_number,
         'da-offer-1-name': procurement.contract_name,
@@ -305,7 +308,7 @@ module FacilitiesManagement
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
         'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id,
-        'da-offer-1-supplier-1': supplier.data['supplier_name'],
+        'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,
         'da-offer-1-contract-start-date': format_date(contract_start_date),
@@ -320,6 +323,5 @@ module FacilitiesManagement
         false
       end
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end

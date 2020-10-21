@@ -315,15 +315,6 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def link_to_add_row(name, form, association, **args)
-    new_object = form.object.send(association).klass.new
-    id = new_object.object_id
-    fields = form.fields_for(association, new_object, child_index: id) do |builder|
-      render("facilities_management/procurements/edit/#{association.to_s.singularize}", ff: builder)
-    end
-    link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
-  end
-
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
     if service_type == 'Direct Award Discount (%)'
       supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']

@@ -1,6 +1,0 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <%= f.fields_for :invoice_contact_detail do |ff|%>
-    <%= render partial: '/facilities_management/procurements/edit/new_contact_details_address',
-               locals: {f: f, ff: ff, page_id: "new_invoice_contact_details_address", page_contact: 'invoice_contact_detail'} %>
-  <% end %>
-<% end %>

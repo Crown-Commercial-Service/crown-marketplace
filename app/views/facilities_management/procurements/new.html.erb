@@ -6,7 +6,7 @@
         <div class="govuk-grid-column-full">
           <h1 class="govuk-heading-xl"><%= t('.quick_view_results') %></h1>
           <% content_for :page_title, t('.quick_view_results') %>
-          <% if (@suppliers_lot1a + @suppliers_lot1b + @suppliers_lot1c).count.zero? %>
+          <% if (supplier_count).zero? %>
             <p class="govuk-body"><%= t('.no_suppliers') %></p>
           <% else %>
             <p class="govuk-body"><%= t('.search_result_body_html') %></p>
