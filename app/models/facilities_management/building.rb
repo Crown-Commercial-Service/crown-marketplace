@@ -148,7 +148,7 @@ module FacilitiesManagement
     end
 
     def combined_external_area_and_gia_greater_than_zero
-      return if (gia.to_i + external_area.to_i).positive?
+      return if errors[:gia].any? || errors[:external_area].any? || (gia.to_i + external_area.to_i).positive?
 
       errors.add(:gia, :combined_area)
       errors.add(:external_area, :combined_area)
