@@ -620,7 +620,7 @@ en:
       buyer_account:
         buyer_account_dashboard: Buyer account dashboard
         buyer_account_title: Your account
-        further_information_help: "(opens in new tab)"
+        further_information_help: "(opens in a new tab)"
         further_information_link: https://www.crowncommercial.gov.uk/agreements/rm3830
         further_information_link_description: View further information about the Facilities Management framework RM3830
         manage_account_desc: Update and edit your contact details
