@@ -17,14 +17,11 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
 
       before do
         first_contract.update(aasm_state: 'declined')
+        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'withdraw', facilities_management_procurement_supplier: { reason_for_closing: reason_for_closing } }
       end
 
       context 'when a reason for closing is given' do
         let(:reason_for_closing) { 'Taking too long' }
-
-        before do
-          put :update, params: { procurement_id: procurement.id, id: first_contract.id, close_procurement: 'Close procurement', facilities_management_procurement_supplier: { reason_for_closing: reason_for_closing } }
-        end
 
         it 'redirects to facilities_management_procurement_contract_closed_index_path' do
           expect(response).to redirect_to facilities_management_procurement_contract_closed_index_path(procurement.id, contract_id: first_contract.id)
@@ -38,9 +35,9 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
 
       context 'when a reason for closing is not given' do
-        it 'renders the edit page' do
-          put :update, params: { procurement_id: procurement.id, id: first_contract.id, close_procurement: 'Close procurement', facilities_management_procurement_supplier: { reason_for_closing: '' } }
+        let(:reason_for_closing) { '' }
 
+        it 'renders the edit page' do
           expect(response).to render_template('edit')
         end
       end
@@ -52,12 +49,11 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
 
       before do
         contract.accept!
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date_yyyy } }
       end
 
       context 'when the buyer gives a valid date' do
-        before do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, sign_procurement: 'Save and continue', facilities_management_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date.year.to_s } }
-        end
+        let(:end_date_yyyy) { end_date.year.to_s }
 
         it 'redirects to facilities_management_procurement_contract_closed_index_path' do
           expect(response).to redirect_to facilities_management_procurement_contract_closed_index_path(procurement.id, contract_id: contract.id)
@@ -78,9 +74,9 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
 
       context 'when the buyer does not give a valid date' do
-        it 'renders the edit page' do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, sign_procurement: 'Save and continue', facilities_management_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_yyyy: end_date.year.to_s } }
+        let(:end_date_yyyy) { nil }
 
+        it 'renders the edit page' do
           expect(response).to render_template('edit')
         end
       end
@@ -89,14 +85,11 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
     context 'when the buyer does not sign the procurement' do
       before do
         contract.accept!
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
       end
 
       context 'when the buyer gives a valid reason' do
         let(:reason_for_not_signing) { 'The supplier did not respond' }
-
-        before do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, sign_procurement: 'Save and continue', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
-        end
 
         it 'redirects to facilities_management_procurement_contract_closed_index_path' do
           expect(response).to redirect_to facilities_management_procurement_contract_path(procurement.id, contract_id: contract.id)
@@ -116,9 +109,9 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
 
       context 'when the buyer does not give a valid reason' do
-        it 'renders the edit page' do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, sign_procurement: 'Save and continue', facilities_management_procurement_supplier: { contract_signed: false } }
+        let(:reason_for_not_signing) { nil }
 
+        it 'renders the edit page' do
           expect(response).to render_template('edit')
         end
       end
@@ -131,7 +124,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         procurement.procurement_suppliers.each do |ps|
           ps.update(aasm_state: 'declined')
         end
-        put :update, params: { procurement_id: procurement.id, id: last_contract.id, send_contract_to_next_supplier: 'offer to next supplier' }
+        put :update, params: { procurement_id: procurement.id, id: last_contract.id, name: 'next_supplier' }
       end
 
       it 'redirects to facilities_management_procurement_contract_sent_index_path' do
@@ -152,7 +145,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       before do
         first_contract.update(aasm_state: 'declined')
         next_contract.update(supplier_id: supplier.id)
-        put :update, params: { procurement_id: procurement.id, id: first_contract.id, send_contract_to_next_supplier: 'offer to next supplier' }
+        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'next_supplier' }
       end
 
       it 'redirects to facilities_management_procurement_contract_sent_index_path' do
@@ -163,6 +156,18 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         next_contract.reload
 
         expect(next_contract.sent?).to be true
+      end
+    end
+
+    context 'when contract is closed' do
+      before do
+        contract.accept!
+        create(:facilities_management_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: 'Some reason' } }
+      end
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
       end
     end
   end
@@ -461,6 +466,18 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         it 'redirects to the contract summary' do
           expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
+      end
+    end
+
+    context 'when contract is closed' do
+      before do
+        contract.update(aasm_state: 'sent')
+        create(:facilities_management_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
+        get :edit, params: { procurement_id: procurement.id, id: contract.id }
+      end
+
+      it 'redirects to the contract summary' do
+        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
       end
     end
   end
