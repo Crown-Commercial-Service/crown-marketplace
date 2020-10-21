@@ -40,7 +40,7 @@
             <% when 'not_signed', 'declined' , 'expired' %>
                 <div class= 'govuk-!-margin-top-5'>
                 <% if @contract.last_offer? %>
-                    <%= form_for @contract, url: facilities_management_procurement_contract_path, method: :put do |f| %>
+                    <%= form_for @contract, url: facilities_management_procurement_contract_path(name: 'next_supplier'), method: :put do |f| %>
                         <%= f.submit pd.navigation_details.primary_text, class: 'govuk-!-margin-right-4 govuk-button', name: :send_contract_to_next_supplier, 'aria-label': "#{pd.navigation_details.primary_text}" %>
                     <% end %>
                 <% else %>
