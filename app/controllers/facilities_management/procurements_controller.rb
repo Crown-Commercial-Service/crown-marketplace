@@ -810,6 +810,14 @@ module FacilitiesManagement
       page_definitions
     end
 
+    def quick_search_page_title
+      if params['what_happens_next'].present?
+        t('facilities_management.procurements.what_happens_next.heading')
+      else
+        t('facilities_management.procurements.quick_search.quick_view_results')
+      end
+    end
+
     # used to control page navigation and headers
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Style/MultilineIfModifier
@@ -1064,7 +1072,7 @@ module FacilitiesManagement
           back_text: 'Return to your account',
           back_url: facilities_management_path,
           caption1: @procurement[:contract_name],
-          page_title: 'What happens next'
+          page_title: quick_search_page_title
         },
         choose_contract_value: {
           page_title: 'Estimated contract cost',
