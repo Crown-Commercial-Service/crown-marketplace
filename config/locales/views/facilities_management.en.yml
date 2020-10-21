@@ -1586,7 +1586,7 @@ en:
         save_and_continue: Continue to procurement
         save_for_later: Return to procurements dashboard
         save_text: To be placed compliantly into a sub-lot, and receive your own supplier shortlist, an estimated contract cost and your procurement options, please continue to a procurement below.
-        search_result_body_html: Here are the suppliers that can provide your services to your buildings. We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
+        search_result_body_html: Here are the suppliers that can provide your services to your building(s). We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search_form:
         new_name_label: Enter a name or reference to save this search.
         save_headline: Save your search
