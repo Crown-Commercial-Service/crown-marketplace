@@ -58,6 +58,8 @@ module Marketplace
     ActionView::Base.field_error_proc = proc do |html_tag, _instance|
       html_tag
     end
+
+    config.active_job.queue_adapter = :sidekiq unless Rails.env.test?
   end
 
   def self.feedback_email_address
