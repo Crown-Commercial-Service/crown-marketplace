@@ -99,13 +99,13 @@ RSpec.describe FacilitiesManagement::ProcurementContactDetail, type: :model do
     context 'when the organisation_address_line_1 is only one space character' do
       it 'expected to be invalid' do
         procurement_contact_detail.organisation_address_line_1 = ' '
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
       end
     end
 
     context 'when the organisation_address_line_1 is valid' do
       it 'expected to be valid' do
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq true
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq true
       end
     end
   end
@@ -114,13 +114,13 @@ RSpec.describe FacilitiesManagement::ProcurementContactDetail, type: :model do
     context 'when the organisation_address_town is only one space character' do
       it 'expected to be invalid' do
         procurement_contact_detail.organisation_address_town = ' '
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
       end
     end
 
     context 'when the organisation_address_town is valid' do
       it 'expected to be valid' do
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq true
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq true
       end
     end
   end
@@ -129,37 +129,37 @@ RSpec.describe FacilitiesManagement::ProcurementContactDetail, type: :model do
     context 'when the organisation_address_postcode is only one space character' do
       it 'expected to be invalid' do
         procurement_contact_detail.organisation_address_postcode = ' '
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
       end
     end
 
     context 'when the organisation_address_postcode is valid' do
       it 'expected to be valid' do
         procurement_contact_detail.organisation_address_postcode = 'SE1 0PY'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq true
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq true
 
         procurement_contact_detail.organisation_address_postcode = 'N4 2DQ'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq true
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq true
       end
     end
 
     context 'when the organisation_address_postcode is invalid' do
       it 'expected to be valid' do
         procurement_contact_detail.organisation_address_postcode = 'SAN TA1'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
       end
     end
 
     context 'when the organisation_address_postcode is invalid with invalid symbol' do
       it 'expected to be invalid' do
         procurement_contact_detail.organisation_address_postcode = 'ST! 2DE'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
 
         procurement_contact_detail.organisation_address_postcode = 'ST! @DE'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
 
         procurement_contact_detail.organisation_address_postcode = 'SW1A 1AA!'
-        expect(procurement_contact_detail.valid?(:new_invoicing_address)).to eq false
+        expect(procurement_contact_detail.valid?(:new_invoicing_contact_details_address)).to eq false
       end
     end
 
