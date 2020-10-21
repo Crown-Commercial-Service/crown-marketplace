@@ -153,7 +153,7 @@ module FacilitiesManagement
 
     def closed?
       return true if procurement.aasm_state == 'closed'
-      return false if aasm_state == 'unsent'
+      return false if unsent?
 
       procurement.procurement_suppliers.where.not(aasm_state: 'unsent')&.last&.id != id
     end
