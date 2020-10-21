@@ -7,30 +7,30 @@ module FacilitiesManagement
       before_action :set_procurement
       before_action :set_contract
       before_action :authorize_user
+      before_action :redirect_if_contract_cannot_be_updated, only: %i[edit update]
       before_action :set_page_detail, only: %i[show edit]
       before_action :assign_contract_attributes, only: :update
 
       def show; end
 
       def edit
-        case params[:name]
-        when 'next_supplier'
-          next_supplier_options
-        when 'withdraw'
-          redirect_to facilities_management_procurement_contract_path if @contract.cannot_withdraw?
-        when 'signed'
-          redirect_to facilities_management_procurement_contract_path unless @contract.accepted?
-        end
+        redirect_to_last_contract_closed_page if params[:name] == 'next_supplier' && @procurement.unsent_direct_award_offers.empty?
       end
 
-      # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       def update
-        close_procurement && return if params['close_procurement'].present?
-        update_supplier_response && return if params['sign_procurement'].present?
-        no_more_suppliers && return if @contract.last_offer?
-        send_offer_to_next_supplier && return if params['send_contract_to_next_supplier'].present?
+        case params[:name]
+        when 'withdraw'
+          close_procurement
+        when 'signed'
+          update_supplier_response
+        when 'next_supplier'
+          if @contract.last_offer?
+            no_more_suppliers
+          else
+            send_offer_to_next_supplier
+          end
+        end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       private
 
@@ -42,8 +42,27 @@ module FacilitiesManagement
         @contract = ProcurementSupplier.find(params[:id])
       end
 
+      def redirect_if_contract_cannot_be_updated
+        redirect_to facilities_management_procurement_contract_path if cannot_edit_or_update_contract?
+      end
+
+      def cannot_edit_or_update_contract?
+        if @contract.closed?
+          true
+        else
+          case params[:name]
+          when 'next_supplier'
+            @contract.cannot_offer_to_next_supplier?
+          when 'withdraw'
+            @contract.cannot_withdraw?
+          when 'signed'
+            !@contract.accepted?
+          end
+        end
+      end
+
       def assign_contract_attributes
-        return if params['send_contract_to_next_supplier'].present?
+        return if params[:name] == 'next_supplier'
 
         @contract.assign_attributes(contract_params)
       end
@@ -55,7 +74,6 @@ module FacilitiesManagement
           @procurement.set_state_to_closed!
           redirect_to facilities_management_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
         else
-          params[:name] = 'withdraw'
           set_page_detail
           render :edit
         end
@@ -83,13 +101,9 @@ module FacilitiesManagement
         redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
       end
 
-      def next_supplier_options
-        if @contract.cannot_offer_to_next_supplier?
-          redirect_to facilities_management_procurement_contract_path
-        elsif @procurement.unsent_direct_award_offers.empty?
-          last_contract = @procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last
-          redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
-        end
+      def redirect_to_last_contract_closed_page
+        last_contract = @procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last
+        redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
       end
 
       def no_more_suppliers

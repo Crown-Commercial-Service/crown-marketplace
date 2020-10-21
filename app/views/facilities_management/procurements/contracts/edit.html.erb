@@ -5,7 +5,7 @@
     <% else %>
         <%= content_for :page_title, pd.heading_details.text %>
     <% end %>
-    <%= form_for @contract, url: facilities_management_procurement_contract_path, method: :put do |f| %>
+    <%= form_for @contract, url: facilities_management_procurement_contract_path(name: params[:name]), method: :put, html: { specialvalidation: true } do |f| %>
         <% case params[:name] %>
         <% when 'withdraw' %>
             <%= render partial: 'closing_direct_award_offer', :locals=>{:f=>f} %>
