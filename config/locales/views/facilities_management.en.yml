@@ -1787,7 +1787,7 @@ en:
           dashboard_link: Return to procurements dashboard
           processing: Your upload is being processed
           review: After a successful upload, you can continue to review your procurement.
-          warning_text: If it has been more than 30 minutes, and the upload status has not changed after you have refreshed your browser, click on the 'Return to upload your spreadsheet' link above to go back to retry the upload.
+          warning_text: If it has been more than 30 minutes, and the upload status has not changed, click on the 'Return to upload your spreadsheet' link above, to go back to retry the upload. If you close this page during the upload, you can access this procurement by clicking on ‘Continue a procurement’ in your account.
         new:
           cancel_and_return: Cancel and return to services and buildings template
           check: How to check your spreadsheet is ready
