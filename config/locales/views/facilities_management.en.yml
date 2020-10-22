@@ -1626,6 +1626,7 @@ en:
         hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
         hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
         hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
+        no_suitable_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
         print_page: Print this page
         sub-lot-1a: Sub-lot 1a
         sub-lot-1b: Sub-lot 1b
