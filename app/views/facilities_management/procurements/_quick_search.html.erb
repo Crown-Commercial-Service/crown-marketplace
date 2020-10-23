@@ -5,7 +5,11 @@
       <div class="govuk-grid-column-full">
         <span class="govuk-caption-xl"><%= @procurement.contract_name %></span>
         <h1 class="govuk-heading-xl"><%= t('.quick_view_results') %></h1>
-        <p class="govuk-body"><%= t('.search_result_body_html') %></p>
+        <% if (@suppliers_lot1a + @suppliers_lot1b + @suppliers_lot1c).count.zero? %>
+          <p class="govuk-body"><%= t('.no_suppliers') %></p>
+        <% else %>
+          <p class="govuk-body"><%= t('.search_result_body_html') %></p>
+        <% end %>
       </div>
     </div>
     <%= render partial: 'filter_details', locals: { form: f } %>
