@@ -11,7 +11,7 @@ cache:
 env:
   global:
     - RAILS_ENV=test
-    - CC_TEST_REPORTER_ID=fd77fd608d62b7a46467dfa4c8d3ece86f525be4fec94d4874f3ab7665f70693
+    - CC_TEST_REPORTER_ID=6fc605211aa3f9b75d03186bb3cf2e549f606bc056fa985c065dbee53b37c443
 services:
   - postgresql
 addons:
@@ -33,6 +33,6 @@ script:
   - bundle exec rake
   - rm public/assets/.sprockets-manifest-*.json
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
 notifications:
   webhooks: https://api.eu.opsgenie.com/v1/json/travisci?apiKey=430b3a4a-eeba-486e-9133-99083dde9787
