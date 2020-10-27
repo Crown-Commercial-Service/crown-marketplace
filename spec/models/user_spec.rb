@@ -78,7 +78,7 @@ RSpec.describe User, type: :model do
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new
         user.buyer_detail.full_name = 'Test name'
         user.buyer_detail.job_title = 'Job title'
-        user.buyer_detail.telephone_number = '3434'
+        user.buyer_detail.telephone_number = '343434343434'
         user.buyer_detail.organisation_name = 'org name'
         user.buyer_detail.organisation_address_line_1 = 'Address line 1'
         user.buyer_detail.organisation_address_town = 'Address town'

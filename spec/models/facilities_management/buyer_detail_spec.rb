@@ -78,10 +78,26 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
       end
 
       context 'when telephone number is too long' do
-        let(:telephone_number) { '016101610161' }
+        let(:telephone_number) { '0161016101610161' }
 
         it 'is invalid' do
           expect(buyer_detail.valid?(:update)).to eq false
+        end
+      end
+
+      context 'when telephone number is too short' do
+        let(:telephone_number) { '0161' }
+
+        it 'is invalid' do
+          expect(buyer_detail.valid?(:update)).to eq false
+        end
+      end
+
+      context 'when telephone number is just right' do
+        let(:telephone_number) { '016101610161' }
+
+        it 'is valid' do
+          expect(buyer_detail.valid?(:update)).to eq true
         end
       end
     end
