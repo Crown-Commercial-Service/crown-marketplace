@@ -16,7 +16,7 @@
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
             <%= link_to search.contract_name, facilities_management_procurement_path(search, spreadsheet: search.detailed_search_bulk_upload?)  %>
           </th>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(search.updated_at.in_time_zone("London")) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date_time(search.updated_at) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= procurement_state(search.aasm_state) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.delete'), facilities_management_procurement_delete_path(search), class: "govuk-link govuk-link--no-visited-state" %></td>
