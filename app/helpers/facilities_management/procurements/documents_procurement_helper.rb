@@ -2,7 +2,7 @@ module FacilitiesManagement
   module Procurements
     class DocumentsProcurementHelper
       def self.review_docs
-        base_scope = %i[facilities_management procurements da_buyer review_contract]
+        base_scope = %i[facilities_management procurements contract_details da_journey review]
 
         @review_your_contract_static_files = [
           I18n.t('attachment_1.file_name', scope: base_scope),

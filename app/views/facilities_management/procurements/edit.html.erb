@@ -1,19 +1,11 @@
 
 <%= link_to t('.return_to_requirements'), @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? && requires_back_link? %>
-<%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: does_form_for_current_step_require_special_client_validation?(params), novalidate: true, multipart: true } do |f| %>
-  <% unless @page_description || @page_description&.no_error_block || params[:step] == "buildings_and_services"%>
+<%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+  <% unless params[:step] == "buildings_and_services"%>
     <div class="govuk-grid-row">
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
     </div>
   <%end %>
-  <% if @page_description %>
-    <% case @page_description.heading_details.text %>
-    <% when 'Add address' %>
-      <% content_for(:page_title, "#{@page_description.heading_details.text} for #{@page_description.heading_details.caption.downcase}") %>
-    <% else %>
-      <% content_for(:page_title, @page_description.heading_details.text) %>
-    <% end %>
-  <% end %>
   <% site_title = { "services" => t('facilities_management.journey.choose_services.heading'),
                     "regions" => t('facilities_management.journey.choose_locations.heading'),
   } %>
