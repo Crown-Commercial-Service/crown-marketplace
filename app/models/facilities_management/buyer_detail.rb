@@ -12,7 +12,7 @@ module FacilitiesManagement
 
     validates :full_name, presence: true, length: { maximum: MAX_FIELD_LENGTH }, on: :update
     validates :job_title, presence: true, length: { maximum: MAX_FIELD_LENGTH }, on: :update
-    validates :telephone_number, presence: true, format: { with: /\A(\d{0,11})\z/ }, on: :update
+    validates :telephone_number, presence: true, format: { with: /\A[\s()\d-]{10,14}\d\z/ }, length: { maximum: 15 }, on: :update
     validates :telephone_number, numericality: { greater_than: 0, message: :blank }, on: :update
     validates :organisation_name, length: { maximum: MAX_FIELD_LENGTH }, presence: true, on: :update
 
