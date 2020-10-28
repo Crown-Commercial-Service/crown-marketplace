@@ -1833,4 +1833,32 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '.security_policy_document_file' do
+    before do
+      procurement.security_policy_document_required = true
+      procurement.security_policy_document_file = security_policy_document_file
+    end
+
+    context 'when a file is uploaded with the wrong extension' do
+      let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+
+      it 'is not valid' do
+        expect(procurement.save).to be false
+      end
+
+      it 'has the correct error message' do
+        procurement.save
+        expect(procurement.errors[:security_policy_document_file].first).to eq 'The selected file must be a DOC, DOCX or PDF'
+      end
+    end
+
+    context 'when a file is uploaded with the correct extension' do
+      let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+
+      it 'saves the file successfully' do
+        expect(procurement.save).to be true
+      end
+    end
+  end
 end
