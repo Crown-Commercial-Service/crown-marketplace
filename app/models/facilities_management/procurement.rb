@@ -41,6 +41,7 @@ module FacilitiesManagement
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
     # extension or size was being uploaded. The error message for this rather than the carrierwave error messages were being displayed
     validates :security_policy_document_file, attached: true, if: :security_policy_document_required?
+    validate :security_policy_document_file_ext_validation
     validates :security_policy_document_file, content_type: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document]
     validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
@@ -669,5 +670,13 @@ module FacilitiesManagement
     def service_question_complete_for_codes?(codes, context)
       procurement_building_services.where(code: codes).pluck(context).all?(&:present?)
     end
+
+    def security_policy_document_file_ext_validation
+      return unless security_policy_document_file.attached?
+
+      errors.add(:security_policy_document_file, :wrong_extension) if VALID_FILE_EXTENSIONS.none? { |extension| security_policy_document_file.blob.filename.to_s.end_with?(extension) }
+    end
+
+    VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx'].freeze
   end
 end
