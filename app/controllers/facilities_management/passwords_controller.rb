@@ -15,7 +15,7 @@ module FacilitiesManagement
     end
 
     def after_request_password_path
-      facilities_management_edit_user_password_path(email: params[:email])
+      facilities_management_edit_user_password_path
     end
   end
 end
