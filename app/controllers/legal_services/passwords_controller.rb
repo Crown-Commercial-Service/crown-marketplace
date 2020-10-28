@@ -15,7 +15,7 @@ module LegalServices
     end
 
     def after_request_password_path
-      legal_services_edit_user_password_path(email: params[:email])
+      legal_services_edit_user_password_path
     end
   end
 end
