@@ -16,7 +16,7 @@ module SupplyTeachers
       end
 
       def after_request_password_path
-        supply_teachers_admin_edit_user_password_path(email: params[:email])
+        supply_teachers_admin_edit_user_password_path
       end
     end
   end

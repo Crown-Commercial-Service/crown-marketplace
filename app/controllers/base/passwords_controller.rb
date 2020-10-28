@@ -10,6 +10,7 @@ module Base
     def create
       @response = Cognito::ForgotPassword.call(params[:email])
       if @response.success?
+        cookies[:reset_email] = { value: params[:email], expires: 20.minutes, httponly: true }
         redirect_to after_request_password_path
       else
         flash[:error] = @response.error
@@ -18,7 +19,7 @@ module Base
     end
 
     def edit
-      @response = Cognito::ConfirmPasswordReset.new(params[:email], params[:password], params[:password_confirmation], params[:confirmation_code])
+      @response = Cognito::ConfirmPasswordReset.new(cookies[:reset_email], params[:password], params[:password_confirmation], params[:confirmation_code])
     end
 
     def update
@@ -26,6 +27,7 @@ module Base
 
       @response = Cognito::ConfirmPasswordReset.call(email, params[:password], params[:password_confirmation], params[:confirmation_code])
       if @response.success?
+        cookies.delete :reset_email
         redirect_to after_password_reset_path
       else
         render :edit, erorr: @response.error
