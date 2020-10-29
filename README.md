@@ -32,11 +32,16 @@ make
 
 ### MacOS
 
-#### Install PostGIS
-$ brew install postgres (this will install the latest (HEAD) version, currently 12.  The server runs 11!)
+#### Check the Ruby version
+##### N.B. The project currently runs on 2.5.3. (October 2020) 
+
+Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 2.5.3 as the Ruby version before trying anything else. 
+
+#### Install Postgres and PostGIS
+$ brew install postgres (this will install the latest (HEAD) version, currently 12.  The server runs 11!)  
 $ brew install postgis (this is the latest (HEAD) and has postgres12 as a dependency - problematic)
 
-####Look at these pages for building postgis:
+#### Look at these pages for building postgis:  
 * http://www.concept47.com/austin_web_developer_blog/rails/best-way-to-install-postgis-for-postgres-versions-lower-than-9-6-x-from-source/
 
 * https://github.com/petere/pex/issues/8
@@ -63,12 +68,12 @@ $ brew install redis
 
 To install dependencies:
 
-$ yarn install
-$ bundle
+$ yarn install  
+$ bundle (make sure the bundler gem is installed first)
 
-To create, migrate & seed the database:
+To create, migrate & seed the database:  
 
-$ rake db:setup
+$ rake db:setup  
 
 ### Environment variables
 
