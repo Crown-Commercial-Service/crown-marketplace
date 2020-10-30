@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :controller do
+  extend APIRequestStubs
+
   let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: subject.current_user) }
   let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
   let(:user) { subject.current_user }
@@ -47,6 +49,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       let(:start_date) { Time.now.in_time_zone('London') + 2.years }
       let(:end_date) { Time.now.in_time_zone('London') + 4.years }
 
+      stub_bank_holiday_json
+
       before do
         contract.accept!
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date_yyyy } }
@@ -83,6 +87,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
     end
 
     context 'when the buyer does not sign the procurement' do
+      stub_bank_holiday_json
+
       before do
         contract.accept!
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
@@ -141,6 +147,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
     context 'when offering to the next supplier' do
       let(:first_contract) { procurement.procurement_suppliers.min_by(&:direct_award_value) }
       let(:next_contract) { procurement.procurement_suppliers.sort_by(&:direct_award_value)[1] }
+
+      stub_bank_holiday_json
 
       before do
         first_contract.update(aasm_state: 'declined')
