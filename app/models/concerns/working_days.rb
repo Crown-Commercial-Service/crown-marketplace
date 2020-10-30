@@ -23,6 +23,10 @@ module WorkingDays
   end
 
   def self.uk_bank_holidays
-    @uk_bank_holidays ||= FacilitiesManagement::StaticData.bank_holidays.map { |country| country[1]['events'].map { |date| DateTime.parse(date['date']).in_time_zone('London') } }.flatten.uniq
+    @uk_bank_holidays ||= bank_holiday_json.map { |country| country[1]['events'].map { |date| DateTime.parse(date['date']).in_time_zone('London') } }.flatten.uniq
+  end
+
+  def self.bank_holiday_json
+    JSON.parse(Net::HTTP.get(URI('https://www.gov.uk/bank-holidays.json')))
   end
 end

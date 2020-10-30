@@ -67,6 +67,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     let(:obj) { double }
     let(:contract) { procurement.procurement_suppliers[0] }
 
+    stub_bank_holiday_json
+
     before do
       [da_value_test1, da_value_test2, da_value_test3, da_value_test4].each_with_index do |da_value, index|
         procurement.procurement_suppliers.create(direct_award_value: da_value, supplier_id: supplier_ids[index])
@@ -562,6 +564,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     describe '#contract_expiry_date' do
       before { contract.update(aasm_state: 'sent') }
 
+      stub_bank_holiday_json
+
       # NO BANK HOLIDAYS
       context 'when it is a normal week without bank holidays' do
         context 'when a procurement is sent on Monday' do
@@ -705,6 +709,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
     describe '#contract_reminder_date' do
       before { contract.update(aasm_state: 'sent') }
+
+      stub_bank_holiday_json
 
       context 'when contract is sent in a normal week without bank holidays' do
         it 'is expected to have reminder date in one working day' do
