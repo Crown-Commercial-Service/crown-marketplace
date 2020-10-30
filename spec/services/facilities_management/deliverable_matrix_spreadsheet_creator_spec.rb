@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   include ActionView::Helpers::NumberHelper
+  extend APIRequestStubs
 
   subject(:wb) do
     spreadsheet_builder = described_class.new(contract.id)
@@ -83,6 +84,8 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
 
   context 'when contract is sent' do
     let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+    stub_bank_holiday_json
 
     before do
       contract.offer_to_supplier!

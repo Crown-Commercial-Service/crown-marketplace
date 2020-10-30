@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe WorkingDays do
+  stub_bank_holiday_json
+
   describe '#bank_holiday?' do
     context 'when it is not a bank holiday' do
       it 'will return false' do
