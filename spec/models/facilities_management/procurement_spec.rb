@@ -791,6 +791,8 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       # rubocop:enable RSpec/AnyInstance
     end
 
+    stub_bank_holiday_json
+
     context 'when all contracts are unsent' do
       it 'will return true and the first contract will be sent' do
         expect(procurement.offer_to_next_supplier).to be true
