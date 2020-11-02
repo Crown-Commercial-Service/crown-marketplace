@@ -840,7 +840,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement.offer_to_next_supplier
         procurement.reload
         expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
-        expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
+        expect(procurement.procurement_suppliers.sent[1].last_offer?).to be true
       end
     end
 
