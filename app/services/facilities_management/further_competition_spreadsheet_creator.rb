@@ -156,15 +156,15 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def add_shortlist_supplier_names(sheet, standard_style, bold_style, hint_style, link_style)
-    supplier_datas = @procurement.procurement_suppliers.map { |s| s.supplier['data'] }.sort_by { |s| s['supplier_name'] }
+    suppliers = @procurement.procurement_suppliers.map(&:supplier).sort_by(&:supplier_name)
 
-    return if supplier_datas.empty?
+    return if suppliers.empty?
 
     sheet.add_row ['Suppliers shortlist', 'Further supplier information and contact details can be found here:'], style: bold_style, height: standard_row_height
     update_cell_styles(sheet, 'B9:B9', standard_style)
 
-    supplier_datas.each do |data|
-      sheet.add_row [data['supplier_name']], style: hint_style, height: standard_row_height
+    suppliers.each do |supplier|
+      sheet.add_row [supplier.supplier_name], style: hint_style, height: standard_row_height
     end
 
     sheet.rows[9].add_cell 'https://www.crowncommercial.gov.uk/agreements/RM3830/suppliers', style: link_style

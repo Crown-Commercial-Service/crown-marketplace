@@ -51,15 +51,7 @@ module FacilitiesManagement
     end
 
     def selected_suppliers(for_lot)
-      suppliers = CCS::FM::Supplier.all.select do |s|
-        s.data['lots'].find do |l|
-          (l['lot_number'] == for_lot) &&
-            (@posted_locations - l['regions']).empty? &&
-            (@posted_services - l['services']).empty?
-        end
-      end
-
-      suppliers.sort_by! { |supplier| supplier.data['supplier_name'] }
+      CCS::FM::Supplier.selected_suppliers(for_lot, @posted_locations, @posted_services)
     end
 
     def assessed_value

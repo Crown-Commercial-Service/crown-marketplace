@@ -2,8 +2,8 @@ module FacilitiesManagement
   module Admin
     class SuppliersFrameworkDataController < FacilitiesManagement::Admin::FrameworkController
       def index
-        @fm_suppliers = FacilitiesManagement::Admin::SuppliersAdmin.all.order(Arel.sql("data->'supplier_name'")).pluck(:data).map do |supplier|
-          [supplier['supplier_name'], { lot_numbers: supplier['lots'].map { |lots| lots['lot_number'] }, supplier_id: supplier['supplier_id'] }]
+        @fm_suppliers = FacilitiesManagement::Admin::SuppliersAdmin.all.order(:supplier_name).select(:supplier_id, :supplier_name, :lot_data).map do |supplier|
+          [supplier.supplier_name, { lot_numbers: supplier.lot_data.keys, supplier_id: supplier.supplier_id }]
         end.to_h
 
         @supplier_lot1a_present = supplier_lot_present('1a')

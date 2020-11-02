@@ -1379,6 +1379,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   end
 
   describe '#selected_suppliers' do
+    def selected_suppliers_for_no_region(for_lot, for_regions, for_services)
+      CCS::FM::Supplier.all.select do |s|
+        s.lot_data[for_lot] && (for_regions - s.lot_data[for_lot]['regions']).any? && (for_services - s.lot_data[for_lot]['services']).empty?
+      end
+    end
+
     context 'when region is UKH1' do
       let(:procurement_building_service) do
         create(:facilities_management_procurement_building_service,
@@ -1388,23 +1394,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
-              ([procurement_building_service.code] - l['services']).empty?
-          end
-        end.first.data['supplier_name']
+        CCS::FM::Supplier.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_no_region) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).any? &&
-              ([procurement_building_service.code] - l['services']).empty?
-          end
-        end.last.data['supplier_name']
+        selected_suppliers_for_no_region('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).last.supplier_name
       end
 
       before do
@@ -1412,11 +1406,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the service in UKH1 region' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that do not provide the service in UKH1 region' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_region)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_region)).to eq false
       end
     end
 
@@ -1428,23 +1422,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
-              ([procurement_building_service.code] - l['services']).empty?
-          end
-        end.first.data['supplier_name']
+        CCS::FM::Supplier.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service.procurement_building.building.address_region_code] - l['regions']).empty? &&
-              ([procurement_building_service.code] - l['services']).any?
-          end
-        end.last.data['supplier_name']
+        selected_suppliers_for_no_region('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).last.supplier_name
       end
 
       before do
@@ -1452,11 +1434,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
       end
     end
 
@@ -1494,23 +1476,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       let(:procurement) { procurement_building_service_c22.procurement_building.procurement }
       let(:supplier_name) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service_c1.procurement_building.building.address_region_code] - l['regions']).empty? &&
-              (procurement.procurement_building_services.map(&:code) - l['services']).empty?
-          end
-        end.first.data['supplier_name']
+        CCS::FM::Supplier.selected_suppliers('1a', [procurement_building_service_c1.procurement_building.building.address_region_code], procurement.procurement_building_services.map(&:code)).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              ([procurement_building_service_c1.procurement_building.building.address_region_code] - l['regions']).empty? &&
-              (procurement.procurement_building_services.map(&:code) - l['services']).any?
-          end
-        end.last.data['supplier_name']
+        selected_suppliers_for_no_region('1a', [procurement_building_service_c1.procurement_building.building.address_region_code], procurement.procurement_building_services.map(&:code)).last.supplier_name
       end
 
       before do
@@ -1519,11 +1489,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       it 'shows suppliers that do provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
       end
     end
 
@@ -1546,23 +1516,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       let(:procurement) { procurement_building_service_c6.procurement_building.procurement }
       let(:supplier_name) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              (procurement.procurement_buildings.map { |pb| pb.building.address_region_code } - l['regions']).empty? &&
-              (procurement.procurement_building_services.map(&:code) - l['services']).empty?
-          end
-        end.first.data['supplier_name']
+        CCS::FM::Supplier.selected_suppliers('1a', procurement.procurement_buildings.map { |pb| pb.building.address_region_code }, procurement.procurement_building_services.map(&:code)).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              (procurement.procurement_building_services.map { |pb| pb.procurement_building.building.address_region_code } - l['regions']).any? &&
-              (procurement.procurement_building_services.map(&:code) - l['services']).empty?
-          end
-        end.last.data['supplier_name']
+        selected_suppliers_for_no_region('1a', procurement.procurement_building_services.map { |pb| pb.procurement_building.building.address_region_code }, procurement.procurement_building_services.map(&:code)).last.supplier_name
       end
 
       before do
@@ -1571,12 +1529,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       it 'shows suppliers that do provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that do not provide the specific service' do
         report = described_class.new(procurement.id)
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_no_service)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_no_service)).to eq false
       end
     end
 
@@ -1589,24 +1547,13 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period: 7)))
       end
       let(:supplier_name) do
-        CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1b') &&
-              ([procurement_building_service.procurement_building.address_region_code] - l['regions']).empty? &&
-              ([procurement_building_service.code] - l['services']).empty?
-          end
-        end.first.data['supplier_name']
+        CCS::FM::Supplier.selected_suppliers('1a', [procurement_building_service.procurement_building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_lot1a) do
         CCS::FM::Supplier.all.select do |s|
-          s.data['lots'].find do |l|
-            (l['lot_number'] == '1a') &&
-              !((l['lot_number'] == '1b') &&
-                ([procurement_building_service.procurement_building.address_region_code] - l['regions']).empty? &&
-                ([procurement_building_service.code] - l['services']).empty?)
-          end
-        end.first.data['supplier_name']
+          s.lot_data['1a'] && s.lot_data['1b'].nil? && ([procurement_building_service.procurement_building.address_region_code] - s.lot_data['1a']['regions']).any? && ([procurement_building_service.code] - s.lot_data['1a']['services']).empty?
+        end.first.supplier_name
       end
 
       let(:lift_data) { [999, 999, 999, 999] }
@@ -1619,11 +1566,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'shows suppliers that do provide the service in lot1b' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name)).to eq true
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name)).to eq true
       end
 
       it 'does not show the suppliers that provide the services in lot1a not lot1b' do
-        expect(report.selected_suppliers(report.current_lot).map { |s| s.data['supplier_name'] }.include?(supplier_name_lot1a)).to eq false
+        expect(report.selected_suppliers(report.current_lot).map(&:supplier_name).include?(supplier_name_lot1a)).to eq false
       end
     end
   end

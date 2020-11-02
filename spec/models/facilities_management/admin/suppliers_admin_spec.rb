@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
 
   describe '.replace_services_for_lot' do
     let(:target_lot) { '1b' }
-    let(:changed_lot_data) { suppliers_admin.data['lots'].select { |lot| lot['lot_number'] == target_lot } .first }
+    let(:changed_lot_data) { suppliers_admin.lot_data[target_lot] }
 
     context 'when there are services selected' do
       let(:new_services) { %w[bish bosh bash] }

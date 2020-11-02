@@ -1,23 +1,16 @@
 FactoryBot.define do
   factory :ccs_fm_supplier, class: CCS::FM::Supplier do
     id { SecureRandom.uuid }
-    data do
-      {
-        supplier_id: id,
-        supplier_name: Faker::Name.unique.name,
-        contact_email: Faker::Internet.unique.email
-      }
-    end
+    supplier_id { id }
+    supplier_name { Faker::Name.unique.name }
+    contact_email { Faker::Internet.unique.email }
   end
 
   factory :ccs_fm_supplier_with_lots, parent: :ccs_fm_supplier do
-    data do
+    lot_data do
       {
-        supplier_id: id,
-        supplier_name: Faker::Name.unique.name,
-        lots: [
+        '1a':
           {
-            lot_number: '1a',
             regions: %w[UKC1 UKC2 UKD1 UKD3 UKD4 UKD6 UKD7 UKE1 UKE2 UKE3 UKE4 UKF1 UKF2 UKF3 UKG1
                         UKG2 UKG3 UKH2 UKH3 UKI3 UKI4 UKI5 UKI6 UKI7 UKJ1 UKJ2 UKJ4 UKK1 UKK2 UKL11 UKL17
                         UKL18 UKL21 UKL22 UKL23 UKM21 UKM22 UKM23 UKM24 UKM25 UKM26 UKM27 UKM28 UKM31 UKM32
@@ -31,8 +24,8 @@ FactoryBot.define do
                          J.8 J.2 J.3 J.4 J.9 J.10 J.11 J.6 J.1 J.5 J.12 J.7 K.1 K.5 K.7 K.2 K.4
                          K.6 K.3 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.9 L.10 L.11 M.1 N.1 O.1]
           },
+        '1b':
           {
-            lot_number: '1b',
             regions: %w[UKC1 UKC2 UKD1 UKD3 UKD4 UKD6 UKD7 UKE1 UKE2 UKE3 UKE4 UKF1 UKF2 UKF3 UKG1
                         UKG2 UKG3 UKH2 UKH3 UKI3 UKI4 UKI5 UKI6 UKI7 UKJ1 UKJ2 UKJ4 UKK1 UKK2 UKL11 UKL17
                         UKL18 UKL21 UKL22 UKL23 UKM21 UKM22 UKM23 UKM24 UKM25 UKM26 UKM27 UKM28 UKM31 UKM32
@@ -46,7 +39,6 @@ FactoryBot.define do
                          J.8 J.2 J.3 J.4 J.9 J.10 J.11 J.6 J.1 J.5 J.12 J.7 K.1 K.5 K.7 K.2 K.4
                          K.6 K.3 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.9 L.10 L.11 M.1 N.1 O.1]
           }
-        ]
       }
     end
 
@@ -55,7 +47,7 @@ FactoryBot.define do
         name { 'My supplier' }
       end
       after(:build) do |supplier, evaluator|
-        supplier.data = supplier.data.merge(supplier_name: evaluator.name)
+        supplier.supplier_name = evaluator.name
       end
     end
   end

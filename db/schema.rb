@@ -383,10 +383,12 @@ ActiveRecord::Schema.define(version: 2020_12_01_085212) do
   create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "data"
-    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
-    t.index ["data"], name: "idxgin", using: :gin
-    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
+    t.string "contact_name"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.string "supplier_name"
+    t.jsonb "lot_data", default: {}
+    t.index ["contact_email"], name: "index_fm_suppliers_on_contact_email"
   end
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|

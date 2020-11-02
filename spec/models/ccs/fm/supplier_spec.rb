@@ -6,11 +6,11 @@ RSpec.describe CCS::FM::Supplier, type: :model do
 
     before do
       [
-        { lots: [{ lot_number: lot, regions: %w[r0 r1], services: %w[s0 s1] }] },
-        { lots: [{ lot_number: lot, regions: %w[r0 r2], services: %w[s0 s2] }] },
-        { lots: [{ lot_number: lot, regions: %w[r0 r3], services: %w[s0 s3] }] }
-      ].each do |data|
-        FactoryBot.create(:ccs_fm_supplier, data: data)
+        { lot => { regions: %w[r0 r1], services: %w[s0 s1] } },
+        { lot => { regions: %w[r0 r2], services: %w[s0 s2] } },
+        { lot => { regions: %w[r0 r3], services: %w[s0 s3] } }
+      ].each do |lot_data|
+        FactoryBot.create(:ccs_fm_supplier, lot_data: lot_data)
       end
     end
 

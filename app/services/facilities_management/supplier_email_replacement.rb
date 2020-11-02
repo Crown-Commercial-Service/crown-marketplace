@@ -15,14 +15,12 @@ class FacilitiesManagement::SupplierEmailReplacement
   private
 
   def replace_supplier_email(email_set)
-    supplier = CCS::FM::Supplier.find_by('data @> ?', { contact_email: email_set[0] }.to_json)
+    supplier = CCS::FM::Supplier.find_by(contact_email: email_set[0])
 
     return "supplier record not found found for #{email_set[0]}" if supplier.nil?
 
-    supplier_data = supplier.data
-    updated_data = supplier_data.merge(contact_email: email_set[1])
-    supplier.update(data: updated_data)
-    Rails.logger.info "updated email for #{supplier.data['supplier_name']}"
+    supplier.update(contact_email: email_set[1])
+    Rails.logger.info "updated email for #{supplier.contact_email}"
   end
 
   def replace_supplier_detail_email(email_set)
