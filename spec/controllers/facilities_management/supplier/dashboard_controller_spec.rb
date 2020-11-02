@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::Supplier::DashboardController, type: :contr
 
     context 'with supplier found' do
       before do
-        supplier.update(data: supplier.data.merge(contact_email: controller.current_user.email))
+        supplier.update(contact_email: controller.current_user.email)
         get :index
       end
 
