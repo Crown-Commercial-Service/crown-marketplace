@@ -236,6 +236,8 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     end
 
     describe 'time_delta_in_day' do
+      stub_bank_holiday_json
+
       context 'when sent on a Monday in a normal working week' do
         it 'is expected to return 1 day' do
           contract.offer_sent_date = DateTime.new(2020, 3, 9, 12, 0, 0).in_time_zone('London')
