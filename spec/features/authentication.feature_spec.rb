@@ -47,7 +47,7 @@ RSpec.feature 'Authentication', type: :feature do
   end
 
   scenario 'Users signed in using AWS Cognito can sign out' do
-    user = create(:user, :without_detail, roles: %i[buyer fm_access])
+    user = create(:user, :with_detail, roles: %i[buyer fm_access])
     visit '/facilities-management/gateway'
     click_on 'Sign in with Cognito'
     fill_in 'Email', with: user.email
