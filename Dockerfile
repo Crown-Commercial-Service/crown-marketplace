@@ -106,6 +106,10 @@ RUN GOOGLE_GEOCODING_API_KEY=dummy SECRET_KEY_BASE=dummy bundle exec rails asset
 ENV PORT=8080
 EXPOSE 8080
 
+RUN apk add nginx
+RUN mkdir -p /run/nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Ensure our entry point script is executable
 RUN chmod +x ./bin/docker-entrypoint.sh
 
