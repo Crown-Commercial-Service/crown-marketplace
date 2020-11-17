@@ -90,9 +90,7 @@
           <div class="govuk-radios">
             <div class="govuk-radios__item">
               <%= f.radio_button :route_to_market, 'da_draft', class: 'govuk-radios__input' %>
-              <%= f.label :route_to_market, value: 'da_draft', class: 'govuk-label govuk-radios__label' do %>
-                <%= t('.direct_award_label_html') %>
-              <% end %>
+              <%= f.label :route_to_market, t('.direct_award_label_html'), value: 'da_draft', class: 'govuk-label govuk-radios__label' %>
               <%= govuk_details t('.what_is_da') do %>
                 <ul class="govuk-list govuk-list--bullet">
                   <%= t('.da_list_html') %>
@@ -101,9 +99,7 @@
             </div>
             <div class="govuk-radios__item">
               <%= f.radio_button :route_to_market, 'further_competition_chosen', class: 'govuk-radios__input' %>
-              <%= f.label :route_to_market, value: 'further_competition', class: 'govuk-label govuk-radios__label' do %>
-                <%= t('.further_competition_html') %>
-              <% end %>
+              <%= f.label :route_to_market, t('.further_competition_html'), value: 'further_competition_chosen' , class: 'govuk-label govuk-radios__label' %>
               <%= govuk_details t('.what_is_fc') do %>
                 <ul class="govuk-list govuk-list--bullet">
                   <%= t('.fc_list_html') %>
