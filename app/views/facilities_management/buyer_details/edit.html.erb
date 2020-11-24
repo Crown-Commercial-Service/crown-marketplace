@@ -1,7 +1,7 @@
 <% content_for :page_title, t('.buyer_details') %>
 
 <div class="govuk-body govuk-grid-row buyer-details" id="buyer_details">
-  <div class="govuk-grid-column-two-thirds" id="buyer-details-form">
+  <div class="govuk-grid-column-two-thirds" id="edit-contact-detail">
     <%= form_for @buyer_detail, url: facilities_management_buyer_detail_path, method: :patch, html: { novalidate: true, specialvalidation: true, multipart: true } do |f| %>
       <%= link_to t('.back'), facilities_management_path, class: "govuk-back-link govuk-!-margin-bottom-2" unless (current_user.nil? || current_user.fm_buyer_details_incomplete?) %>
       <%= render partial: 'shared/error_summary', locals: {errors: f.object.errors, render_empty: false} %>
@@ -53,67 +53,8 @@
           </h2>
         </div>
 
-        <div id="fm-postcode-error-form-group" class="govuk-form-group govuk-!-margin-top-4 <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>" data-propertyname="organisation_address_postcode">
-          <div class="">
-            <div id="fm-postcode-lookup-container" class="<%= ' govuk-visually-hidden' if f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>">
-              <div class="govuk-grid-row ">
-                <div class="govuk-grid-column-one-half">
-                  <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-label govuk-!-margin-bottom-1', for: 'buyer-details-postcode' %>
-                  <div class="govuk-error-message govuk-!-margin-top-3" id="fm-postcode-error"></div>
-                  <%= display_error(f.object, :organisation_address_postcode) if f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
-                  <% input_index = f.object.organisation_address_line_1.present? ? -1 : 0 %>
-                  <%= f.text_field :postcode_entry, class: 'govuk-input fm-postcode-input govuk-!-margin-bottom-4 govuk-!-width-full', id: 'buyer-details-postcode', maxlength: 10, required: true, tabindex: "#{input_index}"  %>
-                </div>
-              </div>
-              <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-0">
-                <a role="button" href="#"  tabindex="<%="#{input_index}"%>" class="govuk-button govuk-!-margin-bottom-2" id="buyer-details-find-address-btn" aria-label="<%= t('.find_addr') %>"><%= t('.find_addr') %></a>
-              </div>
-              <div class="govuk-!-margin-top-0">
-                <%= link_to t('.cant_find_addr_in_list'), facilities_management_buyer_detail_edit_address_path(@buyer_detail),  class: "govuk-link--no-visited-state govuk-caption-m", id: 'add-buyer-address-link-1', tabindex: "#{input_index}" %>
-              </div>
-            </div>
+        <%= render partial: 'contact_detail_address_container', locals: { f: f } %>
 
-            <div id="fm-post-code-results-container" class="govuk-form-group govuk-visually-hidden">
-              <%= f.label :organisation_address_postcode, t('.postcode'), class: 'govuk-heading-s govuk-!-margin-bottom-2' %>
-              <div class="govuk-grid-row govuk-!-margin-top-0">
-                <div class="govuk-grid-column-one-quarter">
-                  <p id="fm-postcode-label" class="govuk-body"><%= f.object.organisation_address_postcode %></p>
-                </div>
-                <div class="govuk-grid-column-one-quarter">
-                  <% postcode_index = f.object.organisation_address_postcode.present? && !f.object.valid_postcode? ? 0 : -1 %>
-                  <a id="buyer-details-change-postcode" href="" tabindex=<%= postcode_index %> class="govuk-link--no-visited-state"><%= t('.change') %></a>
-                </div>
-              </div>
-              <div class= <%= "govuk-form-group--error" if f.object.errors[:organisation_address_postcode].any? %>>
-                <label class="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-4" for="buyer-details-postcode-lookup-results"><%= t('.select_an_addr') %></label>
-                <%= display_error(f.object, :organisation_address_postcode) unless f.object.organisation_address_postcode.blank? || !f.object.valid_postcode? %>
-                <div id="fm-address-error-form-group" class="govuk-form-group govuk-!-margin-bottom-0">
-                  <span id="fm-address-error" class="govuk-error-message govuk-visually-hidden">
-                    <%= t('.no_addr_selected') %>
-                  </span>
-                  <select class="govuk-select govuk-!-width-full" tabindex=<%= postcode_index %> id="buyer-details-postcode-lookup-results" name="buyer-details-postcode-lookup-results">
-                    <option value="status-option" selected><%= t('.no_addr_found') %></option>
-                  </select>
-                </div>
-                <div class="govuk-!-margin-top-2">
-                  <%= link_to t('.cant_find_addr_in_list'), facilities_management_buyer_detail_edit_address_path(@buyer_detail, update_address: true),  class: "govuk-link--no-visited-state govuk-caption-m", id: 'add-buyer-address-link-2', tabindex: postcode_index%>
-                </div>
-              </div>
-            </div>
-            <div class="govuk-!-margin-top-3<%= ' govuk-visually-hidden' unless f.object.organisation_address_line_1.present? && f.object.organisation_address_postcode.present? && f.object.valid_postcode? %>" id="selected-address-container">
-              <div id="selected-address-label" class="govuk-!-margin-bottom-2">
-                <%= f.object.full_organisation_address if f.object.organisation_address_postcode.present? %>
-              </div>
-              <% change_index = f.object.organisation_address_line_1.present? && f.object.valid_postcode? ? 0 : -1 %>
-              <a id="change-selected-address-link" tabindex=<%="#{change_index}"%> href="" class="govuk-link--no-visited-state"><%= t('.change') %></a>
-              <%= f.hidden_field :organisation_address_line_1, id: 'organisation-address-line-1' %>
-              <%= f.hidden_field :organisation_address_line_2, id: 'organisation-address-line-2' %>
-              <%= f.hidden_field :organisation_address_town, id: 'organisation-address-town' %>
-              <%= f.hidden_field :organisation_address_county, id: 'organisation-address-county' %>
-              <%= f.hidden_field :organisation_address_postcode, id: 'organisation-address-postcode' %>
-            </div>
-          </div>
-        </div>
         <h2 class="govuk-heading-m">
           Sector
         </h2>
