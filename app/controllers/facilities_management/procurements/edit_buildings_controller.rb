@@ -3,7 +3,7 @@ module FacilitiesManagement
     class EditBuildingsController < FacilitiesManagement::FrameworkController
       include Procurements::EditBuildingsControllerDefinitions
       include Procurements::EditBuildingsControllerNavigation
-      include Buildings::BuildingsControllerRegions
+      include FacilitiesManagement::FindAddressConcern
       include SharedBuildingsControllerMethods
 
       before_action :set_procurement
@@ -40,7 +40,7 @@ module FacilitiesManagement
                                       end
       end
 
-      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?
+      helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :region_needs_resolution?, :multiple_regions?
 
       def set_procurement
         @procurement = current_user.procurements.find(params[:procurement_id])
