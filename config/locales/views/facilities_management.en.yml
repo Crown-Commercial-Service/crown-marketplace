@@ -76,6 +76,8 @@ en:
               blank: You must select a security clearance level
         facilities_management/buyer_detail:
           attributes:
+            base:
+              not_selected: You must select an address to save your details
             central_government:
               blank: Select the type of public sector organisation you’re buying for
               inclusion: Select the type of public sector organisation you’re buying for
@@ -90,7 +92,7 @@ en:
               invalid: Enter your building or street name
             organisation_address_postcode:
               address_not_complete: Address not provided
-              blank: Enter your postcode
+              blank: Enter a valid postcode, for example SW1A 1AA
               invalid: Enter a valid postcode, for example SW1A 1AA
             organisation_address_town:
               blank: Enter your town or city
@@ -263,6 +265,10 @@ en:
               blank: Enter the new authorised representative job title
             name:
               blank: Enter the new authorised representative name
+            organisation_address_postcode:
+              address_not_complete: Select an address from the list or add a missing address
+              blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
             telephone_number:
               blank: Enter a UK telephone number, for example 020 7946 0000
               invalid: Enter a UK telephone number, for example 020 7946 0000
@@ -319,6 +325,8 @@ en:
               not_an_integer: Enter a whole number between 1 and 999
         facilities_management/procurement_contact_detail:
           attributes:
+            base:
+              not_selected: Select an address from the list or add a missing address
             email:
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
             organisation_address_line_1:
@@ -337,6 +345,10 @@ en:
               blank: Enter the new invoicing contact job title
             name:
               blank: Enter the new invoicing contact name
+            organisation_address_postcode:
+              address_not_complete: Select an address from the list or add a missing address
+              blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
         facilities_management/procurement_notices_contact_detail:
           attributes:
             email:
@@ -345,6 +357,10 @@ en:
               blank: Enter the new notices contact job title
             name:
               blank: Enter the new notices contact name
+            organisation_address_postcode:
+              address_not_complete: Select an address from the list or add a missing address
+              blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
         facilities_management/procurement_pension_fund:
           attributes:
             name:
@@ -637,21 +653,24 @@ en:
         start_procurement_desc: See shortlisted suppliers, estimated contract costs, and explore direct award or further competition options
         start_procurement_link: Start a procurement
     buyer_details:
+      contact_detail_address_container:
+        address_plural: addresses found
+        address_singular: address found
+        cant_find_address: Enter address manually, if you can’t find address
+        change: Change
+        find_address: Find address
+        option_text: "%{number} %{location} found"
+        please_select_address: Please select an address
+        postcode: Postcode
+        select_an_address: Select an address
       edit:
         back: Return to your account
         buyer_details: Manage your details
-        cant_find_addr_in_list: Enter address manually, if you can’t find address
         central_gov: Central government
-        change: Change
-        find_addr: Find address
         name: Name
-        no_addr_found: 0 addresses found
-        no_addr_selected: No address selected
         organisation_address: Organisation address
         organisation_details: Organisation details
-        postcode: Postcode
         search_html: Search <a href="%{url}" target="_blank">central government departments, agencies and public bodies</a> if you’re unsure.
-        select_an_addr: Select an address
         submit: Save and continue
         which_type_of_public_sector_org: Which type of public sector organisation are you buying for?
         wider_public_sector: Wider public sector
@@ -1141,12 +1160,8 @@ en:
             description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
           new_contact_details:
             address: Address
-            change: Change
-            choose_address: Select an address
             email: Email address
-            find_address: Find address
             job_title: Job title
-            missing_address: Enter address manually, if you can't find address
             name: Name
             telephone_number: Telephone number
           new_contact_details_address:
