@@ -35,12 +35,13 @@ module FacilitiesManagement
     validates :reason_for_not_signing, presence: true, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
     validate proc { text_area_max_length(:reason_for_not_signing, 100) }, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
 
-    validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
-    validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validate -> { valid_date?(:contract_start_date) }, unless: -> { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
+    validates :contract_start_date, presence: true, if: -> { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_start_date, date: { after_or_equal_to: proc { EARLIEST_CONTRACT_START_DATE } }, if: -> { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
-    validate proc { valid_date?(:contract_end_date) }, unless: proc { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
+    validate -> { valid_date?(:contract_end_date) }, unless: -> { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, presence: true, if: -> { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: -> { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -220,6 +221,8 @@ module FacilitiesManagement
     end
 
     private
+
+    EARLIEST_CONTRACT_START_DATE = DateTime.new(2020, 6, 1).in_time_zone('London').freeze
 
     # Custom Validation
     def real_date?(date)

@@ -411,7 +411,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           context 'when the values entered are numbers' do
             let(:contract_start_date_dd) { '1' }
             let(:contract_start_date_mm) { '11' }
-            let(:contract_start_date_yyyy) { '2012' }
+            let(:contract_start_date_yyyy) { '2020' }
             let(:contract_end_date_dd) { '1' }
             let(:contract_end_date_mm) { '11' }
             let(:contract_end_date_yyyy) { '2025' }
@@ -443,10 +443,10 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
           context 'when the values entered are not real dates' do
             let(:contract_start_date_dd) { '01' }
             let(:contract_start_date_mm) { '01' }
-            let(:contract_start_date_yyyy) { '2020' }
+            let(:contract_start_date_yyyy) { '2021' }
             let(:contract_end_date_dd) { '30' }
             let(:contract_end_date_mm) { '2' }
-            let(:contract_end_date_yyyy) { '2020' }
+            let(:contract_end_date_yyyy) { '2021' }
 
             it 'will not be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
@@ -508,6 +508,21 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
               contract.valid?(:confirmation_of_signed_contract)
               expect(contract.errors[:contract_start_date].first).to eq nil
               expect(contract.errors[:contract_end_date].first).to eq 'The contract end date must be after the contract start date'
+            end
+          end
+
+          context 'when the start date is before June 2020' do
+            let(:contract_start_date) { described_class::EARLIEST_CONTRACT_START_DATE - 1.day }
+            let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq 'The contract start date must be on or after 1 June 2020'
+              expect(contract.errors[:contract_end_date].first).to eq nil
             end
           end
 

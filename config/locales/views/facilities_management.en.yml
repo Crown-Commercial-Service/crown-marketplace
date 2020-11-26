@@ -374,6 +374,7 @@ en:
               inclusion: Select one option
             contract_start_date:
               blank: Enter contract start date
+              date_after_or_equal_to: The contract start date must be on or after 1 June 2020
               not_a_date: Enter a valid start date
             reason_for_closing:
               blank: Enter a reason for closing this procurement
