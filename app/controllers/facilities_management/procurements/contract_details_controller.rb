@@ -10,11 +10,11 @@ module FacilitiesManagement
       before_action :return_to_results, only: :update, if: -> { params['return_to_results'].present? }
       before_action :set_page_name
       before_action :set_page_detail_from_view_name, only: %i[show edit]
-      before_action :create_contact_detail, only: :edit
-      before_action :create_first_pension_fund, only: :edit, if: -> { @page_name == :pension_funds }
       before_action :delete_incomplete_contact_details, only: %i[show edit]
       before_action :reset_security_policy_document_page, only: :show, if: -> { @page_name == :contract_details }
       before_action :delete_incomplete_pension_data, only: :show, if: -> { @page_name == :contract_details && pension_data_incomplete? }
+      before_action :create_contact_detail, only: :edit
+      before_action :create_first_pension_fund, only: :edit, if: -> { @page_name == :pension_funds }
 
       def show; end
 
@@ -231,7 +231,7 @@ module FacilitiesManagement
           @procurement.reload
         end
 
-        if !@procurement[using_buyer_detail] && @procurement.send(contact_detail).blank?
+        if @procurement[using_buyer_detail] == false && @procurement.send(contact_detail).blank?
           @procurement[using_buyer_detail] = nil
           @procurement.save
         end
