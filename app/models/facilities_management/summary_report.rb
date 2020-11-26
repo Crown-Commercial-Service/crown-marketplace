@@ -24,31 +24,31 @@ module FacilitiesManagement
     def initialize_from_procurement
       @start_date = @procurement.initial_call_off_start_date
       @user_id = @procurement.user.id
-      @posted_services = @procurement.procurement_building_services.map(&:code)
-      @posted_locations = @procurement.active_procurement_buildings.map { |pb| pb.building.address_region_code }
+      @active_procurement_buildings = @procurement.active_procurement_buildings
+      @procurement_building_services = @procurement.procurement_building_services
+      @posted_services = @procurement_building_services.map(&:code)
+      @posted_locations = @active_procurement_buildings.map(&:address_region_code)
       @contract_length_years = @procurement.initial_call_off_period.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
     end
 
-    def calculate_services_for_buildings(supplier_name = nil, remove_cafm_help = true, spreadsheet_type = nil, use_latest_building = true)
+    def calculate_services_for_buildings(supplier_name = nil, spreadsheet_type = nil, remove_cafm_help = true)
       @sum_uom = 0
       @sum_benchmark = 0
       @results = {}
 
-      @procurement.active_procurement_buildings.order_by_building_name.each do |building|
-        result = uvals_for_building(building, spreadsheet_type, use_latest_building)
-        building_data = result[1]
-        # TBC filter out nil values for now
-        building_uvals = result[0].reject { |v| v[:uom_value].nil? }
-
-        building_data&.deep_symbolize_keys! unless use_latest_building
-        vals_per_building = services(building_data, building_uvals, supplier_name, remove_cafm_help)
+      @active_procurement_buildings.includes(:procurement_building_services).find_each do |building|
+        procurement_building_services = building.procurement_building_services
+        result = uvals_for_building(building, procurement_building_services, spreadsheet_type)
+        vals_per_building = services(building, result[1].deep_symbolize_keys!, result[0], remove_cafm_help, supplier_name)
         @sum_uom += vals_per_building[:sum_uom]
-        @sum_benchmark += vals_per_building[:sum_benchmark] if supplier_name.nil?
-
-        # for da spreadsheet
-        @results[building.building_id] = vals_per_building[:results] if supplier_name
+        if supplier_name
+          # for da spreadsheet
+          @results[building.building_id] = vals_per_building[:results]
+        else
+          @sum_benchmark += vals_per_building[:sum_benchmark]
+        end
       end
     end
 
@@ -102,15 +102,8 @@ module FacilitiesManagement
       end
     end
 
-    def uvals_for_building(building, spreadsheet_type = nil, use_latest_building = true)
-      services = case spreadsheet_type
-                 when :da
-                   da_procurement_building_services(building)
-                 when :fc
-                   fc_procurement_building_services(building)
-                 else
-                   building.procurement_building_services
-                 end
+    def uvals_for_building(building, procurement_building_services, spreadsheet_type = nil)
+      services = spreadsheet_type == :da ? da_procurement_building_services(procurement_building_services) : procurement_building_services
 
       building_uvals = services.map do |procurement_building_service|
         {
@@ -121,24 +114,19 @@ module FacilitiesManagement
         }
       end
 
-      if use_latest_building
-        [building_uvals, building.building.building_json]
-      else
-        [building_uvals, building.building_json]
-      end
+      [building_uvals, building.building_json]
     end
 
-    def da_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.direct_award_services(@procurement.id) }
+    def da_procurement_building_services(procurement_building_services)
+      procurement_building_services.select { |u| u.code.in? procurement_da_services }
     end
 
-    def fc_procurement_building_services(building)
-      building.procurement_building_services.select { |u| u.code.in? CCS::FM::Service.further_competition_services(@procurement.id) }
+    def procurement_da_services
+      @procurement_da_services ||= CCS::FM::Service.direct_award_services(@procurement.id)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def uom_values(spreadsheet_type)
-      uvals = @procurement.active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
+      uvals = @active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
 
       # add labels for spreadsheet
       uvals.each do |u|
@@ -147,44 +135,22 @@ module FacilitiesManagement
         u['example_text'] = uoms.last['example_text']
       end
 
-      # lift_service = uvals.select { |s| s['service_code'] == 'C.5' }
-      # if lift_service.count.positive?
-      #   lifts_title_text = lift_service.last['title_text']
-      #   lifts_example_text = lift_service.last['title_text']
-      #
-      #   uvals.reject! { |u| u['service_code'] == 'C.5' && u['uom_value'] == 'Saved' }
-      #
-      #   lifts_per_building.each do |b|
-      #     b['lift_data']['lift_data']['floor-data'].each do |l|
-      #       uvals << { user_id: b['user_id'],
-      #                  service_code: 'C.5',
-      #                  uom_value: l.first[1],
-      #                  building_id: b['building_id'],
-      #                  title_text: lifts_title_text,
-      #                  example_text: lifts_example_text,
-      #                  spreadsheet_label: 'The sum total of number of floors per lift' }
-      #     end
-      #   end
-      # end
+      @procurement_building_services.each do |s|
+        # selected_services.each do |s|
+        next unless CCS::FM::Service.gia_services.include? s.code
 
-      @procurement.active_procurement_buildings.each do |b|
-        b.procurement_building_services.each do |s|
-          # selected_services.each do |s|
-          next unless CCS::FM::Service.gia_services.include? s.code
-
-          uvals << { user_id: @procurement.user.id,
-                     service_code: s.code.gsub('-', '.'),
-                     uom_value: b.gia.to_f,
-                     building_id: b.building_id,
-                     title_text: 'What is the total internal area of this building?',
-                     example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
-                     spreadsheet_label: 'Square Metre (GIA) per annum' }
-        end
+        pc = s.procurement_building
+        uvals << { user_id: @procurement.user.id,
+                   service_code: s.code.gsub('-', '.'),
+                   uom_value: pc.gia.to_f,
+                   building_id: pc.building_id,
+                   title_text: 'What is the total internal area of this building?',
+                   example_text: 'For example, 18000 sqm. When the gross internal area (GIA) measures 18,000 sqm',
+                   spreadsheet_label: 'Square Metre (GIA) per annum' }
       end
 
       uvals
     end
-    # rubocop:enable Metrics/AbcSize
 
     def values_to_average
       if any_services_missing_framework_price?
@@ -209,31 +175,25 @@ module FacilitiesManagement
     end
     # rubocop:enable Rails/FindEach
 
-    def copy_params(building_data, _uvals)
+    def copy_params(procurement_building, building_data, uvals)
       @london_flag = building_in_london?(building_data[:address]['fm-address-region-code'.to_sym])
-      procurement_building = @procurement.procurement_buildings.find_by(building_id: building_data[:id])
       @gia = procurement_building.gia
       @external_area = procurement_building.external_area
-      @helpdesk_flag = procurement_building.procurement_building_services.where(code: 'N.1').any?
-      @cafm_flag = procurement_building.procurement_building_services.where(code: 'M.1').any?
+      @helpdesk_flag = uvals.any? { |uval| uval[:service_code] == 'N.1' }
+      @cafm_flag = uvals.any? { |uval| uval[:service_code] == 'M.1' }
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building_data, uvals, supplier_name = nil, remove_cafm_help = true)
+    def services(building, building_data, uvals, remove_cafm_help, supplier_name = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
       results = {}
 
-      copy_params building_data, uvals
+      copy_params building, building_data, uvals
 
-      # TODO : Validation must be put in the front end to NOT allow just CAFM or HELP services otherwise an exception be ge generated below in .max
-      uvals_remove_cafm_help = if remove_cafm_help == true
-                                 uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' }
-                               else
-                                 uvals
-                               end
+      uvals_remove_cafm_help = remove_cafm_help == true ? uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' } : uvals
       uvals_remove_cafm_help.each do |v|
         uom_value = v[:uom_value]
 
@@ -261,8 +221,11 @@ module FacilitiesManagement
                                                supplier_name,
                                                building_data)
         sum_uom += calc_fm.sumunitofmeasure
-        sum_benchmark += calc_fm.benchmarkedcostssum if supplier_name.nil?
-        results[v[:service_code]] = calc_fm.results if supplier_name
+        if supplier_name
+          results[v[:service_code]] = calc_fm.results
+        else
+          sum_benchmark += calc_fm.benchmarkedcostssum
+        end
       end
       return { sum_uom: sum_uom, results: results } if supplier_name
 

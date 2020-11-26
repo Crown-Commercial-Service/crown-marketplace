@@ -2,14 +2,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
-
     @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
     @supplier_name = @contract.supplier.data['supplier_name']
-
     frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
     @rate_card_data = CCS::FM::RateCard.latest.data unless frozen_rate_card.exists?
-
     set_data
     create_spreadsheet
   end
@@ -28,23 +25,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @report_results_no_cafmhelp_removed = {}
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
 
-    supplier_names = @report.selected_suppliers(@report.current_lot).map { |s| s['data']['supplier_name'] }
+    @report.calculate_services_for_buildings @supplier_name, :da, true
+    ids = @active_procurement_buildings.joins(:building).pluck('facilities_management_buildings.id')
+    @data = @report.results.sort_by { |id, _| ids.index(id) }.to_h
 
-    supplier_names.each do |supplier_name|
-      # e.g. dummy_supplier_name = 'Hickle-Schinner'
-      @results[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, true, :da, false
-      @results[supplier_name] = @report.results
-
-      @report_results_no_cafmhelp_removed[supplier_name] = {}
-      @report.calculate_services_for_buildings supplier_name, false, :da, false
-      @report_results_no_cafmhelp_removed[supplier_name] = @report.results
-    end
-
-    @data = @results[@supplier_name]
-
-    @data_no_cafmhelp_removed = @report_results_no_cafmhelp_removed[@supplier_name]
-    @uvals_contract = @active_procurement_buildings.map { |b| @report.uvals_for_building(b, :da)[0] }.flatten
+    @report.calculate_services_for_buildings @supplier_name, :da, false
+    @data_no_cafmhelp_removed = @report.results.sort_by { |id, _| ids.index(id) }.to_h
   end
 
   def add_computed_row(sheet, sorted_building_keys, label, vals)
@@ -61,6 +47,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   end
 
   # rubocop:disable Metrics/AbcSize
+
   def add_summation_row(sheet, sorted_building_keys, label, how_many_rows = 2, just_one = false)
     standard_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -90,6 +77,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
     cell_refs
   end
+
   # rubocop:enable Metrics/AbcSize
 
   def create_spreadsheet
@@ -100,104 +88,112 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     contract_rate_card
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def contract_rate_card
-    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.select(:id, :service_usage, :unit_measure_label)
-
-    selected_building_names = []
-    selected_building_info = []
-    get_building_data(selected_building_names, selected_building_info)
+    assign_service_codes_for_each_building_type
 
     @workbook.add_worksheet(name: 'Contract Rate Card') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
-      price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
-      percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
-      standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
       bold_style = sheet.styles.add_style sz: 12, b: true
 
       sheet.add_row [@supplier_name], style: bold_style
       sheet.add_row ['Table 1. Service rates']
 
       new_row = ['Service Reference', 'Service Name', 'Unit of Measure']
-      selected_building_names.each { |building_name| new_row << building_name }
+      # selected_building_types.each { |building_type| new_row << building_type }
+      @building_types_with_service_codes.each { |building_type_with_service_code| new_row << building_type_with_service_code[:building_type] }
       sheet.add_row new_row, style: header_row_style
 
-      if @supplier_name
-        rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
-        rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
-        @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
-                                 .flatten.uniq
-                                 .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-          new_row = []
-
-          # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
-          # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
-          selected_building_names.each do |building_name|
-            building_type_ids = selected_building_info.select { |building_info| building_info[:"building-type"] == building_name }
-            building_linking_to_this_service = []
-            building_type_ids.each do |building_type_id|
-              contract_building_service = @uvals_contract.select { |uval| uval[:service_code] == s && uval[:building_id] == building_type_id[:building_id] }
-              building_linking_to_this_service << contract_building_service unless contract_building_service.empty?
-            end
-
-            # only output the rate value for the cell if the service uval contains the building type otherwise output nil for the excel cell value
-            is_building_containing_service = !building_linking_to_this_service.empty?
-            row_value = nil unless is_building_containing_service
-            row_value = @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_name.to_sym] if is_building_containing_service
-            new_row << row_value
-          end
-
-          unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
-          unit_of_measurement_value = begin
-                                        unit_of_measurement_row['unit_measure_label']
-                                      rescue NameError
-                                        nil
-                                      end
-          new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
-
-          styles = [standard_column_style, standard_column_style, standard_column_style]
-
-          CCS::FM::RateCard.building_types.count.times do
-            styles << percentage_style if ['M.1', 'N.1'].include? s
-            styles << price_style unless ['M.1', 'N.1'].include? s
-          end
-
-          sheet.add_row new_row, style: styles
-        end
-
-        sheet.add_row
-        sheet.add_row
-        sheet.add_row ['Table 2. Pricing Variables']
-        sheet.add_row ['Cost type', 'Unit of Measure', 'Rate'], style: header_row_style
-
-        sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']], style: [standard_column_style, standard_column_style, price_style]
-        sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
-        sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
-        sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']], style: [standard_column_style, standard_column_style, percentage_style]
-        sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']], style: [standard_column_style, standard_column_style, percentage_style]
-        sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
-        sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
-      end
+      add_supplier_rates_to_rate_card(sheet) if @supplier_name
     end
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/BlockLength
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-  def get_building_data(selected_building_names, selected_building_info)
-    selected_buildings_data = @active_procurement_buildings
-    selected_buildings_data.each { |building_data| selected_building_names << building_data.building_type }
-    selected_building_names.uniq!
-    selected_buildings_data.each { |building_data| selected_building_info << { 'id': building_data.id, 'building-type': building_data.building_type, 'building_id': building_data.building_id } }
   end
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/BlockLength
+
+  def add_supplier_rates_to_rate_card(sheet)
+    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.all
+    standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+    price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+    percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+
+    rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
+
+    @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
+                             .flatten.uniq
+                             .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
+      new_row = []
+
+      # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
+      # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
+      @building_types_with_service_codes.each do |building_type_with_service_codes|
+        unless building_type_with_service_codes[:service_codes].include? s
+          new_row << nil
+
+          next
+        end
+
+        new_row << @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_type_with_service_codes[:building_type].to_sym]
+      end
+
+      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
+      unit_of_measurement_value = begin
+                                    unit_of_measurement_row['unit_measure_label']
+                                  rescue NameError
+                                    nil
+                                  end
+      new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
+
+      styles = [standard_column_style, standard_column_style, standard_column_style]
+
+      CCS::FM::RateCard.building_types.count.times do
+        styles << percentage_style if ['M.1', 'N.1'].include? s
+        styles << price_style unless ['M.1', 'N.1'].include? s
+      end
+
+      sheet.add_row new_row, style: styles
+    end
+
+    add_table_headings_for_pricing_variables(sheet)
+    add_pricing_variables_to_rate_card_sheet(sheet)
+  end
+
+  # rubocop:enable Metrics/AbcSize
+
+  def add_pricing_variables_to_rate_card_sheet(sheet)
+    rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
+    standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
+    price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+    percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+
+    sheet.add_row ['Cleaning Consumables', 'price per building occupant per annum', rate_card_variances[:'Cleaning Consumables per Building User (£)']], style: [standard_column_style, standard_column_style, price_style]
+    sheet.add_row ['Management Overhead', 'percentage of deliverables value', rate_card_variances[:"Management Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
+    sheet.add_row ['Corporate Overhead', 'percentage of deliverables value', rate_card_variances[:"Corporate Overhead %"]], style: [standard_column_style, standard_column_style, percentage_style]
+    sheet.add_row ['Profit', 'percentage of deliverables value', rate_card_variances[:'Profit %']], style: [standard_column_style, standard_column_style, percentage_style]
+    sheet.add_row ['London Location Variance Rate', 'variance to standard service rate', rate_card_variances[:'London Location Variance Rate (%)']], style: [standard_column_style, standard_column_style, percentage_style]
+    sheet.add_row ['TUPE Risk Premium', 'percentage of deliverables value', rate_card_variances[:'TUPE Risk Premium (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
+    sheet.add_row ['Mobilisation Cost', 'percentage of deliverables value', rate_card_variances[:'Mobilisation Cost (DA %)']], style: [standard_column_style, standard_column_style, percentage_style]
+  end
+
+  def add_table_headings_for_pricing_variables(sheet)
+    header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
+
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ['Table 2. Pricing Variables']
+    sheet.add_row ['Cost type', 'Unit of Measure', 'Rate'], style: header_row_style
+  end
+
+  def assign_service_codes_for_each_building_type
+    selected_building_types = @active_procurement_buildings.pluck(:building_type).uniq
+    @building_types_with_service_codes = []
+    selected_building_types.each do |building_type|
+      service_codes = @active_procurement_buildings.select { |apb| apb.building_type == building_type }.pluck(:service_codes).flatten.uniq
+      @building_types_with_service_codes << { building_type: building_type, service_codes: service_codes }
+    end
+  end
+
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Metrics/AbcSize
   def contract_price_matrix
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -378,6 +374,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet["A#{service_count + 18}:B#{service_count + 22}"].each { |c| c.style = standard_column_style }
     end
   end
+
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/AbcSize

@@ -203,4 +203,38 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
     end
   end
+
+  describe 'GET show' do
+    let(:contract) { create(:facilities_management_procurement_supplier) }
+    let(:procurement) { create(:facilities_management_procurement, user: controller.current_user) }
+
+    context 'when logging in as an fm buyer' do
+      login_fm_buyer_with_details
+
+      it 'returns http success' do
+        get :show, params: { procurement_id: procurement.id, id: contract.id }
+
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context 'when logging in as an mc buyer' do
+      login_mc_buyer_with_detail
+      it 'redirects to the not permitted page' do
+        get :show, params: { procurement_id: procurement.id, id: contract.id }
+
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
+
+    context 'when logging in without buyer details' do
+      login_fm_buyer
+
+      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
+        get :show, params: { procurement_id: procurement.id, id: contract.id }
+
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
+  end
 end

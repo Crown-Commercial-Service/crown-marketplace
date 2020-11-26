@@ -1,111 +1,71 @@
-function LiftDataUI(jqContainer) {
-    this.containerDiv = jqContainer;
-    this.liftDataContainer = jqContainer.find(".liftdata");
-}
-LiftDataUI.prototype.addNewLift = function() {
-    let currentCount = Number(this.liftDataContainer.find("div[data-propertyname='Lift Data']").length);
-    let newInputElement = $("<div>", {
-        "class": "govuk-form-group",
-        "data-propertyname":"Lift Data",
-        "data-liftcount":currentCount+1,
-    }).append([
-        $("<label>",{"class":"govuk-label", "for":"newlift_"+(currentCount+1)}).append("Lift " + (currentCount+1) + "."),
-        $("<span>",{"class":"govuk-caption-m"}).append("Number of floors"),
-        this.getErrorLabels(),
-        $("<input>",{"class":"govuk-input govuk-input--width-2", "type":"number","maxlength":"3","min":"1","max":"1000","step":"1", "required":"required",
-                     "id":"newlift_"+(currentCount+1),
-                     "name":"facilities_management_procurement_building_service[lift_data][]"}),
-        $("<button>",{"class":"govuk-!-margin-left-2 govuk-button govuk-button--secondary removelift",
-                      "data-liftcount":(currentCount+1)}).append("Remove")
-    ]);
-    newInputElement.find("button").on("click", function(e) {
-        e.preventDefault();
-        let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
-        this.removeLift(targetLift);
-    }.bind(this));
-    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").addClass("govuk-visually-hidden");
-    this.liftDataContainer.find("button[data-liftcount=" + currentCount + "]").prop("tabindex", -1);
-    this.liftDataContainer.append(newInputElement);
-    this.updateErrorIds();
-};
+function ProcurementBuildingServicesLifts() {
+  var maxLifts = 99;
 
-LiftDataUI.prototype.removeLift = function(nLiftIndex) {
-    let toRemove = this.liftDataContainer.find("div[data-liftcount=" + nLiftIndex + "]");
-    toRemove.remove();
-    $($(".addliftbtn").get(0)).val("Add new lift (" + (100 - nLiftIndex) +" remaining)");
-    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").removeClass("govuk-visually-hidden");
-    this.liftDataContainer.find("button[data-liftcount=" + (nLiftIndex-1) + "]").prop("tabindex", null);
-};
-LiftDataUI.prototype.connectAddLiftButton = function(){
-    if (this.containerDiv) {
-        let addNewButton = this.containerDiv.find(".addliftbtn");
-        if ( addNewButton.length > 0 ) {
-            addNewButton.on("click", function(e){
-                if ($(".govuk-form-group").length < 99 ) {
-                    e.preventDefault();
-                    this.addNewLift();
-                    $($(".addliftbtn").get(0)).val("Add new lift (" + (99 - $(".govuk-form-group").length) +" remaining)");
-                } else {
-                    e.preventDefault();
-                }
-            }.bind(this));
-        }
-    }
-};
-LiftDataUI.prototype.connectRemoveLiftButtons = function() {
-    if ( this.liftDataContainer){
-        let removeButtons = this.liftDataContainer.find(".removelift");
-        if ( removeButtons.length > 0 ) {
-            removeButtons.on("click", function(e) {
-                e.preventDefault();
-                let targetLift = Number(e.currentTarget.getAttribute("data-liftcount"));
-                this.removeLift(targetLift);
-            }.bind(this));
-        }
-    }
-};
-LiftDataUI.prototype.restrictInputKeys = function(){
-    if ( this.liftDataContainer) {
-        let inputs = this.liftDataContainer.find("input[type='number']");
-        let i = 0;
-        for (i = 0; i < inputs.length; i++) {
-            this.restrictInput(inputs[i]);
-        }
-    }
-};
-LiftDataUI.prototype.restrictInput = function(jqElem) {
-    $(jqElem).keypress(function(e) {
-        let verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
-        if (verified) {e.preventDefault();}
+  function getNumberOfLifts() {
+    return $(".lift-row").length;
+  }
+
+  function getRowCount() {
+    $(".lift-row").each(function( i ) {
+      this.getElementsByClassName("lift-number")[0].textContent = "Lift " + (i + 1);
     });
-};
-LiftDataUI.prototype.connectButtons = function() {
-    this.connectAddLiftButton();
-    this.connectRemoveLiftButtons();
-};
-LiftDataUI.prototype.getErrorLabels = function() {
-  let errorMessages = $(this.liftDataContainer.find("div[data-liftcount=1]")).get(0).cloneNode(true);
-  let newErrorMessages = $(errorMessages).children("label.govuk-error-message");
-  for (var i = 0; i < newErrorMessages.length; i++) {
-    $(newErrorMessages.get(i)).addClass('govuk-visually-hidden');
   }
-  return newErrorMessages;
-};
-LiftDataUI.prototype.updateErrorIds = function() {
-  lifts = document.querySelectorAll('[data-propertyname="Lift Data"]');
-  for(var i = 0; i < lifts.length; i++) {
-    var errorLabels = $(lifts[i]).children("label.govuk-error-message");
-    for(var j = 0; j < errorLabels.length; j++) {
-      errorLabels.get(j).setAttribute('id', ('error_' + $(lifts[i]).find('input').get(0).id));
-      errorLabels.get(j).setAttribute('for', $(lifts[i]).find('input').get(0).id);
+
+  function updateAddButton() {
+    var addButton = $('.add-lift-button')[0]
+    var numberRemaining = maxLifts - getNumberOfLifts()
+
+    addButton.textContent = "Add another lift (" + numberRemaining + " remaining)"
+  }
+
+  function updateRemoveButtons() {
+    $(".lift-row").each(function( i ) {
+      var removeButton = $(this.getElementsByClassName("remove-lift-record")[0])
+
+      if (i + 1 < getNumberOfLifts() ||  getNumberOfLifts() == 1) {
+        removeButton.attr('tabindex', '-1')
+        removeButton.addClass('govuk-visually-hidden')
+      } else {
+        removeButton.removeAttr('tabindex');
+        removeButton.removeClass('govuk-visually-hidden')
+      }
+    });
+  }
+
+  $("form").on("click", ".remove-lift-record", function(e) {
+    var liftRow = $(this).closest("div")
+
+    $(this).next().val("true");
+    liftRow.addClass("removed-lift-row");
+    liftRow.closest("div").removeClass("lift-row");
+    liftRow.hide();
+    getRowCount();
+    updateRemoveButtons();
+    updateAddButton();
+    return e.preventDefault();
+  });
+
+  $("form").on("click", ".add-lift-button", function(e) {
+    if (getNumberOfLifts() < maxLifts) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data("id"), "g");
+      $(".fields").append($(this).data("fields").replace(regexp, time));
+      getRowCount();
+      updateRemoveButtons();
+      updateAddButton();
+      return e.preventDefault();
     }
-  }
+    return e.preventDefault();
+  });
+
+  getRowCount();
+  updateRemoveButtons();
+  updateAddButton();
 }
-$(function(){
-   let liftDataContainer = $(".liftdatacontainer");
-   if (liftDataContainer.length > 0 ) {
-       this.liftHelper = new LiftDataUI(liftDataContainer);
-       this.liftHelper.connectButtons();
-       this.liftHelper.updateErrorIds();
-   }
+
+$(function () {
+  if ($('.liftdatacontainer').length) {
+    new ProcurementBuildingServicesLifts();
+  }
 });

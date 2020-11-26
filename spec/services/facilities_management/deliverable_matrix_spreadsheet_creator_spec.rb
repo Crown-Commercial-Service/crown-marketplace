@@ -11,61 +11,60 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     Roo::Excelx.new(path)
   end
 
-  let(:service_hours) { FacilitiesManagement::ServiceHours.new }
+  let(:service_hours) { 3484 }
+  let(:detail_of_requirement) { 'Details of the requirement' }
+  let(:no_of_appliances_for_testing) { 506 }
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
   let(:supplier) { create(:ccs_fm_supplier) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   before do
-    service_hours[:monday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:tuesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:wednesday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '08', start_minute: '00', start_ampm: 'am', end_hour: '05', end_minute: '30', end_ampm: 'PM', uom: 0)
-    service_hours[:thursday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:friday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :all_day, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:saturday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :hourly, start_hour: '10', start_minute: '00', start_ampm: 'pm', end_hour: '05', end_minute: '30', end_ampm: 'AM', uom: 0)
-    service_hours[:sunday] = FacilitiesManagement::ServiceHourChoice.new(service_choice: :not_required, uom: 0, start_hour: '', start_minute: '', start_ampm: 'AM', end_hour: '', end_minute: '', end_ampm: 'AM')
-    service_hours[:personnel] = 1
+    procurement.active_procurement_buildings.first.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours, detail_of_requirement: detail_of_requirement)
+    procurement.active_procurement_buildings.last.procurement_building_services[0].update(code: 'E.4', no_of_appliances_for_testing: no_of_appliances_for_testing)
 
-    procurement.active_procurement_buildings.each do |pb|
-      pb.procurement_building_services[0].update(code: 'I.1', service_hours: service_hours)
+    procurement.active_procurement_buildings.each do |building|
+      service_codes = building.procurement_building_services.map(&:code)
+
+      building.update(service_codes: service_codes)
     end
   end
 
   # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, service periods, worksheet headers' do
-    expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Specific Service Periods', 'Building 1', 'Building 2'])
+    expect(wb.sheet('Service Periods').row(1)).to match_array(['Service Reference', 'Service Name', 'Metric per Annum', 'Building 1', 'Building 2'])
     expect(wb.sheet('Service Periods').row(2)).to match_array([nil, nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Periods').row(3)).to match_array(['I.1', 'Reception service', 'Monday', 'Not required', 'Not required'])
-    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Tuesday', 'All day (24 hours)', 'All day (24 hours)'])
-    expect(wb.sheet('Service Periods').row(5)).to match_array(['I.1', 'Reception service', 'Wednesday', '8:00am to 5:30pm', '8:00am to 5:30pm'])
+    expect(wb.sheet('Service Periods').row(3)).to match_array(['I.1', 'Reception service', 'Number of hours required', service_hours, nil])
+    expect(wb.sheet('Service Periods').row(4)).to match_array(['I.1', 'Reception service', 'Detail of requirement', detail_of_requirement, nil])
   end
-  # rubocop:enable RSpec/MultipleExpectations
 
-  # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, Building Information, worksheet the NUTS region' do
     expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
     expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa', 'asa'])
-    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Street', '10 Mariners Court', '10 Mariners Court'])
-    expect(wb.sheet('Buildings information').row(8)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
-    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building External Area (sqm)', 4596, 4596])
-    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
+    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '10 Mariners Court', '10 Mariners Court'])
+    expect(wb.sheet('Buildings information').row(5)).to match_array(['Building Address - Line 2', 'Floor 2', 'Floor 2'])
+    expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
+    expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596, 4596])
+    expect(wb.sheet('Buildings information').row(11)).to match_array(['Building Type', 'General office - Customer Facing', 'General office - Customer Facing'])
+    expect(wb.sheet('Buildings information').row(12)).to match_array(['Building Type (other)', nil, nil])
+    expect(wb.sheet('Buildings information').row(13)).to match_array(['Building Security Clearance', 'Baseline personnel security standard (BPSS)', 'Baseline personnel security standard (BPSS)'])
+    expect(wb.sheet('Buildings information').row(14)).to match_array(['Building Security Clearance (other)', nil, nil])
   end
-  # rubocop:enable RSpec/MultipleExpectations
 
   it 'verify for, service matrix, worksheet headers' do
     expect(wb.sheet('Service Matrix').row(1)).to match_array(['Service Reference', 'Service Name', 'Building 1', 'Building 2'])
     expect(wb.sheet('Service Matrix').row(2)).to match_array([nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Service Matrix').row(3)).to match_array(['I.1', 'Reception service', nil, nil])
+    expect(wb.sheet('Service Matrix').row(3)).to match_array(['E.4', 'Portable appliance testing', nil, 'Yes'])
+    expect(wb.sheet('Service Matrix').row(4)).to match_array(['I.1', 'Reception service', 'Yes', nil])
   end
 
   it 'verify for, Volume, worksheet headers' do
     expect(wb.sheet('Volume').row(1)).to match_array(['Service Reference', 'Service Name', 'Metric per annum', 'Building 1', 'Building 2'])
     expect(wb.sheet('Volume').row(2)).to match_array([nil, nil, nil, 'asa', 'asa'])
-    expect(wb.sheet('Volume').row(3)).to match_array(['I.1', 'Reception service', 'Number of hours required', 3484.0, 3484.0])
+    expect(wb.sheet('Volume').row(3)).to match_array(['E.4', 'Portable appliance testing', 'Number of appliances to be tested', nil, 506])
+    expect(wb.sheet('Volume').row(4)).to match_array(['I.1', 'Reception service', 'Number of hours required', 3484.0, nil])
   end
 
-  # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, Customer & Contract Details, worksheet headers' do
     expect(wb.sheet('Customer & Contract Details').row(1)).to match_array(['1. Customer details', nil])
     expect(wb.sheet('Customer & Contract Details').row(3)).to match_array(['Buyer Organisation Name', 'MyString'])
@@ -73,15 +72,27 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     expect(wb.sheet('Customer & Contract Details').row(7)).to match_array(['Buyer Contact Email Address', 'test@example.com'])
     expect(wb.sheet('Customer & Contract Details').row(10)).to match_array(['2. Contract requirements', nil])
   end
-  # rubocop:enable RSpec/MultipleExpectations
 
-  # rubocop:disable RSpec/MultipleExpectations
   it 'verify for, service information, worksheet headers' do
     expect(wb.sheet('Service Information').row(1)).to match_array(['Work Package Ref', 'Service Reference', 'Work Package'])
     expect(wb.sheet('Service Information').row(2)).to match_array(['Work Package A - Contract Management', nil, 'Work Package A – Contract Management'])
     expect(wb.sheet('Service Information').row(3)).to match_array(['Work Package A - Contract Management', nil, nil])
     expect(wb.sheet('Service Information').row(4)).to match_array(['Work Package A - Contract Management', nil, '1.       Service A:1 - Integration'])
     expect(wb.sheet('Service Information').row(5)).to match_array(['Work Package A - Contract Management', nil, '1.1.    Service A:1 – Integration is Mandatory for Lot 1a-1c.'])
+  end
+
+  context 'when contract is sent' do
+    let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+    before do
+      contract.offer_to_supplier!
+    end
+
+    it 'returns the right Customer & Contract details header' do
+      expect(wb.sheet('Customer & Contract Details').row(1)).to match_array(['Reference number:', contract.contract_number])
+      expect(wb.sheet('Customer & Contract Details').cell(2, 1)).to match('Date/time of production of this document:')
+      expect(wb.sheet('Customer & Contract Details').cell(2, 2)).not_to be_nil
+    end
   end
   # rubocop:enable RSpec/MultipleExpectations
 end

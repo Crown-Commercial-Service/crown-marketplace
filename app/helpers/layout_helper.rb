@@ -246,7 +246,7 @@ module LayoutHelper
     css_classes += ['ccs-character-count'] if char_count
 
     options = {}
-    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
+    options.merge!('aria-describedby': builder.object.errors.key?(attribute) ? error_id(attribute) : attribute.to_s)
     options.merge!(class: css_classes)
     options.merge!(option[0].to_h) { |_key, old, new| Array(old).push(new).join(' ') } if option
 
@@ -312,6 +312,37 @@ module LayoutHelper
       end
     end
     safe_join(html)
+  end
+
+  def form_group_with_error(model, attribute)
+    css_classes = ['govuk-form-group']
+    any_errors = model.errors.key?(attribute)
+    css_classes += ['govuk-form-group--error'] if any_errors
+
+    content_tag :div, class: css_classes, id: "#{attribute}-form-group" do
+      yield(display_error(model, attribute), any_errors)
+    end
+  end
+
+  def hint_details(question, hint)
+    capture do
+      concat(content_tag(:legend, question, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
+
+  def label_details(form, attribute, label_text, hint)
+    capture do
+      concat(form.label(attribute, label_text, class: 'govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-left-0'))
+      concat(content_tag(:span, hint, class: 'govuk-caption-m govuk-!-margin-bottom-0'))
+    end
+  end
+
+  def numbered_list_helper(heading, &block)
+    capture do
+      concat(content_tag(:h2, heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
+      concat(content_tag(:div, class: 'govuk-body govuk-!-padding-left-5', &block))
+    end
   end
 end
 # rubocop:enable Metrics/ModuleLength

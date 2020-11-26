@@ -1,17 +1,17 @@
 class FacilitiesManagement::ServicesAndQuestions
-  def initialize
-    @context_questions = define_context_questions
-    @service_collection = gather_services
+  def self.context_questions
+    @context_questions ||= define_context_questions
   end
 
-  attr_accessor :service_collection
-  attr_accessor :context_questions
+  def self.service_collection
+    @service_collection ||= gather_services
+  end
 
   # Reduces the set of service declarations into a single hash for the given service code
-  def service_detail(code)
+  def self.service_detail(code)
     result = { code: code, context: {}, questions: [] }
 
-    @service_collection.select { |x| x[:code] == code }.each do |svc|
+    service_collection.select { |x| x[:code] == code }.each do |svc|
       result[:context].merge! svc[:context]
       result[:questions] |= svc[:questions]
     end
@@ -19,31 +19,33 @@ class FacilitiesManagement::ServicesAndQuestions
     result
   end
 
-  def get_codes_by_context(context)
-    @service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
+  def self.get_codes_by_context(context)
+    service_collection.select { |svc| svc[:context].include?(context.to_sym) }.map { |svc| svc[:code] }
   end
 
-  def codes
-    @service_collection.map { |sc| sc[:code] }
+  def self.get_codes_by_question(question)
+    service_collection.select { |svc| svc[:questions].include?(question.to_sym) }.map { |svc| svc[:code] }
   end
 
-  private
+  def self.codes
+    service_collection.map { |sc| sc[:code] }
+  end
 
-  def define_context_questions
+  def self.define_context_questions
     { lifts: %i[lift_data].freeze,
       ppm_standards: %i[service_standard].freeze,
       building_standards: %i[service_standard].freeze,
       cleaning_standards: %i[service_standard].freeze,
-      volume: %i[no_of_appliances_for_testing no_of_building_occupants size_of_external_area no_of_consoles_to_be_serviced tones_to_be_collected_and_removed].freeze,
+      volume: %i[no_of_appliances_for_testing no_of_building_occupants no_of_consoles_to_be_serviced tones_to_be_collected_and_removed no_of_units_to_be_serviced].freeze,
       service_hours: %i[service_hours].freeze }
   end
 
-  def gather_services
-    service_hours_questions = @context_questions[:service_hours]
-    cleaning_questions = @context_questions[:cleaning_standards]
-    ppm_questions = @context_questions[:ppm_standards]
+  def self.gather_services
+    service_hours_questions = context_questions[:service_hours]
+    cleaning_questions = context_questions[:cleaning_standards]
+    ppm_questions = context_questions[:ppm_standards]
 
-    [{ code: 'C.5', context: { lifts: @context_questions[:lifts] }, questions: context_questions[:lifts] },
+    [{ code: 'C.5', context: { lifts: context_questions[:lifts] }, questions: context_questions[:lifts] },
      { code: 'C.5', context: { ppm_standards: ppm_questions }, questions: context_questions[:lifts] + ppm_questions },
      { code: 'E.4', context: { volume: [:no_of_appliances_for_testing] }, questions: [:no_of_appliances_for_testing] },
      { code: 'G.1', context: { volume: [:no_of_building_occupants], cleaning_standards: cleaning_questions }, questions: %i[no_of_building_occupants] + cleaning_questions },

@@ -53,6 +53,10 @@ gem 'json-jwt', '>= 1.11.0'
 
 # for authentication
 gem 'devise', '~> 4.7.1'
+
+# for timing out when session expires
+gem 'auto-session-timeout', '~> 0.9.6'
+
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
 
@@ -140,6 +144,7 @@ group :development, :test do
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
+  gem 'bullet', require: true
 end
 
 group :development do

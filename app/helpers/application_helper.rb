@@ -337,5 +337,61 @@ module ApplicationHelper
   def service_name_param
     params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end
+
+  def govuk_tag(status)
+    extra_classes = {
+      cannot_start: 'govuk-tag--grey',
+      incomplete: 'govuk-tag--red',
+      in_progress: 'govuk-tag--blue',
+      not_started: 'govuk-tag--grey',
+      not_required: 'govuk-tag--grey'
+    }
+
+    content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
+  end
+
+  def govuk_tag_with_text(colour, text)
+    extra_classes = {
+      grey: 'govuk-tag--grey',
+      blue: 'govuk-tag',
+      red: 'govuk-tag--red'
+    }
+
+    content_tag :strong, text, class: ['govuk-tag'] << extra_classes[colour]
+  end
+
+  def da_eligible?(code)
+    CCS::FM::Rate.where.not(framework: nil).map(&:code).include? code
+  end
+
+  def service_specification_document
+    content_tag(:a,
+                href: "#{asset_path(t('facilities_management.documents.service_specification_document.name'), skip_pipeline: true)}?format=pdf",
+                class: 'supplier-record__file-download',
+                type: t('common.type_doc'),
+                download: t('facilities_management.documents.service_specification_document.name'),
+                alt: t('facilities_management.select_services.servicespec_link_alttext')) do
+      capture do
+        concat(t('facilities_management.documents.service_specification_document.text'))
+        concat(content_tag(:span, t('common.doc_html'), class: 'govuk-visually-hidden'))
+      end
+    end
+  end
+
+  def govuk_radio_driver
+    content_tag(:div, t('common.radio_driver'), class: 'govuk-radios__divider')
+  end
+
+  def warning_text(text)
+    content_tag(:div, class: 'govuk-warning-text') do
+      concat(content_tag(:span, '!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
+      concat(
+        content_tag(:strong, class: 'govuk-warning-text__text') do
+          concat(content_tag(:span, 'Warning', class: 'govuk-warning-text__assistive'))
+          concat(text)
+        end
+      )
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

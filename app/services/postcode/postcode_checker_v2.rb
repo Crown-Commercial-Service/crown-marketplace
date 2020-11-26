@@ -4,8 +4,8 @@ module Postcode
   # post code retrieval
   class PostcodeCheckerV2
     def self.destructure_postcode(postcode)
-      result = { valid: false, input: postcode }
-      input  = ('' + postcode).strip
+      result = { valid: false, input: normalise_postcode(postcode) }
+      input  = ('' + normalise_postcode(postcode)).strip
       matches = input.match(/^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i)
       unless matches.nil?
         result = {
@@ -51,18 +51,30 @@ module Postcode
       postcode_structure = destructure_postcode(postcode)
 
       if postcode_structure[:valid] && !EXCLUDED_POSTCODE_AREAS.include?(postcode_structure[:postcode_area])
-        result = execute_find_region_query postcode_structure[:out_code]
+        result = extract_regions(postcode_structure)
+
         if result.length.zero?
-          nuts1region_codes = Nuts1Region.all.map(&:code)
-          result = FacilitiesManagement::Region.all.map { |f| { code: f.code, region: f.name } if f.code.start_with?(*nuts1region_codes) }.compact
+          regions_from_nuts
+        else
+          result
         end
       else
-        result = execute_find_region_query(':')
+        execute_find_region_query(':')
       end
-
-      result
     rescue StandardError => e
       raise e
+    end
+
+    def self.regions_from_nuts
+      nuts1region_codes = Nuts1Region.all.map(&:code)
+      FacilitiesManagement::Region.all.map { |f| { code: f.code, region: f.name } if f.code.start_with?(*nuts1region_codes) }.compact
+    end
+
+    def self.extract_regions(postcode_structure)
+      result = execute_find_region_query(postcode_structure[:full_postcode].delete(' ')).map { |code| code.transform_keys(&:to_sym) }
+      return result if result.length == 1
+
+      execute_find_region_query(postcode_structure[:out_code]).map { |code| code.transform_keys(&:to_sym) }.reject { |region| region[:code].nil? || region[:region].nil? }
     end
 
     def self.execute_find_region_query(postcode)
@@ -72,7 +84,7 @@ module Postcode
         FROM   PUBLIC.postcodes_nuts_regions
                LEFT JOIN PUBLIC.nuts_regions
                       ON PUBLIC.nuts_regions.code = PUBLIC.postcodes_nuts_regions.code
-        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{postcode}%'
+        WHERE  PUBLIC.postcodes_nuts_regions.postcode LIKE '#{normalise_postcode(postcode)}%'
       HEREDOC
       ActiveRecord::Base.connection_pool.with_connection { |db| db.exec_query(ActiveRecord::Base.sanitize_sql(query)) }
     rescue StandardError => e
@@ -117,6 +129,10 @@ module Postcode
 
     def self.upload(access_key, secret_access_key, bucket, region)
       uploader(access_key, secret_access_key, bucket, region)
+    end
+
+    def self.normalise_postcode(postcode)
+      postcode&.delete(' ')&.upcase
     end
   end
 end

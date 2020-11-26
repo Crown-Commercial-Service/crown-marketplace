@@ -45,16 +45,32 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
       context 'when on the first step' do
         let(:step) { 'contract_name' }
 
-        it 'returns a route for the next edit step' do
-          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit?step=estimated_annual_cost')
+        it 'returns a route for the show page' do
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1')
         end
       end
 
-      context 'when on the procurement_buildings_step' do
-        let(:step) { 'procurement_buildings' }
+      context 'when on the contract_period step' do
+        let(:step) { 'contract_period' }
 
-        it 'returns a route for the next step' do
-          expect(procurement_router.route).to eq('/facilities-management/procurements/1/edit?step=building_services')
+        it 'returns a route for the summary' do
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/summary?summary=contract_period')
+        end
+      end
+
+      context 'when on the buildings step' do
+        let(:step) { 'buildings' }
+
+        it 'returns a route for the summary' do
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/summary?summary=buildings')
+        end
+      end
+
+      context 'when on the buildings_and_services step' do
+        let(:step) { 'buildings_and_services' }
+
+        it 'returns a route for the summary' do
+          expect(procurement_router.route).to eq('/facilities-management/procurements/1/summary?summary=buildings_and_services')
         end
       end
 
@@ -85,14 +101,6 @@ RSpec.describe FacilitiesManagement::ProcurementRouter do
 
         it 'returns a route for the show page' do
           expect(procurement_router.back_link).to eq('/facilities-management/procurements/1')
-        end
-      end
-
-      context 'when on the last step' do
-        let(:step) { 'building_services' }
-
-        it 'returns a route for the edit page of the previous step' do
-          expect(procurement_router.back_link).to eq('/facilities-management/procurements/1/edit?step=procurement_buildings')
         end
       end
 

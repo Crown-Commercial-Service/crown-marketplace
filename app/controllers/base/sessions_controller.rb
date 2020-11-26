@@ -1,8 +1,8 @@
 module Base
   class SessionsController < Devise::SessionsController
     skip_forgery_protection
-    before_action :authenticate_user!, except: %i[new create destroy]
-    before_action :authorize_user, except: %i[new create destroy]
+    before_action :authenticate_user!, except: %i[new create destroy active timeout]
+    before_action :authorize_user, except: %i[new create destroy active timeout]
 
     def new
       @result = Cognito::SignInUser.new(nil, nil, nil)
@@ -10,14 +10,18 @@ module Base
     end
 
     def create
-      self.resource ||= User.new
-      @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
-      @result.call
-
-      if @result.success?
-        @result.challenge? ? redirect_to(challenge_path) : super
+      if Rails.env.development?
+        super
       else
-        result_unsuccessful_path
+        self.resource ||= User.new
+        @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
+        @result.call
+
+        if @result.success?
+          @result.challenge? ? redirect_to(challenge_path) : super
+        else
+          result_unsuccessful_path
+        end
       end
     end
 
@@ -28,6 +32,20 @@ module Base
       super
     end
 
+    def active
+      render_session_status
+    end
+
+    def timeout
+      session[:return_to] = params[:url]
+
+      begin
+        redirect_to session_expired_sign_in_path
+      rescue ActionController::RoutingError
+        redirect_to facilities_management_new_user_session_path(expired: true)
+      end
+    end
+
     protected
 
     def after_sign_in_path_for(resource)
@@ -36,6 +54,14 @@ module Base
 
     def after_sign_out_path_for(_resource)
       gateway_url
+    end
+
+    def session_expired_sign_in_path
+      split_url = params[:url].split('/')
+      service = split_url[1]
+      service_type ||= split_url[2] if split_url[2] == 'supplier' || split_url[2] == 'admin'
+
+      '/' + [service, service_type, 'sign-in'].compact.join('/') + '?expired=true'
     end
 
     def authorize_user

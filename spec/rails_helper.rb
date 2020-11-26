@@ -39,9 +39,23 @@ end
 RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
   config.extend ControllerMacros, type: :controller
+  config.include SpreadsheetImportHelper, type: :service
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  # finds N+1 queries
+  # if Bullet.enable?
+  #   config.before do
+  #     Bullet.start_request
+  #   end
+  #
+  #   config.after do
+  #     Bullet.perform_out_of_channel_notifications if Bullet.notification?
+  #     Bullet.end_request
+  #   end
+  # end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

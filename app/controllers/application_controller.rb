@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  auto_session_timeout Devise.timeout_in
 
   rescue_from CanCan::AccessDenied do
     redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)

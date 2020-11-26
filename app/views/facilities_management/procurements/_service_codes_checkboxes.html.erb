@@ -1,14 +1,15 @@
 <fieldset class="govuk-fieldset">
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
     <%= heading %>
   </h2>
 </fieldset>
-<p class="govuk-caption-m govuk-!-margin-top-0">
+<p class="govuk-caption-m govuk-!-margin-top-0" id="service-caption">
   <%= subtitle %>
 </p>
-<p>
-  <a href="<%= Marketplace.service_information_doc %>" alt="<%= t('facilities_management.select_services.servicespec_link_alttext') %>"><%= service_specification_doc %></a>
+<p class="govuk-!-margin-bottom-1">
+  <%= service_specification_document %>
 </p>
+<p class="govuk-caption-m govuk-!-margin-top-0"><%= t('.caption2') %></p>
 <%= display_error @procurement, :service_codes %>
 <div class="govuk-grid-column-full" style="padding-left:0">
   <div class="chooser-input">
@@ -36,10 +37,11 @@
                               for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
                         <%= work_package['name'] %>
                         <br/>
-                        <span style="font-weight:lighter;" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
+                        <span style="font-weight:lighter;" class="govuk-!-font-size-16" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
                         <div>
                           <%# TODO: work_package and service vars are named the wrong way around %>
-                          <%= link_to t('.learn_more'), facilities_management_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank' %>
+                          <%= link_to t('.learn_more'), facilities_management_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank', class: 'govuk-!-font-size-16' %>
+                          <%= govuk_tag_with_text(:grey, t('common.da_eligible')) if da_eligible?(work_package['code']) %>
                         </div>
                       </label>
                     </div>

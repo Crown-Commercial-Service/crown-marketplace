@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'layouts/application.html.erb' do
+RSpec.describe 'layouts/application.html.erb', type: :view do
   before do
     view.extend(ApplicationHelper)
     allow(view).to receive(:user_signed_in?).and_return(false)

@@ -3,16 +3,20 @@ class FacilitiesManagement::ProcurementRouter
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[contract_name estimated_annual_cost tupe contract_dates procurement_buildings building_services services].freeze
+  STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
 
-  def initialize(id:, procurement_state:, step: nil, da_journey_state: nil)
+  SUMMARY = %w[contract_period services buildings buildings_and_services].freeze
+
+  def initialize(id:, procurement_state:, step: nil, da_journey_state: nil, further_competition_chosen: false)
     @id = id
     @procurement_state = procurement_state
     @da_journey_state = da_journey_state
     @step = step
+    @further_competition_chosen = further_competition_chosen
   end
 
   STATES_TO_VIEWS = {
+    'quick_search': 'quick_search',
     'choose_contract_value': 'choose_contract_value',
     'results': 'results',
     'da_draft': 'direct_award',
@@ -34,6 +38,7 @@ class FacilitiesManagement::ProcurementRouter
     'new_notices_address': 'new_notices_address',
     'security_policy_document': 'security_policy_document',
     'local_government_pension_scheme': 'local_government_pension_scheme',
+    'governing_law': 'governing_law',
     'important_information': 'did_you_know',
     'contract_details': 'contract_details',
     'review_and_generate': 'review_and_generate_documents',
@@ -49,9 +54,13 @@ class FacilitiesManagement::ProcurementRouter
   end
 
   def view
-    return STATES_TO_VIEWS[@procurement_state.to_sym] if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+    if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+      return 'further_competition' if @procurement_state == 'results' && @further_competition_chosen
 
-    'detailed_search_summary'
+      return STATES_TO_VIEWS[@procurement_state.to_sym]
+    end
+
+    'requirements'
   end
 
   def route
@@ -61,7 +70,7 @@ class FacilitiesManagement::ProcurementRouter
     return edit_facilities_management_procurement_path(id: @id, step: previous_step) if @step == 'services'
     return facilities_management_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
-    next_step.nil? ? facilities_management_procurement_path(id: @id) : edit_facilities_management_procurement_path(id: @id, step: next_step)
+    summary_page? ? facilities_management_procurement_summary_path(procurement_id: @id, summary: @step) : facilities_management_procurement_path(id: @id)
   end
 
   def back_link
@@ -72,14 +81,10 @@ class FacilitiesManagement::ProcurementRouter
 
   private
 
-  def next_step
-    return nil if @step.nil?
+  def summary_page?
+    return false if @step.nil?
 
-    return nil unless STEPS.include? @step
-
-    return nil if @step == STEPS.last
-
-    STEPS[STEPS.find_index(@step) + 1]
+    SUMMARY.include? @step
   end
 
   def previous_step

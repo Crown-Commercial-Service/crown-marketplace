@@ -8,6 +8,8 @@ module FacilitiesManagement
     end
 
     def after_sign_in_path_for(resource)
+      return redirect_for_spreadsheet_upload(session[:return_to]) if session[:return_to] =~ /spreadsheet_import/
+
       return session[:return_to] unless session[:return_to].nil?
 
       stored_location_for(resource) || facilities_management_path
@@ -27,6 +29,10 @@ module FacilitiesManagement
 
     def confirm_email_path(email)
       facilities_management_users_confirm_path(email: email)
+    end
+
+    def redirect_for_spreadsheet_upload(session_return_path)
+      new_facilities_management_procurement_spreadsheet_import_path(procurement_id: session_return_path.split('/')[3])
     end
   end
 end

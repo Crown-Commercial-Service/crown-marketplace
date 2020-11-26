@@ -25,6 +25,10 @@
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
+    <% if current_user %>
+      <%= auto_session_timeout_js %>
+    <% end %>
+
     <div id="wrapper">
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
       <header id="main-header" class="govuk-header" role="banner" data-module="header">

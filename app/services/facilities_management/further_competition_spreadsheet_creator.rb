@@ -9,40 +9,18 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def units_of_measure_values
     @units_of_measure_values ||= @active_procurement_buildings.map do |building|
-      @report.fc_procurement_building_services(building).map do |procurement_building_service|
-        {
-          building_id: building.building_id,
-          service_code: procurement_building_service.code,
-          uom_value: procurement_building_service.uval,
-          service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
-        }
-      end
-    end.flatten
-  end
-
-  def units_of_measure_values_for_volume
-    @units_of_measure_values_for_volume ||= @active_procurement_buildings.map do |building|
       building.procurement_building_services.map do |procurement_building_service|
         {
           building_id: building.building_id,
           service_code: procurement_building_service.code,
           uom_value: procurement_building_service.uval,
           service_standard: procurement_building_service.service_standard,
-          service_hours: procurement_building_service.service_hours
+          detail_of_requirement: procurement_building_service.detail_of_requirement
         }
       end
     end.flatten
   end
 
-  def assessed_value
-    return if @assessed_value
-
-    @report.calculate_services_for_buildings
-    @assessed_value = @report.assessed_value
-  end
-
-  # rubocop:disable Metrics/AbcSize
   def build
     @package = Axlsx::Package.new do |p|
       p.workbook.styles do |s|
@@ -50,50 +28,96 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
         standard_column_style = s.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
         standard_bold_style = s.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }, b: true
 
-        p.workbook.add_worksheet(name: 'Buildings information') do |sheet|
-          add_header_row(sheet, ['Buildings information'])
-          add_building_name_row(sheet, ['Building name'], :left)
-          add_buildings_information(sheet)
-          style_buildings_information_sheet(sheet, first_column_style)
-        end
+        add_buildings_worksheet(p, first_column_style)
 
-        p.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
-          add_header_row(sheet, ['Service Reference', 'Service Name'])
-          add_building_name_row(sheet, ['', ''], :center)
-          number_rows_added = add_service_matrix(sheet)
-          style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
-        end
+        add_service_matrix_worksheet(p, standard_column_style)
 
-        units_of_measure_values
-        units_of_measure_values_for_volume
-        if volume_services_included?
-          p.workbook.add_worksheet(name: 'Volume') do |sheet|
-            add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
-            add_building_name_row(sheet, ['', '', ''], :center)
-            number_volume_services = add_volumes_information_fc(sheet)
-            style_volume_sheet(sheet, standard_column_style, number_volume_services)
-          end
-        end
+        add_volume_worksheet(p, standard_column_style) if volume_services_included?
 
-        add_other_competition_worksheets(p, standard_column_style, standard_bold_style)
+        add_service_periods_worksheet(p, standard_column_style, units_of_measure_values) if services_require_service_periods?
+
+        add_shortlist_details(p, standard_column_style, standard_bold_style)
+
+        add_customer_and_contract_details(p) if @procurement
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
+
+  private
+
+  ##### Methods regarding the building of the 'Service Matrix' worksheet #####
+  def add_service_matrix_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Service Matrix') do |sheet|
+      add_header_row(sheet, ['Service Reference', 'Service Name'])
+      add_building_name_row(sheet, ['', ''], :center)
+      number_rows_added = add_service_matrix(sheet)
+      style_service_matrix_sheet(sheet, standard_column_style, number_rows_added)
+    end
+  end
+
+  def add_service_matrix(sheet)
+    rows_added = 0
+    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
+
+    services_data.each do |service|
+      data_for_service = data_for_service_code(units_of_measure_values, service['code'])
+      list_standards = get_sorted_list_unique_standards_per_building data_for_service
+
+      list_standards.each do |standard|
+        row_values = []
+        buildings_data.each_with_index do |building, index|
+          unit_of_measure = find_service_for_building(data_for_service, building[:building_id])
+          service_name = determine_service_name(service['name'], standard)
+          row_values << service['code'] << service_name if index.zero?
+          row_values << determine_service_matrix_cell_text(unit_of_measure, standard)
+        end
+        sheet.add_row row_values, style: standard_style, height: standard_row_height
+        rows_added += 1
+      end
+    end
+    rows_added
+  end
+
+  def get_sorted_list_unique_standards_per_building(data_for_service)
+    list_standards = data_for_service.map { |data| data[:service_standard] }.compact.uniq.sort
+    list_standards << nil if list_standards.empty?
+    list_standards.sort
+  end
+
+  def determine_service_matrix_cell_text(unit_of_measure, standard)
+    if unit_of_measure.present? && unit_of_measure[:service_standard] == standard
+      'Yes'
+    else
+      ''
+    end
+  end
+
+  ##### Methods regarding the building of the 'Volume' worksheet #####
+  def add_volume_worksheet(package, standard_column_style)
+    package.workbook.add_worksheet(name: 'Volume') do |sheet|
+      add_header_row(sheet, ['Service Reference',	'Service Name',	'Metric per annum'])
+      add_building_name_row(sheet, ['', '', ''], :center)
+      number_volume_services = add_volumes_information_fc(sheet)
+      style_volume_sheet(sheet, standard_column_style, number_volume_services)
+    end
+  end
 
   def add_volumes_information_fc(sheet)
     number_column_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }
+    allowed_volume_services = services_data.keep_if { |service| ALLOWED_VOLUME_SERVICES.include? service['code'] }
 
-    allowed_volume_services = services_data.keep_if { |service| list_of_allowed_volume_services.include? service['code'] }
+    allowed_volume_services.each do |service|
+      new_row = [service['code'], service['name'], service['metric']]
+      data_for_service = data_for_service_code(units_of_measure_values, service['code'])
 
-    allowed_volume_services.each do |s|
-      new_row = [s['code'], s['name'], s['metric']]
-      @active_procurement_buildings.each do |b|
-        uvs = @units_of_measure_values_for_volume.flatten.select { |u| b.building_id == u[:building_id] }
-        suv = uvs.find { |u| s['code'] == u[:service_code] }
+      @active_procurement_buildings.each do |building|
+        service_measure = find_service_for_building(data_for_service, building.building_id)
 
-        new_row << calculate_uom_value(suv) if suv
-        new_row << nil unless suv
+        new_row << if service_measure.nil?
+                     nil
+                   else
+                     service_measure[:uom_value].to_f
+                   end
       end
 
       sheet.add_row new_row, style: number_column_style
@@ -102,71 +126,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     allowed_volume_services.count
   end
 
-  def add_other_competition_worksheets(package, standard_column_style, standard_bold_style)
-    add_service_periods_worksheet(package, standard_column_style, @units_of_measure_values_for_volume) if services_require_service_periods?
-
-    add_shortlist_details(package, standard_column_style, standard_bold_style)
-
-    add_customer_and_contract_details(package) if @procurement
-  end
-
-  # rubocop:disable Metrics/AbcSize
-  def add_service_matrix(sheet)
-    rows_added = 0
-    standard_style = sheet.styles.add_style sz: 12, border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center, horizontal: :center }
-
-    services_data.each do |service|
-      list_standards = get_sorted_list_unique_standards_per_building service
-      list_standards.each do |standard|
-        first_loop = true
-        row_values = []
-        buildings_data.each do |building|
-          unit_of_measure = units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
-          service_name = determine_service_name(service['name'], unit_of_measure, standard)
-          row_values << service['code'] << service_name if first_loop
-          row_values << determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
-          first_loop = false
-        end
-        sheet.add_row row_values, style: standard_style, height: standard_row_height
-        rows_added += 1
-      end
-    end
-    rows_added
-  end
-  # rubocop:enable Metrics/AbcSize
-
-  def determine_service_matrix_cell_text(building, unit_of_measure, standard, service)
-    cell_text = ''
-    cell_text = (building[:service_codes].include?(service['code']) ? 'Yes' : '') if standard.nil? || (building[:service_codes].include?(service['code']) && unit_of_measure[:service_standard] == standard)
-    cell_text
-  end
-
-  def get_sorted_list_unique_standards_per_building(service)
-    list_standards = Set[]
-    buildings_data.each do |building|
-      unit_of_measure = units_of_measure_values.find { |unit| unit[:building_id] == building[:building_id] && unit[:service_code] == service['code'] }
-      list_standards.add(unit_of_measure[:service_standard]) if unit_of_measure && unit_of_measure[:service_standard]
-    end
-    list_standards.add nil if list_standards.empty?
-    list_standards.sort
-  end
-
-  def style_service_matrix_sheet(sheet, style, number_rows_added)
-    column_widths = [15, 100]
-    buildings_data.count.times { column_widths << 50 }
-
-    last_column_name = ('A'..'ZZ').to_a[1 + buildings_data.count]
-    sheet["A3:#{last_column_name}#{number_rows_added + 2}"].each { |c| c.style = style } if number_rows_added.positive?
-
-    sheet.column_widths(*column_widths)
-  end
-
-  def determine_service_name(name, unit_of_measure, standard_name)
-    return name + ' - Standard ' + standard_name if unit_of_measure && unit_of_measure[:service_standard]
-
-    name
-  end
-
+  ##### Methods regarding the building of the 'Shortlist' worksheet #####
   def add_shortlist_details(package, standard_column_style, _standard_bold_style)
     package.workbook.add_worksheet(name: 'Shortlist') do |sheet|
       standard_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }
@@ -188,23 +148,24 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     sheet.add_row ['Reference number:', @procurement.contract_number], style: bold_style, height: standard_row_height
     sheet.add_row ['Date/time production of this document:', @procurement.contract_datetime], style: bold_style, height: standard_row_height
     sheet.add_row [], style: bold_style, height: standard_row_height
-    update_cell_styles(sheet, ['B1', 'B2'], hint_style)
+    update_cell_styles(sheet, 'B1:B2', hint_style)
   end
 
   def add_shortlist_cost_sublot_recommendation(sheet, standard_style, bold_style, hint_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
-    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: hint_style, height: standard_row_height
-    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @report.current_lot, sublot_customer_selected_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(@procurement.assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @procurement.lot_number, sublot_customer_selected_text], style: hint_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: hint_style, height: standard_row_height
-    update_cell_styles(sheet, ['A5', 'A6', 'A7'], standard_style)
+    update_cell_styles(sheet, 'A5:A7', standard_style)
   end
 
   def add_shortlist_supplier_names(sheet, standard_style, bold_style, hint_style, link_style)
-    supplier_datas = @report.selected_suppliers(@report.current_lot).map { |s| s['data'] }
+    supplier_datas = @procurement.procurement_suppliers.map { |s| s.supplier['data'] }.sort_by { |s| s['supplier_name'] }
+
     return if supplier_datas.empty?
 
     sheet.add_row ['Suppliers shortlist', 'Further supplier information and contact details can be found here:'], style: bold_style, height: standard_row_height
-    update_cell_styles(sheet, ['B9'], standard_style)
+    update_cell_styles(sheet, 'B9:B9', standard_style)
 
     supplier_datas.each do |data|
       sheet.add_row [data['supplier_name']], style: hint_style, height: standard_row_height
@@ -247,6 +208,20 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     end
   end
 
+  def determine_lot_range
+    case @procurement.lot_number
+    when '1a'
+      'Up to £7m'
+    when '1b'
+      'between £7m-50m'
+    when '1c'
+      'over £50m'
+    else
+      'UNKNOWN'
+    end
+  end
+
+  ##### Methods regarding the building of the 'Customer & Contract Details' worksheet #####
   def add_customer_and_contract_details(package)
     package.workbook.add_worksheet(name: 'Customer & Contract Details') do |sheet|
       add_customer_details(sheet)
@@ -282,17 +257,21 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
     str_array.reject(&:blank?).join(', ') + '. ' + sanitize_string_for_excel(buyer_detail.organisation_address_postcode)
   end
 
-  def determine_lot_range
-    lot_range = 'UNKNOWN'
-    case @report.current_lot
-    when '1a'
-      lot_range = 'Up to £7m'
-    when '1b'
-      lot_range = 'between £7m-50m'
-    when '1c'
-      lot_range = 'over £50m'
-    end
-    lot_range
+  ##### Methods regarding the styling of the worksheets #####
+  def style_service_matrix_sheet(sheet, style, number_rows_added)
+    column_widths = [15, 100]
+    buildings_data.count.times { column_widths << 50 }
+
+    last_column_name = ('A'..'ZZZ').to_a[1 + buildings_data.count]
+    sheet["A3:#{last_column_name}#{number_rows_added + 2}"].each { |c| c.style = style } if number_rows_added.positive?
+
+    sheet.column_widths(*column_widths)
+  end
+
+  def determine_service_name(name, standard_name)
+    return name + ' - Standard ' + standard_name if standard_name
+
+    name
   end
 
   def style_supplier_names_sheet(sheet, style, rows_added)
@@ -304,9 +283,5 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   def style_shortlist_sheet(sheet)
     column_widths = [50, 50, 50]
     sheet.column_widths(*column_widths)
-  end
-
-  def update_cell_styles(sheet, cells, style)
-    cells.each { |cell| sheet[cell].style = style }
   end
 end

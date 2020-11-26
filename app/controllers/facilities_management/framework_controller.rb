@@ -11,19 +11,19 @@ module FacilitiesManagement
     end
 
     def buyer_path
-      @buyer_path ||= edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
+      edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
     end
 
     def redirect_to_buyer_detail
-      redirect_to(buyer_path, params: { return_to: { url: request.path, params: request.query_parameters } }) if guarded_path? && current_user&.fm_buyer_details_incomplete? && request.path != buyer_path
+      redirect_to(buyer_path) if !path_an_exception? && current_user&.fm_buyer_details_incomplete?
     end
 
     private
 
-    def guarded_path?
+    def path_an_exception?
       full_path = request.path
 
-      %w[building procurement choose-].any? { |sp| full_path.include?(sp) }
+      %w[users sign-in sign-out resend_confirmation_email sign-up domain-not-on-safelist buyer-details api].any? { |path_section| full_path.include?(path_section) }
     end
   end
 end

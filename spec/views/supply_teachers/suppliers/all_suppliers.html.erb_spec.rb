@@ -5,7 +5,7 @@ RSpec.describe 'supply_teachers/suppliers/all_suppliers.html.erb' do
   let(:branch) { create(:supply_teachers_branch, supplier: supplier) }
 
   before do
-    assign(:branches, SupplyTeachers::Branch.all.page)
+    assign(:branches, SupplyTeachers::Branch.all.page(1))
     assign(:branches_count, 10)
   end
 

@@ -1,19 +1,23 @@
 class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesManagement::FrameworkController
   before_action :set_building_and_service_data
   before_action :authorize_user
-  before_action :set_back_path
   before_action :set_partial
-  before_action :set_lift_count
+  before_action :create_first_lift, if: -> { @partial_prefix == 'lifts' }, only: :edit
 
-  def show
-    render :edit
-  end
+  def edit; end
 
   def update
-    if params[:facilities_management_procurement_building_service][:step] == 'lifts'
-      update_lifts
-    elsif params[:facilities_management_procurement_building_service][:step] == 'service_hours'
-      update_service_hours
+    case params[:facilities_management_procurement_building_service][:service_question]
+    when 'lifts'
+      update_procurement_building_service(lift_params, :lifts)
+    when 'service_hours'
+      update_procurement_building_service(service_hours_params, :service_hours)
+    when 'volumes'
+      update_procurement_building_service(volume_params, :volume)
+    when 'service_standards'
+      update_procurement_building_service(service_standards_params, :service_standard)
+    when 'area'
+      update_building_area
     else
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     end
@@ -21,72 +25,87 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
 
   private
 
-  def update_lifts
-    @building_service.assign_attributes(lift_params)
-    @building_service.lift_data&.reject!(&:blank?)
-    if @building_service.save(context: :lifts)
+  def update_procurement_building_service(pbs_params, context)
+    @building_service.assign_attributes(pbs_params)
+
+    if @building_service.save(context: context)
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     else
-      set_lift_count
+      params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+      set_partial
       render :edit
     end
   end
 
-  def update_service_hours
-    @building_service.assign_attributes(service_hours_params.select { |attribute| attribute unless attribute.empty? }.to_h)
+  def update_building_area
+    @building.assign_attributes(area_params)
 
-    if @building_service.save(context: :service_hours)
+    if building_valid?
+      @building.save
       redirect_to facilities_management_procurement_building_path(@procurement_building)
     else
+      params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+      set_partial
       render :edit
     end
   end
 
-  def set_lift_count
-    @lift_count = 1 if @building_service[:lift_data].blank?
+  def building_valid?
+    return false unless @building.valid?(:gia)
 
-    @lift_count = @building_service[:lift_data]&.length if @building_service[:lift_data]&.any?
+    @building.errors.add(:gia, :required) unless @procurement_building.valid?(:gia)
+    @building.errors.add(:external_area, :required) unless @procurement_building.valid?(:external_area)
+
+    @building.errors.empty?
   end
 
   def set_partial
-    @partial_prefix = ''
-    return @partial_prefix = 'lifts' if @building_service.code == 'C.5'
-
-    @partial_prefix = 'service_hours'
+    @partial_prefix = params[:service_question]
   end
 
   def lift_params
     params.require(:facilities_management_procurement_building_service)
-          .permit(:lift_data, lift_data: [])
+          .permit(lifts_attributes: %i[id number_of_floors _destroy])
   end
 
   def service_hours_params
     params.require(:facilities_management_procurement_building_service)
-          .permit(service_hours: [{
-                    monday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    tuesday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    wednesday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    thursday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    friday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    saturday: FacilitiesManagement::ServiceHourChoice::PARAMETERS,
-                    sunday: FacilitiesManagement::ServiceHourChoice::PARAMETERS
-                  }, :personnel])
+          .permit(:service_hours, :detail_of_requirement)
+  end
+
+  def volume_params
+    params.require(:facilities_management_procurement_building_service)
+          .permit(:no_of_appliances_for_testing,
+                  :no_of_building_occupants,
+                  :no_of_consoles_to_be_serviced,
+                  :tones_to_be_collected_and_removed,
+                  :no_of_units_to_be_serviced)
+  end
+
+  def service_standards_params
+    params.require(:facilities_management_procurement_building_service)
+          .permit(:service_standard)
+  end
+
+  def area_params
+    params.require(:facilities_management_building)
+          .permit(:gia, :external_area)
   end
 
   def set_building_and_service_data
     @building_service = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
     @procurement_building = @building_service.procurement_building
     @building = @procurement_building.building
-    @building_data = @building.building_json
+    @procurement = @procurement_building.procurement
   end
 
-  def set_back_path
-    @back_link = :back
+  def create_first_lift
+    @building_service.lifts.build if @building_service.lifts.empty?
   end
 
   protected
 
   def authorize_user
-    authorize! :manage, @procurement_building.procurement
+    authorize! :manage, @procurement
   end
 end

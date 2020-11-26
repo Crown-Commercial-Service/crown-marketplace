@@ -143,4 +143,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#da_eligible?' do
+    context 'when the code belongs to a DA eligable service' do
+      it 'returns true' do
+        expect(helper.da_eligible?('C.1')).to be true
+      end
+    end
+
+    context 'when the code belongs to a non-DA service' do
+      it 'returns false' do
+        expect(helper.da_eligible?('C.14')).to be false
+      end
+    end
+  end
 end

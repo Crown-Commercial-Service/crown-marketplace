@@ -20,6 +20,8 @@ module FacilitiesManagement
 
     has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
 
+    has_one :spreadsheet_import, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+
     has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
 
@@ -45,7 +47,7 @@ module FacilitiesManagement
     attr_accessor :mobilisation_start_date
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
-    validates :route_to_market, inclusion: { in: %w[da_draft further_competition] }, on: :route_to_market
+    validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
 
     # attributes to hold and validate optional call off extension
     attribute :call_off_extension_2
@@ -107,6 +109,7 @@ module FacilitiesManagement
     aasm do
       state :quick_search, initial: true
       state :detailed_search
+      state :detailed_search_bulk_upload
       state :choose_contract_value
       state :results
       state :da_draft
@@ -146,6 +149,13 @@ module FacilitiesManagement
 
       event :start_detailed_search do
         transitions from: :quick_search, to: :detailed_search
+      end
+
+      event :start_detailed_search_bulk_upload do
+        before do
+          remove_existing_spreadsheet_import if spreadsheet_import.present?
+        end
+        transitions from: :detailed_search, to: :detailed_search_bulk_upload
       end
 
       event :start_direct_award do
@@ -243,26 +253,23 @@ module FacilitiesManagement
       end
     end
 
+    def create_new_procurement_buildings
+      building_ids = procurement_buildings.map(&:building_id)
+
+      user.buildings.each do |building|
+        next if building_ids.include? building.id
+
+        procurement_buildings.create(building_id: building.id)
+      end
+    end
+
     def find_or_build_procurement_building(building_id)
       procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
-      procurement_building.service_codes = service_codes if procurement_building.service_codes.empty?
       procurement_building.save
     end
 
-    def valid_on_continue?
-      valid?(:all) && valid_services? && valid_buildings?
-    end
-
-    def valid_services?
-      procurement_building_services.any? && active_procurement_buildings.all? { |p| p.valid?(:procurement_building_services) && p.valid?(:building_services) }
-    end
-
-    def valid_buildings?
-      active_procurement_buildings.all? { |pb| pb.valid?(:gia) && pb.valid?(:external_area) }
-    end
-
     def buildings_standard
-      active_procurement_buildings.map { |pb| pb.building.building_standard }.include?('NON-STANDARD') ? 'NON-STANDARD' : 'STANDARD'
+      active_procurement_buildings.includes(:building).any? { |pb| pb.building.building_standard == 'NON-STANDARD' } ? 'NON-STANDARD' : 'STANDARD'
     end
 
     def services_standard
@@ -272,10 +279,10 @@ module FacilitiesManagement
 
     def priced_at_framework
       # if one service is not priced at framework, returns false
-      procurement_building_services.reject(&:special_da_service?).map { |pbs| pbs.service_missing_framework_price?(rate_model) }.all?(false)
+      procurement_building_services.reject(&:special_da_service?).none? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
-    SEARCH = %i[quick_search detailed_search choose_contract_value results].freeze
+    SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
     DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
@@ -381,15 +388,52 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.where(
+        code: FacilitiesManagement::ServicesAndQuestions.get_codes_by_question(:service_standard)
+      ).map { |s| [s.code, s.service_standard] } .uniq
     end
 
     def active_procurement_building_region_codes
-      active_procurement_buildings.map { |proc_building| proc_building&.building&.address_region_code } .uniq
+      if building_data_frozen?
+        active_procurement_buildings.distinct(:address_region_code).pluck(:address_region_code)
+      else
+        attribute = 'facilities_management_buildings.address_region_code'
+        active_procurement_buildings.joins(:building).select(attribute).distinct(attribute).pluck(attribute)
+      end
+    end
+
+    def active_procurement_building_gross_internal_areas
+      if building_data_frozen?
+        active_procurement_buildings.pluck(:gia).compact
+      else
+        attribute = 'facilities_management_buildings.gia'
+        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+      end
+    end
+
+    def active_procurement_building_external_areas
+      if building_data_frozen?
+        active_procurement_buildings.pluck(:external_area).compact
+      else
+        attribute = 'facilities_management_buildings.external_area'
+        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+      end
+    end
+
+    def building_data_frozen?
+      !(quick_search? || detailed_search? || detailed_search_bulk_upload?)
     end
 
     def procurement_building_services_not_used_in_calculation
-      procurement_building_services.reject(&:special_da_service?).select { |service| unused_service?(service) }.map(&:name).uniq
+      names = []
+      services = procurement_building_services.select(:code, :service_standard, :name).uniq.reject(&:special_da_service?).pluck(:code, :service_standard, :name).uniq
+
+      services.each do |service|
+        pbs = FacilitiesManagement::ProcurementBuildingService.new(code: service[0], service_standard: service[1], name: service[2])
+        names << pbs.name if pbs.service_missing_framework_price?(rate_model) && pbs.service_missing_benchmark_price?(rate_model)
+      end
+
+      names
     end
 
     def unused_service?(service)
@@ -401,11 +445,11 @@ module FacilitiesManagement
     end
 
     def any_services_missing_framework_price?
-      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_framework_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     def any_services_missing_benchmark_price?
-      procurement_building_services.uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).any? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def all_services_unpriced_and_no_buyer_input?
@@ -413,11 +457,95 @@ module FacilitiesManagement
     end
 
     def all_services_missing_framework_price?
-      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_framework_price?(rate_model) }
     end
 
     def all_services_missing_framework_and_benchmark_price?
       all_services_missing_framework_price? && all_services_missing_benchmark_price?
+    end
+
+    def contract_name_status
+      contract_name.present? ? :completed : :not_started
+    end
+
+    def estimated_annual_cost_status
+      estimated_cost_known.nil? ? :not_started : :completed
+    end
+
+    def tupe_status
+      tupe.nil? ? :not_started : :completed
+    end
+
+    def contract_period_status
+      relevant_attributes = [
+        initial_call_off_period,
+        initial_call_off_start_date,
+        mobilisation_period_required,
+        extensions_required
+      ]
+
+      relevant_attributes.all?(&:nil?) ? :not_started : :completed
+    end
+
+    def services_status
+      service_codes.any? ? :completed : :not_started
+    end
+
+    def buildings_status
+      active_procurement_buildings.any? ? :completed : :not_started
+    end
+
+    def buildings_and_services_status
+      return :cannot_start if services_status == :not_started || buildings_status == :not_started
+
+      buildings_and_services_completed? ? :completed : :incomplete
+    end
+
+    def buildings_and_services_completed?
+      active_procurement_buildings.all?(&:service_selection_complete?)
+    end
+
+    def service_requirements_status
+      return :cannot_start unless buildings_and_services_status == :completed
+      return :not_required if no_services_requiring_standard? && no_services_requiring_unit_of_measure?
+
+      service_requirements_completed? ? :completed : :incomplete
+    end
+
+    def service_requirements_completed?
+      active_procurement_buildings.all?(&:complete?)
+    end
+
+    def remove_existing_spreadsheet_import
+      spreadsheet_import.remove_spreadsheet_file
+      spreadsheet_import.delete
+    end
+
+    def sorted_active_procurement_buildings
+      active_procurement_buildings.order_by_building_name
+    end
+
+    def services
+      sort_order = StaticData.work_packages.map { |wp| wp['code'] }
+      Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
+    end
+
+    def no_services_requiring_unit_of_measure?
+      procurement_building_services.none?(&:requires_unit_of_measure?) && procurement_buildings.none?(&:requires_building_area?)
+    end
+
+    def no_services_requiring_standard?
+      procurement_building_services.none?(&:requires_service_standard?)
+    end
+
+    def can_be_deleted?
+      %w[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results da_draft].include? aasm_state
+    end
+
+    def procurement_buildings_missing_regions?
+      return false unless detailed_search? || detailed_search_bulk_upload?
+
+      active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region_code').any?(&:blank?)
     end
 
     private
@@ -433,21 +561,21 @@ module FacilitiesManagement
     end
 
     def copy_procurement_buildings_gia
-      procurement_buildings.each(&:set_gia)
+      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:set_gia) }
     end
 
     def save_data_for_procurement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
       self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
-
       set_suppliers_for_procurement
     end
 
     def set_suppliers_for_procurement
       procurement_suppliers.destroy_all
-      assessed_value_calculator.sorted_list.each do |supplier_data|
-        procurement_suppliers.create(supplier_id: CCS::FM::Supplier.supplier_name(supplier_data[0].to_s).id, direct_award_value: supplier_data[1])
+
+      assessed_value_calculator.sorted_list(eligible_for_da).each do |supplier_data|
+        procurement_suppliers.create!(supplier_id: supplier_data[:supplier_id], direct_award_value: supplier_data[:da_value])
       end
     end
 
@@ -477,7 +605,6 @@ module FacilitiesManagement
       procurement_buildings.each do |building|
         building.service_codes.select! { |service_code| service_codes&.include? service_code }
       end
-
       procurement_building_services.where.not(code: service_codes).destroy_all
     end
 
@@ -486,7 +613,7 @@ module FacilitiesManagement
     end
 
     def all_services_missing_benchmark_price?
-      procurement_building_services.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
+      procurement_building_services.select(:code, :service_standard).uniq.reject(&:special_da_service?).all? { |pbs| pbs.service_missing_benchmark_price?(rate_model) }
     end
 
     def contract_value_needed?

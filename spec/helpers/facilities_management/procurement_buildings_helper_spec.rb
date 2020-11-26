@@ -1,142 +1,94 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper do
-  describe '#question_type' do
-    context 'when using a ppm code' do
-      it 'will return ppm_standards with C.1' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'C.1'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'ppm_standards'
+  describe '#get_service_question' do
+    context 'when question is service_standard' do
+      it 'will return service_standards' do
+        result = helper.get_service_question(:service_standard)
+        expect(result).to eq 'service_standards'
       end
     end
 
-    context 'when using a building code' do
-      it 'will return building_standards with C.7' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'C.7'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'building_standards'
+    context 'when question is lift_data' do
+      it 'will return lifts' do
+        result = helper.get_service_question(:lift_data)
+        expect(result).to eq 'lifts'
       end
     end
 
-    context 'when using a cleaning code' do
-      it 'will return cleaning_standards with G.1' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.1'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'cleaning_standards'
-      end
-      it 'will return cleaning_standards with G.3' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.3'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'cleaning_standards'
-      end
-      it 'will return cleaning_standards with G.4' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.4'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'cleaning_standards'
-      end
-      it 'will return cleaning_standards with G.5' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.5'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq 'cleaning_standards'
-      end
-
-      it 'will not return cleaning_standards with G.2' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.2'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.6' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.6'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.7' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.7'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.8' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.8'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.9' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.9'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.10' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.10'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.11' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.11'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.12' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.12'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.13' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.13'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.14' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.14'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.15' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.15'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
-      end
-
-      it 'will not return cleaning_standards with G.16' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.16'
-        result = helper.question_type(service, :service_standard)
-        expect(result).to eq nil
+    context 'when question is service_hours' do
+      it 'will return service_hours' do
+        result = helper.get_service_question(:service_hours)
+        expect(result).to eq 'service_hours'
       end
     end
 
-    context 'when using a volume code' do
-      it 'will return volume with G.3' do
-        service = FacilitiesManagement::ProcurementBuildingService.new
-        service.code = 'G.3'
-        result = helper.question_type(service, nil)
-        expect(result).to eq 'volume'
+    context 'when question is no_of_appliances_for_testing' do
+      it 'will return volumes' do
+        result = helper.get_service_question(:no_of_appliances_for_testing)
+        expect(result).to eq 'volumes'
+      end
+    end
+
+    context 'when question is no_of_building_occupants' do
+      it 'will return volumes' do
+        result = helper.get_service_question(:no_of_appliances_for_testing)
+        expect(result).to eq 'volumes'
+      end
+    end
+
+    context 'when question is no_of_consoles_to_be_serviced' do
+      it 'will return volumes' do
+        result = helper.get_service_question(:no_of_consoles_to_be_serviced)
+        expect(result).to eq 'volumes'
+      end
+    end
+
+    context 'when question is tones_to_be_collected_and_removed' do
+      it 'will return volumes' do
+        result = helper.get_service_question(:tones_to_be_collected_and_removed)
+        expect(result).to eq 'volumes'
+      end
+    end
+
+    context 'when question is no_of_units_to_be_serviced' do
+      it 'will return volumes' do
+        result = helper.get_service_question(:no_of_units_to_be_serviced)
+        expect(result).to eq 'volumes'
+      end
+    end
+
+    context 'when question is nil' do
+      it 'will return service_standards' do
+        result = helper.get_service_question(nil)
+        expect(result).to eq 'area'
+      end
+    end
+  end
+
+  describe '#procurement_building_status' do
+    let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
+    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:user) { create(:user) }
+
+    before do
+      @procurement_building = procurement_building
+      allow(procurement_building).to receive(:complete?).and_return(answer)
+    end
+
+    context 'when the procurement_building is complete' do
+      let(:answer) { true }
+
+      it 'returns the COMPLETE status' do
+        expect(helper.procurement_building_status).to eq [:blue, 'COMPLETE']
+      end
+    end
+
+    context 'when the procurement_building is not complete' do
+      let(:answer) { false }
+
+      it 'returns the INCOMPLETE status' do
+        expect(helper.procurement_building_status).to eq [:red, 'INCOMPLETE']
       end
     end
   end
