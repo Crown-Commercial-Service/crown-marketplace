@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         expect(assigns(:lot_name)).to eq 'Sub-lot 1b services'
       end
 
-      pending 'retrieves correct service data' do
+      it 'retrieves correct service data' do
         get :index, params: { id: id, lot: target_lot }
         expect(assigns(:supplier_rate_data_checkboxes).size).to eq 116
         expect(assigns(:full_services).size).to eq 13
