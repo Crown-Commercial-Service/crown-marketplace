@@ -617,7 +617,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuilding, type: :model do
         procurement_building.reload
       end
 
-      pending 'returns the procurement_building_services in the work package order' do
+      it 'returns the procurement_building_services in the work package order' do
         expect(procurement_building.sorted_procurement_building_services.map(&:code)).to eq %w[C.1 C.2 C.3 C.4 C.11 C.5 D.1 E.1 E.4 G.1 G.3 I.3 K.4 N.1 O.1]
       end
     end

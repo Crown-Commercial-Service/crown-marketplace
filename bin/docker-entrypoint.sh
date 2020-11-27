@@ -11,10 +11,6 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
     bundle exec rails db:static
   fi
 
-  if [ "$APP_RUN_FM_STATIC_TASK" = 'TRUE' ]; then
-    bundle exec rails db:fm_static_data
-  fi
-
   if [ "$APP_RUN_EMAIL_REPLACEMENT" = 'TRUE' ]; then
     bundle exec rails supplier_emails:update
   fi
