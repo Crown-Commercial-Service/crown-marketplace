@@ -118,10 +118,6 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 ENV PORT=8080
 EXPOSE 8080
 
-RUN apk add nginx
-RUN mkdir -p /run/nginx
-COPY default.conf /etc/nginx/conf.d/default.conf
-
 # Ensure our entry point script is executable
 RUN chmod +x ./bin/docker-entrypoint.sh
 
