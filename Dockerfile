@@ -61,6 +61,10 @@ ARG APP_RUN_STATIC_TASK
 LABEL app_run_static_task=$APP_RUN_STATIC_TASK
 ENV APP_RUN_STATIC_TASK=$APP_RUN_STATIC_TASK
 
+ARG APP_RUN_FM_STATIC_TASK
+LABEL app_run_fm_static_task=$APP_RUN_FM_STATIC_TASK
+ENV APP_RUN_FM_STATIC_TASK=$APP_RUN_FM_STATIC_TASK
+
 ARG CLAMAV_SERVER_IP
 LABEL clam_av_server_ip=$CLAMAV_SERVER_IP
 ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
@@ -113,10 +117,6 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 # Run the web app on port 8080
 ENV PORT=8080
 EXPOSE 8080
-
-RUN apk add nginx
-RUN mkdir -p /run/nginx
-COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Ensure our entry point script is executable
 RUN chmod +x ./bin/docker-entrypoint.sh
