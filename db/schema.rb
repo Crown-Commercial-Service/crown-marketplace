@@ -378,6 +378,18 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.index ["key"], name: "fm_static_data_key_idx"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "data"
+    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
+    t.index ["data"], name: "idxgin", using: :gin
+    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
+  end
+
+>>>>>>> 9911efa9b (Update docker files)
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
     t.string "title_text", null: false
