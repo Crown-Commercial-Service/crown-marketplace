@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
 module FM
   require 'pg'
   require 'json'
@@ -33,43 +32,11 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
     puts e.message
   end
 
-  def self.create_uom_values_table
+  def self.static_data_table
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'CREATE TABLE IF NOT EXISTS public.fm_uom_values (
-	user_id varchar NULL,
-	service_code varchar NULL,
-	uom_value varchar NULL,
-	building_id varchar NULL
-);
-DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_id_idx ON public.fm_uom_values USING btree (user_id, service_code, building_id);
-'
+      query = 'DROP TABLE if exists public.fm_static_data; CREATE TABLE if not exists public.fm_static_data ("key" varchar NOT NULL, value jsonb NULL);'
       db.query query
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.create_fm_lifts_table
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = "create table if not exists fm_lifts (user_id varchar not null, building_id varchar not null, lift_data jsonb not null); drop index if exists fm_lifts_user_id_idx; create index fm_lifts_user_id_idx on fm_lifts using btree (user_id, building_id); drop index if exists fm_lifts_lift_json; create index fm_lifts_lift_json on fm_lifts using GIN ((lift_data -> 'floor-data'));"
-      db.query query
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.facilities_management_buildings
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'create table if not exists facilities_management_buildings (user_id varchar not null); DROP INDEX IF EXISTS idx_buildings_user_id; CREATE INDEX idx_buildings_user_id ON facilities_management_buildings USING btree (user_id);'
-      db.query query
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.truncate_buildings_table
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'TRUNCATE TABLE public.facilities_management_buildings;'
+      query = 'truncate table public.fm_static_data; CREATE INDEX fm_static_data_key_idx ON public.fm_static_data USING btree (key);'
       db.query query
     end
   rescue PG::Error => e
@@ -81,17 +48,6 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
       query = "DELETE FROM fm_static_data WHERE key = 'services';"
       db.query query
       query = "INSERT INTO public.fm_static_data (key, value) VALUES('services', " + '\'[{"code": "C", "name": "Maintenance services"}, {"code": "D", "name": "Horticultural services"}, {"code": "E", "name": "Statutory obligations"}, {"code": "F", "name": "Catering services"}, {"code": "G", "name": "Cleaning services"}, {"code": "H", "name": "Workplace FM services"}, {"code": "I", "name": "Reception services"}, {"code": "J", "name": "Security services"}, {"code": "K", "name": "Waste services"}, {"code": "L", "name": "Miscellaneous FM services"}, {"code": "M", "name": "Computer-aided facilities management (CAFM)"}, {"code": "N", "name": "Helpdesk services"}, {"code": "O", "name": "Management of billable works"}]\');'
-      db.query query
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.static_data_table
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'DROP TABLE if exists public.fm_static_data; CREATE TABLE if not exists public.fm_static_data ("key" varchar NOT NULL, value jsonb NULL);'
-      db.query query
-      query = 'truncate table public.fm_static_data; CREATE INDEX fm_static_data_key_idx ON public.fm_static_data USING btree (key);'
       db.query query
     end
   rescue PG::Error => e
@@ -123,20 +79,31 @@ DROP INDEX IF EXISTS fm_uom_values_user_id_idx; CREATE INDEX fm_uom_values_user_
   rescue PG::Error => e
     puts e.message
   end
+
+  def self.populate_security_types
+    file_name = 'data/facilities_management/security_types.csv'
+
+    ActiveRecord::Base.connection_pool.with_connection do |db|
+      truncate_query = 'truncate table fm_security_types;'
+      db.query truncate_query
+      CSV.read(file_name, headers: true).each do |row|
+        column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
+        values = row.fields.map { |i| "'#{i}'" }.join(',')
+        query = "INSERT INTO fm_security_types (#{column_names}) values (#{values})"
+        db.query query
+      end
+    end
+  rescue PG::Error => e
+    puts e.message
+  end
 end
 
 namespace :db do
   desc 'add FM static data to the database'
   task fmdata: :environment do
     DistributedLocks.distributed_lock(153) do
-      p 'Creating FM building database'
-      FM.facilities_management_buildings
       p 'Creating FM UOM table'
       FM.create_uom_table
-      p 'Creating FM UOM values table'
-      FM.create_uom_values_table
-      p 'Creating FM lift table'
-      FM.create_fm_lifts_table
       p 'Creating FM static data table'
       FM.static_data_table
       p 'add services data to fm_static_table'
@@ -145,6 +112,8 @@ namespace :db do
       FM.facilities_management_work_packages
       p 'add bank_holidays data to fm_static_table'
       FM.facilities_management_bank_holidays
+      p 'Loading security types static data'
+      FM.populate_security_types
     end
   end
   desc 'add FM static data to the database'
@@ -161,4 +130,3 @@ namespace :db do
   task static: :fmdata do
   end
 end
-# rubocop:enable Metrics/ModuleLength

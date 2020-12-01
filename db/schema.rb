@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_102942) do
+ActiveRecord::Schema.define(version: 2020_12_01_085212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -336,16 +336,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_102942) do
     t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rates_procurement"
   end
 
-  create_table "fm_lifts", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "building_id", null: false
-    t.jsonb "lift_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
-    t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
-  end
-
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "data"
     t.text "source_file", null: false
@@ -391,9 +381,9 @@ ActiveRecord::Schema.define(version: 2020_10_15_102942) do
   end
 
   create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "data"
     t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
     t.index ["data"], name: "idxgin", using: :gin
     t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
@@ -408,16 +398,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_102942) do
     t.string "spreadsheet_label"
     t.string "unit_measure_label"
     t.text "service_usage", array: true
-  end
-
-  create_table "fm_uom_values", id: false, force: :cascade do |t|
-    t.text "user_id"
-    t.text "service_code"
-    t.text "uom_value"
-    t.text "building_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
   end
 
   create_table "legal_services_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
