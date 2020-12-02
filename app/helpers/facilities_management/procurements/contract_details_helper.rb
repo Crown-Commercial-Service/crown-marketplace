@@ -34,4 +34,12 @@ module FacilitiesManagement::Procurements::ContractDetailsHelper
     end
     link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
   end
+
+  def object_name(name)
+    name.gsub('[', '_')[0..-2]
+  end
+
+  def cant_find_address_link
+    facilities_management_procurement_contract_details_edit_path(page: @address_step)
+  end
 end

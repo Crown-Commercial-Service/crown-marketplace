@@ -111,12 +111,6 @@ module SharedBuildingsControllerMethods
     []
   end
 
-  def valid_addresses
-    return @valid_addresses ||= find_addresses_by_postcode(@page_data[:model_object].address_postcode) if @page_data[:model_object].address_postcode.present?
-
-    []
-  end
-
   def set_postcode_data
     @page_data[:model_object].address_postcode = building_params[:address_postcode].upcase if building_params[:address_postcode]
   end

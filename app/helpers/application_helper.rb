@@ -382,5 +382,22 @@ module ApplicationHelper
       )
     end
   end
+
+  def create_find_address_helper(object, organisaiton_prefix, object_name, postcode_name)
+    @find_address_helper = FacilitiesManagement::FindAddressHelper.new(object, organisaiton_prefix)
+
+    capture do
+      concat(hidden_field_tag(:object_name, object_name))
+      concat(hidden_field_tag(:postcode_name, postcode_name))
+    end
+  end
+
+  def hidden_class(visible)
+    'govuk-visually-hidden' unless visible
+  end
+
+  def input_visible?(visible)
+    visible ? 0 : -1
+  end
 end
 # rubocop:enable Metrics/ModuleLength

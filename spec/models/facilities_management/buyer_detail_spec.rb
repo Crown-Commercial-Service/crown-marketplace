@@ -4,10 +4,6 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
   subject(:buyer_detail) { create(:buyer_detail, user: create(:user)) }
 
   describe '#validations' do
-    # before do
-    #   buyer_detail
-    # end
-
     context 'when everything is present' do
       it 'is valid' do
         expect(buyer_detail.valid?).to eq true
@@ -132,6 +128,12 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
           expect(buyer_detail.valid?(:update)).to eq false
           expect(buyer_detail.valid?(:update_address)).to eq false
         end
+
+        it 'has the correct error message' do
+          buyer_detail.valid?(:update_address)
+
+          expect(buyer_detail.errors[:organisation_address_postcode].first).to eq 'Enter a valid postcode, for example SW1A 1AA'
+        end
       end
 
       context 'when organisation postcode is not a valid postcode' do
@@ -229,6 +231,77 @@ RSpec.describe FacilitiesManagement::BuyerDetail, type: :model do
         end
       end
     end
+
+    # rubocop:disable RSpec/NestedGroups
+    context 'when considering address selection' do
+      let(:organisation_address_postcode) { 'ST161AA' }
+      let(:organisation_address_line_1) { 'The Globe Theatre' }
+      let(:organisation_address_town) { 'London Town' }
+
+      before { buyer_detail.assign_attributes(organisation_address_postcode: organisation_address_postcode, organisation_address_line_1: organisation_address_line_1, organisation_address_town: organisation_address_town) }
+
+      context 'when the postcode is not valid' do
+        let(:organisation_address_postcode) { '' }
+
+        it 'is not valid' do
+          expect(buyer_detail.valid?(:update)).to eq false
+        end
+
+        it 'does not have an error message on address selection' do
+          buyer_detail.valid?(:update)
+          expect(buyer_detail.errors[:base].any?).to eq false
+        end
+      end
+
+      context 'when the postocde is valid' do
+        context 'and address_line_1 is missing' do
+          let(:organisation_address_line_1) { '' }
+
+          it 'is not valid' do
+            expect(buyer_detail.valid?(:update)).to eq false
+          end
+
+          it 'has the correct error message' do
+            buyer_detail.valid?(:update)
+            expect(buyer_detail.errors[:base].first).to eq 'You must select an address to save your details'
+          end
+        end
+
+        context 'and address_town is missing' do
+          let(:organisation_address_town) { '' }
+
+          it 'is not valid' do
+            expect(buyer_detail.valid?(:update)).to eq false
+          end
+
+          it 'has the correct error message' do
+            buyer_detail.valid?(:update)
+            expect(buyer_detail.errors[:base].first).to eq 'You must select an address to save your details'
+          end
+        end
+
+        context 'and address_line_1 and address_town are missing' do
+          let(:organisation_address_line_1) { '' }
+          let(:organisation_address_town) { '' }
+
+          it 'is not valid' do
+            expect(buyer_detail.valid?(:update)).to eq false
+          end
+
+          it 'has the correct error message' do
+            buyer_detail.valid?(:update)
+            expect(buyer_detail.errors[:base].first).to eq 'You must select an address to save your details'
+          end
+        end
+      end
+
+      context 'when all parts are valid' do
+        it 'is valid' do
+          expect(buyer_detail.valid?(:update)).to eq true
+        end
+      end
+    end
+    # rubocop:enable RSpec/NestedGroups
   end
 
   describe '#full_organisation_address' do

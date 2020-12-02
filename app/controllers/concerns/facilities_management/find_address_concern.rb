@@ -1,4 +1,4 @@
-module Buildings::BuildingsControllerRegions
+module FacilitiesManagement::FindAddressConcern
   extend ActiveSupport::Concern
 
   def ensure_postcode_is_valid(postcode)
