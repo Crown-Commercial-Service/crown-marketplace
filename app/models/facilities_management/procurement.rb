@@ -260,20 +260,6 @@ module FacilitiesManagement
       end
     end
 
-    def create_new_procurement_buildings
-      procurement_building_ids = procurement_buildings.map(&:building_id)
-      building_ids = user.buildings.pluck(:id)
-
-      (building_ids - (building_ids & procurement_building_ids)).each do |building_id|
-        procurement_buildings.create(building_id: building_id)
-      end
-    end
-
-    def find_or_build_procurement_building(building_id)
-      procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
-      procurement_building.save
-    end
-
     def buildings_standard
       active_procurement_buildings.includes(:building).any? { |pb| pb.building.building_standard == 'NON-STANDARD' } ? 'NON-STANDARD' : 'STANDARD'
     end

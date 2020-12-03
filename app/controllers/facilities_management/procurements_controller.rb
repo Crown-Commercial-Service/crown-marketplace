@@ -273,8 +273,23 @@ module FacilitiesManagement
       redirect_to facilities_management_procurement_path(@procurement)
     end
 
+    def paginate_procurement_buildings
+      paramatise_building_selection
+      find_buildings_with_update
+
+      update_procurement_building_selection && return if params.key?(:buildings)
+
+      params[:page] = params.keys.select { |key| key.include?('paginate') }.first.split('-').last
+      params[:step] = 'buildings'
+
+      set_paginated_buildings_data
+
+      render :edit
+    end
+
     def update_procurement_building_selection
-      @procurement.assign_attributes(procurement_params)
+      current_procurement_buildings = @procurement.procurement_buildings.select(:id, :building_id).map { |pb| [pb.building_id, pb.id] }.to_h
+      @procurement.assign_attributes(procurement_buildings_attributes: @building_params.map { |building_id, active| { id: current_procurement_buildings[building_id], building_id: building_id, active: active } })
 
       if @procurement.save(context: :buildings)
         redirect_to facilities_management_procurement_summary_path(@procurement, summary: 'buildings')
@@ -286,31 +301,26 @@ module FacilitiesManagement
       end
     end
 
-    def paginate_procurement_buildings
-      update_procurement_building_selection && return if params.key?(:buildings)
+    def paramatise_building_selection
+      @building_params = procurement_params['procurement_buildings_attributes'].to_h.values.select { |building| building['active'] }.map { |item| [item['building_id'], item['active']] }.to_h
+    end
 
-      params[:page] = params.keys.select { |key| key.include?('paginate') }.first.split('-').last
-      params[:step] = 'buildings'
+    def find_buildings_with_update
+      active_procurement_building_ids = @procurement.procurement_buildings.select(&:active).pluck(:building_id)
 
-      @procurement.assign_attributes(procurement_params)
-      set_paginated_buildings_data
+      active_procurement_building_ids.each do |building_id|
+        @building_params[building_id] = '1' unless @building_params[building_id]
+      end
 
-      render :edit
+      @building_params.select! { |building_id, active| active == '1' || active_procurement_building_ids.include?(building_id) }
     end
 
     def set_paginated_buildings_data
-      active_procurement_buildings = @procurement.procurement_buildings.select(&:active)
+      @buildings = current_user.buildings.order_by_building_name.page(params[:page])
+      visible_buildings_ids = @buildings.map(&:id)
 
-      @active_procurement_building_ids = active_procurement_buildings.map(&:id)
-
-      @procurement.active_procurement_buildings.each do |procurement_building|
-        active_procurement_buildings << procurement_building if @active_procurement_building_ids.exclude?(procurement_building.id)
-      end
-
-      @procurement_buildings = @procurement.procurement_buildings.order_by_building_name.page(params[:page])
-      procurement_building_ids = @procurement_buildings.map(&:id)
-
-      @hidden_procurement_buildings = active_procurement_buildings.reject { |procurement_building| procurement_building_ids.include? procurement_building.id }
+      hidden_building_ids = @building_params.reject { |building_id, _| visible_buildings_ids.include? building_id }.keys
+      @hidden_buildings = current_user.buildings.order_by_building_name.where(id: hidden_building_ids)
     end
 
     # sets the state of the procurement depending on the submission from the results view
@@ -383,6 +393,7 @@ module FacilitiesManagement
               service_codes: [],
               region_codes: [],
               procurement_buildings_attributes: [:id,
+                                                 :building_id,
                                                  :active,
                                                  service_codes: []]
             )
@@ -404,7 +415,8 @@ module FacilitiesManagement
     end
 
     def set_buildings
-      @procurement.create_new_procurement_buildings if current_user.buildings.count != @procurement.procurement_buildings.count
+      @building_params = {}
+      find_buildings_with_update
 
       set_paginated_buildings_data
     end

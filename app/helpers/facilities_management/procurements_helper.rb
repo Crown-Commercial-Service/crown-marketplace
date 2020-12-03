@@ -144,12 +144,12 @@ module FacilitiesManagement::ProcurementsHelper
     procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
   end
 
-  def procurement_building_row(form, building, procurement_building_id)
+  def procurement_building_row(form, building)
     if building.status == 'Ready'
       content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
         content_tag(:div, class: 'govuk-checkboxes__item') do
           capture do
-            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @active_procurement_building_ids.include?(procurement_building_id)))
+            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @building_params[building.id] == '1'))
             concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
               procurement_building_checkbox_text(building)
             end)
