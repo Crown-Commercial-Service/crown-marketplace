@@ -235,35 +235,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '#create_new_procurement_buildings' do
-    let!(:building) { create(:facilities_management_building, user: procurement.user) }
-    let(:building_id) { building.id }
-
-    context 'when procurement building already exists' do
-      before do
-        procurement.save
-        procurement.procurement_buildings.create(building_id: building_id)
-      end
-
-      it 'does not create a new one' do
-        expect { procurement.create_new_procurement_buildings }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
-      end
-    end
-
-    context 'when procurement building does not exist' do
-      it 'creates one' do
-        procurement.save
-        expect { procurement.create_new_procurement_buildings }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
-      end
-
-      it 'does not have any service codes present' do
-        procurement.save
-        procurement.create_new_procurement_buildings
-        expect(procurement.procurement_buildings.last.service_codes).to be_empty
-      end
-    end
-  end
-
   describe 'validations on :continue' do
     let(:procurement) { create(:facilities_management_procurement_without_procurement_buildings, user: user) }
     let(:building) { create(:facilities_management_building, user: user) }
