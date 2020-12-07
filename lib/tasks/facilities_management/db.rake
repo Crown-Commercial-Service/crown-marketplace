@@ -106,8 +106,4 @@ namespace :db do
   desc 'add static data to the database'
   task setup: :static do
   end
-
-  task fm_static_data: :environment do
-    CCS.populate_security_types 'data/facilities_management/security_types.csv'
-  end
 end
