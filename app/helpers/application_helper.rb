@@ -230,7 +230,7 @@ module ApplicationHelper
 
   def service_header_banner
     if params[:service]
-      render partial: "#{params[:service]}/header-banner"
+      header_banner(params[:service])
     else
       service_name = controller.class.parent_name&.underscore
       if service_name&.include? 'admin'
@@ -241,6 +241,18 @@ module ApplicationHelper
         render partial: 'layouts/header-banner'
       end
     end
+  end
+
+  def header_banner(service)
+    if legacy_service?(service)
+      render partial: 'legacy/header-banner', locals: { service: service, service_url: service.gsub('_', '-') }
+    else
+      render partial: "#{service}/header-banner"
+    end
+  end
+
+  def legacy_service?(service)
+    ['legal_services', 'management_consultancy', 'supply_teachers'].include? service
   end
 
   def landing_or_admin_page
