@@ -36,17 +36,9 @@
                 <div class="govuk-footer__meta-item">
                   <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
                 </div>
-              <% elsif service_name_param&.include? 'management_consultancy' %>
+              <% elsif legacy_service?(service_name_param) %>
                 <div class="govuk-footer__meta-item">
-                  <%= link_to t("layouts.application.accessibility_statement_link"), management_consultancy_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
-                </div>
-              <% elsif service_name_param&.include? 'legal_services' %>
-                <div class="govuk-footer__meta-item">
-                  <%= link_to t("layouts.application.accessibility_statement_link"), legal_services_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
-                </div>
-              <% elsif service_name_param&.include? 'supply_teachers' %>
-                <div class="govuk-footer__meta-item">
-                  <%= link_to t("layouts.application.accessibility_statement_link"), supply_teachers_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
+                  <%= link_to t("layouts.application.accessibility_statement_link"), "/#{service_name_param.gsub('_','-')}/accessibility-statement?service=#{service_name_param}", class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
                 </div>
               <% end %>
               <div class="govuk-footer__meta-item">
