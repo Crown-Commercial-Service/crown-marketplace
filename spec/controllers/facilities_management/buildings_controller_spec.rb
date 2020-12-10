@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     end
 
     context 'when logging in as a buyer without permissions' do
-      login_buyer_buyer_without_permissions
+      login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
         get :index
@@ -40,7 +40,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     end
 
     context 'when logging in as a buyer without permissions' do
-      login_buyer_buyer_without_permissions
+      login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
         get :new

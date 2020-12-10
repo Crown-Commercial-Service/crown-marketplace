@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
     end
 
     context 'when logging in as a buyer without permissions' do
-      login_buyer_buyer_without_permissions
+      login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
         get :new, params: { procurement_id: procurement_id }
