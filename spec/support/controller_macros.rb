@@ -33,7 +33,7 @@ module ControllerMacros
     end
   end
 
-  def login_buyer_buyer_without_permissions
+  def login_buyer_without_permissions
     before do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer])

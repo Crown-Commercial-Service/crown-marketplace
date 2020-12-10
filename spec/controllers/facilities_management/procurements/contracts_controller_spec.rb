@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
     end
 
     context 'when logging in as a buyer without permissions' do
-      login_buyer_buyer_without_permissions
+      login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
         get :show, params: { procurement_id: procurement.id, id: contract.id }
