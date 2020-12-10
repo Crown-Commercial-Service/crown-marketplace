@@ -256,19 +256,19 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def suppliers_lot1a
-    @suppliers_lot1a ||= CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1a')
+    @suppliers_lot1a ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1a')
   end
 
   def suppliers_lot1b
-    @suppliers_lot1b ||= CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1b')
+    @suppliers_lot1b ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1b')
   end
 
   def suppliers_lot1c
-    @suppliers_lot1c ||= CCS::FM::Supplier.long_list_suppliers_lot(region_codes, service_codes, '1c')
+    @suppliers_lot1c ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1c')
   end
 
   def supplier_count
-    @supplier_count ||= CCS::FM::Supplier.supplier_count(region_codes, service_codes)
+    @supplier_count ||= FacilitiesManagement::SupplierDetail.supplier_count(region_codes, service_codes)
   end
 end
 # rubocop:enable Metrics/ModuleLength

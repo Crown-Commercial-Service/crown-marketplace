@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_085212) do
+ActiveRecord::Schema.define(version: 2020_12_10_144159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -267,17 +267,16 @@ ActiveRecord::Schema.define(version: 2020_12_01_085212) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
-  create_table "facilities_management_supplier_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "facilities_management_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.string "supplier_name"
+    t.jsonb "lot_data", default: {}
     t.uuid "user_id"
-    t.string "name", limit: 255
-    t.boolean "lot1a"
-    t.boolean "lot1b"
-    t.boolean "lot1c"
-    t.boolean "direct_award"
     t.boolean "sme"
-    t.string "contact_name", limit: 255
-    t.string "contact_email", limit: 255
-    t.string "contact_number", limit: 255
     t.string "duns", limit: 255
     t.string "registration_number", limit: 255
     t.string "address_line_1", limit: 255
@@ -285,8 +284,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_085212) do
     t.string "address_town", limit: 255
     t.string "address_county", limit: 255
     t.string "address_postcode", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["contact_email"], name: "index_facilities_management_supplier_details_on_contact_email"
     t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 
@@ -378,17 +376,6 @@ ActiveRecord::Schema.define(version: 2020_12_01_085212) do
     t.string "key", null: false
     t.jsonb "value"
     t.index ["key"], name: "fm_static_data_key_idx"
-  end
-
-  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "contact_name"
-    t.string "contact_email"
-    t.string "contact_phone"
-    t.string "supplier_name"
-    t.jsonb "lot_data", default: {}
-    t.index ["contact_email"], name: "index_fm_suppliers_on_contact_email"
   end
 
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|

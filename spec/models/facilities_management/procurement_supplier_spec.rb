@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     let(:da_value_test2) {  865.24783745402 }
     let(:da_value_test3) { 1292.48276446867 }
     let(:da_value_test4) { 1517.20280381278 }
-    let(:supplier_ids) { CCS::FM::Supplier.first(4).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
     let(:obj) { double }
     let(:contract) { procurement.procurement_suppliers[0] }
 

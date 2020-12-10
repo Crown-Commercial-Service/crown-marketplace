@@ -8,7 +8,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     procurement_with_buildings.active_procurement_buildings.first.update(service_codes: ['C.1', 'H.4'])
     procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'B')
     procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'H.4').update(service_hours: 208, detail_of_requirement: 'Details of the requirement')
-    procurement_with_buildings.procurement_suppliers.create(supplier_id: CCS::FM::Supplier.find_by(supplier_name: 'Abernathy and Sons').id, direct_award_value: 123456)
+    procurement_with_buildings.procurement_suppliers.create(supplier_id: FacilitiesManagement::SupplierDetail.find_by(supplier_name: 'Abernathy and Sons').id, direct_award_value: 123456)
   end
 
   context 'and verify FC excel' do

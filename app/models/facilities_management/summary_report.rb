@@ -51,7 +51,7 @@ module FacilitiesManagement
     end
 
     def selected_suppliers(for_lot)
-      CCS::FM::Supplier.selected_suppliers(for_lot, @posted_locations, @posted_services)
+      SupplierDetail.selected_suppliers(for_lot, @posted_locations, @posted_services)
     end
 
     def assessed_value

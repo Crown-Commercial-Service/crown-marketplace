@@ -509,7 +509,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
-      it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
+      it 'creates procurement_suppliers with the right supplier id' do
         procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
       end
@@ -745,7 +745,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:da_value_test1) { 1500 }
     let(:da_value_test2) { 1000 }
     let(:da_value_test3) { 2000 }
-    let(:supplier_ids) { CCS::FM::Supplier.first(4).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
 
     before do
       [da_value_test, da_value_test1, da_value_test2, da_value_test3].each_with_index do |da_value, index|
