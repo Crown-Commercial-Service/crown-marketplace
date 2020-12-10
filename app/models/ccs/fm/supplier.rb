@@ -7,30 +7,12 @@ module CCS
     end
 
     class Supplier < ApplicationRecord
-      # usage:
-      # CCS::FM::Supplier.supplier_name('Shields, Ratke and Parisian')
-      def self.supplier_name(name)
-        select { |s| s['data']['supplier_name'] == name }.first
-      end
-
-      # usage:
-      # "contact_name"=>"Xuan Durgan"
-      # CCS::FM::Supplier.contact_name('Xuan Durgan')
-      # CCS::FM::Supplier.contact_name('Xuan Durgan').first.data
-      def self.contact_name(name)
-        where("data->>'contact_name' = '#{name}'")
-      end
-
       def self.selected_suppliers(for_lot, for_regions, for_services)
         # This sort by will deal with suppliers that don't have a supplier_name and place them at the end.
         # It only seems to come up in the specs, but it does come up for some reason
 
-        CCS::FM::Supplier.all.sort_by { |s| [s.data['supplier_name'] ? 1 : 0, s.data['supplier_name']] }.select do |s|
-          s.data['lots'].find do |l|
-            l['lot_number'] == for_lot &&
-              (for_regions - l['regions']).empty? &&
-              (for_services - l['services']).empty?
-          end
+        CCS::FM::Supplier.all.sort_by { |s| [s.supplier_name ? 1 : 0, s.supplier_name] }.select do |s|
+          s.lot_data[for_lot] && (for_regions - s.lot_data[for_lot]['regions']).empty? && (for_services - s.lot_data[for_lot]['services']).empty?
         end
       end
 
@@ -41,13 +23,9 @@ module CCS
 
         result =
           vals.map do |s|
-            selected_lot = s.data['lots'].select do |x|
-              x['lot_number'] == for_lot
-            end
-            first_selected_lot = selected_lot&.first
-            { 'name' => s.data['supplier_name'],
-              'service_code' => first_selected_lot['services'],
-              'region_code' => first_selected_lot['regions'] }
+            { 'name' => s.supplier_name,
+              'service_code': s.lot_data[for_lot]['services'],
+              'region_code': s.lot_data[for_lot]['regions'] }
           end
         result
       end

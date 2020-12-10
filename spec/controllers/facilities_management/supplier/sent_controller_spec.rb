@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::Supplier::SentController, type: :controller
       login_fm_supplier
 
       before do
-        supplier.update(data: supplier.data.merge(contact_email: controller.current_user.email))
+        supplier.update(contact_email: controller.current_user.email)
       end
 
       it 'assigns contract' do

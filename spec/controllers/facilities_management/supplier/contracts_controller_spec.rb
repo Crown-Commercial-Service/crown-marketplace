@@ -11,7 +11,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
     login_fm_supplier
 
     before do
-      supplier.data['contact_email'] = controller.current_user.email
+      supplier.contact_email = controller.current_user.email
       allow(CCS::FM::Supplier).to receive(:find).and_return(supplier)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
     let(:supplier) { CCS::FM::Supplier.all.first }
 
     before do
-      supplier.data['contact_email'] = user.email
+      supplier.contact_email = user.email
       allow(CCS::FM::Supplier).to receive(:find).and_return(supplier)
     end
 
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
     login_fm_supplier
 
     before do
-      controller.current_user.email = contract.supplier.data['contact_email']
+      controller.current_user.email = contract.supplier.contact_email
       get :edit, params: { id: contract.id }
     end
 

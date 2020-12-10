@@ -18,21 +18,23 @@ module CCS
   end
 
   def self.fm_suppliers
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query = 'CREATE TABLE IF NOT EXISTS fm_suppliers ( supplier_id UUID PRIMARY KEY, data jsonb,' \
-              '  created_at timestamp without time zone NOT NULL,  updated_at timestamp without time zone NOT NULL);' \
-              'CREATE INDEX IF NOT EXISTS idxgin ON fm_suppliers USING GIN (data);' \
-              'CREATE INDEX IF NOT EXISTS idxginp ON fm_suppliers USING GIN (data jsonb_path_ops);' \
-              "CREATE INDEX IF NOT EXISTS idxginlots ON fm_suppliers USING GIN ((data -> 'lots'));"
-      db.query query
+    CCS::FM::Supplier.destroy_all
+    supplier_data.each do |data|
+      full_lot_data = {}
 
-      supplier_data.each do |supplier|
-        values = supplier.to_json.gsub("'") { "''" }
-        query = "DELETE FROM fm_suppliers where data->'supplier_id' ? '" + supplier['supplier_id'] + "' ; " \
-                'insert into fm_suppliers ( created_at, updated_at, supplier_id, data ) values ( now(), now(), \'' \
-                          + supplier['supplier_id'] + "', '" + values + "')"
-        db.query query
+      ['1a', '1b', '1c'].each do |lot_number|
+        lot_data = data['lots'].find { |lot| lot['lot_number'] == lot_number }
+        full_lot_data[lot_number] = { regions: lot_data['regions'], services: lot_data['services'] } if lot_data
       end
+
+      CCS::FM::Supplier.create(
+        supplier_id: data['supplier_id'],
+        contact_name: data['contact_name'],
+        contact_email: data['contact_email'],
+        contact_phone: data['contact_phone'],
+        supplier_name: data['supplier_name'],
+        lot_data: full_lot_data
+      )
     end
   rescue PG::Error => e
     puts e.message

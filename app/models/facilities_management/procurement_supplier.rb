@@ -194,12 +194,10 @@ module FacilitiesManagement
     end
 
     def supplier_email
-      supplier.data['contact_email']
+      supplier.contact_email
     end
 
-    def supplier_name
-      supplier.data['supplier_name']
-    end
+    delegate :supplier_name, to: :supplier
 
     def closed_date
       case aasm_state
