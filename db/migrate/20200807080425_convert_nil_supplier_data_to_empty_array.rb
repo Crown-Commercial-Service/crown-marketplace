@@ -1,6 +1,10 @@
 class ConvertNilSupplierDataToEmptyArray < ActiveRecord::Migration[5.2]
+  class FMSupplier < ApplicationRecord
+    self.table_name = 'fm_suppliers'
+  end
+
   def self.up
-    CCS::FM::Supplier.all.each do |supplier|
+    FMSupplier.all.each do |supplier|
       supplier.data['lots'].each do |lot|
         lot['services'] = [] if lot['services'].nil?
       end

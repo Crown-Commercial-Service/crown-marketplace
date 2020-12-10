@@ -5,14 +5,14 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: user) }
     let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now) }
-    let(:supplier) { CCS::FM::Supplier.all.first }
+    let(:supplier) { FacilitiesManagement::SupplierDetail.all.first }
 
     ENV['RAILS_ENV_URL'] = 'https://test-fm'
     login_fm_supplier
 
     before do
       supplier.contact_email = controller.current_user.email
-      allow(CCS::FM::Supplier).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
     context 'when the supplier accepts the procurement' do
@@ -71,11 +71,11 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
     let(:procurement) { create(:facilities_management_procurement, user: user) }
     let(:user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:supplier) { CCS::FM::Supplier.all.first }
+    let(:supplier) { FacilitiesManagement::SupplierDetail.all.first }
 
     before do
       supplier.contact_email = user.email
-      allow(CCS::FM::Supplier).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
     context 'when the user is not the intended supplier' do

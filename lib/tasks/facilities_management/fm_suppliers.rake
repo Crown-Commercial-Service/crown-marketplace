@@ -18,7 +18,6 @@ module CCS
   end
 
   def self.fm_suppliers
-    CCS::FM::Supplier.destroy_all
     supplier_data.each do |data|
       full_lot_data = {}
 
@@ -27,13 +26,14 @@ module CCS
         full_lot_data[lot_number] = { regions: lot_data['regions'], services: lot_data['services'] } if lot_data
       end
 
-      CCS::FM::Supplier.create(
+      FacilitiesManagement::SupplierDetail.create(
         supplier_id: data['supplier_id'],
         contact_name: data['contact_name'],
         contact_email: data['contact_email'],
         contact_phone: data['contact_phone'],
         supplier_name: data['supplier_name'],
-        lot_data: full_lot_data
+        lot_data: full_lot_data,
+        user: User.find_by(email: data['contact_email'])
       )
     end
   rescue PG::Error => e
@@ -42,21 +42,11 @@ module CCS
 
   # rubocop:disable Metrics/AbcSize
   def self.fm_supplier_contact_details
-    FacilitiesManagement::SupplierDetail.destroy_all
     supplier_contact_details = Roo::Spreadsheet.open(supplier_details_path, extension: :xlsx)
     supplier_contact_details.sheet(0).drop(1).each do |row|
-      contact_email = row[8]&.strip
-      FacilitiesManagement::SupplierDetail.create(
-        user: User.find_by(email: contact_email),
-        name: row[1]&.strip,
-        lot1a: row[2].to_s.downcase.include?('x'),
-        lot1b: row[3].to_s.downcase.include?('x'),
-        lot1c: row[4].to_s.downcase.include?('x'),
-        direct_award: row[5].to_s.downcase.include?('yes'),
+      supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: row[8]&.strip)
+      supplier_detail.update(
         sme: row[6].to_s.downcase.include?('yes'),
-        contact_name: row[7]&.strip,
-        contact_email: contact_email,
-        contact_number: row[9]&.strip,
         duns: row[10],
         registration_number: row[11],
         address_line_1: row[12]&.strip,
@@ -111,7 +101,7 @@ namespace :db do
   task aws: :environment do
     p 'Loading FM Suppliers static'
     DistributedLocks.distributed_lock(152) do
-      CCS::FM::Supplier.destroy_all
+      FacilitiesManagement::SupplierDetail.destroy_all
       CCS.fm_suppliers
       CCS.fm_supplier_contact_details
     end

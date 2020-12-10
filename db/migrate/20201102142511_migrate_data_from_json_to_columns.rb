@@ -1,7 +1,11 @@
 class MigrateDataFromJsonToColumns < ActiveRecord::Migration[5.2]
+  class FMSupplier < ApplicationRecord
+    self.table_name = 'fm_suppliers'
+  end
+
   # rubocop:disable Metrics/AbcSize
   def up
-    CCS::FM::Supplier.all.each do |supplier|
+    FMSupplier.all.each do |supplier|
       data = supplier.data
       supplier.contact_name = data['contact_name']
       supplier.contact_email = data['contact_email']
@@ -25,7 +29,7 @@ class MigrateDataFromJsonToColumns < ActiveRecord::Migration[5.2]
     add_index :fm_suppliers, ['data'], name: 'idxgin', using: :gin
     add_index :fm_suppliers, ['data'], name: 'idxginp', opclass: :jsonb_path_ops, using: :gin
 
-    CCS::FM::Supplier.all.each do |supplier|
+    FMSupplier.all.each do |supplier|
       data = {}
       data['supplier_id'] = supplier.supplier_id
       data['contact_name'] = supplier.contact_name

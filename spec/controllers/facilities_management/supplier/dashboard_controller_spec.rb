@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::Supplier::DashboardController, type: :contr
   describe '#index' do
     login_fm_supplier
 
-    let(:supplier) { create(:ccs_fm_supplier) }
+    let(:supplier) { create(:facilities_management_supplier_detail) }
 
     let!(:received) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'sent') }
     let!(:accepted) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'accepted') }

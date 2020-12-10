@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::Procurements::Contracts::SentController, ty
   login_fm_buyer_with_details
 
   let(:procurement) { create(:facilities_management_procurement, user: subject.current_user) }
-  let(:supplier) { create(:ccs_fm_supplier) }
+  let(:supplier) { create(:facilities_management_supplier_detail) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   describe 'GET index' do

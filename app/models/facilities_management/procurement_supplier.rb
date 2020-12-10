@@ -145,7 +145,7 @@ module FacilitiesManagement
     end
 
     def supplier
-      CCS::FM::Supplier.find(supplier_id)
+      SupplierDetail.find(supplier_id)
     end
 
     def assign_contract_number
