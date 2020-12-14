@@ -211,7 +211,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
   describe 'contract methods' do
     let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
     let(:user) { create(:user) }
-    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232') }
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::SupplierDetail.first) }
+
+    stub_bank_holiday_json
 
     describe '.real_date?' do
       context 'when the date is not real' do

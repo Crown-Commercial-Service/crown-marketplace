@@ -5,6 +5,7 @@ module FacilitiesManagement
 
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
+    belongs_to :supplier, foreign_key: :supplier_id, inverse_of: :contracts, class_name: 'FacilitiesManagement::SupplierDetail'
 
     has_one_attached :contract_documents_zip
 
@@ -144,10 +145,6 @@ module FacilitiesManagement
         .map { |contract_number| contract_number.split('-')[1].split('FC')[1] }
     end
 
-    def supplier
-      SupplierDetail.find(supplier_id)
-    end
-
     def assign_contract_number
       self.contract_number = generate_contract_number
     end
@@ -278,10 +275,7 @@ module FacilitiesManagement
       date&.in_time_zone('London')&.strftime '%d/%m/%Y'
     end
 
-    def send_email_to_buyer(email_type)
-      template_name = email_type
-      email_to = procurement.user.email
-
+    def send_email_to_buyer(template_name)
       gov_notify_template_arg = {
         'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
@@ -294,16 +288,13 @@ module FacilitiesManagement
 
       # TODO: This prevents crashing on local when sidekiq isn't running
       begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, procurement.user.email, gov_notify_template_arg)
       rescue StandardError
         false
       end
     end
 
-    def send_email_to_supplier(email_type)
-      template_name = email_type
-      email_to = supplier_email
-
+    def send_email_to_supplier(template_name)
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
@@ -319,7 +310,7 @@ module FacilitiesManagement
 
       # TODO: This prevents crashing on local when sidekiq isn't running
       begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, supplier_email, gov_notify_template_arg)
       rescue StandardError
         false
       end

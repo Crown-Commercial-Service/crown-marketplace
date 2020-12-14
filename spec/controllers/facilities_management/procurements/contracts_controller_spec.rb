@@ -9,8 +9,6 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
   let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
   let(:supplier) { create(:facilities_management_supplier_detail) }
 
-  ENV['RAILS_ENV_URL'] = 'https://test-fm'
-
   describe 'PUT update' do
     login_fm_buyer_with_details
 
