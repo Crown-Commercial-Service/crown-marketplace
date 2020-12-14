@@ -6,10 +6,10 @@ RSpec.describe FacilitiesManagement::Supplier::DashboardController, type: :contr
 
     let(:supplier) { create(:facilities_management_supplier_detail) }
 
-    let!(:received) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'sent') }
-    let!(:accepted) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'accepted') }
-    let!(:live) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'signed') }
-    let!(:closed) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'declined') }
+    let!(:received) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'sent') }
+    let!(:accepted) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'accepted') }
+    let!(:live) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'signed') }
+    let!(:closed) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'declined') }
 
     context 'with supplier not found' do
       before { get :index }
@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::Supplier::DashboardController, type: :contr
 
     context 'with supplier found' do
       before do
-        supplier.update(contact_email: controller.current_user.email)
+        supplier.update(user: controller.current_user)
         get :index
       end
 

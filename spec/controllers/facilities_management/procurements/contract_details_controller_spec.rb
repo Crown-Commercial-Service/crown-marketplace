@@ -1191,7 +1191,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         end
 
         context 'when continuing the journey' do
-          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232') }
+          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: create(:facilities_management_supplier_detail)) }
 
           before do
             contract

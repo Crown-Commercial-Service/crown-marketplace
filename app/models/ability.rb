@@ -40,6 +40,6 @@ class Ability
 
   def fm_supplier_specific_auth(user)
     can :read, FacilitiesManagement::Supplier
-    can :manage, FacilitiesManagement::ProcurementSupplier, supplier_email: user.email
+    can :manage, FacilitiesManagement::ProcurementSupplier, supplier: user.supplier_detail
   end
 end

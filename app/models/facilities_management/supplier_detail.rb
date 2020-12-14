@@ -1,6 +1,9 @@
 module FacilitiesManagement
   class SupplierDetail < ApplicationRecord
     belongs_to :user, foreign_key: :user_id, inverse_of: :supplier_detail, optional: true
+    # rubocop:disable Rails/HasManyOrHasOneDependent
+    has_many :contracts, foreign_key: :supplier_id, inverse_of: :supplier, class_name: 'FacilitiesManagement::ProcurementSupplier'
+    # rubocop:enable Rails/HasManyOrHasOneDependent
 
     def self.selected_suppliers(for_lot, for_regions, for_services)
       all.order(:supplier_name).select do |s|
