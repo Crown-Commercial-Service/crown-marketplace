@@ -7,10 +7,10 @@ class FacilitiesManagement::Supplier::DashboardController < FacilitiesManagement
 
   def index
     if !@supplier.nil?
-      @received_offers = FacilitiesManagement::ProcurementSupplier.unscoped.sent.where(supplier_id: @supplier.id).order(:offer_sent_date)
-      @accepted_offers = FacilitiesManagement::ProcurementSupplier.unscoped.accepted.where(supplier_id: @supplier.id).order(supplier_response_date: :desc)
-      @live_contracts = FacilitiesManagement::ProcurementSupplier.unscoped.signed.where(supplier_id: @supplier.id).order(contract_start_date: :desc, contract_end_date: :desc)
-      @closed_contracts = FacilitiesManagement::ProcurementSupplier.unscoped.where(supplier_id: @supplier.id, aasm_state: FacilitiesManagement::ProcurementSupplier::CLOSED_TO_SUPPLIER).sort_by(&:closed_date).reverse
+      @received_offers = contracts.sent.where(supplier_id: @supplier.id).order(:offer_sent_date)
+      @accepted_offers = contracts.accepted.where(supplier_id: @supplier.id).order(supplier_response_date: :desc)
+      @live_contracts = contracts.signed.where(supplier_id: @supplier.id).order(contract_start_date: :desc, contract_end_date: :desc)
+      @closed_contracts = contracts.where(supplier_id: @supplier.id, aasm_state: FacilitiesManagement::ProcurementSupplier::CLOSED_TO_SUPPLIER).sort_by(&:closed_date).reverse
     else
       @received_offers = []
       @accepted_offers = []
@@ -22,6 +22,10 @@ class FacilitiesManagement::Supplier::DashboardController < FacilitiesManagement
   private
 
   def set_supplier
-    @supplier = FacilitiesManagement::SupplierDetail.find_by(contact_email: current_user.email)
+    @supplier = current_user.supplier_detail
+  end
+
+  def contracts
+    @supplier.contracts.unscoped
   end
 end

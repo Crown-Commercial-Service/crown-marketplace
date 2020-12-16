@@ -4,14 +4,12 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
   describe 'PUT update' do
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: user) }
-    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now) }
-    let(:supplier) { FacilitiesManagement::SupplierDetail.all.first }
+    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
+    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
 
-    ENV['RAILS_ENV_URL'] = 'https://test-fm'
     login_fm_supplier
 
     before do
-      supplier.contact_email = controller.current_user.email
       allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
@@ -67,14 +65,13 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
   end
 
   describe '.authorize_user' do
-    let(:contract) { create(:facilities_management_procurement_supplier) }
+    let(:contract) { create(:facilities_management_procurement_supplier, supplier: supplier) }
     let(:procurement) { create(:facilities_management_procurement, user: user) }
     let(:user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:supplier) { FacilitiesManagement::SupplierDetail.all.first }
+    let(:supplier) { create(:facilities_management_supplier_detail, user: user) }
 
     before do
-      supplier.contact_email = user.email
       allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
@@ -111,7 +108,8 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
 
   describe 'GET edit' do
     let(:procurement) { create(:facilities_management_procurement, user: create(:user)) }
-    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state) }
+    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state, supplier: supplier) }
+    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier
 

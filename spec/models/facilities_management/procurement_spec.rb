@@ -481,7 +481,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#set_state_to_results_if_possible' do
-    let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(2).pluck(:supplier_id) }
     let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
     let(:obj) { double }
@@ -490,7 +490,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
-      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_uuid, da_value: da_value_test }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test1 }])
+      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_ids[0], da_value: da_value_test }, { supplier_name: 'test1', supplier_id: supplier_ids[1], da_value: da_value_test1 }])
     end
 
     context 'when no eligible suppliers' do
@@ -511,7 +511,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
       it 'creates procurement_suppliers with the right supplier id' do
         procurement.set_state_to_results_if_possible
-        expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
+        expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_ids[0]
       end
       it 'saves assessed_value' do
         procurement.set_state_to_results_if_possible
@@ -1689,15 +1689,25 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '.unsent_direct_award_offers' do
-    let(:contract1) { procurement.procurement_suppliers.create(direct_award_value: 10000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state1) }
-    let(:contract2) { procurement.procurement_suppliers.create(direct_award_value: 100000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state2) }
-    let(:contract3) { procurement.procurement_suppliers.create(direct_award_value: 1499999, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state3) }
-    let(:contract4) { procurement.procurement_suppliers.create(direct_award_value: 1500000, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state4) }
+    let(:contract1) { procurement.procurement_suppliers[0] }
+    let(:contract2) { procurement.procurement_suppliers[1] }
+    let(:contract3) { procurement.procurement_suppliers[2] }
+    let(:contract4) { procurement.procurement_suppliers[3] }
 
     let(:state1) { 'unsent' }
     let(:state2) { 'unsent' }
     let(:state3) { 'unsent' }
     let(:state4) { 'unsent' }
+
+    let(:da_values) { [10000, 100000, 1499999, 1500000] }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
+    let(:states) { [state1, state2, state3, state4] }
+
+    before do
+      da_values.each_with_index do |value, index|
+        procurement.procurement_suppliers.create(direct_award_value: value, supplier_id: supplier_ids[index], aasm_state: states[index])
+      end
+    end
 
     context 'when there are 4 unsent offers with 3 in range' do
       it 'returns the three in range' do
