@@ -383,6 +383,6 @@ class ProcurementCsvExport
   end
 
   def self.supplier_names
-    @supplier_names ||= CCS::FM::Supplier.all.select(:supplier_id, :supplier_name).pluck(:supplier_id, :supplier_name).to_h
+    @supplier_names ||= FacilitiesManagement::SupplierDetail.all.select(:supplier_id, :supplier_name).pluck(:supplier_id, :supplier_name).to_h
   end
 end

@@ -69,7 +69,6 @@ module FacilitiesManagement
         @supplier = @contract.supplier
         @procurement = @contract.procurement
         @buyer_detail = @procurement.user.buyer_detail
-        @supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @supplier.contact_email)
         @invoice_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.invoice_contact_detail
         @authorised_contact_detail = @procurement.using_buyer_detail_for_authorised_detail? ? @buyer_detail : @procurement.authorised_contact_detail
         @notice_contact_detail = @procurement.using_buyer_detail_for_notices_detail? ? @buyer_detail : @procurement.notices_contact_detail
@@ -79,7 +78,6 @@ module FacilitiesManagement
           supplier: @supplier,
           procurement: @procurement,
           buyer_detail: @buyer_detail,
-          supplier_detail: @supplier_detail,
           invoice_contact_detail: @invoice_contact_detail,
           authorised_contact_detail: @authorised_contact_detail,
           notice_contact_detail: @notice_contact_detail

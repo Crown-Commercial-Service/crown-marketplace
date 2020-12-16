@@ -22,6 +22,6 @@ class FacilitiesManagement::Supplier::DashboardController < FacilitiesManagement
   private
 
   def set_supplier
-    @supplier = CCS::FM::Supplier.find_by(contact_email: current_user.email)
+    @supplier = FacilitiesManagement::SupplierDetail.find_by(contact_email: current_user.email)
   end
 end

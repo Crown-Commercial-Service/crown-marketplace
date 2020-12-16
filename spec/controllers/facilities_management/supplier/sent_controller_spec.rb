@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::Supplier::SentController, type: :controller
   describe '#index' do
     subject(:index) { get :index, params: { contract_id: contract.id } }
 
-    let(:supplier) { create(:ccs_fm_supplier) }
+    let(:supplier) { create(:facilities_management_supplier_detail) }
     let(:contract) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.id, aasm_state: 'signed') }
 
     context 'when signed in' do
