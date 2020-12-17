@@ -46,7 +46,9 @@ module CCS
     supplier_contact_details.sheet(0).drop(1).each do |row|
       supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: row[8]&.strip)
       supplier_detail.update(
-        sme: row[6].to_s.downcase.include?('yes'),
+        contact_name: row[7]&.strip,
+        contact_phone: row[9]&.strip,
+        sme: row[5].to_s.downcase.include?('yes'),
         duns: row[10],
         registration_number: row[11],
         address_line_1: row[12]&.strip,

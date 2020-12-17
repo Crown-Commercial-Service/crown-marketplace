@@ -15,6 +15,8 @@ class AddDataToFmSuppliers < ActiveRecord::Migration[5.2]
 
       fm_supplier.update(
         user_id: supplier_detail.user_id,
+        contact_name: supplier_detail.contact_name,
+        contact_phone: supplier_detail.contact_number,
         sme: supplier_detail.sme,
         duns: supplier_detail.duns,
         registration_number: supplier_detail.registration_number,
