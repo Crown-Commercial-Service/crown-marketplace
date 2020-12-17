@@ -142,4 +142,68 @@ RSpec.describe Cognito::SignInUser do
       end
     end
   end
+
+  describe 'validation' do
+    let(:sign_in_user) { described_class.new(email, password, nil) }
+    let(:email) { 'test@test.com' }
+    let(:password) { 'Password678?' }
+
+    context 'when considering the email' do
+      context 'and it is blank' do
+        let(:email) { '' }
+
+        it 'is not valid' do
+          expect(sign_in_user.valid?).to be false
+        end
+
+        it 'has the correct error message' do
+          sign_in_user.valid?
+          expect(sign_in_user.errors[:email].first).to eq 'You must provide your email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'and it is present' do
+        it 'is valid' do
+          expect(sign_in_user.valid?).to be true
+        end
+      end
+
+      context 'and it is present with an invalid format' do
+        let(:email) { 'some-person.email@fake.email-place.com' }
+
+        it 'is valid' do
+          expect(sign_in_user.valid?).to be true
+        end
+      end
+    end
+
+    context 'when considering the password' do
+      context 'and it is blank' do
+        let(:password) { '' }
+
+        it 'is not valid' do
+          expect(sign_in_user.valid?).to be false
+        end
+
+        it 'has the correct error message' do
+          sign_in_user.valid?
+          expect(sign_in_user.errors[:password].first).to eq 'You must provide your password'
+        end
+      end
+
+      context 'and it is present' do
+        it 'is valid' do
+          expect(sign_in_user.valid?).to be true
+        end
+      end
+
+      context 'and it is present with an invalid format' do
+        let(:password) { 'not a valid password' }
+
+        it 'is valid' do
+          expect(sign_in_user.valid?).to be true
+        end
+      end
+    end
+  end
 end
