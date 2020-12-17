@@ -239,7 +239,7 @@ FindAddressComponent.prototype.selectAddress = function () {
   if (this.regionContainterPresent) {
     this.findRegion();
   } else {
-    this.viewStates(6);
+    this.viewStates(5);
   }
 }
 
@@ -290,9 +290,9 @@ FindAddressComponent.prototype.processRegion = function (regions) {
 
   if (regions.length === 1) {
     this.selectOneRegion();
-    this.viewStates(6);
+    this.viewStates(5);
   } else {
-    this.viewStates(4);
+    this.viewStates(3);
   }
 }
 
@@ -314,7 +314,7 @@ FindAddressComponent.prototype.selectRegion = function () {
   $("#address-region-code").val(selectedOption.dataset.address_region_code);
   $(this.regionText).text(selectedOption.dataset.address_region);
 
-  this.viewStates(5);
+  this.viewStates(4);
 }
 
 FindAddressComponent.prototype.changePostcode = function (e) {
@@ -337,7 +337,7 @@ FindAddressComponent.prototype.changeRegion = function (e) {
   e.preventDefault();
   this.errorShow(false, this.regionDropDown, "address_region", "select");
   this.removeRegion();
-  this.viewStates(4);
+  this.viewStates(3);
 }
 
 FindAddressComponent.prototype.removeAddress = function () {
@@ -360,14 +360,14 @@ FindAddressComponent.prototype.viewStates = function (state) {
   this.showOrHideInputs(state === 2, this.postcodeChange);
   this.showOrHideInputs(state === 2, this.selectAnAddress);
 
-  this.showOrHideInputs([3, 4, 5, 6].indexOf(state) !== -1, this.fullAddress);
+  this.showOrHideInputs([3, 4, 5].indexOf(state) !== -1, this.fullAddress);
 
   if (this.regionContainterPresent) {
-    this.showOrHideInputs(state === 4, this.selectARegion);
+    this.showOrHideInputs(state === 3, this.selectARegion);
   
-    this.showOrHideInputs([5, 6].indexOf(state) !== -1, this.fullRegion);
+    this.showOrHideInputs([4, 5].indexOf(state) !== -1, this.fullRegion);
   
-    this.showOrHideInputs(state === 5, this.changeRegionLink);
+    this.showOrHideInputs(state === 4, this.changeRegionLink);
   }
 
   switch (state) {
@@ -378,15 +378,12 @@ FindAddressComponent.prototype.viewStates = function (state) {
       this.addressDropDown.focus();
       break;
     case 3:
-      this.changeAddressLink.focus();
-      break;
-    case 4:
       if (this.regionContainterPresent) this.regionDropDown.focus();
       break;
-    case 5:
+    case 4:
       if (this.regionContainterPresent) this.changeRegionLink.focus();
       break;
-    case 6:
+    case 5:
       this.changeAddressLink.focus();
       break;
   }
