@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SuppliersFrameworkDataController do
+RSpec.describe FacilitiesManagement::Admin::SupplierFrameworkDataController, type: :controller do
   login_fm_admin
 
   describe 'GET #index' do

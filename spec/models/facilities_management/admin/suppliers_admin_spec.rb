@@ -874,7 +874,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
         let(:user) { create(:user, roles: :supplier) }
         let(:user_email) { user.email }
 
-        before { described_class.where.not(supplier_id: supplier_id).first.update(user: user) }
+        before { described_class.find('ef44b65d-de46-4297-8d2c-2c6130cecafc').update(user: user) }
 
         it 'is not valid' do
           expect(supplier.valid?(:supplier_user)).to be false

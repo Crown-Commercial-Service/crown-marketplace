@@ -1,121 +1,115 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SublotRegionsController do
-  login_fm_admin
-  supplier_id = 'ca57bf4c-e8a5-468a-95f4-39fcf730c567'
-  lot_data = {
-    '1a':
-    {
-      'regions': [
-        'UKC1',
-        'UKC2',
-        'UKD1',
-      ],
-      'services': [
-        'A.7',
-        'A.12',
-      ]
-    },
-    '1b':
-    {
-      'regions': [
-        'UKC1',
-        'UKC2'
-      ],
-      'services': [
-        'A.7',
-        'A.12'
-      ]
-    },
-    '1c':
-    {
-      'regions': [
-        'UKC1',
-        'UKC2'
-      ],
-      'services': [
-        'A.7',
-        'A.12'
-      ]
-    }
-  }
+RSpec.describe FacilitiesManagement::Admin::SublotRegionsController, type: :controller do
+  let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
+  let(:supplier_id) { supplier.supplier_id }
 
-  contact_name = 'Doreatha Tunnell'
-  contact_email = 'rowe-hessel-and-heller@yopmail.com'
-  contact_phone = '01482 133573'
-  supplier_name = 'Rowe, Hessel and Heller'
+  login_fm_admin
 
   before do
-    FacilitiesManagement::Admin::SuppliersAdmin.where(supplier_id: supplier_id).first_or_create(supplier_id: supplier_id, contact_name: contact_name, contact_email: contact_email, contact_phone: contact_phone, supplier_name: supplier_name, lot_data: lot_data, created_at: 'now()')
+    supplier.update(lot_data: {
+                      '1a': { 'regions': ['UKC1', 'UKC2', 'UKD1'], 'services': ['A.7', 'A.12'] },
+                      '1b': { 'regions': ['UKC1', 'UKC2'], 'services': ['A.7', 'A.12'] },
+                      '1c': { 'regions': ['UKC1', 'UKC2'], 'services': ['A.7', 'A.12'] }
+                    })
   end
 
-  describe 'GET and PUT sublot_regions controller' do
-    context 'when sublot_region 1a page is rendered' do
-      it 'returns http success' do
-        get :sublot_region, params: { id: supplier_id, lot_type: '1a' }
-        expect(response).to have_http_status(:ok)
-      end
-    end
+  describe 'GET edit' do
+    context 'when checking permissions' do
+      context 'when an fm amdin' do
+        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
-    context 'when sublot_region 1b page is rendered' do
-      it 'returns http success' do
-        get :sublot_region, params: { id: supplier_id, lot_type: '1b' }
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context 'when sublot_region 1c page is rendered' do
-      it 'returns http success' do
-        get :sublot_region, params: { id: supplier_id, lot_type: '1c' }
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context 'when sublot_region does not exist redirect to admin home page' do
-      it 'returns http success' do
-        get :sublot_region, params: { id: supplier_id, lot_type: '1e' }
-        expect(response).to redirect_to facilities_management_admin_path
-      end
-    end
-
-    context 'when update sublot_regions' do
-      context 'when there are regions' do
-        let(:regions) { ['UKC1', 'UKC2'] }
-
-        before do
-          put :update_sublot_regions, params: { id: supplier_id, lot_type: '1a', regions: regions }
-        end
-
-        it 'returns http success' do
-          expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
-        end
-
-        it 'updates the regions correctly' do
-          expect(FacilitiesManagement::Admin::SuppliersAdmin.find(supplier_id).lot_data['1a']['regions']).to eq regions
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
         end
       end
 
-      context 'when there are no regions' do
-        before do
-          put :update_sublot_regions, params: { id: supplier_id, lot_type: '1a' }
-        end
+      context 'when not an fm admin' do
+        login_fm_buyer
 
-        it 'returns http success' do
-          expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
-        end
+        before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
-        it 'updates the regions correctly' do
-          expect(FacilitiesManagement::Admin::SuppliersAdmin.find(supplier_id).lot_data['1a']['regions']).to eq []
+        it 'redirects to not permitted page' do
+          expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
         end
       end
     end
 
-    context 'when not an fm admin' do
-      login_mc_admin
+    context 'when viewing the edit page' do
+      before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: lot_number } }
 
-      it 'redirects to not permitted page' do
-        get :sublot_region, params: { id: supplier_id, lot_type: '1a' }
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      context 'and the lot is 1a' do
+        let(:lot_number) { '1a' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'assigns the sublot region name' do
+          expect(assigns(:sublot_region_name)).to eq 'Sub-lot 1a regions'
+        end
+      end
+
+      context 'and the lot is 1b' do
+        let(:lot_number) { '1b' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'assigns the sublot region name' do
+          expect(assigns(:sublot_region_name)).to eq 'Sub-lot 1b regions'
+        end
+      end
+
+      context 'and the lot is 1c' do
+        let(:lot_number) { '1c' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'assigns the sublot region name' do
+          expect(assigns(:sublot_region_name)).to eq 'Sub-lot 1c regions'
+        end
+      end
+
+      context 'and the lot does not exist' do
+        let(:lot_number) { '1e' }
+
+        it 'redirect to admin home page' do
+          expect(response).to redirect_to facilities_management_admin_path
+        end
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', regions: regions } }
+
+    context 'when updating the data with regions' do
+      let(:regions) { ['UKC1', 'UKC2'] }
+
+      it 'redirects to the supplier_framework_data_path' do
+        expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+      end
+
+      it 'updates the regions correctly' do
+        supplier.reload
+        expect(supplier.lot_data['1a']['regions']).to eq regions
+      end
+    end
+
+    context 'when updating the data without regions' do
+      let(:regions) { [] }
+
+      it 'redirects to the supplier_framework_data_path' do
+        expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+      end
+
+      it 'updates the regions correctly' do
+        supplier.reload
+        expect(supplier.lot_data['1a']['regions']).to eq regions
       end
     end
   end

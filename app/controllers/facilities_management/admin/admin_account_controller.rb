@@ -5,7 +5,7 @@ module FacilitiesManagement
       before_action :authenticate_user!
       before_action :authorize_user
 
-      def admin_account
+      def index
         @current_login_email = current_user.email.to_s
       end
 

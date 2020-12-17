@@ -1,37 +1,38 @@
 module FacilitiesManagement
   module Admin
-    class SupplierRatesController < FacilitiesManagement::Admin::FrameworkController
-      before_action :full_services, :variances, :init_errors
+    class ServiceRatesController < FacilitiesManagement::Admin::FrameworkController
+      before_action :set_slug, :set_rate_type, :full_services, :set_variances, :initialise_errors
 
-      def update_supplier_benchmark_rates
-        all_errors = apply_and_collect_errors(params[:rates], :benchmark)
+      def edit; end
 
-        if all_errors.any?
-          @errors = all_errors.first
-          render :supplier_benchmark_rates
+      def update
+        apply_and_collect_errors(params[:rates])
+
+        if @errors.any?
+          @errors = @errors.first
+          render :edit
         else
           save_updated_rates
-          flash[:success] = 'Rates successfully updated'
-          redirect_to facilities_management_admin_path
-        end
-      end
-
-      def update_supplier_framework_rates
-        all_errors = apply_and_collect_errors(params[:rates], :framework)
-
-        if all_errors.any?
-          @errors = all_errors.first
-          render :supplier_framework_rates
-        else
-          save_updated_rates
-          flash[:success] = 'Rates successfully updated'
           redirect_to facilities_management_admin_path
         end
       end
 
       private
 
-      def variances
+      def set_slug
+        @slug = params[:slug]
+      end
+
+      def set_rate_type
+        @rate_type = case @slug
+                     when 'average-framework-rates'
+                       :framework
+                     when 'call-off-benchmark-rates'
+                       :benchmark
+                     end
+      end
+
+      def set_variances
         @variances = {
           td_overhead: rates.find_by(code: 'M.140'),
           td_corporate: rates.find_by(code: 'M.141'),
@@ -43,28 +44,24 @@ module FacilitiesManagement
         }
       end
 
-      def init_errors
+      def initialise_errors
         @errors = []
       end
 
-      def apply_and_collect_errors(data, attribute)
-        all_errors = []
-
+      def apply_and_collect_errors(data)
         @full_services.each do |service|
           service['work_package'].each do |package|
             package['rates'].each do |rate|
-              rate.send("#{attribute}=", data[rate.id])
-              all_errors << rate.errors if rate.invalid?
+              rate.send("#{@rate_type}=", data[rate.id])
+              @errors << rate.errors if rate.invalid? @rate_type
             end
           end
         end
 
         @variances.each do |_label, rate|
-          rate.send("#{attribute}=", data[rate.id])
-          all_errors << rate.errors if rate.invalid?
+          rate.send("#{@rate_type}=", data[rate.id])
+          @errors << rate.errors if rate.invalid? @rate_type
         end
-
-        all_errors
       end
 
       def save_updated_rates
