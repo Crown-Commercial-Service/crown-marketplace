@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module Admin
-    class SuppliersFrameworkDataController < FacilitiesManagement::Admin::FrameworkController
+    class SupplierFrameworkDataController < FacilitiesManagement::Admin::FrameworkController
       def index
         @fm_suppliers = FacilitiesManagement::Admin::SuppliersAdmin.all.order(:supplier_name).select(:supplier_id, :supplier_name, :lot_data).map do |supplier|
           [supplier.supplier_name, { lot_numbers: supplier.lot_data.keys, supplier_id: supplier.supplier_id }]

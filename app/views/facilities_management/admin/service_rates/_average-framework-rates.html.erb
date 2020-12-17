@@ -1,0 +1,50 @@
+<h1 class="govuk-heading-xl">
+  <%= t('.heading') %>
+</h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <%= t('.leading_text') %>
+</p>
+
+<% @full_services.each do |service| %>
+  <table class="govuk-table ccs-errors">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-one-quarter left"><%= service['name'] %></th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+          <% if(service['value_type'] == 'money') %>
+            <%= t('.rate_pound_a') %>
+          <% else %>
+            <%= t('.rate_percentage_a') %>
+          <% end %>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% service['work_package'].each do |work_pckg| %>
+        <% rate = work_pckg['rate_standard_a_or_blank'] %>
+        <% rate_invalid = rate.invalid? :framework %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+            <div class="<%= 'govuk-form-group--error' if rate_invalid %>">
+              <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
+                <%= work_pckg['code'] %>
+                <%= work_pckg['name'] %>
+              </label>
+            <%= display_error rate, :framework %>
+            </div>
+          </td>
+
+          <td class="govuk-table__cell supplier-rates-td">
+            <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(:framework), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<h2 class="govuk-heading-xl govuk-!-font-weight-bold govuk-!-margin-bottom-2">
+  <%= t('.heading_two') %>
+</h2>
+
+<%= render 'variance_table', { attribue: :framework } %>

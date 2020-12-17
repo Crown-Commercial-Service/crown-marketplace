@@ -1,0 +1,30 @@
+<table class="govuk-table ccs-errors">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold govuk-!-width-two-quarters left">
+        <%= t('.item') %>
+      </th>
+      <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left">
+        <%= t('.rate') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% @variances.each do |rate_label, rate| %>
+      <% rate_invalid = rate.invalid? attribue %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
+          <div class="<%= 'govuk-form-group--error' if rate_invalid %>">
+            <label id="rates_<%= rate.id %>_label" for="rates_<%= rate.id %>">
+              <%= raw t(".#{rate_label}") %>
+            </label>
+            <%= display_error rate, attribue %>
+          </div>
+        </td>
+        <td class="govuk-table__cell supplier-rates-td">
+          <%= text_field_tag "rates[#{rate.id}]", rate.read_attribute_before_type_cast(attribue), class: "govuk-input govuk-input--width-3 #{'govuk-input--error' if rate_invalid }" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

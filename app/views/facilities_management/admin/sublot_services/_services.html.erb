@@ -1,21 +1,18 @@
 <%= content_for :page_title, @lot_name %>
-<div class="govuk-breadcrumbs">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_path %>">Home</a>
-    </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page"><a class="govuk-breadcrumbs__link" href="<%= facilities_management_admin_supplier_framework_data_path %>"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.breadcrumb_text_supplier_framework_data') %></a></li><li class="govuk-breadcrumbs__list-item" aria-current="page"> <%= @lot_name %></li>
-  </ol>
-</div>
+<%= admin_breadcrumbs(
+  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
+  { link_text: @lot_name }
+)%>
+
 <div class="govuk-grid-column-one-thirds">
-  <span class="govuk-caption-l"><%= @supplier_name %></span>
+  <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
 </div>
 <h1 class="govuk-heading-xl"><%= @lot_name %></h1>
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('facilities_management.admin.supplier_framework_data.sublot_data.note') %>
+  <%= t('.note') %>
 </p>
 
-<%= form_with url: facilities_management_admin_update_sublot_services_path, class: 'ccs-form', method: :put, local: 'false' do |f| %>
+<%= form_with url: facilities_management_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: false } do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
@@ -52,6 +49,6 @@
       </table>
     </fieldset>
   <% end %>
-  <%= f.submit t('facilities_management.admin.supplier_framework_data.sublot_data.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') }%>
-  <a href="<%= facilities_management_admin_supplier_framework_data_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard" ><%= t('facilities_management.admin.supplier_framework_data.sublot_data.return_button') %></a>
+  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }%>
+  <%= link_to t('.return_button'), facilities_management_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
 <% end %>
