@@ -25,7 +25,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l"><%= @supplier_name %></span>
+    <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
   </div>
 </div>
 <h1 class="govuk-heading-xl"><%= t('facilities_management.admin.supplier_framework_data.sublot_data.heading_title') %></h1>
@@ -36,7 +36,7 @@
 </p>
 
 <div style="width: 3000px !important;">
-  <%= form_with(url: "", method: "put", local: "false") do |f| %>
+  <%= form_with(url: "", method: "put", local: "false", html: { specialvalidation: true }) do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
