@@ -31,7 +31,7 @@ module FacilitiesManagement
       @tupe_flag = @procurement.tupe
     end
 
-    def calculate_services_for_buildings(supplier_name = nil, spreadsheet_type = nil, remove_cafm_help = true)
+    def calculate_services_for_buildings(supplier_id = nil, spreadsheet_type = nil, remove_cafm_help = true)
       @sum_uom = 0
       @sum_benchmark = 0
       @results = {}
@@ -39,9 +39,9 @@ module FacilitiesManagement
       @active_procurement_buildings.includes(:procurement_building_services).find_each do |building|
         procurement_building_services = building.procurement_building_services
         result = uvals_for_building(building, procurement_building_services, spreadsheet_type)
-        vals_per_building = services(building, result, remove_cafm_help, supplier_name)
+        vals_per_building = services(building, result, remove_cafm_help, supplier_id)
         @sum_uom += vals_per_building[:sum_uom]
-        if supplier_name
+        if supplier_id
           # for da spreadsheet
           @results[building.building_id] = vals_per_building[:results]
         else
@@ -170,7 +170,7 @@ module FacilitiesManagement
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
-    def services(building, uvals, remove_cafm_help, supplier_name = nil)
+    def services(building, uvals, remove_cafm_help, supplier_id = nil)
       sum_uom = 0.0
       sum_benchmark = 0.0
       results = {}
@@ -202,16 +202,16 @@ module FacilitiesManagement
                                                @helpdesk_flag,
                                                @rates,
                                                @rate_card,
-                                               supplier_name,
+                                               supplier_id,
                                                building)
         sum_uom += calc_fm.sumunitofmeasure
-        if supplier_name
+        if supplier_id
           results[v[:service_code]] = calc_fm.results
         else
           sum_benchmark += calc_fm.benchmarkedcostssum
         end
       end
-      return { sum_uom: sum_uom, results: results } if supplier_name
+      return { sum_uom: sum_uom, results: results } if supplier_id
 
       { sum_uom: sum_uom,
         sum_benchmark: sum_benchmark }
