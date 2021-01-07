@@ -12,9 +12,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report = described_class.new(procurement_with_buildings.id)
 
-      supplier_names = CCS::FM::RateCard.latest.data[:Prices].keys
-      supplier_names.each do |supplier_name|
-        report.calculate_services_for_buildings(supplier_name, :fc)
+      supplier_ids = CCS::FM::RateCard.latest.data[:Prices].keys
+      supplier_ids.each do |supplier_id|
+        report.calculate_services_for_buildings(supplier_id, :fc)
         expect(report.direct_award_value).to be > 0
       end
 
