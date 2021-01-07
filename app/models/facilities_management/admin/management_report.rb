@@ -1,82 +1,56 @@
 module FacilitiesManagement
   module Admin
-    class ManagementReport
-      include ActiveModel::Model
-      include ActiveModel::Validations
-      include ActiveModel::Validations::Callbacks
-      include Virtus.model
+    class ManagementReport < ApplicationRecord
+      include AASM
 
-      attribute :start_date
-      attribute :end_date
-      attribute :start_date_dd
-      attribute :start_date_mm
-      attribute :start_date_yyyy
-      attribute :end_date_dd
-      attribute :end_date_mm
-      attribute :end_date_yyyy
+      belongs_to :user,
+                 foreign_key: :user_id,
+                 inverse_of: :management_reports
 
-      validates :start_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
-      validates :start_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
-      validates :start_date_yyyy, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 4 }
-      validates :end_date_dd, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
-      validates :end_date_mm, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 2 }
-      validates :end_date_yyyy, numericality: { only_integer: true, message: :not_a_number }, length: { maximum: 4 }
+      acts_as_gov_uk_date :start_date, :end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
-      validate :dates_valid?
+      validate :dates_are_valid_dates
+      validates :start_date, date: { before_or_equal_to: proc { Time.zone.today } }, presence: true
+      validates :end_date, date: { before_or_equal_to: proc { Time.zone.today } }, presence: true
 
-      def initialize(start_date, end_date)
-        @start_date = start_date
-        @end_date = end_date
-      end
+      has_one_attached :management_report_csv
 
-      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
-      def set_start_date
-        self.start_date = Date.new(start_date_yyyy.to_i, start_date_mm.to_i, start_date_dd.to_i)
-        errors.add(:start_date, :invalid) if start_date_yyyy.to_i >= 10000 || start_date_yyyy.to_i < 1
-        errors.add(:start_date, :invalid) if errors[:start_date_dd].any? || errors[:start_date_mm].any? || errors[:start_date_yyyy].any?
-      rescue StandardError
-        errors.add(:start_date, :invalid)
-        self.start_date = nil
-      end
+      after_create :generate_report_csv
 
-      def set_end_date
-        self.end_date = Date.new(end_date_yyyy.to_i, end_date_mm.to_i, end_date_dd.to_i)
-        errors.add(:end_date, :invalid) if end_date_yyyy.to_i >= 10000 || end_date_yyyy.to_i < 1
-        errors.add(:end_date, :invalid) if errors[:end_date_dd].any? || errors[:end_date_mm].any? || errors[:end_date_yyyy].any?
-      rescue StandardError
-        errors.add(:end_date, :invalid)
-        self.end_date = nil
-      end
-      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+      aasm do
+        state :generating_csv, initial: true
+        state :completed
 
-      def dates_present?
-        dates_present = true
-        if [start_date_dd, start_date_mm, start_date_yyyy].any?(&:blank?)
-          errors.add(:start_date, :blank)
-          dates_present = false
-        else
-          set_start_date
+        event :complete do
+          transitions from: :generating_csv, to: :completed
         end
-        if [end_date_dd, end_date_mm, end_date_yyyy].any?(&:blank?)
-          errors.add(:end_date, :blank)
-          dates_present = false
-        else
-          set_end_date
-        end
-        dates_present
       end
 
-      def dates_valid?
-        return false unless dates_present?
+      private
 
-        return false if start_date.nil? || end_date.nil?
+      def generate_report_csv
+        GenerateFMAdminReportJob.perform_later(id) unless management_report_csv.attached?
+      end
 
-        if end_date < start_date
-          errors.add(:end_date, :less_than_or_equal_to)
-          return false
-        end
+      def dates_are_valid_dates
+        start_date_valid_date
+        end_date_valid_date
 
-        true
+        return if @errors.any?
+
+        @errors.add(:end_date, :must_be_before_start_date) unless start_date <= end_date
+      end
+
+      def end_date_valid_date
+        Date.parse("#{end_date_dd.to_i}/#{end_date_mm.to_i}/#{end_date_yyyy.to_i}")
+      rescue ArgumentError
+        errors.add(:end_date, :not_a_date)
+      end
+
+      def start_date_valid_date
+        Date.parse("#{start_date_dd.to_i}/#{start_date_mm.to_i}/#{start_date_yyyy.to_i}")
+      rescue ArgumentError
+        errors.add(:start_date, :not_a_date)
       end
     end
   end
