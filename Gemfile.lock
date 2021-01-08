@@ -177,6 +177,8 @@ GEM
       railties (>= 3.2)
     down (4.8.1)
       addressable (~> 2.5)
+    email_validator (2.2.2)
+      activemodel
     equalizer (0.0.11)
     erubi (1.10.0)
     execjs (2.7.0)
@@ -554,6 +556,7 @@ DEPENDENCIES
   devise (~> 4.7.2)
   dotenv-rails (>= 2.7.6)
   down
+  email_validator
   factory_bot_rails (>= 6.1.0)
   faker (~> 2.10.2)
   friendly_id (~> 5.2.5)
