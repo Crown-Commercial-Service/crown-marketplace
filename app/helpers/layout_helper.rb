@@ -344,5 +344,28 @@ module LayoutHelper
       concat(content_tag(:div, class: 'govuk-body govuk-!-padding-left-5', &block))
     end
   end
+
+  def admin_breadcrumbs(*breadcrumbs)
+    tag.div(class: 'govuk-breadcrumbs') do
+      tag.ol(class: 'govuk-breadcrumbs__list') do
+        capture do
+          concat(admin_breadcrumb_link('Home', facilities_management_admin_path))
+          breadcrumbs.each do |breadcrumb|
+            concat(admin_breadcrumb_link(breadcrumb[:link_text], breadcrumb[:link_url]))
+          end
+        end
+      end
+    end
+  end
+
+  def admin_breadcrumb_link(link_text, link_url)
+    tag.li(class: 'govuk-breadcrumbs__list-item') do
+      if link_url.present?
+        link_to link_text, link_url, class: 'govuk-breadcrumbs__link'
+      else
+        link_text
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

@@ -27,6 +27,41 @@ en:
               date_before_or_equal_to: The ‘From’ date must be today or in the past
               invalid: Enter a valid ‘From’ date
               not_a_date: Enter a valid ‘From’ date
+        facilities_management/admin/suppliers_admin:
+          attributes:
+            address_county:
+              too_long: The county must be 50 characters or less
+            address_line_1:
+              blank: Enter the building or street name
+              too_long: Building or street name must be 100 characters or less
+            address_line_2:
+              too_long: Second address line must be 100 characters or less
+            address_postcode:
+              blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
+              too_short: Enter a valid postcode, for example SW1A 1AA
+            address_town:
+              blank: Enter the town or city
+              too_long: The town or city name for this building must be 50 characters or less
+            contact_email:
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
+              email: Enter an email address in the correct format, for example name@organisation.gov.uk
+            contact_name:
+              blank: You must enter a name for the contact
+              too_long: The contact name cannot be more than 100 characters
+            contact_phone:
+              blank: You must enter a telephone number for the contact
+              invalid: Enter a UK telephone number, for example 020 7946 0000
+              too_long: The telephone number cannot be more than 15 characters
+            duns:
+              blank: Enter the DUNS number
+              invalid: Enter the DUNS number in the correct fomrat, for example 214567885
+            registration_number:
+              blank: Enter the company registration number
+              invalid: Enter the company registration number in the correct format, for example AC123456
+            supplier_name:
+              blank: You must enter a supplier name
+              too_long: The supplier name cannot be more than 100 characters
         facilities_management/building:
           attributes:
             address_line_1:
@@ -425,9 +460,11 @@ en:
           dashboard_header: RM3830 administration dashboard
           dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
           dashboard_manage_rate: Manage the average framework rates and variances
+          dashboard_manage_supplier_details: Manage the details of the suppliers
           dashboard_management_report_detail: Download the management data in CSV format
           dashboard_management_report_header: Management report
           dashboard_supplier_data: Supplier data
+          dashboard_supplier_details: Supplier details
           dashboard_supplier_framework_data: Supplier framework data
           dashboard_supplier_prices: Manage supplier services, prices and regions
       management_reports:
@@ -459,6 +496,49 @@ en:
         new:
           admin_sign_in_header: Sign in to your administration dashboard
           email_hint_html: Enter the email address you used to register
+      supplier_details:
+        additional_supplier_information:
+          duns_question: Enter the DUNS number for the supplier
+          registration_number_question: Enter the company registration number for the supplier
+        edit:
+          cancel_text: Cancel and return to the supplier details
+          page_title:
+            additional_supplier_information: Additional supplier information
+            supplier_address: Supplier address
+            supplier_contact_information: Supplier contact information
+            supplier_name: Supplier name
+          save_and_return: Save and return
+        index:
+          heading: Supplier details
+          supplier_contact_email: Contact email
+          supplier_name: Supplier name
+          view_supplier_details: You can view the full details for a supplier by clicking on their name
+        show:
+          additional_supplier_information: Additional supplier information
+          change: Change
+          contact_email: Contact email
+          contact_name: Contact name
+          contact_phone: Contact telephone number
+          duns: DUNS number
+          edit_supplier_details: You can edit the details for the supplier by clicking on change
+          full_address: Full address
+          page_title: "%{supplier_name} details"
+          registration_number: Company registration number
+          supplier_contact_information: Supplier contact information
+          supplier_details: Supplier details
+          supplier_name: Supplier name
+        supplier_address:
+          building_and_street: Building and street
+          county: County (optional)
+          postcode: Postcode
+          town_or_city: Town or city
+        supplier_contact_information:
+          contact_email_info: This email will be used when sending contracts to the supplier
+          contact_email_question: Enter the contact email for the supplier
+          contact_name_question: Enter the contact name for the supplier
+          contact_phone_question: Enter the telephone number for the supplier
+        supplier_name:
+          supplier_name_question: Enter the name for the supplier
       supplier_framework_data:
         heading_title: Supplier framework data
         rtrn_link: Return to admin dashboard
