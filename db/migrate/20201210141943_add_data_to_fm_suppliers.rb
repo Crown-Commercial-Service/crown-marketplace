@@ -8,12 +8,15 @@ class AddDataToFmSuppliers < ActiveRecord::Migration[5.2]
   end
 
   def up
+    SupplierDetail.reset_column_information
+    FMSupplier.reset_column_information
+
     SupplierDetail.all.each do |supplier_detail|
       contact_email = supplier_detail.contact_email
       fm_supplier = FMSupplier.find_by(contact_email: contact_email)
       next if fm_supplier.blank?
 
-      fm_supplier.update(
+      fm_supplier.assign_attributes(
         user_id: supplier_detail.user_id,
         contact_name: supplier_detail.contact_name,
         contact_phone: supplier_detail.contact_number,
@@ -26,6 +29,7 @@ class AddDataToFmSuppliers < ActiveRecord::Migration[5.2]
         address_county: supplier_detail.address_county,
         address_postcode: supplier_detail.address_postcode
       )
+      fm_supplier.save
     end
   end
 
