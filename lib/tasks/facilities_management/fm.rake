@@ -116,17 +116,6 @@ namespace :db do
       FM.populate_security_types
     end
   end
-  desc 'add FM static data to the database'
-  task fm_static_data: :environment do
-    p 'Creating FM static data table'
-    FM.static_data_table
-    p 'add services data to fm_static_table'
-    FM.facilities_management_services
-    p 'add work_packages data to fm_static_table'
-    FM.facilities_management_work_packages
-    p 'add bank_holidays data to fm_static_table'
-    FM.facilities_management_bank_holidays
-  end
   task static: :fmdata do
   end
 end
