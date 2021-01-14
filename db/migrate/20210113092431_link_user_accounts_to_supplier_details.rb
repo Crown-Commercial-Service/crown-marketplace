@@ -8,6 +8,8 @@ class LinkUserAccountsToSupplierDetails < ActiveRecord::Migration[5.2]
   end
 
   def up
+    SupplierDetail.reset_column_information
+
     SupplierDetail.all.each do |supplier_detail|
       next if supplier_detail.user_id.present?
 
