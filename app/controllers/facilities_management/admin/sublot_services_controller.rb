@@ -4,6 +4,7 @@ module FacilitiesManagement
       rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
       rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
       rescue_from NoMethodError, with: :render_no_method_error_response
+      before_action :setup_supplier
 
       def render_unprocessable_entity_response(exception)
         logger.error exception.message
@@ -21,32 +22,33 @@ module FacilitiesManagement
       end
 
       def index
-        supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
-        @supplier_name = supplier_data['supplier_name']
+        @supplier_name = @supplier.supplier_name
         @lot_name = 'Sub-lot ' + params[:lot] + ' services'
-        lot_data = supplier_data['lots'].select { |data| data['lot_number'] == params[:lot] } .first
-        supplier_services = lot_data['services'].nil? ? [] : lot_data['services']
+        lot_data = @supplier.lot_data[params[:lot]]
+        supplier_services = lot_data['services'] || []
         full_services
         setup_checkboxes(supplier_services)
       end
 
       def update
-        supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
-        supplier.replace_services_for_lot(params[:checked_services], params[:lot])
-        supplier.save
+        @supplier.replace_services_for_lot(params[:checked_services], params[:lot])
+        @supplier.save
         redirect_to facilities_management_admin_supplier_framework_data_path
       end
 
       private
 
+      def setup_supplier
+        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
+      end
+
       def setup_checkboxes(supplier_services)
-        @supplier_rate_data_checkboxes = {}
-        @full_services.each do |service|
-          service['work_package'].each do |work_pckg|
+        @supplier_rate_data_checkboxes = @full_services.map do |service|
+          service['work_package'].map do |work_pckg|
             code = work_pckg['code']
-            @supplier_rate_data_checkboxes[code] = supplier_services.include?(code)
-          end
-        end
+            [code, supplier_services.include?(code)]
+          end.to_h
+        end.inject(:merge)
       end
     end
   end

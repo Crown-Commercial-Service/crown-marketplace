@@ -113,7 +113,7 @@ module ProcurementValidator
     end
 
     def remove_excess_whitespace_from_name
-      self.contract_name = contract_name&.split&.join(' ')
+      contract_name&.squish!
     end
 
     #############################################
@@ -227,7 +227,7 @@ module ProcurementValidator
     end
 
     def all_complete
-      return if errors.any?
+      return if errors.any? || building_data_frozen?
 
       check_contract_details_completed
       check_contract_period_completed

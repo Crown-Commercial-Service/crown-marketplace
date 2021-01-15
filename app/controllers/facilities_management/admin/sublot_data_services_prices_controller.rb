@@ -51,12 +51,16 @@ module FacilitiesManagement
 
       private
 
-      def setup_supplier_data
-        supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
-        @supplier_name = supplier_data['supplier_name']
+      def setup_supplier
+        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
+        @supplier_name = @supplier.supplier_name
+      end
 
-        lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
-        lot1a_data[0]['services']
+      def setup_supplier_data
+        setup_supplier
+
+        lot1a_data = @supplier['lot_data']['1a']
+        lot1a_data['services']
       end
 
       def setup_instance_variables
@@ -88,14 +92,11 @@ module FacilitiesManagement
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
       def update_checkboxes
-        supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
-        supplier_data = supplier['data']
-        @supplier_name = supplier_data['supplier_name']
+        setup_supplier
 
-        lot1a_data = supplier_data['lots'].select { |data| data['lot_number'] == '1a' }
-        supplier_services = lot1a_data[0]['services']
+        lot1a_data = @supplier['lot_data']['1a']
+        supplier_services = lot1a_data['services']
 
         supplier_checkboxes = determine_used_services
         checked_services = params['checked_services'].nil? ? [] : params['checked_services']
@@ -105,9 +106,8 @@ module FacilitiesManagement
           supplier_services.delete(service) if (!checked_services.include? service) && (supplier_services.include? service)
         end
 
-        supplier.save
+        @supplier.save
       end
-      # rubocop:enable Metrics/AbcSize
 
       def determine_used_services
         supplier_checkboxes = []
@@ -122,8 +122,7 @@ module FacilitiesManagement
 
       def update_rates(only_validate)
         invalid_services = []
-        supplier_data = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])['data']
-        @supplier_name = supplier_data['supplier_name']
+        setup_supplier
         rate_card = CCS::FM::RateCard.latest
         setup_variance_supplier_data(rate_card)
 

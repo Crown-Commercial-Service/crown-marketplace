@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe StaticDataLoader do
-  describe '.regions_not_empty' do
-    it 'there is at least one Region' do
-      described_class.load_static_data(FacilitiesManagement::Region)
-      expect(FacilitiesManagement::Region.all.count.zero?).to be(false)
-    end
-  end
-
   describe '.nuts1_codes_not_empty' do
     it 'there is at least one Nuts1 Region' do
       described_class.load_static_data(Nuts1Region)

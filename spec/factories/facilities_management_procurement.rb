@@ -68,6 +68,7 @@ FactoryBot.define do
     authorised_contact_detail { create :facilities_management_procurement_authorised_contact_detail }
     notices_contact_detail { create :facilities_management_procurement_notices_contact_detail }
     procurement_suppliers { build_list :facilities_management_procurement_supplier, 3 }
+    governing_law { 'english' }
   end
 
   factory :facilities_management_procurement_with_contact_details_with_buildings, parent: :facilities_management_procurement_with_contact_details do

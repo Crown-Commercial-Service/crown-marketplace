@@ -24,7 +24,7 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
       context 'when signed in as the supplier that the procurement belongs to' do
         login_fm_supplier
         it 'returns the path' do
-          contract.supplier.update(data: { 'supplier_email' => controller.current_user.email })
+          contract.supplier.update(contact_email: controller.current_user.email)
 
           get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
           expect(response).to have_http_status(:found)

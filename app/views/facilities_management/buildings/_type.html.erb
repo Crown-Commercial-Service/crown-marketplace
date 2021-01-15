@@ -18,7 +18,7 @@
       <% end %>
     </div>
     <%= govuk_radio_driver %>
-    <details class="govuk-details" data-module="govuk-details" <%= 'open' if open_state_of_building_details(f.object) %>>
+    <details class="govuk-details" data-module="govuk-details" <%= 'open' if open_state_of_building_details %>>
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
           <%= t('.view_more') %>
@@ -27,7 +27,7 @@
       <div class="govuk-details__text govuk-!-padding-bottom-0">
         <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
           <div class="govuk-radios__item">
-            <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details(f.object) %>
+            <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details %>
             <%= f.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
               <%= building_type[:title] %>
               <%= building_type_caption(building_type) %>
@@ -35,7 +35,7 @@
           </div>
         <% end %>
         <%= govuk_radio_driver %>
-        <%= render partial: 'facilities_management/buildings/other', locals: { f: f, attribute: :building_type, other_attribute: :other_building_type, description: t('.describe_building'), disabled: !open_state_of_building_details(f.object), not_other: f.object.building_type != 'other'}%>
+        <%= render partial: 'facilities_management/buildings/other', locals: { f: f, attribute: :building_type, other_attribute: :other_building_type, description: t('.describe_building'), disabled: !open_state_of_building_details, not_other: f.object.building_type != 'other'}%>
       </div>
     </details>
   </fieldset>

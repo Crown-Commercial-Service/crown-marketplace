@@ -2,7 +2,7 @@ module FacilitiesManagement
   module Procurements
     class DocumentsProcurementHelper
       def self.review_docs
-        base_scope = %i[facilities_management procurements da_buyer review_contract]
+        base_scope = %i[facilities_management procurements contract_details da_journey review]
 
         @review_your_contract_static_files = [
           I18n.t('attachment_1.file_name', scope: base_scope),
@@ -48,10 +48,10 @@ module FacilitiesManagement
             zip.print IO.read(Rails.root + files_path + file)
           end
 
-          zip.put_next_entry 'Attachment 4 - Order Form and Call-off Schedule (DA).docx'
+          zip.put_next_entry 'Attachment 4 - Order Form and Call-Off Schedules (DA) v3.0.docx'
           zip.print generate_doc(contract_id)
 
-          zip.put_next_entry 'Call-Off Schedule 2 - Staff Transfer (DA).docx'
+          zip.put_next_entry 'Call-Off Schedule 2 - Staff Transfer (DA) v3.0.docx'
           zip.print generate_doc_call_off_schedule_2(contract_id)
         end
 
@@ -69,7 +69,6 @@ module FacilitiesManagement
         @supplier = @contract.supplier
         @procurement = @contract.procurement
         @buyer_detail = @procurement.user.buyer_detail
-        @supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @supplier.data['contact_email'])
         @invoice_contact_detail = @procurement.using_buyer_detail_for_invoice_details? ? @buyer_detail : @procurement.invoice_contact_detail
         @authorised_contact_detail = @procurement.using_buyer_detail_for_authorised_detail? ? @buyer_detail : @procurement.authorised_contact_detail
         @notice_contact_detail = @procurement.using_buyer_detail_for_notices_detail? ? @buyer_detail : @procurement.notices_contact_detail
@@ -79,7 +78,6 @@ module FacilitiesManagement
           supplier: @supplier,
           procurement: @procurement,
           buyer_detail: @buyer_detail,
-          supplier_detail: @supplier_detail,
           invoice_contact_detail: @invoice_contact_detail,
           authorised_contact_detail: @authorised_contact_detail,
           notice_contact_detail: @notice_contact_detail

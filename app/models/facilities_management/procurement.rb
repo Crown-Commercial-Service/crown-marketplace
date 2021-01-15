@@ -4,6 +4,7 @@ module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
     include ProcurementValidator
+    include ServiceQuestionsConcern
 
     # buyer
     belongs_to :user,
@@ -40,6 +41,7 @@ module FacilitiesManagement
     # needed to move this validation here as it was being called incorrectly in the validator, ie when a file with the wrong
     # extension or size was being uploaded. The error message for this rather than the carrierwave error messages were being displayed
     validates :security_policy_document_file, attached: true, if: :security_policy_document_required?
+    validate :security_policy_document_file_ext_validation
     validates :security_policy_document_file, content_type: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document]
     validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
@@ -140,6 +142,10 @@ module FacilitiesManagement
         end
       end
 
+      event :return_to_results do
+        transitions from: :da_draft, to: :results, after: :start_da_journey
+      end
+
       event :set_state_to_detailed_search do
         before do
           remove_buyer_choice
@@ -210,6 +216,7 @@ module FacilitiesManagement
       next_event = aasm(:da_journey).events(reject: :start_da_journey, permitted: true).first
       aasm(:da_journey).fire!(next_event.name) if next_event.present?
     end
+
     aasm(:da_journey, column: 'da_journey_state') do
       state :pricing, initial: true
       state :what_next
@@ -251,21 +258,6 @@ module FacilitiesManagement
       event :set_to_sent do
         transitions from: :sending, to: :sent
       end
-    end
-
-    def create_new_procurement_buildings
-      building_ids = procurement_buildings.map(&:building_id)
-
-      user.buildings.each do |building|
-        next if building_ids.include? building.id
-
-        procurement_buildings.create(building_id: building.id)
-      end
-    end
-
-    def find_or_build_procurement_building(building_id)
-      procurement_building = procurement_buildings.find_or_initialize_by(building_id: building_id)
-      procurement_building.save
     end
 
     def buildings_standard
@@ -358,13 +350,17 @@ module FacilitiesManagement
     end
 
     def offer_to_next_supplier
-      return false if procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).empty?
+      return false if unsent_direct_award_offers.empty?
 
       unless procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').empty?
         last_contract = procurement_suppliers.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE).where.not(aasm_state: 'unsent').last
         last_contract.update(contract_closed_date: last_contract.set_contract_closed_date)
       end
-      procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)&.first&.offer_to_supplier!
+      unsent_direct_award_offers&.first&.offer_to_supplier!
+    end
+
+    def unsent_direct_award_offers
+      procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)
     end
 
     def mobilisation_period_start_date
@@ -388,35 +384,24 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.where(
-        code: FacilitiesManagement::ServicesAndQuestions.get_codes_by_question(:service_standard)
-      ).map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
     end
 
-    def active_procurement_building_region_codes
+    def active_procurement_buildings_with_attribute_distinct(attribute)
       if building_data_frozen?
-        active_procurement_buildings.distinct(:address_region_code).pluck(:address_region_code)
+        active_procurement_buildings.distinct(attribute).pluck(attribute)
       else
-        attribute = 'facilities_management_buildings.address_region_code'
-        active_procurement_buildings.joins(:building).select(attribute).distinct(attribute).pluck(attribute)
+        full_attribute = "facilities_management_buildings.#{attribute}"
+        active_procurement_buildings.joins(:building).select(full_attribute).distinct(full_attribute).pluck(full_attribute)
       end
     end
 
-    def active_procurement_building_gross_internal_areas
+    def active_procurement_buildings_with_attribute(attribute)
       if building_data_frozen?
-        active_procurement_buildings.pluck(:gia).compact
+        active_procurement_buildings.pluck(attribute).compact
       else
-        attribute = 'facilities_management_buildings.gia'
-        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
-      end
-    end
-
-    def active_procurement_building_external_areas
-      if building_data_frozen?
-        active_procurement_buildings.pluck(:external_area).compact
-      else
-        attribute = 'facilities_management_buildings.external_area'
-        active_procurement_buildings.joins(:building).select(attribute).pluck(attribute).compact
+        full_attribute = "facilities_management_buildings.#{attribute}"
+        active_procurement_buildings.joins(:building).select(full_attribute).pluck(full_attribute)
       end
     end
 
@@ -488,17 +473,19 @@ module FacilitiesManagement
     end
 
     def services_status
-      service_codes.any? ? :completed : :not_started
+      @services_status ||= service_codes.any? ? :completed : :not_started
     end
 
     def buildings_status
-      active_procurement_buildings.any? ? :completed : :not_started
+      @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
     end
 
     def buildings_and_services_status
-      return :cannot_start if services_status == :not_started || buildings_status == :not_started
-
-      buildings_and_services_completed? ? :completed : :incomplete
+      @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
+                                           :cannot_start
+                                         else
+                                           buildings_and_services_completed? ? :completed : :incomplete
+                                         end
     end
 
     def buildings_and_services_completed?
@@ -507,13 +494,18 @@ module FacilitiesManagement
 
     def service_requirements_status
       return :cannot_start unless buildings_and_services_status == :completed
-      return :not_required if no_services_requiring_standard? && no_services_requiring_unit_of_measure?
+      return :not_required unless services_require_questions?
 
       service_requirements_completed? ? :completed : :incomplete
     end
 
     def service_requirements_completed?
-      active_procurement_buildings.all?(&:complete?)
+      gia_complete? &&
+        external_area_complete? &&
+        services_requiring_lift_data_complete? &&
+        services_requiring_volumes_complete? &&
+        services_requiring_service_hours_complete? &&
+        services_requiring_service_standard_complete?
     end
 
     def remove_existing_spreadsheet_import
@@ -530,12 +522,8 @@ module FacilitiesManagement
       Service.where(code: service_codes)&.sort_by { |service| sort_order.index(service.code) }
     end
 
-    def no_services_requiring_unit_of_measure?
-      procurement_building_services.none?(&:requires_unit_of_measure?) && procurement_buildings.none?(&:requires_building_area?)
-    end
-
-    def no_services_requiring_standard?
-      procurement_building_services.none?(&:requires_service_standard?)
+    def services_require_questions?
+      (service_codes & services_requiring_questions).any?
     end
 
     def can_be_deleted?
@@ -548,20 +536,24 @@ module FacilitiesManagement
       active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region_code').any?(&:blank?)
     end
 
+    def contract_detail_incomplete?(contact_detail)
+      send(contact_detail).present? && send(contact_detail).name.nil?
+    end
+
     private
 
     def freeze_procurement_data
       return unless detailed_search?
 
-      copy_procurement_buildings_gia
+      copy_procurement_buildings_data
       copy_fm_rates_to_frozen
       copy_fm_rate_cards_to_frozen
       calculate_initial_assesed_value
       save_data_for_procurement
     end
 
-    def copy_procurement_buildings_gia
-      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:set_gia) }
+    def copy_procurement_buildings_data
+      ActiveRecord::Base.transaction { active_procurement_buildings.includes(:building).find_each(&:freeze_building_data) }
     end
 
     def save_data_for_procurement
@@ -619,5 +611,49 @@ module FacilitiesManagement
     def contract_value_needed?
       all_services_unpriced_and_no_buyer_input? || some_services_unpriced_and_no_buyer_input?
     end
+
+    def gia_complete?
+      building_area_complete?(:gia, services_requiring_gia)
+    end
+
+    def external_area_complete?
+      building_area_complete?(:external_area, services_requiring_external_area)
+    end
+
+    def building_area_complete?(attribute, codes)
+      full_attribute = "facilities_management_buildings.#{attribute}"
+
+      active_procurement_buildings.where('service_codes && ARRAY[?]::text[]', codes).joins(:building).select(full_attribute).pluck(full_attribute).all?(&:positive?)
+    end
+
+    def services_requiring_lift_data_complete?
+      procurement_building_services.where(code: services_requiring_lift_data).all? { |service| service.sum_number_of_floors.positive? }
+    end
+
+    def services_requiring_volumes_complete?
+      volume_contexts.all? do |context|
+        service_question_complete_for_codes?(service_quesions.get_codes_by_question(context), context)
+      end
+    end
+
+    def services_requiring_service_hours_complete?
+      service_question_complete_for_codes?(services_requiring_service_hours, :service_hours)
+    end
+
+    def services_requiring_service_standard_complete?
+      service_question_complete_for_codes?(services_requiring_service_standards, :service_standard)
+    end
+
+    def service_question_complete_for_codes?(codes, context)
+      procurement_building_services.where(code: codes).pluck(context).all?(&:present?)
+    end
+
+    def security_policy_document_file_ext_validation
+      return unless security_policy_document_file.attached?
+
+      errors.add(:security_policy_document_file, :wrong_extension) if VALID_FILE_EXTENSIONS.none? { |extension| security_policy_document_file.blob.filename.to_s.end_with?(extension) }
+    end
+
+    VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx'].freeze
   end
 end

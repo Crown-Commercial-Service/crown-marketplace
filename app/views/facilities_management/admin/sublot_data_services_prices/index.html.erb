@@ -36,7 +36,7 @@
 </p>
 
 <div style="width: 3000px !important;">
-  <%= form_with(url: "", method: "put", local: "false") do %>
+  <%= form_with(url: "", method: "put", local: "false") do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
@@ -133,7 +133,7 @@
     </tbody>
   </table>
 
-  <input type="submit" name="update_sublot_data_services_prices" aria-label="update_sublot_data_services_prices" value="<%= t('facilities_management.admin.supplier_framework_data.sublot_data.update_button') %>" class="govuk-button" data-disable-with="Continue"><br/>
+  <%= f.submit t('facilities_management.admin.supplier_framework_data.sublot_data.update_button'), class: 'govuk-button', name: 'update_sublot_data_services_prices', aria: { label: 'update_sublot_data_services_prices' } %><br/>
   <%= link_to t('facilities_management.admin.supplier_rates.supplier_benchmark_rates.rtrn_link'), facilities_management_admin_path, class: 'govuk-link govuk-!-font-size-19' %>
   <% end %>
 </div>

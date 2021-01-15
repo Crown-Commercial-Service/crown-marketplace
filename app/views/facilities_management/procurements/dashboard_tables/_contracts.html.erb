@@ -15,7 +15,7 @@
           <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
             <%= link_to contract.procurement.contract_name, facilities_management_procurement_contract_path(procurement_id: contract.procurement.id, id: contract.id) %>
           </th>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= contract.supplier.data['supplier_name'] %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= contract.supplier.supplier_name %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(contract.contract_start_date) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= format_date(contract.contract_end_date) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>

@@ -57,7 +57,7 @@ class ProcurementCsvExport
     'Optional call-off extensions',
     'Number of Buildings', # 20
     'Building Types',
-    'Services',
+    'Building services',
     'Building GIA sum total',
     'Building external area sum total',
     'Building regions', # 25
@@ -115,7 +115,7 @@ class ProcurementCsvExport
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
       building_total_external_area(procurement),
-      expand_regions(procurement.active_procurement_building_region_codes), # 25
+      expand_regions(procurement.active_procurement_buildings_with_attribute_distinct(:address_region_code)), # 25
       delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
@@ -161,7 +161,7 @@ class ProcurementCsvExport
       expand_services_and_standards(procurement.procurement_building_service_codes_and_standards),
       building_gias(procurement),
       building_total_external_area(procurement),
-      expand_regions(procurement.active_procurement_building_region_codes), # 25
+      expand_regions(procurement.active_procurement_buildings_with_attribute_distinct(:address_region_code)), # 25
       delimited_with_pence(procurement.assessed_value),
       format_lot_number(procurement.lot_number),
       yes_no(procurement.eligible_for_da),
@@ -365,16 +365,15 @@ class ProcurementCsvExport
   end
 
   def self.building_types(procurement)
-    procurement.active_procurement_buildings.map { |pb| pb.building_type || pb.building.building_type }
-               .uniq.join(LIST_ITEM_SEPARATOR)
+    procurement.active_procurement_buildings_with_attribute_distinct(:building_type).join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_gias(procurement)
-    procurement.active_procurement_building_gross_internal_areas.map(&:to_i).reduce(0, :+)
+    procurement.active_procurement_buildings_with_attribute(:gia).map(&:to_i).reduce(0, :+)
   end
 
   def self.building_total_external_area(procurement)
-    procurement.active_procurement_building_external_areas.map(&:to_i).reduce(0, :+)
+    procurement.active_procurement_buildings_with_attribute(:external_area).map(&:to_i).reduce(0, :+)
   end
 
   def self.spreadsheet_import_status(procurement)
@@ -384,6 +383,6 @@ class ProcurementCsvExport
   end
 
   def self.supplier_names
-    @supplier_names ||= CCS::FM::Supplier.all.select(:supplier_id, :data).map { |supplier| [supplier.supplier_id, supplier.data['supplier_name']] }.to_h
+    @supplier_names ||= FacilitiesManagement::SupplierDetail.all.select(:supplier_id, :supplier_name).pluck(:supplier_id, :supplier_name).to_h
   end
 end

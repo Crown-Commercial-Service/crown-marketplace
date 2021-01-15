@@ -15,7 +15,7 @@
   <%= t('facilities_management.admin.supplier_rates.supplier_framework_rates.leading_text') %>
 </p>
 
-<%= form_tag facilities_management_admin_update_average_framework_rates_path, class: 'ccs-form', method: :put, specialvalidation: true, novalidate: true, local: false do %>
+<%= form_with url: facilities_management_admin_update_average_framework_rates_path, class: 'ccs-form', method: :put, specialvalidation: true, novalidate: true, local: 'false' do |f| %>
   <% @full_services.each do |service| %>
     <table class="govuk-table ccs-errors">
       <thead class="govuk-table__head">
@@ -98,7 +98,6 @@
       <% end %>
     </tbody>
   </table>
-
-  <input type="submit" name="update_benchmark_rates" value="<%= t('facilities_management.admin.supplier_rates.supplier_framework_rates.update_button') %>" aria-label="<%= t('facilities_management.admin.supplier_rates.supplier_framework_rates.update_button') %>" class="govuk-button" data-disable-with="Continue">
+  <%= f.submit t('facilities_management.admin.supplier_rates.supplier_framework_rates.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label: t('facilities_management.admin.supplier_rates.supplier_framework_rates.update_button') } %>
   <a href="<%= facilities_management_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('facilities_management.admin.supplier_rates.supplier_framework_rates.rtrn_link') %></a>
 <% end %>

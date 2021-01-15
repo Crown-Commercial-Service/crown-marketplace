@@ -51,11 +51,15 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
-  def open_state_of_building_details(building)
-    return false if building[:building_type].blank?
+  def open_state_of_building_details
+    @open_state_of_building_details ||= should_building_details_be_open?
+  end
 
-    if building.building_type == 'other' || building.errors.key?(:other_building_type) ||
-       FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:title] }.exclude?(building[:building_type])
+  def should_building_details_be_open?
+    return false if @page_data[:model_object][:building_type].blank?
+
+    if @page_data[:model_object].building_type == 'other' || @page_data[:model_object].errors.key?(:other_building_type) ||
+       FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:id] }.exclude?(@page_data[:model_object][:building_type])
       true
     else
       false
@@ -81,35 +85,11 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
-  def postcode_search_visible?
-    @postcode_search_visible ||= @page_data[:model_object].address_postcode.blank? || @page_data[:model_object].errors[:address_postcode].any?
-  end
-
-  def postcode_change_visible?
-    @postcode_change_visible ||= @page_data[:model_object].address_postcode.present? && @page_data[:model_object].errors[:address_postcode].none? && @page_data[:model_object].address_line_1.blank?
-  end
-
-  def select_an_address_visible?
-    @select_an_address_visible ||= postcode_change_visible?
-  end
-
-  def full_address_visible?
-    @full_address_visible ||= @page_data[:model_object].address_line_1.present?
-  end
-
   def select_a_region_visible?
     @select_a_region_visible ||= @page_data[:model_object].address_line_1.present? && @page_data[:model_object].address_region.blank?
   end
 
   def full_region_visible?
     @full_region_visible ||= @page_data[:model_object].address_region.present?
-  end
-
-  def hidden_class(visible)
-    'govuk-visually-hidden' unless visible
-  end
-
-  def input_visible?(visible)
-    visible ? 0 : -1
   end
 end

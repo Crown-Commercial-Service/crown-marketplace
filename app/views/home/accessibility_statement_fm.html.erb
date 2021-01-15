@@ -8,7 +8,7 @@
   <div>
     <p>
       <%= t('.this_statement') %> <br>
-      <%= link_to t('.market_place_link'), t('.market_place_link'), class: 'govuk-link govuk-link--no-visited-state' %>
+      <%= link_to t('.market_place_link'), t('.market_place_link'), class: 'govuk-link govuk-link--no-visited-state', target: '_blank' %>
     </p>
     <p>
       <%= t('.this_website') %>
@@ -23,7 +23,7 @@
       <%= t('.website_text_simple') %>
     </p>
     <p>
-      <%= link_to t('.ability_net'), t('.ability_net_link'), class: 'govuk-link govuk-link--no-visited-state' %> has advice on making your device easier to use if you have a disability.
+      <%= link_to t('.ability_net'), t('.ability_net_link'), class: 'govuk-link govuk-link--no-visited-state', target: '_blank' %> has advice on making your device easier to use if you have a disability.
     </p>
   </div>
 
@@ -40,7 +40,6 @@
       <li> <%= t('.list_2_text_reflow') %> </li>
       <li> <%= t('.list_2_contrast') %> </li>
       <li> <%= t('.list_2_page_view') %> </li>
-      <li> <%= t('.list_2_contrast_ratio') %> </li>
     </ul>
   </div>
 
@@ -81,7 +80,7 @@
     </h2>
     <p>
       <%= t('.equality') %>
-      <%= link_to t('.equality_link_text'), t('.equality_link'), class: 'govuk-link govuk-link--no-visited-state' %>.
+      <%= link_to t('.equality_link_text'), t('.equality_link'), class: 'govuk-link govuk-link--no-visited-state', target: '_blank' %>.
     </p>
   </div>
 
@@ -96,7 +95,7 @@
     </p>
     <p>
       <%= t('.this_website_partially_1') %>
-      <%= link_to t('.accessibility_guidelines_link_text'), t('.accessibility_guidelines_link'), class: 'govuk-link govuk-link--no-visited-state' %>,
+      <%= link_to t('.accessibility_guidelines_link_text'), t('.accessibility_guidelines_link'), class: 'govuk-link govuk-link--no-visited-state', target: '_blank' %>,
       <%= t('.this_website_partially_2') %>
     </p>
   </div>
@@ -157,20 +156,6 @@
         <%= t('.page_optimisation_this_falls') %>
       </p>
     </div>
-
-    <hr class="govuk-section-break govuk-section-break--m">
-
-    <div>
-      <h3 class='govuk-heading-s'>
-        <%= t('.insufficient_contrast') %>
-      </h3>
-      <p>
-        <%= t('.insufficient_contrast_issue') %>
-      </p>
-      <p>
-        <%= t('.insufficient_contrast_this_falls') %>
-      </p>
-    </div>
   </div>
 
   <hr class="govuk-section-break govuk-section-break--l">
@@ -194,7 +179,7 @@
       </p>
       <p>
         <%= t('.accessibility_regulations_1') %>
-        <%= link_to t('.accessibility_regulations_link_text'), t('.accessibility_regulations_link'), class: 'govuk-link govuk-link--no-visited-state' %>
+        <%= link_to t('.accessibility_regulations_link_text'), t('.accessibility_regulations_link'), class: 'govuk-link govuk-link--no-visited-state', target: '_blank' %>
         <%= t('.accessibility_regulations_2') %>
       </p>
       <p>

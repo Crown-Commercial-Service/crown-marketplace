@@ -130,6 +130,12 @@ Rails.application.routes.draw do
       post 'da_spreadsheets'
       get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
       get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
+      namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
+        get '/', action: 'show'
+        put '/', action: 'update'
+        patch '/', action: 'update'
+        get '/edit', action: 'edit'
+      end
       resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
         resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
         resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
@@ -137,7 +143,9 @@ Rails.application.routes.draw do
         get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
-      resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports'
+      resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
+        resources :progress, only: :index, defaults: { format: :json }, controller: 'procurements/spreadsheet_imports/progress'
+      end
       resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
         member do
           match 'add_address', via: %i[get post patch]
@@ -164,7 +172,6 @@ Rails.application.routes.draw do
       get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
       put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
       get 'supplier-framework-data', to: 'suppliers_framework_data#index'
-      get 'management-report', to: 'management_report#index'
       put 'update-management-report', to: 'management_report#update'
       get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
       put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
@@ -172,12 +179,12 @@ Rails.application.routes.draw do
       put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
       get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
       put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
+      resources :management_reports, only: %i[new create show]
     end
 
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   namespace 'management_consultancy', path: 'management-consultancy' do

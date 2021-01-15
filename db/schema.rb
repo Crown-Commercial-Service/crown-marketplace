@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_160551) do
+ActiveRecord::Schema.define(version: 2021_01_13_092431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,8 +38,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "user_email", null: false
-    t.jsonb "building_json"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
     t.string "status", default: "Incomplete", null: false
@@ -47,7 +45,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.text "building_name"
     t.text "description"
     t.integer "gia"
-    t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
@@ -60,10 +57,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.string "other_building_type"
     t.string "other_security_type"
     t.bigint "external_area"
-    t.index "((building_json -> 'services'::text))", name: "idx_buildings_service", using: :gin
     t.index "lower(building_name)", name: "index_fm_buildings_on_lower_building_name"
-    t.index ["building_json"], name: "idx_buildings_gin", using: :gin
-    t.index ["building_json"], name: "idx_buildings_ginp", opclass: :jsonb_path_ops, using: :gin
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
@@ -83,6 +77,16 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
+  end
+
+  create_table "facilities_management_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.string "aasm_state", limit: 30
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_facilities_management_management_reports_on_user_id"
   end
 
   create_table "facilities_management_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -123,7 +127,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.boolean "active"
     t.uuid "building_id"
     t.integer "gia"
-    t.text "region"
     t.text "building_type"
     t.text "security_type"
     t.text "address_town"
@@ -133,7 +136,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.text "address_region"
     t.text "address_region_code"
     t.text "building_name"
-    t.jsonb "building_json"
     t.text "description"
     t.bigint "external_area"
     t.string "other_building_type"
@@ -265,17 +267,16 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
-  create_table "facilities_management_supplier_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "facilities_management_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "contact_name"
+    t.string "contact_email"
+    t.string "contact_phone"
+    t.string "supplier_name"
+    t.jsonb "lot_data", default: {}
     t.uuid "user_id"
-    t.string "name", limit: 255
-    t.boolean "lot1a"
-    t.boolean "lot1b"
-    t.boolean "lot1c"
-    t.boolean "direct_award"
     t.boolean "sme"
-    t.string "contact_name", limit: 255
-    t.string "contact_email", limit: 255
-    t.string "contact_number", limit: 255
     t.string "duns", limit: 255
     t.string "registration_number", limit: 255
     t.string "address_line_1", limit: 255
@@ -283,8 +284,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.string "address_town", limit: 255
     t.string "address_county", limit: 255
     t.string "address_postcode", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["contact_email"], name: "index_facilities_management_supplier_details_on_contact_email"
     t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 
@@ -334,16 +334,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.index ["facilities_management_procurement_id"], name: "index_frozen_fm_rates_procurement"
   end
 
-  create_table "fm_lifts", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "building_id", null: false
-    t.jsonb "lift_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "((lift_data -> 'floor-data'::text))", name: "fm_lifts_lift_json", using: :gin
-    t.index ["user_id", "building_id"], name: "fm_lifts_user_id_idx"
-  end
-
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "data"
     t.text "source_file", null: false
@@ -388,15 +378,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.index ["key"], name: "fm_static_data_key_idx"
   end
 
-  create_table "fm_suppliers", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "((data -> 'lots'::text))", name: "idxginlots", using: :gin
-    t.index ["data"], name: "idxgin", using: :gin
-    t.index ["data"], name: "idxginp", opclass: :jsonb_path_ops, using: :gin
-  end
-
   create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
     t.serial "id", null: false
     t.string "title_text", null: false
@@ -406,16 +387,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
     t.string "spreadsheet_label"
     t.string "unit_measure_label"
     t.text "service_usage", array: true
-  end
-
-  create_table "fm_uom_values", id: false, force: :cascade do |t|
-    t.text "user_id"
-    t.text "service_code"
-    t.text "uom_value"
-    t.text "building_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "service_code", "building_id"], name: "fm_uom_values_user_id_idx"
   end
 
   create_table "legal_services_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -739,6 +710,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_160551) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
+  add_foreign_key "facilities_management_management_reports", "users"
   add_foreign_key "facilities_management_procurement_building_service_lifts", "facilities_management_procurement_building_services", column: "facilities_management_procurement_building_services_id"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurement_buildings"
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"

@@ -73,13 +73,13 @@ docx.p "BUYER ADDRESS:                    #{@buyer_detail.full_organisation_addr
 
 docx.p 'TO THE ("SUPPLIER"):', font: 'Calibri'
 
-docx.p "NAME:                                      #{@supplier.data['supplier_name']}", font: 'Calibri'
+docx.p "NAME:                                      #{@supplier.supplier_name}", font: 'Calibri'
 
-docx.p "REGISTERED ADDRESS:         #{@supplier_detail.full_organisation_address}", font: 'Calibri'
+docx.p "REGISTERED ADDRESS:         #{@supplier.full_organisation_address}", font: 'Calibri'
 
-docx.p "REGISTERED NUMBER:          #{@supplier_detail.registration_number}", font: 'Calibri'
+docx.p "REGISTERED NUMBER:          #{@supplier.registration_number}", font: 'Calibri'
 
-docx.p "DUNS NUMBER:                     #{@supplier_detail.duns}", font: 'Calibri'
+docx.p "DUNS NUMBER:                     #{@supplier.duns}", font: 'Calibri'
 
 docx.p 'This Order Form, when completed and executed by both Parties, forms a Call-Off Contract. Completion and execution of a Call-Off Contract may be achieved using an equivalent document or electronic purchase order system.  The text below should be copied into any electronic order forms.', font: 'Calibri'
 

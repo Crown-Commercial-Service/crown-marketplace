@@ -1,6 +1,6 @@
 <%= govuk_page_content(@page_description, @contract) do |pd| %>
     <%= content_for :page_title, pd.heading_details.text %>
-    <%= form_for @contract, url: facilities_management_procurement_contract_path do |f| %>
+    <%= form_for @contract, url: facilities_management_procurement_contract_path(name: 'next_supplier'), method: :put do |f| %>
 
         <%= render partial: 'contract_summary_head' %>
 
@@ -40,9 +40,7 @@
             <% when 'not_signed', 'declined' , 'expired' %>
                 <div class= 'govuk-!-margin-top-5'>
                 <% if @contract.last_offer? %>
-                    <%= form_for @contract, url: facilities_management_procurement_contract_path, method: :put do |f| %>
-                        <%= f.submit(value: pd.navigation_details.primary_text, class: 'govuk-!-margin-right-4 govuk-button', data: { disable_with: false }, name: :send_contract_to_next_supplier, 'aria-label': "#{pd.navigation_details.primary_text}") %>
-                    <% end %>
+                    <%= f.submit pd.navigation_details.primary_text, class: 'govuk-!-margin-right-4 govuk-button', name: :send_contract_to_next_supplier, 'aria-label': "#{pd.navigation_details.primary_text}" %>
                 <% else %>
                     <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_procurement_contract_path(id: @contract.id, name: 'next_supplier'), role: 'button', class: 'govuk-button govuk-!-margin-right-4', 'aria-label': "#{pd.navigation_details.primary_text}") %>
                 <% end %>

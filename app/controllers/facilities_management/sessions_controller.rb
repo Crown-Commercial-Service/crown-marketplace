@@ -3,7 +3,7 @@ module FacilitiesManagement
     protected
 
     def challenge_path
-      cookies[:session] = { value: @result.session, expires: 20.minutes }
+      cookies[:session] = { value: @result.session, expires: 20.minutes, httponly: true }
       facilities_management_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
     end
 

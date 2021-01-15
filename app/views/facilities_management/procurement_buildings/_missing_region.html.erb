@@ -43,6 +43,6 @@
 <% end %>
 <hr class="govuk-section-break govuk-section-break--l">
 <div>
-  <%= f.submit 'Save and return', class: 'govuk-button', data: { disable_with: false }, name: :add_missing_region, 'aria-label': 'Save and return' %><br/>
+  <%= f.submit 'Save and return', class: 'govuk-button', name: :add_missing_region, 'aria-label': 'Save and return' %><br/>
   <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement),  'aria-label': t('.return_link'), class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19' %>
 </div>

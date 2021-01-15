@@ -1,6 +1,0 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object]) do |pd| %>
-  <%= f.fields_for :authorised_contact_detail do |ff| %>
-    <%= render partial: '/facilities_management/procurements/edit/new_contact_details',
-               locals: {f: f, ff: ff, page_id: "new_authorised_contact_details", page_contact: 'authorised_contact_detail', address_step: 'new_authorised_representative_address', telephone_number: true}%>
-  <% end %>
-<% end %>

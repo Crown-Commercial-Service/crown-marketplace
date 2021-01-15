@@ -68,13 +68,11 @@ module ErrorsHelper
   # looks up the locals data for validation messages
   def validation_messages(model_object_sym, attribute_sym = nil)
     translation_key = "activerecord.errors.models.#{model_object_sym.downcase}.attributes"
-    if attribute_sym.is_a? Array
-      attribute_sym.each do |attr|
-        translation_key += ".#{attr}"
-      end
-    else
-      translation_key += ".#{attribute_sym}"
-    end
+    translation_key += if attribute_sym.is_a? Array
+                         ".#{attribute_sym.join('.')}"
+                       else
+                         ".#{attribute_sym}"
+                       end
 
     result = t(translation_key)
     if result.include? 'translation_missing'

@@ -5,6 +5,7 @@ module FacilitiesManagement
 
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
+    belongs_to :supplier, foreign_key: :supplier_id, inverse_of: :contracts, class_name: 'FacilitiesManagement::SupplierDetail'
 
     has_one_attached :contract_documents_zip
 
@@ -35,12 +36,13 @@ module FacilitiesManagement
     validates :reason_for_not_signing, presence: true, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
     validate proc { text_area_max_length(:reason_for_not_signing, 100) }, if: -> { contract_signed == false }, on: :confirmation_of_signed_contract
 
-    validate proc { valid_date?(:contract_start_date) }, unless: proc { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
-    validates :contract_start_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
+    validate -> { valid_date?(:contract_start_date) }, unless: -> { contract_start_date_dd.empty? || contract_start_date_mm.empty? || contract_start_date_yyyy.empty? }, on: :confirmation_of_signed_contract
+    validates :contract_start_date, presence: true, if: -> { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_start_date, date: { after_or_equal_to: proc { EARLIEST_CONTRACT_START_DATE } }, if: -> { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
-    validate proc { valid_date?(:contract_end_date) }, unless: proc { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, presence: true, if: proc { contract_signed == true }, on: :confirmation_of_signed_contract
-    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: proc { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
+    validate -> { valid_date?(:contract_end_date) }, unless: -> { contract_end_date_dd.empty? || contract_end_date_mm.empty? || contract_end_date_yyyy.empty? }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, presence: true, if: -> { contract_signed == true }, on: :confirmation_of_signed_contract
+    validates :contract_end_date, date: { after_or_equal_to: proc { :contract_start_date } }, if: -> { contract_signed == true && real_date?(:contract_start_date) }, on: :confirmation_of_signed_contract
 
     # rubocop:disable Metrics/BlockLength
     aasm do
@@ -143,17 +145,13 @@ module FacilitiesManagement
         .map { |contract_number| contract_number.split('-')[1].split('FC')[1] }
     end
 
-    def supplier
-      CCS::FM::Supplier.find(supplier_id)
-    end
-
     def assign_contract_number
       self.contract_number = generate_contract_number
     end
 
     def closed?
       return true if procurement.aasm_state == 'closed'
-      return false if aasm_state == 'unsent'
+      return false if unsent?
 
       procurement.procurement_suppliers.where.not(aasm_state: 'unsent')&.last&.id != id
     end
@@ -187,16 +185,39 @@ module FacilitiesManagement
     end
 
     def last_offer?
-      return false unless procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7, aasm_state: %w[unsent sent]).empty?
+      return false unless procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE, aasm_state: %w[unsent sent]).empty?
 
-      procurement.procurement_suppliers.where(direct_award_value: 0..0.15e7).last == self
+      procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last == self
     end
 
     def supplier_email
-      supplier.data['contact_email']
+      supplier.contact_email
+    end
+
+    delegate :supplier_name, to: :supplier
+
+    def closed_date
+      case aasm_state
+      when 'not_signed'
+        contract_signed_date
+      when 'expired', 'declined'
+        supplier_response_date
+      else
+        contract_closed_date
+      end
+    end
+
+    def cannot_offer_to_next_supplier?
+      procurement.closed? || sent? || accepted? || signed?
+    end
+
+    def cannot_withdraw?
+      procurement.closed? || signed?
     end
 
     private
+
+    EARLIEST_CONTRACT_START_DATE = DateTime.new(2020, 6, 1).in_time_zone('London').freeze
 
     # Custom Validation
     def real_date?(date)
@@ -254,13 +275,9 @@ module FacilitiesManagement
       date&.in_time_zone('London')&.strftime '%d/%m/%Y'
     end
 
-    # rubocop:disable Metrics/AbcSize
-    def send_email_to_buyer(email_type)
-      template_name = email_type
-      email_to = procurement.user.email
-
+    def send_email_to_buyer(template_name)
       gov_notify_template_arg = {
-        'da-offer-1-supplier-1': supplier.data['supplier_name'],
+        'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-reference': contract_number,
         'da-offer-1-name': procurement.contract_name,
@@ -271,22 +288,19 @@ module FacilitiesManagement
 
       # TODO: This prevents crashing on local when sidekiq isn't running
       begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, procurement.user.email, gov_notify_template_arg)
       rescue StandardError
         false
       end
     end
 
-    def send_email_to_supplier(email_type)
-      template_name = email_type
-      email_to = supplier_email
-
+    def send_email_to_supplier(template_name)
       gov_notify_template_arg = {
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
         'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id,
-        'da-offer-1-supplier-1': supplier.data['supplier_name'],
+        'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,
         'da-offer-1-contract-start-date': format_date(contract_start_date),
@@ -296,11 +310,10 @@ module FacilitiesManagement
 
       # TODO: This prevents crashing on local when sidekiq isn't running
       begin
-        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, email_to, gov_notify_template_arg)
+        FacilitiesManagement::GovNotifyNotification.perform_async(template_name, supplier_email, gov_notify_template_arg)
       rescue StandardError
         false
       end
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end
