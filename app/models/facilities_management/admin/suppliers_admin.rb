@@ -3,6 +3,10 @@ module FacilitiesManagement
     class SuppliersAdmin < ApplicationRecord
       self.table_name = 'facilities_management_supplier_details'
 
+      attr_accessor :user_email
+
+      belongs_to :user, foreign_key: :user_id, inverse_of: :supplier_admin, optional: true
+
       validates :supplier_name, presence: true, length: { maximum: 100 }, on: :supplier_name
 
       validates :contact_email, :contact_name, :contact_phone, presence: true, on: :supplier_contact_information
@@ -18,9 +22,11 @@ module FacilitiesManagement
       validates :address_line_2, length: { maximum: 100 }, on: :supplier_address
       validates :address_town, length: { maximum: 50 }, presence: true, on: :supplier_address
       validates :address_county, length: { maximum: 50 }, on: :supplier_address
-
       validates :address_postcode, presence: true, on: :supplier_address
       validate :postcode_format, if: -> { address_postcode.present? }, on: :supplier_address
+
+      validates :user_email, email: true, on: :supplier_user
+      validate :user_account_validation, on: :supplier_user
 
       def replace_services_for_lot(new_services, target_lot)
         lot_data[target_lot]['services'] = new_services || []
@@ -35,6 +41,29 @@ module FacilitiesManagement
       def postcode_format
         pc = UKPostcode.parse(address_postcode)
         pc.full_valid? ? errors.delete(:address_postcode) : errors.add(:address_postcode, :invalid)
+      end
+
+      USER_ACCOUNT_VALIDATIONS = { account_must_exist: :user_exists?, account_must_be_supplier: :user_supplier?, account_must_be_unique: :user_unique? }.freeze
+
+      def user_account_validation
+        USER_ACCOUNT_VALIDATIONS.each do |error, validation|
+          break if errors[:user_email].any?
+
+          errors.add(:user_email, error) unless send(validation)
+        end
+      end
+
+      def user_exists?
+        self.user = User.find_by(email: user_email)
+        user.present?
+      end
+
+      def user_supplier?
+        user.has_role? :supplier
+      end
+
+      def user_unique?
+        self.class.where.not(supplier_id: supplier_id).pluck(:user_id).exclude? user.id
       end
     end
   end

@@ -1,12 +1,37 @@
-<%= content_for :page_title, t('.page_title', supplier_name: @supplier.supplier_name) %>
+<%= content_for :page_title, t('.page_title', supplier_name: @supplier.supplier_name).html_safe %>
 <%= admin_breadcrumbs(
   { link_text: t('facilities_management.admin.supplier_details.index.heading'), link_url: facilities_management_admin_supplier_details_path },
   { link_text: @supplier.supplier_name }
 ) %>
 <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.supplier_details'), @supplier.supplier_name, nil, nil, nil)) %>
+
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
   <%= t('.edit_supplier_details') %>
 </p>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h3 class="govuk-heading-l govuk-!-margin-bottom-2">
+      <%= t('.supplier_account_information') %>
+    </h3>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__header govuk-!-font-weight-bold" width="50%"></td>
+          <td class="govuk-table__header govuk-!-font-weight-bold" width="40%"></td>
+          <td class="govuk-table__header govuk-!-font-weight-bold" width="10%"></td>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-padding-right-2" scope="row"> <%= t('.current_user') %> </th>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= supplier_user_email %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@supplier, page: :supplier_user), class: 'govuk-link--no-visited-state') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

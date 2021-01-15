@@ -62,6 +62,11 @@ en:
             supplier_name:
               blank: You must enter a supplier name
               too_long: The supplier name cannot be more than 100 characters
+            user_email:
+              account_must_be_supplier: The user must have supplier access
+              account_must_be_unique: The user cannot belong to another supplier
+              account_must_exist: The supplier must be registered with the facilities management service
+              email: Enter an email address in the correct format, for example name@organisation.gov.uk
         facilities_management/building:
           attributes:
             address_line_1:
@@ -507,9 +512,11 @@ en:
             supplier_address: Supplier address
             supplier_contact_information: Supplier contact information
             supplier_name: Supplier name
+            supplier_user: Supplier user account
           save_and_return: Save and return
         index:
           heading: Supplier details
+          search_for_a_supplier: Search for a supplier..
           supplier_contact_email: Contact email
           supplier_name: Supplier name
           view_supplier_details: You can view the full details for a supplier by clicking on their name
@@ -519,11 +526,13 @@ en:
           contact_email: Contact email
           contact_name: Contact name
           contact_phone: Contact telephone number
+          current_user: Current user
           duns: DUNS number
           edit_supplier_details: You can edit the details for the supplier by clicking on change
           full_address: Full address
           page_title: "%{supplier_name} details"
           registration_number: Company registration number
+          supplier_account_information: Supplier user account information
           supplier_contact_information: Supplier contact information
           supplier_details: Supplier details
           supplier_name: Supplier name
@@ -539,6 +548,12 @@ en:
           contact_phone_question: Enter the telephone number for the supplier
         supplier_name:
           supplier_name_question: Enter the name for the supplier
+        supplier_user:
+          email_must: 'This user must:'
+          email_must_1: be registered with the Facilities Management service
+          email_must_2: have supplier access
+          email_must_3: not be the same user as another supplier
+          user_email_question: Changing the user email will change who can view the supplier dashboard.
       supplier_framework_data:
         heading_title: Supplier framework data
         rtrn_link: Return to admin dashboard

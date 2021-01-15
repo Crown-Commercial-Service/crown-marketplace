@@ -215,5 +215,27 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         end
       end
     end
+
+    context 'when updating on the supplier user page' do
+      let(:user) { create(:user, roles: :supplier) }
+      let(:page) { :supplier_user }
+      let(:supplier_params) { { user_email: user_email } }
+
+      context 'and the data is not valid' do
+        let(:user_email) { 'AAA111' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'and the data is valid' do
+        let(:user_email) { user.email }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+        end
+      end
+    end
   end
 end

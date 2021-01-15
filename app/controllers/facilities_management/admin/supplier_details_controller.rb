@@ -3,6 +3,7 @@ module FacilitiesManagement
     class SupplierDetailsController < FacilitiesManagement::Admin::FrameworkController
       before_action :set_supplier, except: :index
       before_action :set_page, only: %i[edit update]
+      before_action :set_user_email, only: :edit, if: -> { @page == :supplier_user }
 
       def index
         @suppliers = FacilitiesManagement::Admin::SuppliersAdmin.select(:supplier_id, :supplier_name, :contact_email).order(:supplier_name)
@@ -32,6 +33,10 @@ module FacilitiesManagement
         @page = params[:page].to_sym
       end
 
+      def set_user_email
+        @supplier.user_email = @supplier.user&.email
+      end
+
       def supplier_params
         params.require(:facilities_management_admin_suppliers_admin).permit(permitted_params)
       end
@@ -46,6 +51,8 @@ module FacilitiesManagement
           %i[duns registration_number]
         when :supplier_address
           %i[address_line_1 address_line_2 address_town address_county address_postcode]
+        when :supplier_user
+          %i[user_email]
         end
       end
     end
