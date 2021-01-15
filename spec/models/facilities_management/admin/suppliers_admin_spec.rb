@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
-  subject(:suppliers_admin) { FacilitiesManagement::Admin::SuppliersAdmin.find(id) }
+  subject(:suppliers_admin) { FacilitiesManagement::Admin::SuppliersAdmin.find(supplier_id) }
 
-  let(:id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
+  let(:supplier_id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
 
   describe '.replace_services_for_lot' do
     let(:target_lot) { '1b' }
@@ -770,6 +770,128 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
 
         it 'is valid' do
           expect(supplier.valid?(:supplier_address)).to eq true
+        end
+      end
+    end
+
+    context 'when considering user email' do
+      before { supplier.user_email = user_email }
+
+      context 'and not a valid format' do
+        let(:user_email) { 'invalid@email' }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+        end
+      end
+
+      context 'and is nil' do
+        let(:user_email) { nil }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+        end
+      end
+
+      context 'and is empty' do
+        let(:user_email) { '' }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+        end
+      end
+
+      context 'and is white space' do
+        let(:user_email) { '   ' }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
+        end
+      end
+
+      context 'and there is no user with that email' do
+        let(:user_email) { 'valid@email.com' }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'The supplier must be registered with the facilities management service'
+        end
+      end
+
+      context 'and the user does not have supplier access' do
+        let(:user) { create(:user) }
+        let(:user_email) { user.email }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'The user must have supplier access'
+        end
+      end
+
+      context 'and the user belongs to another supplier' do
+        let(:user) { create(:user, roles: :supplier) }
+        let(:user_email) { user.email }
+
+        before { described_class.where.not(supplier_id: supplier_id).first.update(user: user) }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_user)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_user)
+          expect(supplier.errors[:user_email].first).to eq 'The user cannot belong to another supplier'
+        end
+      end
+
+      context 'and the user is not changed' do
+        let(:user) { create(:user, roles: :supplier) }
+        let(:user_email) { user.email }
+
+        before do
+          supplier.update(user: user)
+          supplier.user_email = user_email
+        end
+
+        it 'is valid' do
+          expect(supplier.valid?(:supplier_user)).to be true
+        end
+      end
+
+      context 'and it is an unasigned user' do
+        let(:user) { create(:user, roles: :supplier) }
+        let(:user_email) { user.email }
+
+        it 'is valid' do
+          expect(supplier.valid?(:supplier_user)).to be true
         end
       end
     end
