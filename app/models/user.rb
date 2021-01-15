@@ -19,6 +19,12 @@ class User < ApplicationRecord
           class_name: 'FacilitiesManagement::SupplierDetail',
           dependent: :destroy
 
+  has_one :supplier_admin,
+          foreign_key: :user_id,
+          inverse_of: :user,
+          class_name: 'FacilitiesManagement::Admin::SuppliersAdmin',
+          dependent: :destroy
+
   has_many :buildings,
            foreign_key: :user_id,
            class_name: 'FacilitiesManagement::Building',

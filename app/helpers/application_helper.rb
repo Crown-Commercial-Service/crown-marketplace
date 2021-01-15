@@ -399,5 +399,9 @@ module ApplicationHelper
   def input_visible?(visible)
     visible ? 0 : -1
   end
+
+  def search_box(placeholder_text, column = 0)
+    text_field_tag 'fm-table-filter-input', nil, class: 'govuk-input', placeholder: placeholder_text, data: { column: column }
+  end
 end
 # rubocop:enable Metrics/ModuleLength
