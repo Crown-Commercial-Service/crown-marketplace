@@ -26,7 +26,7 @@ module FacilitiesManagement
       @procurement_building_services = @procurement.procurement_building_services
       @posted_services = @procurement_building_services.map(&:code)
       @posted_locations = @active_procurement_buildings.map(&:address_region_code)
-      @contract_length_years = @procurement.initial_call_off_period.to_i
+      @contract_length_years = @procurement.initial_call_off_period_years.to_i
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
       @tupe_flag = @procurement.tupe
     end

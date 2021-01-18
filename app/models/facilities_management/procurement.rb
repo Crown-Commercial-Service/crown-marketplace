@@ -46,7 +46,6 @@ module FacilitiesManagement
     validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
 
-    attr_accessor :mobilisation_start_date
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
@@ -104,7 +103,7 @@ module FacilitiesManagement
     end
 
     def unanswered_contract_date_questions?
-      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
+      initial_call_off_period_years.nil? || initial_call_off_period_months.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
     end
 
     # rubocop:disable Metrics/BlockLength
@@ -281,56 +280,28 @@ module FacilitiesManagement
 
     MAX_NUMBER_OF_PENSIONS = 99
 
+    def initial_call_off_period
+      initial_call_off_period_years.years + initial_call_off_period_months.months
+    end
+
     def initial_call_off_end_date
-      initial_call_off_start_date + initial_call_off_period.years - 1.day
+      period_end_date(initial_call_off_start_date, initial_call_off_period)
     end
 
-    def extension_period_1_start_date
-      return nil if optional_call_off_extensions_1.nil?
-
-      initial_call_off_start_date + initial_call_off_period.years
+    def mobilisation_start_date
+      mobilisation_end_date - mobilisation_period.weeks
     end
 
-    def extension_period_1_end_date
-      return nil if optional_call_off_extensions_1.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years - 1.day
+    def mobilisation_end_date
+      initial_call_off_start_date - 1.day
     end
 
-    def extension_period_2_start_date
-      return nil if optional_call_off_extensions_2.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years
+    def extension_period_start_date(period)
+      initial_call_off_end_date + (1..(period - 1)).sum { |number| send("optional_call_off_extensions_#{number}").years } + 1.day
     end
 
-    def extension_period_2_end_date
-      return nil if optional_call_off_extensions_2.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years - 1.day
-    end
-
-    def extension_period_3_start_date
-      return nil if optional_call_off_extensions_3.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years
-    end
-
-    def extension_period_3_end_date
-      return nil if optional_call_off_extensions_3.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years - 1.day
-    end
-
-    def extension_period_4_start_date
-      return nil if optional_call_off_extensions_4.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years
-    end
-
-    def extension_period_4_end_date
-      return nil if optional_call_off_extensions_4.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4).years - 1.day
+    def extension_period_end_date(period)
+      initial_call_off_end_date + (1..period).sum { |number| send("optional_call_off_extensions_#{number}").years }
     end
 
     def sent_offers
@@ -361,18 +332,6 @@ module FacilitiesManagement
 
     def unsent_direct_award_offers
       procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)
-    end
-
-    def mobilisation_period_start_date
-      return nil if mobilisation_period.nil?
-
-      mobilisation_period_end_date - mobilisation_period.weeks
-    end
-
-    def mobilisation_period_end_date
-      return nil if mobilisation_period.nil?
-
-      initial_call_off_start_date - 1.day
     end
 
     def first_unsent_contract
@@ -463,13 +422,14 @@ module FacilitiesManagement
 
     def contract_period_status
       relevant_attributes = [
-        initial_call_off_period,
+        initial_call_off_period_years,
+        initial_call_off_period_months,
         initial_call_off_start_date,
         mobilisation_period_required,
         extensions_required
       ]
 
-      relevant_attributes.all?(&:nil?) ? :not_started : :completed
+      relevant_attributes.any?(&:nil?) ? :not_started : :completed
     end
 
     def services_status
@@ -655,5 +615,11 @@ module FacilitiesManagement
     end
 
     VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx'].freeze
+
+    def period_end_date(start_date, period)
+      end_date = start_date + period
+      end_date -= 1.day if start_date.day == end_date.day
+      end_date
+    end
   end
 end
