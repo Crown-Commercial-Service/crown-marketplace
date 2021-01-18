@@ -4,6 +4,8 @@ require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::TextHelper
+  include FacilitiesManagement::Procurements::ContractDatesHelper
 
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
@@ -285,15 +287,15 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_mobilisation_period(sheet)
-    sheet.add_row ['Mobilisation Period', ("#{@procurement.mobilisation_period} weeks" if @procurement.mobilisation_period_required)]
-    sheet.add_row ['Mobilisation Start Date', ((@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
-    sheet.add_row ['Mobilisation End Date', ((@procurement.initial_call_off_start_date - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation Period', (mobilisation_period if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation Start Date', (@procurement.mobilisation_start_date.strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation End Date', (@procurement.mobilisation_end_date.strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
   end
 
   def add_initial_call_off_period(sheet)
-    sheet.add_row ['Initial Call-Off Period', "#{@procurement.initial_call_off_period} years"]
+    sheet.add_row ['Initial Call-Off Period', initial_call_off_period]
     sheet.add_row ['Initial Call-Off Period Start Date', @procurement.initial_call_off_start_date.strftime('%d/%m/%Y')]
-    sheet.add_row ['Initial Call-Off Period End Date', (@procurement.initial_call_off_start_date + @procurement.initial_call_off_period.years - 1.day).strftime('%d/%m/%Y')]
+    sheet.add_row ['Initial Call-Off Period End Date', @procurement.initial_call_off_end_date.strftime('%d/%m/%Y')]
   end
 
   def add_extension_periods(sheet)
@@ -305,7 +307,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def extension_period(period)
     return nil if !@procurement.extensions_required || @procurement.try("optional_call_off_extensions_#{period}").nil?
 
-    @procurement.try("extension_period_#{period}_start_date").strftime('%d/%m/%Y') + ' - ' + @procurement.try("extension_period_#{period}_end_date").strftime('%d/%m/%Y')
+    @procurement.try('extension_period_start_date', period).strftime('%d/%m/%Y') + ' - ' + @procurement.try('extension_period_end_date', period).strftime('%d/%m/%Y')
   end
 
   def add_tupe(sheet)

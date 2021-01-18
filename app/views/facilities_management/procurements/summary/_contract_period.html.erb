@@ -13,7 +13,7 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row" id="contract-period">
       <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.initial_call_off_period') %> </th>
-      <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"><%= initial_call_off_period(@procurement.initial_call_off_period)%></td>
+      <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"><%= initial_call_off_period %></td>
     </tr>
     <tr class="govuk-table__row" id="contract-period-description">
       <td class="govuk-table__cell govuk-!-padding-right-2"></td>
@@ -39,7 +39,7 @@
         <% break if @procurement.send("optional_call_off_extensions_#{period}").nil? %>
         <tr class="govuk-table__row" id="<%= "call-off-extension-#{period}" %>">
           <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.optional_call_off_extension_period') %> <%= period %> </th>
-          <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"> <%= pluralize(@procurement.send("optional_call_off_extensions_#{period}"), 'year') %> </td>
+          <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"> <%= optional_call_off_extensions_period(period) %> </td>
         </tr>
         <tr class="govuk-table__row" id="<%= "call-off-extension-#{period}-description" %>">
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>

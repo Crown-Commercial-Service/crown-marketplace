@@ -38,31 +38,19 @@ module ProcurementValidator
 
     validates :governing_law, inclusion: { in: %w[english scottish northern_ireland] }, on: %i[governing_law]
 
-    #############################################
-    # Validation rules for contract-dates
-    # these rules need to cover
-    #   initial_call_off_period (int)
-    #   initial_call_off_start_date (date)
-    #   initial_call_off_end_date (date)
-    #   mobilisation_period (int)
-    #   extension_period (int)
-    #   optional_call_off_extensions_1 (int)
-    #   optional_call_off_extensions_2 (int)
-    #   optional_call_off_extensions_3 (int)
-    #   optional_call_off_extensions_4 (int)
-    validates :initial_call_off_period, presence: true, on: :contract_period
-    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { initial_call_off_period.present? }, on: :contract_period
-    validates :initial_call_off_period, numericality: { allow_nil: false, only_integer: true, less_than_or_equal_to: 7 }, if: -> { initial_call_off_period.present? }, on: :contract_period
-    validate  :initial_call_off_start_date_yyyy_invalid, on: :contract_period
-    validates :initial_call_off_start_date, presence: true, date: { after_or_equal_to: proc { Time.zone.today } }, if: :initial_call_off_period_expects_a_date?, on: :contract_period
-    validate  :initial_call_off_start_date_yyyy_after_2100, on: :contract_period
-    validate  :initial_call_off_start_date_valid_date, if: -> { initial_call_off_period_expects_a_date? && initial_call_off_period_whole_number? }, on: :contract_period
+    validates :initial_call_off_period_years, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 7 }, on: :contract_period
+    validates :initial_call_off_period_months, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 11 }, on: :contract_period
+    validate :initial_call_off_period_length, on: :contract_period
+
+    validate :initial_call_off_start_date_present, :initial_call_off_start_date_real, on: :contract_period
+    validates :initial_call_off_start_date, date: { after_or_equal_to: proc { Time.zone.today }, before: proc { Time.new(2100).in_time_zone('London') } }, on: :contract_period
 
     validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_period
+    validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required }, on: :contract_period
+
     validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }, on: :contract_period
-    validates :mobilisation_period, presence: true, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
-    validates :mobilisation_period, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? }, on: :contract_period
-    validates :mobilisation_period, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && tupe }, on: :contract_period
+    validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { tupe && mobilisation_period_required }, on: :contract_period
+
     validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_period
 
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_period
@@ -96,40 +84,31 @@ module ProcurementValidator
 
     private
 
-    #############################################
-    # Start of validation methods for contract-dates
-    def initial_call_off_start_date_valid_date
-      Date.parse("#{initial_call_off_start_date_dd.to_i}/#{initial_call_off_start_date_mm.to_i}/#{initial_call_off_start_date_yyyy.to_i}")
-    rescue ArgumentError
-      errors.add(:initial_call_off_start_date, :not_a_date)
-    end
-
-    def initial_call_off_start_date_yyyy_invalid
-      errors.add(:initial_call_off_start_date, :not_a_date) if initial_call_off_start_date_yyyy.to_i < 100
-    end
-
-    def initial_call_off_start_date_yyyy_after_2100
-      errors.add(:initial_call_off_start_date, :after_2100) if initial_call_off_start_date_yyyy.to_i > 2100
-    end
-
     def remove_excess_whitespace_from_name
       contract_name&.squish!
     end
 
     #############################################
     # Start of validation methods for contract-dates
+
+    def initial_call_off_period_length
+      return if errors[:initial_call_off_period_years].any? || errors[:initial_call_off_period_months].any?
+
+      errors.add(:base, :total_contract_period) if initial_call_off_period > 7.years || initial_call_off_period.zero?
+    end
+
+    def initial_call_off_start_date_present
+      errors.add(:initial_call_off_start_date, :blank) if initial_call_off_start_date_yyyy.blank? || initial_call_off_start_date_mm.blank? || initial_call_off_start_date_dd.blank?
+    end
+
+    def initial_call_off_start_date_real
+      errors.add(:initial_call_off_start_date, :not_a_date) unless Date.valid_date?(initial_call_off_start_date_yyyy.to_i, initial_call_off_start_date_mm.to_i, initial_call_off_start_date_dd.to_i)
+    end
+
+    #############################################
+    # Start of validation methods for contract-dates
     def validate_contract_data?
-      initial_call_off_period.present? ? initial_call_off_period.positive? : false
-    end
-
-    def initial_call_off_period_whole_number?
-      errors.details[:initial_call_off_period].none? { |error| error[:error] == :not_an_integer }
-    end
-
-    def initial_call_off_period_expects_a_date?
-      return (1..7).include? initial_call_off_period if initial_call_off_period.present?
-
-      false
+      initial_call_off_period_years.present? ? initial_call_off_period_years.positive? : false
     end
 
     def total_extensions
@@ -148,9 +127,9 @@ module ProcurementValidator
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def optional_call_off_extensions_too_long
-      return if initial_call_off_period.to_i > 7
+      return if initial_call_off_period_years.to_i > 7
 
-      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period.to_i + total_extensions <= 10
+      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period_years.to_i + total_extensions <= 10
     end
     # End of validation methods for contract-dates
     #############################################
@@ -217,7 +196,7 @@ module ProcurementValidator
     end
 
     def validate_contract_period_questions
-      errors.add(:initial_call_off_period, :not_present) if initial_call_off_period.blank?
+      errors.add(:initial_call_off_period_years, :not_present) if initial_call_off_period_years.blank?
     end
 
     # Validations for continuing on the requirements summary page
@@ -274,7 +253,7 @@ module ProcurementValidator
     def mobilisation_period_in_past?
       return false unless mobilisation_period_required
 
-      (initial_call_off_start_date - mobilisation_period.weeks - 1.day).to_date <= Time.now.in_time_zone('London').to_date
+      mobilisation_start_date.to_date <= Time.now.in_time_zone('London').to_date
     end
 
     def mobilisation_period_valid_when_tupe_required?

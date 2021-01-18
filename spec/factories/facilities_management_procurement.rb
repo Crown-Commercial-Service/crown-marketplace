@@ -3,7 +3,8 @@ FactoryBot.define do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { 12345 }
     tupe { false }
-    initial_call_off_period { 1 }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
     initial_call_off_start_date { Time.zone.now + 6.months }
     service_codes { ['C.1', 'C.2'] }
     association :user
@@ -86,7 +87,8 @@ FactoryBot.define do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { false }
     tupe { false }
-    initial_call_off_period { 1 }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
     service_codes { ['C.1', 'C.2'] }
     association :user
     procurement_buildings { build_list :facilities_management_procurement_building_for_further_competition, 1 }

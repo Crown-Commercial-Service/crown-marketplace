@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_092431) do
+ActiveRecord::Schema.define(version: 2021_01_18_100723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "contract_name", limit: 100
     t.integer "estimated_annual_cost"
     t.boolean "tupe"
-    t.integer "initial_call_off_period"
+    t.integer "initial_call_off_period_years"
     t.date "initial_call_off_start_date"
     t.date "initial_call_off_end_date"
     t.integer "mobilisation_period"
@@ -234,6 +234,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "contract_datetime"
     t.boolean "lot_number_selected_by_customer", default: false
     t.string "governing_law"
+    t.integer "initial_call_off_period_months"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
