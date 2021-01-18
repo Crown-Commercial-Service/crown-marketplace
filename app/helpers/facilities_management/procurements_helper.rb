@@ -1,43 +1,17 @@
 # rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::ProcurementsHelper
+  include FacilitiesManagement::Procurements::ContractDatesHelper
+
   def journey_step_url_former(journey_step:, region_codes: nil, service_codes: nil)
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
   end
 
-  def initial_call_off_period_start_date
-    format_date @procurement.initial_call_off_start_date
+  def initial_call_off_period_error?
+    @procurement.errors[:initial_call_off_period_years].any? || @procurement.errors[:initial_call_off_period_months].any? || total_contract_period_error?
   end
 
-  def initial_call_off_period_end_date
-    return '' if @procurement.initial_call_off_start_date.blank?
-
-    Date.parse(@procurement.initial_call_off_start_date.to_s).next_year(@procurement.initial_call_off_period) - 1
-  end
-
-  def mobilisation_period
-    result = ''
-    period = @procurement.mobilisation_period
-    result = "#{period} #{'week'.pluralize(period)}" if @procurement.mobilisation_period_required == true
-    result = '' if @procurement.mobilisation_period_required.blank?
-    result = 'None' if @procurement.mobilisation_period_required == false
-    result
-  end
-
-  def mobilisation_start_date
-    start_date = Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
-    start_date - (@procurement.mobilisation_period * 7)
-  end
-
-  def mobilisation_end_date
-    Date.parse(@procurement.initial_call_off_start_date.to_s) - 1
-  end
-
-  def initial_call_off_period(period)
-    period.to_s + (period > 1 ? ' years' : ' year') unless period.nil?
-  end
-
-  def format_extension(start_date, end_date)
-    "#{format_date start_date} to #{format_date end_date}"
+  def total_contract_period_error?
+    @total_contract_period_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_period }
   end
 
   def any_service_codes(procurement_buildings)
@@ -62,18 +36,6 @@ module FacilitiesManagement::ProcurementsHelper
     return procurement_state.humanize unless PROCUREMENT_STATE.key?(procurement_state.to_sym)
 
     PROCUREMENT_STATE[procurement_state.to_sym]
-  end
-
-  def mobilisation_period_description
-    format_extension(mobilisation_start_date, mobilisation_end_date)
-  end
-
-  def initial_call_off_period_description
-    format_extension(@procurement.initial_call_off_start_date, initial_call_off_period_end_date)
-  end
-
-  def extension_period_description(period)
-    format_extension(@procurement.send("extension_period_#{period}_start_date"), @procurement.send("extension_period_#{period}_end_date"))
   end
 
   def mobilisation_period_error_case

@@ -1,13 +1,25 @@
 <div class="govuk-!-margin-top-3">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if @procurement.errors[:initial_call_off_period].any?%>" data-propertyname="Initial call-off period">
-    <%= f.label :initial_call_off_period, t('.heading'), class: "govuk-heading-m govuk-!-margin-bottom-0"%>
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if initial_call_off_period_error? %>" data-propertyname="Initial call-off period">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+      <%= t('.heading') %>
+    </h2>
     <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds">
       <%= t('.description') %>
     </p>
-    <%= display_errors(f.object, :initial_call_off_period)%>
-    <%= f.number_field :initial_call_off_period, class: "govuk-input govuk-input--width-4 #{'govuk-input--error' if @procurement.errors[:initial_call_off_period].any?}", min:1, maxlength:2, max: 7 %>
-    <span class="govuk-label--s govuk-!-margin-left-2">
-      <%= t('.unit') %>
+    <%= display_error(f.object, :initial_call_off_period_years) %>
+    <%= display_error(f.object, :initial_call_off_period_months) %>
+    <%= display_error(f.object, :base) if total_contract_period_error? %>
+    <span>
+      <%= f.number_field :initial_call_off_period_years, class: "govuk-input govuk-input--width-4 #{'govuk-input--error' if @procurement.errors[:initial_call_off_period_years].any?}", aria: { label: t('.aria_label_years') } %>
+      <span class="govuk-label--s govuk-!-margin-left-2">
+        <%= t('.unit_years') %>
+      </span>
+    </span>
+    <span class="govuk-!-margin-left-4">
+      <%= f.number_field :initial_call_off_period_months, class: "govuk-input govuk-input--width-4 #{'govuk-input--error' if @procurement.errors[:initial_call_off_period_months].any?}", aria: { label: t('.aria_label_months') } %>
+      <span class="govuk-label--s govuk-!-margin-left-2">
+        <%= t('.unit_months') %>
+      </span>
     </span>
   </div>
 </div>

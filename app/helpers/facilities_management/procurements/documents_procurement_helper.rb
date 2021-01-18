@@ -86,6 +86,7 @@ module FacilitiesManagement
 
         view = ActionView::Base.new(ActionController::Base.view_paths, {})
         view.assign(view_assignement)
+        view.class_eval { include FacilitiesManagement::Procurements::ContractDatesHelper }
         view.render(file: 'facilities_management/procurements/contracts/documents/call_off_schedule.docx.caracal')
       end
 
