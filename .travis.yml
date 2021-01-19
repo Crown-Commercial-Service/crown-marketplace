@@ -1,5 +1,6 @@
 dist: bionic
 language: ruby
+os: linux
 cache:
   bundler: true
   yarn: true
@@ -19,6 +20,10 @@ addons:
 sudo: true
 before_install:
   - gem install bundler
+  - CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
+  - CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
+  - curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
+  - unzip chromedriver_linux64.zip -d ~/bin
 before_script:
   - sudo apt-get -qq update
   - sudo apt-get install -y postgresql-11-postgis-2.5
@@ -31,6 +36,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
+  - bundle exec cucumber features
   - rm public/assets/.sprockets-manifest-*.json
 after_script:
   - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
