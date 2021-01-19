@@ -157,6 +157,14 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'cucumber'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'webdrivers'
+  gem 'cucumber-rails', require: false
+  gem 'capybara-screenshot'
+  gem 'site_prism'
+  gem 'ruby_event_store-rspec', require: false
 end

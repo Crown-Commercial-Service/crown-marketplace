@@ -1,0 +1,1 @@
+default: DRIVER=chrome_headless --format html --out doc/reports/<%=Time.now.strftime("%Y%m%d-%H%M%S") %>test-report.html --format pretty -r features --tags 'not @wip and not @smoke and not @accessibility and not @set_up'
