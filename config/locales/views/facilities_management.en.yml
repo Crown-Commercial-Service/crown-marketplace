@@ -61,6 +61,7 @@ en:
               invalid: Enter the company registration number in the correct format, for example AC123456
             supplier_name:
               blank: You must enter a supplier name
+              taken: A supplier with this name already exists
               too_long: The supplier name cannot be more than 100 characters
             user_email:
               account_must_be_supplier: The user must have supplier access
@@ -550,7 +551,7 @@ en:
           supplier_name_question: Enter the name for the supplier
         supplier_user:
           email_must: 'This user must:'
-          email_must_1: be registered with the Facilities Management service
+          email_must_1: be a registered user with the facilities management service
           email_must_2: have supplier access
           email_must_3: not be the same user as another supplier
           user_email_question: Changing the user email will change who can view the supplier dashboard.

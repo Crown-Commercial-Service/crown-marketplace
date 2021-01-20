@@ -43,7 +43,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
           expect(supplier.valid?(:supplier_name)).to be false
         end
 
-        it 'hhas the correct error message' do
+        it 'has the correct error message' do
           supplier.valid?(:supplier_name)
           expect(supplier.errors[:supplier_name].first).to eq 'You must enter a supplier name'
         end
@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
           expect(supplier.valid?(:supplier_name)).to be false
         end
 
-        it 'hhas the correct error message' do
+        it 'has the correct error message' do
           supplier.valid?(:supplier_name)
           expect(supplier.errors[:supplier_name].first).to eq 'You must enter a supplier name'
         end
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
           expect(supplier.valid?(:supplier_name)).to be false
         end
 
-        it 'hhas the correct error message' do
+        it 'has the correct error message' do
           supplier.valid?(:supplier_name)
           expect(supplier.errors[:supplier_name].first).to eq 'You must enter a supplier name'
         end
@@ -82,9 +82,22 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
           expect(supplier.valid?(:supplier_name)).to be false
         end
 
-        it 'hhas the correct error message' do
+        it 'has the correct error message' do
           supplier.valid?(:supplier_name)
           expect(supplier.errors[:supplier_name].first).to eq 'The supplier name cannot be more than 100 characters'
+        end
+      end
+
+      context 'and it belongs to another supplier' do
+        let(:supplier_name) { FacilitiesManagement::Admin::SuppliersAdmin.where.not(supplier_id: supplier_id).first.supplier_name }
+
+        it 'is not valid' do
+          expect(supplier.valid?(:supplier_name)).to be false
+        end
+
+        it 'has the correct error message' do
+          supplier.valid?(:supplier_name)
+          expect(supplier.errors[:supplier_name].first).to eq 'A supplier with this name already exists'
         end
       end
 
