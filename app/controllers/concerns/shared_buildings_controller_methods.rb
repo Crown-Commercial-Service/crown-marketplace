@@ -86,7 +86,7 @@ module SharedBuildingsControllerMethods
   end
 
   def create_new_building
-    @page_data[:model_object] = FacilitiesManagement::Building.new(user: current_user)
+    @page_data[:model_object] = current_user.buildings.build
   end
 
   def build_page_data

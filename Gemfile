@@ -166,4 +166,7 @@ group :test do
   gem 'webmock'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'site_prism'
 end

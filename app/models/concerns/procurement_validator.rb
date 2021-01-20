@@ -268,7 +268,7 @@ module ProcurementValidator
     end
 
     def contract_period_in_past?
-      initial_call_off_start_date <= Time.now.in_time_zone('London').to_date
+      initial_call_off_start_date < Time.now.in_time_zone('London').to_date
     end
 
     def mobilisation_period_in_past?

@@ -110,5 +110,11 @@ namespace :db do
     p 'Import address from local FM directory'
     OrdnanceSurvey.import_sample_addresses
   end
+
+  if Rails.env.test?
+    desc 'add static data to the database'
+    task static: :sample_address_import do
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
