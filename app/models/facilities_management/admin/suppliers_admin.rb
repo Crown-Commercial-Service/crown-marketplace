@@ -7,7 +7,7 @@ module FacilitiesManagement
 
       belongs_to :user, foreign_key: :user_id, inverse_of: :supplier_admin, optional: true
 
-      validates :supplier_name, presence: true, length: { maximum: 100 }, on: :supplier_name
+      validates :supplier_name, presence: true, uniqueness: true, length: { maximum: 100 }, on: :supplier_name
 
       validates :contact_email, :contact_name, :contact_phone, presence: true, on: :supplier_contact_information
       validates :contact_email, email: { allow_nil: true }, on: :supplier_contact_information
