@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_100723) do
+ActiveRecord::Schema.define(version: 2021_01_27_131100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -165,6 +165,16 @@ ActiveRecord::Schema.define(version: 2021_01_18_100723) do
     t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
   end
 
+  create_table "facilities_management_procurement_optional_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id"
+    t.integer "extension"
+    t.integer "years"
+    t.integer "months"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_id"], name: "index_optional_call_off_on_fm_procurements_id"
+  end
+
   create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.string "name", limit: 150
@@ -210,10 +220,6 @@ ActiveRecord::Schema.define(version: 2021_01_18_100723) do
     t.date "initial_call_off_start_date"
     t.date "initial_call_off_end_date"
     t.integer "mobilisation_period"
-    t.integer "optional_call_off_extensions_1"
-    t.integer "optional_call_off_extensions_2"
-    t.integer "optional_call_off_extensions_3"
-    t.integer "optional_call_off_extensions_4"
     t.boolean "estimated_cost_known"
     t.boolean "mobilisation_period_required"
     t.boolean "extensions_required"
@@ -717,6 +723,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_100723) do
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_optional_call_off_extensions", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"

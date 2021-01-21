@@ -299,15 +299,15 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def add_extension_periods(sheet)
-    (1..4).each do |period|
-      sheet.add_row ["Extension Period #{period}", extension_period(period)]
+    (0..3).each do |period|
+      sheet.add_row ["Extension Period #{period + 1}", extension_period(period)]
     end
   end
 
   def extension_period(period)
-    return nil if !@procurement.extensions_required || @procurement.try("optional_call_off_extensions_#{period}").nil?
+    return nil if !@procurement.extensions_required || @procurement.optional_call_off_extension(period).nil?
 
-    @procurement.try('extension_period_start_date', period).strftime('%d/%m/%Y') + ' - ' + @procurement.try('extension_period_end_date', period).strftime('%d/%m/%Y')
+    @procurement.extension_period_start_date(period).strftime('%d/%m/%Y') + ' - ' + @procurement.extension_period_start_date(period).strftime('%d/%m/%Y')
   end
 
   def add_tupe(sheet)

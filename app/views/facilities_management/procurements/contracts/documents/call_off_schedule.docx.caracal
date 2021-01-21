@@ -478,12 +478,13 @@ docx.p "CALL-OFF INITIAL PERIOD: #{initial_call_off_period}", font: 'Calibri'
 
 docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.extensions_required ? 'Yes' : 'None'}", font: 'Calibri'
 
-(1..4).each do |call_off_period|
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: Not used", font: 'Calibri' if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
-
-  next if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
-
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: #{@procurement.send(:extension_period_start_date, call_off_period).strftime('%d-%m-%Y')} to #{@procurement.send(:extension_period_end_date, call_off_period).strftime('%d-%m-%Y')}", font: 'Calibri'
+(0..3).each do |call_off_period|
+  if !@procurement.extensions_required || @procurement.optional_call_off_extension(call_off_period).nil?
+    docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period + 1}: Not used", font: 'Calibri'
+    next
+  else
+    docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period + 1}: #{@procurement.extension_period_start_date(call_off_period).strftime('%d-%m-%Y')} to #{@procurement.extension_period_end_date(call_off_period).strftime('%d-%m-%Y')}", font: 'Calibri'
+  end
 end
 
 docx.p

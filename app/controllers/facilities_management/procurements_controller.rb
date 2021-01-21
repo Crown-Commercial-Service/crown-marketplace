@@ -368,13 +368,6 @@ module FacilitiesManagement
               :initial_call_off_period_years,
               :initial_call_off_period_months,
               :mobilisation_period,
-              :optional_call_off_extensions_1,
-              :optional_call_off_extensions_2,
-              :optional_call_off_extensions_3,
-              :optional_call_off_extensions_4,
-              :call_off_extension_2,
-              :call_off_extension_3,
-              :call_off_extension_4,
               :mobilisation_period_required,
               :extensions_required,
               :lot_number,
@@ -384,7 +377,8 @@ module FacilitiesManagement
               procurement_buildings_attributes: [:id,
                                                  :building_id,
                                                  :active,
-                                                 service_codes: []]
+                                                 service_codes: []],
+              optional_call_off_extensions_attributes: %i[id extension years months extension_required]
             )
     end
 
@@ -401,6 +395,7 @@ module FacilitiesManagement
       @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
       set_buildings if params['step'] == 'buildings'
       set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
+      @procurement.build_optional_call_off_extensions if params['step'] == 'contract_period'
     end
 
     def set_buildings
