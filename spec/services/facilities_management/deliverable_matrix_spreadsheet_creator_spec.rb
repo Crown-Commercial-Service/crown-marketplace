@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   include ActionView::Helpers::NumberHelper
+  extend APIRequestStubs
 
   subject(:wb) do
     spreadsheet_builder = described_class.new(contract.id)
@@ -16,7 +17,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   let(:no_of_appliances_for_testing) { 506 }
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
-  let(:supplier) { create(:ccs_fm_supplier) }
+  let(:supplier) { create(:facilities_management_supplier_detail) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   before do
@@ -83,6 +84,8 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
 
   context 'when contract is sent' do
     let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+    stub_bank_holiday_json
 
     before do
       contract.offer_to_supplier!

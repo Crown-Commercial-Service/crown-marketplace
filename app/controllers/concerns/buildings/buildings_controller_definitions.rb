@@ -99,7 +99,6 @@ module Buildings::BuildingsControllerDefinitions
     page_description action
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def edit_details
     return if params[:step].nil? || @page_data[:model_object].id.nil?
 
@@ -112,10 +111,10 @@ module Buildings::BuildingsControllerDefinitions
       secondary_name: 'save_and_return',
       secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
       back_url: facilities_management_building_path(@page_data[:model_object], step: 'building_details'),
-      back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_building_details')
+      back_text: edit_back_text
     }
 
-    details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_details_summary') if params[:step] == 'building_details'
+    details[:continuation_text] = I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary') if params[:step] == 'security'
 
     if %w[gia type security].include? params[:step]
       details[:return_url] = next_link(false, params[:step])
@@ -123,16 +122,21 @@ module Buildings::BuildingsControllerDefinitions
       details[:back_url] = edit_facilities_management_building_path(@page_data[:model_object].id, step: previous_step(params[:step].to_sym))
     end
 
-    details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_size') if params[:step] == 'type'
-
-    if params[:step] == 'security'
-      details[:back_text] = I18n.t('facilities_management.buildings.page_definitions.return_to_building_type')
-      details[:continuation_text] = I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary')
-    end
-
     details
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def edit_back_text
+    case params[:step]
+    when 'gia'
+      I18n.t('facilities_management.buildings.page_definitions.return_to_building_details')
+    when 'type'
+      I18n.t('facilities_management.buildings.page_definitions.return_to_building_size')
+    when 'security'
+      I18n.t('facilities_management.buildings.page_definitions.return_to_building_type')
+    else
+      I18n.t('facilities_management.buildings.page_definitions.return_to_building_details_summary')
+    end
+  end
 
   def building_details
     {

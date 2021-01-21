@@ -82,6 +82,24 @@ $offset                        : 4;
     }
   }
 
+.govuk-button--secondary[disabled="disabled"],
+.govuk-button--secondary[disabled] {
+  background : #f3f2f1;
+
+  &:hover {
+    background-color : #f3f2f1;
+    }
+
+  &:active {
+    top                : 0;
+    -webkit-box-shadow : 0 $button-shadow-size 0  #929191;
+    box-shadow         : 0 $button-shadow-size 0  #929191;
+    @include govuk-if-ie8 {
+      border-bottom : $button-shadow-size solid  #929191;
+      }
+    }
+  }
+
 .govuk-button--start {
   background-image    : image-url("icon-pointer.png");
   background-repeat   : no-repeat;

@@ -304,7 +304,7 @@ en:
   home:
     accessibility:
       accessibility_statement:
-        ability_net: AbilityNet
+        ability_net: AbilityNet (opens in a new tab)
         ability_net_advice: has advice on making your device easier to use if you have a disability.
         ability_net_link: https://mcmw.abilitynet.org.uk/
         list_1_change_colours: change colours, contrast levels and fonts
@@ -323,7 +323,7 @@ en:
         accessibility_regulations_1: The accessibility regulations
         accessibility_regulations_2: if they're not essential to providing our services.
         accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
-        accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018
+        accessibility_regulations_link_text: do not require us to fix PDFs or other document published before 23 September 2018 (opens in a new tab)
         any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
         heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
         many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards - for example, they may not be structured so they're accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
@@ -336,13 +336,13 @@ en:
       shared_section:
         CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
         accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
-        accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard.
+        accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard (opens in a new tab).
         call: call 0345 410 2222
         email: email
         email_link: info@crowncommercial.gov.uk
         equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,
         equality_link: https://www.equalityadvisoryservice.com/
-        equality_link_text: contact the Equality Advisory and Support Service (EASS)
+        equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
         heading_enforcement: Enforcement procedure
         heading_reporting: Reporting accessibility problems with this website
         heading_technical_information: Technical information about this website’s accessibility
@@ -353,21 +353,21 @@ en:
         well_consider: We'll consider your request and get back to you in five working days.
     accessibility_statement_fm:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-      ability_net: AbilityNet
+      ability_net: AbilityNet (opens in a new tab)
       ability_net_link: https://mcmw.abilitynet.org.uk/
       accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
-      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard
+      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard (opens in a new tab)
       accessibility_regulations_1: The accessibility regulations
       accessibility_regulations_2: if they’re not essential to providing our services.
       accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
-      accessibility_regulations_link_text: do not require us to fix PDFs or other documents published before 23 September 2018
+      accessibility_regulations_link_text: do not require us to fix PDFs or other documents published before 23 September 2018 (opens in a new tab)
       any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
       call: call 0345 410 2222
       email: email
       email_link: info@crowncommercial.gov.uk
       equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
       equality_link: https://www.equalityadvisoryservice.com/
-      equality_link_text: contact the Equality Advisory and Support Service (EASS)
+      equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
       heading: Facilities Management (FM) Accessibility statement
       heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
       heading_enforcement: Enforcement procedure
@@ -380,15 +380,11 @@ en:
       heading_technical_information: Technical information about this website’s accessibility
       heading_what_to_do: What to do if you cannot access parts of this website
       if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
-      insufficient_contrast: Copy has insufficient contrast against background
-      insufficient_contrast_issue: When viewing the “Compliance”, “Service Requirements” and “Service Standards” sheets, red text is present against a white background which does not meet the recommended contrast ratio.
-      insufficient_contrast_this_falls: This fails WCAG 2.1AA success criterion 1.4.3 (contrast ratio). We plan to fix this by December 2020.
       list_1_change_colours: change colours, contrast levels and fonts
       list_1_navigate_keyboard: navigate most of the website using just a keyboard
       list_1_navigate_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
       list_1_navigate_speach: navigate most of the website using speech recognition software
       list_2_contrast: the contrast on some text may not be enough
-      list_2_contrast_ratio: contrast ratio is not sufficient on certain pages
       list_2_page_view: page view is not optimised for viewing on mobile devices
       list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
       many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
@@ -1029,7 +1025,7 @@ en:
         create_password: Create a password you'll remember
         email: Email address
         email_hint: We will send a confirmation code to this address.
-        heading_html: Create a <abbr title="Crown Commercial Service">CCS</abbr> account
+        heading: Create an account
         lead: You must be employed by, or represent, a public sector organisation.
     sessions:
       new:

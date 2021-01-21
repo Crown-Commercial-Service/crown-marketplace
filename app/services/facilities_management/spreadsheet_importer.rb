@@ -93,7 +93,6 @@ class FacilitiesManagement::SpreadsheetImporter
 
   def building_attribues(building_column)
     {
-      user_email: @user.email,
       building_name: building_column[1].to_s,
       description: building_column[2],
       address_line_1: building_column[3],
@@ -115,7 +114,6 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def store_building(building)
-    building.populate_json_attribute
     validations = validate_building(building)
     @procurement_array << { object: building, valid: validations[0], errors: validations[1], skip: false }
   end
@@ -409,7 +407,7 @@ class FacilitiesManagement::SpreadsheetImporter
     buildings = complete_procurement_array.map { |building| building[:object].building_name }
     sheet_buildings = sheet.row(row).compact.reject(&:blank?)
     sheet_buildings.shift(shift_number)
-    (buildings.map(&:to_s).sort - sheet_buildings.map(&:to_s).sort).empty?
+    (buildings.map(&:to_s).sort - sheet_buildings.map(&:to_s).map(&:squish).sort).empty?
   end
 
   def spreadsheet_import_loop(sheet_variables, building_variables, starting_column, error)
@@ -492,9 +490,9 @@ class FacilitiesManagement::SpreadsheetImporter
       building.save
     else
       if building.address_region.nil? && normalise_postcode(existing_building.address_postcode) == normalise_postcode(building.address_postcode)
-        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'address_region', 'address_region_code', 'building_json'))
+        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'address_region', 'address_region_code'))
       else
-        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at', 'building_json'))
+        existing_building.assign_attributes(building.attributes.except('id', 'created_at', 'updated_at'))
       end
       existing_building.save
       building_hash[:object] = existing_building

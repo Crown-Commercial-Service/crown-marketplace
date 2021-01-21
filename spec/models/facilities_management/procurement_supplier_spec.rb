@@ -1,83 +1,78 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
-  let(:current_year) { Date.current.year.to_s }
-  let(:da_current_year_1) { create(:facilities_management_procurement_supplier_da, contract_number: "RM3860-DA0001-#{current_year}") }
-  let(:da_current_year_2) { create(:facilities_management_procurement_supplier_da, contract_number: "RM3860-DA0002-#{current_year}") }
-  let(:da_previous_year_1) { create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0003-2019') }
-  let(:da_previous_year_2) { create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0004-2019') }
-  let(:fc_current_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0005-#{current_year}") }
-  let(:fc_current_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0006-#{current_year}") }
-  let(:fc_previous_year_1) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0007-2019') }
-  let(:fc_previous_year_2) { create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0008-2019') }
-
-  before do
-    da_current_year_1
-    da_current_year_2
-    da_previous_year_1
-    da_previous_year_2
-    fc_current_year_1
-    fc_current_year_2
-    fc_previous_year_1
-    fc_previous_year_2
-  end
-
-  describe '.used_direct_award_contract_numbers_for_current_year' do
-    it 'presents all of the direct award contract numbers used for the current year' do
-      expect(described_class.used_direct_award_contract_numbers_for_current_year.sort).to match(['0001', '0002'])
-    end
-
-    it 'does not present any of the direct award contract numbers used for the previous years' do
-      expect(described_class.used_direct_award_contract_numbers_for_current_year).not_to match(['0003', '0004'])
-    end
-  end
-
-  describe '.used_further_competition_contract_numbers_for_current_year' do
-    it 'presents all of the further competition contract numbers used for the current year' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
-    end
-
-    it 'does not present any of the further competition contract numbers used for the previous years' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year).not_to match(['0007', '0008'])
-    end
-  end
-
-  describe '.generate_contract_number' do
-    let(:direct_award) { create(:facilities_management_procurement_supplier_da) }
-    let(:further_competition) { create(:facilities_management_procurement_supplier_fc) }
-    let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
-    let(:expected_number) { number_array.sample }
+  describe 'contract number generation' do
+    let(:current_year) { Date.current.year.to_s }
 
     before do
-      allow(described_class).to receive(:used_direct_award_contract_numbers_for_current_year) { number_array - [expected_number] }
-      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+      create(:facilities_management_procurement_supplier_da, contract_number: "RM3860-DA0001-#{current_year}")
+      create(:facilities_management_procurement_supplier_da, contract_number: "RM3860-DA0002-#{current_year}")
+      create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0003-2019')
+      create(:facilities_management_procurement_supplier_da, contract_number: 'RM3860-DA0004-2019')
+      create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0005-#{current_year}")
+      create(:facilities_management_procurement_supplier_fc, contract_number: "RM3860-FC0006-#{current_year}")
+      create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0007-2019')
+      create(:facilities_management_procurement_supplier_fc, contract_number: 'RM3860-FC0008-2019')
     end
 
-    context 'with a procurement in direct award' do
-      it 'returns an available number for a direct award contract' do
-        expect(direct_award.send(:generate_contract_number)).to eq("RM3830-DA#{expected_number}-#{current_year}")
+    describe '.used_direct_award_contract_numbers_for_current_year' do
+      it 'presents all of the direct award contract numbers used for the current year' do
+        expect(described_class.used_direct_award_contract_numbers_for_current_year.sort).to match(['0001', '0002'])
+      end
+
+      it 'does not present any of the direct award contract numbers used for the previous years' do
+        expect(described_class.used_direct_award_contract_numbers_for_current_year).not_to match(['0003', '0004'])
+      end
+    end
+
+    describe '.used_further_competition_contract_numbers_for_current_year' do
+      it 'presents all of the further competition contract numbers used for the current year' do
+        expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
+      end
+
+      it 'does not present any of the further competition contract numbers used for the previous years' do
+        expect(described_class.used_further_competition_contract_numbers_for_current_year).not_to match(['0007', '0008'])
+      end
+    end
+
+    describe '.generate_contract_number' do
+      let(:direct_award) { create(:facilities_management_procurement_supplier_da) }
+      let(:further_competition) { create(:facilities_management_procurement_supplier_fc) }
+      let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
+      let(:expected_number) { number_array.sample }
+
+      before do
+        allow(described_class).to receive(:used_direct_award_contract_numbers_for_current_year) { number_array - [expected_number] }
+        allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+      end
+
+      context 'with a procurement in direct award' do
+        it 'returns an available number for a direct award contract' do
+          expect(direct_award.send(:generate_contract_number)).to eq("RM3830-DA#{expected_number}-#{current_year}")
+        end
       end
     end
   end
 
+  # rubocop:disable RSpec/NestedGroups
   describe 'contracts' do
-    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user, aasm_state: 'direct_award') }
     let(:user) { create(:user) }
     let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
     let(:da_value_test1) {  347.60116658878 }
     let(:da_value_test2) {  865.24783745402 }
     let(:da_value_test3) { 1292.48276446867 }
     let(:da_value_test4) { 1517.20280381278 }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
     let(:obj) { double }
+    let(:contract) { procurement.procurement_suppliers[0] }
+
+    stub_bank_holiday_json
 
     before do
-      allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
-      allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
-      allow(obj).to receive(:assessed_value).and_return(0.1234)
-      allow(obj).to receive(:lot_number).and_return('1a')
-      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test1', supplier_id: '1', da_value: da_value_test1 }, { supplier_name: 'test2', supplier_id: '2', da_value: da_value_test2 }, { supplier_name: 'test3', supplier_id: '3', da_value: da_value_test3 }, { supplier_name: 'test4', supplier_id: '4', da_value: da_value_test4 }])
-      allow(procurement).to receive(:buildings_standard).and_return('STANDARD')
-      procurement.set_state_to_results_if_possible
+      [da_value_test1, da_value_test2, da_value_test3, da_value_test4].each_with_index do |da_value, index|
+        procurement.procurement_suppliers.create(direct_award_value: da_value, supplier_id: supplier_ids[index])
+      end
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
@@ -88,64 +83,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
     end
 
-    describe '.real_date?' do
-      let(:contract) { procurement.procurement_suppliers[0] }
-
-      context 'when the date is not real' do
-        it 'returns false' do
-          contract.contract_start_date_dd = '29'
-          contract.contract_start_date_mm = '2'
-          contract.contract_start_date_yyyy = '2019'
-          expect(contract.send(:real_date?, :contract_start_date)).to be false
-        end
-      end
-
-      context 'when the date is real' do
-        it 'returns true' do
-          contract.contract_end_date_dd = '29'
-          contract.contract_end_date_mm = '2'
-          contract.contract_end_date_yyyy = '2020'
-          expect(contract.send(:real_date?, :contract_end_date)).to be true
-        end
-      end
-    end
-
-    describe 'time_delta_in_day' do
-      let(:contract) { procurement.procurement_suppliers[0] }
-
-      context 'when sent on a Monday in a normal working week' do
-        it 'is expected to return 1 day' do
-          contract.offer_sent_date = DateTime.new(2020, 3, 9, 12, 0, 0).in_time_zone('London')
-          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.day
-        end
-      end
-
-      context 'when sent on a Friday in a normal working week' do
-        it 'is expected to return 3 days' do
-          contract.offer_sent_date = DateTime.new(2020, 3, 6, 12, 0, 0).in_time_zone('London')
-          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 3.days
-        end
-      end
-
-      context 'when sent on a Thursday with a bank holiday on Friday' do
-        it 'is expected to return 4 days' do
-          contract.offer_sent_date = DateTime.new(2020, 5, 7, 12, 0, 0).in_time_zone('London')
-          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 4.days
-        end
-      end
-
-      context 'when sent on the weekend at 12PM' do
-        it 'is expected to return 1.5 days' do
-          contract.offer_sent_date = DateTime.new(2020, 3, 8, 12, 0, 0).in_time_zone('London')
-          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.5.days
-        end
-      end
-    end
-
-    # rubocop:disable RSpec/NestedGroups
     describe 'state changes' do
-      let(:contract) { procurement.procurement_suppliers[0] }
-
       before { contract.offer_to_supplier }
 
       describe '.sent' do
@@ -214,8 +152,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
       describe '.declined' do
         context 'when a contract is declined by the supplier' do
-          let(:contract) { procurement.procurement_suppliers[0] }
-
           before do
             contract.offer_to_supplier!
             contract.decline!
@@ -239,8 +175,6 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
       end
 
       describe '.expires' do
-        let(:contract) { procurement.procurement_suppliers[0] }
-
         before do
           contract.offer_to_supplier!
           contract.expire!
@@ -272,11 +206,67 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         end
       end
     end
+  end
+
+  describe 'contract methods' do
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
+    let(:user) { create(:user) }
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::SupplierDetail.first) }
+
+    stub_bank_holiday_json
+
+    describe '.real_date?' do
+      context 'when the date is not real' do
+        it 'returns false' do
+          contract.contract_start_date_dd = '29'
+          contract.contract_start_date_mm = '2'
+          contract.contract_start_date_yyyy = '2019'
+          expect(contract.send(:real_date?, :contract_start_date)).to be false
+        end
+      end
+
+      context 'when the date is real' do
+        it 'returns true' do
+          contract.contract_end_date_dd = '29'
+          contract.contract_end_date_mm = '2'
+          contract.contract_end_date_yyyy = '2020'
+          expect(contract.send(:real_date?, :contract_end_date)).to be true
+        end
+      end
+    end
+
+    describe 'time_delta_in_day' do
+      context 'when sent on a Monday in a normal working week' do
+        it 'is expected to return 1 day' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 9, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.day
+        end
+      end
+
+      context 'when sent on a Friday in a normal working week' do
+        it 'is expected to return 3 days' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 6, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 3.days
+        end
+      end
+
+      context 'when sent on a Thursday with a bank holiday on Friday' do
+        it 'is expected to return 4 days' do
+          contract.offer_sent_date = DateTime.new(2020, 5, 7, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 4.days
+        end
+      end
+
+      context 'when sent on the weekend at 12PM' do
+        it 'is expected to return 1.5 days' do
+          contract.offer_sent_date = DateTime.new(2020, 3, 8, 12, 0, 0).in_time_zone('London')
+          expect(contract.send(:time_delta_in_days, contract.offer_sent_date, contract.contract_reminder_date)).to eq 1.5.days
+        end
+      end
+    end
 
     describe '#contract_response' do
-      let(:contract) { procurement.procurement_suppliers[0] }
-
-      before { contract.offer_to_supplier }
+      before { contract.update(aasm_state: 'sent') }
 
       context 'when contract_response is nil' do
         it 'will not be valid' do
@@ -298,184 +288,300 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
 
         context 'when contract_response is false and no reason is given' do
           it 'will not be valid' do
-            contract.contract_response = false
-            expect(contract.contract_response).to be false
             expect(contract.valid?(:contract_response)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:contract_response)
+            expect(contract.errors[:reason_for_declining].first).to eq 'Enter a reason for declining this contract offer'
           end
         end
 
         context 'when contract_response is false and a reason is given' do
+          before { contract.reason_for_declining = 'This is test string' }
+
           it 'will be valid' do
-            contract.reason_for_declining = 'This is test string'
-            expect(contract.contract_response).to be false
-            expect(contract.reason_for_declining).to match 'This is test string'
             expect(contract.valid?(:contract_response)).to be true
           end
         end
 
         context 'when contract_response is false and a reason is given that is more than 500 characters' do
+          before { contract.reason_for_declining = (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
+
           it 'will not be valid' do
-            closed_reason = (0...501).map { ('a'..'z').to_a[rand(26)] }.join
-            contract.reason_for_declining = closed_reason
-            expect(contract.contract_response).to be false
-            expect(contract.reason_for_declining).to match closed_reason
             expect(contract.valid?(:contract_response)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:contract_response)
+            expect(contract.errors[:reason_for_declining].first).to eq 'Reason for declining must be 500 characters or less'
+          end
+        end
+      end
+    end
+
+    describe 'signing the contract' do
+      before { contract.update(aasm_state: 'accepted') }
+
+      context 'when nothing is selected' do
+        it 'will not be valid' do
+          expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+        end
+
+        it 'will have the correct error message' do
+          contract.valid?(:confirmation_of_signed_contract)
+          expect(contract.errors[:contract_signed].first).to eq 'Select one option'
+        end
+      end
+
+      context 'when the supplier has not signed' do
+        before do
+          contract.contract_signed = false
+          contract.reason_for_not_signing = reason_for_not_signing
+        end
+
+        context 'when reason for closing is nil' do
+          let(:reason_for_not_signing) { nil }
+
+          it 'will not be valid' do
+            expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:confirmation_of_signed_contract)
+            expect(contract.errors[:reason_for_not_signing].first).to eq 'Enter a reason why this contract will not be signed'
+          end
+        end
+
+        context 'when reason for closing is more than max characters' do
+          let(:reason_for_not_signing) { (0...101).map { ('a'..'z').to_a[rand(26)] }.join }
+
+          it 'will not be valid' do
+            expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+          end
+
+          it 'will have the correct error message' do
+            contract.valid?(:confirmation_of_signed_contract)
+            expect(contract.errors[:reason_for_not_signing].first).to eq 'Reason for not signing must be 100 characters or less'
+          end
+        end
+
+        context 'when reason for closing is less than max characters' do
+          let(:reason_for_not_signing) { 'In my younger and more vulnerable years my father gave me some advice' }
+
+          it 'will be valid' do
+            expect(contract.valid?(:confirmation_of_signed_contract)).to be true
           end
         end
       end
 
-      describe '#confirmation_of_signed_contract' do
+      context 'when the supplier has signed' do
         before do
-          contract.accept!
+          contract.contract_signed = true
         end
 
-        context 'when nothing is selected' do
-          it 'will not be valid' do
-            expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+        context 'when entering individual date data' do
+          before do
+            contract.contract_start_date_dd = contract_start_date_dd
+            contract.contract_start_date_mm = contract_start_date_mm
+            contract.contract_start_date_yyyy = contract_start_date_yyyy
+            contract.contract_end_date_dd = contract_end_date_dd
+            contract.contract_end_date_mm = contract_end_date_mm
+            contract.contract_end_date_yyyy = contract_end_date_yyyy
           end
-        end
 
-        context 'when the supplier has not signed' do
-          context 'when no signing date is selected' do
+          context 'when the values entered are not numbers' do
+            let(:string) { (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join }
+            let(:contract_start_date_dd) { string.split('').shuffle.join }
+            let(:contract_start_date_mm) { string.split('').shuffle.join }
+            let(:contract_start_date_yyyy) { string.split('').shuffle.join }
+            let(:contract_end_date_dd) { string.split('').shuffle.join }
+            let(:contract_end_date_mm) { string.split('').shuffle.join }
+            let(:contract_end_date_yyyy) { string.split('').shuffle.join }
+
             it 'will not be valid' do
-              contract.contract_signed = false
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will not be valid with no reason for closing' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = nil
-              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
+              expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
             end
+          end
 
-            it 'will be valid with a reason for closing' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = 'reason'
+          context 'when the values entered are numbers' do
+            let(:contract_start_date_dd) { '1' }
+            let(:contract_start_date_mm) { '11' }
+            let(:contract_start_date_yyyy) { '2020' }
+            let(:contract_end_date_dd) { '1' }
+            let(:contract_end_date_mm) { '11' }
+            let(:contract_end_date_yyyy) { '2025' }
+
+            it 'will be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be true
             end
+          end
 
-            it 'will be not valid with a reason for closing above 100 characters' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = (0...101).map { ('a'..'z').to_a[rand(26)] }.join
+          context 'when the values entered are not real dates' do
+            let(:contract_start_date_dd) { '29' }
+            let(:contract_start_date_mm) { '2' }
+            let(:contract_start_date_yyyy) { '2019' }
+            let(:contract_end_date_dd) { '15' }
+            let(:contract_end_date_mm) { '2' }
+            let(:contract_end_date_yyyy) { '2025' }
+
+            it 'will not be valid' do
               expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            it 'will be valid with a reason for closing below 100 characters' do
-              contract.contract_signed = false
-              contract.reason_for_not_signing = 'In my younger and more vulnerable years my father gave me some advice'
-              expect(contract.valid?(:confirmation_of_signed_contract)).to be true
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq 'Enter a valid start date'
+              expect(contract.errors[:contract_end_date].first).to eq nil
+            end
+          end
+
+          context 'when the values entered are not real dates' do
+            let(:contract_start_date_dd) { '01' }
+            let(:contract_start_date_mm) { '01' }
+            let(:contract_start_date_yyyy) { '2021' }
+            let(:contract_end_date_dd) { '30' }
+            let(:contract_end_date_mm) { '2' }
+            let(:contract_end_date_yyyy) { '2021' }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to eq 'Enter a valid end date'
             end
           end
         end
 
-        context 'when the supplier has signed' do
-          context 'when a contract start date has been added' do
-            before do
-              contract.contract_signed = true
+        context 'when entering the dates' do
+          before do
+            contract.contract_start_date = contract_start_date
+            contract.contract_end_date = contract_end_date
+          end
+
+          context 'when a start date has been added without an end date' do
+            let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+            let(:contract_end_date) { nil }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            context 'when a start date has been added without an end date' do
-              it 'will not be valid' do
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-              end
-            end
-
-            context 'when the values entered are not numbers' do
-              it 'will not be valid' do
-                string = (0...rand(1..9)).map { ('a'..'z').to_a[rand(26)] }.join
-                contract.contract_start_date_dd = string.split('').shuffle.join
-                contract.contract_start_date_mm = string.split('').shuffle.join
-                contract.contract_start_date_yyyy = string.split('').shuffle.join
-                contract.contract_end_date_dd = string.split('').shuffle.join
-                contract.contract_end_date_mm = string.split('').shuffle.join
-                contract.contract_end_date_yyyy = string.split('').shuffle.join
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-              end
-            end
-
-            context 'when the values entered are numbers' do
-              it 'will be valid' do
-                contract.contract_start_date_dd = '1'
-                contract.contract_start_date_mm = '11'
-                contract.contract_start_date_yyyy = '2012'
-                contract.contract_end_date_dd = '1'
-                contract.contract_end_date_mm = '11'
-                contract.contract_end_date_yyyy = '2025'
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
-              end
-            end
-
-            context 'when the values entered are not real dates' do
-              it 'will not be valid' do
-                contract.contract_start_date_dd = '29'
-                contract.contract_start_date_mm = '2'
-                contract.contract_start_date_yyyy = '2019'
-                contract.contract_end_date_dd = '15'
-                contract.contract_end_date_mm = '2'
-                contract.contract_end_date_yyyy = '2025'
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-              end
-            end
-
-            context 'when the values entered are not real dates' do
-              it 'will not be valid' do
-                contract.contract_start_date_dd = '01'
-                contract.contract_start_date_mm = '01'
-                contract.contract_start_date_yyyy = '2020'
-                contract.contract_end_date_dd = '30'
-                contract.contract_end_date_mm = '2'
-                contract.contract_end_date_yyyy = '2020'
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-                expect(contract.errors.messages[:contract_end_date]).to include('Enter a valid end date')
-              end
-            end
-
-            context 'when both a start and end date have been added' do
-              it 'will be valid' do
-                contract.contract_signed = true
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1.day
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
-              end
-
-              context 'when the end date is before the start date' do
-                it 'will be valid' do
-                  contract.contract_signed = true
-                  contract.contract_start_date = DateTime.now.in_time_zone('London')
-                  contract.contract_end_date = DateTime.now.in_time_zone('London') - 1.day
-                  expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-                end
-              end
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to eq 'Enter contract end date'
             end
           end
 
-          context 'when a contract end date has been added' do
-            context 'when an end date has been added without a start date' do
-              it 'will not be valid' do
-                contract.contract_signed = true
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be false
-              end
+          context 'when an end date has been added without a start date' do
+            let(:contract_start_date) { nil }
+            let(:contract_end_date) { DateTime.now.in_time_zone('London') }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
             end
 
-            context 'when both a start and end date have been added' do
-              it 'will be valid' do
-                contract.contract_signed = true
-                contract.contract_start_date = DateTime.now.in_time_zone('London')
-                contract.contract_end_date = DateTime.now.in_time_zone('London') + 1
-                expect(contract.valid?(:confirmation_of_signed_contract)).to be true
-              end
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq 'Enter contract start date'
+              expect(contract.errors[:contract_end_date].first).to eq nil
+            end
+          end
+
+          context 'when the end date is before the start date' do
+            let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+            let(:contract_end_date) { DateTime.now.in_time_zone('London') - 1.day }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq nil
+              expect(contract.errors[:contract_end_date].first).to eq 'The contract end date must be after the contract start date'
+            end
+          end
+
+          context 'when the start date is before June 2020' do
+            let(:contract_start_date) { described_class::EARLIEST_CONTRACT_START_DATE - 1.day }
+            let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
+
+            it 'will not be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be false
+            end
+
+            it 'will have the correct error message' do
+              contract.valid?(:confirmation_of_signed_contract)
+              expect(contract.errors[:contract_start_date].first).to eq 'The contract start date must be on or after 1 June 2020'
+              expect(contract.errors[:contract_end_date].first).to eq nil
+            end
+          end
+
+          context 'when both a start and end date have been added' do
+            let(:contract_start_date) { DateTime.now.in_time_zone('London') }
+            let(:contract_end_date) { DateTime.now.in_time_zone('London') + 1.day }
+
+            it 'will be valid' do
+              expect(contract.valid?(:confirmation_of_signed_contract)).to be true
             end
           end
         end
       end
     end
 
-    describe '#contract_expiry_date' do
-      let(:contract) { procurement.procurement_suppliers[0] }
+    describe '#reason_for_closing' do
+      before { contract.reason_for_closing = reason_for_closing }
 
-      before { contract.offer_to_supplier }
+      context 'when no reason is given' do
+        let(:reason_for_closing) { nil }
+
+        it 'will not be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be false
+        end
+
+        it 'will have the correct error message' do
+          contract.valid?(:reason_for_closing)
+          expect(contract.errors[:reason_for_closing].first).to eq 'Enter a reason for closing this procurement'
+        end
+      end
+
+      context 'when a reason is given' do
+        let(:reason_for_closing) { 'This is test string' }
+
+        it 'will be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be true
+        end
+      end
+
+      context 'when a reason is given that is more than 500 characters' do
+        let(:reason_for_closing) { (0...501).map { ('a'..'z').to_a[rand(26)] }.join }
+
+        it 'will not be valid' do
+          expect(contract.valid?(:reason_for_closing)).to be false
+        end
+
+        it 'will have the correct error message' do
+          contract.valid?(:reason_for_closing)
+          expect(contract.errors[:reason_for_closing].first).to eq 'Reason for closing must be 500 characters or less'
+        end
+      end
+    end
+
+    describe '#contract_expiry_date' do
+      before { contract.update(aasm_state: 'sent') }
+
+      stub_bank_holiday_json
 
       # NO BANK HOLIDAYS
       context 'when it is a normal week without bank holidays' do
@@ -619,9 +725,9 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
     end
 
     describe '#contract_reminder_date' do
-      let(:contract) { procurement.procurement_suppliers[0] }
+      before { contract.update(aasm_state: 'sent') }
 
-      before { contract.offer_to_supplier }
+      stub_bank_holiday_json
 
       context 'when contract is sent in a normal week without bank holidays' do
         it 'is expected to have reminder date in one working day' do
@@ -656,6 +762,175 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
+  end
+  # rubocop:enable RSpec/NestedGroups
+
+  describe '.closed_date' do
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user) }
+    let(:user) { create(:user) }
+    let(:contract_signed_date) { Time.now.in_time_zone('London') }
+    let(:supplier_response_date) { Time.now.in_time_zone('London') - 1.week }
+    let(:contract_closed_date) { Time.now.in_time_zone('London') - 2.weeks }
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state, contract_signed_date: contract_signed_date, supplier_response_date: supplier_response_date, contract_closed_date: contract_closed_date) }
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'means the closed date is contract_signed_date' do
+        expect(contract.closed_date).to eq contract_signed_date
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+
+      it 'means the closed date is contract_closed_date' do
+        expect(contract.closed_date).to eq contract_closed_date
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'means the closed date is supplier_response_date' do
+        expect(contract.closed_date).to eq supplier_response_date
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'means the closed date is supplier_response_date' do
+        expect(contract.closed_date).to eq supplier_response_date
+      end
+    end
+  end
+
+  describe '.cannot_offer_to_next_supplier?' do
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user, aasm_state: procurement_state) }
+    let(:user) { create(:user) }
+    let(:procurement_state) { 'direct_award' }
+
+    context 'when the contract is sent' do
+      let(:state) { 'sent' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is accepted' do
+      let(:state) { 'accepted' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is signed' do
+      let(:state) { 'signed' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'cannot_offer_to_next_supplier returns false' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq false
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+      let(:procurement_state) { 'closed' }
+
+      it 'cannot_offer_to_next_supplier returns true' do
+        expect(contract.cannot_offer_to_next_supplier?).to eq true
+      end
+    end
+  end
+
+  describe '.cannot_withdraw?' do
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier_id: 'eb7b05da-e52e-46a3-99ae-2cb0e6226232', aasm_state: state) }
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, user: user, aasm_state: procurement_state) }
+    let(:user) { create(:user) }
+    let(:procurement_state) { 'direct_award' }
+
+    context 'when the contract is sent' do
+      let(:state) { 'sent' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is accepted' do
+      let(:state) { 'accepted' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is signed' do
+      let(:state) { 'signed' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq true
+      end
+    end
+
+    context 'when the contract is not_signed' do
+      let(:state) { 'not_signed' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is declined' do
+      let(:state) { 'declined' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is expired' do
+      let(:state) { 'expired' }
+
+      it 'cannot_withdraw returns false' do
+        expect(contract.cannot_withdraw?).to eq false
+      end
+    end
+
+    context 'when the contract is withdrawn' do
+      let(:state) { 'withdrawn' }
+      let(:procurement_state) { 'closed' }
+
+      it 'cannot_withdraw returns true' do
+        expect(contract.cannot_withdraw?).to eq true
+      end
+    end
   end
 end

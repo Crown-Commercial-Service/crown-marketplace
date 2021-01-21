@@ -4,6 +4,7 @@ module FacilitiesManagement
       rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
       rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
       rescue_from NoMethodError, with: :render_no_method_error_response
+      before_action :setup_supplier
 
       def render_unprocessable_entity_response(exception)
         logger.error exception.message
@@ -25,27 +26,23 @@ module FacilitiesManagement
       # for suppliers
       def sublot_region
         # Get nuts regions
-        h = {}
-        Nuts1Region.all.each { |x| h[x.code] = x.name }
-        @regions = h
-        h = {}
-        FacilitiesManagement::Region.all.each { |x| h[x.code] = x.name }
-        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
-        @supplier_lot = @supplier.data['lots'].select { |lot| lot['lot_number'] == params['lot_type'] }
+        @regions = Nuts1Region.all.map { |x| [x.code, x.name] }.to_h
+        @supplier_lot = @supplier.lot_data[params['lot_type']]['regions']
         @sublot_region_name = 'Sub-lot ' + params['lot_type'] + ' regions'
         @selected_supplier_regions = FacilitiesManagement::Supplier::SupplierRegionsHelper.supllier_selected_regions(@supplier_lot)
-        @subregions = h
+        @subregions = FacilitiesManagement::Region.all.map { |x| [x.code, x.name] }.to_h
       end
 
       def update_sublot_regions
-        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
-        @supplier.data['lots'].each do |lot|
-          if lot['lot_number'] == params['lot_type']
-            lot['regions'] = params[:regions].nil? ? [] : params[:regions]
-          end
-        end
+        @supplier.lot_data[params['lot_type']]['regions'] = params[:regions] || []
         @supplier.save
         redirect_to facilities_management_admin_supplier_framework_data_path
+      end
+
+      private
+
+      def setup_supplier
+        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params['id'])
       end
     end
   end

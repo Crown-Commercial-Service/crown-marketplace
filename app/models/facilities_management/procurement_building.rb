@@ -1,5 +1,7 @@
 module FacilitiesManagement
   class ProcurementBuilding < ApplicationRecord
+    include ServiceQuestionsConcern
+
     scope :active, -> { where(active: true) }
     scope :order_by_building_name, -> { joins(:building).merge(FacilitiesManagement::Building.order(FacilitiesManagement::Building.arel_table['building_name'].lower.asc)) }
     scope :requires_service_information, -> { select { |pb| pb.service_codes.any? { |code| FacilitiesManagement::ServicesAndQuestions.codes.include?(code) } } }
@@ -23,12 +25,11 @@ module FacilitiesManagement
     end
 
     # rubocop:disable Metrics/AbcSize, Rails/SkipsModelValidations
-    def set_gia
+    def freeze_building_data
       # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress
       update_columns(
         gia: building.gia,
         external_area: building.external_area,
-        region: building.region,
         building_type: building.building_type,
         security_type: building.security_type,
         address_town: building.address_town,
@@ -38,7 +39,6 @@ module FacilitiesManagement
         address_region: building.address_region,
         address_region_code: building.address_region_code,
         building_name: building.building_name,
-        building_json: building.building_json,
         description: building.description,
         other_security_type: building.other_security_type,
         other_building_type: building.other_building_type,
@@ -78,9 +78,7 @@ module FacilitiesManagement
     end
 
     def requires_service_questions?
-      return true if requires_internal_area? || requires_external_area?
-
-      procurement_building_services.map(&:required_contexts).any?(&:present?)
+      (service_codes & services_requiring_questions).any?
     end
 
     def building_internal_area
@@ -181,26 +179,23 @@ module FacilitiesManagement
     end
 
     def requires_external_area?
-      service_codes.include? 'G.5'
+      @requires_external_area ||= (services_requiring_external_area & service_codes).any?
     end
 
     def requires_internal_area?
-      (CCS::FM::Service.full_gia_services & service_codes).any?
+      @requires_internal_area ||= (services_requiring_gia & service_codes).any?
     end
 
     def area_complete?
-      return false if internal_area_incomplete?
-      return false if external_area_incomplete?
-
-      true
+      !internal_area_incomplete? && !external_area_incomplete?
     end
 
     def volumes_complete?
-      procurement_building_services.select(&:requires_unit_of_measure?).all? { |pbs| pbs.uval.present? }
+      procurement_building_services.where(code: services_requiring_volumes).all? { |pbs| pbs.uval.present? }
     end
 
     def standards_complete?
-      procurement_building_services.select(&:requires_service_standard?).all? { |pbs| pbs.service_standard.present? }
+      procurement_building_services.where(code: services_requiring_service_standards).pluck(:service_standard).all?(&:present?)
     end
 
     SERVICE_SELECTION_INVALID_TYPE = %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable invalid_cleaning].freeze

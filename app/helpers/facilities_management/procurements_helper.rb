@@ -4,10 +4,6 @@ module FacilitiesManagement::ProcurementsHelper
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
   end
 
-  def does_form_for_current_step_require_special_client_validation?(params)
-    %i[contract_name contract_period estimated_annual_cost pension_funds security_policy_document].include? params[:step].try(:to_sym)
-  end
-
   def initial_call_off_period_start_date
     format_date @procurement.initial_call_off_start_date
   end
@@ -133,7 +129,7 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def service_name(service_code)
-    @services.select { |s| s['code'] == service_code }.first&.name&.humanize
+    services.select { |s| s['code'] == service_code }.first&.name&.humanize
   end
 
   def requires_back_link?
@@ -148,12 +144,12 @@ module FacilitiesManagement::ProcurementsHelper
     procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
   end
 
-  def procurement_building_row(form, building, procurement_building_id)
+  def procurement_building_row(form, building)
     if building.status == 'Ready'
       content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
         content_tag(:div, class: 'govuk-checkboxes__item') do
           capture do
-            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, sectionid: building.building_name, checked: @active_procurement_building_ids.include?(procurement_building_id)))
+            concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @building_params[building.id] == '1'))
             concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
               procurement_building_checkbox_text(building)
             end)
@@ -169,7 +165,7 @@ module FacilitiesManagement::ProcurementsHelper
 
   def procurement_building_checkbox_text(building)
     capture do
-      concat(content_tag(:legend, building.building_name, class: 'govuk-fieldset__legend'))
+      concat(content_tag(:span, building.building_name, class: 'govuk-fieldset__legend'))
       concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
     end
   end
@@ -209,6 +205,70 @@ module FacilitiesManagement::ProcurementsHelper
     else
       edit_facilities_management_procurement_path(@procurement, step: section)
     end
+  end
+
+  def section_id(section)
+    section.downcase.gsub(' ', '-') + '-tag'
+  end
+
+  def work_packages_names
+    @work_packages_names ||= FacilitiesManagement::StaticData.work_packages.map { |wp| [wp['code'], wp['name']] }.to_h
+  end
+
+  def active_procurement_buildings
+    @active_procurement_buildings ||= @procurement.active_procurement_buildings.order_by_building_name
+  end
+
+  def number_of_suppliers
+    @procurement.procurement_suppliers.count
+  end
+
+  def procurement_services
+    @procurement_services ||= @procurement.procurement_building_services.map { |s| s[:name] }.uniq
+  end
+
+  def lowest_supplier_price
+    @procurement.procurement_suppliers.minimum(:direct_award_value)
+  end
+
+  def suppliers
+    @procurement.procurement_suppliers.map(&:supplier_name).sort
+  end
+
+  def unpriced_services
+    @unpriced_services ||= @procurement.procurement_building_services_not_used_in_calculation
+  end
+
+  def service_codes
+    @service_codes ||= @procurement.service_codes
+  end
+
+  def region_codes
+    @region_codes ||= @procurement.region_codes
+  end
+
+  def services
+    @services ||= FacilitiesManagement::Service.where(code: service_codes)&.sort_by { |service| service_codes.index(service.code) }
+  end
+
+  def regions
+    FacilitiesManagement::Region.where(code: region_codes)
+  end
+
+  def suppliers_lot1a
+    @suppliers_lot1a ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1a')
+  end
+
+  def suppliers_lot1b
+    @suppliers_lot1b ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1b')
+  end
+
+  def suppliers_lot1c
+    @suppliers_lot1c ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1c')
+  end
+
+  def supplier_count
+    @supplier_count ||= FacilitiesManagement::SupplierDetail.supplier_count(region_codes, service_codes)
   end
 end
 # rubocop:enable Metrics/ModuleLength

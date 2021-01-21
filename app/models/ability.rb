@@ -35,10 +35,11 @@ class Ability
     end
     can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
     can :manage, FacilitiesManagement::Admin if user.has_role? :fm_access
+    can :manage, FacilitiesManagement::Admin::ManagementReport if user.has_role? :fm_access
   end
 
   def fm_supplier_specific_auth(user)
     can :read, FacilitiesManagement::Supplier
-    can :manage, FacilitiesManagement::ProcurementSupplier, supplier_email: user.email
+    can :manage, FacilitiesManagement::ProcurementSupplier, supplier: user.supplier_detail
   end
 end

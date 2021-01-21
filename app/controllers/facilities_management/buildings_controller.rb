@@ -4,7 +4,7 @@ module FacilitiesManagement
   class BuildingsController < FacilitiesManagement::FrameworkController
     include Buildings::BuildingsControllerDefinitions
     include Buildings::BuildingsControllerNavigation
-    include Buildings::BuildingsControllerRegions
+    include FacilitiesManagement::FindAddressConcern
     include SharedBuildingsControllerMethods
 
     before_action :initialise_page_data
@@ -43,7 +43,7 @@ module FacilitiesManagement
                                     end
     end
 
-    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :valid_addresses, :region_needs_resolution?, :multiple_regions?
+    helper_method :step_title, :step_footer, :add_address_form_details, :valid_regions, :region_needs_resolution?, :multiple_regions?
 
     def define_all_buildings
       @page_data[:model_object] = current_user.buildings.order_by_building_name.page(params[:page])

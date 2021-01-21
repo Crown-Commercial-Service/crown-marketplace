@@ -123,7 +123,6 @@ if ENV["fm"]
     street_address = '75 Chancery Lane'
     town = 'London'
     building = FacilitiesManagement::Building.create!(user: user,
-                                                     user_email: user.email,
                                                      building_name: Faker::Name.unique.name + "'s Building",
                                                      address_line_1: street_address,
                                                      address_town: town,
@@ -135,7 +134,6 @@ if ENV["fm"]
     region = Postcode::PostcodeCheckerV2.find_region postcode.delete(' ')
     building.address_region_code = region[0]['code']
     building.address_region = region[0]['region']
-    building.populate_json_attribute
     building.save
     procurement_building = FacilitiesManagement::ProcurementBuilding.create!(
       procurement: procurement,

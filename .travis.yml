@@ -11,6 +11,7 @@ cache:
 env:
   global:
     - RAILS_ENV=test
+    - CC_TEST_REPORTER_ID=6fc605211aa3f9b75d03186bb3cf2e549f606bc056fa985c065dbee53b37c443
 services:
   - postgresql
 addons:
@@ -23,10 +24,15 @@ before_script:
   - sudo apt-get install -y postgresql-11-postgis-2.5
   - psql -U postgres -c 'create database marketplace_test'
   - psql -U postgres -d marketplace_test -c 'create extension postgis'
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
   - rm public/assets/.sprockets-manifest-*.json
+after_script:
+  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
 notifications:
   webhooks: https://api.eu.opsgenie.com/v1/json/travisci?apiKey=430b3a4a-eeba-486e-9133-99083dde9787

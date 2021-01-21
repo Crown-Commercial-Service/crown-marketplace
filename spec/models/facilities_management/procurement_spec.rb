@@ -8,50 +8,59 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   let(:current_year) { Date.current.year.to_s }
   let(:time) { Time.now.getlocal }
   let(:contract_datetime_value) { "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}" }
-  let(:da_current_year_1) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0001-#{current_year}") }
-  let(:da_current_year_2) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0002-#{current_year}") }
-  let(:da_previous_year_1) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0003-2019') }
-  let(:da_previous_year_2) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0004-2019') }
-  let(:fc_current_year_1) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
-  let(:fc_current_year_2) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
-  let(:fc_previous_year_1) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0007-2019', contract_datetime: contract_datetime_value) }
-  let(:fc_previous_year_2) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0008-2019', contract_datetime: contract_datetime_value) }
 
-  before do
-    da_current_year_1
-    da_current_year_2
-    da_previous_year_1
-    da_previous_year_2
-    fc_current_year_1
-    fc_current_year_2
-    fc_previous_year_1
-    fc_previous_year_2
-  end
-
-  it { is_expected.to be_valid }
-
-  describe '.used_further_competition_contract_numbers_for_current_year' do
-    it 'presents all of the further competition contract numbers used for the current year' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
-    end
-
-    it 'does not present any of the further competition contract numbers used for the previous years' do
-      expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).not_to match(['0007', '0008'])
-    end
-  end
-
-  describe '.generate_contract_number' do
-    let(:further_competition) { create(:facilities_management_procurement_further_competition) }
-    let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
-    let(:expected_number) { number_array.sample }
+  describe 'contract number generation' do
+    let(:da_current_year_1) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0001-#{current_year}") }
+    let(:da_current_year_2) { create(:facilities_management_procurement_direct_award, contract_number: "RM3860-DA0002-#{current_year}") }
+    let(:da_previous_year_1) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0003-2019') }
+    let(:da_previous_year_2) { create(:facilities_management_procurement_direct_award, contract_number: 'RM3860-DA0004-2019') }
+    let(:fc_current_year_1) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
+    let(:fc_current_year_2) { create(:facilities_management_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
+    let(:fc_previous_year_1) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0007-2019', contract_datetime: contract_datetime_value) }
+    let(:fc_previous_year_2) { create(:facilities_management_procurement_further_competition, contract_number: 'RM3860-FC0008-2019', contract_datetime: contract_datetime_value) }
 
     before do
-      allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+      da_current_year_1
+      da_current_year_2
+      da_previous_year_1
+      da_previous_year_2
+      fc_current_year_1
+      fc_current_year_2
+      fc_previous_year_1
+      fc_previous_year_2
     end
 
-    context 'with a procurement in further_competition' do
-      it 'returns an available number for a further_competition contract' do
-        expect(further_competition.send(:generate_contract_number_fc)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+    it { is_expected.to be_valid }
+
+    describe '.used_further_competition_contract_numbers_for_current_year' do
+      it 'presents all of the further competition contract numbers used for the current year' do
+        expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
+      end
+
+      it 'does not present any of the further competition contract numbers used for the previous years' do
+        expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).not_to match(['0007', '0008'])
+      end
+    end
+
+    describe '.generate_contract_number' do
+      let(:further_competition) { create(:facilities_management_procurement_further_competition) }
+      let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
+      let(:expected_number) { number_array.sample }
+
+      before do
+        allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
+      end
+
+      context 'with a procurement in further_competition' do
+        it 'returns an available number for a further_competition contract' do
+          expect(further_competition.send(:generate_contract_number_fc)).to eq("RM3830-FC#{expected_number}-#{current_year}")
+        end
+      end
+    end
+
+    context 'when contract_datetime format is created' do
+      it 'returns value' do
+        expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
       end
     end
   end
@@ -222,35 +231,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         procurement_building = procurement.procurement_buildings.create(active: true)
         allow(procurement_building.building).to receive(:building_name).and_return('asa')
         expect(procurement_building.valid?(:buildings_and_services)).to eq false
-      end
-    end
-  end
-
-  describe '#create_new_procurement_buildings' do
-    let!(:building) { create(:facilities_management_building, user: procurement.user) }
-    let(:building_id) { building.id }
-
-    context 'when procurement building already exists' do
-      before do
-        procurement.save
-        procurement.procurement_buildings.create(building_id: building_id)
-      end
-
-      it 'does not create a new one' do
-        expect { procurement.create_new_procurement_buildings }.not_to change(FacilitiesManagement::ProcurementBuilding, :count)
-      end
-    end
-
-    context 'when procurement building does not exist' do
-      it 'creates one' do
-        procurement.save
-        expect { procurement.create_new_procurement_buildings }.to change(FacilitiesManagement::ProcurementBuilding, :count).by(1)
-      end
-
-      it 'does not have any service codes present' do
-        procurement.save
-        procurement.create_new_procurement_buildings
-        expect(procurement.procurement_buildings.last.service_codes).to be_empty
       end
     end
   end
@@ -440,6 +420,18 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '#all_complete' do
+    context 'when the procurement is beyond requirements' do
+      %i[choose_contract_value results da_draft direct_award further_competition closed].each do |state|
+        before { procurement.update(aasm_state: state) }
+
+        it "will be nil for a state of #{state}" do
+          expect(procurement.send(:all_complete)).to be_nil
+        end
+      end
+    end
+  end
+
   describe '#update_building_services' do
     before do
       procurement.procurement_buildings.first.procurement_building_services.destroy_all
@@ -489,17 +481,16 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   end
 
   describe '#set_state_to_results_if_possible' do
-    let(:supplier_uuid) { 'eb7b05da-e52e-46a3-99ae-2cb0e6226232' }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(2).pluck(:supplier_id) }
     let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
     let(:obj) { double }
 
     before do
-      allow(CCS::FM::Supplier.supplier_name('any')).to receive(:id).and_return(supplier_uuid)
       allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
-      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_uuid, da_value: da_value_test }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test1 }])
+      allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_ids[0], da_value: da_value_test }, { supplier_name: 'test1', supplier_id: supplier_ids[1], da_value: da_value_test1 }])
     end
 
     context 'when no eligible suppliers' do
@@ -518,9 +509,9 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
-      it 'creates procurement_suppliers with the right CCS::FM::Supplier id' do
+      it 'creates procurement_suppliers with the right supplier id' do
         procurement.set_state_to_results_if_possible
-        expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_uuid
+        expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_ids[0]
       end
       it 'saves assessed_value' do
         procurement.set_state_to_results_if_possible
@@ -747,118 +738,121 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
     end
+  end
 
-    describe '#offer_to_next_supplier' do
-      let(:da_value_test) { 500 }
-      let(:da_value_test1) { 1500 }
-      let(:da_value_test2) { 1000 }
-      let(:da_value_test3) { 2000 }
+  describe '#offer_to_next_supplier' do
+    let(:da_value_test) { 500 }
+    let(:da_value_test1) { 1500 }
+    let(:da_value_test2) { 1000 }
+    let(:da_value_test3) { 2000 }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
 
-      before do
-        allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: '1', da_value: da_value_test2 }, { supplier_name: 'test1', supplier_id: '2', da_value: da_value_test }, { supplier_name: 'test2', supplier_id: '3', da_value: da_value_test3 }, { supplier_name: 'test3', supplier_id: '4', da_value: da_value_test1 }])
-        allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
-        allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
-        allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
-        allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
-        # rubocop:enable RSpec/AnyInstance
-        procurement.set_state_to_results_if_possible
-        procurement.aasm_state = 'direct_award'
-        procurement.save
+    before do
+      [da_value_test, da_value_test1, da_value_test2, da_value_test3].each_with_index do |da_value, index|
+        procurement.procurement_suppliers.create(direct_award_value: da_value, supplier_id: supplier_ids[index])
+      end
+      procurement.update(aasm_state: 'direct_award')
+      allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
+      allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
+      allow_any_instance_of(FacilitiesManagement::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)
+      # rubocop:enable RSpec/AnyInstance
+    end
+
+    stub_bank_holiday_json
+
+    context 'when all contracts are unsent' do
+      it 'will return true and the first contract will be sent' do
+        expect(procurement.offer_to_next_supplier).to be true
+        procurement.reload
+        expect(procurement.procurement_suppliers.first.aasm_state).to eq 'sent'
       end
 
-      context 'when all contracts are unsent' do
-        it 'will return true and the first contract will be sent' do
-          expect(procurement.offer_to_next_supplier).to be true
-          procurement.reload
-          expect(procurement.procurement_suppliers.first.aasm_state).to eq 'sent'
-        end
-
-        it 'will set the first contract number' do
-          expect(procurement.offer_to_next_supplier).to be true
-          procurement.reload
-          expect(procurement.procurement_suppliers.first.contract_number).not_to be_nil
-        end
-
-        it 'will not have a closed date' do
-          expect(procurement.offer_to_next_supplier).to be true
-          procurement.reload
-          expect(procurement.procurement_suppliers.first.contract_closed_date).to be_nil
-        end
+      it 'will set the first contract number' do
+        expect(procurement.offer_to_next_supplier).to be true
+        procurement.reload
+        expect(procurement.procurement_suppliers.first.contract_number).not_to be_nil
       end
 
-      context 'when some contracts are unsent' do
-        before { procurement.offer_to_next_supplier }
+      it 'will not have a closed date' do
+        expect(procurement.offer_to_next_supplier).to be true
+        procurement.reload
+        expect(procurement.procurement_suppliers.first.contract_closed_date).to be_nil
+      end
+    end
 
-        it 'will return true and the next contract will be sent' do
-          expect(procurement.offer_to_next_supplier).to be true
-          procurement.reload
-          expect(procurement.procurement_suppliers[1].aasm_state).to eq 'sent'
-        end
+    context 'when some contracts are unsent' do
+      before { procurement.offer_to_next_supplier }
 
-        it 'will set their contract numbers' do
-          procurement.offer_to_next_supplier
-          procurement.reload
-          contract_numbers = procurement.procurement_suppliers[0..1].map(&:contract_number)
-          expect(contract_numbers.any?(nil)).to be false
-        end
-
-        it 'only the first will have a closed date' do
-          procurement.offer_to_next_supplier
-          procurement.reload
-          expect(procurement.procurement_suppliers[0].contract_closed_date).not_to be_nil
-          expect(procurement.procurement_suppliers[1].contract_closed_date).to be_nil
-        end
-
-        it 'last sent offer returns false' do
-          procurement.offer_to_next_supplier
-          procurement.reload
-          expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
-          expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
-        end
+      it 'will return true and the next contract will be sent' do
+        expect(procurement.offer_to_next_supplier).to be true
+        procurement.reload
+        expect(procurement.procurement_suppliers[1].aasm_state).to eq 'sent'
       end
 
-      context 'when no contracts are unsent' do
-        before { 4.times { procurement.offer_to_next_supplier } }
+      it 'will set their contract numbers' do
+        procurement.offer_to_next_supplier
+        procurement.reload
+        contract_numbers = procurement.procurement_suppliers[0..1].map(&:contract_number)
+        expect(contract_numbers.any?(nil)).to be false
+      end
 
-        it 'will return false and no contract states will be changed' do
-          expect(procurement.offer_to_next_supplier).to be false
-          procurement.reload
-          closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
-          expect(closed_contracts.all?('sent')).to eq true
-        end
+      it 'only the first will have a closed date' do
+        procurement.offer_to_next_supplier
+        procurement.reload
+        expect(procurement.procurement_suppliers[0].contract_closed_date).not_to be_nil
+        expect(procurement.procurement_suppliers[1].contract_closed_date).to be_nil
+      end
 
-        it 'the contracts will be sent in order of lowest direct award value' do
-          procurement.reload
+      it 'last sent offer returns false' do
+        procurement.offer_to_next_supplier
+        procurement.reload
+        expect(procurement.procurement_suppliers.sent[0].last_offer?).to be false
+        expect(procurement.procurement_suppliers.sent[1].last_offer?).to be false
+      end
+    end
 
-          sorted_contracts = procurement.procurement_suppliers.order(:direct_award_value)
-          sorted_sent_contracts = procurement.procurement_suppliers.sent.order(:offer_sent_date)
+    context 'when no contracts are unsent' do
+      before { 4.times { procurement.offer_to_next_supplier } }
 
-          expect(sorted_sent_contracts).to match_array(sorted_contracts)
-        end
+      it 'will return false and no contract states will be changed' do
+        expect(procurement.offer_to_next_supplier).to be false
+        procurement.reload
+        closed_contracts = procurement.procurement_suppliers.map(&:aasm_state)
+        expect(closed_contracts.all?('sent')).to eq true
+      end
 
-        it 'will set their contract numbers' do
-          procurement.reload
-          contract_numbers = procurement.procurement_suppliers.map(&:contract_number)
-          expect(contract_numbers.any?(nil)).to be false
-        end
+      it 'the contracts will be sent in order of lowest direct award value' do
+        procurement.reload
 
-        it 'only the last will not have a closed date' do
-          procurement.reload
-          contract_closed_dates = procurement.procurement_suppliers.map(&:contract_closed_date)
-          expect(contract_closed_dates[0..2].any?(nil)).to be false
-          expect(contract_closed_dates.last).to be_nil
-        end
+        sorted_contracts = procurement.procurement_suppliers.order(:direct_award_value)
+        sorted_sent_contracts = procurement.procurement_suppliers.sent.order(:offer_sent_date)
 
-        it 'last sent offer returns true' do
-          procurement.offer_to_next_supplier
-          procurement.reload
-          procurement.procurement_suppliers.sent.each(&:decline!)
-          sent_offers = procurement.procurement_suppliers.map(&:last_offer?)
-          expect(sent_offers[0..2].any?(true)).to be false
-          expect(sent_offers.last).to be true
-        end
+        expect(sorted_sent_contracts).to match_array(sorted_contracts)
+      end
+
+      it 'will set their contract numbers' do
+        procurement.reload
+        contract_numbers = procurement.procurement_suppliers.map(&:contract_number)
+        expect(contract_numbers.any?(nil)).to be false
+      end
+
+      it 'only the last will not have a closed date' do
+        procurement.reload
+        contract_closed_dates = procurement.procurement_suppliers.map(&:contract_closed_date)
+        expect(contract_closed_dates[0..2].any?(nil)).to be false
+        expect(contract_closed_dates.last).to be_nil
+      end
+
+      it 'last sent offer returns true' do
+        procurement.offer_to_next_supplier
+        procurement.reload
+        procurement.procurement_suppliers.sent.each(&:decline!)
+        sent_offers = procurement.procurement_suppliers.map(&:last_offer?)
+        expect(sent_offers[0..2].any?(true)).to be false
+        expect(sent_offers.last).to be true
       end
     end
   end
@@ -1091,23 +1085,17 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
     end
+  end
 
-    describe 'further competition verify' do
-      context 'when further competition is valid' do
-        it 'is expected to be true' do
-          procurement.aasm_state = 'further_competition'
-          expect(procurement.further_competition?).to eq(true)
-        end
-
-        it 'is expected to be false' do
-          expect(procurement.further_competition?).to eq(false)
-        end
+  describe 'further competition verify' do
+    context 'when further competition is valid' do
+      it 'is expected to be true' do
+        procurement.aasm_state = 'further_competition'
+        expect(procurement.further_competition?).to eq(true)
       end
 
-      context 'when contract_datetime format is created' do
-        it 'returns value' do
-          expect(fc_current_year_1.contract_datetime).to eq contract_datetime_value
-        end
+      it 'is expected to be false' do
+        expect(procurement.further_competition?).to eq(false)
       end
     end
   end
@@ -1281,7 +1269,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     let(:building) { create :facilities_management_building_london }
 
     before do
-      procurement.send(:copy_procurement_buildings_gia)
+      procurement.send(:copy_procurement_buildings_data)
       procurement.lot_number_selected_by_customer = lot_number_selected_by_customer
       procurement.save
     end
@@ -1696,6 +1684,162 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         it 'returns false' do
           expect(procurement.procurement_buildings_missing_regions?).to eq false
         end
+      end
+    end
+  end
+
+  describe '.unsent_direct_award_offers' do
+    let(:contract1) { procurement.procurement_suppliers[0] }
+    let(:contract2) { procurement.procurement_suppliers[1] }
+    let(:contract3) { procurement.procurement_suppliers[2] }
+    let(:contract4) { procurement.procurement_suppliers[3] }
+
+    let(:state1) { 'unsent' }
+    let(:state2) { 'unsent' }
+    let(:state3) { 'unsent' }
+    let(:state4) { 'unsent' }
+
+    let(:da_values) { [10000, 100000, 1499999, 1500000] }
+    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
+    let(:states) { [state1, state2, state3, state4] }
+
+    before do
+      da_values.each_with_index do |value, index|
+        procurement.procurement_suppliers.create(direct_award_value: value, supplier_id: supplier_ids[index], aasm_state: states[index])
+      end
+    end
+
+    context 'when there are 4 unsent offers with 3 in range' do
+      it 'returns the three in range' do
+        expect(procurement.unsent_direct_award_offers).to match [contract1, contract2, contract3]
+      end
+    end
+
+    context 'when there are 4 offers with 3 unsent, and 3 in range' do
+      let(:state1) { 'declined' }
+
+      it 'returns the 2 unsent in range' do
+        expect(procurement.unsent_direct_award_offers).to match [contract2, contract3]
+      end
+    end
+
+    context 'when there are 4 offers with 0 unsent, and 3 in range' do
+      let(:state1) { 'declined' }
+      let(:state2) { 'expired' }
+      let(:state3) { 'declined' }
+
+      it 'returns no offers' do
+        expect(procurement.unsent_direct_award_offers).to match []
+      end
+    end
+  end
+
+  describe '.contract_detail_incomplete?' do
+    let(:result) { procurement.contract_detail_incomplete?(contact_detail) }
+
+    context 'when considering invoice_contact_detail' do
+      let(:contact_detail) { :invoice_contact_detail }
+
+      context 'when there is no invoice_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is invoice_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_invoice_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is invoice_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_invoice_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when considering authorised_contact_detail' do
+      let(:contact_detail) { :authorised_contact_detail }
+
+      context 'when there is no authorised_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is authorised_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_authorised_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is authorised_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_authorised_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when considering authorised_contact_detail' do
+      let(:contact_detail) { :notices_contact_detail }
+
+      context 'when there is no notices_contact_detail' do
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is notices_contact_detail and it is complete' do
+        before { create :facilities_management_procurement_notices_contact_detail, procurement: procurement }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+
+      context 'when there is notices_contact_detail and it is incomplete' do
+        before { create :facilities_management_procurement_notices_contact_detail_empty, procurement: procurement }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+  end
+
+  describe '.security_policy_document_file' do
+    before do
+      procurement.security_policy_document_required = true
+      procurement.security_policy_document_file = security_policy_document_file
+    end
+
+    context 'when a file is uploaded with the wrong extension' do
+      let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+
+      it 'is not valid' do
+        expect(procurement.save).to be false
+      end
+
+      it 'has the correct error message' do
+        procurement.save
+        expect(procurement.errors[:security_policy_document_file].first).to eq 'The selected file must be a DOC, DOCX or PDF'
+      end
+    end
+
+    context 'when a file is uploaded with the correct extension' do
+      let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+
+      it 'saves the file successfully' do
+        expect(procurement.save).to be true
       end
     end
   end

@@ -118,9 +118,7 @@ module ApplicationHelper
   end
 
   def model_has_error?(model_object, error_type, *attributes)
-    result = false
-    attributes.each { |a| result |= (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
-    result
+    attributes.any? { |a| (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
   end
 
   def display_errors(journey, *attributes)
@@ -317,15 +315,6 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def link_to_add_row(name, form, association, **args)
-    new_object = form.object.send(association).klass.new
-    id = new_object.object_id
-    fields = form.fields_for(association, new_object, child_index: id) do |builder|
-      render("facilities_management/procurements/edit/#{association.to_s.singularize}", ff: builder)
-    end
-    link_to(name, '#', class: 'add-pension-fields ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
-  end
-
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
     if service_type == 'Direct Award Discount (%)'
       supplier_data_ratecard_discounts.values[0][work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts.values[0][work_pckg_code]['Disc %']
@@ -392,6 +381,23 @@ module ApplicationHelper
         end
       )
     end
+  end
+
+  def create_find_address_helper(object, organisaiton_prefix, object_name, postcode_name)
+    @find_address_helper = FacilitiesManagement::FindAddressHelper.new(object, organisaiton_prefix)
+
+    capture do
+      concat(hidden_field_tag(:object_name, object_name))
+      concat(hidden_field_tag(:postcode_name, postcode_name))
+    end
+  end
+
+  def hidden_class(visible)
+    'govuk-visually-hidden' unless visible
+  end
+
+  def input_visible?(visible)
+    visible ? 0 : -1
   end
 end
 # rubocop:enable Metrics/ModuleLength

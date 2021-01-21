@@ -16,7 +16,7 @@ module ManagementConsultancy
       end
 
       def after_request_password_path
-        management_consultancy_admin_edit_user_password_path(email: params[:email])
+        management_consultancy_admin_edit_user_password_path
       end
     end
   end

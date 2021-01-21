@@ -15,7 +15,7 @@
       </h2>
       <%= displayed_error %>
       <p class='govuk-hint'>
-        <%= t('.select_all_that_apply') %>
+        <%= t('.select_all_that_apply_html', services_link: link_to(t('.services_link_text'), facilities_management_procurement_summary_path(@procurement, summary: 'services'), class: 'govuk-link govuk-link--no-visited-state')) %>
       </p>
     </div>
   </div>

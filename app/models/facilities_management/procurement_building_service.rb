@@ -46,11 +46,6 @@ module FacilitiesManagement
       @answer_store ||= { code: this_service[:code], contexts: this_service[:context], questions: get_answers(this_service[:questions]) }
     end
 
-    # Process each service by validating each context and gathers the errors for any context
-    def context_validations
-      @context_validations ||= answer_store[:contexts].map { |ctx| { ctx[0] => context_errors(ctx[0]) } }.reduce({}, :update)
-    end
-
     # The options given in the service standards pages
     SERVICE_STANDARDS = %w[A B C].freeze
     SERVICES_DEFINITION = services_and_questions.service_collection
@@ -110,23 +105,14 @@ module FacilitiesManagement
     def validate_services
       return if this_service.blank?
 
-      errors.merge!(context_errors([required_contexts.keys]))
-    end
-
-    # Returns a hash of all contexts and the valid? status for each
-    def services_status
-      return { context: :na, ready: false } if code.blank?
-
-      return { context: :unknown, ready: false } if this_service[:context].empty?
-
-      answer_store.merge(validity: context_validations)
+      validate_for_all_contexts(required_contexts.keys)
     end
 
     def uval
       if requires_volume?
         send(required_contexts[:volume].first)
       elsif requires_lift_data?
-        lifts.sum(:number_of_floors) unless lifts.empty?
+        sum_number_of_floors unless lifts.empty?
       elsif requires_service_hours?
         service_hours
       elsif requires_external_area?
@@ -146,6 +132,10 @@ module FacilitiesManagement
 
     def special_da_service?
       FacilitiesManagement::Service.special_da_service?(code)
+    end
+
+    def sum_number_of_floors
+      lifts.sum(:number_of_floors)
     end
 
     def gia
@@ -211,16 +201,10 @@ module FacilitiesManagement
       questions.map { |q| { question: q, answer: self[q] } }
     end
 
-    def context_errors(*contexts)
-      return nil if contexts.blank?
+    def validate_for_all_contexts(*contexts)
+      return if contexts.blank?
 
-      error_collection = ActiveModel::Errors.new(ProcurementBuildingService)
-      contexts.flatten.each do |ctx|
-        valid?(ctx)
-        error_collection.merge!(errors)
-      end
-
-      error_collection
+      contexts.flatten.all? { |ctx| valid?(ctx) }
     end
   end
 end

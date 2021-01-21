@@ -48,16 +48,30 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
     let(:record) { FacilitiesManagement::Admin::SuppliersAdmin.find(id) }
 
     let(:updated_lot_data) do
-      record.data['lots'].select { |lot| lot['lot_number'] == target_lot } .first
+      record.lot_data[target_lot]
     end
 
     context 'with lot 1b' do
-      it 'updates the supplier' do
-        expect(updated_lot_data['services']).to eq(new_services)
+      context 'with new services' do
+        it 'updates the supplier' do
+          expect(updated_lot_data['services']).to eq(new_services)
+        end
+
+        it 'redirects to admin dashboard' do
+          expect(response).to redirect_to(facilities_management_admin_supplier_framework_data_path)
+        end
       end
 
-      it 'redirects to admin dashboard' do
-        expect(response).to redirect_to(facilities_management_admin_supplier_framework_data_path)
+      context 'without new services' do
+        let(:new_services) { %w[] }
+
+        it 'updates the supplier' do
+          expect(updated_lot_data['services']).to eq(new_services)
+        end
+
+        it 'redirects to admin dashboard' do
+          expect(response).to redirect_to(facilities_management_admin_supplier_framework_data_path)
+        end
       end
     end
 

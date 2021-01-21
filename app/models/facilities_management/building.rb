@@ -7,9 +7,8 @@ module FacilitiesManagement
 
     scope :order_by_building_name, -> { order(Arel.sql('lower(building_name)')) }
 
-    before_save :populate_other_data, :determine_status, :populate_json_attribute
+    before_save :determine_status
     before_validation :determine_status
-    after_find :populate_json_attribute
 
     BUILDING_TYPES = [{ id: 'General office - Customer Facing', title: 'General office - customer facing', caption: 'General office areas and customer facing areas.' },
                       { id: 'General office - Non Customer Facing', title: 'General office - non customer facing', caption: 'General office areas and non-customer facing areas.' },
@@ -43,6 +42,7 @@ module FacilitiesManagement
                       { id: 'Hospitals', title: 'Hospitals', caption: 'Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.' },
                       { id: 'Mothballed-/-Vacant-/-Disposal', title: 'Mothballed or vacant or disposal', caption: 'Areas which are vacant or awaiting disposal where no services are being undertaken.' }].freeze
 
+    validate :remove_excess_spaces_from_building_name, on: %i[new building_details all]
     validates :building_name, presence: true, uniqueness: { scope: :user }, length: { maximum: 50 }, on: %i[new building_details all]
     validates :description, length: { maximum: 50 }, on: %i[new building_details all]
 
@@ -76,24 +76,6 @@ module FacilitiesManagement
     validate :security_type_selection, on: %i[security all]
     validates :other_security_type, presence: true, on: %i[security all], if: -> { security_type == 'other' }
     validate proc { text_area_max_length(:other_security_type, 150) }, on: %i[security all], if: -> { security_type == 'other' }
-
-    def building_json=(json)
-      populate_row_from_json(json.deep_symbolize_keys)
-      attributes['building_json'] = json
-    end
-
-    def building_json
-      if building_name.present?
-        json_from_row
-      else
-        attributes['building_json']
-      end
-    end
-
-    def populate_json_attribute
-      self[:building_json] = json_from_row.deep_symbolize_keys if building_name.present?
-      populate_row_from_json(self[:building_json].deep_symbolize_keys) if building_name.blank? && self&.building_json&.dig('name').present?
-    end
 
     def building_standard
       STANDARD_BUILDING_TYPES.include?(building_type) ? 'STANDARD' : 'NON-STANDARD'
@@ -129,16 +111,16 @@ module FacilitiesManagement
 
     private
 
-    def populate_other_data
-      self.user_email = Base64.encode64(user.email.to_s) unless user.nil?
-    end
-
     def determine_status
       self.status = if building_ready?
                       'Ready'
                     else
                       'Incomplete'
                     end
+    end
+
+    def remove_excess_spaces_from_building_name
+      building_name&.squish!
     end
 
     def building_ready?
@@ -151,46 +133,6 @@ module FacilitiesManagement
       (gia.to_i + external_area.to_i).positive?
     end
 
-    def json_from_row
-      {
-        id: id,
-        name: building_name,
-        description: description,
-        region: region,
-        gia: gia,
-        'building-type': building_type,
-        'security-type': security_type,
-        address: {
-          'fm-address-town': address_town,
-          'fm-address-line-1': address_line_1,
-          'fm-address-line-2': address_line_2,
-          'fm-address-region': address_region,
-          'fm-address-region-code': address_region_code,
-          'fm-address-postcode': address_postcode
-        }
-      }.symbolize_keys
-    end
-
-    # rubocop:disable Metrics/AbcSize
-    def populate_row_from_json(building_json)
-      self.building_name = building_json[:building_name] || building_json[:name]
-      self.description   = building_json[:description]
-      self.region        = building_json[:region]
-      self.building_type = building_json['building-type'.to_sym]
-      self.security_type = building_json['security-type'.to_sym]
-      self.gia           = building_json[:gia].to_s.to_i
-      if building_json&.dig(:address).present?
-        self.address_town        = building_json[:address]['fm-address-town'.to_sym]
-        self.address_line_1      = building_json[:address]['fm-address-line-1'.to_sym]
-        self.address_line_2      = building_json[:address]['fm-address-line-2'.to_sym]
-        self.address_region      = building_json[:address]['fm-address-region'.to_sym] || building_json[:address]['fm-nuts-region'.to_sym]
-        self.address_postcode    = building_json[:address]['fm-address-postcode'.to_sym]
-        self.address_region_code = building_json[:address]['fm-address-region-code'.to_sym]
-      end
-      determine_status
-    end
-
-    # rubocop:enable Metrics/AbcSize
     def address_selection
       return if address_postcode.blank?
 
@@ -206,7 +148,7 @@ module FacilitiesManagement
     end
 
     def combined_external_area_and_gia_greater_than_zero
-      return if (gia.to_i + external_area.to_i).positive?
+      return if errors[:gia].any? || errors[:external_area].any? || (gia.to_i + external_area.to_i).positive?
 
       errors.add(:gia, :combined_area)
       errors.add(:external_area, :combined_area)
