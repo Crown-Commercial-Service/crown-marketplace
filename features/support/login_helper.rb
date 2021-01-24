@@ -1,7 +1,9 @@
 def cognito_groups
   OpenStruct.new(groups: [
       OpenStruct.new(group_name: 'fm_access'),
-      OpenStruct.new(group_name: 'ccs_employee')
+      OpenStruct.new(group_name: 'ccs_employee'),
+      OpenStruct.new(group_name: 'buyer')
+
   ])
 end
 
@@ -22,19 +24,19 @@ def cognito_user
   )
 end
 
-
-def login_user
-
+def aws_cognito_identity
   aws_client = instance_double(Aws::CognitoIdentityProvider::Client)
   allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
   allow(aws_client).to receive(:admin_get_user).and_return(cognito_user)
   allow(aws_client).to receive(:initiate_auth).and_return(OpenStruct.new(session: '1234667'))
   allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
+end
 
-  # create_cookie('foo', 'bar')
 
+def login_user
+  aws_cognito_identity
   OmniAuth.config.test_mode = false
-  user = create(:user, :without_detail, roles: %i[ccs_employee fm_access])
+  user = create(:user, :with_detail, roles: %i[buyer fm_access])
   visit 'facilities-management/start'
   click_on 'Start now'
   click_on 'Sign in with Cognito'
