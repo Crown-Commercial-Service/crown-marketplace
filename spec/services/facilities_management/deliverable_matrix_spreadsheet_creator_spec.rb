@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   it 'verify for, Building Information, worksheet the NUTS region' do
     expect(wb.sheet('Buildings information').row(1)).to match_array(['Buildings information', 'Building 1', 'Building 2'])
     expect(wb.sheet('Buildings information').row(2)).to match_array(['Building name', 'asa', 'asa'])
-    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '10 Mariners Court', '10 Mariners Court'])
+    expect(wb.sheet('Buildings information').row(4)).to match_array(['Building Address - Line 1', '17 Sailors road', '17 Sailors road'])
     expect(wb.sheet('Buildings information').row(5)).to match_array(['Building Address - Line 2', 'Floor 2', 'Floor 2'])
     expect(wb.sheet('Buildings information').row(9)).to match_array(['Building Gross Internal Area (GIA) (sqm)', 1002, 1002])
     expect(wb.sheet('Buildings information').row(10)).to match_array(['Building External Area (sqm)', 4596, 4596])
