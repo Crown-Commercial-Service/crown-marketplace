@@ -7,8 +7,6 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement_with_buildings_no_tupe_london) { create(:facilities_management_procurement_with_contact_details_with_buildings_no_tupe_london) }
 
-  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_name, :supplier_id).to_h.symbolize_keys }
-
   include_context 'with list of suppliers'
 
   context 'when testing DA' do
@@ -17,10 +15,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       results = {}
       report_results = {}
-
       supplier_names.each do |supplier_name|
         report_results[supplier_name] = {}
-        report.calculate_services_for_buildings supplier_ids[supplier_name]
+        report.calculate_services_for_buildings supplier_name
         results[supplier_name] = report.direct_award_value
       end
 
@@ -31,8 +28,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     it 'price for one supplier with tupe' do
       report = described_class.new(procurement_with_buildings.id)
-      supplier_name = :'Hickle-Schinner'
-      report.calculate_services_for_buildings supplier_ids[supplier_name]
+      supplier_name = 'Hickle-Schinner'
+      report_results = {}
+      report_results[supplier_name] = {}
+      report.calculate_services_for_buildings supplier_name
 
       expect(report.direct_award_value.round(2)).to eq 27733.01
     end
@@ -43,7 +42,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       results = {}
       supplier_names.each do |supplier_name|
         results[supplier_name] = {}
-        report.calculate_services_for_buildings(supplier_ids[supplier_name], :da)
+        report.calculate_services_for_buildings(supplier_name, :da)
         results[supplier_name][:direct_award_value] = report.direct_award_value
       end
 

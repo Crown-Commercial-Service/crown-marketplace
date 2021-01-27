@@ -35,7 +35,7 @@ gem 'activerecord-postgis-adapter', '>= 5.2.2'
 gem 'uk_postcode'
 gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx', '>= 3.0.2'
+gem 'caxlsx', '>= 3.0.1'
 gem 'caxlsx_rails', '>= 0.6.2'
 gem 'phonejack'
 gem 'holidays'
@@ -116,28 +116,25 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.0'
+gem 'active_storage_validations', '>= 0.8.9'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
-gem 'caracal-rails', '>= 1.0.2'
+gem 'caracal-rails', '>= 1.0.1'
 
 # duplicating procurements
 gem 'amoeba', '>= 3.1.0'
 
-# For validating emails
-gem 'email_validator', require: 'email_validator/strict'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', '>= 2.7.6'
-  gem 'factory_bot_rails', '>= 6.1.0'
+  gem 'dotenv-rails', '>= 2.7.5'
+  gem 'factory_bot_rails', '>= 5.2.0'
   gem 'launchy'
   gem 'pry-rails'
-  gem 'rails-controller-testing', '>= 1.0.5'
+  gem 'rails-controller-testing', '>= 1.0.4'
   gem 'rspec-rails', '>= 4.0.1'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop'

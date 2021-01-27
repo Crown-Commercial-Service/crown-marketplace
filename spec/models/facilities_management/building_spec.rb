@@ -859,7 +859,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     context 'when using full_address' do
       context 'when all parts of the address are present' do
         it 'returns the correct address' do
-          expect(building.full_address).to eq '17 Sailors road, Floor 2, Southend-On-Sea, Essex, SS84 6VF'
+          expect(building.full_address).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, Essex, SS31 0DR'
         end
       end
 
@@ -867,7 +867,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         before { building.address_line_2 = nil }
 
         it 'returns the correct address' do
-          expect(building.full_address).to eq '17 Sailors road, Southend-On-Sea, Essex, SS84 6VF'
+          expect(building.full_address).to eq '10 Mariners Court, Southend-On-Sea, Essex, SS31 0DR'
         end
       end
     end
@@ -875,7 +875,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     context 'when using address_no_region' do
       context 'when all parts of the address are present' do
         it 'returns the correct address' do
-          expect(building.address_no_region).to eq '17 Sailors road, Floor 2, Southend-On-Sea, SS84 6VF'
+          expect(building.address_no_region).to eq '10 Mariners Court, Floor 2, Southend-On-Sea, SS31 0DR'
         end
       end
 
@@ -883,7 +883,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         before { building.address_line_2 = nil }
 
         it 'returns the correct address' do
-          expect(building.address_no_region).to eq '17 Sailors road, Southend-On-Sea, SS84 6VF'
+          expect(building.address_no_region).to eq '10 Mariners Court, Southend-On-Sea, SS31 0DR'
         end
       end
     end

@@ -18,7 +18,7 @@ module FMCalculator
     @framework_rates = nil
 
     # rubocop:disable Metrics/ParameterLists (with a s)
-    def initialize(contract_length_years, service_ref, service_standard, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_id = nil, building = nil)
+    def initialize(contract_length_years, service_ref, service_standard, uom_vol, occupants, tupe_flag, london_flag, cafm_flag, helpdesk_flag, rates, rate_card, supplier_name = nil, building = nil)
       @contract_length_years = contract_length_years
       @subsequent_length_years = contract_length_years - 1
       @service_ref = service_ref
@@ -34,11 +34,11 @@ module FMCalculator
       @benchmark_rates = rates[:benchmark_rates]
       @framework_rates = rates[:framework_rates]
 
-      if supplier_id
-        @supplier_id = supplier_id.to_sym
-        @rate_card_discounts = rate_card.data[:Discounts][@supplier_id]
-        @rate_card_variances = rate_card.data[:Variances][@supplier_id]
-        @rate_card_prices = rate_card.data[:Prices][@supplier_id]
+      if supplier_name
+        @supplier_name = supplier_name.to_sym
+        @rate_card_discounts = rate_card.data[:Discounts][@supplier_name]
+        @rate_card_variances = rate_card.data[:Variances][@supplier_name]
+        @rate_card_prices = rate_card.data[:Prices][@supplier_name]
       end
 
       @building_type = building.building_type.to_sym if building
@@ -48,7 +48,7 @@ module FMCalculator
 
     # unit of measurable deliverables = framework_rate * unit of measure volume
     def uomd
-      if @supplier_id && @rate_card_discounts[@service_ref_sym]
+      if @supplier_name && @rate_card_discounts[@service_ref_sym]
         (1 - @rate_card_discounts[@service_ref_sym][:'Disc %'].to_f) * @uom_vol * @rate_card_prices[@service_ref_sym][@building_type].to_f
       else
         @uom_vol * framework_rate_for(@service_ref.gsub('.', '')).to_f
@@ -60,7 +60,7 @@ module FMCalculator
     # cleaning consumables
     def clean
       @clean =
-        if @supplier_id
+        if @supplier_name
           @occupants * @rate_card_variances[:'Cleaning Consumables per Building User (£)']
         else
           @occupants * framework_rate_for('M146')
@@ -70,7 +70,7 @@ module FMCalculator
     # London location variance based on being in london and a framework rate multiplied by subtotal2
     def variance(subtotal2)
       @variance ||= if @london_flag
-                      if @supplier_id
+                      if @supplier_name
                         subtotal2 * @rate_card_variances[:'London Location Variance Rate (%)'].to_f
                       else
                         subtotal2 * @framework_rates['M144'].to_f
@@ -83,7 +83,7 @@ module FMCalculator
     # if cafm flag is set then subtotal * framework rate
     def cafm(subtotal1)
       @cafm ||= if @cafm_flag
-                  if @supplier_id
+                  if @supplier_name
                     subtotal1 * @rate_card_prices[:'M.1'][@building_type].to_f
                   else
                     subtotal1 * @framework_rates['M136']
@@ -96,7 +96,7 @@ module FMCalculator
     # if helpdesk_flag is set then multiply by subtotal2
     def helpdesk(subtotal1)
       @helpdesk ||= if @helpdesk_flag
-                      if @supplier_id
+                      if @supplier_name
                         subtotal1 * @rate_card_prices[:'N.1'][@building_type].to_f
                       else
                         subtotal1 * @framework_rates['N138']
@@ -108,7 +108,7 @@ module FMCalculator
 
     # mobilisation = subtotal3 * framework_rate
     def mobilisation(subtotal3)
-      if @supplier_id
+      if @supplier_name
         subtotal3 * @rate_card_variances[:'Mobilisation Cost (DA %)'].to_f
       else
         subtotal3 * @framework_rates['B1']
@@ -119,7 +119,7 @@ module FMCalculator
     def tupe(subtotal3)
       # note: @tube_flag is now; true or false, not "Y" or "N"
       @tupe ||= if @tupe_flag
-                  if @supplier_id
+                  if @supplier_name
                     subtotal3 * @rate_card_variances[:'TUPE Risk Premium (DA %)'].to_f
                   else
                     subtotal3 * @framework_rates['M148']
@@ -131,7 +131,7 @@ module FMCalculator
 
     # Management overhead
     def manage(year1)
-      @manage ||= if @supplier_id
+      @manage ||= if @supplier_name
                     year1 * @rate_card_variances[:'Management Overhead %']
                   else
                     year1 * @framework_rates['M140']
@@ -140,7 +140,7 @@ module FMCalculator
 
     # Corporate overhead
     def corporate(year1)
-      @corporate ||= if @supplier_id
+      @corporate ||= if @supplier_name
                        year1 * @rate_card_variances[:'Corporate Overhead %']
                      else
                        year1 * @framework_rates['M141']
@@ -149,7 +149,7 @@ module FMCalculator
 
     # framework profit
     def profit(year1total)
-      @profit ||= if @supplier_id
+      @profit ||= if @supplier_name
                     year1total * @rate_card_variances[:'Profit %']
                   else
                     year1total * @framework_rates['M142']
@@ -158,7 +158,7 @@ module FMCalculator
 
     # subsequent year(s) total charges
     def subyearstotal(year1totalcharges, mobilisation)
-      @subyearstotal ||= if @supplier_id
+      @subyearstotal ||= if @supplier_name
                            @subsequent_length_years *
                              (year1totalcharges -
                                (((mobilisation + (mobilisation * @rate_card_variances[:'Management Overhead %']) +

@@ -4,7 +4,6 @@ module FacilitiesManagement
       rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
       rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
       rescue_from NoMethodError, with: :render_no_method_error_response
-      before_action :full_services
 
       def render_unprocessable_entity_response(exception)
         logger.error exception.message
@@ -29,11 +28,13 @@ module FacilitiesManagement
         supplier_services = setup_supplier_data
         setup_supplier_data_ratecard
         setup_variance_supplier_data(CCS::FM::RateCard.latest)
+        setup_instance_variables
         setup_checkboxes(supplier_services)
       end
 
       def update_sublot_data_services_prices
         setup_supplier_data
+        setup_instance_variables
 
         error_services = update_data_table(true)
         error_services += update_rates(true)
@@ -52,7 +53,7 @@ module FacilitiesManagement
 
       def setup_supplier
         @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
-        @supplier_id = @supplier.id.to_sym
+        @supplier_name = @supplier.supplier_name
       end
 
       def setup_supplier_data
@@ -62,8 +63,19 @@ module FacilitiesManagement
         lot1a_data['services']
       end
 
+      def setup_instance_variables
+        @services = FacilitiesManagement::Admin::StaticDataAdmin.services
+        @work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
+        @rates = FacilitiesManagement::Admin::Rates.all
+        @work_packages_with_rates = FacilitiesManagement::Supplier::SupplierRatesHelper.add_rates_to_work_packages(@work_packages, @rates)
+        @full_services = FacilitiesManagement::Supplier::SupplierRatesHelper.work_package_to_services(@services, @work_packages_with_rates)
+      end
+
       def setup_variance_supplier_data(rate_card)
-        @variance_supplier_data = rate_card['data'][:Variances][@supplier_id]
+        supplier_rate_card = rate_card['data'][:Variances].select do |k, v|
+          v if k.to_s == @supplier_name
+        end
+        @variance_supplier_data = supplier_rate_card[@supplier_name.to_sym]
       end
 
       def setup_checkboxes(supplier_services)
@@ -145,11 +157,11 @@ module FacilitiesManagement
 
       def setup_supplier_data_ratecard
         latest_rate_card = CCS::FM::RateCard.latest
-        @supplier_data_ratecard_prices = latest_rate_card[:data][:Prices][@supplier_id]
-        @supplier_data_ratecard_prices.deep_stringify_keys!
+        @supplier_data_ratecard_prices = latest_rate_card[:data][:Prices].select { |key, _| @supplier_name.include? key.to_s }
+        @supplier_data_ratecard_prices.values[0].deep_stringify_keys!
 
-        @supplier_data_ratecard_discounts = latest_rate_card[:data][:Discounts][@supplier_id]
-        @supplier_data_ratecard_discounts.deep_stringify_keys!
+        @supplier_data_ratecard_discounts = latest_rate_card[:data][:Discounts].select { |key, _| @supplier_name.include? key.to_s }
+        @supplier_data_ratecard_discounts.values[0].deep_stringify_keys!
         latest_rate_card
       end
 
@@ -180,11 +192,11 @@ module FacilitiesManagement
             elsif key == 'Direct Award Discount'
               new_value = params['data'][service_key][service_type_key]
               new_value = new_value.to_f unless new_value.empty?
-              @supplier_data_ratecard_discounts[service_key]['Disc %'] = new_value unless @supplier_data_ratecard_discounts[service_key].nil?
+              @supplier_data_ratecard_discounts.values[0][service_key]['Disc %'] = new_value unless @supplier_data_ratecard_discounts.values[0][service_key].nil?
             else
               new_value = params['data'][service_key][service_type_key]
               new_value = new_value.to_f unless new_value.empty?
-              @supplier_data_ratecard_prices[service_key][key] = new_value unless @supplier_data_ratecard_prices[service_key].nil?
+              @supplier_data_ratecard_prices.values[0][service_key][key] = new_value unless @supplier_data_ratecard_prices.values[0][service_key].nil?
             end
           end
         end
