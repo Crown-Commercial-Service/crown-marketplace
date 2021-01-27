@@ -37,7 +37,7 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   end
 
   def update_frozen_rate_cards
-    CCS::FM::FrozenRateCard.find_in_batches(batch_size: 5) do |group|
+    CCS::FM::FrozenRateCard.find_in_batches(batch_size: 1) do |group|
       group.each do |frozen_rate_card|
         frozen_rate_card.data = map_supplier_keys(frozen_rate_card.data)
         frozen_rate_card.save
