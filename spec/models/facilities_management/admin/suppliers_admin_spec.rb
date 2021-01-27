@@ -89,9 +89,9 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
       end
 
       context 'and it belongs to another supplier' do
-        before { FacilitiesManagement::Admin::SuppliersAdmin.where.not(supplier_id: supplier_id).first.update(supplier_name: supplier_name) }
+        let(:fake_supplier) { create(:facilities_management_admin_supplier_detail) }
 
-        let(:supplier_name) { 'Terry Crews and Sons' }
+        let(:supplier_name) { fake_supplier.supplier_name }
 
         it 'is not valid' do
           expect(supplier.valid?(:supplier_name)).to be false
