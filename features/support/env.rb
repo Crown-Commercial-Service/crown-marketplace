@@ -11,8 +11,6 @@ require 'capybara/cucumber'
 require 'selenium-webdriver'
 require 'capybara-screenshot/cucumber'
 
-
-require_relative '../support/webmock_stub'
 require_relative '../support/capybara_driver.helper'
 require_relative '../support/pages_helper'
 require_relative '../support/login_helper'
@@ -22,9 +20,9 @@ World(Cognito)
 World(Base)
 World(Pages)
 
-Webdrivers::Chromedriver
+Webdrivers::Chromedriver.update
 
-WebMock.disable_net_connect!(:allow_localhost => true)
+WebMock.disable_net_connect!(allow_localhost: 'true')
 
 DatabaseCleaner.strategy = nil
 
@@ -80,11 +78,10 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :transaction
-load Rails.root.join('db/seeds.rb')
+load Rails.root.join('db', 'seeds.rb')
 
 # Before do |_scenario|
 #   Populators::TransactionTypePopulator.call
 #   # Delete previous screenshots from filesystem that were generated during previous feature runs
 #   FileUtils.rm_rf("#{Rails.root}/tmp/capybara/**.*")
 # end
-

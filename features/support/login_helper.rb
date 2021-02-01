@@ -1,27 +1,24 @@
 def cognito_groups
   OpenStruct.new(groups: [
-      OpenStruct.new(group_name: 'fm_access'),
-      OpenStruct.new(group_name: 'ccs_employee'),
-      OpenStruct.new(group_name: 'buyer')
-
-  ])
+                   OpenStruct.new(group_name: 'fm_access'),
+                   OpenStruct.new(group_name: 'ccs_employee'),
+                   OpenStruct.new(group_name: 'buyer')
+                 ])
 end
 
 def cognito_user
-  username =  '123456'
+  username = '123456'
   email = 'user@email.com'
   name = 'Scooby'
   family_name = 'Doo'
-  phone_number ='+447500594946'
-  OpenStruct.new(
-      user_attributes: [
-          OpenStruct.new(name: 'sub', value: username),
-          OpenStruct.new(name: 'email', value: email),
-          OpenStruct.new(name: 'name', value: name),
-          OpenStruct.new(name: 'family_name', value: family_name),
-          OpenStruct.new(name: 'phone_number', value: phone_number)
-      ]
-  )
+  phone_number = '+447500594946'
+  OpenStruct.new(user_attributes: [
+                   OpenStruct.new(name: 'sub', value: username),
+                   OpenStruct.new(name: 'email', value: email),
+                   OpenStruct.new(name: 'name', value: name),
+                   OpenStruct.new(name: 'family_name', value: family_name),
+                   OpenStruct.new(name: 'phone_number', value: phone_number)
+                 ])
 end
 
 def aws_cognito_identity
@@ -32,9 +29,9 @@ def aws_cognito_identity
   allow(aws_client).to receive(:admin_list_groups_for_user).and_return(cognito_groups)
 end
 
-
 def login_user
   aws_cognito_identity
+
   OmniAuth.config.test_mode = false
   user = create(:user, :with_detail, roles: %i[buyer fm_access])
   visit 'facilities-management/start'
@@ -43,5 +40,4 @@ def login_user
   fill_in 'Email', with: user.email
   fill_in 'Password', with: 'ValidPassword!'
   click_button 'Sign in'
-
 end
