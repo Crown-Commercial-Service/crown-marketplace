@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       context 'when variance between the Customer & BM prices and the available FW prices is >|-30%| and <|30%|' do
-        let(:estimated_annual_cost) { 1850843 }
+        let(:estimated_annual_cost) { 1844700 }
 
         it 'uses FW, BM and Customer prices' do
           expect(report.assessed_value.round(2)).to eq(((report.sum_uom + report.sum_benchmark + report.buyer_input) / 3.0).round(2))

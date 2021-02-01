@@ -212,7 +212,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sum_building = {}
       sum_building_cafm = {}
       sum_building_helpdesk = {}
-      sum_building_variance = {}
+      sum_building_london_variance = {}
       sum_building_tupe = {}
       sum_building_manage = {}
       sum_building_corporate = {}
@@ -222,7 +222,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         sum_building[k] = 0
         sum_building_cafm[k] = 0
         sum_building_helpdesk[k] = 0
-        sum_building_variance[k] = 0
+        sum_building_london_variance[k] = 0
         sum_building_tupe[k] = 0
         sum_building_manage[k] = 0
         sum_building_corporate[k] = 0
@@ -250,10 +250,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
             sum_building_cafm[k] += service_data[:cafm]
             sum_building_helpdesk[k] += service_data[:helpdesk]
-            sum_building_variance[k] += service_data[:variance]
-            sum_building_tupe[k] += service_data[:tupe]
-            sum_building_manage[k] += service_data[:manage]
-            sum_building_corporate[k] += service_data[:corporate]
+            sum_building_london_variance[k] += service_data[:london_variance]
+            sum_building_tupe[k] += service_data[:tupe_risk_premium]
+            sum_building_manage[k] += service_data[:management_overhead]
+            sum_building_corporate[k] += service_data[:corporate_overhead]
             sum_building_profit[k] += service_data[:profit]
             sum_building_mobilisation[k] += service_data[:mobilisation]
 
@@ -280,7 +280,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables sub total', 4
       sheet.add_row
 
-      add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_variance
+      add_computed_row sheet, sorted_building_keys, 'London Location Variance', sum_building_london_variance
 
       add_summation_row sheet, sorted_building_keys, 'Year 1 Deliverables total', 3
       sheet.add_row
@@ -304,19 +304,20 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       sheet.add_row
       sheet.add_row ['Table 2. Subsequent Years Total Charges']
-      max_years = sorted_building_keys.collect { |k| @data[k].first[1][:contract_length_years] }.max
+
+      subsiquent_years_length = @data[sorted_building_keys.first].first[1][:subsequent_length_years]
+      max_years = @data[sorted_building_keys.first].first[1][:contract_length_years].ceil
 
       if max_years > 1
-        sumsum = 0
-        new_row = sorted_building_keys.map do |k|
-          sum = @data[k].sum { |s| s[1][:subyearstotal] }
-          sumsum += sum
-          sum
+        yearly_charge = sorted_building_keys.sum do |key|
+          @data[key].sum { |s| s[1][:subsequent_yearly_charge] }
         end
 
         (2..max_years).each do |i|
-          new_row2 = ["Year #{i}", nil, sumsum]
-          sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+          year_length = [(subsiquent_years_length + 2 - i).clamp(0, 10), 1.0].min
+
+          new_row = ["Year #{i}", nil, yearly_charge * year_length]
+          sheet.add_row new_row, style: [standard_column_style, standard_column_style, standard_style]
         end
       end
 
@@ -328,10 +329,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
 
       if max_years > 1
-        new_row = new_row.map { |x| x / 12 }
         (2..max_years).each do |i|
-          new_row2 = ["Year #{i} Monthly cost", nil, sumsum / 12]
-          sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
+          new_row = ["Year #{i} Monthly cost", nil, yearly_charge / 12.0]
+          sheet.add_row new_row, style: [standard_column_style, standard_column_style, standard_style]
         end
       end
 
