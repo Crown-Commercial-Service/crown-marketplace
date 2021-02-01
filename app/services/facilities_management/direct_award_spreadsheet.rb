@@ -3,6 +3,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
     @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
+    @supplier_id = @contract.supplier_id.to_sym
     @supplier_name = @contract.supplier.supplier_name
     frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
@@ -25,11 +26,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @report_results_no_cafmhelp_removed = {}
     @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
 
-    @report.calculate_services_for_buildings @supplier_name, :da, true
+    @report.calculate_services_for_buildings @supplier_id, :da, true
     ids = @active_procurement_buildings.joins(:building).pluck('facilities_management_buildings.id')
     @data = @report.results.sort_by { |id, _| ids.index(id) }.to_h
 
-    @report.calculate_services_for_buildings @supplier_name, :da, false
+    @report.calculate_services_for_buildings @supplier_id, :da, false
     @data_no_cafmhelp_removed = @report.results.sort_by { |id, _| ids.index(id) }.to_h
   end
 
@@ -109,7 +110,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
 
-    rate_card_prices = @rate_card_data[:Prices][@supplier_name.to_sym]
+    rate_card_prices = @rate_card_data[:Prices][@supplier_id]
 
     @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                              .flatten.uniq
@@ -119,7 +120,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
 
       new_row = @building_types_with_service_codes.map do |building_type_with_service_codes|
-        @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][building_type_with_service_codes[:building_type].to_sym] if building_type_with_service_codes[:service_codes].include? s
+        @rate_card_data[:Prices][@supplier_id][s.to_sym][building_type_with_service_codes[:building_type].to_sym] if building_type_with_service_codes[:service_codes].include? s
       end
 
       unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
@@ -149,7 +150,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
   # rubocop:enable Metrics/AbcSize
 
   def add_pricing_variables_to_rate_card_sheet(sheet)
-    rate_card_variances = @rate_card_data[:Variances][@supplier_name.to_sym]
+    rate_card_variances = @rate_card_data[:Variances][@supplier_id]
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
@@ -229,7 +230,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       @data.keys.collect { |k| @data[k].keys }
            .flatten.uniq
            .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-        new_row = [s, @rate_card_data[:Prices][@supplier_name.to_sym][s.to_sym][:'Service Name']]
+        new_row = [s, @rate_card_data[:Prices][@supplier_id][s.to_sym][:'Service Name']]
 
         sum = 0
 
