@@ -12,11 +12,11 @@ class FacilitiesManagement::AssessedValueCalculator
   end
 
   def sorted_list(eligible_for_da)
-    suppliers = @report.selected_suppliers(@report.current_lot).map { |s| { supplier_id: s.supplier_id } }
+    suppliers = @report.selected_suppliers(@report.current_lot).map { |s| { supplier_name: s.supplier_name, supplier_id: s.supplier_id } }
 
     if @lot_number == '1a' && eligible_for_da
       suppliers.each do |supplier|
-        @report.calculate_services_for_buildings supplier[:supplier_id]
+        @report.calculate_services_for_buildings supplier[:supplier_name]
         supplier.merge!(da_value: @report.direct_award_value)
       end
       suppliers.sort_by { |s| s[:da_value] }
