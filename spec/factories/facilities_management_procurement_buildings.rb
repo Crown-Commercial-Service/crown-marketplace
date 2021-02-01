@@ -9,11 +9,11 @@ FactoryBot.define do
     building_type { 'General office - Customer Facing' }
     security_type { 'Baseline personnel security standard (BPSS)' }
     address_town { 'Southend-On-Sea' }
-    address_line_1 { '17 Sailors road' }
+    address_line_1 { '10 Mariners Court' }
     address_line_2 { 'Floor 2' }
     address_region { 'Essex' }
     address_region_code { 'UKH1' }
-    address_postcode { 'SS84 6VF' }
+    address_postcode { 'SS31 0DR' }
   end
 
   factory :facilities_management_procurement_building, parent: :facilities_management_procurement_building_no_services do
