@@ -20,9 +20,25 @@ World(Cognito)
 World(Base)
 World(Pages)
 
+module Cucumber
+  module RunningTestCase
+    class TestCase < SimpleDelegator
+      def feature
+        string = File.read(location.file)
+        document = ::Gherkin::Parser.new.parse(string)
+        document[:feature]
+      end
+    end
+  end
+end
+
+allowed_sites = [/__identify__/,
+                 /127.0.0.1.*(session|shutdown)/,
+                 /chromedriver.storage.googleapis.com/]
+
 Webdrivers::Chromedriver.update
 
-WebMock.disable_net_connect!(allow_localhost: 'true')
+WebMock.disable_net_connect!(allow: allowed_sites)
 
 DatabaseCleaner.strategy = nil
 

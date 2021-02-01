@@ -45,3 +45,4 @@ Capybara.javascript_driver = Capybara.default_driver
 Capybara.current_driver = Capybara.default_driver
 Capybara.app_host = ENV['HOST'] if ENV['HOST']
 Capybara.default_max_wait_time = 30
+Webdrivers::Chromedriver.update
