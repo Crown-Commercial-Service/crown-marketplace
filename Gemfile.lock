@@ -123,6 +123,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    capybara-screenshot (1.0.25)
+      capybara (>= 1.0, < 4)
+      launchy
     caracal (1.4.1)
       nokogiri (~> 1.6)
       rubyzip (~> 1.1)
@@ -157,6 +160,44 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
+    cucumber (5.2.0)
+      builder (~> 3.2, >= 3.2.4)
+      cucumber-core (~> 8.0, >= 8.0.1)
+      cucumber-create-meta (~> 2.0, >= 2.0.2)
+      cucumber-cucumber-expressions (~> 10.3, >= 10.3.0)
+      cucumber-gherkin (~> 15.0, >= 15.0.2)
+      cucumber-html-formatter (~> 9.0, >= 9.0.0)
+      cucumber-messages (~> 13.1, >= 13.1.0)
+      cucumber-wire (~> 4.0, >= 4.0.1)
+      diff-lcs (~> 1.4, >= 1.4.4)
+      multi_test (~> 0.1, >= 0.1.2)
+      sys-uname (~> 1.2, >= 1.2.1)
+    cucumber-core (8.0.1)
+      cucumber-gherkin (~> 15.0, >= 15.0.2)
+      cucumber-messages (~> 13.0, >= 13.0.1)
+      cucumber-tag-expressions (~> 2.0, >= 2.0.4)
+    cucumber-create-meta (2.0.4)
+      cucumber-messages (~> 13.1, >= 13.1.0)
+      sys-uname (~> 1.2, >= 1.2.1)
+    cucumber-cucumber-expressions (10.3.0)
+    cucumber-gherkin (15.0.2)
+      cucumber-messages (~> 13.0, >= 13.0.1)
+    cucumber-html-formatter (9.0.0)
+      cucumber-messages (~> 13.0, >= 13.0.1)
+    cucumber-messages (13.1.0)
+      protobuf-cucumber (~> 3.10, >= 3.10.8)
+    cucumber-rails (2.2.0)
+      capybara (>= 2.18, < 4)
+      cucumber (>= 3.0.2, < 6)
+      mime-types (~> 3.2)
+      nokogiri (~> 1.8)
+      rails (>= 5.0, < 7)
+    cucumber-tag-expressions (2.0.4)
+    cucumber-wire (4.0.1)
+      cucumber-core (~> 8.0, >= 8.0.1)
+      cucumber-cucumber-expressions (~> 10.3, >= 10.3.0)
+      cucumber-messages (~> 13.0, >= 13.0.1)
+    database_cleaner (1.8.5)
     date_validator (0.10.0)
       activemodel (>= 3)
       activesupport (>= 3)
@@ -259,6 +300,7 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.2)
+    middleware (0.1.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.0512)
@@ -269,6 +311,7 @@ GEM
     msgpack (1.2.10)
     msgpack (1.2.10-x64-mingw32)
     multi_json (1.14.1)
+    multi_test (0.1.2)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     mustermann (1.1.1)
@@ -314,6 +357,11 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    protobuf-cucumber (3.10.8)
+      activesupport (>= 3.2)
+      middleware
+      thor
+      thread_safe
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -398,6 +446,10 @@ GEM
     roo (2.8.3)
       nokogiri (~> 1)
       rubyzip (>= 1.3.0, < 3.0.0)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -430,6 +482,8 @@ GEM
       nokogiri (>= 1.10.8)
       rubyzip (>= 1.3.0)
     ruby_dep (1.5.0)
+    ruby_event_store-rspec (2.0.1)
+      rspec (~> 3.0)
     rubyzip (1.3.0)
     safe_yaml (1.0.5)
     sass (3.7.4)
@@ -465,6 +519,11 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    site_prism (3.7)
+      addressable (~> 2.5)
+      capybara (~> 3.8)
+      site_prism-all_there (>= 0.3.1, < 1.0)
+    site_prism-all_there (0.3.2)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -484,6 +543,8 @@ GEM
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
+    sys-uname (1.2.2)
+      ffi (~> 1.1)
     temple (0.8.1)
     terminal-table (2.0.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
@@ -513,6 +574,10 @@ GEM
     warden (1.2.9)
       rack (>= 2.0.9)
     wdm (0.1.1)
+    webdrivers (4.4.1)
+      nokogiri (~> 1.6)
+      rubyzip (>= 1.3.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     webfinger (1.1.0)
       activesupport
       httpclient (>= 2.4)
@@ -545,11 +610,15 @@ DEPENDENCIES
   byebug
   cancan (~> 1.6.10)
   capybara (>= 3.32.2)
+  capybara-screenshot
   caracal-rails (>= 1.0.2)
   carrierwave (~> 1.3, >= 1.3.1)
   carrierwave-aws (~> 1.3.0)
   caxlsx (>= 3.0.2)
   caxlsx_rails (>= 0.6.2)
+  cucumber
+  cucumber-rails
+  database_cleaner
   date_validator (>= 0.9.0)
   devise (~> 4.7.2)
   dotenv-rails (>= 2.7.6)
@@ -591,6 +660,7 @@ DEPENDENCIES
   rubocop
   rubocop-rspec
   rubyXL (>= 3.4.6)
+  ruby_event_store-rspec
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.1, >= 5.1.0)
   selenium-webdriver (>= 3.142.3)
@@ -599,6 +669,7 @@ DEPENDENCIES
   sidekiq (~> 6.0.7)
   simplecov (>= 0.16.1)
   sinatra (~> 2.0.8, >= 2.0.8.1)
+  site_prism
   slim (~> 4.0.1)
   smarter_csv
   sprockets (>= 3.7.2)
@@ -608,6 +679,7 @@ DEPENDENCIES
   uk_postcode
   virtus
   wdm (>= 0.1.0)
+  webdrivers
   webmock
 
 RUBY VERSION
