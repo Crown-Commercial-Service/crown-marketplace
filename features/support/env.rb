@@ -11,7 +11,6 @@ require 'capybara/cucumber'
 require 'selenium-webdriver'
 require 'capybara-screenshot/cucumber'
 
-require_relative '../support/capybara_driver.helper'
 require_relative '../support/pages_helper'
 require_relative '../support/login_helper'
 
@@ -36,9 +35,31 @@ allowed_sites = [/__identify__/,
                  /127.0.0.1.*(session|shutdown)/,
                  /chromedriver.storage.googleapis.com/]
 
+WebMock.disable_net_connect!(allow: allowed_sites)
+
 Webdrivers::Chromedriver.update
 
-WebMock.disable_net_connect!(allow: allowed_sites)
+Capybara.register_driver :headless_chrome do |app|
+  browser_options = Selenium::WebDriver::Chrome::Options.new(args: %w[start-maximized headless disable-gpu no-sandbox])
+  chrome_options = { browser: :chrome,
+                     options: browser_options }
+
+  Capybara::Selenium::Driver.new app, chrome_options.merge(clear_local_storage: true, clear_session_storage: true)
+end
+
+Capybara.default_driver = :headless_chrome
+Capybara.javascript_driver = :headless_chrome
+
+if ENV['BROWSER'] == 'chrome'
+  Capybara.register_driver :chrome do |app|
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
+  end
+
+  Capybara.configure do |config|
+    config.default_max_wait_time = 10 # seconds
+    config.javascript_driver = :chrome
+  end
+end
 
 DatabaseCleaner.strategy = nil
 
