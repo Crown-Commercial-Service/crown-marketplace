@@ -55,7 +55,7 @@ en:
               too_long: The telephone number cannot be more than 15 characters
             duns:
               blank: Enter the DUNS number
-              invalid: Enter the DUNS number in the correct fomrat, for example 214567885
+              invalid: Enter the DUNS number in the correct format with 9 digits, for example 214567885
             registration_number:
               blank: Enter the company registration number
               invalid: Enter the company registration number in the correct format, for example AC123456
@@ -504,7 +504,9 @@ en:
           email_hint_html: Enter the email address you used to register
       supplier_details:
         additional_supplier_information:
+          duns_info: The nine-digit unique identifier for the business
           duns_question: Enter the DUNS number for the supplier
+          registration_number_info: If the company registration number contains letters, make sure they are uppercase
           registration_number_question: Enter the company registration number for the supplier
         edit:
           cancel_text: Cancel and return to the supplier details
