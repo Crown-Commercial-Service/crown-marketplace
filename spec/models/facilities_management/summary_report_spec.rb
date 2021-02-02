@@ -15,10 +15,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:building_id) { procurement.procurement_buildings.first.building.id }
     let(:service_code) { 'C.1' }
 
-    before { report.calculate_services_for_buildings(supplier_name) }
+    before { report.calculate_services_for_buildings(supplier_id) }
 
-    context 'when supplier_name provided' do
-      let(:supplier_name) { 'Wolf-Wiza' }
+    context 'when supplier_id provided' do
+      let(:supplier_id) { 'ec27d911-6800-4a7b-bf52-19278431d012' }
 
       context 'when remove CAFM help is true' do
         let(:remove_cafm_help) { true }
@@ -65,8 +65,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       # TODO: context 'when remove CAFM help is false'
     end
 
-    context 'when supplier_name not provided' do
-      let(:supplier_name) { nil }
+    context 'when supplier_id not provided' do
+      let(:supplier_id) { nil }
       let(:remove_cafm_help) { true }
 
       it 'results are empty' do
@@ -89,9 +89,9 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   describe '#values_to_average' do
     subject(:values_to_average) { report.values_to_average }
 
-    let(:supplier_name) { 'Wolf-Wiza' }
+    let(:supplier_id) { 'ec27d911-6800-4a7b-bf52-19278431d012' }
 
-    before { report.calculate_services_for_buildings(supplier_name) }
+    before { report.calculate_services_for_buildings(supplier_id) }
 
     it 'contains correct values' do
       expect(values_to_average.map(&:round)).to eq([18821, 0])

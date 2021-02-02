@@ -12,8 +12,12 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
 
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
-  let(:supplier) { create(:facilities_management_supplier_detail_with_lots, :with_supplier_name, name: 'Bogan-Koch') }
+  let(:supplier_name) { 'Bogan-Koch' }
+  let(:supplier_details) { create(:facilities_management_supplier_detail_with_lots) }
+  let(:supplier) { FacilitiesManagement::SupplierDetail.find_by(supplier_name: supplier_name) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+  before { supplier.update(lot_data: supplier_details.lot_data) }
 
   describe 'contract rate card worksheet' do
     subject(:rates) { wb.sheet('Contract Rate Card') }
@@ -24,7 +28,7 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
 
     context 'with a procurement in direct_award' do
       it 'verify contract rate card worksheet headers' do
-        expect(rates.row(1)).to match_array(['Bogan-Koch', nil, nil, nil])
+        expect(rates.row(1)).to match_array([supplier_name, nil, nil, nil])
         expect(rates.row(2)).to match_array(['Table 1. Service rates', nil, nil, nil])
         expect(rates.row(3)).to match_array(['Service Reference', 'Service Name', 'Unit of Measure', 'General office - Customer Facing'])
       end
