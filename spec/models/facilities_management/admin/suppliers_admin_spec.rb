@@ -409,7 +409,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
 
         it 'has the correct error message' do
           supplier.valid?(:additional_supplier_information)
-          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct fomrat, for example 214567885'
+          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct format with 9 digits, for example 214567885'
         end
       end
 
@@ -422,7 +422,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
 
         it 'has the correct error message' do
           supplier.valid?(:additional_supplier_information)
-          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct fomrat, for example 214567885'
+          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct format with 9 digits, for example 214567885'
         end
       end
 
@@ -435,7 +435,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
 
         it 'has the correct error message' do
           supplier.valid?(:additional_supplier_information)
-          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct fomrat, for example 214567885'
+          expect(supplier.errors[:duns].first).to eq 'Enter the DUNS number in the correct format with 9 digits, for example 214567885'
         end
       end
 
