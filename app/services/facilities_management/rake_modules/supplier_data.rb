@@ -1,14 +1,12 @@
 # rubocop:disable Rails/Output
 module FacilitiesManagement::RakeModules::SupplierData
   def self.supplier_data
-    is_dev_db = ENV['CCS_DEFAULT_DB_HOST']
-    # nb reinstate || (is_dev_db.include? 'dev')
-    if is_dev_db.nil? || (%w[dev. cmpdefault.db.internal.fm-preview preview sandbox].any? { |env| is_dev_db.include?(env) })
+    if Rails.env.production?
+      puts 'supplier data from aws'
+      JSON fm_aws
+    else
       puts 'dummy supplier data'
       JSON File.read('data/' + 'facilities_management/dummy_supplier_data.json')
-    elsif ENV['SECRET_KEY_BASE']
-      puts 'real supplier data'
-      JSON fm_aws
     end
   end
 
