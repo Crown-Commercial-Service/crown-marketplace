@@ -315,14 +315,6 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
-    if service_type == 'Direct Award Discount (%)'
-      supplier_data_ratecard_discounts[work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts[work_pckg_code]['Disc %']
-    else
-      supplier_data_ratecard_prices[work_pckg_code].nil? ? '' : supplier_data_ratecard_prices[work_pckg_code][service_type.remove(' (%)').remove(' (£)')]
-    end
-  end
-
   def service_name_param
     params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end

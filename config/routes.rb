@@ -165,20 +165,13 @@ Rails.application.routes.draw do
       end
     end
     namespace :admin, path: 'admin' do
-      get '/', to: 'admin_account#admin_account'
+      get '/', to: 'admin_account#index'
       get '/gateway', to: 'gateway#index'
-      get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-      put 'update-call-off-benchmark-rates', to: 'supplier_rates#update_supplier_benchmark_rates'
-      get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-      put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
-      get 'supplier-framework-data', to: 'suppliers_framework_data#index'
-      put 'update-management-report', to: 'management_report#update'
-      get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
-      put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
-      get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
-      put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
-      get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
-      put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
+      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
+      resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
+        resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
+        resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
+      end
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
