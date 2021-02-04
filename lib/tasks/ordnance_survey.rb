@@ -246,15 +246,7 @@ module OrdnanceSurvey
 
         next if File.extname(filename) == '.sh'
 
-        p "Processing    #{filename}"
-        file_time = Time.current
-        read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
-          p "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
-          log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
-                                   summation[:md5],
-                                   summation[:updated_time],
-                                   DateTime.now.utc)
-        end
+        import_local_postcode_file(directory, filename)
       rescue StandardError => e
         p "Error with    #{File.basename(filename, File.extname(filename))}: #{([e.message] + e.backtrace).join($INPUT_RECORD_SEPARATOR)}"
         log_postcode_file_failed(File.basename(filename, File.extname(filename)), e.message)
@@ -267,6 +259,24 @@ module OrdnanceSurvey
     else
       Rails.logger.info("POSTCODE: No folder for local postcode import found (#{directory})")
       p "POSTCODE: No folder for local postcode import found (#{directory})"
+    end
+  end
+
+  def self.import_sample_addresses
+    beginning_time = Time.current
+    import_local_postcode_file('data/facilities_management', 'uk_addresses.csv')
+    p "Duration: #{Time.current - beginning_time} seconds"
+  end
+
+  def self.import_local_postcode_file(directory, filename)
+    p "Processing    #{filename}"
+    file_time = Time.current
+    read_file("#{directory}/#{filename}", method(:process_csv_data)) do |summation|
+      p "Duration for #{filename}, of #{number_to_human_size summation[:length]} is #{Time.current - file_time}"
+      log_postcode_file_loaded(File.basename(filename, File.extname(filename)), summation[:length],
+                               summation[:md5],
+                               summation[:updated_time],
+                               DateTime.now.utc)
     end
   end
 
