@@ -10,8 +10,9 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       end
     end
 
-    context 'when logging in as an st buyer' do
-      login_st_buyer_with_detail
+    context 'when logging in as a buyer without permissions' do
+      login_buyer_without_permissions
+
       it 'redirects to the not permitted page' do
         get :index
 
@@ -38,8 +39,8 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       expect(response).to have_http_status(:found)
     end
 
-    context 'when logging in as an mc buyer' do
-      login_mc_buyer_with_detail
+    context 'when logging in as a buyer without permissions' do
+      login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
         get :new

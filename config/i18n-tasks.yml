@@ -130,6 +130,8 @@ ignore_unused:
   - facilities_management.procurements.results.sub-lot-1*
   - facilities_management.procurement_buildings_services.service_standards.detail_text.*
   - facilities_management.procurement_buildings_services.service_standards.detail_title.*
+  - common.type_*
+  - common.*_html
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'
   - 'devise.*'

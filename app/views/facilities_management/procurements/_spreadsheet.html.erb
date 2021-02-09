@@ -8,9 +8,7 @@
   <%= numbered_list_helper(t('.download_the_template')) do %>
     <%= t('.link') %>
     <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-3">
-      <a href="<%= asset_path(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_NAME, skip_pipeline: true) %>?format=xlsx" class="supplier-record__file-download" type="<%= t('common.type_xlsx') %>" download>
-        <%= t('.services_and_buildings_template') %> <span class="govuk-visually-hidden"><%= t('common.xlsx_html') %></span>
-      </a>
+      <%= link_to_public_file_for_download(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_NAME, :xlsx, t('.services_and_buildings_template'), true) %>
     </div>
     <%= t('.list_description', class: 'govuk-!-margin-top-4') %>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-4">
