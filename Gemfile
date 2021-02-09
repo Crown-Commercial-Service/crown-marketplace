@@ -132,7 +132,7 @@ gem 'email_validator', require: 'email_validator/strict'
 
 # for cloud storage of assets
 gem 'asset_sync'
-gem 'fog-aws'
+gem 'fog-aws', '>= 3.6.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
