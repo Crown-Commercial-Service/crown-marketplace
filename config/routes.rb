@@ -74,9 +74,8 @@ Rails.application.routes.draw do
       get 'delete'
       get 'further_competition_spreadsheet'
       get 'summary', to: 'procurements#summary'
-      post 'da_spreadsheets'
-      get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
-      get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
+      get 'deliverables_matrix'
+      get 'price_matrix'
       namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
         get '/', action: 'show'
         put '/', action: 'update'
@@ -86,8 +85,12 @@ Rails.application.routes.draw do
       resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
         resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
         resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-        get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
-        get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
+        namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do
+          get '/call-off-schedule', action: :call_off_schedule
+          get '/call-off-schedule-2', action: :call_off_schedule_2
+          get '/zip', action: :zip_contracts
+          get '/download/zip', action: :download_zip_contracts
+        end
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
