@@ -2,7 +2,7 @@ module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
     include FacilitiesManagement::ProcurementsControllerLayoutHelper
 
-    before_action :set_procurement, only: %i[show summary edit update delete destroy]
+    before_action :set_procurement, except: %i[index new create what_happens_next]
     before_action :authorize_user
     before_action :set_deleted_action_occurred, only: :index
     before_action :redirect_from_delete_if_needed, only: %i[delete destroy]
@@ -81,48 +81,25 @@ module FacilitiesManagement
 
     def what_happens_next; end
 
-    def start_bulk_upload
-      @procurement.start_detailed_search_bulk_upload! if @procurement.may_start_detailed_search_bulk_upload?
-      if params['bulk_upload_spreadsheet'] == t('facilities_management.procurements.spreadsheet.save_and_return_link')
-        redirect_to facilities_management_procurements_path
-      else
-        redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
-      end
-    end
-
     def further_competition_spreadsheet
-      init
       spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
       spreadsheet_builder.build
       send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
     end
 
-    def da_spreadsheets
-      init
-      if params[:spreadsheet] == 'prices_spreadsheet'
-        spreadsheet1 = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.first_unsent_contract.id
-        render xlsx: spreadsheet1.to_xlsx, filename: 'Attachment_3_-_Price_Matrix_(DA).xlsx'
-      else
-        spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.first_unsent_contract.id
-        spreadsheet2 = spreadsheet_builder.build
-        render xlsx: spreadsheet2.to_stream.read, filename: 'Attachment_2_-_Statement_of_Requirements_-_Deliverables_Matrix_(DA).xlsx'
-      end
+    def deliverables_matrix
+      spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.first_unsent_contract.id
+      spreadsheet_builder.build
+      send_data spreadsheet_builder.to_xlsx, filename: 'Attachment_3_-_Price_Matrix_(DA).xlsx'
+    end
+
+    def price_matrix
+      spreadsheet_builder = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.first_unsent_contract.id
+      spreadsheet_builder.build
+      send_data spreadsheet_builder.to_xlsx, filename: 'Attachment_2_-_Statement_of_Requirements_-_Deliverables_Matrix_(DA).xlsx'
     end
 
     private
-
-    def init
-      @procurement = current_user.procurements.find_by(id: params[:procurement_id])
-    end
-
-    def init_further_competition
-      if params[:procurement_id]
-        @procurement = current_user.procurements.where(id: params[:procurement_id]).first
-        @start_date = @procurement.initial_call_off_start_date
-      else
-        @start_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      end
-    end
 
     def back_path
       helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
@@ -204,6 +181,15 @@ module FacilitiesManagement
       end
 
       true
+    end
+
+    def start_bulk_upload
+      @procurement.start_detailed_search_bulk_upload! if @procurement.may_start_detailed_search_bulk_upload?
+      if params['bulk_upload_spreadsheet'] == t('facilities_management.procurements.spreadsheet.save_and_return_link')
+        redirect_to facilities_management_procurements_path
+      else
+        redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
+      end
     end
 
     def change_the_contract_value
