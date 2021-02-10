@@ -2,10 +2,10 @@ module FacilitiesManagement
   module Procurements
     module Contracts
       class DocumentsController < FacilitiesManagement::FrameworkController
+        before_action :set_contract, except: :zip_contracts
         # If this document generation changes you must change it
         # app/helpers/facilities_management/procurements/documents_procurement_helper.rb self.generate_doc
         def call_off_schedule
-          @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
           @supplier = @contract.supplier
           @procurement = @contract.procurement
           @buyer_detail = @procurement.user.buyer_detail
@@ -24,19 +24,23 @@ module FacilitiesManagement
         end
 
         def download_zip_contracts
-          @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
           @procurement = @contract.procurement
           send_data @procurement.contract_documents_zip.download, filename: 'review_your_contract.zip', type: 'application/zip'
         end
 
         def call_off_schedule_2
-          @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
           @procurement = @contract.procurement
           @pension_funds = @procurement.procurement_pension_funds
 
           respond_to do |format|
             format.docx { headers['Content-Disposition'] = 'attachment; filename="Call-Off Schedule 2 - Staff Transfer (DA) v3.0.docx"' }
           end
+        end
+
+        private
+
+        def set_contract
+          @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
         end
 
         protected
