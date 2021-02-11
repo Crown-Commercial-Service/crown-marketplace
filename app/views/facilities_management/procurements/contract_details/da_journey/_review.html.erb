@@ -14,7 +14,7 @@
     <h3 class="govuk-heading-s"><%= t('.attachment_2.heading') %></h3>
     <ul class="govuk-list documents">
       <li class="govuk-!-margin-bottom-3 govuk-section-break--visible govuk-!-margin-left-2">
-        <%= link_to_generated_file_for_download(facilities_management_procurement_price_matrix_path(@procurement.id, contract_id: @procurement.first_unsent_contract.id), :xlsx, t('.attachment_2.statement_of_requirements.title'), true) %>
+        <%= link_to_generated_file_for_download(facilities_management_procurement_deliverables_matrix_path(@procurement.id, contract_id: @procurement.first_unsent_contract.id), :xlsx, t('.attachment_2.statement_of_requirements.title'), true) %>
       </a>
         <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_2.statement_of_requirements.guidance') %></p>
       </li>
@@ -27,7 +27,7 @@
     <h3 class="govuk-heading-s"><%= t('.attachment_3.heading') %></h3>
     <ul class="govuk-list documents">
       <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-        <%= link_to_generated_file_for_download(facilities_management_procurement_deliverables_matrix_path(@procurement.id, contract_id: @procurement.first_unsent_contract.id), :xlsx, t('.attachment_3.price_matrix.title'), true) %>
+        <%= link_to_generated_file_for_download(facilities_management_procurement_price_matrix_path(@procurement.id, contract_id: @procurement.first_unsent_contract.id), :xlsx, t('.attachment_3.price_matrix.title'), true) %>
         <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.attachment_3.price_matrix.guidance') %></p>
       </li>
     </ul>
