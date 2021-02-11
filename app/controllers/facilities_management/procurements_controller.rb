@@ -88,15 +88,11 @@ module FacilitiesManagement
     end
 
     def deliverables_matrix
-      spreadsheet_builder = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @procurement.first_unsent_contract.id
-      spreadsheet_builder.build
-      send_data spreadsheet_builder.to_xlsx, filename: 'Attachment_3_-_Price_Matrix_(DA).xlsx'
+      download_da_spreadsheet(FacilitiesManagement::DeliverableMatrixSpreadsheetCreator, 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx')
     end
 
     def price_matrix
-      spreadsheet_builder = FacilitiesManagement::DirectAwardSpreadsheet.new @procurement.first_unsent_contract.id
-      spreadsheet_builder.build
-      send_data spreadsheet_builder.to_xlsx, filename: 'Attachment_2_-_Statement_of_Requirements_-_Deliverables_Matrix_(DA).xlsx'
+      download_da_spreadsheet(FacilitiesManagement::DirectAwardSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
     end
 
     private
@@ -190,6 +186,12 @@ module FacilitiesManagement
       else
         redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
       end
+    end
+
+    def download_da_spreadsheet(spreadsheet_creator, filename)
+      spreadsheet_builder = spreadsheet_creator.new @procurement.first_unsent_contract.id
+      spreadsheet_builder.build
+      send_data spreadsheet_builder.to_xlsx, filename: filename
     end
 
     def change_the_contract_value

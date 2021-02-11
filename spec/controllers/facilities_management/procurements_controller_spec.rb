@@ -999,6 +999,38 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
       end
     end
+
+    describe 'downloading the spreadsheets' do
+      before do
+        spreadsheet_double = double
+        contract_double = double
+        fake_id = double
+        allow_any_instance_of(procurement.class).to receive(:first_unsent_contract).and_return(contract_double)
+        allow(contract_double).to receive(:id).and_return(fake_id)
+        allow(spreadsheet_creator).to receive(:new).with(fake_id).and_return(spreadsheet_double)
+        allow(spreadsheet_double).to receive(:build)
+        allow(spreadsheet_double).to receive(:to_xlsx)
+        get spreadsheet_action, params: { procurement_id: procurement.id }
+      end
+
+      context 'when deliverables_matrix' do
+        let(:spreadsheet_creator) { FacilitiesManagement::DeliverableMatrixSpreadsheetCreator }
+        let(:spreadsheet_action) { :deliverables_matrix }
+
+        it 'downloads the document with the right filename' do
+          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx"'
+        end
+      end
+
+      context 'when price_matrix' do
+        let(:spreadsheet_creator) { FacilitiesManagement::DirectAwardSpreadsheet }
+        let(:spreadsheet_action) { :price_matrix }
+
+        it 'downloads the document with the right filename' do
+          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 3 - Price Matrix (DA).xlsx"'
+        end
+      end
+    end
   end
 
   context 'when logging in as a different fm buyer than the one that created the procurement' do
