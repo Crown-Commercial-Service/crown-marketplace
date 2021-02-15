@@ -46,7 +46,7 @@ RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :contr
       let(:rates) { { rate_C1_A_id => rate_C1_A_value, rate_B1_id => rate_B1_value } }
 
       context 'when the updated data is valid' do
-        let(:rate_B1_value) { 1.456 }
+        let(:rate_B1_value) { 0.1456 }
 
         it 'redirects to the home page' do
           expect(response).to redirect_to facilities_management_admin_path
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :contr
 
       context 'when the updated data is valid' do
         let(:rate_C1_C_value) { 54.27 }
-        let(:rate_B1_value) { 1.456 }
+        let(:rate_B1_value) { 0.1456 }
 
         it 'redirects to the home page' do
           expect(response).to redirect_to facilities_management_admin_path

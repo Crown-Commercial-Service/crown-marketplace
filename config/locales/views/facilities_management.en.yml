@@ -31,8 +31,10 @@ en:
           attributes:
             benchmark:
               not_a_number: The rate must be a number, like 2.60 or 8
+              out_of_range: The rate must be less than or equal to 1
             framework:
               not_a_number: The rate must be a number, like 2.60 or 8
+              out_of_range: The rate must be less than or equal to 1
         facilities_management/admin/suppliers_admin:
           attributes:
             address_county:
@@ -509,6 +511,7 @@ en:
           heading: Average framework rates
           heading_two: Average framework variances
           leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate_percentage_a: Rate (%)
           rate_pound_a: Rate (£)
         call-off-benchmark-rates:
@@ -517,6 +520,7 @@ en:
           heading_two: Benchmark variances
           leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
           note: "*Use this column for normal price if Standard A isn’t applicable"
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate_a: Rate (£) *Standard A
           rate_b: Rate (£) Standard B
           rate_c: Rate (£) Standard C
@@ -553,6 +557,7 @@ en:
           heading: Sub-lot 1a services, prices, and variances
           item: Item
           note: The tick boxes in the first column indicate the services this supplier can provide.
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
           rate_error: The rate must be a number, like 2.60 or 8
           return_link: Return to supplier framework data
