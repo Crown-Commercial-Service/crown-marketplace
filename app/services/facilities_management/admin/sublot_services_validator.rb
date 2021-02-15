@@ -95,7 +95,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
 
     return false if more_than_max_decimals?(user_entered_value)
 
-    user_entered_value.to_f <= 100
+    user_entered_value.to_f <= 1
   end
 
   def more_than_max_decimals?(user_entered_value)
