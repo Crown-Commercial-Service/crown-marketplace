@@ -16,24 +16,14 @@ class Ability
   private
 
   def service_specific_auth(user)
-    if user.has_any_role? :fm_access, :mc_access, :ls_access
-      can :read, FacilitiesManagement
-      can :read, ManagementConsultancy
-      can :read, LegalServices
-    end
+    can :read, FacilitiesManagement if user.has_any_role? :fm_access
     can :manage, FacilitiesManagement::Procurement, user_id: user.id if user.has_role? :fm_access
     can :manage, FacilitiesManagement::ProcurementSupplier, procurement: { user_id: user.id } if user.has_role? :fm_access
     can :manage, FacilitiesManagement::Building, user_id: user.id if user.has_role? :fm_access
-    can :read, SupplyTeachers if user.has_role? :st_access
   end
 
   def admin_tool_specific_auth(user)
     can :read, :all
-    if user.has_any_role? :mc_access, :ls_access
-      can :manage, ManagementConsultancy::Admin::Upload
-      can :manage, LegalServices::Admin::Upload
-    end
-    can :manage, SupplyTeachers::Admin::Upload if user.has_role? :st_access
     can :manage, FacilitiesManagement::Admin if user.has_role? :fm_access
     can :manage, FacilitiesManagement::Admin::ManagementReport if user.has_role? :fm_access
   end

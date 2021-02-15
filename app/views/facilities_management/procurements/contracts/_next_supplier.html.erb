@@ -17,7 +17,7 @@
   </div>
 
   <div class="govuk-body-l govuk-!-width-two-thirds">
-    <%= link_to t('.download_documents'), facilities_management_procurement_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
+    <%= link_to t('.download_documents'), facilities_management_procurement_contract_documents_zip_path(procurement_id: @procurement.id, contract_id: @procurement.first_unsent_contract.id), class: 'govuk-button govuk-button--secondary' %>
 
     <%= warning_text(t('.download_docs_description')) %>
   </div>

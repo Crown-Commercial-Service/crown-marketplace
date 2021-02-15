@@ -70,7 +70,7 @@ gem 'friendly_id', '~> 5.2.5'
 gem 'aws-sdk-s3', '~> 1'
 
 # for file uploads
-gem 'carrierwave', '~> 1.3', '>= 1.3.1'
+gem 'carrierwave', '~> 1.3'
 
 # handles spreadsheets
 gem 'roo', '~> 2.8.2'
@@ -129,6 +129,10 @@ gem 'amoeba', '>= 3.1.0'
 
 # For validating emails
 gem 'email_validator', require: 'email_validator/strict'
+
+# for cloud storage of assets
+gem 'asset_sync'
+gem 'fog-aws', '>= 3.6.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

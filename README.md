@@ -38,8 +38,8 @@ make
 Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 2.5.3 as the Ruby version before trying anything else. 
 
 #### Install Postgres and PostGIS
-$ brew install postgres (this will install the latest (HEAD) version, currently 12.  The server runs 11!)  
-$ brew install postgis (this is the latest (HEAD) and has postgres12 as a dependency - problematic)
+`brew install postgres` (this will install the latest (HEAD) version, currently 12.  The server runs 11!)  
+`brew install postgis` (this is the latest (HEAD) and has postgres12 as a dependency - problematic)
 
 #### Look at these pages for building postgis:  
 * http://www.concept47.com/austin_web_developer_blog/rails/best-way-to-install-postgis-for-postgres-versions-lower-than-9-6-x-from-source/
@@ -58,22 +58,28 @@ They amount to:
 
 Install PhantomJS (for Javascript tests)
 
-$ brew install phantomjs
+`brew install phantomjs`
 
 Install Redis (for Sidekiq background jobs)
 
-$ brew install redis
+`brew install redis`
 
 ## Set up
 
 To install dependencies:
 
-$ yarn install  
-$ bundle (make sure the bundler gem is installed first)
+`yarn install`
+
+`bundle` (make sure the bundler gem is installed first)
 
 To create, migrate & seed the database:  
 
-$ rake db:setup  
+`rake db:setup` 
+
+### Adding address data
+To seed your database with address data run the following command
+
+`rake db:sample_address_import`
 
 ### Environment variables
 
@@ -165,9 +171,9 @@ environments:
 Execute the following commands:
 
 ```
-$ redis-server /usr/local/etc/redis.conf
-$ bundle exec sidekiq
-$ rails s
+redis-server /usr/local/etc/redis.conf
+bundle exec sidekiq
+rails s
 ```
 
 Visit [localhost:3000](http://localhost:3000).
@@ -182,9 +188,9 @@ You can upload data for a given framework using the following command where
 environments):
 
 ```
-$ git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
-$ cd crown-marketplace-data/$FRAMEWORK_NAME
-$ curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST \
+git clone git@github.com:Crown-Commercial-Service/crown-marketplace-data.git
+cd crown-marketplace-data/$FRAMEWORK_NAME
+curl --user $HTTP_BASIC_AUTH_NAME:$HTTP_BASIC_AUTH_PASSWORD --request POST \
   --header "Content-Type: application/json" --data @output/data.json \
   $SCHEME://$HOST/$FRAMEWORK_NAME/uploads
 ```
@@ -206,7 +212,7 @@ service, inlining all CSS, images, web fonts, etc. A Rake task makes this
 easier:
 
 ```
-$ rake 'error_pages[http://localhost:3000]'
+rake 'error_pages[http://localhost:3000]'
 ```
 
 This will pull down `/errors/404.html`, for example, and save an inlined copy in

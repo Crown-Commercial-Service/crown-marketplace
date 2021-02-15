@@ -27,6 +27,12 @@ en:
               date_before_or_equal_to: The ‘From’ date must be today or in the past
               invalid: Enter a valid ‘From’ date
               not_a_date: Enter a valid ‘From’ date
+        facilities_management/admin/rates:
+          attributes:
+            benchmark:
+              not_a_number: The rate must be a number, like 2.60 or 8
+            framework:
+              not_a_number: The rate must be a number, like 2.60 or 8
         facilities_management/admin/suppliers_admin:
           attributes:
             address_county:
@@ -55,7 +61,7 @@ en:
               too_long: The telephone number cannot be more than 15 characters
             duns:
               blank: Enter the DUNS number
-              invalid: Enter the DUNS number in the correct fomrat, for example 214567885
+              invalid: Enter the DUNS number in the correct format with 9 digits, for example 214567885
             registration_number:
               blank: Enter the company registration number
               invalid: Enter the company registration number in the correct format, for example AC123456
@@ -459,7 +465,7 @@ en:
   facilities_management:
     admin:
       admin_account:
-        admin_account:
+        index:
           dashboard_assessed_value: Assessed value
           dashboard_average_rate: Average framework rates
           dashboard_calloff_rate: Call-off benchmark rates
@@ -498,13 +504,75 @@ en:
           heading_sub_detail: 'Report for date range: %{start_date} - %{end_date}'
           heading_title: Management report
           return_link: Return to admin dashboard
+      service_rates:
+        average-framework-rates:
+          heading: Average framework rates
+          heading_two: Average framework variances
+          leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
+          rate_percentage_a: Rate (%)
+          rate_pound_a: Rate (£)
+        call-off-benchmark-rates:
+          benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
+          heading: Call-off benchmark rates
+          heading_two: Benchmark variances
+          leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
+          note: "*Use this column for normal price if Standard A isn’t applicable"
+          rate_a: Rate (£) *Standard A
+          rate_b: Rate (£) Standard B
+          rate_c: Rate (£) Standard C
+          rate_percentage_a: Rate (%)
+          rate_pound_a: Rate (£)
+        edit:
+          return_link: Return to admin dashboard
+          update_button: Save and return to dashboard
+        variance_table:
+          item: Item
+          rate: Rate
+          td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+          td_corporate: Corporate overhead (%)
+          td_london: London location percentage variance (%)
+          td_mobilisation: Direct award mobilisation (%)
+          td_overhead: Management overhead (%) <br /> Workpackage A - contract management
+          td_profit: Profit (%)
+          td_tupe: Direct award TUPE risk premium (%)
       sessions:
         new:
           admin_sign_in_header: Sign in to your administration dashboard
           email_hint_html: Enter the email address you used to register
+      sublot_regions:
+        edit:
+          leading_text: The tick boxes indicate the regions to which this supplier can provide services.
+          return_link: Return to supplier framework data
+          update_button: Save and return to supplier framework data
+      sublot_services:
+        services:
+          note: The tick boxes in the first column indicate the services this supplier can provide.
+          return_button: Return to supplier framework data
+          update_button: Save and return to supplier framework data
+        services_prices_and_variances:
+          heading: Sub-lot 1a services, prices, and variances
+          item: Item
+          note: The tick boxes in the first column indicate the services this supplier can provide.
+          rate: Rate
+          rate_error: The rate must be a number, like 2.60 or 8
+          return_link: Return to supplier framework data
+          services_and_prices: Services and prices
+          td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
+          td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
+          td_corporate: Corporate overhead (%)
+          td_london: London location percentage variance (%)
+          td_mobilisation: Mobilisation (%)
+          td_overhead: Management overhead  (%) <br /> Workpackage A - contract management
+          td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
+          td_profit: Profit (%)
+          td_tupe: TUPE risk premium (%)
+          update_button: Save and return to supplier framework data
+          variances: Variances
       supplier_details:
         additional_supplier_information:
+          duns_info: The nine-digit unique identifier for the business
           duns_question: Enter the DUNS number for the supplier
+          registration_number_info: If the company registration number contains letters, make sure they are uppercase
           registration_number_question: Enter the company registration number for the supplier
         edit:
           cancel_text: Cancel and return to the supplier details
@@ -556,70 +624,15 @@ en:
           email_must_3: not be the same user as another supplier
           user_email_question: Changing the user email will change who can view the supplier dashboard.
       supplier_framework_data:
-        heading_title: Supplier framework data
-        rtrn_link: Return to admin dashboard
-        sublot_1a_regions:
-          breadcrumb_supllier_framework_data: Supplier framework data
-          leading_text: The tick boxes indicate the regions to which this supplier can provide services.
-          rtrn_link: Return to supplier framework data
-          update_button: Save and return to supplier framework data
-        sublot_data:
-          breadcrumb_text_supplier_framework_data: Supplier framework data
-          heading_title: Sub-lot 1a services, prices, and variances
-          heading_title_three: Services and prices
-          heading_title_two: Variances
-          leading_text: Sub-lot 1a services, prices, and variances
-          note: The tick boxes in the first column indicate the services this supplier can provide.
-          rate_error: The rate must be a number, like 2.60 or 8
-          return_button: Return to supplier framework data
-          there_is_a_problem: There is a problem
-          update_button: Save and return to supplier framework data
-      supplier_rates:
-        supplier_benchmark_rates:
-          benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
-          heading_title: Call-off benchmark rates
-          heading_title_two: Benchmark variances
-          item: Item
-          leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-          note: "*Use this column for normal price if Standard A isn’t applicable"
-          rate: Rate
-          rate_a: Rate (£) *Standard A
-          rate_b: Rate (£) Standard B
-          rate_c: Rate (£) Standard C
-          rate_percentage_a: Rate (%)
-          rate_pound_a: Rate (£)
-          rtrn_link: Return to admin dashboard
-          td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
-          td_cleaning_html: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-          td_corporate: Corporate overhead (%)
-          td_london: London location percentage variance (%)
-          td_mobilisation: Mobilisation (%)
-          td_overhead: Management overhead  (%) <br /> Workpackage A - contract management
-          td_overhead_html: Management overhead (%) <br /> Workpackage A - contract management
-          td_profit: Profit (%)
-          td_tupe: TUPE risk premium (%)
-          update_button: Save and return to dashboard
-        supplier_framework_rates:
-          heading_title: Average framework rates
-          heading_title_two: Average framework variances
-          item: Item
-          leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-          note: "*Use this column for normal price if Standard A isn’t applicable"
-          rate: Rate
-          rate_a: Rate (£) *Standard A
-          rate_b: Rate (£) Standard B
-          rate_c: Rate (£) Standard C
-          rate_percentage_a: Rate (%)
-          rate_pound_a: Rate (£)
-          rtrn_link: Return to admin dashboard
-          td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-          td_corporate: Corporate overhead (%)
-          td_london: London location percentage variance (%)
-          td_mobilisation: Direct award mobilisation (%)
-          td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-          td_profit: Profit (%)
-          td_tupe: Direct award TUPE risk premium (%)
-          update_button: Save and return to dashboard
+        index:
+          heading: Supplier framework data
+          regions: Regions
+          return_link: Return to admin dashboard
+          service_prices: Services, prices and variances
+          services: Services
+          sub_lot_1a: Sub-lot 1a
+          sub_lot_1b: Sub-lot 1b
+          sub_lot_1c: Sub-lot 1c
     basket:
       or_text: or
       selectall_text: Select all
@@ -1036,8 +1049,7 @@ en:
             intro-text: There are some elements of a direct award contract that cannot be amended. Please read the below information to ensure that a direct award is suitable for you.
             price_body_html: Your price has been calculated using rates that were submitted by suppliers when they competed to join the framework. There can be no further negotiation on the price within a direct award.
             price_heading: Price
-            services_body_html_1: The service specifications and service standards cannot be amended within a direct award. Please check within the
-            services_body_html_2: that you’re happy with the details for the services you are buying.
+            services_body_html: The service specifications and service standards cannot be amended within a direct award. Please check within the that %{document_link} you’re happy with the details for the services you are buying.
             services_heading: Services
             warning_text: If you wish to change any of the above criteria, you will need to consider switching to a further competition.
           pricing:
