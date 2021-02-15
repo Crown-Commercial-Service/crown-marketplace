@@ -135,31 +135,31 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
       end
 
       context 'when there are more than max decimals' do
-        let(:value) { '1.123456789012345678901' }
+        let(:value) { '0.123456789012345678901' }
 
         it 'returns false' do
           expect(result).to be false
         end
       end
 
-      context 'when the number is more than 100' do
-        let(:value) { '101' }
+      context 'when the number is more than 1' do
+        let(:value) { '1.00000001' }
 
         it 'returns false' do
           expect(result).to be false
         end
       end
 
-      context 'when the number is 100' do
-        let(:value) { '100.0' }
+      context 'when the number is 1' do
+        let(:value) { '1' }
 
         it 'returns true' do
           expect(result).to be true
         end
       end
 
-      context 'when the number is less than 100' do
-        let(:value) { '99.9' }
+      context 'when the number is less than 1' do
+        let(:value) { '0.9999999' }
 
         it 'returns true' do
           expect(result).to be true
@@ -177,8 +177,8 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
     let(:rate_card) { CCS::FM::RateCard.latest }
 
     context 'when the data and rates are valid' do
-      let(:data) { { 'E.2': { 'Direct Award Discount (%)': '3.0', 'Restaurant and Catering Facilities (£)': '40.6' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': '8.513' } } }
-      let(:rate) { { 'M.142': '3.0', 'M.146': '41.91' } }
+      let(:data) { { 'E.2': { 'Direct Award Discount (%)': '0.3', 'Restaurant and Catering Facilities (£)': '0.406' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': '8.513' } } }
+      let(:rate) { { 'M.142': '0.3', 'M.146': '41.91' } }
 
       it 'returns true' do
         expect(validator.save).to be true
@@ -186,26 +186,26 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
 
       it 'updates the discounts' do
         validator.save
-        expect(rate_card[:data][:Discounts][supplier_id][:'E.2'][:'Disc %']).to eq 3.0
+        expect(rate_card[:data][:Discounts][supplier_id][:'E.2'][:'Disc %']).to eq 0.3
         expect(rate_card[:data][:Discounts][supplier_id][:'H.5'][:'Disc %']).to eq 0.0
       end
 
       it 'updates the prices' do
         validator.save
-        expect(rate_card[:data][:Prices][supplier_id][:'E.2'][:'Restaurant and Catering Facilities']).to eq 40.6
+        expect(rate_card[:data][:Prices][supplier_id][:'E.2'][:'Restaurant and Catering Facilities']).to eq 0.406
         expect(rate_card[:data][:Prices][supplier_id][:'H.5'][:'Pre-School']).to eq 8.513
       end
 
       it 'updates the variances' do
         validator.save
-        expect(rate_card[:data][:Variances][supplier_id][:'Profit %']).to eq 3.0
+        expect(rate_card[:data][:Variances][supplier_id][:'Profit %']).to eq 0.3
         expect(rate_card[:data][:Variances][supplier_id][:'Cleaning Consumables per Building User (£)']).to eq 41.91
       end
     end
 
     context 'when the data and rates are not valid' do
       let(:data) { { 'E.2': { 'Direct Award Discount (%)': 'geoff', 'Restaurant and Catering Facilities (£)': 'Crazy' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': 'Henry VIII' } } }
-      let(:rate) { { 'M.142': '101.6', 'M.146': '41.91' } }
+      let(:rate) { { 'M.142': '1.016', 'M.146': '41.91' } }
 
       it 'returns false' do
         expect(validator.save).to be false
@@ -216,7 +216,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
         expect(validator.invalid_services).to match(
           'E.2' => { 'Direct Award Discount (%)' => 'geoff', 'Restaurant and Catering Facilities (£)' => 'Crazy' },
           'H.5' => { 'Pre-School (£)' => 'Henry VIII' },
-          'M.142' => '101.6'
+          'M.142' => '1.016'
         )
       end
     end

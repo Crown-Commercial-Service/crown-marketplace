@@ -99,7 +99,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
     context 'when updating the data for lot 1a' do
       let(:checked_services) { ['C.1', 'D.4'] }
       let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': '12.0' }, 'G.4': { 'Direct Award Discount (%)': '0.5', 'Special Schools (£)': '4.6789' } } }
-      let(:rate) { { 'M.141': '1.123', 'B.1': '0.35' } }
+      let(:rate) { { 'M.141': '0.1123', 'B.1': '0.35' } }
 
       before { put :update, params: { supplier_framework_datum_id: supplier_id, lot: '1a', checked_services: checked_services, data: data, rate: rate } }
 
@@ -134,14 +134,14 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         end
 
         context 'and the data is not valid' do
-          let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': 'TARDIS' }, 'G.4': { 'Direct Award Discount (%)': '1005', 'Special Schools (£)': 'Doctor' } } }
+          let(:data) { { 'C.1': { 'Direct Award Discount (%)': '1.0', 'Call Centre Operations (£)': 'TARDIS' }, 'G.4': { 'Direct Award Discount (%)': '1.005', 'Special Schools (£)': 'Doctor' } } }
 
           it 'renders the edit page' do
             expect(response).to render_template(:edit)
           end
 
           it 'has the correct errors' do
-            expect(assigns(:invalid_services)).to match('C.1' => { 'Call Centre Operations (£)' => 'TARDIS' }, 'G.4' => { 'Direct Award Discount (%)' => '1005', 'Special Schools (£)' => 'Doctor' })
+            expect(assigns(:invalid_services)).to match('C.1' => { 'Call Centre Operations (£)' => 'TARDIS' }, 'G.4' => { 'Direct Award Discount (%)' => '1.005', 'Special Schools (£)' => 'Doctor' })
           end
         end
       end
@@ -155,20 +155,20 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
           end
 
           it 'updated the variances correctly' do
-            expect(latest_rate_card[:data][:Variances][supplier_id.to_sym][:'Corporate Overhead %']).to eq 1.123
+            expect(latest_rate_card[:data][:Variances][supplier_id.to_sym][:'Corporate Overhead %']).to eq 0.1123
             expect(latest_rate_card[:data][:Variances][supplier_id.to_sym][:'Mobilisation Cost (DA %)']).to eq 0.35
           end
         end
 
         context 'and the data is not valid' do
-          let(:rate) { { 'M.141': '1.123', 'B.1': '100.0001' } }
+          let(:rate) { { 'M.141': '0.1123', 'B.1': '1.0001' } }
 
           it 'renders the edit page' do
             expect(response).to render_template(:edit)
           end
 
           it 'has the correct errors' do
-            expect(assigns(:invalid_services)).to match('B.1' => '100.0001')
+            expect(assigns(:invalid_services)).to match('B.1' => '1.0001')
           end
         end
       end

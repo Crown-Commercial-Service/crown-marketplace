@@ -2,7 +2,8 @@
   <%= t('.heading') %>
 </h1>
 <p class="govuk-body govuk-!-font-weight-regular govuk-hint">
-  <%= t('.leading_text') %>
+  <%= t('.leading_text') %><br/>
+  <%= t('.percentage_note') %>
 </p>
 
 <% @full_services.each do |service| %>
@@ -22,7 +23,7 @@
     <tbody class="govuk-table__body">
       <% service['work_package'].each do |work_pckg| %>
         <% rate = work_pckg['rate_standard_a_or_blank'] %>
-        <% rate_invalid = rate.invalid? :framework %>
+        <% rate_invalid = rate.errors.any? %>
         <tr class="govuk-table__row">
           <td class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td">
             <div class="<%= 'govuk-form-group--error' if rate_invalid %>">
