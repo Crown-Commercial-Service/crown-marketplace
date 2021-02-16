@@ -1,9 +1,17 @@
 module Pages
-  def procurement_page
-    @procurement_page ||= Pages::Procurement.new
+  def building_page
+    @building_page ||= Pages::Building.new
+  end
+
+  def common_page
+    @common_page ||= Pages::Common.new
   end
 
   def da_draft_page
     @da_draft_page ||= Pages::DaDraft.new
+  end
+
+  def procurement_page
+    @procurement_page ||= Pages::Procurement.new
   end
 end
