@@ -334,8 +334,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error messages' do
-          expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
-          expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
+          expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0'
+          expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0'
         end
       end
 
