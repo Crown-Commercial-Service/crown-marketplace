@@ -1,6 +1,6 @@
 Feature: Create a procurement
 
-  Background: Background name: Navigate to create a procurement
+  Background: Navigate to create a procurement
     Given I sign in and navigate to my account
     And I click on 'Start a procurement'
     Then I am on the 'What happens next' page
