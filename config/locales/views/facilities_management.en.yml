@@ -173,6 +173,7 @@ en:
               service_requirements_incomplete: "‘Service requirements’ must be ‘COMPLETED’"
               services_incomplete: "‘Services’ must be ‘COMPLETED’"
               services_not_present: You must select at least one service
+              total_contract_period: The total initial call-off period must be between 1 month and 7 years
               tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
@@ -199,19 +200,23 @@ en:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
-            initial_call_off_period:
-              blank: Enter initial call-off period
-              greater_than_or_equal_to: Initial call-off period must be between 1 and 7 years
-              less_than_or_equal_to: Initial call-off period must be between 1 and 7 years
-              not_a_number: Enter initial call-off period
-              not_an_integer: Initial call-off period must be a whole number
+            initial_call_off_period_months:
+              blank: Enter the months for the initial call-off period
+              greater_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              less_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              not_a_number: The months for the initial call-off period must be a whole number
+              not_an_integer: The months for the initial call-off period must be a whole number
+            initial_call_off_period_years:
+              blank: Enter the years for the initial call-off period
+              greater_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              less_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              not_a_number: The years for the initial call-off period must be a whole number
+              not_an_integer: The years for the initial call-off period must be a whole number
               not_present: You must answer all questions about ‘Contract period’
             initial_call_off_start_date:
-              after: Initial call-off period start date must be today or in the future
-              after_2100: Initial call-off period start date cannot be later than 31 December 2100
-              after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
               date_after_or_equal_to: Initial call-off period start date must be today or in the future
+              date_before: Initial call-off period start date cannot be later than 31 December 2100
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
@@ -223,8 +228,8 @@ en:
             mobilisation_period:
               blank: Enter mobilisation period length
               greater_than: Mobilisation length must be between 1 and 52 weeks
-              greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
+              greater_than_or_equal_to: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
@@ -1704,11 +1709,14 @@ en:
         sent_offers: Sent offers
         was_deleted: "'%{contract_name}' was deleted."
       initial_call_off_period:
+        aria_label_months: The month part of the initial call off period
+        aria_label_years: The year part of the initial call off period
         description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
         example: For example, 01 11 2030.
         heading: Initial call-off period
         initial_call_off_period_start_date: Initial call-off period start date
-        unit: years
+        unit_months: months
+        unit_years: years
       missing_regions_summary:
         before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
         building_address: Building address

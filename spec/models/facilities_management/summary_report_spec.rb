@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement) do
     create(:facilities_management_procurement_with_extension_periods,
-           initial_call_off_period: 7,
+           initial_call_off_period_years: 7,
            lot_number_selected_by_customer: lot_number_selected_by_customer)
   end
 

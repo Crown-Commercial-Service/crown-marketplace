@@ -34,7 +34,7 @@ $(function () {
   }
 
   const calcTotalContractYears = function() {
-    let result =  parseInt($("#facilities_management_procurement_initial_call_off_period").val());
+    let result =  parseInt($("#facilities_management_procurement_initial_call_off_period_years").val());
     for (var i = 1; i <= 4; i++) {
       var period = parseInt($("#facilities_management_procurement_optional_call_off_extensions_" + i).val())
       result += isNaN(period) ? 0 : period;
@@ -137,7 +137,7 @@ $(function () {
     hideAndUnhideElements();
   });
 
-  $('#facilities_management_procurement_initial_call_off_period').on("keyup", function (e) {
+  $('#facilities_management_procurement_initial_call_off_period_years').on("keyup", function (e) {
     updateButtonText();
   });
 

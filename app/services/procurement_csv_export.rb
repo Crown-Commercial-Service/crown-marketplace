@@ -266,7 +266,7 @@ class ProcurementCsvExport
   def self.format_period_start_end(procurement)
     return '' if procurement.unanswered_contract_date_questions?
 
-    "#{procurement.initial_call_off_period} years, " +
+    "#{initial_call_off_period(procurement)}, " +
       [procurement.initial_call_off_start_date.strftime(DATE_FORMAT),
        procurement.initial_call_off_end_date.strftime(DATE_FORMAT)].join(' - ')
   end
@@ -341,13 +341,24 @@ class ProcurementCsvExport
     procurement.estimated_cost_known ? delimited_with_pence(procurement.estimated_annual_cost) : 'None'
   end
 
+  def self.initial_call_off_period(procurement)
+    period_to_string(procurement.initial_call_off_period_years, procurement.initial_call_off_period_months)
+  end
+
   def self.mobilisation_period(procurement)
     return '' if procurement.mobilisation_period_required.nil?
     return 'None' if !procurement.mobilisation_period_required || procurement.mobilisation_period.nil?
 
-    "#{procurement.mobilisation_period} weeks, " +
-      [procurement.mobilisation_period_start_date.strftime(DATE_FORMAT),
-       procurement.mobilisation_period_end_date.strftime(DATE_FORMAT)].join(' - ')
+    "#{helpers.pluralize(procurement.mobilisation_period, 'weeks')}, " +
+      [procurement.mobilisation_start_date.strftime(DATE_FORMAT),
+       procurement.mobilisation_end_date.strftime(DATE_FORMAT)].join(' - ')
+  end
+
+  def self.period_to_string(years, months)
+    years_text = years.positive? ? helpers.pluralize(years, 'year') : nil
+    months_text = months.positive? ? helpers.pluralize(months, 'month') : nil
+
+    [years_text, months_text].compact.join(' and ')
   end
 
   def self.da_suppliers(procurement)

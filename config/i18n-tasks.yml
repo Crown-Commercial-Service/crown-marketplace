@@ -130,6 +130,8 @@ ignore_unused:
   - facilities_management.procurements.results.sub-lot-1*
   - facilities_management.procurement_buildings_services.service_standards.detail_text.*
   - facilities_management.procurement_buildings_services.service_standards.detail_title.*
+  - facilities_management.procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
+  - facilities_management.procurements.contracts.procurement_requirements.call_off_extensions_*
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'

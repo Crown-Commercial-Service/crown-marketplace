@@ -1297,7 +1297,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: code,
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period: 2)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 2)))
       end
 
       context 'when service is C.1' do
@@ -1544,7 +1544,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: 'C.5',
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period: 7)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 7)))
       end
       let(:supplier_name) do
         FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.address_region_code], [procurement_building_service.code]).first.supplier_name
