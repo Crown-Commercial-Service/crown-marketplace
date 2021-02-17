@@ -82,12 +82,12 @@ Feature: Procuremnt journey - Direct Award
       Then I am on the 'Service requirements' page
       And I click on 'Test building'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service volume question for 'Portable appliance testing'
+      And I choose to answer the service volume question for 'Portable appliance testing'
       Then I am on the page with secondary heading 'Portable appliance testing'
       And I enter '500' for the service volume
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service volume question for 'Routine cleaning'
+      And I choose to answer the service volume question for 'Routine cleaning'
       Then I am on the page with secondary heading 'Routine cleaning'
       And I enter '456' for the service volume
       Then I click on 'Save and return'
@@ -100,17 +100,17 @@ Feature: Procuremnt journey - Direct Award
         | And it goes over two lines          |
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service volume question for 'General waste'
+      And I choose to answer the service volume question for 'General waste'
       Then I am on the page with secondary heading 'General waste'
       And I enter '123' for the service volume
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service standard question for 'Mechanical and electrical engineering maintenance'
+      And I choose to answer the service standard question for 'Mechanical and electrical engineering maintenance'
       Then I am on the page with secondary heading 'Mechanical and electrical engineering maintenance'
       And I select Standard 'A'
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service standard question for 'Routine cleaning'
+      And I choose to answer the service standard question for 'Routine cleaning'
       And I select Standard 'A'
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
@@ -118,7 +118,7 @@ Feature: Procuremnt journey - Direct Award
       And I click on 'Return to service requirements summary'
       Then I am on the 'Service requirements' page
       And I click on 'Test London building'
-      And I choose to answer the Service volume question for 'Portable appliance testing'
+      And I choose to answer the service volume question for 'Portable appliance testing'
       Then I am on the page with secondary heading 'Portable appliance testing'
       And I enter '500' for the service volume
       Then I click on 'Save and return'
@@ -129,7 +129,7 @@ Feature: Procuremnt journey - Direct Award
         | This is some details of requirement and it goes over one line |
       Then I click on 'Save and return'
       Then I am on the page with secondary heading 'Service requirements'
-      And I choose to answer the Service standard question for 'Mechanical and electrical engineering maintenance'
+      And I choose to answer the service standard question for 'Mechanical and electrical engineering maintenance'
       Then I am on the page with secondary heading 'Mechanical and electrical engineering maintenance'
       And I select Standard 'A'
       Then I click on 'Save and return'
