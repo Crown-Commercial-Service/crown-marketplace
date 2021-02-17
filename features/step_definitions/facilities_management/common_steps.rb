@@ -29,7 +29,7 @@ When 'I click on {string}' do |button_text|
 end
 
 Then('the following content should be displayed on the page:') do |table|
-  page_text = page.find('#main-content > div.govuk-width-container').text
+  page_text = page.find('#main-content').text
 
   table.transpose.raw.flatten.each do |item|
     expect(page_text).to include(item)
@@ -49,4 +49,18 @@ Then('I enter the following details into the form:') do |table|
   table.raw.to_h.each do |field, value|
     fill_in field, with: value
   end
+end
+
+Then('I navigate to the building summary page for {string}') do |building_name|
+  visit facilities_management_buildings_path
+  click_on building_name
+  step "I am on the buildings summary page for '#{building_name}'"
+end
+
+Given('I click on the {string} return link') do |link_text|
+  page.find('.govuk-link, .govuk-link--no-visited-state', text: link_text).click
+end
+
+Given('I click on the {string} back link') do |link_text|
+  page.find('.govuk-back-link', text: link_text).click
 end

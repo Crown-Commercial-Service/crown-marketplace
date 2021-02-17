@@ -188,13 +188,13 @@ module FacilitiesManagement
         validates_numericality_of(question.to_sym, greater_than: 0, less_than_or_equal_to: 999999999, only_integer: true, message: :invalid)
       end
     end
+    # rubocop:enable Rails/Validation
 
     def validate_detail_of_requirement_max_length
       self.detail_of_requirement = ActionController::Base.helpers.strip_tags(detail_of_requirement)
       errors.add(:detail_of_requirement, :too_long) if detail_of_requirement.present? && detail_of_requirement.gsub("\r\n", "\r").length > 500
     end
 
-    # rubocop:enable Rails/Validation
     # gathers the answers for a set of questions
     # in an array of question => answer key-value pairs
     def get_answers(questions)
