@@ -207,8 +207,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'GET summary' do
       context 'when the user wants to edit contract_periods' do
-        context 'when the contract periods are not complete' do
+        context 'when the contract periods are not started' do
           before { procurement.update(initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+          it 'redirects to the edit page with contract_period step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'contract_period')
+          end
+        end
+
+        context 'when the contract periods are not complete' do
+          before { procurement.update(initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
 
           it 'redirects to the edit page with contract_period step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }

@@ -2,10 +2,10 @@
   <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.title'), @procurement.contract_name, nil, nil, nil)) %>
   <% content_for :page_title, t('.title') %>
   <div class="contract-dates">
-    <%= render partial: 'initial_call_off_period', locals: { f: f } %>
+    <%= render partial: 'facilities_management/procurements/edit/contract_period/initial_call_off_period', locals: { f: f } %>
     <hr class="govuk-section-break govuk-section-break--m">
-    <%= render partial: 'mobilisation_period', locals: { f: f } %>
+    <%= render partial: 'facilities_management/procurements/edit/contract_period/mobilisation_period', locals: { f: f } %>
     <hr class="govuk-section-break govuk-section-break--m">
-    <%= render partial: 'call_off_extensions', locals: { f: f } %>
+    <%= render partial: 'facilities_management/procurements/edit/contract_period/optional_call_off_extensions', locals: { f: f } %>
   </div>
 </div>

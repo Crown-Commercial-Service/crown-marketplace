@@ -14,6 +14,9 @@ module FacilitiesManagement
     before_save :update_procurement_building_services, if: :service_codes_changed?
     before_save :set_state_to_results, if: :buyer_selected_contract_value?
 
+    has_many :optional_call_off_extensions, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    accepts_nested_attributes_for :optional_call_off_extensions, allow_destroy: true
+
     has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
     has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
     has_many :procurement_building_services, through: :active_procurement_buildings
@@ -49,11 +52,6 @@ module FacilitiesManagement
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
-
-    # attributes to hold and validate optional call off extension
-    attribute :call_off_extension_2
-    attribute :call_off_extension_3
-    attribute :call_off_extension_4
 
     # For making a copy of a procurement
     amoeba do
@@ -296,12 +294,22 @@ module FacilitiesManagement
       initial_call_off_start_date - 1.day
     end
 
-    def extension_period_start_date(period)
-      initial_call_off_end_date + (1..(period - 1)).sum { |number| send("optional_call_off_extensions_#{number}").years } + 1.day
+    def extension_period_start_date(extension)
+      initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..(extension - 1))).sum(&:period) + 1.day
     end
 
-    def extension_period_end_date(period)
-      initial_call_off_end_date + (1..period).sum { |number| send("optional_call_off_extensions_#{number}").years }
+    def extension_period_end_date(extension)
+      initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..extension)).sum(&:period)
+    end
+
+    def optional_call_off_extension(extension)
+      optional_call_off_extensions.find_by(extension: extension)
+    end
+
+    def build_optional_call_off_extensions
+      (0..3).each do |extension|
+        optional_call_off_extensions.find_or_initialize_by(extension: extension)
+      end
     end
 
     def sent_offers
@@ -429,7 +437,9 @@ module FacilitiesManagement
         extensions_required
       ]
 
-      relevant_attributes.any?(&:nil?) ? :not_started : :completed
+      return :not_started if relevant_attributes.all?(&:nil?)
+
+      relevant_attributes.any?(&:nil?) ? :incomplete : :completed
     end
 
     def services_status
