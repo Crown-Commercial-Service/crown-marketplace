@@ -230,7 +230,7 @@ module ApplicationHelper
 
   def service_header_banner
     if params[:service]
-      render partial: "#{params[:service]}/header-banner"
+      header_banner(params[:service])
     else
       service_name = controller.class.parent_name&.underscore
       if service_name&.include? 'admin'
@@ -241,6 +241,18 @@ module ApplicationHelper
         render partial: 'layouts/header-banner'
       end
     end
+  end
+
+  def header_banner(service)
+    if legacy_service?(service)
+      render partial: 'legacy/header-banner', locals: { service: service, service_url: service.gsub('_', '-') }
+    else
+      render partial: "#{service}/header-banner"
+    end
+  end
+
+  def legacy_service?(service)
+    ['legal_services', 'management_consultancy', 'supply_teachers'].include? service
   end
 
   def landing_or_admin_page
@@ -315,14 +327,6 @@ module ApplicationHelper
     number_to_currency(cost, precision: precision, unit: '£')
   end
 
-  def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
-    if service_type == 'Direct Award Discount (%)'
-      supplier_data_ratecard_discounts[work_pckg_code].nil? ? '' : supplier_data_ratecard_discounts[work_pckg_code]['Disc %']
-    else
-      supplier_data_ratecard_prices[work_pckg_code].nil? ? '' : supplier_data_ratecard_prices[work_pckg_code][service_type.remove(' (%)').remove(' (£)')]
-    end
-  end
-
   def service_name_param
     params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end
@@ -354,17 +358,7 @@ module ApplicationHelper
   end
 
   def service_specification_document
-    content_tag(:a,
-                href: "#{asset_path(t('facilities_management.documents.service_specification_document.name'), skip_pipeline: true)}?format=pdf",
-                class: 'supplier-record__file-download',
-                type: t('common.type_doc'),
-                download: t('facilities_management.documents.service_specification_document.name'),
-                alt: t('facilities_management.select_services.servicespec_link_alttext')) do
-      capture do
-        concat(t('facilities_management.documents.service_specification_document.text'))
-        concat(content_tag(:span, t('common.doc_html'), class: 'govuk-visually-hidden'))
-      end
-    end
+    link_to_public_file_for_download(t('facilities_management.documents.service_specification_document.name'), :pdf, t('facilities_management.documents.service_specification_document.text'), true, alt: t('facilities_management.select_services.servicespec_link_alttext'))
   end
 
   def govuk_radio_driver
@@ -402,6 +396,23 @@ module ApplicationHelper
 
   def search_box(placeholder_text, column = 0)
     text_field_tag 'fm-table-filter-input', nil, class: 'govuk-input', placeholder: placeholder_text, data: { column: column }
+  end
+
+  def link_to_public_file_for_download(filename, file_type, text, show_doc_image, **html_options)
+    link_to_file_for_download("/#{filename}?format=#{file_type}", file_type, text, show_doc_image, **html_options)
+  end
+
+  def link_to_generated_file_for_download(filename, file_type, text, show_doc_image, **html_options)
+    link_to_file_for_download("#{filename}?format=#{file_type}", file_type, text, show_doc_image, **html_options)
+  end
+
+  def link_to_file_for_download(file_link, file_type, text, show_doc_image, **html_options)
+    link_to(file_link, class: ('supplier-record__file-download' if show_doc_image).to_s, type: t("common.type_#{file_type}"), download: '', **html_options) do
+      capture do
+        concat(text)
+        concat(tag.span(t("common.#{file_type}_html"), class: 'govuk-visually-hidden')) if show_doc_image
+      end
+    end
   end
 end
 # rubocop:enable Metrics/ModuleLength

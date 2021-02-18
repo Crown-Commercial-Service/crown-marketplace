@@ -1,0 +1,54 @@
+<%= content_for :page_title, @lot_name %>
+<%= admin_breadcrumbs(
+  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
+  { link_text: @lot_name }
+)%>
+
+<div class="govuk-grid-column-one-thirds">
+  <span class="govuk-caption-l"><%= @supplier.supplier_name %></span>
+</div>
+<h1 class="govuk-heading-xl"><%= @lot_name %></h1>
+<p class="govuk-body govuk-!-font-weight-regular govuk-hint">
+  <%= t('.note') %>
+</p>
+
+<%= form_with url: facilities_management_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: false } do |f| %>
+  <% @full_services.each do |service| %>
+    <fieldset class="govuk-fieldset">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold  left">
+            <legend class="govuk-padding-left-0">
+              <%= service['name'] %>
+            </legend>
+          </th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        <% service['work_package'].each do |work_pckg| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+              <div class="govuk-checkboxes__item">
+                <%= check_box_tag(
+                        "checked_services[]",
+                        work_pckg['code'],
+                        @supplier_rate_data_checkboxes[work_pckg['code']],
+                        class: "govuk-checkboxes__input",
+                        id: "rates_#{work_pckg['code']}"
+                    ) %>
+                <label class="govuk-label govuk-checkboxes__label" for="rates_<%=work_pckg['code'] %>">
+
+                  <%= work_pckg['code'] %> <%= work_pckg['name'] %>
+                </label>
+              </div>
+            </th>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </fieldset>
+  <% end %>
+  <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }%>
+  <%= link_to t('.return_button'), facilities_management_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
+<% end %>

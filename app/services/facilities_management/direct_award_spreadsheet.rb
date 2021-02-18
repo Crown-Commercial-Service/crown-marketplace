@@ -8,6 +8,9 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     frozen_rate_card = CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
     @rate_card_data = CCS::FM::RateCard.latest.data unless frozen_rate_card.exists?
+  end
+
+  def build
     set_data
     create_spreadsheet
   end

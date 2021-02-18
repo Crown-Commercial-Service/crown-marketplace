@@ -27,16 +27,17 @@ module FacilitiesManagement
         @procurement = @contract.procurement
         file_policy = @procurement.security_policy_document_file
         files_path = 'public'
-        direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new @contract.id
-        deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new @contract.id
-        deliverable_matrix_spreadsheet_built = deliverable_matrix_spreadsheet.build
+        direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new(@contract.id)
+        direct_award_spreadsheet.build
+        deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(@contract.id)
+        deliverable_matrix_spreadsheet.build
         @review_your_contract_static_files = FacilitiesManagement::Procurements::DocumentsProcurementHelper.review_docs
 
         file_stream = Zip::OutputStream.write_buffer do |zip|
           zip.put_next_entry 'Attachment 3 - Price Matrix (DA).xlsx'
           zip.print direct_award_spreadsheet.to_xlsx
           zip.put_next_entry 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx'
-          zip.print deliverable_matrix_spreadsheet_built.to_stream.read
+          zip.print deliverable_matrix_spreadsheet.to_xlsx
 
           if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?
             zip.put_next_entry 'SEC_POLICY-' + file_policy.blob.filename.to_s

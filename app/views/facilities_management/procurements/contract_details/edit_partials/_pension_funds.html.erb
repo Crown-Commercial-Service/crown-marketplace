@@ -1,9 +1,7 @@
 <div class="govuk-body govuk-!-font-size-20 govuk-!-width-two-thirds">
     <%= t('.lead_in') %>
 </div>
-<a href="<%= asset_path(t('.attachment_2.file_name'), skip_pipeline: true)%>?format=pdf" class="supplier-record__file-download" type="<%= t('common.type_pdf') %>" download>
-    <%= t('.attachment_2.name') %> <span class="govuk-visually-hidden"><%= t('common.pdf_html') %></span>
-</a>
+<%= link_to_public_file_for_download(t('.attachment_2.file_name'), :pdf,  t('.attachment_2.name'), true) %>
 <h1 class="govuk-heading-m">
     <%= t('.form_title') %>
 </h1>

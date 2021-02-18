@@ -5,6 +5,7 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
 
   subject(:wb) do
     spreadsheet = described_class.new contract.id
+    spreadsheet.build
     path = '/tmp/Attachment_3_Price_Matrix_(DA).xlsx'
     IO.write(path, spreadsheet.to_xlsx)
     Roo::Excelx.new(path)

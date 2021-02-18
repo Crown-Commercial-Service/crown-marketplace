@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   get '/status', to: 'home#status'
   get '/cookies', to: 'home#cookies'
   get '/facilities-management/accessibility-statement', to: 'home#accessibility_statement_fm'
-  get '/management-consultancy/accessibility-statement', to: 'home#accessibility_statement_mc'
-  get '/supply-teachers/accessibility-statement', to: 'home#accessibility_statement_st'
-  get '/legal-services/accessibility-statement', to: 'home#accessibility_statement_ls'
   get '/landing-page', to: 'home#landing_page'
   get '/not-permitted', to: 'home#not_permitted'
 
@@ -41,13 +38,6 @@ Rails.application.routes.draw do
 
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
-    namespace 'supply_teachers', path: 'supply-teachers' do
-      concerns :authenticatable
-      namespace :admin do
-        concerns :authenticatable
-      end
-    end
-
     namespace 'facilities_management', path: 'facilities-management' do
       concerns %i[authenticatable registrable]
       namespace :supplier do
@@ -58,51 +48,8 @@ Rails.application.routes.draw do
       end
     end
 
-    namespace 'management_consultancy', path: 'management-consultancy' do
-      concerns %i[authenticatable registrable]
-      namespace :admin do
-        concerns :authenticatable
-      end
-    end
-
-    namespace 'legal_services', path: 'legal-services' do
-      concerns %i[authenticatable registrable]
-      namespace :admin do
-        concerns :authenticatable
-      end
-    end
-
     get 'active'  => 'base/sessions#active'
     get 'timeout' => 'base/sessions#timeout'
-  end
-
-  namespace 'supply_teachers', path: 'supply-teachers' do
-    get '/', to: 'home#index'
-    get '/cognito', to: 'gateway#index', cognito_enabled: true
-    get '/gateway', to: 'gateway#index'
-    get '/temp-to-perm-fee', to: 'home#temp_to_perm_fee'
-    get '/fta-to-perm-fee', to: 'home#fta_to_perm_fee'
-    get '/master-vendors', to: 'suppliers#master_vendors', as: 'master_vendors'
-    # get '/neutral-vendors', to: 'suppliers#neutral_vendors', as: 'neutral_vendors'
-    get '/all-suppliers', to: 'suppliers#all_suppliers', as: 'all_suppliers'
-    get '/agency-payroll-results', to: 'branches#index', slug: 'agency-payroll-results'
-    get '/fixed-term-results', to: 'branches#index', slug: 'fixed-term-results', as: 'fixed_term_results'
-    get '/nominated-worker-results', to: 'branches#index', slug: 'nominated-worker-results'
-    resources :branches, only: %i[index show]
-    resources :downloads, only: :index
-    namespace :admin do
-      resources :uploads, only: %i[index new create show destroy] do
-        get 'approve'
-        get 'reject'
-        get 'uploading'
-        delete 'destroy'
-      end
-      get '/in_progress', to: 'uploads#in_progress'
-    end
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-    resources :uploads, only: :create if Marketplace.upload_privileges?
   end
 
   namespace 'facilities_management', path: 'facilities-management' do
@@ -127,9 +74,8 @@ Rails.application.routes.draw do
       get 'delete'
       get 'further_competition_spreadsheet'
       get 'summary', to: 'procurements#summary'
-      post 'da_spreadsheets'
-      get '/documents/zip', to: 'procurements/contracts/documents#zip_contracts'
-      get '/download/zip', to: 'procurements/contracts/documents#download_zip_contracts'
+      get 'deliverables_matrix'
+      get 'price_matrix'
       namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
         get '/', action: 'show'
         put '/', action: 'update'
@@ -139,8 +85,12 @@ Rails.application.routes.draw do
       resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
         resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
         resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-        get '/documents/call-off-schedule', to: 'procurements/contracts/documents#call_off_schedule'
-        get '/documents/call-off-schedule-2', to: 'procurements/contracts/documents#call_off_schedule_2'
+        namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do
+          get '/call-off-schedule', action: :call_off_schedule
+          get '/call-off-schedule-2', action: :call_off_schedule_2
+          get '/zip', action: :zip_contracts
+          get '/download/zip', action: :download_zip_contracts
+        end
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
@@ -165,20 +115,13 @@ Rails.application.routes.draw do
       end
     end
     namespace :admin, path: 'admin' do
-      get '/', to: 'admin_account#admin_account'
+      get '/', to: 'admin_account#index'
       get '/gateway', to: 'gateway#index'
-      get 'call-off-benchmark-rates', to: 'supplier_rates#supplier_benchmark_rates'
-      put 'update-call-off-benchmark-rates', to: 'supplier_rates#update_supplier_benchmark_rates'
-      get 'average-framework-rates', to: 'supplier_rates#supplier_framework_rates'
-      put 'update-average-framework-rates', to: 'supplier_rates#update_supplier_framework_rates'
-      get 'supplier-framework-data', to: 'suppliers_framework_data#index'
-      put 'update-management-report', to: 'management_report#update'
-      get 'sublot-regions/:id/:lot_type', to: 'sublot_regions#sublot_region', as: 'get_sublot_regions'
-      put 'sublot-regions/:id/:lot_type', to: 'sublot_regions#update_sublot_regions'
-      get 'sublot-data/:id', to: 'sublot_data_services_prices#index', as: 'get_sublot_data'
-      put 'sublot-data/:id', to: 'sublot_data_services_prices#update_sublot_data_services_prices'
-      get 'sublot-services/:id/:lot', to: 'sublot_services#index', as: 'get_sublot_services'
-      put 'sublot-services/:id/:lot', to: 'sublot_services#update', as: 'update_sublot_services'
+      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
+      resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
+        resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
+        resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
+      end
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
@@ -188,64 +131,10 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
-  namespace 'management_consultancy', path: 'management-consultancy' do
-    get '/', to: 'home#index'
-    get '/gateway', to: 'gateway#index'
-    get '/suppliers', to: 'suppliers#index'
-    get '/suppliers/download', to: 'suppliers#download', as: 'suppliers_download'
-    get '/suppliers/:id', to: 'suppliers#show', as: 'supplier'
-    get '/html/select-lot', to: 'html#select_lot'
-    get '/html/select-services', to: 'html#select_services'
-    get '/html/select-location', to: 'html#select_location'
-    get '/html/supplier-detail', to: 'html#supplier_detail'
-    get '/html/download-the-supplier-list', to: 'html#download_the_supplier_list'
-    namespace :admin do
-      resources :uploads, only: %i[index new create show] do
-        get 'approve'
-        get 'reject'
-        get 'uploading'
-      end
-      get '/in_progress', to: 'uploads#in_progress'
-    end
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-    resources :uploads, only: :create if Marketplace.upload_privileges?
-  end
-
-  namespace 'legal_services', path: 'legal-services' do
-    get '/cognito', to: 'gateway#index', cognito_enabled: true
-    get '/gateway', to: 'gateway#index'
-    get '/', to: 'home#index'
-    get '/service-not-suitable', to: 'home#service_not_suitable'
-    get '/suppliers/download', to: 'suppliers#download'
-    get '/suppliers/no-suppliers-found', to: 'suppliers#no_suppliers_found'
-    get '/suppliers/cg-no-suppliers-found', to: 'suppliers#cg_no_suppliers_found'
-    resources :suppliers, only: %i[index show]
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-    resources :downloads, only: :index
-    namespace :admin do
-      resources :uploads, only: %i[index new create show] do
-        get 'approve'
-        get 'reject'
-        get 'uploading'
-      end
-      get '/in_progress', to: 'uploads#in_progress'
-    end
-    resources :uploads, only: :create if Marketplace.upload_privileges?
-  end
-
   get '/errors/404'
   get '/errors/422'
   get '/errors/500'
   get '/errors/maintenance'
-
-  if Marketplace.dfe_signin_enabled?
-    get '/auth/dfe', as: :dfe_sign_in
-    get '/auth/dfe/callback' => 'auth#callback'
-  end
 
   namespace :api, defaults: { format: :json } do
     namespace :v2 do
