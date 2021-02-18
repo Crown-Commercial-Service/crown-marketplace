@@ -7,8 +7,8 @@ module FacilitiesManagement::Procurements::ContractDatesHelper
     @procurement.mobilisation_period_required ? pluralize(@procurement.mobilisation_period, 'week') : 'None'
   end
 
-  def optional_call_off_extensions_period(period)
-    period_to_string(@procurement.send("optional_call_off_extensions_#{period}"), 0)
+  def optional_call_off_extensions_period(optional_call_off_extension)
+    period_to_string(optional_call_off_extension.years, optional_call_off_extension.months)
   end
 
   def initial_call_off_period_description

@@ -1041,31 +1041,31 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     describe 'extension_period_start_date' do
       context 'when there is one extenesion period' do
         it 'is expected to return the date one day after the end of the initial call off period' do
-          expect(procurement.extension_period_start_date(1)).to eq(procurement.initial_call_off_end_date + 1.day)
+          expect(procurement.extension_period_start_date(0)).to eq(procurement.initial_call_off_end_date + 1.day)
         end
       end
 
       context 'when there is a second extension period' do
         it 'is expected to return the date one day after the end of the first extension period' do
-          extension_period_1_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
 
-          expect(procurement.extension_period_start_date(2)).to eq(extension_period_1_end_date + 1.day)
+          expect(procurement.extension_period_start_date(1)).to eq(extension_period_start_date + 1.day)
         end
       end
 
       context 'when there is a third extension period' do
         it 'is expected to return the date one day after the end of the second extension period' do
-          extension_period_2_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years + procurement.optional_call_off_extensions_2.years
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
 
-          expect(procurement.extension_period_start_date(3)).to eq(extension_period_2_end_date + 1.day)
+          expect(procurement.extension_period_start_date(2)).to eq(extension_period_start_date + 1.day)
         end
       end
 
       context 'when there is a forth extension period' do
         it 'is expected to return the date one day after the end of the third extension period' do
-          extension_period_3_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years + procurement.optional_call_off_extensions_2.years + procurement.optional_call_off_extensions_3.years
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
 
-          expect(procurement.extension_period_start_date(4)).to eq(extension_period_3_end_date + 1.day)
+          expect(procurement.extension_period_start_date(3)).to eq(extension_period_start_date + 1.day)
         end
       end
     end
@@ -1073,31 +1073,33 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     describe 'extension_period_end_date' do
       context 'when there is one extenesion period' do
         it 'is expected to return the date one year after the end of the initial call off period' do
-          expect(procurement.extension_period_end_date(1)).to eq(procurement.initial_call_off_end_date + 1.year)
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
+
+          expect(procurement.extension_period_end_date(0)).to eq(extension_period_end_date)
         end
       end
 
       context 'when there is a second extension period' do
         it 'is expected to return the date one year after the end of the first extension period' do
-          extension_period_1_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
 
-          expect(procurement.extension_period_end_date(2)).to eq(extension_period_1_end_date + 1.year)
+          expect(procurement.extension_period_end_date(1)).to eq(extension_period_end_date)
         end
       end
 
       context 'when there is a third extension period' do
         it 'is expected to return the date one year after the end of the second extension period' do
-          extension_period_2_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years + procurement.optional_call_off_extensions_2.years
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
 
-          expect(procurement.extension_period_end_date(3)).to eq(extension_period_2_end_date + 1.year)
+          expect(procurement.extension_period_end_date(2)).to eq(extension_period_end_date)
         end
       end
 
       context 'when there is a forth extension period' do
         it 'is expected to return the date one year after the end of the third extension period' do
-          extension_period_3_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions_1.years + procurement.optional_call_off_extensions_2.years + procurement.optional_call_off_extensions_3.years
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..3).sum(&:period)
 
-          expect(procurement.extension_period_end_date(4)).to eq(extension_period_3_end_date + 1.year)
+          expect(procurement.extension_period_end_date(3)).to eq(extension_period_end_date)
         end
       end
     end
@@ -1390,12 +1392,104 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '.contract_name_status' do
+    subject(:status) { procurement.contract_name_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, contract_name: contract_name) }
+
+    context 'when the contract name section has not been completed' do
+      let(:contract_name) { '' }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the contract name section has been completed' do
+      let(:contract_name) { 'My contract name' }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.estimated_annual_cost_status' do
+    subject(:status) { procurement.estimated_annual_cost_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, estimated_cost_known: estimated_cost_known) }
+
+    context 'when the estimated cost section has not been completed' do
+      let(:estimated_cost_known) { nil }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the estimated cost section has not been' do
+      let(:estimated_cost_known) { false }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.tupe_status' do
+    subject(:status) { procurement.tupe_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, tupe: tupe) }
+
+    context 'when the tupe section has not been completed' do
+      let(:tupe) { nil }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the tupe section has been completed' do
+      let(:tupe) { true }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.contract_period_status' do
+    subject(:status) { procurement.contract_period_status }
+
+    context 'when all contract period sections have not been started' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when all contract period sections have not been completed' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:incomplete)
+      end
+    end
+
+    context 'when all contract period sections have been completed' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, mobilisation_period_required: false, extensions_required: false) }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
   describe '.services_status' do
     subject(:status) { procurement.services_status }
 
-    let(:procurement) do
-      create(:facilities_management_procurement_detailed_search, service_codes: service_codes)
-    end
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, service_codes: service_codes) }
 
     context 'when user has not yet selected services' do
       let(:service_codes) { [] }

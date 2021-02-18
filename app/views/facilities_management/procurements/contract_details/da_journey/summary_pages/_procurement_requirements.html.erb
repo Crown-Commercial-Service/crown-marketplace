@@ -42,12 +42,11 @@
                 </td>
             </tr>
             <% if @procurement.extensions_required %>
-              <% [1, 2, 3, 4].each do |period| %>
-                <% break if @procurement.send("optional_call_off_extensions_#{period}").nil? %>
+              <% @procurement.optional_call_off_extensions.each do |optional_call_off_extension| %>
                 <tr class="govuk-table__row">
-                    <th class="govuk-table__cell govuk-table__header"><%= t(".optional_call_off_extensions_#{period}") %></th>
+                    <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extension', extension: optional_call_off_extension.extension + 1) %></th>
                     <td class="govuk-table__cell">
-                        <%= govuk_details(optional_call_off_extensions_period(period), true) { extension_period_description(period) } %>
+                        <%= govuk_details(optional_call_off_extensions_period(optional_call_off_extension), true) { extension_period_description(optional_call_off_extension.extension) } %>
                     </td>
                 </tr>
               <% end %>

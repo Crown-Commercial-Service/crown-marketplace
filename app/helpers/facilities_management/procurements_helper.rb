@@ -14,6 +14,25 @@ module FacilitiesManagement::ProcurementsHelper
     @total_contract_period_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_period }
   end
 
+  def extension_periods_error?
+    %i[extensions_required optional_call_off_extensions.months optional_call_off_extensions.years optional_call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
+  end
+
+  def total_contract_length_error?
+    @total_contract_length_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_length }
+  end
+
+  def display_extension_error_anchor
+    error_list = []
+
+    error_list << 'optional_call_off_extensions.years-error' if @procurement.errors[:'optional_call_off_extensions.years']
+    error_list << 'optional_call_off_extensions.months-error' if @procurement.errors[:'optional_call_off_extensions.months']
+
+    error_list.each do |error|
+      concat(tag.span(id: error))
+    end
+  end
+
   def any_service_codes(procurement_buildings)
     procurement_buildings.map(&:service_codes).flatten.reject(&:blank?).any?
   end
@@ -167,6 +186,24 @@ module FacilitiesManagement::ProcurementsHelper
     else
       edit_facilities_management_procurement_path(@procurement, step: section)
     end
+  end
+
+  def optional_call_off_extensions
+    @optional_call_off_extensions ||= @procurement.optional_call_off_extensions.sort_by(&:extension)
+  end
+
+  def optional_call_off_extension_visible?(extension)
+    return false unless @procurement.extensions_required
+
+    optional_call_off_extension = optional_call_off_extensions.find { |call_off_extension| call_off_extension.extension == extension }
+
+    return false unless optional_call_off_extension
+
+    optional_call_off_extension_meet_conditions?(optional_call_off_extension)
+  end
+
+  def optional_call_off_extension_meet_conditions?(optional_call_off_extension)
+    optional_call_off_extension.extension_required || optional_call_off_extension.years.present? || optional_call_off_extension.months.present? || optional_call_off_extension.errors.any?
   end
 
   def section_id(section)

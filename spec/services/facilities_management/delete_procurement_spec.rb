@@ -143,6 +143,10 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
           expect(FacilitiesManagement::ProcurementBuildingService.where(facilities_management_procurement_building_id: procurement_building_id).empty?).to be false
         end
 
+        it 'will find optional extension periods' do
+          expect(FacilitiesManagement::Procurement::OptionalCallOffExtension.where(facilities_management_procurement_id: procurement.id).empty?).to be false
+        end
+
         it 'will find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do
           expect(FacilitiesManagement::ProcurementSupplier.where(facilities_management_procurement_id: procurement.id).empty?).to be false
           expect(CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement.id).empty?).to be false
@@ -163,6 +167,10 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
           expect(FacilitiesManagement::Procurement.find_by(id: procurement.id)).to be_nil
           expect(FacilitiesManagement::ProcurementBuilding.where(facilities_management_procurement_id: procurement.id).empty?).to be true
           expect(FacilitiesManagement::ProcurementBuildingService.where(facilities_management_procurement_building_id: procurement_building_id).empty?).to be true
+        end
+
+        it 'will not find optional extension periods' do
+          expect(FacilitiesManagement::Procurement::OptionalCallOffExtension.where(facilities_management_procurement_id: procurement.id).empty?).to be true
         end
 
         it 'will not find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do

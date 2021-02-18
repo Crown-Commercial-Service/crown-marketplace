@@ -28,12 +28,13 @@ if ENV["fm"]
     initial_call_off_start_date: DateTime.now + 2.months,
     initial_call_off_end_date: nil,
     mobilisation_period: 4,
-    optional_call_off_extensions_1: 2,
-    optional_call_off_extensions_2: 2,
     estimated_cost_known: true,
     mobilisation_period_required: true,
     extensions_required: true,
     da_journey_state: "pricing")
+
+  procurement.optional_call_off_extensions.create!(extension: 0, years: 2, months: 0)
+  procurement.optional_call_off_extensions.create!(extension: 1, years: 2, months: 0)
 
   # creates 1000 buildings
   (0..999).each do |index|
