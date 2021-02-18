@@ -3,20 +3,10 @@ class MoveDataToNewColumns < ActiveRecord::Migration[5.2]
     FacilitiesManagement::Procurement.reset_column_information
     FacilitiesManagement::Procurement::OptionalCallOffExtension.reset_column_information
 
-    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
+    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
       sleep(5)
 
       group.each { |procurement| add_years_and_months(procurement) }
-    end
-
-    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload]).find_in_batches do |group|
-      sleep(5)
-
-      group.each do |procurement|
-        next unless procurement.contract_period_status == :completed
-
-        add_years_and_months(procurement)
-      end
     end
 
     remove_column :facilities_management_procurements, :optional_call_off_extensions_1
@@ -34,20 +24,10 @@ class MoveDataToNewColumns < ActiveRecord::Migration[5.2]
     FacilitiesManagement::Procurement.reset_column_information
     FacilitiesManagement::Procurement::OptionalCallOffExtension.reset_column_information
 
-    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
+    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
       sleep(5)
 
       group.each { |procurement| remove_years_and_months(procurement) }
-    end
-
-    FacilitiesManagement::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload]).find_in_batches do |group|
-      sleep(5)
-
-      group.each do |procurement|
-        next unless procurement.contract_period_status == :completed
-
-        remove_years_and_months(procurement)
-      end
     end
   end
 

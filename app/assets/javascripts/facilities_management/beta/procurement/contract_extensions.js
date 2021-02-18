@@ -3,11 +3,11 @@ function contractPeriod() {
     totalContractPeriod: 0,
 
     callOffPeriodYears() {
-      return parseInt($('#facilities_management_procurement_initial_call_off_period_years').val());
+      return parseInt($('#facilities_management_procurement_initial_call_off_period_years').val()) * 156;
     },
 
     callOffPeriodMonths() {
-      return parseInt($('#facilities_management_procurement_initial_call_off_period_months').val()) / 12;
+      return parseInt($('#facilities_management_procurement_initial_call_off_period_months').val()) * 13;
     },
 
     mobilisationPeriodChecked() {
@@ -15,7 +15,7 @@ function contractPeriod() {
     },
 
     mobilisationPeriod() {
-      return parseInt($('#facilities_management_procurement_mobilisation_period').val()) / 52;
+      return parseInt($('#facilities_management_procurement_mobilisation_period').val()) * 3;
     },
 
     extensionChecked() {
@@ -23,11 +23,11 @@ function contractPeriod() {
     },
 
     extensionYears(extension) {
-      return parseInt($(`#facilities_management_procurement_optional_call_off_extensions_attributes_${extension}_years`).val());
+      return parseInt($(`#facilities_management_procurement_optional_call_off_extensions_attributes_${extension}_years`).val()) * 156;
     },
 
     extensionMonths(extension) {
-      return parseInt($(`#facilities_management_procurement_optional_call_off_extensions_attributes_${extension}_months`).val()) / 12;
+      return parseInt($(`#facilities_management_procurement_optional_call_off_extensions_attributes_${extension}_months`).val()) * 13;
     },
 
     yearsAndMonthsInomplete(years, months) {
@@ -72,11 +72,15 @@ function contractPeriod() {
       this.totalContractPeriod = totalPeriod;
     },
 
-    timeRemaining() {
-      const totalTimeRemaining = 10 - this.totalContractPeriod;
+    totalTimeRemaining() {
+      return totalTimeRemaining = 1560 - this.totalContractPeriod;
+    },
 
-      const years = Math.floor(totalTimeRemaining);
-      const months = Math.floor((totalTimeRemaining % 1) * 12);
+    timeRemaining() {
+      const totalTimeRemaining = this.totalTimeRemaining();
+
+      const years = Math.floor(totalTimeRemaining / 156);
+      const months = Math.floor((totalTimeRemaining % 156) / 13);
 
       return [years, months];
     },
@@ -129,13 +133,13 @@ function contractPeriod() {
       if (!pagePeriods.allPeriodInputsComplete()) return false;
 
       pagePeriods.calculateTotalContractPeriod();
-      if (pagePeriods.totalContractPeriod >= 10) return false;
+      if (this.noTimePeriodLeftToAdd()) return false;
 
       return true;
     },
 
     updateButtonVisibility() {
-      if (!pagePeriods.extensionChecked() || this.forthExtensionRequired() || this.totalPeriodMoreThanTenYears()) {
+      if (!pagePeriods.extensionChecked() || this.forthExtensionRequired() || this.noTimePeriodLeftToAdd()) {
         this.hideButton();
       } else {
         this.showButton();
@@ -166,8 +170,8 @@ function contractPeriod() {
       return $('#facilities_management_procurement_optional_call_off_extensions_attributes_3_extension_required').val() === 'true';
     },
 
-    totalPeriodMoreThanTenYears() {
-      return pagePeriods.totalContractPeriod >= 10;
+    noTimePeriodLeftToAdd() {
+      return pagePeriods.totalTimeRemaining() < 13
     },
 
     hideButton() {

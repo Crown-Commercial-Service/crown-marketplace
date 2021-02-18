@@ -437,7 +437,9 @@ module FacilitiesManagement
         extensions_required
       ]
 
-      relevant_attributes.any?(&:nil?) ? :not_started : :completed
+      return :not_started if relevant_attributes.all?(&:nil?)
+
+      relevant_attributes.any?(&:nil?) ? :incomplete : :completed
     end
 
     def services_status
