@@ -86,23 +86,29 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :h
   end
 
   describe 'optional_call_off_extensions_period' do
-    let(:optional_call_off_extensions_1) { 1 }
-    let(:optional_call_off_extensions_2) { 2 }
-
     before do
-      procurement.optional_call_off_extensions_1 = optional_call_off_extensions_1
-      procurement.optional_call_off_extensions_2 = optional_call_off_extensions_2
-    end
+      procurement.optional_call_off_extensions.delete_all
 
-    context 'when considering optional_call_off_extensions_1' do
-      it 'returns 1 year' do
-        expect(helper.optional_call_off_extensions_period(1)).to eq '1 year'
+      4.times do |extension|
+        procurement.optional_call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
       end
     end
 
-    context 'when considering optional_call_off_extensions_2' do
-      it 'returns 2 years' do
-        expect(helper.optional_call_off_extensions_period(2)).to eq '2 years'
+    context 'when considering time period' do
+      it 'returns 1 year for the first extension period' do
+        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(0))).to eq '1 year'
+      end
+
+      it 'returns 2 years and 2 months for the second extension period' do
+        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(1))).to eq '2 years and 2 months'
+      end
+
+      it 'returns 3 years and 4 months for the third extension period' do
+        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(2))).to eq '3 years and 4 months'
+      end
+
+      it 'returns 6 months for the forth extension period' do
+        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(3))).to eq '6 months'
       end
     end
   end
@@ -146,7 +152,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :h
       let(:initial_call_off_start_date) { Time.new(2022, 11, 5).in_time_zone('London') }
       let(:mobilisation_period) { 2 }
 
-      it 'returns 7 December 2022 to  6 June 2026' do
+      it 'returns 21 October 2022 to  4 November 2022' do
         expect(helper.mobilisation_period_description).to eq '21 October 2022 to  4 November 2022'
       end
     end
@@ -155,7 +161,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :h
       let(:initial_call_off_start_date) { Time.new(2024, 6, 5).in_time_zone('London') }
       let(:mobilisation_period) { 40 }
 
-      it 'returns 27 May 2022 to 26 January 2029' do
+      it 'returns 29 August 2023 to  4 June 2024' do
         expect(helper.mobilisation_period_description).to eq '29 August 2023 to  4 June 2024'
       end
     end
@@ -167,33 +173,34 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :h
       procurement.initial_call_off_period_years = 3
       procurement.initial_call_off_period_months = 5
       procurement.extensions_required = true
-      procurement.optional_call_off_extensions_1 = 1
-      procurement.optional_call_off_extensions_2 = 2
-      procurement.optional_call_off_extensions_3 = 1
-      procurement.optional_call_off_extensions_4 = 2
+      procurement.optional_call_off_extensions.delete_all
+      procurement.optional_call_off_extensions.create(extension: 0, years: 1, months: 1)
+      procurement.optional_call_off_extensions.create(extension: 1, years: 0, months: 8)
+      procurement.optional_call_off_extensions.create(extension: 2, years: 1, months: 3)
+      procurement.optional_call_off_extensions.create(extension: 3, years: 2, months: 11)
     end
 
     context 'when considering the first extension period' do
-      it 'returns 27 May 2022 to 26 January 2029' do
-        expect(helper.extension_period_description(1)).to eq '14 July 2030 to 13 July 2031'
+      it 'returns 14 July 2030 to 13 August 2031' do
+        expect(helper.extension_period_description(0)).to eq '14 July 2030 to 13 August 2031'
       end
     end
 
     context 'when considering the second extension period' do
-      it 'returns 27 May 2022 to 26 January 2029' do
-        expect(helper.extension_period_description(2)).to eq '14 July 2031 to 13 July 2033'
+      it 'returns 14 August 2031 to 13 April 2032' do
+        expect(helper.extension_period_description(1)).to eq '14 August 2031 to 13 April 2032'
       end
     end
 
     context 'when considering the third extension period' do
-      it 'returns 27 May 2022 to 26 January 2029' do
-        expect(helper.extension_period_description(3)).to eq '14 July 2033 to 13 July 2034'
+      it 'returns 14 April 2032 to 13 July 2033' do
+        expect(helper.extension_period_description(2)).to eq '14 April 2032 to 13 July 2033'
       end
     end
 
     context 'when considering the forth extension period' do
-      it 'returns 27 May 2022 to 26 January 2029' do
-        expect(helper.extension_period_description(4)).to eq '14 July 2034 to 13 July 2036'
+      it 'returns 14 July 2033 to 13 June 2036' do
+        expect(helper.extension_period_description(3)).to eq '14 July 2033 to 13 June 2036'
       end
     end
   end

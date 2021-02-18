@@ -18,10 +18,13 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions_1 { 1 }
-    optional_call_off_extensions_2 { 1 }
-    optional_call_off_extensions_3 { 1 }
-    optional_call_off_extensions_4 { 1 }
+    optional_call_off_extensions do
+      build_list(:facilities_management_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
+        optional_call_off_extension.extension = index
+        optional_call_off_extension.years = index
+        optional_call_off_extension.months = (index + 1) % 4
+      end
+    end
   end
 
   factory :facilities_management_procurement_detailed_search, parent: :facilities_management_procurement do
@@ -33,10 +36,13 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions_1 { 1 }
-    optional_call_off_extensions_2 { 1 }
-    optional_call_off_extensions_3 { 1 }
-    optional_call_off_extensions_4 { 1 }
+    optional_call_off_extensions do
+      build_list(:facilities_management_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
+        optional_call_off_extension.extension = index
+        optional_call_off_extension.years = index
+        optional_call_off_extension.months = (index + 1) % 4
+      end
+    end
   end
 
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do

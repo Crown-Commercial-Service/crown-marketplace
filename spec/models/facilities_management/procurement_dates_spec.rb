@@ -93,7 +93,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
 
-      context 'and it is a number bewteen 0 and 7' do
+      context 'and it is a number between 0 and 7' do
         it 'is valid' do
           expect(procurement.valid?(:contract_period)).to eq true
         end
@@ -179,7 +179,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
 
-      context 'and it is a number bewteen 0 and 11' do
+      context 'and it is a number between 0 and 11' do
         it 'is valid' do
           expect(procurement.valid?(:contract_period)).to eq true
         end
@@ -510,134 +510,337 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe 'validations for optional call of extensions' do
-    let(:optional_call_off_extensions_1) { 1 }
-    let(:optional_call_off_extensions_2) { nil }
-    let(:optional_call_off_extensions_3) { nil }
-    let(:optional_call_off_extensions_4) { nil }
-    let(:call_off_extension_2) { 'false' }
-    let(:call_off_extension_3) { 'false' }
-    let(:call_off_extension_4) { 'false' }
+  # rubocop:disable RSpec/NestedGroups
+  describe 'validations for the total period' do
+    let(:mobilisation_period_required) { false }
 
     before do
-      procurement.mobilisation_period_required = false
-      procurement.initial_call_off_period_years = 7
-      procurement.initial_call_off_period_months = 0
+      procurement.initial_call_off_period_years = 3
+      procurement.initial_call_off_period_months = 4
+      procurement.mobilisation_period_required = mobilisation_period_required
+      procurement.mobilisation_period = mobilisation_period if mobilisation_period_required
+
       procurement.extensions_required = true
-      procurement.call_off_extension_2 = call_off_extension_2
-      procurement.call_off_extension_3 = call_off_extension_3
-      procurement.call_off_extension_4 = call_off_extension_4
-      procurement.optional_call_off_extensions_1 = optional_call_off_extensions_1
-      procurement.optional_call_off_extensions_2 = optional_call_off_extensions_2
-      procurement.optional_call_off_extensions_3 = optional_call_off_extensions_3
-      procurement.optional_call_off_extensions_4 = optional_call_off_extensions_4
+      procurement.assign_attributes(optional_call_off_extensions_attributes: extension_details)
     end
 
-    context 'when the first optional period is left blank' do
-      let(:optional_call_off_extensions_1) { nil }
+    context 'with only optional call of extensions' do
+      context 'and the total is just more than 10 years' do
+        context 'and there is 1 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 6, months: 9, extension_required: 'true' },
+              { extension: 1, years: nil, months: nil, extension_required: 'false' },
+              { extension: 2, years: nil, months: nil, extension_required: 'false' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+
+        context 'and there are 2 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 3, months: 11, extension_required: 'true' },
+              { extension: 1, years: 2, months: 10, extension_required: 'true' },
+              { extension: 2, years: nil, months: nil, extension_required: 'false' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+
+        context 'and there are 3 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 1, months: 10, extension_required: 'true' },
+              { extension: 1, years: 2, months: 1, extension_required: 'true' },
+              { extension: 2, years: 2, months: 10, extension_required: 'true' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+
+        context 'and there are 4 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 1, months: 5, extension_required: 'true' },
+              { extension: 1, years: 1, months: 10, extension_required: 'true' },
+              { extension: 2, years: 1, months: 8, extension_required: 'true' },
+              { extension: 3, years: 1, months: 10, extension_required: 'true' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+      end
+
+      context 'and the total is just less than 10 years' do
+        context 'and there are 2 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 1, months: 10, extension_required: 'true' },
+              { extension: 1, years: 2, months: 0, extension_required: 'true' },
+              { extension: 2, years: nil, months: nil, extension_required: 'false' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is valid' do
+            expect(procurement.valid?(:contract_period)).to eq true
+          end
+        end
+
+        context 'and there are 4 extension period' do
+          let(:extension_details) do
+            [
+              { extension: 0, years: 1, months: 0, extension_required: 'true' },
+              { extension: 1, years: 1, months: 5, extension_required: 'true' },
+              { extension: 2, years: 1, months: 5, extension_required: 'true' },
+              { extension: 3, years: 2, months: 10, extension_required: 'true' }
+            ]
+          end
+
+          it 'is valid' do
+            expect(procurement.valid?(:contract_period)).to eq true
+          end
+        end
+      end
+    end
+
+    context 'with both mobilisation period and optional call of extensions' do
+      let(:mobilisation_period_required) { true }
+
+      context 'and the total is just more than 10 years' do
+        context 'and there is 1 extension period' do
+          let(:mobilisation_period) { 5 }
+          let(:extension_details) do
+            [
+              { extension: 0, years: 6, months: 7, extension_required: 'true' },
+              { extension: 1, years: nil, months: nil, extension_required: 'false' },
+              { extension: 2, years: nil, months: nil, extension_required: 'false' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+
+        context 'and there are 3 extension period' do
+          let(:mobilisation_period) { 9 }
+          let(:extension_details) do
+            [
+              { extension: 0, years: 2, months: 6, extension_required: 'true' },
+              { extension: 1, years: 2, months: 6, extension_required: 'true' },
+              { extension: 2, years: 1, months: 6, extension_required: 'true' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is not valid' do
+            expect(procurement.valid?(:contract_period)).to eq false
+          end
+
+          it 'has the correct error message' do
+            procurement.valid?(:contract_period)
+            expect(procurement.errors[:base].first).to eq 'Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total'
+          end
+        end
+      end
+
+      context 'and the total is just less than 10 years' do
+        context 'and there is 1 extension period' do
+          let(:mobilisation_period) { 4 }
+          let(:extension_details) do
+            [
+              { extension: 0, years: 6, months: 7, extension_required: 'true' },
+              { extension: 1, years: nil, months: nil, extension_required: 'false' },
+              { extension: 2, years: nil, months: nil, extension_required: 'false' },
+              { extension: 3, years: nil, months: nil, extension_required: 'false' }
+            ]
+          end
+
+          it 'is valid' do
+            expect(procurement.valid?(:contract_period)).to eq true
+          end
+        end
+
+        context 'and there are 3 extension period' do
+          let(:mobilisation_period) { 8 }
+          let(:extension_details) do
+            [
+              { extension: 0, years: 2, months: 6, extension_required: 'true' },
+              { extension: 1, years: 2, months: 6, extension_required: 'true' },
+              { extension: 2, years: 1, months: 6, extension_required: 'true' },
+              { extension: 3, years: 1, months: 1, extension_required: 'false' }
+            ]
+          end
+
+          it 'is valid' do
+            expect(procurement.valid?(:contract_period)).to eq true
+          end
+        end
+      end
+    end
+  end
+  # rubocop:enable RSpec/NestedGroups
+
+  describe 'saving extension periods' do
+    before do
+      procurement.initial_call_off_period_years = 3
+      procurement.initial_call_off_period_months = 4
+      procurement.mobilisation_period_required = false
+
+      procurement.extensions_required = true
+      procurement.assign_attributes(optional_call_off_extensions_attributes: extension_details)
+    end
+
+    context 'when the extensions are not valid' do
+      let(:extension_details) do
+        [
+          { extension: 0, years: 1, months: 0, extension_required: 'true' },
+          { extension: 1, years: 1, months: 1, extension_required: 'true' },
+          { extension: 2, years: 1, months: 13, extension_required: 'true' },
+          { extension: 3, years: 0, months: 1, extension_required: 'true' }
+        ]
+      end
 
       it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        expect(procurement.save(context: :contract_period)).to eq false
       end
 
       it 'has the correct error message' do
-        procurement.valid?(:contract_period)
-        expect(procurement.errors[:optional_call_off_extensions_1].first).to eq 'Enter extension period'
+        procurement.save(context: :contract_period)
+        expect(procurement.errors[:'optional_call_off_extensions.months'].first).to eq 'The months for the extension period must be between 0 and 11'
       end
     end
 
-    context 'when the total period is more than 10' do
-      let(:optional_call_off_extensions_1) { 4 }
+    context 'when the extensions are valid' do
+      context 'and there is 1 extension' do
+        let(:extension_details) do
+          [
+            { extension: 0, years: 1, months: 1, extension_required: 'true' },
+            { extension: 1, years: 1, months: 1, extension_required: 'false' },
+            { extension: 2, years: 1, months: 1, extension_required: 'false' },
+            { extension: 3, years: 1, months: 1, extension_required: 'false' }
+          ]
+        end
 
-      it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+        it 'is valid' do
+          expect(procurement.save(context: :contract_period)).to eq true
+        end
+
+        it 'only saves the one extension' do
+          procurement.save(context: :contract_period)
+          procurement.reload
+
+          expect(procurement.optional_call_off_extensions.count).to eq 1
+        end
       end
 
-      it 'has the correct error message' do
-        procurement.valid?(:contract_period)
-        expect(procurement.errors[:optional_call_off_extensions_1].first).to eq 'Call-off contract period, including extensions, must not be more than 10 years in total'
-      end
-    end
+      context 'and there are 2 extensions' do
+        let(:extension_details) do
+          [
+            { extension: 0, years: 1, months: 1, extension_required: 'true' },
+            { extension: 1, years: 1, months: 1, extension_required: 'true' },
+            { extension: 2, years: 1, months: 1, extension_required: 'false' },
+            { extension: 3, years: 1, months: 1, extension_required: 'false' }
+          ]
+        end
 
-    context 'when the total period is more than 10 with two periods' do
-      let(:optional_call_off_extensions_1) { 2 }
-      let(:optional_call_off_extensions_2) { 2 }
-      let(:call_off_extension_2) { 'true' }
+        it 'is valid' do
+          expect(procurement.save(context: :contract_period)).to eq true
+        end
 
-      it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
-      end
+        it 'only saves two extensions' do
+          procurement.save(context: :contract_period)
+          procurement.reload
 
-      it 'has the correct error message' do
-        procurement.valid?(:contract_period)
-        expect(procurement.errors[:optional_call_off_extensions_1].first).to eq 'Call-off contract period, including extensions, must not be more than 10 years in total'
-      end
-    end
-
-    context 'when optional_call_off_extensions even though they have not been added' do
-      let(:optional_call_off_extensions_1) { 1 }
-      let(:optional_call_off_extensions_2) { 'a' }
-      let(:optional_call_off_extensions_3) { 'a' }
-      let(:optional_call_off_extensions_4) { 'a' }
-
-      it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
-      end
-    end
-
-    context 'when second extension is nil but the third is not' do
-      let(:optional_call_off_extensions_1) { 1 }
-      let(:optional_call_off_extensions_3) { 1 }
-      let(:call_off_extension_3) { 'true' }
-
-      before do
-        procurement.call_off_extension_2 = 'false'
-        procurement.call_off_extension_3 = 'true'
-        procurement.call_off_extension_4 = 'false'
-        procurement.optional_call_off_extensions_1 = 1
-        procurement.optional_call_off_extensions_3 = 1
+          expect(procurement.optional_call_off_extensions.count).to eq 2
+        end
       end
 
-      it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
+      context 'and there are 3 extensions' do
+        let(:extension_details) do
+          [
+            { extension: 0, years: 1, months: 1, extension_required: 'true' },
+            { extension: 1, years: 1, months: 1, extension_required: 'true' },
+            { extension: 2, years: 1, months: 1, extension_required: 'true' },
+            { extension: 3, years: 1, months: 1, extension_required: 'false' }
+          ]
+        end
+
+        it 'is valid' do
+          expect(procurement.save(context: :contract_period)).to eq true
+        end
+
+        it 'only saves three extensions' do
+          procurement.save(context: :contract_period)
+          procurement.reload
+
+          expect(procurement.optional_call_off_extensions.count).to eq 3
+        end
       end
-    end
 
-    context 'when the third extension is nil but the forth is not' do
-      let(:optional_call_off_extensions_1) { 1 }
-      let(:optional_call_off_extensions_4) { 1 }
-      let(:call_off_extension_4) { 'true' }
+      context 'and there are 4 extensions' do
+        let(:extension_details) do
+          [
+            { extension: 0, years: 1, months: 1, extension_required: 'true' },
+            { extension: 1, years: 1, months: 1, extension_required: 'true' },
+            { extension: 2, years: 1, months: 1, extension_required: 'true' },
+            { extension: 3, years: 1, months: 1, extension_required: 'true' }
+          ]
+        end
 
-      before do
-        procurement.call_off_extension_2 = 'false'
-        procurement.call_off_extension_3 = 'false'
-        procurement.call_off_extension_4 = 'true'
-        procurement.optional_call_off_extensions_1 = 1
-        procurement.optional_call_off_extensions_4 = 1
-      end
+        it 'is valid' do
+          expect(procurement.save(context: :contract_period)).to eq true
+        end
 
-      it 'is not valid' do
-        expect(procurement.valid?(:contract_period)).to eq false
-      end
-    end
+        it 'saves all four extensions' do
+          procurement.save(context: :contract_period)
+          procurement.reload
 
-    context 'when the total with one extension is 10 years or less' do
-      let(:optional_call_off_extensions_1) { 1 }
-
-      it 'is valid' do
-        expect(procurement.valid?(:contract_period)).to eq true
-      end
-    end
-
-    context 'when the total with multiple extensions is 10 years or less' do
-      let(:optional_call_off_extensions_1) { 1 }
-      let(:optional_call_off_extensions_2) { 1 }
-      let(:optional_call_off_extensions_3) { 1 }
-      let(:call_off_extension_2) { 'true' }
-      let(:call_off_extension_3) { 'true' }
-
-      it 'is valid' do
-        expect(procurement.valid?(:contract_period)).to eq true
+          expect(procurement.optional_call_off_extensions.count).to eq 4
+        end
       end
     end
   end

@@ -54,14 +54,8 @@ module ProcurementValidator
     validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_period
 
     validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_period
-    validates :optional_call_off_extensions_1, presence: true, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_period
-    validates :optional_call_off_extensions_1, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && initial_call_off_start_date.present? }, on: :contract_period
-    validates :optional_call_off_extensions_2, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_2 != 'false' || !optional_call_off_extensions_2.nil?) }, on: :contract_period
-    validates :optional_call_off_extensions_3, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_3 != 'false' || !optional_call_off_extensions_3.nil?) }, on: :contract_period
-    validates :optional_call_off_extensions_4, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1 }, if: -> { extensions_required && (call_off_extension_4 != 'false' || !optional_call_off_extensions_4.nil?) }, on: :contract_period
-    validate :optional_call_off_extensions_too_long, on: :contract_period
-    validate :optional_call_off_extensions_catch_validation, on: :contract_period
 
+    after_validation :total_contract_length, :remove_empty_extensions, on: :contract_period
     #
     # End of validation rules for contract-dates
     #############################################
@@ -111,26 +105,26 @@ module ProcurementValidator
       initial_call_off_period_years.present? ? initial_call_off_period_years.positive? : false
     end
 
-    def total_extensions
-      optional_call_off_extensions_1.to_i + optional_call_off_extensions_2.to_i + optional_call_off_extensions_3.to_i + optional_call_off_extensions_4.to_i
+    def total_contract_length
+      return if errors.any?
+
+      start_date = mobilisation_period_required ? mobilisation_start_date : initial_call_off_start_date
+
+      end_date = initial_call_off_end_date
+
+      end_date += optional_call_off_extensions.select(&:extension_required).sum(&:period) if extensions_required
+
+      return if end_date <= start_date + 10.years
+
+      errors.add(:base, :total_contract_length)
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def optional_call_off_extensions_catch_validation
-      unless optional_call_off_extensions_4.nil?
-        errors.add(:optional_call_off_extensions_3, :blank) if optional_call_off_extensions_3.nil?
-        errors.add(:optional_call_off_extensions_2, :blank) if optional_call_off_extensions_2.nil?
-      end
+    def remove_empty_extensions
+      return if errors.any?
 
-      errors.add(:optional_call_off_extensions_2, :blank) if (!optional_call_off_extensions_3.nil? || !optional_call_off_extensions_4.nil?) && optional_call_off_extensions_2.nil?
+      optional_call_off_extensions.reject(&:extension_required).each(&:delete)
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
 
-    def optional_call_off_extensions_too_long
-      return if initial_call_off_period_years.to_i > 7
-
-      errors.add(:optional_call_off_extensions_1, :too_long) unless initial_call_off_period_years.to_i + total_extensions <= 10
-    end
     # End of validation methods for contract-dates
     #############################################
 

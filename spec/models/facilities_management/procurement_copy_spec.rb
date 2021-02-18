@@ -31,6 +31,28 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         end
       end
 
+      context 'when considering optional call of extensions' do
+        it 'will have the extension periods' do
+          expect(procurement_copy.optional_call_off_extensions.size).to eq 4
+        end
+
+        it 'will have the right period for extension 1' do
+          expect(procurement_copy.optional_call_off_extensions.select { |optional_call_off_extension| optional_call_off_extension.extension == 0 }.first.period).to eq 0.years + 1.month
+        end
+
+        it 'will have the right period for extension 2' do
+          expect(procurement_copy.optional_call_off_extensions.select { |optional_call_off_extension| optional_call_off_extension.extension == 1 }.first.period).to eq 1.year + 2.months
+        end
+
+        it 'will have the right period for extension 3' do
+          expect(procurement_copy.optional_call_off_extensions.select { |optional_call_off_extension| optional_call_off_extension.extension == 2 }.first.period).to eq 2.years + 3.months
+        end
+
+        it 'will have the right period for extension 4' do
+          expect(procurement_copy.optional_call_off_extensions.select { |optional_call_off_extension| optional_call_off_extension.extension == 3 }.first.period).to eq 3.years + 0.months
+        end
+      end
+
       context 'when considering procurement buildings' do
         it 'will have procurement buildings' do
           expect(procurement_copy.procurement_buildings).not_to be_empty

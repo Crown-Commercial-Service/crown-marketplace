@@ -198,13 +198,11 @@ RSpec.describe ProcurementCsvExport do
 
   describe '.call_off_extensions' do
     before do
-      procurement_in_search.update(
-        extensions_required: required,
-        optional_call_off_extensions_1: 1,
-        optional_call_off_extensions_2: 2,
-        optional_call_off_extensions_3: 3,
-        optional_call_off_extensions_4: 4
-      )
+      procurement_in_search.update(extensions_required: required)
+
+      4.times do |extension|
+        procurement_in_search.optional_call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
+      end
     end
 
     context 'when not filled in yet' do
@@ -219,7 +217,7 @@ RSpec.describe ProcurementCsvExport do
       let(:required) { true }
 
       it 'show extensions' do
-        expect(described_class.call_off_extensions(procurement_in_search)).to eq '4 extensions, 1 year, 2 years, 3 years, 4 years'
+        expect(described_class.call_off_extensions(procurement_in_search)).to eq '4 extensions, 1 year, 2 years and 2 months, 3 years and 4 months, 6 months'
       end
     end
 
