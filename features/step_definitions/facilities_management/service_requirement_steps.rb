@@ -48,7 +48,7 @@ Then('I enter {string} for the number of hours per year') do |volume|
 end
 
 Then('I enter the following for the detail of requirement:') do |detail_of_requirement|
-  page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.transpose.raw.flatten.join("\n"))
+  page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.raw.flatten.join("\n"))
 end
 
 Then('I select Standard {string}') do |standard|

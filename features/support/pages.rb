@@ -15,6 +15,10 @@ module Pages
     @procurement_page ||= Pages::Procurement.new
   end
 
+  def quick_view_results_page
+    @quick_view_results_page ||= Pages::QuickViewResults.new
+  end
+
   def service_requirement_page
     @service_requirement_page ||= Pages::ServiceRequirement.new
   end

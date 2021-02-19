@@ -34,8 +34,8 @@ Feature: Procuremnt journey - Direct Award
       Then I am on the 'Requirements' page
       And I click on 'Services'
       Then I am on the 'Services' page
-      And I open all sections for the services
-      Then I select the following services:
+      And I open all sections
+      Then I select the following items:
         | Mechanical and electrical engineering maintenance   |
         | Portable appliance testing                          |
         | Routine cleaning                                    |
