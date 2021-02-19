@@ -21,7 +21,7 @@ Then 'I am on the page with secondary heading {string}' do |title|
 end
 
 Then('I should see the following secondary headings:') do |table|
-  expect(page.all('h2').map(&:text)).to include(*table.transpose.raw.flatten)
+  expect(page.all('h2').map(&:text)).to include(*table.raw.flatten)
 end
 
 When 'I click on {string}' do |button_text|
@@ -31,14 +31,14 @@ end
 Then('the following content should be displayed on the page:') do |table|
   page_text = page.find('#main-content').text
 
-  table.transpose.raw.flatten.each do |item|
+  table.raw.flatten.each do |item|
     expect(page_text).to include(item)
   end
 end
 
 Then('I should see the following error messages:') do |table|
   expect(page).to have_css('div.govuk-error-summary')
-  expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text)).to eq table.transpose.raw.flatten
+  expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text)).to eq table.raw.flatten
 end
 
 Then('I click on {string} details') do |summary_text|
