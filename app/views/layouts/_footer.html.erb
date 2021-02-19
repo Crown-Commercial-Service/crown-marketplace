@@ -27,20 +27,14 @@
           <nav class="govuk-grid-column-two-thirds" aria-label="Footer navigation">
             <div class="govuk-footer__meta">
               <div class="govuk-footer__meta-item">
-                <%= link_to t("layouts.application.cookie_link"), cookies_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
+                <%= link_to t("layouts.application.cookie_link"), facilities_management_cookies_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
               </div>
               <div class="govuk-footer__meta-item">
                 <%= link_to t("layouts.application.privacy_link"), 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice', class: 'ccs-footer__links ccs-no-print', aria: { label: t('layouts.application.privacy_link_aria_label') }, target: "_blank" %>
               </div>
-              <% if service_name_param&.include? 'facilities_management' %>
-                <div class="govuk-footer__meta-item">
-                  <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
-                </div>
-              <% elsif legacy_service?(service_name_param) %>
-                <div class="govuk-footer__meta-item">
-                  <%= link_to t("layouts.application.accessibility_statement_link"), "/#{service_name_param.gsub('_','-')}/accessibility-statement?service=#{service_name_param}", class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
-                </div>
-              <% end %>
+              <div class="govuk-footer__meta-item">
+                <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: "ccs-footer__links ccs-no-print", aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
+              </div>
               <div class="govuk-footer__meta-item">
                 <%= t("layouts.application.crown_copyright") %>
               </div>
