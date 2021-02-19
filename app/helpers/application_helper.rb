@@ -230,30 +230,13 @@ module ApplicationHelper
   end
 
   def service_header_banner
-    if params[:service]
-      header_banner(params[:service])
+    if service_name_param && lookup_context.template_exists?("#{service_name_param}/_header-banner")
+      render partial: "#{service_name_param}/header-banner"
+    elsif service_name_param&.include? 'admin'
+      render partial: 'layouts/admin/header-banner'
     else
-      service_name = controller.class.parent_name&.underscore
-      if service_name&.include? 'admin'
-        render partial: 'layouts/admin/header-banner'
-      elsif service_name && lookup_context.template_exists?("#{service_name}/_header-banner")
-        render partial: "#{service_name}/header-banner"
-      else
-        render partial: 'layouts/header-banner'
-      end
+      render partial: 'layouts/header-banner'
     end
-  end
-
-  def header_banner(service)
-    if legacy_service?(service)
-      render partial: 'legacy/header-banner', locals: { service: service, service_url: service.gsub('_', '-') }
-    else
-      render partial: "#{service}/header-banner"
-    end
-  end
-
-  def legacy_service?(service)
-    ['legal_services', 'management_consultancy', 'supply_teachers'].include? service
   end
 
   def landing_or_admin_page
@@ -292,20 +275,8 @@ module ApplicationHelper
     controller.action_name == 'cookies'
   end
 
-  def accessibility_statement_fm_page
-    controller.action_name == 'accessibility_statement_fm'
-  end
-
-  def accessibility_statement_mc_page
-    controller.action_name == 'accessibility_statement_mc'
-  end
-
-  def accessibility_statement_ls_page
-    controller.action_name == 'accessibility_statement_ls'
-  end
-
-  def accessibility_statement_st_page
-    controller.action_name == 'accessibility_statement_st'
+  def accessibility_statement_page
+    controller.action_name == 'accessibility_statement'
   end
 
   def not_permitted_page
@@ -329,7 +300,7 @@ module ApplicationHelper
   end
 
   def service_name_param
-    params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
+    @service_name_param ||= params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
   end
 
   def govuk_tag(status)

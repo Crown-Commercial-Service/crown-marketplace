@@ -1,14 +1,10 @@
 <%= render 'layouts/logo' %>
 <div class="govuk-header__content">
-  <%= render 'layouts/admin/header-title', service: 'admin_account', path: facilities_management_admin_path %>
+  <%= render 'layouts/admin/header-title', service: 'admin_account' %>
   <nav role="navigation" aria-label="Top Level Navigation">
     <ul id="navigation" class="govuk-header__navigation ">
-      <% if %w[supply-teachers legal-services management-consultancy].include? request.original_fullpath.split('/')[1] %>
-        <%= render 'layouts/sign-out-link', sign_out_path: send("#{request.original_fullpath.split('/')[1].gsub('-','_')}_admin_destroy_user_session_path") %>
-      <% else %>
-        <%= render 'layouts/admin/header-dashboard-link', admin_dashboard_path: facilities_management_admin_path %>
-        <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_admin_destroy_user_session_path %>
-      <% end %>
+      <%= render 'layouts/admin/header-dashboard-link', admin_dashboard_path: facilities_management_admin_path %>
+      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_admin_destroy_user_session_path %>
     </ul>
   </nav>
 </div>
