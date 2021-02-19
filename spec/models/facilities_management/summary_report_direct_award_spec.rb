@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
-  include ActionView::Helpers::NumberHelper
-
   let(:procurement_with_buildings) { create(:facilities_management_procurement_with_contact_details_with_buildings) }
 
   let(:procurement_with_buildings_no_tupe_london) { create(:facilities_management_procurement_with_contact_details_with_buildings_no_tupe_london) }
@@ -26,7 +24,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
 
-      expect(sorted_list.first).to eq [:"Halvorson, Corwin and O'Connell", 3105.6768582048]
+      expect(sorted_list.first).to eq [:"Halvorson, Corwin and O'Connell", 3105.6768582048003]
     end
 
     it 'price for one supplier with tupe' do

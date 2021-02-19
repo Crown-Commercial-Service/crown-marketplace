@@ -35,16 +35,16 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         it 'results has the correct values' do
           expected = {
             subtotal1: 2339,
-            year1totalcharges: 2758,
+            year_1_total_charges: 2758,
             cafm: 0,
             helpdesk: 0,
-            variance: 0,
-            tupe: 0,
-            manage: 96,
-            corporate: 120,
+            london_variance: 0,
+            tupe_risk_premium: 0,
+            management_overhead: 96,
+            corporate_overhead: 120,
             profit: 131,
             mobilisation: 70,
-            subyearstotal: 2677
+            subsequent_yearly_charge: 2677
           }
 
           expected.each do |key, rounded_value|
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'sum benchmark is correct' do
-        expect(report.sum_benchmark.round).to eq(22101)
+        expect(report.sum_benchmark.round).to eq(22189)
       end
     end
   end

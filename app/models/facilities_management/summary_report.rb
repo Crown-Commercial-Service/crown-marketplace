@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SummaryReport
-    attr_reader :sum_uom, :sum_benchmark, :contract_length_years, :start_date, :tupe_flag,
+    attr_reader :sum_uom, :sum_benchmark, :contract_length_years, :start_date, :tupe_required,
                 :posted_services, :posted_locations, :subregions, :results
 
     def initialize(procurement_id)
@@ -26,9 +26,9 @@ module FacilitiesManagement
       @procurement_building_services = @procurement.procurement_building_services
       @posted_services = @procurement_building_services.map(&:code)
       @posted_locations = @active_procurement_buildings.map(&:address_region_code)
-      @contract_length_years = @procurement.initial_call_off_period_years.to_i
+      @contract_length_years = @procurement.initial_call_off_period_years + @procurement.initial_call_off_period_months / 12.0
       @contract_cost = @procurement.estimated_cost_known? ? @procurement.estimated_annual_cost.to_f : 0
-      @tupe_flag = @procurement.tupe
+      @tupe_required = @procurement.tupe
     end
 
     def calculate_services_for_buildings(supplier_id = nil, spreadsheet_type = nil, remove_cafm_help = true)
@@ -160,57 +160,60 @@ module FacilitiesManagement
     end
 
     def copy_params(procurement_building, uvals)
-      @london_flag = building_in_london?(procurement_building.address_region_code)
+      @london_building = building_in_london?(procurement_building.address_region_code)
       @gia = procurement_building.gia
       @external_area = procurement_building.external_area
-      @helpdesk_flag = uvals.any? { |uval| uval[:service_code] == 'N.1' }
-      @cafm_flag = uvals.any? { |uval| uval[:service_code] == 'M.1' }
+      @helpdesk_required = uvals.any? { |uval| uval[:service_code] == 'N.1' }
+      @cafm_required = uvals.any? { |uval| uval[:service_code] == 'M.1' }
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     # rubocop:disable Metrics/AbcSize
     def services(building, uvals, remove_cafm_help, supplier_id = nil)
-      sum_uom = 0.0
-      sum_benchmark = 0.0
+      sum_uom = 0
       results = {}
 
       copy_params building, uvals
 
       uvals_remove_cafm_help = remove_cafm_help == true ? uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' } : uvals
+
+      calc_fm = FMCalculator::Calculator.new(@contract_length_years,
+                                             @tupe_required,
+                                             @london_building,
+                                             @cafm_required,
+                                             @helpdesk_required,
+                                             @rates,
+                                             @rate_card,
+                                             supplier_id,
+                                             building)
+
       uvals_remove_cafm_help.each do |v|
-        uom_value = v[:uom_value]
-
         if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
-          occupants = v[:uom_value].to_i
-          uom_value = @gia.to_f
+          v[:occupants] = v[:uom_value].to_i
+          v[:uom_value] = @gia.to_f
         elsif v[:service_code] == 'G.5'
-          occupants = 0
-          uom_value = @external_area.to_f
+          v[:occupants] = 0
+          v[:uom_value] = @external_area.to_f
         else
-          occupants = 0
-        end
-
-        calc_fm = FMCalculator::Calculator.new(@contract_length_years,
-                                               v[:service_code],
-                                               v[:service_standard],
-                                               uom_value,
-                                               occupants,
-                                               @tupe_flag,
-                                               @london_flag,
-                                               @cafm_flag,
-                                               @helpdesk_flag,
-                                               @rates,
-                                               @rate_card,
-                                               supplier_id,
-                                               building)
-        sum_uom += calc_fm.sumunitofmeasure
-        if supplier_id
-          results[v[:service_code]] = calc_fm.results
-        else
-          sum_benchmark += calc_fm.benchmarkedcostssum
+          v[:occupants] = 0
         end
       end
+
+      if supplier_id
+        calc_fm.set_calculation_mode(:direct_award)
+        uvals_remove_cafm_help.each do |v|
+          sum_uom += calc_fm.initialize_service_variables(v[:service_code], v[:service_standard], v[:uom_value], v[:occupants]).calculate_total
+          results[v[:service_code]] = calc_fm.results
+        end
+      else
+        calc_fm.set_calculation_mode(:framework)
+        sum_uom = uvals_remove_cafm_help.sum { |v| calc_fm.initialize_service_variables(v[:service_code], v[:service_standard], v[:uom_value], v[:occupants]).calculate_total }
+
+        calc_fm.set_calculation_mode(:benchmark)
+        sum_benchmark = uvals_remove_cafm_help.sum { |v| calc_fm.initialize_service_variables(v[:service_code], v[:service_standard], v[:uom_value], v[:occupants]).calculate_total }
+      end
+
       return { sum_uom: sum_uom, results: results } if supplier_id
 
       { sum_uom: sum_uom,
