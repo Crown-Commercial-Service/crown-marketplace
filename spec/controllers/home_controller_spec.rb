@@ -16,67 +16,53 @@ RSpec.describe HomeController, type: :controller do
   end
 
   describe 'GET not-permitted' do
-    render_views
-
     before { get :not_permitted, params: { service: service } }
 
     context 'when the service is facilities_management' do
       let(:service) { 'facilities_management' }
 
-      it 'renders the not permitted page' do
-        expect(response).to render_template(:not_permitted)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'facilities_management/_header-banner')
+      it 'redirects to the facilities_management_not_permitted_path' do
+        expect(response).to redirect_to('/facilities-management/not-permitted')
       end
     end
 
     context 'when the service is supply_teachers' do
       let(:service) { 'supply_teachers' }
 
-      it 'renders the not permitted page' do
-        expect(response).to render_template(:not_permitted)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'legacy/_header-banner')
+      it 'redirects to the supply_teachers_not_permitted_path' do
+        expect(response).to redirect_to('/supply-teachers/not-permitted')
       end
     end
 
     context 'when the service is auth' do
       let(:service) { 'auth' }
 
-      it 'renders the not permitted page' do
-        expect(response).to render_template(:not_permitted)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'auth/_header-banner')
+      it 'redirects to the supply_teachers_not_permitted_path' do
+        expect(response).to redirect_to('/supply-teachers/not-permitted')
       end
     end
 
     context 'when the service is management_consultancy' do
       let(:service) { 'management_consultancy' }
 
-      it 'renders the not permitted page' do
-        expect(response).to render_template(:not_permitted)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'legacy/_header-banner')
+      it 'redirects to the management_consultancy_not_permitted_path' do
+        expect(response).to redirect_to('/management-consultancy/not-permitted')
       end
     end
 
     context 'when the service is legal_services' do
       let(:service) { 'legal_services' }
 
-      it 'renders the not permitted page' do
-        expect(response).to render_template(:not_permitted)
+      it 'redirects to the legal_services_not_permitted_path' do
+        expect(response).to redirect_to('/legal-services/not-permitted')
       end
+    end
 
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'legacy/_header-banner')
+    context 'when the service is not in the list' do
+      let(:service) { 'apprenticeships' }
+
+      it 'redirects to the 404 page not found' do
+        expect(response).to redirect_to errors_404_path
       end
     end
   end
