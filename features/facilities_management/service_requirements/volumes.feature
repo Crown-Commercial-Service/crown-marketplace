@@ -2,7 +2,7 @@ Feature: Volumes
 
   Background: Navigate to the Service requirements page
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | E.4 |
       | G.1 |
       | K.1 |

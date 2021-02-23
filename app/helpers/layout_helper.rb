@@ -121,24 +121,39 @@ module LayoutHelper
 
   # rubocop:enable Rails/OutputSafety
 
-  # rubocop:disable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/ParameterLists
   def govuk_continuation_buttons(page_description, form_builder, secondary_button = true, return_link = true, primary_button = true, red_secondary_button = false, primary_btn_as_link = false, secondary_btn_as_link = false)
     buttons = ActiveSupport::SafeBuffer.new
 
-    buttons << form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.primary_text }) if primary_button && !primary_btn_as_link
-    buttons << link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if primary_button && primary_btn_as_link && page_description.navigation_details.primary_url.present?
-    buttons << form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.secondary_text }) if secondary_button && !secondary_btn_as_link
-    buttons << link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if secondary_button && secondary_btn_as_link
-    if secondary_button || primary_button
+    buttons << govuk_first_button(page_description, form_builder, red_secondary_button, primary_btn_as_link) if primary_button
+    buttons << govuk_second_button(page_description, form_builder, red_secondary_button, secondary_btn_as_link) if secondary_button
+
+    if (secondary_button || primary_button) && return_link
       buttons << tag.br
-      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, class: 'govuk-link govuk-!-font-size-19', aria: { label: page_description.navigation_details.return_text }) if return_link
+      buttons << link_to(page_description.navigation_details.return_text, page_description.navigation_details.return_url, class: 'govuk-link govuk-!-font-size-19', aria: { label: page_description.navigation_details.return_text })
     end
 
     content_tag :div, class: 'govuk-!-margin-top-5' do
       buttons
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/ParameterLists, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/ParameterLists
+
+  def govuk_first_button(page_description, form_builder, red_secondary_button, primary_btn_as_link)
+    if primary_btn_as_link
+      link_to(page_description.navigation_details.primary_text, page_description.navigation_details.primary_url, class: "govuk-!-margin-right-4 govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button') if page_description.navigation_details.primary_url.present?
+    else
+      form_builder.submit(page_description.navigation_details.primary_text, class: 'govuk-button govuk-!-margin-right-4', name: [page_description.navigation_details.primary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.primary_text })
+    end
+  end
+
+  def govuk_second_button(page_description, form_builder, red_secondary_button, secondary_btn_as_link)
+    if secondary_btn_as_link
+      link_to(page_description.navigation_details.secondary_text, page_description.navigation_details.secondary_url, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", role: 'button')
+    else
+      form_builder.submit(page_description.navigation_details.secondary_text, class: "govuk-button #{red_secondary_button ? 'govuk-button--warning' : 'govuk-button--secondary'}", name: [page_description.navigation_details.secondary_name, 'commit'].find(&:present?), aria: { label: page_description.navigation_details.secondary_text })
+    end
+  end
 
   def govuk_page_error_summary(model_object)
     render partial: 'shared/error_summary', locals: { errors: model_object.errors, render_empty: true }
