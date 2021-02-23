@@ -1,0 +1,15 @@
+<%= content_for :page_title, t('.page_not_found') %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l govuk-!-font-weight-bold">
+      <%= t('.page_not_found') %>
+    </h1>
+    <p class="govuk-body">
+      <%= t('.check_web_address') %>
+    </p>
+    <p class="govuk-body">
+      <%= t('.check_pasted_address') %>
+    </p>
+    <%= render partial: 'contact_ccs' %>
+  </div>
+</div>

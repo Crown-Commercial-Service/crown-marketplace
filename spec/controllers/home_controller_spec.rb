@@ -62,7 +62,7 @@ RSpec.describe HomeController, type: :controller do
       let(:service) { 'apprenticeships' }
 
       it 'redirects to the 404 page not found' do
-        expect(response).to redirect_to errors_404_path
+        expect(response).to redirect_to '/404'
       end
     end
   end

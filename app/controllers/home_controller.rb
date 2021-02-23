@@ -17,7 +17,7 @@ class HomeController < ApplicationController
         redirect_to "/#{service_name}/not-permitted"
       end
     else
-      redirect_to errors_404_path
+      redirect_to '/404'
     end
   end
 

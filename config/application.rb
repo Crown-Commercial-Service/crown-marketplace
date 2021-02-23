@@ -65,6 +65,8 @@ module Marketplace
     end
 
     config.active_job.queue_adapter = :sidekiq unless Rails.env.test?
+
+    config.exceptions_app = routes
   end
 
   def self.feedback_email_address

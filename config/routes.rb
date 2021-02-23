@@ -131,10 +131,10 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
-  get '/errors/404'
-  get '/errors/422'
-  get '/errors/500'
-  get '/errors/maintenance'
+  get '/404', to: 'errors#not_found'
+  get '/422', to: 'errors#unacceptable'
+  get '/500', to: 'errors#internal_error'
+  get '/503', to: 'errors#service_unavailable'
 
   namespace :api, defaults: { format: :json } do
     namespace :v2 do
