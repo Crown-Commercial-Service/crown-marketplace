@@ -21,7 +21,7 @@
 
     <%= render partial: '/shared/google_analytics' %>
   </head>
-  <body class="govuk-template__body">
+  <body class="govuk-template__body error-box">
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
@@ -29,8 +29,8 @@
       <%= auto_session_timeout_js %>
     <% end %>
 
-    <div id="wrapper">
-      <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
+    <div class="error-content">
+      <a href="#main-content" class="govuk-skip-link"><%= t('layouts.application.skip') %></a>
       <%= render partial: '/layouts/cookie-banner' %>
       <%= service_header_banner %>
 
@@ -45,9 +45,9 @@
           <%= yield %>
         </div>
       </main>
-
-      <%= render partial: '/layouts/footer' %>
     </div>
+    
+    <%= render partial: '/layouts/footer' %>
 
     <%= javascript_include_tag 'application' %>
     <%= render partial: '/layouts/init-js' %>

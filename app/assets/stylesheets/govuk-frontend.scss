@@ -97,3 +97,13 @@ body.js-enabled #ccs-accordion-with-basket {
 .govuk-template {
   background-color: #ffffff;
 }
+
+.error-box {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.error-content {
+  flex: 1 0 auto;
+}

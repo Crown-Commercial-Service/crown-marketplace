@@ -264,23 +264,26 @@ en:
       one: company
       other: companies
   errors:
-    '404':
-      explanation: You may have mistyped the address or the page may have moved.
-      header: The page you were looking for doesn’t exist.
-      title: Errors#404
-    '422':
-      explanation: Maybe you tried to change something you didn’t have access to.
-      header: The change you wanted was rejected.
-      title: Errors#422
-    '500':
-      header: We’re sorry, but something went wrong.
-      title: Errors#500
-    maintenance:
-      explanation: You will be able to use the service later.
-      title: Service unavailable
+    contact_ccs:
+      call: 'Call:'
+      contact_ccs: 'Contact CCS if you believe you are seeing this message in error:'
+      email: 'Email:'
+    internal_error:
+      there_is_a_problem: Sorry, there is a problem with the service
+      try_again_later: Try again later.
     messages:
       extension_safelist_error: The selected file must be a DOC, DOCX or PDF
       max_size_error: The selected file must be smaller than %{max_size}
+    not_found:
+      check_pasted_address: If you pasted the web address, check you copied the entire address.
+      check_web_address: If you typed the web address, check it is correct.
+      page_not_found: Page not found
+    service_unavailable:
+      explanation: You will be able to use the service later.
+      title: Service unavailable
+    unacceptable:
+      changes_rejected: Sorry, the change you wanted was rejected
+      explanation: Maybe you tried to change something you didn’t have access to.
   faker:
     company:
       name:
