@@ -2,7 +2,7 @@ Feature: Internal and external area validations
 
   Background: Internal and external area page
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Area procurement' with the following services:
+    And I have a procurement in detailed search named 'Area procurement' with the following services:
       | C.1 |
       | G.5 |
     And I navigate to the service requirements page

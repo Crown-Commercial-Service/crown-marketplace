@@ -4,7 +4,7 @@ Feature: Internal and external area validations
     Given I sign in and navigate to my account
 
   Scenario: Updating the area will change in buildings
-    Given I have a procurement in direct award named 'Area procurement' with the following services:
+    Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | C.1 |
       | G.5 |
     And I navigate to the service requirements page
@@ -22,7 +22,7 @@ Feature: Internal and external area validations
     And my building's 'External area' is '257'
 
   Scenario: When internal area is 0 there is an error message
-    Given I have a procurement in direct award named 'Area procurement' with the following services:
+    Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | C.1 |
       | C.3 |
     And the GIA for 'Test building' is 0
@@ -34,7 +34,7 @@ Feature: Internal and external area validations
     And the building should have the status 'INCOMPLETE'
 
   Scenario: When external area is 0 there is an error message
-    Given I have a procurement in direct award named 'Area procurement' with the following services:
+    Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | G.5 |
     And the external area for 'Test building' is 0
     When I navigate to the service requirements page
@@ -44,7 +44,7 @@ Feature: Internal and external area validations
     And the building should have the status 'INCOMPLETE'
 
   Scenario: The return links navigate back to Service requirements
-    Given I have a procurement in direct award named 'Area procurement' with the following services:
+    Given I have a procurement in detailed search named 'Area procurement' with the following services:
       | C.1 |
       | G.5 |
     And I navigate to the service requirements page

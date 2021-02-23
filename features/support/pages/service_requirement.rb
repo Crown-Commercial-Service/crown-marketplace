@@ -5,6 +5,7 @@ module Pages
 
     element :add_lifts, '.add-lifts'
     elements :lift_rows, '.lift-row'
+    elements :number_of_floors_inputs, '.number-of-floors'
 
     element :volume_label, 'label'
     element :volume_unit, '.ccs-unit-label'

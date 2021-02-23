@@ -11,7 +11,7 @@ Given('I have an empty procurement in direct award named {string}') do |contract
   create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: [], aasm_state: 'detailed_search')
 end
 
-Given('I have a procurement in direct award named {string} with the following services:') do |contract_name, service_codes_table|
+Given('I have a procurement in detailed search named {string} with the following services:') do |contract_name, service_codes_table|
   service_codes = service_codes_table.raw.flatten
   procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
   building = create(:facilities_management_building, building_name: 'Test building', user: @user)
