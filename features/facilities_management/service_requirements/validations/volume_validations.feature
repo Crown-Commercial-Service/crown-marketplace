@@ -2,7 +2,7 @@ Feature: Volume validations
 
   Scenario Outline: Validating the volume for appliances
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | E.4 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Portable appliance testing'
@@ -22,7 +22,7 @@ Feature: Volume validations
  
   Scenario Outline: Validating the volume for building ocupants
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | G.1 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Routine cleaning'
@@ -42,7 +42,7 @@ Feature: Volume validations
 
   Scenario Outline: Validating the volume for consoles
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | K.1 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Classified waste'
@@ -62,7 +62,7 @@ Feature: Volume validations
 
   Scenario Outline: Validating the volume for tonnes
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | K.2 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'General waste'
@@ -82,7 +82,7 @@ Feature: Volume validations
 
   Scenario Outline: Validating the volume for units
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service volumes procurement' with the following services:
+    And I have a procurement in detailed search named 'Service volumes procurement' with the following services:
       | K.7 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Feminine hygiene waste'

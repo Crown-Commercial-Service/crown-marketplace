@@ -40,25 +40,25 @@ Then('the detail of requirement for {string} is as follows:') do |service, detai
 end
 
 Then('I enter {string} for the service volume') do |volume|
-  page.find('input[type="text"]').set(volume)
+  service_requirement_page.find('input[type="text"]').set(volume)
 end
 
 Then('I enter {string} for the number of hours per year') do |volume|
-  page.find('#facilities_management_procurement_building_service_service_hours').set(volume)
+  service_requirement_page.find('#facilities_management_procurement_building_service_service_hours').set(volume)
 end
 
 Then('I enter the following for the detail of requirement:') do |detail_of_requirement|
-  page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.raw.flatten.join("\n"))
+  service_requirement_page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.raw.flatten.join("\n"))
 end
 
 Then('I select Standard {string}') do |standard|
-  page.find("#facilities_management_procurement_building_service_service_standard_#{standard.downcase}").choose
+  service_requirement_page.find("#facilities_management_procurement_building_service_service_standard_#{standard.downcase}").choose
 end
 
 Then('I enter {string} for lift number {int}') do |number_of_floors, lift_number|
-  raise if page.all('.number-of-floors').size < lift_number
+  raise if service_requirement_page.lift_rows.size < lift_number
 
-  page.all('.number-of-floors')[lift_number - 1].set(number_of_floors)
+  service_requirement_page.number_of_floors_inputs[lift_number - 1].set(number_of_floors)
 end
 
 Then('I add {int} lifts') do |number_of_lifts|

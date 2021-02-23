@@ -7,6 +7,10 @@ module Pages
     @common_page ||= Pages::Common.new
   end
 
+  def contract_detail_page
+    @contract_detail_page ||= Pages::ContractDetail.new
+  end
+
   def da_draft_page
     @da_draft_page ||= Pages::DaDraft.new
   end
