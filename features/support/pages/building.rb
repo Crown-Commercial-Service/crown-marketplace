@@ -8,6 +8,7 @@ module Pages
     element :region_drop_down, '#regions-container'
     element :address_text, '#address-text'
     element :region_text, '#region-text'
+    element :change_address, '#change-input-2'
     element :change_region, '#change-input-3'
 
     element :building_status, '.govuk-body > strong'
