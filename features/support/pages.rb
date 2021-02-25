@@ -15,6 +15,10 @@ module Pages
     @da_draft_page ||= Pages::DaDraft.new
   end
 
+  def entering_requirements_page
+    @entering_requirements_page ||= Pages::EnteringRequirements.new
+  end
+
   def procurement_page
     @procurement_page ||= Pages::Procurement.new
   end
