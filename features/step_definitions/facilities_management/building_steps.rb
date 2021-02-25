@@ -58,3 +58,7 @@ end
 Then('I change the {string}') do |building_detail|
   building_page.building_details_summary.send(building_detail.to_sym).link.click
 end
+
+Then('I change my building address') do
+  building_page.change_address.click
+end

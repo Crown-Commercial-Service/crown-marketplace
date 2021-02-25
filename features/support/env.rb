@@ -13,6 +13,8 @@ require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
 require 'capybara/poltergeist'
+require 'axe-capybara'
+require 'axe-cucumber-steps'
 
 # Require files we've created to help with the setup
 require_relative '../support/pages.rb'
