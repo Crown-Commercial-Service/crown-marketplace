@@ -13,21 +13,21 @@ Feature: Procuremnt journey - Direct Award
       And I should see my procurement name
       And I click on 'Estimated annual cost'
       Then I am on the 'Estimated annual cost' page
-      And I select "Yes" for estimated annual cost known
+      And I select 'Yes' for estimated annual cost known
       And I enter '123456' for estimated annual cost
       And I click on 'Save and return'
       Then I am on the 'Requirements' page
       And I click on 'TUPE'
       Then I am on the 'TUPE' page
-      And I select "No" for TUPE required
+      And I select 'No' for TUPE required
       And I click on 'Save and return'
       Then I am on the 'Requirements' page
       And I click on 'Contract period'
       Then I am on the 'Contract period' page
-      And I enter 3 years and 2 months for the contract period
+      And I enter '3' years and '2' months for the contract period
       And I enter 'today' as the inital call-off period start date
-      And I select "No" for mobilisation period required
-      And I select "No" for optional extension required
+      And I select 'No' for mobilisation period required
+      And I select 'No' for optional extension required
       And I click on 'Save and continue'
       Then I am on the 'Contract period summary' page
       And I click on 'Return to requirements'

@@ -113,4 +113,10 @@ FactoryBot.define do
   factory :facilities_management_procurement_with_lifts, parent: :facilities_management_procurement_no_procurement_buildings do
     procurement_buildings { build_list :facilities_management_procurement_building_with_lifts, 1 }
   end
+
+  factory :facilities_management_procurement_entering_requirements, class: FacilitiesManagement::Procurement do
+    contract_name { Faker::Name.unique.name }
+    aasm_state { 'detailed_search' }
+    association :user
+  end
 end
