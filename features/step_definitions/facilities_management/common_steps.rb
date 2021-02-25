@@ -38,7 +38,7 @@ end
 
 Then('I should see the following error messages:') do |table|
   expect(page).to have_css('div.govuk-error-summary')
-  expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text)).to eq table.raw.flatten
+  expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text).reject(&:empty?)).to eq table.raw.flatten
 end
 
 Then('I open the {string} details') do |summary_text|
@@ -80,4 +80,5 @@ end
 
 Then('I pause') do
   # binding.pry
+  pending 'This step is used for debugging features'
 end
