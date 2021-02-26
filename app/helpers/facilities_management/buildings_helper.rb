@@ -18,7 +18,7 @@ module FacilitiesManagement::BuildingsHelper
     when :building_type
       type_description(building_type_description(text), building, :other_building_type)
     when :security_type
-      type_description(text.capitalize, building, :other_security_type)
+      type_description(text, building, :other_security_type)
     else
       text
     end

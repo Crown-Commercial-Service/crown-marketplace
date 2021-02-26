@@ -11,6 +11,28 @@ Given('I have an empty procurement for entering requirements named {string}') do
   create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name)
 end
 
+Given('I have an empty procurement for entering requirements named {string} with the following servcies:') do |contract_name, service_codes_table|
+  create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
+end
+
+Given('I have an empty procurement with buildings named {string} with the following servcies:') do |contract_name, service_codes_table|
+  procurement = create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
+
+  @user.buildings.each do |building|
+    procurement.procurement_buildings.create(building: building, active: true)
+  end
+end
+
+Given('I have an empty procurement with buildings named {string} with the following servcies assigned:') do |contract_name, service_codes_table|
+  service_codes = service_codes_table.raw.flatten
+
+  procurement = create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes)
+
+  @user.buildings.each do |building|
+    procurement.procurement_buildings.create(building: building, active: true, service_codes: service_codes)
+  end
+end
+
 Given('I have a procurement in detailed search named {string} with the following services:') do |contract_name, service_codes_table|
   service_codes = service_codes_table.raw.flatten
   procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
