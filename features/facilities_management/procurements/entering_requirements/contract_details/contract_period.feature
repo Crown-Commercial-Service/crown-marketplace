@@ -54,6 +54,11 @@ Feature: Contract period
     And mobilisation period length is '18 weeks'
     And the mobilisation period is correct given the contract start date
     And there are no optional call off extensions
+    When I click on 'Return to requirements'
+    And I am on the 'Requirements' page
+    Then 'Contract period' should have the status 'COMPLETED' in 'Contract details'
+    And I click on 'Contract period'
+    Then I am on the 'Contract period summary' page
 
   Scenario: With tupe and 1 optional extension period
     Given I enter an inital call-off period start date 1 years and 8 months into the future

@@ -116,6 +116,20 @@ module Pages
       element :extension_4_period, '#call-off-extension-3-description > td:nth-child(2)'
     end
 
+    element :number_of_selected_servcies, '#number-of-services'
+    element :number_of_selected_buildings, '#number-of-buildings'
+
+    element :no_buildings_text, 'form > div.procurement > div:nth-child(5)'
+    elements :checked_buildings, 'input[checked="checked"]'
+
     element :building_status, '.govuk-body > span > strong'
+    element :assigning_services_to_buildings_status, '.govuk-body > span > strong'
+
+    element :select_all_services_checkbox, '#box-all'
+
+    element :next_pagination, 'li.ccs-last > button'
+    element :previous_pagination, 'li.ccs-first > button'
+
+    element :region_drop_down, '#facilities_management_building_address_region'
   end
 end

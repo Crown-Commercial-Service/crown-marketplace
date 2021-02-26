@@ -119,4 +119,15 @@ FactoryBot.define do
     aasm_state { 'detailed_search' }
     association :user
   end
+
+  factory :facilities_management_procurement_entering_requirements_complete, parent: :facilities_management_procurement_entering_requirements do
+    estimated_cost_known { false }
+    tupe { false }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    mobilisation_period_required { false }
+    extensions_required { false }
+    service_codes { ['C.1', 'C.2'] }
+  end
 end
