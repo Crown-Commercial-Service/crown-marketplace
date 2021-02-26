@@ -73,7 +73,7 @@ function contractPeriod() {
     },
 
     totalTimeRemaining() {
-      return totalTimeRemaining = 1560 - this.totalContractPeriod;
+      return 1560 - this.totalContractPeriod;
     },
 
     timeRemaining() {
@@ -171,7 +171,7 @@ function contractPeriod() {
     },
 
     noTimePeriodLeftToAdd() {
-      return pagePeriods.totalTimeRemaining() < 13
+      return pagePeriods.totalTimeRemaining() < 13;
     },
 
     hideButton() {
@@ -182,6 +182,14 @@ function contractPeriod() {
     showButton() {
       this.addExtensionButton.removeClass('govuk-visually-hidden');
       this.addExtensionButton.attr('tabindex', 0);
+    },
+
+    updateButtonState() {
+      if (pagePeriods.allPeriodInputsComplete()) {
+        pagePeriods.calculateTotalContractPeriod();
+        this.updateButtonVisibility();
+        this.updateButtonText();
+      }
     },
   };
 
@@ -206,7 +214,6 @@ function contractPeriod() {
       extensionPeriods.showRemoveButton($(this).attr('data-extension') - 1);
 
       if (addExtensionPeriodButton.ableToAddPeriod()) {
-        pagePeriods.calculateTotalContractPeriod();
         addExtensionPeriodButton.updateButtonVisibility();
         addExtensionPeriodButton.updateButtonText();
       }
@@ -217,8 +224,6 @@ function contractPeriod() {
     e.preventDefault();
 
     if (addExtensionPeriodButton.ableToAddPeriod()) {
-      pagePeriods.calculateTotalContractPeriod();
-
       const nextExtension = $($('.extension-container.govuk-visually-hidden').get(0)).attr('data-extension');
       extensionPeriods.showExtensionPeriod(nextExtension);
       extensionPeriods.hideRemoveButton(nextExtension - 1);
@@ -229,11 +234,15 @@ function contractPeriod() {
   });
 
   $('.period-input').on('keyup', () => {
-    if (pagePeriods.allPeriodInputsComplete()) {
-      pagePeriods.calculateTotalContractPeriod();
-      addExtensionPeriodButton.updateButtonVisibility();
-      addExtensionPeriodButton.updateButtonText();
-    }
+    addExtensionPeriodButton.updateButtonState();
+  });
+
+  $('#facilities_management_procurement_mobilisation_period_required_true').on('click', () => {
+    addExtensionPeriodButton.updateButtonState();
+  });
+
+  $('#facilities_management_procurement_mobilisation_period_required_false').on('click', () => {
+    addExtensionPeriodButton.updateButtonState();
   });
 
   if (addExtensionPeriodButton.ableToAddPeriod()) {

@@ -2,6 +2,8 @@ module FacilitiesManagement
   class Procurement::OptionalCallOffExtension < ApplicationRecord
     belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :optional_call_off_extensions
 
+    scope :sorted, -> { order(:extension) }
+
     attr_accessor :extension_required
 
     before_validation :convert_to_boolean, on: :contract_period
