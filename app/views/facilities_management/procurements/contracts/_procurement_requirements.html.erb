@@ -35,7 +35,7 @@
                 </td>
             </tr>
             <% if @procurement.extensions_required %>
-              <% @procurement.optional_call_off_extensions.each do |optional_call_off_extension| %>
+              <% @procurement.optional_call_off_extensions.sorted.each do |optional_call_off_extension| %>
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extension', extension: optional_call_off_extension.extension + 1) %></th>
                     <td class="govuk-table__cell">
