@@ -1638,7 +1638,7 @@ en:
           my_buildings: My buildings
           new_buildings: New buildings
           new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
-          no_saved_buildings: You have no saved buildings. Click on ‘Add a building' to start setting up your building(s)
+          no_saved_buildings: You have no saved buildings. Click on 'Add a building' to start setting up your building(s)
           page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
