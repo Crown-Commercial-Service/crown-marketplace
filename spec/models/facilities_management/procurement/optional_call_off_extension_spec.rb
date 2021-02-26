@@ -243,4 +243,22 @@ RSpec.describe FacilitiesManagement::Procurement::OptionalCallOffExtension, type
       end
     end
   end
+
+  describe 'scope sorted' do
+    let(:procurement) { optional_call_off_extension.procurement }
+
+    before do
+      (1..3).each do |extension|
+        procurement.optional_call_off_extensions.create(extension: 4 - extension, years: 1, months: 1)
+      end
+    end
+
+    it 'is not sorted without the scope' do
+      expect(procurement.optional_call_off_extensions.pluck(:extension)).to eq [0, 3, 2, 1]
+    end
+
+    it 'is sorted with the scope' do
+      expect(procurement.optional_call_off_extensions.sorted.pluck(:extension)).to eq [0, 1, 2, 3]
+    end
+  end
 end
