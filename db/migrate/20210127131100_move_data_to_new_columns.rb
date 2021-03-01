@@ -41,7 +41,7 @@ class MoveDataToNewColumns < ActiveRecord::Migration[5.2]
   end
 
   def self.remove_years_and_months(procurement)
-    procurement.optional_call_off_extensions.each do |extenion_period|
+    procurement.optional_call_off_extensions.sorted.each do |extenion_period|
       procurement.send("optional_call_off_extensions_#{extenion_period.extension + 1}=", extenion_period.years) if extenion_period.years.positive?
     end
 
