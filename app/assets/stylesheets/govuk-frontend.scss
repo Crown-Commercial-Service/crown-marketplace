@@ -1,16 +1,16 @@
 // We import the GOVUK settings and then override the ones we need to in
 // our own settings file.
-@import "govuk-frontend/settings/all";
+@import "govuk-frontend/govuk/settings/all";
 @import "settings";
-@import "govuk-frontend/tools/all";
-@import "govuk-frontend/helpers/all";
-@import "govuk-frontend/core/all";
-@import "govuk-frontend/objects/all";
+@import "govuk-frontend/govuk/tools/all";
+@import "govuk-frontend/govuk/helpers/all";
+@import "govuk-frontend/govuk/core/all";
+@import "govuk-frontend/govuk/objects/all";
 // We are importing all the GOVUK components here, but we could import only
 // the ones we need.
 @import "components/all";
-@import "govuk-frontend/utilities/all";
-@import "govuk-frontend/overrides/all";
+@import "govuk-frontend/govuk/utilities/all";
+@import "govuk-frontend/govuk/overrides/all";
 
 .govuk-label--s {
   font-weight : 600;
@@ -48,4 +48,39 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.govuk-align-center-table__td {
+  text-align: center !important;
+}
+.govuk-align-left-table__td {
+  text-align: left !important;
+}
+.supplier-rates-td {
+  border: none !important;
+}
+.govuk-brand-light-grey {
+  color: #cecece !important;
+}
+.govuk-brand-light-grey-benchmark {
+  color:#6F777B !important;
+}
+.govuk-header_muted {
+  color: #6F777B;
+}
+.bg_gov-mssg {
+  background-color: #6F777B;
+  color: #FFFFFF;
+  padding: 5px;
+}
+.govuk-border-bottom_none {
+  border-bottom: 0px !important;
+}
+
+body.js-enabled #ccs-accordion-with-basket {
+  .basket,
+  .govuk-checkboxes .ccs-select-all,
+  .govuk-checkboxes > div + p {
+    display : block;
+  }
 }
