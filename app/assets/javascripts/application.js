@@ -11,7 +11,7 @@
 // about supported directives.
 //= require jquery3
 //= require rails-ujs
-//= require govuk-frontend/all
+//= require govuk-frontend/govuk/all
 //= require google_analytics
 //= require cookie_banner
 //= require supplier_markup_calculator

@@ -14,8 +14,10 @@
           <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
             <%= f.label :estimated_annual_cost, t('.label'), class: "govuk-label" %>
             <%= display_errors @procurement, :estimated_annual_cost %>
-            <span class="moj-label__currency <%= 'moj-label__currency--error' if @procurement.errors[:estimated_annual_cost].any? %>">&pound;</span>
-            <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field moj-input__currency govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
+            <div class="govuk-input__wrapper">
+              <div class="govuk-input__prefix" aria-hidden="true">£</div>
+              <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
+            </div>
           </div>
         </div>
       </div>

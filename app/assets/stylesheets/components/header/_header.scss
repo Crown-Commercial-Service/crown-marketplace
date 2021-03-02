@@ -1,6 +1,4 @@
-@import "govuk-frontend/components/header/header";
-
-$ccs_header_bg: govuk-colour("primary");
+$ccs_header_bg: ccs-colour("primary");
 $ccs_header_fg: govuk-colour("white");
 
 .govuk-header {

@@ -1,9 +1,0 @@
-@import "govuk-frontend/components/error-message/error-message";
-
-.govuk-error-message {
-	font-weight: $govuk-font-weight-semi-bold;
-}
-
-form.ccs-form .ccs-errors .govuk-input--error {
-	border: 4px solid #d4351c !important;
-}
