@@ -4,19 +4,11 @@
 <h1 class="govuk-heading-xl">
   <%= t('.heading') %>
 </h1>
-<div class="govuk-accordion govuk-!-width-two-thirds" data-module="accordion" id="accordion-default">
-  <% @fm_suppliers.each do |supplier_name, data| %>
-    <% supplier_id = data[:supplier_id] %>
-
-    <div class="govuk-accordion__section ">
-      <div class="govuk-accordion__section-header">
-        <h2 class="govuk-accordion__section-heading framework-data-accordion">
-          <span class="govuk-accordion__section-button" id="<%= supplier_name.downcase.gsub(' ', '-').tr("',", '') %>-framework-data-label" aria-controls="<%= supplier_name.downcase.gsub(' ', '-').tr("',", '') %>-framework-data">
-            <%= supplier_name %>
-          </span>
-        </h2>
-      </div>
-      <div id="<%= supplier_name.downcase.gsub(' ', '-').tr("',", '') %>-framework-data" class="govuk-accordion__section-content" aria-labelledby="<%= supplier_name.downcase.gsub(' ', '-').tr("',", '') %>-framework-data-label">
+<div class="govuk-!-width-two-thirds">
+  <%= govuk_accordion('supplier-framework-data') do %>
+    <% @fm_suppliers.each_with_index do |(supplier_name, data), index| %>
+      <% supplier_id = data[:supplier_id] %>
+      <%= govuk_accordion_add_section(index, supplier_name) do %>
         <% if (@supplier_lot1a_present[supplier_name]) %>
           <div class="govuk-!-margin-bottom-5">
             <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">
@@ -47,8 +39,8 @@
             <%= link_to t('.regions'), edit_facilities_management_admin_supplier_framework_datum_sublot_region_path(supplier_id, '1c'), class: 'govuk-link govuk-!-font-size-19' %>
           </div>
         <% end %>
-      </div>
-    </div>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
 

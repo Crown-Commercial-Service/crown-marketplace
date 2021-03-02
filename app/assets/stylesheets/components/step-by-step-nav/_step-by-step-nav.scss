@@ -5,7 +5,7 @@ $stroke-width: 2px;
 $stroke-width-large: 3px;
 $number-circle-size: 26px;
 $number-circle-size-large: 35px;
-$top-border: solid 2px govuk-colour("grey-3");
+$top-border: solid 2px ccs-colour("grey-3");
 
 @mixin step-nav-vertical-line ($line-style: solid) {
   content: "";
@@ -13,7 +13,7 @@ $top-border: solid 2px govuk-colour("grey-3");
   z-index: 2;
   width: 0;
   height: 100%;
-  border-left: $line-style $stroke-width govuk-colour("grey-2");
+  border-left: $line-style $stroke-width ccs-colour("grey-2");
   background: govuk-colour("white");
   }
 
@@ -142,7 +142,7 @@ $top-border: solid 2px govuk-colour("grey-3");
     margin-left: $number-circle-size / 4;
     width: $number-circle-size / 2;
     height: 0;
-    border-bottom: solid $stroke-width govuk-colour("grey-2");
+    border-bottom: solid $stroke-width ccs-colour("grey-2");
     }
 
   &:after {
@@ -268,7 +268,7 @@ $top-border: solid 2px govuk-colour("grey-3");
 
 .app-step-nav__circle--number {
   @include step-nav-font(16, $weight: bold, $line-height: 23px);
-  border: solid $stroke-width govuk-colour("grey-2");
+  border: solid $stroke-width ccs-colour("grey-2");
 
   .app-step-nav--large & {
     @include step-nav-font(16, $tablet-size: 19, $weight: bold, $line-height: 23px, $tablet-line-height: 25px);
@@ -481,7 +481,7 @@ $top-border: solid 2px govuk-colour("grey-3");
 .app-step-nav__context {
   display: inline-block;
   font-weight: normal;
-  color: govuk-colour("grey-1");
+  color: ccs-colour("grey-1");
 
   &:before {
     content: " \2013\00a0";
