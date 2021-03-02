@@ -320,6 +320,8 @@ en:
       support_html: Email %{link} or call %{phone} for support.
       support_link_aria_label: Email us for support with this service
       title: Crown Commercial Service
+    logotype:
+      ccs_logo_title: Crown Commercial Service logo
   miles:
     unit:
       one: mile
