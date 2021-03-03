@@ -1056,7 +1056,7 @@ en:
             lowest_price_supplier: lowest priced supplier
             pricing_description_1: Your requirements have been priced using rates submitted by suppliers when they competed to the join the framework.
             pricing_description_2: The contract prices shown include all the elements you have entered including service pricing, any mobilisation and TUPE requirements, and supplier overhead and profit.
-            pricing_description_3: Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered.
+            pricing_description_3: Prices shown are contract values, excluding VAT, and are based on the contract term and service requirements that you have entered. The price does not include the costs of your optional call-off extension period(s) if you have included any.
             pricing_description_4: If there is more than one supplier that can meet your requirements, and the lowest priced supplier declines the opportunity, then the details of the second place supplier will be presented to you, with the option to proceed with them.
             pricing_description_5: If you wish to switch to further competition, please click the ‘Return to results' button.
             supplier_description_plural: that can offer your services under direct award, their contract prices are shown below in ascending order.
