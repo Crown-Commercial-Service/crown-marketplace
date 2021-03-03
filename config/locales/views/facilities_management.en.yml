@@ -1214,6 +1214,7 @@ en:
               supplier: Supplier
           what_next:
             heading: Below outlines the steps you will follow to direct award your contract.
+            or: or
             step_1_content_1: we will inform you about some key contract information on the next page
             step_1_content_2: you will be asked a few questions that will help us build your contract
             step_1_title: Creating your contract
@@ -1653,8 +1654,16 @@ en:
           description_list_4: supplier shortlist
           description_list_5: contract requirements and key dates
           description_text: 'The summary contains all the information that you have entered into this portal, all of which you can transfer into the relevant documents when running your further competition, including:'
+          download_file_in_format: Download the procurement summary in XLSX format.
           esourcing: eSourcing tool
-          esourcing_description: Crown Commercial Service offer a free eSourcing tool, to help you run your further competition online, or you can use your own organisation’s sourcing tool if you have one.
+          esourcing_description_html: Crown Commercial Service offer a free eSourcing tool, to help you run your further competition online, or you can use your own organisation’s sourcing tool if you have one. %{link} for further information.
+          esourcing_description_link_text: Click here
+          esourcing_description_link_url: https://www.gov.uk/government/publications/esourcing-suite-guidance-for-customers
+          facilities_management_framework_html: 'On %{link} you can view information including:'
+          facilities_management_framework_link_text: facilities management framework page,
+          facilities_management_framework_link_url: https://www.crowncommercial.gov.uk/agreements/rm3830
+          file_download: File download
+          file_name: "%{procurement_name} procurement summary"
           help: Need help?
           help_description: Please find our contact details below.
           help_description_1: When speaking to us please reference your procurement summary reference number.
@@ -2007,6 +2016,7 @@ en:
         return: Return to your account
       what_happens_next_body:
         first_information: We will first ask you for some information including
+        or: or
         step_1_content_1: 'basic contract information such as: '
         step_1_content_1_list_1: your current annual cost (if known)
         step_1_content_1_list_2: any TUPE involvement
