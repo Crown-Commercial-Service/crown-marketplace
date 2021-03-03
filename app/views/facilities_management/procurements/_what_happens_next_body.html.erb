@@ -3,149 +3,77 @@
 </p>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
-      <ol class="app-step-nav__steps">
-        <li class="app-step-nav__step js-step step-is-shown" id="creating-your-contract">
-          <div class="app-step-nav__header js-toggle-panel" data-position="1">
-            <h2 class="app-step-nav__title">
-            <span class="app-step-nav__circle app-step-nav__circle--number">
-              <span class="app-step-nav__circle-inner">
-                <span class="app-step-nav__circle-background">
-                  <span class="govuk-visually-hidden">Step</span> 1
-                </span>
-              </span>
-            </span>
-            <span class="js-step-title">
-              <span class="js-step-title-text">
-                <%= t('.step_1_title') %>
-              </span>
-              <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
-                Hide
-              </span>
-            </span>
-            </h2>
+    <%= govuk_step_by_step_navigation do %>
+      <%= govuk_step_by_step_navigation_step(t('.step_1_title'), 1) do %>
+        <p class="govuk-!-margin-bottom-2"> <%= t('.first_information') %> </p>
+        <ol class="app-step-nav__list " data-length="3">
+          <li class="app-step-nav__list-item js-list-item govuk-list--number">
+            <span data-position="1.1"><%= t('.step_1_content_1') %></span>
+            <ul class="govuk-list govuk-list--bullet">
+              <li><%= t('.step_1_content_1_list_1') %></li>
+              <li><%= t('.step_1_content_1_list_2') %></li>
+              <li><%= t('.step_1_content_1_list_3') %></li>
+            </ul>
+          </li>
+          <li class="app-step-nav__list-item js-list-item govuk-list--number ">
+            <span data-position="1.2"><%= t('.step_1_content_2') %></span>
+            <ul class="govuk-list govuk-list--bullet">
+              <li><%= t('.step_1_content_2_list_1') %></li>
+              <li><%= t('.step_1_content_2_list_2') %></li>
+            </ul>
+          </li>
+        </ol>
+        <div class="govuk-body">
+          <p><%= t('.step_1_content_3') %> </p>
+          <div class="govuk-!-margin-left-9">
+            <ul class="govuk-list govuk-list--bullet">
+              <li><%= t('.step_1_content_3_list_1') %></li>
+            </ul>
+            <p><%=t('.or') %></p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li><%= t('.step_1_content_3_list_2') %></li>
+            </ul>
           </div>
-
-          <div class="app-step-nav__panel js-panel" id="step-panel-creating-your-contract-1" hidden>
-            <p class="govuk-!-margin-bottom-2"> <%= t('.first_information') %> </p>
-            <ol class="app-step-nav__list " data-length="3">
-              <li class="app-step-nav__list-item js-list-item govuk-list--number">
-                <span data-position="1.1"><%= t('.step_1_content_1') %></span>
-                <ul class="govuk-list govuk-list--bullet">
-                  <li><%= t('.step_1_content_1_list_1') %></li>
-                  <li><%= t('.step_1_content_1_list_2') %></li>
-                  <li><%= t('.step_1_content_1_list_3') %></li>
-                </ul>
-              </li>
-              <li class="app-step-nav__list-item js-list-item govuk-list--number ">
-                <span data-position="1.2"><%= t('.step_1_content_2') %></span>
-                <ul class="govuk-list govuk-list--bullet">
-                  <li><%= t('.step_1_content_2_list_1') %></li>
-                  <li><%= t('.step_1_content_2_list_2') %></li>
-                </ul>
-              </li>
-            </ol>
-            <div class="govuk-body">
-              <p>
-              <%= t('.step_1_content_3') %>
-              </p>
-              <div class="govuk-!-margin-left-9">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><%= t('.step_1_content_3_list_1') %></li>
-                </ul>
-                <p>
-                or
-                </p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><%= t('.step_1_content_3_list_2') %></li>
-                </ul>
-              </div>
-                <%= t('.step_1_content_4') %>
-            </div>
-          </div>
-        </li>
-        <li class="app-step-nav__step js-step step-is-shown" id="review-contract">
-          <div class="app-step-nav__header js-toggle-panel" data-position="2">
-            <h2 class="app-step-nav__title">
-            <span class="app-step-nav__circle app-step-nav__circle--number">
-              <span class="app-step-nav__circle-inner">
-                <span class="app-step-nav__circle-background">
-                  <span class="govuk-visually-hidden">Step</span> 2
-                </span>
-              </span>
-            </span>
-            <span class="js-step-title">
-              <span class="js-step-title-text">
-                <%= t('.step_2_title') %>
-              </span>
-              <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
-                Hide
-              </span>
-            </span>
-            </h2>
-          </div>
-
-          <div class="app-step-nav__panel js-panel" id="step-panel-review-contract-2" hidden>
-          <p class="govuk-!-margin-bottom-2"> <%= t('.step_2_content_1') %> </p>
-            <ol class="app-step-nav__list " data-length="3">
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="2.1"><%= t('.step_2_content_1_list_1') %></span>
-              </li>
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="2.2"><%= t('.step_2_content_1_list_2') %></span>
-              </li>
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="2.3"><%= t('.step_2_content_1_list_3') %></span>
-              </li>
-            </ol>
-          </div>
-        </li>
-        <li class="app-step-nav__step js-step step-is-shown" id="offer-accepted">
-          <div class="app-step-nav__header js-toggle-panel" data-position="3">
-            <h2 class="app-step-nav__title">
-            <span class="app-step-nav__circle app-step-nav__circle--number">
-              <span class="app-step-nav__circle-inner">
-                <span class="app-step-nav__circle-background">
-                  <span class="govuk-visually-hidden">Step</span> 3
-                </span>
-              </span>
-            </span>
-            <span class="js-step-title">
-              <span class="js-step-title-text">
-                <%= t('.step_3_title') %>
-              </span>
-              <span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden="">
-                Hide
-              </span>
-            </span>
-            </h2>
-          </div>
-
-          <div class="app-step-nav__panel js-panel" id="step-panel-offer-accepted-3" hidden>
-            <p class="govuk-!-margin-bottom-2"> <%= t('.step_3_content_1') %>  </p>
-            <ol class="app-step-nav__list " data-length="4">
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="3.1"><%= t('.step_3_content_1_list_1') %></span>
-              </li>
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="3.2"><%= t('.step_3_content_1_list_2') %></span>
-              </li>
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="3.3"><%= t('.step_3_content_1_list_3') %> </span>
-              </li>
-            </ol>
-            <%= t('.step_3_content_2') %> 
-            <ol class="app-step-nav__list " data-length="2">
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="3.4"><%= t('.step_3_content_2_list_1') %></span>
-              </li>
-              <li class="app-step-nav__list-item js-list-item ">
-                <span data-position="3.5"><%= t('.step_3_content_2_list_2') %></span>
-              </li>
-            </ol>
-          </div>
-        </li>
-      </ol>
-    </div>
+          <%= t('.step_1_content_4') %>
+        </div>
+      <% end %>
+      <%= govuk_step_by_step_navigation_step(t('.step_2_title'), 2) do %>
+        <p class="govuk-!-margin-bottom-2"> <%= t('.step_2_content_1') %> </p>
+        <ol class="app-step-nav__list " data-length="3">
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="2.1"><%= t('.step_2_content_1_list_1') %></span>
+          </li>
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="2.2"><%= t('.step_2_content_1_list_2') %></span>
+          </li>
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="2.3"><%= t('.step_2_content_1_list_3') %></span>
+          </li>
+        </ol>
+      <% end %>
+      <%= govuk_step_by_step_navigation_step(t('.step_3_title'), 3) do %>
+        <p class="govuk-!-margin-bottom-2"> <%= t('.step_3_content_1') %>  </p>
+        <ol class="app-step-nav__list " data-length="3">
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="3.1"><%= t('.step_3_content_1_list_1') %></span>
+          </li>
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="3.2"><%= t('.step_3_content_1_list_2') %></span>
+          </li>
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="3.3"><%= t('.step_3_content_1_list_3') %> </span>
+          </li>
+        </ol>
+        <%= t('.step_3_content_2') %> 
+        <ol class="app-step-nav__list " data-length="2">
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="3.4"><%= t('.step_3_content_2_list_1') %></span>
+          </li>
+          <li class="app-step-nav__list-item js-list-item ">
+            <span data-position="3.5"><%= t('.step_3_content_2_list_2') %></span>
+          </li>
+        </ol>
+      <% end %>
+    <% end %>
   </div>
 </div>
