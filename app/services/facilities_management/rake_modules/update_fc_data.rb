@@ -3,7 +3,7 @@ module FacilitiesManagement::RakeModules::UpdateFCData
     FacilitiesManagement::Procurement.further_competition.where(contract_number: nil).find_in_batches do |group|
       group.each do |procurement|
         procurement.contract_number = generate_contract_number_fc(procurement.updated_at.year)
-        procurement.contract_datetime = procurement.updated_at.in_time_zone('London').strftime('%d/%m/%Y - %l:%M%P')
+        procurement.contract_datetime = procurement.updated_at.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
         procurement.save
       end
     end
