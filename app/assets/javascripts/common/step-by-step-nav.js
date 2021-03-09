@@ -136,6 +136,7 @@ window.GOVUKFrontend = window.GOVUKFrontend || {};
 
                     $title.wrapInner(
                         '<button ' +
+                        'type="button"' +
                         'class="app-step-nav__button app-step-nav__button--title js-step-title-button" ' +
                         'aria-expanded="false" aria-controls="' + contentId + '">' +
                         '</button>'
