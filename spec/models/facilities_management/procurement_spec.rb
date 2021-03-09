@@ -1843,4 +1843,26 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
   end
+
+  describe '.start_further_competition' do
+    context 'when the procurement transitions to Further Competition' do
+      before do
+        procurement.update(aasm_state: 'results')
+        procurement.start_further_competition!
+        procurement.reload
+      end
+
+      it 'updates the contract state' do
+        expect(procurement.further_competition?).to be true
+      end
+
+      it 'adds the contract number' do
+        expect(procurement.contract_number).to be_present
+      end
+
+      it 'adds the contract date time' do
+        expect(procurement.contract_datetime).to be_present
+      end
+    end
+  end
 end

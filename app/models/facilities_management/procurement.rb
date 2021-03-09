@@ -82,7 +82,7 @@ module FacilitiesManagement
     end
 
     def assign_contract_datetime
-      self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
+      self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y - %l:%M%P')
     end
 
     def generate_contract_number_fc
@@ -181,6 +181,7 @@ module FacilitiesManagement
         after do
           assign_contract_number_fc
           assign_contract_datetime
+          save
         end
       end
     end
