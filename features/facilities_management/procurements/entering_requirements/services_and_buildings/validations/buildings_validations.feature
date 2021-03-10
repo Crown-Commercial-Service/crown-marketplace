@@ -1,3 +1,4 @@
+@pipeline
 Feature: Buildings validations
 
   Scenario: No buildings selected

@@ -1,3 +1,4 @@
+@pipeline
 Feature: Tupe validations
 
   Scenario: Nothing is selected

@@ -1,3 +1,4 @@
+@pipeline
 Feature: Service standard validations
 
   Scenario: Blank service standard

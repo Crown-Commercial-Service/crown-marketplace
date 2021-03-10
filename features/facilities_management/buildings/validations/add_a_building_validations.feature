@@ -1,3 +1,4 @@
+@pipeline
 Feature: Add a building - validations
 
   Background: Navigate to buildings page
