@@ -1,3 +1,4 @@
+@pipeline
 Feature: Select region validations
 
   Background: Navigate to the Quick view results page

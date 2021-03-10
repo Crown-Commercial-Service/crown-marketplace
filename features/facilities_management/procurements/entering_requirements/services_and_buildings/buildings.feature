@@ -6,6 +6,7 @@ Feature: Buildings
     When I navigate to the procurement 'My buildings procurement'
     Then I am on the 'Requirements' page
 
+  @pipeline
   Scenario: Building selection saves
     Given I have buildings
     And I click on 'Buildings'
@@ -37,6 +38,7 @@ Feature: Buildings
       | Test building         |
       | Test London building  |
 
+  @pipeline
   Scenario: Selections and deselections carry over between pages - no saved buildings
     Given I have 200 buildings
     And I click on 'Buildings'

@@ -1,3 +1,4 @@
+@pipeline
 Feature: Add address manually - validations
 
   Background:

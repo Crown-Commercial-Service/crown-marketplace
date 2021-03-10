@@ -1,3 +1,4 @@
+@pipeline
 Feature: Local government pension scheme
 
   Background: Navigate to the Local government pension scheme question
