@@ -33,6 +33,7 @@ Feature: Select services
       | Courier booking and external distribution     |
       | Patrols (fixed or static guarding)            |
 
+  @pipeline
   Scenario: Changing the selection will change the basket
     When I select the following items:
       | Water hygiene maintenance                     |

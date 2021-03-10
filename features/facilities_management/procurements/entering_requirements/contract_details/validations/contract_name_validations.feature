@@ -1,3 +1,4 @@
+@pipeline
 Feature: Changing contract name validations
 
   Scenario Outline: Validate contract name

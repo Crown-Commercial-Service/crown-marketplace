@@ -1,3 +1,4 @@
+@pipeline
 Feature: Select services validations
 
   Scenario: No services selected

@@ -1,4 +1,4 @@
-@javascript
+@javascript @pipeline
 Feature: Add extension button
 
   Background: Navigate to the contract period page

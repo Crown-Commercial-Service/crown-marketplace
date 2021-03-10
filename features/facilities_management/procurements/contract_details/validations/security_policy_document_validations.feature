@@ -1,3 +1,4 @@
+@pipeline
 Feature: Security policy document validations
 
   Background: Navigate to the Security policy document question

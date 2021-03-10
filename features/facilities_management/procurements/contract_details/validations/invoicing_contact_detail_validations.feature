@@ -1,3 +1,4 @@
+@pipeline
 Feature: Invoicing contact detail validations
 
   Background: Navigate to the Invoicing contact detail question
