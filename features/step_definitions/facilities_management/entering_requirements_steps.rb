@@ -395,6 +395,10 @@ Given('I have a completed procurement for entering requirements named {string} w
   procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') }
 end
 
+Given('I have a completed procurement for entering requirements named {string}') do |contract_name|
+  create_completed_procurement(contract_name)
+end
+
 Then('there are {int} buildings missing a region') do |number_of_buildings|
   expect(entering_requirements_page.all('tbody > tr').count).to eq number_of_buildings
 end
@@ -403,7 +407,7 @@ Then('there is {int} building missing a region') do |number_of_buildings|
   step "there are #{number_of_buildings} buildings missing a region"
 end
 
-Then('I select the region for {string}') do |building_name|
+Then('I select region for {string}') do |building_name|
   entering_requirements_page.find('td', text: building_name).sibling('td', text: 'Select region').find('a').click
 end
 
