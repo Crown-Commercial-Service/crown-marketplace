@@ -8,19 +8,19 @@ Feature: Buildings used in a procurement are missing a region
 
   Scenario: Can complete missing regions for buildings
     Then there are 3 buildings missing a region
-    And I select the region for 'Test building 1'
+    And I select region for 'Test building 1'
     Then I am on the "Confirm your building's region" page
     And I select 'Bedfordshire and Hertfordshire' for the missing region
     And I click on 'Save and return'
     Then I am on the 'Review your buildings' page
     Then there are 2 buildings missing a region
-    And I select the region for 'Test building 2'
+    And I select region for 'Test building 2'
     Then I am on the "Confirm your building's region" page
     And I select 'Aberdeen and Aberdeenshire' for the missing region
     And I click on 'Save and return'
     Then I am on the 'Review your buildings' page
     Then there is 1 building missing a region
-    And I select the region for 'Test building 3'
+    And I select region for 'Test building 3'
     Then I am on the "Confirm your building's region" page
     And I select 'Shropshire and Staffordshire' for the missing region
     And I click on 'Save and return'
@@ -28,11 +28,11 @@ Feature: Buildings used in a procurement are missing a region
     And everything is completed
 
   Scenario: Return links work
-    Given I select the region for 'Test building 1'
+    Given I select region for 'Test building 1'
     Then I am on the "Confirm your building's region" page
     And I click on the 'Return to review your buildings' return link
     Then I am on the 'Review your buildings' page
-    Given I select the region for 'Test building 2'
+    Given I select region for 'Test building 2'
     Then I am on the "Confirm your building's region" page
     And I click on the 'Return to review your buildings' back link
     Then I am on the 'Review your buildings' page

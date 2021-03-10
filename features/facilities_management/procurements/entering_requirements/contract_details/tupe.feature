@@ -1,4 +1,4 @@
-Feature: Tupe validations
+Feature: Tupe
 
   Background: Navigate to TUPE page
     Given I sign in and navigate to my account
