@@ -6,7 +6,7 @@ Feature: Buildings used in a procurement are missing a region - validations
     When I navigate to the procurement 'My missing regions procurement'
     Then I am on the 'Review your buildings' page
     Then there are 3 buildings missing a region
-    And I select the region for 'Test building 1'
+    And I select region for 'Test building 1'
     Then I am on the "Confirm your building's region" page
     And I click on 'Save and return'
     Then I should see the following error messages:
