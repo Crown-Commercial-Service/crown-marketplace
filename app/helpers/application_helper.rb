@@ -2,6 +2,7 @@
 module ApplicationHelper
   include LayoutHelper
   include GovUKHelper
+  include HeaderNavigationLinksHelper
 
   ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
   PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze

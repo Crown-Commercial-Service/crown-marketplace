@@ -2,6 +2,7 @@
 @import "govuk-frontend/govuk/components/all";
 
 /* Override with my own components */
+@import "button/button";
 @import "calculator-form/calculator-form";
 @import "header/header";
 @import "footer/footer";
