@@ -1,10 +1,1 @@
-<%= render 'layouts/logo' %>
-<div class="govuk-header__content">
-  <%= render 'layouts/admin/header-title', service: 'admin_account' %>
-  <nav role="navigation" aria-label="Top Level Navigation">
-    <ul id="navigation" class="govuk-header__navigation ">
-      <%= render 'layouts/admin/header-dashboard-link', admin_dashboard_path: facilities_management_admin_path %>
-      <%= render 'layouts/sign-out-link', sign_out_path: facilities_management_admin_destroy_user_session_path %>
-    </ul>
-  </nav>
-</div>
+<%= govuk_header(t('dashboard.index.admin_link'), facilites_management_admin_navigation_links) %>
