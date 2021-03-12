@@ -67,13 +67,6 @@ module FacilitiesManagement::ProcurementsHelper
     end
   end
 
-  def to_lower_case(str)
-    return str if !/[[:upper:]]/.match(str[0]).nil? && !/[[:upper:]]/.match(str[1]).nil?
-
-    str[0] = str[0].downcase
-    str
-  end
-
   def sort_by_pension_fund_created_at
     # problem was for pension funds with duplicated names,the validation has an error so there is no created_at
     parts = @procurement.procurement_pension_funds.partition { |o| o.created_at.nil? }

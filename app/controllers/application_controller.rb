@@ -66,10 +66,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_end_of_journey
-    @end_of_journey = true
-  end
-
   def st_gateway_path
     if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
       supply_teachers_admin_user_session_url
