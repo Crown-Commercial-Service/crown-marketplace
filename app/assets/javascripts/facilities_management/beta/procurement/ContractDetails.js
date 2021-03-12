@@ -1,13 +1,21 @@
-$(function () {
-    $('.govuk-details__summary').on('click', function(e) {
-      var links = $(e.currentTarget).next().find('a');
-      removeTabIndex = e.currentTarget.getAttribute('aria-expanded') === 'false'
-      for (var i = 0; i < links.length; i++) {
-        removeTabIndexOnLinks(links[i], removeTabIndex)
-      }
-    });
+$(() => {
+  if ($('.govuk-details').length) {
+    const removeTabIndexOnLinks = (removeTabIndex) => {
+      $('.govuk-details__text a').each(function () {
+        removeTabIndex ? $(this).removeAttr('tabindex') : $(this).attr('tabindex', -1);
+      });
+    };
+  
+    const govukDetails = $('.govuk-details');
+  
+    govukDetails.each(function (_, govukDetail) {
+      const observer = new MutationObserver(() => {
+        removeTabIndexOnLinks(govukDetail.open);
+      });
 
-    function removeTabIndexOnLinks(e, state) {
-      state ? e.removeAttribute('tabindex') : e.setAttribute('tabindex', -1)
-    }
+      const config = { attributes: true, childList: false, characterData: false };
+    
+      observer.observe(govukDetail, config);
+    })
+  }
 });

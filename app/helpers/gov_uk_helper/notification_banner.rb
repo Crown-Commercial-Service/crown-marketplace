@@ -8,7 +8,7 @@ module GovUKHelper::NotificationBanner
         concat(tag.div(class: 'govuk-notification-banner__content') do
           capture do
             concat(tag.h3(heading, class: 'govuk-notification-banner__heading'))
-            concat(tag.p(class: 'govuk-body'), &block) if block_given?
+            concat(tag.p(class: 'govuk-body', &block)) if block_given?
           end
         end)
       end
