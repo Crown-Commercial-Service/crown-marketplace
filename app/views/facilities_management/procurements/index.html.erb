@@ -1,7 +1,7 @@
 <div class="govuk-body">
   <div class="grid-column-two-thirds">
     <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label=<%= t('.back') %> href="."><%= t('.back') %></a>
-    <%= govuk_notification_banner(:success, t('.deleted'), t('.was_deleted', contract_name: @what_was_deleted)) if @what_was_deleted %>
+    <%= govuk_notification_banner(:success, t('.deleted')) { t('.was_deleted', contract_name: @what_was_deleted) } if @what_was_deleted %>
 
     <h1 class="govuk-heading-xl"><%= t('.manage_procurements') %></h1>
     <% content_for :page_title, t('.manage_procurements') %>

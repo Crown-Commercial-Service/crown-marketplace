@@ -56,7 +56,7 @@
                     <%= govuk_details(procurement_building.building_name, true) do %>
                         <ul class="govuk-list govuk-list--bullet">
                           <% procurement_building.service_codes.each do |code| %>
-                            <li><%= to_lower_case(work_packages_names[code]) %></li>
+                            <li><%= work_packages_names[code] %></li>
                           <% end %>
                         </ul>
                     <% end %>

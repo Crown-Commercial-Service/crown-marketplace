@@ -1,5 +1,6 @@
 module GovUKHelper::Accordion
   def govuk_accordion(title, &block)
+    @title = title
     tag.div(class: 'govuk-accordion', id: "accordion-with-summary-sections-for-#{title}", data: { module: 'govuk-accordion' }, &block)
   end
 
@@ -32,6 +33,6 @@ module GovUKHelper::Accordion
   end
 
   def govuk_accordion_content_id(index)
-    "accordion-with-summary-sections-content-#{index + 1}"
+    "accordion-with-summary-sections-for-#{@title}-content-#{index + 1}"
   end
 end

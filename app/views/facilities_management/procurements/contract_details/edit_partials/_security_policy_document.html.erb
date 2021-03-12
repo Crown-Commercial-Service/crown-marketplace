@@ -51,10 +51,10 @@
                 <% if @procurement.security_policy_document_file.attachment.present? %>
                   <%= f.label :security_policy_document_file, 'Uploaded file', class: "govuk-label ccs-font-weight-semi-bold" %>
                   <%= ActiveStorage::Blob.where(id: @procurement.security_policy_document_file.attachment.blob_id).first.filename %> </br>
-                  <%= f.file_field :security_policy_document_file %>
+                  <%= f.file_field :security_policy_document_file, class: 'govuk-file-upload' %>
                 <% else %>
                   <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label ccs-font-weight-semi-bold" %>
-                  <%= f.file_field :security_policy_document_file %>
+                  <%= f.file_field :security_policy_document_file, class: 'govuk-file-upload' %>
                 <% end %>
                 <div class="govuk-!-margin-top-3">
                   <%= warning_text(t('.guidance')) %>

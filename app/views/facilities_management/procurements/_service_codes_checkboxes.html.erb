@@ -19,7 +19,7 @@
           <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
             <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
               <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
-                <div id="services-checkboxes" class="govuk-checkboxes">
+                <div class="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
                     <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
                                       title: work_package['name'],
@@ -45,7 +45,7 @@
           <% end %>
           <% if FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
             <p><%= t('facilities_management.basket.or_text') %></p>
-            <div id="services-checkboxes" class="govuk-checkboxes">
+            <div class="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
                 <input title="Select all code-<%= service['code'] %> services"
                         style="margin-top:4px"

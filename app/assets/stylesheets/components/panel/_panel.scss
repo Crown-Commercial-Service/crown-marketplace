@@ -33,3 +33,7 @@
 .ccs-govuk-panel__body {
   @include govuk-font($size: 19);
 }
+
+.govuk-panel--confirmation {
+  background: govuk-colour("turquoise");
+}
