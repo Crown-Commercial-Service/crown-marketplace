@@ -11,16 +11,8 @@ if [ "$APP_RUN_SIDEKIQ" = 'FALSE' ]; then
     bundle exec rake assets:sync
   fi
 
-  if [ "$APP_RUN_STATIC_TASK" = 'TRUE' ]; then
-    bundle exec rails db:static
-  fi
-
-  if [ "$APP_RUN_FM_STATIC_TASK" = 'TRUE' ]; then
-    bundle exec rails db:fmdata
-  fi
-
-  if [ "$APP_RUN_SUPPLIER_KEY_CONVERSION" = 'TRUE' ]; then
-    bundle exec rails fm_supplier:convert_name_to_ids
+  if [ "$APP_RUN_RAKE_TASKS" = 'TRUE' ]; then
+    bundle exec rails command:run
   fi
 
   if [ "$APP_RUN_PC_TABLE_MIGRATION" = 'TRUE' ]; then

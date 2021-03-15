@@ -270,5 +270,9 @@ module FacilitiesManagement::ProcurementsHelper
   def supplier_count
     @supplier_count ||= FacilitiesManagement::SupplierDetail.supplier_count(region_codes, service_codes)
   end
+
+  def further_competition_saved_date(procurement)
+    format_date_time procurement.contract_datetime.to_datetime
+  end
 end
 # rubocop:enable Metrics/ModuleLength

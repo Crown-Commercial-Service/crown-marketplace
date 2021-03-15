@@ -49,4 +49,42 @@ RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
       end
     end
   end
+
+  describe '.further_competition_saved_date' do
+    include ApplicationHelper
+
+    let(:procurement) { create(:facilities_management_procurement, contract_datetime: contract_datetime) }
+
+    context 'when the contract_datetime is 01/02/2019 -  2:53pm' do
+      let(:contract_datetime) { '01/02/2019 -  2:53pm' }
+
+      it 'returns 1 February 2019, 2:53pm' do
+        expect(helper.further_competition_saved_date(procurement)).to eq ' 1 February 2019,  2:53pm'
+      end
+    end
+
+    context 'when the contract_datetime is 15/01/2020 -  11:05am' do
+      let(:contract_datetime) { '15/01/2020 -  11:05am' }
+
+      it 'returns 15 January 2020, 11:05am' do
+        expect(helper.further_competition_saved_date(procurement)).to eq '15 January 2020, 11:05am'
+      end
+    end
+
+    context 'when the contract_datetime is 06/09/2021 - 2:26am' do
+      let(:contract_datetime) { '06/09/2021 - 2:26am' }
+
+      it 'returns 6 September 2021, 3:26am	' do
+        expect(helper.further_competition_saved_date(procurement)).to eq ' 6 September 2021,  3:26am'
+      end
+    end
+
+    context 'when the contract_datetime is 17/12/2020 -10:11pm' do
+      let(:contract_datetime) { ' 17/12/2020 -10:11pm' }
+
+      it 'returns 17 December 2020, 10:11pm' do
+        expect(helper.further_competition_saved_date(procurement)).to eq '17 December 2020, 10:11pm'
+      end
+    end
+  end
 end

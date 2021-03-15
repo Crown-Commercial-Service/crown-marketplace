@@ -181,6 +181,7 @@ module FacilitiesManagement
         after do
           assign_contract_number_fc
           assign_contract_datetime
+          save
         end
       end
     end
