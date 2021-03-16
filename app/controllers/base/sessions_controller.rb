@@ -10,9 +10,7 @@ module Base
     end
 
     def create
-      if Rails.env.development?
-        super
-      else
+      if Rails.env.production?
         self.resource ||= User.new
         @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
         @result.call
@@ -22,6 +20,8 @@ module Base
         else
           result_unsuccessful_path
         end
+      else
+        super
       end
     end
 
