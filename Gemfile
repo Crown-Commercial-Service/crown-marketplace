@@ -166,8 +166,8 @@ group :test do
   gem 'webmock'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
+  gem 'cucumber-rails', '>= 2.2.0', require: false
+  gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism'
   gem 'axe-core-capybara'
   gem 'axe-core-cucumber'
