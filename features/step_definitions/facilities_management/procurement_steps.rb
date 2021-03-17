@@ -7,6 +7,33 @@ Then('I have a procurement with the name {string}') do |contract_name|
   create(:facilities_management_procurement, user: @user, contract_name: contract_name)
 end
 
+Given('I have an empty procurement in direct award named {string}') do |contract_name|
+  create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: [], aasm_state: 'detailed_search')
+end
+
+Given('I have a procurement in direct award named {string} with the following services:') do |contract_name, service_codes_table|
+  service_codes = service_codes_table.raw.flatten
+  procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
+  building = create(:facilities_management_building, building_name: 'Test building', user: @user)
+  @procurement_building_id = procurement.procurement_buildings.create(building: building, service_codes: service_codes, active: true).id
+end
+
+Given('the GIA for {string} is {int}') do |building_name, gia|
+  find_building(building_name).update(gia: gia)
+end
+
+Given('the external area for {string} is {int}') do |building_name, external_area|
+  find_building(building_name).update(external_area: external_area)
+end
+
+def find_building(building_name)
+  @user.buildings.find_by(building_name: building_name)
+end
+
+Given('I navigate to the service requirements page') do
+  visit facilities_management_procurement_building_path(id: @procurement_building_id)
+end
+
 Then('I should see my procurement name') do
   expect(procurement_page.contract_name.text).to eq @contract_name
 end
@@ -173,42 +200,6 @@ Then('I select the following service codes for the building:') do |services|
   services.transpose.raw.flatten.each do |service|
     page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '')}")
   end
-end
-
-Then('I choose to answer the Service volume question for {string}') do |service|
-  step "I choose to answer the first Service volume question for '#{service}'"
-end
-
-Then('I choose to answer the Service standard question for {string}') do |service|
-  answer_service_question(procurement_page.service_standard_questions, service)
-end
-
-Then('I choose to answer the first Service volume question for {string}') do |service|
-  answer_service_question(procurement_page.service_volume_questions, service)
-end
-
-def answer_service_question(section, service)
-  section.first('td', text: service).find(:xpath, './parent::tr').find('a').click
-end
-
-Then('I choose to answer the second Service volume question for {string}') do |service|
-  procurement_page.service_volume_questions.all('td', text: service).last.find(:xpath, './parent::tr').find('a').click
-end
-
-Then('I enter {string} for the service volume') do |volume|
-  page.find('input[type="text"]').set(volume)
-end
-
-Then('I enter {string} for the number of hours per year') do |volume|
-  page.find('#facilities_management_procurement_building_service_service_hours').set(volume)
-end
-
-Then('I enter the following for the detail of requirement:') do |detail_of_requirement|
-  page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.transpose.raw.flatten.join("\n"))
-end
-
-Then('I select Standard {string}') do |standard|
-  page.find("#facilities_management_procurement_building_service_service_standard_#{standard.downcase}").choose
 end
 
 Then('the building should have the status {string}') do |status|

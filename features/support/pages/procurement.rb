@@ -66,9 +66,6 @@ module Pages
     element :extension_required_yes, '#facilities_management_procurement_extensions_required_true'
     element :extension_required_no, '#facilities_management_procurement_extensions_required_false'
 
-    element :service_volume_questions, 'table:nth-of-type(1)'
-    element :service_standard_questions, 'table:nth-of-type(2)'
-
     element :building_status, '.govuk-body > span > strong'
 
     element :direct_award_route_to_market, '#facilities_management_procurement_route_to_market_da_draft'
