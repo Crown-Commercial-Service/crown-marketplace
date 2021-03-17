@@ -40,3 +40,13 @@ Then('I should see the following error messages:') do |table|
   expect(page).to have_css('div.govuk-error-summary')
   expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text)).to eq table.transpose.raw.flatten
 end
+
+Then('I click on {string} details') do |summary_text|
+  page.find('details > summary', text: summary_text).click
+end
+
+Then('I enter the following details into the form:') do |table|
+  table.raw.to_h.each do |field, value|
+    fill_in field, with: value
+  end
+end

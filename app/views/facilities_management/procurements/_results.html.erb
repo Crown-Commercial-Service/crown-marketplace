@@ -5,7 +5,8 @@
   <%= form_for @procurement, url: facilities_management_procurement_path(@procurement.id), method: :patch, html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
     <div class="govuk-!-margin-top-5">
       <%= f.submit @page_description.navigation_details.secondary_text, class: 'govuk-button govuk-button--secondary', name: @page_description.navigation_details.secondary_name, aria: { label: @page_description.navigation_details.secondary_text }, disabled: false %>
-      <%= link_to(@page_description.navigation_details.return_text, facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19 break-before', role: 'button', aria_label: 'Return to procurement dashboard') %>
+      <br/>
+      <%= link_to(@page_description.navigation_details.return_text, facilities_management_procurements_path, class: 'govuk-link govuk-!-font-size-19', role: 'button', aria_label: 'Return to procurement dashboard') %>
     </div>
   <% end %>
 <% else %>
