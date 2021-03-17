@@ -116,37 +116,8 @@ Then('I select {string} for optional extension required') do |option|
   end
 end
 
-Then('I open all sections for the services') do
-  step('I click on "Open all"') if @javascript
-end
-
-Then('I select the service {string}') do |service|
-  page.check(service)
-end
-
-Then('I select the service code {string}') do |service|
-  page.check("#facilities_management_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
-end
-
-Then('I select the following services:') do |services|
-  services.transpose.raw.flatten.each do |service|
-    page.check(service)
-  end
-end
-
-Then('I select the following service codes:') do |services|
-  services.transpose.raw.flatten.each do |service|
-    page.check("facilities_management_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
-  end
-end
-
-Then('I select all services for {string}') do |service_group|
-  service_code = page.find("[data-sectionname='#{service_group}']")['data-section']
-  page.check("#{service_code}_all")
-end
-
 Then('I should see the following seleceted services in the summary:') do |services_summary|
-  expect(page.all('table > tbody > tr > td').map(&:text)).to match_array services_summary.transpose.raw.flatten
+  expect(page.all('table > tbody > tr > td').map(&:text)).to match_array services_summary.raw.flatten
 end
 
 And('I find and select the building with the name {string}') do |building_name|
@@ -165,13 +136,13 @@ And('I find and select the building with the name {string}') do |building_name|
 end
 
 Then('I find and select the following buildings:') do |building_names|
-  building_names.transpose.raw.flatten.each do |building_name|
+  building_names.raw.flatten.each do |building_name|
     step "I find and select the building with the name '#{building_name}'"
   end
 end
 
 Then('I should see the following seleceted buildings in the summary:') do |buildings_summary|
-  expect(page.all('table > tbody > tr > th').map(&:text)).to match_array buildings_summary.transpose.raw.flatten
+  expect(page.all('table > tbody > tr > th').map(&:text)).to match_array buildings_summary.raw.flatten
 end
 
 Then('I select all services for the building') do
@@ -191,13 +162,13 @@ Then('I select the service code {string} for the building') do |service|
 end
 
 Then('I select the following services for the building:') do |services|
-  services.transpose.raw.flatten.each do |service|
+  services.raw.flatten.each do |service|
     page.check(service)
   end
 end
 
 Then('I select the following service codes for the building:') do |services|
-  services.transpose.raw.flatten.each do |service|
+  services.raw.flatten.each do |service|
     page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '')}")
   end
 end
@@ -221,4 +192,16 @@ Then('I select {string} on results') do |option|
   when 'further competition'
     procurement_page.further_competition_route_to_market.choose
   end
+end
+
+Then('the procurement {string} is on the dashboard') do |contract_name|
+  expect(procurement_page).to have_link(contract_name)
+end
+
+Then('the procurement {string} should have the state {string}') do |contract_name, status|
+  expect(procurement_page.find('th', text: contract_name).find(:xpath, '../td[3]')).to have_content(status)
+end
+
+Then('the contract name is shown to be {string}') do |contract_name|
+  expect(procurement_page.contract_name.text).to eq contract_name
 end
