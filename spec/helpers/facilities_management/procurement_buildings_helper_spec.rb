@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
 
     context 'when question is no_of_building_occupants' do
       it 'will return volumes' do
-        result = helper.get_service_question(:no_of_appliances_for_testing)
+        result = helper.get_service_question(:no_of_building_occupants)
         expect(result).to eq 'volumes'
       end
     end

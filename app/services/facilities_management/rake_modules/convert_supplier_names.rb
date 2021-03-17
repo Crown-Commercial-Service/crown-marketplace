@@ -18,7 +18,7 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   end
 
   def map_supplier_keys(data)
-    data.keys.each do |key|
+    data.each_key do |key|
       data[key] = data[key].transform_keys { |old_key| @mapping_list[old_key] || old_key }
     end
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ServiceQuestionsConcern, type: :model do
-  include ServiceQuestionsConcern
+  include described_class
 
   describe '#service_quesions' do
     context 'when service_questions is called' do

@@ -149,8 +149,8 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def add_shortlist_cost_sublot_recommendation(sheet, standard_style, bold_style, hint_style)
     sheet.add_row ['Cost and sub-lot recommendation'], style: bold_style, height: standard_row_height
-    sheet.add_row ['Estimated cost', ActionController::Base.helpers.number_to_currency(@procurement.assessed_value, unit: '£', precision: 2) + ' ', partial_estimated_text], style: hint_style, height: standard_row_height
-    sheet.add_row ['Sub-lot recommendation', 'Sub-lot ' + @procurement.lot_number, sublot_customer_selected_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Estimated cost', "#{ActionController::Base.helpers.number_to_currency(@procurement.assessed_value, unit: '£', precision: 2)} ", partial_estimated_text], style: hint_style, height: standard_row_height
+    sheet.add_row ['Sub-lot recommendation', "Sub-lot #{@procurement.lot_number}", sublot_customer_selected_text], style: hint_style, height: standard_row_height
     sheet.add_row ['Sub-lot value range', determine_lot_range], style: hint_style, height: standard_row_height
     update_cell_styles(sheet, 'A5:A7', standard_style)
   end
@@ -254,7 +254,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
                  sanitize_string_for_excel(buyer_detail.organisation_address_line_2),
                  sanitize_string_for_excel(buyer_detail.organisation_address_town),
                  sanitize_string_for_excel(buyer_detail.organisation_address_county)]
-    str_array.reject(&:blank?).join(', ') + '. ' + sanitize_string_for_excel(buyer_detail.organisation_address_postcode)
+    "#{str_array.reject(&:blank?).join(', ')}. #{sanitize_string_for_excel(buyer_detail.organisation_address_postcode)}"
   end
 
   ##### Methods regarding the styling of the worksheets #####
@@ -269,7 +269,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
   end
 
   def determine_service_name(name, standard_name)
-    return name + ' - Standard ' + standard_name if standard_name
+    return "#{name} - Standard #{standard_name}" if standard_name
 
     name
   end

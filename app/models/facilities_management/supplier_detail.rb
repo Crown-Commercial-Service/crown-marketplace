@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class SupplierDetail < ApplicationRecord
-    belongs_to :user, foreign_key: :user_id, inverse_of: :supplier_detail, optional: true
+    belongs_to :user, inverse_of: :supplier_detail, optional: true
     # rubocop:disable Rails/HasManyOrHasOneDependent
     has_many :contracts, foreign_key: :supplier_id, inverse_of: :supplier, class_name: 'FacilitiesManagement::ProcurementSupplier'
     # rubocop:enable Rails/HasManyOrHasOneDependent
@@ -14,13 +14,11 @@ module FacilitiesManagement
     def self.long_list_suppliers_lot(locations, services, for_lot)
       vals = selected_suppliers(for_lot, locations, services)
 
-      result =
-        vals.map do |s|
-          { 'name' => s.supplier_name,
-            'service_code': s.lot_data[for_lot]['services'],
-            'region_code': s.lot_data[for_lot]['regions'] }
-        end
-      result
+      vals.map do |s|
+        { 'name' => s.supplier_name,
+          'service_code': s.lot_data[for_lot]['services'],
+          'region_code': s.lot_data[for_lot]['regions'] }
+      end
     end
 
     def self.supplier_count(locations, services)

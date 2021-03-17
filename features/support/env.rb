@@ -17,7 +17,7 @@ require 'axe-capybara'
 require 'axe-cucumber-steps'
 
 # Require files we've created to help with the setup
-require_relative '../support/pages.rb'
+require_relative '../support/pages'
 
 # frozen_string_literal: true
 

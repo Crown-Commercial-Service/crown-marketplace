@@ -419,7 +419,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     context 'when TUPE is not requred' do
       let(:mobilisation_period) { 3 }
 
-      context 'and mobilisation period is nil' do
+      context 'and mobilisation period required is nil' do
         let(:mobilisation_period_required) { nil }
 
         it 'is not valid' do

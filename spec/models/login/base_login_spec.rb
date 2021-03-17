@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Login::BaseLogin, type: :model do
   subject(:login) do
-    Login::BaseLogin.new(email: 'user@example.com', extra: {})
+    described_class.new(email: 'user@example.com', extra: {})
   end
 
   describe '#auth_provider' do

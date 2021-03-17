@@ -32,9 +32,9 @@ class StaticDataLoader
         # reload the data a second time
         static_data_class.load_db(query)
       rescue StandardError => e
-        message = class_name + " data is missing! Please run 'rake db:static' to load static data."
-        Rails.logger.info("\e[5;37;41m\n" + message + "\033[0m\n")
-        Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+        message = "#{class_name} data is missing! Please run 'rake db:static' to load static data."
+        Rails.logger.info("\e[5;37;41m\n#{message}\e[0m\n")
+        Rails.logger.info("\e[5;37;41m\n#{e}\e[0m\n")
         raise e
       end
     end

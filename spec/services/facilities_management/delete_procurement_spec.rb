@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
       end
 
-      context 'when the procurement has not been deleted' do
+      context 'when the procurement has been deleted' do
         before do
           described_class.delete_procurement(procurement)
         end

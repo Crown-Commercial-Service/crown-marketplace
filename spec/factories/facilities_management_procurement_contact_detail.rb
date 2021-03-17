@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_procurement_contact_detail, class: FacilitiesManagement::ProcurementContactDetail do
+  factory :facilities_management_procurement_contact_detail, class: 'FacilitiesManagement::ProcurementContactDetail' do
     name { Faker::Name.name[1..50] }
     job_title { Faker::Job.title }
     email { Faker::Internet.email }
@@ -8,6 +8,6 @@ FactoryBot.define do
     organisation_address_postcode { 'SW1A 1AA' }
   end
 
-  factory :facilities_management_procurement_contact_detail_empty, class: FacilitiesManagement::ProcurementContactDetail do
+  factory :facilities_management_procurement_contact_detail_empty, class: 'FacilitiesManagement::ProcurementContactDetail' do
   end
 end

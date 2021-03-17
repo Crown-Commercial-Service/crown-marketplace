@@ -163,12 +163,12 @@ module ProcurementValidator
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
-    SERVICE_SELECTION_INVALID_TYPE = %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable].freeze
+    const_set(:SERVICE_SELECTION_INVALID_TYPE, %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable])
 
     def add_selection_error(index)
       return unless index
 
-      errors.add(:service_codes, SERVICE_SELECTION_INVALID_TYPE[index])
+      errors.add(:service_codes, self.class::SERVICE_SELECTION_INVALID_TYPE[index])
     end
 
     def security_policy_document_date_valid?
@@ -272,7 +272,7 @@ module ProcurementValidator
       errors.add(:lot_number, :blank) unless lot_number_in_correct_range
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize
     def validate_contract_details
       errors.add(:payment_method, :not_present_contract_details) if payment_method.nil?
       errors.add(:using_buyer_detail_for_invoice_details, :not_present_contract_details) if using_buyer_detail_for_invoice_details.nil?
@@ -284,7 +284,7 @@ module ProcurementValidator
       errors.any?
     end
   end
-  # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   def mobilisation_start_date_validation
     return unless mobilisation_period_in_past?

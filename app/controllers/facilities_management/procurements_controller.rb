@@ -375,7 +375,7 @@ module FacilitiesManagement
               procurement_buildings_attributes: [:id,
                                                  :building_id,
                                                  :active,
-                                                 service_codes: []],
+                                                 { service_codes: [] }],
               optional_call_off_extensions_attributes: %i[id extension years months extension_required]
             )
     end

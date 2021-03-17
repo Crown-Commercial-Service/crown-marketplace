@@ -35,7 +35,7 @@ RSpec.describe FacilitiesManagement::ProcurementPensionFund, type: :model do
         let(:pension_fund_2) { create(:facilities_management_procurement_pension_fund, procurement: pension_fund_1.procurement) }
 
         it 'expected to be valid' do
-          pension_fund_2.name = pension_fund_1.name + 'ABC'
+          pension_fund_2.name = "#{pension_fund_1.name}ABC"
           expect(pension_fund_1.valid?(:name)).to eq true
         end
 

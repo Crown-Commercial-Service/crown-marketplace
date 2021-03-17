@@ -15,6 +15,7 @@ module SpreadsheetImportHelper
       File.write(OUTPUT_PATH, @package.to_stream.read)
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def add_building_sheet(buildings_details)
       name = 'Building Information'
       @sheets_added << name
@@ -36,6 +37,7 @@ module SpreadsheetImportHelper
         sheet.add_row(['Status indicator:'] + buildings_details.map(&:last))
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def add_service_matrix_sheet(data)
       name = 'Service Matrix'
@@ -86,6 +88,7 @@ module SpreadsheetImportHelper
       [service_code, detail, (current_service.all?(&:nil?) ? 'No' : 'Yes'), unit] + current_service
     end
 
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def add_service_volumes_2(service_details)
       name = 'Service Volumes 2'
       @sheets_added << name
@@ -105,6 +108,7 @@ module SpreadsheetImportHelper
         sheet.add_row(['', '', '', '', 'Total number of lift entrances'] + service_details.map { |pb| pb[1].sum })
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     SERVICE_HOURS = { 'H.4': 'Handyman Services', 'H.5': 'Move and Space Management - Internal Moves', 'I.1': 'Reception Service', 'I.2': 'Taxi Booking Service', 'I.3': 'Car Park Management and Booking', 'I.4': 'Voice Announcement System Operation', 'J.1': 'Manned Guarding Service', 'J.2': 'CCTV / Alarm Monitoring', 'J.3': 'Control of Access and Security Passes', 'J.4': 'Emergency Response', 'J.5': 'Patrols (Fixed or Static Guarding)', 'J.6': 'Management of Visitors and Passes' }.freeze
 

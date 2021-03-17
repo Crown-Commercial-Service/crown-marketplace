@@ -6,7 +6,7 @@ module FacilitiesManagement::RakeModules::SupplierData
       JSON fm_aws
     else
       puts 'dummy supplier data'
-      JSON File.read('data/' + 'facilities_management/dummy_supplier_data.json')
+      JSON File.read('data/facilities_management/dummy_supplier_data.json')
     end
   end
 
@@ -33,7 +33,7 @@ module FacilitiesManagement::RakeModules::SupplierData
     puts e.message
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.fm_supplier_contact_details
     supplier_contact_details = Roo::Spreadsheet.open(supplier_details_path, extension: :xlsx)
     supplier_contact_details.sheet(0).drop(1).each do |row|
@@ -56,7 +56,7 @@ module FacilitiesManagement::RakeModules::SupplierData
   rescue PG::Error => e
     puts e.message
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def self.supplier_details_path
     if Rails.env.production?
