@@ -425,7 +425,7 @@ RSpec.describe FacilitiesManagement::ProcurementSupplier, type: :model do
             end
           end
 
-          context 'when the values entered are not real dates' do
+          context 'when the leap day is entered without a leap year' do
             let(:contract_start_date_dd) { '29' }
             let(:contract_start_date_mm) { '2' }
             let(:contract_start_date_yyyy) { '2019' }

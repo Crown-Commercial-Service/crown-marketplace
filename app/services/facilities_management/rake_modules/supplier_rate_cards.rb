@@ -49,11 +49,12 @@ module FacilitiesManagement::RakeModules::SupplierRateCards
         # p rate_card
         data[sheet_name][rate_card['Supplier']] = {} unless data[sheet_name][rate_card['Supplier']]
 
-        if sheet_name == 'Prices'
+        case sheet_name
+        when 'Prices'
           data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        elsif sheet_name == 'Discounts'
+        when 'Discounts'
           data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        elsif sheet_name == 'Variances'
+        when 'Variances'
           data[sheet_name][rate_card['Supplier']] = rate_card
         end
       end

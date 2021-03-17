@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/ModuleLength, Rails/Output, Style/AndOr
+# rubocop:disable Metrics/ModuleLength, Rails/Output
 module OrdnanceSurvey
   def self.upsert_csv_data(csv_stream)
     fully_processed = true
@@ -27,7 +27,6 @@ module OrdnanceSurvey
                        thoroughfare dependent_locality locality town_name administrative_area post_town postcode postcode_locator po_box_number ward_code].freeze
   INTEGER_COLUMNS = %i[uprn udprn parent_uprn sao_start_number sao_end_number pao_start_number pao_end_number].freeze
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def self.upsert_row(db, row)
     new_date = DateTime.parse(row[:last_update_date]).utc
     result   = db.exec_query(os_address_select(row))
@@ -35,7 +34,6 @@ module OrdnanceSurvey
     db.execute(os_address_delete(row)) if db_date < new_date || result.length > 1
     db.execute(os_address_insert(row)) if result.empty? || new_date > db_date || result.length > 1
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def self.os_address_select(row)
     "select last_update_date from os_address where postcode_locator = '#{row[:postcode_locator]}' and uprn = #{row[:uprn]} order by last_update_date desc"
@@ -172,8 +170,10 @@ module OrdnanceSurvey
     end
   end
 
-  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>[\w]{1,2}))/.freeze
+  # rubocop:disable Lint/MixedRegexpCaptureTypes
+  MATCH_1 = /dataPostcode_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)_(?<outcode>\w{1,2}))/.freeze
   MATCH_2 = /AddressBasePlus_.*?_(?<meta>(?<date>\d*-\d*-\d*)_(?<seq>\d*)((?>.csv-)(?<outcode>\w{1,2}))?)/.freeze
+  # rubocop:enable Lint/MixedRegexpCaptureTypes
 
   def self.extract_metadata(filename, outcode = nil)
     [MATCH_1, MATCH_2].each do |m|
@@ -240,4 +240,4 @@ module OrdnanceSurvey
     false
   end
 end
-# rubocop:enable Metrics/ModuleLength, Rails/Output, Style/AndOr
+# rubocop:enable Metrics/ModuleLength, Rails/Output

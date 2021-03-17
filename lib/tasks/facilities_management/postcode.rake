@@ -25,8 +25,8 @@ namespace :db do
     o.parse!(nargs)
     options[:folder] = args[:folder] if options.empty? # support debugging
 
-    p "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
-    Rails.logger.info "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
+    p "Creating postcode database and local import from #{options[:folder] || Rails.root.join('data', 'local_postcodes')}"
+    Rails.logger.info "Creating postcode database and local import from #{options[:folder] || Rails.root.join('data', 'local_postcodes')}"
 
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Login, type: :model do
   subject(:login) do
-    Login.from_omniauth(omniauth_hash)
+    described_class.from_omniauth(omniauth_hash)
   end
 
   let(:email) { 'user@example.com' }

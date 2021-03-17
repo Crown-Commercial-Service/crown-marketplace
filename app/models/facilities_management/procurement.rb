@@ -1,5 +1,3 @@
-require 'fm_calculator/fm_direct_award_calculator.rb'
-
 module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
@@ -8,7 +6,6 @@ module FacilitiesManagement
 
     # buyer
     belongs_to :user,
-               foreign_key: :user_id,
                inverse_of: :procurements
 
     before_save :update_procurement_building_services, if: :service_codes_changed?
@@ -275,7 +272,7 @@ module FacilitiesManagement
     SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
-    DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
+    DIRECT_AWARD_VALUE_RANGE = (0..1.49999999e6).freeze
 
     MAX_NUMBER_OF_PENSIONS = 99
 
@@ -352,7 +349,7 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.map { |s| [s.code, s.service_standard] }.uniq
     end
 
     def active_procurement_buildings_with_attribute_distinct(attribute)
@@ -480,8 +477,7 @@ module FacilitiesManagement
     end
 
     def remove_existing_spreadsheet_import
-      spreadsheet_import.remove_spreadsheet_file
-      spreadsheet_import.delete
+      spreadsheet_import.destroy
     end
 
     def sorted_active_procurement_buildings
@@ -530,7 +526,7 @@ module FacilitiesManagement
     def save_data_for_procurement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
-      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
+      self.eligible_for_da = FMCalculator::DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
       set_suppliers_for_procurement
     end
 

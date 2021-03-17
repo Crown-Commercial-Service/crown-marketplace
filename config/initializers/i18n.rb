@@ -24,7 +24,7 @@ if ['1.7.0'].include?(I18n::VERSION)
             result = result[inner_key]
             result = resolve(locale, inner_key, result, options.merge(scope: nil)) if result.is_a?(Symbol)
 
-            Rails.logger.debug "\t\t => " + result.to_s + "\n" if ENV['I18N_DEBUG'] == '1' && (result.class == String)
+            Rails.logger.debug "\t\t => #{result}\n" if ENV['I18N_DEBUG'] == '1' && result.instance_of?(String)
 
             result
           end

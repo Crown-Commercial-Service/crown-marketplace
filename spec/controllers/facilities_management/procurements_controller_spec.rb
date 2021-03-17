@@ -842,10 +842,10 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       end
 
       describe '#pagination' do
-        let(:building1) { create(:facilities_management_building, user: procurement.user) }
-        let(:building2) { create(:facilities_management_building, user: procurement.user) }
-        let(:building3) { create(:facilities_management_building, user: procurement.user) }
-        let(:building4) { create(:facilities_management_building, user: procurement.user) }
+        let(:building1) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 1') }
+        let(:building2) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 2') }
+        let(:building3) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 3') }
+        let(:building4) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 4') }
 
         let(:building1_active) { '1' }
         let(:building2_active) { '0' }
@@ -1030,7 +1030,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         let(:spreadsheet_action) { :deliverables_matrix }
 
         it 'downloads the document with the right filename' do
-          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx"'
+          expect(response.headers['Content-Disposition']).to include 'filename="Attachment 2 - Statement of Requirements - Deliverables Matrix %28DA%29.xlsx"'
         end
       end
 
@@ -1039,7 +1039,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         let(:spreadsheet_action) { :price_matrix }
 
         it 'downloads the document with the right filename' do
-          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 3 - Price Matrix (DA).xlsx"'
+          expect(response.headers['Content-Disposition']).to include 'filename="Attachment 3 - Price Matrix %28DA%29.xlsx"'
         end
       end
     end

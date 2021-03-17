@@ -230,12 +230,10 @@ RSpec.describe ProcurementCsvExport do
     end
   end
 
-  # rubocop:disable Rails/TimeZone
   describe '.localised_datetime' do
     it 'applies DST correctly' do
       expect(described_class.localised_datetime(DateTime.parse('7 Jan 2005 08:09:00+00:00'))).to eq ' 7 January 2005,  8:09am'
       expect(described_class.localised_datetime(DateTime.parse('7 Jun 2005 08:09:00+00:00'))).to eq ' 7 June 2005,  9:09am'
     end
   end
-  # rubocop:enable Rails/TimeZone
 end

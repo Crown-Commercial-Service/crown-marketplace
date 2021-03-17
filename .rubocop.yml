@@ -1,9 +1,11 @@
 ---
 require:
   - rubocop-rspec
+  - rubocop-rails
   - './lib/cop/all'
 
 AllCops:
+    NewCops: disable
     TargetRubyVersion: 2.5
     Exclude:
         - 'db/schema.rb'
@@ -23,6 +25,9 @@ Rails:
 
 Rails/Presence:
     Enabled: false
+
+Rails/FilePath:
+    EnforcedStyle: arguments
 
 Bundler/OrderedGems:
     Enabled: false
@@ -60,8 +65,16 @@ Style/ClassAndModuleChildren:
 Layout/EndOfLine:
    EnforcedStyle: lf
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
     Enabled: true
+
+Layout/LineLength:
+    Max: 120
+    Enabled: false
+    IgnoredPatterns:
+        - 'it .* do$'
+        - 'context .* do$'
+        - 'scenario .* do$'
 
 Metrics/ClassLength:
     Enabled: false
@@ -75,14 +88,6 @@ Metrics/AbcSize:
     Exclude:
         - 'spec/**/*'
         - 'app/controllers/supply_teachers/branches_controller.rb'
-
-Metrics/LineLength:
-    Max: 120
-    Enabled: false
-    IgnoredPatterns:
-        - 'it .* do$'
-        - 'context .* do$'
-        - 'scenario .* do$'
 
 Metrics/BlockLength:
     Max: 40
@@ -109,7 +114,7 @@ RSpec/DescribeClass:
         - 'spec/views/**/*'
         - 'spec/i18n_spec.rb'
 
-Capybara/FeatureMethods:
+RSpec/Capybara:
     Exclude:
         - 'spec/features/**/*'
 
@@ -140,3 +145,21 @@ Metrics/ModuleLength:
     Exclude:
         - 'spec/models/**/*'
         - 'spec/controllers/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+    Enabled: false
+
+RSpec/VariableName:
+    Enabled: false
+
+Naming/VariableNumber:
+    Enabled: false
+
+Lint/MissingSuper:
+    Enabled: false
+
+Rails/HelperInstanceVariable:
+    Enabled: false
+
+Style/OptionalBooleanParameter:
+    Enabled: false

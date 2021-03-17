@@ -14,7 +14,7 @@ module FacilitiesManagement::BuildingsHelper
     when :address
       address_in_a_line(building)
     when :gia, :external_area
-      number_with_delimiter(text.to_i, delimiter: ',') + ' sqm'
+      "#{number_with_delimiter(text.to_i, delimiter: ',')} sqm"
     when :building_type
       type_description(building_type_description(text), building, :other_building_type)
     when :security_type
@@ -76,7 +76,7 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def building_type_caption(building_type)
-    content_tag(:span, class: 'govuk-caption-m govuk-!-margin-top-1') do
+    tag.span(class: 'govuk-caption-m govuk-!-margin-top-1') do
       concat(building_type[:caption])
       if FacilitiesManagement::Building.da_building_type? building_type[:id]
         concat(tag(:hr, class: 'govuk-section-break govuk-!-margin-top-1'))

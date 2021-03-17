@@ -41,7 +41,7 @@ module HeaderNavigationLinksHelper
     navigation_links = []
 
     unless page_does_not_require_back_to_start?
-      link_text = controller.controller_name == 'buildings' || controller.class.parent == FacilitiesManagement::Procurements ? t('header_navigation_links_helper.my_account') : t('header_navigation_links_helper.back_to_start')
+      link_text = controller.controller_name == 'buildings' || controller.class.module_parent == FacilitiesManagement::Procurements ? t('header_navigation_links_helper.my_account') : t('header_navigation_links_helper.back_to_start')
 
       navigation_links << { link_text: link_text, link_url: facilities_management_path }
     end

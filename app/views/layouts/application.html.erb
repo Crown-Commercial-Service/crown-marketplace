@@ -34,15 +34,16 @@
       <%= render partial: '/layouts/cookie-banner' %>
       <%= service_header_banner %>
 
-      <main id="main-content" class="govuk-width-container govuk-!-margin-bottom-6" role="main" style="visibility:<%= 'visible' if request.fullpath.include?('facilities-management') && !(['gateway', 'start', 'sign-in'].any? { |word| request.fullpath.include?(word) })%>">
+      <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">
         <%= render partial: '/layouts/phase-banner' %>
-        <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
-          <% if @back_path.present? %>
-            <%= render partial: '/layouts/back-link' %>
-          <% end %>
-        </div>
 
-        <%= yield %>
+        <div id="main-content" >
+          <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
+            <%= render(partial: '/layouts/back-link') if @back_path.present? %>
+          </div>
+
+          <%= yield %>
+        </div>
       </main>
 
       <%= render partial: '/layouts/footer' %>

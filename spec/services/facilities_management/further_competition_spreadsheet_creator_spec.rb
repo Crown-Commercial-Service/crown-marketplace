@@ -26,11 +26,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
     it 'verify address formatting' do
       user = procurement_with_buildings.user
-      expect(spreadsheet_builder.send(:get_address, procurement_with_buildings.user.buyer_detail)).to eq(user.buyer_detail.organisation_address_line_1 + ', ' +
-                                                                      user.buyer_detail.organisation_address_line_2 + ', ' +
-                                                                      user.buyer_detail.organisation_address_town + ', ' +
-                                                                      user.buyer_detail.organisation_address_county + '. ' +
-                                                                      user.buyer_detail.organisation_address_postcode)
+      expect(spreadsheet_builder.send(:get_address, procurement_with_buildings.user.buyer_detail)).to eq("#{user.buyer_detail.organisation_address_line_1}, #{user.buyer_detail.organisation_address_line_2}, #{user.buyer_detail.organisation_address_town}, #{user.buyer_detail.organisation_address_county}. #{user.buyer_detail.organisation_address_postcode}")
     end
 
     # rubocop:disable RSpec/MultipleExpectations

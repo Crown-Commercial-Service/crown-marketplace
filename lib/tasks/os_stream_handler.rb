@@ -1,5 +1,5 @@
 module OrdnanceSurvey
-  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable  Metrics/AbcSize
   def self.read_file_from_s3(object_summary, fn_process, &block)
     data_summary                = {}
     data_summary[:length]       = object_summary.size
@@ -30,6 +30,7 @@ module OrdnanceSurvey
     end
     block.call(data_summary)
   end
+  # rubocop:enable  Metrics/AbcSize
 
   def self.stream_url(obj, data_summary, &_block)
     meta_type   = :dat
@@ -52,21 +53,20 @@ module OrdnanceSurvey
   end
 
   def self.untar_stream(url, summary, &block)
-    Gem::Package::TarReader.new(Zlib::GzipReader.new(URI.open(url))) do |tar|
+    Gem::Package::TarReader.new(Zlib::GzipReader.new(URI.parse(url).open)) do |tar|
       handle_tar_contents(tar, summary, &block)
     end
   end
 
   def self.gunzip_url(url, summary, &block)
-    Zlib::GzipReader.open(URI.open(url)) do |gz|
+    Zlib::GzipReader.open(URI.parse(url).open) do |gz|
       handle_gzip_contents(gz, summary, &block)
     end
   end
 
   def self.unzip_url(url, summary, &block)
-    Zip::InputStream.open(IO.new(URI.open(url))) do |io|
+    Zip::InputStream.open(IO.new(URI.parse(url).open)) do |io|
       handle_zip_contents(io, summary, &block)
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 end

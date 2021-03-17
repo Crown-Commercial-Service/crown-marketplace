@@ -26,7 +26,7 @@ class HomeController < ApplicationController
   CROWN_MARKETPLACE_SERVICES = %w[auth facilities_management legal_services management_consultancy supply_teachers].freeze
 
   def service_name_param
-    @service_name_param ||= params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
+    @service_name_param ||= params[:service].nil? ? request&.controller_class&.module_parent_name&.underscore : params[:service]
   end
 
   def service_name
