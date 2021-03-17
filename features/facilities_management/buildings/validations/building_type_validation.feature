@@ -28,7 +28,7 @@ Feature: Building type - validations
       | Save and return to building details summary   |
 
   Scenario:
-    And I click on 'View more building types' details
+    And I open the 'View more building types' details
     And I select 'Other' for the building type
     And I click on 'Save and continue'
     Then I should see the following error messages:

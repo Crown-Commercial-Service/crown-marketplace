@@ -168,7 +168,7 @@ Feature: Buildings
     And my building's status is 'INCOMPLETE'
     And I change the 'Building type'
     Then I am on the 'Building type' page
-    And I click on 'View more building types' details
+    And I open the 'View more building types' details
     And I select 'Primary school' for the building type
     Then I click on 'Save and return to building details summary'
     Then I am on the buildings summary page for 'Test building'

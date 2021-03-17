@@ -2,7 +2,7 @@ Feature: Service hours validations
 
   Background: Navigate to Service hour page
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service hours procurement' with the following services:
+    And I have a procurement in detailed search named 'Service hours procurement' with the following services:
       | I.4 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Voice announcement system operation'

@@ -57,10 +57,10 @@ $offset                        : 4;
     box-shadow       : 0 2px 0 #0b0c0c
     }
 
-    @media (min-width: 280px) and (max-width: 640px) {
-      max-width: 90%;
-    }
+  @media (min-width: 280px) and (max-width: 640px) {
+    max-width: 90%;
   }
+}
 
 
 .govuk-button--disabled,

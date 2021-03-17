@@ -13,11 +13,11 @@ Given('I have buildings') do
 end
 
 Then 'I am on the {string} page' do |title|
-  expect(page.find('h1')).to have_content(title)
+  expect(page.find('h1')).to have_content(title.to_s)
 end
 
 Then 'I am on the page with secondary heading {string}' do |title|
-  expect(page.find('h2')).to have_content(title)
+  expect(page.find('h2')).to have_content(title.to_s)
 end
 
 Then('I should see the following secondary headings:') do |table|
@@ -41,7 +41,7 @@ Then('I should see the following error messages:') do |table|
   expect(page.find('.govuk-error-summary__list').find_all('a').map(&:text)).to eq table.raw.flatten
 end
 
-Then('I click on {string} details') do |summary_text|
+Then('I open the {string} details') do |summary_text|
   page.find('details > summary', text: summary_text).click
 end
 
@@ -63,4 +63,17 @@ end
 
 Given('I click on the {string} back link') do |link_text|
   page.find('.govuk-back-link', text: link_text).click
+end
+
+When('I navigate to the procurement {string}') do |contract_name|
+  step 'I click on "Continue a procurement"'
+  step "I click on '#{contract_name}'"
+end
+
+And('I click on the button with text {string}') do |button_text|
+  page.find("input[value='#{button_text}']").send_keys(:return)
+end
+
+And('I click on the link with text {string}') do |button_text|
+  page.find('a', text: button_text).send_keys(:return)
 end

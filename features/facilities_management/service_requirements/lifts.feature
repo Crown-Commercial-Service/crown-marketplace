@@ -2,7 +2,7 @@ Feature: Lifts
 
   Background: I navigate to the lifts page
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Lifts procurement' with the following services:
+    And I have a procurement in detailed search named 'Lifts procurement' with the following services:
       | C.5 |
     And I navigate to the service requirements page
     And I choose to answer the service volume question for 'Lifts, hoists & conveyance systems maintenance'

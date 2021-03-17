@@ -2,7 +2,7 @@ Feature: Service standards
 
   Background: Navigate to the Service requirements page
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service standard procurement' with the following services:
+    And I have a procurement in detailed search named 'Service standard procurement' with the following services:
       | C.5 |
       | G.5 |
       | C.7 |

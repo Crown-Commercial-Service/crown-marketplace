@@ -2,7 +2,7 @@ Feature: Service standard validations
 
   Scenario: Blank service standard
     Given I sign in and navigate to my account
-    And I have a procurement in direct award named 'Service standard procurement' with the following services:
+    And I have a procurement in detailed search named 'Service standard procurement' with the following services:
       | C.1 |
     And I navigate to the service requirements page
     And I choose to answer the service standard question for 'Mechanical and electrical engineering maintenance'

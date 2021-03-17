@@ -7,7 +7,6 @@
       <%= render partial: params[:step], locals: { f: f } %>
     </div>
     <%= govuk_continuation_buttons(*continuation_params(pd, f, params[:step])) %>
-    <%#= link_to(pd.navigation_details.return_text, pd.navigation_details.return_url) %>
     <span class="govuk-caption-m govuk-!-margin-top-3"><%= step_footer(params[:step].to_sym) %></span>
   <% end %>
 <% end %>
