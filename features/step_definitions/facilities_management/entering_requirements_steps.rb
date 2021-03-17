@@ -7,9 +7,10 @@ And('everything is completed') do
 end
 
 And('I select {string} for estimated annual cost known') do |option|
-  if option == 'Yes'
+  case option
+  when 'Yes'
     entering_requirements_page.estimated_cost_known_yes.choose
-  elsif option == 'No'
+  when 'No'
     entering_requirements_page.estimated_cost_known_no.choose
   end
 end
@@ -19,9 +20,10 @@ And('I enter {string} for estimated annual cost') do |estimated_annual_cost|
 end
 
 Then('I select {string} for TUPE required') do |option|
-  if option == 'Yes'
+  case option
+  when 'Yes'
     entering_requirements_page.tupe_yes.choose
-  elsif option == 'No'
+  when 'No'
     entering_requirements_page.tupe_no.choose
   end
 end
@@ -76,9 +78,10 @@ def add_initial_call_off_period_dates(day, month, year)
 end
 
 Then('I select {string} for mobilisation period required') do |option|
-  if option == 'Yes'
+  case option
+  when 'Yes'
     entering_requirements_page.mobilisation_period_yes.choose
-  elsif option == 'No'
+  when 'No'
     entering_requirements_page.mobilisation_period_no.choose
   end
 end
@@ -90,9 +93,10 @@ Then('I enter {string} weeks for the mobilisation period') do |mobilisation_peri
 end
 
 Then('I select {string} for optional extension required') do |option|
-  if option == 'Yes'
+  case option
+  when 'Yes'
     entering_requirements_page.extension_required_yes.choose
-  elsif option == 'No'
+  when 'No'
     entering_requirements_page.extension_required_no.choose
   end
 end
@@ -306,7 +310,7 @@ Then('I deselect the service {string} for the building') do |service|
 end
 
 Then('I select the service code {string} for the building') do |service|
-  entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '')}")
+  entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
 end
 
 Then('I select the following services for the building:') do |services|
@@ -317,7 +321,7 @@ end
 
 Then('I select the following service codes for the building:') do |services|
   services.raw.flatten.each do |service|
-    entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '')}")
+    entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
   end
 end
 

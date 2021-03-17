@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_125429) do
+ActiveRecord::Schema.define(version: 2021_03_18_135321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_125429) do
     t.bigint "external_area"
     t.index "lower(building_name)", name: "index_fm_buildings_on_lower_building_name"
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
+    t.index ["user_id", "building_name"], name: "index_building_bulding_name_and_user_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
@@ -182,6 +183,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_125429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
+    t.index ["name", "facilities_management_procurement_id"], name: "index_pension_funds_name_and_procurement_id", unique: true
   end
 
   create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -251,6 +253,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_125429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
+    t.index ["lot_number", "region_code", "facilities_management_supplier_id"], name: "index_regional_availabilities_on_lot_number_and_region_code", unique: true
     t.index ["lot_number"], name: "index_fm_regional_availabilities_on_lot_number"
   end
 
@@ -261,6 +264,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_125429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
+    t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
   end
 
@@ -292,6 +296,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_125429) do
     t.string "address_county", limit: 255
     t.string "address_postcode", limit: 255
     t.index ["contact_email"], name: "index_facilities_management_supplier_details_on_contact_email"
+    t.index ["supplier_name"], name: "index_facilities_management_supplier_details_on_supplier_name", unique: true
     t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 

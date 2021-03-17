@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.4'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -33,9 +33,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'geocoder', '>= 1.6.1'
 gem 'activerecord-postgis-adapter', '>= 5.2.2'
 gem 'uk_postcode'
-gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx', '>= 3.0.2'
+gem 'caxlsx', '>= 3.1.0'
 gem 'caxlsx_rails', '>= 0.6.2'
 gem 'phonejack'
 gem 'holidays'
@@ -146,6 +145,7 @@ group :development, :test do
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rubocop-rails', require: false
   gem 'rubyXL', '>= 3.4.6'
   gem 'i18n-tasks', '>= 0.9.31'
   gem 'poltergeist', '>= 1.18.1'

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_procurement_no_procurement_buildings, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_no_procurement_buildings, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { 12345 }
     tupe { false }
@@ -89,7 +89,7 @@ FactoryBot.define do
     procurement_buildings { build_list :facilities_management_procurement_building_london, 2 }
   end
 
-  factory :facilities_management_procurement_for_further_competition, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_for_further_competition, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { false }
     tupe { false }
@@ -114,7 +114,7 @@ FactoryBot.define do
     procurement_buildings { build_list :facilities_management_procurement_building_with_lifts, 1 }
   end
 
-  factory :facilities_management_procurement_entering_requirements, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_entering_requirements, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
     aasm_state { 'detailed_search' }
     association :user

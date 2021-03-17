@@ -36,7 +36,7 @@ module CommonRate
       benchmark_rates = {}
       framework_rates = {}
       all.each do |row|
-        code_and_standard = "#{row['code'].remove('.')}#{'-' + row['standard'].to_s if row['standard']}"
+        code_and_standard = "#{row['code'].remove('.')}#{"-#{row['standard']}" if row['standard']}"
         benchmark_rates[code_and_standard] = row['benchmark'].to_f
         framework_rates[code_and_standard] = row['framework'].to_f
       end

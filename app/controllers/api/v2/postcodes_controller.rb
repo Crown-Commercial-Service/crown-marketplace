@@ -15,7 +15,7 @@ module Api
       #      http://localhost:3000/api/v2/postcodes/in_london?postcode=G69%206HB
       def show
         result = query(params[:id])
-        render json: { status: 200, result: result.to_hash }
+        render json: { status: 200, result: result.to_a }
       rescue StandardError => e
         render json: { status: 404, error: e.to_s }
       end

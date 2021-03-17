@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
-  subject(:suppliers_admin) { FacilitiesManagement::Admin::SuppliersAdmin.find(supplier_id) }
+  subject(:suppliers_admin) { described_class.find(supplier_id) }
 
   let(:supplier_id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
 

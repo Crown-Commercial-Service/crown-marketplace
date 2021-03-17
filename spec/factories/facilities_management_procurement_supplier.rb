@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_procurement_supplier, class: FacilitiesManagement::ProcurementSupplier do
+  factory :facilities_management_procurement_supplier, class: 'FacilitiesManagement::ProcurementSupplier' do
     direct_award_value { rand(50000..100000) }
     association :procurement, factory: :facilities_management_procurement
     association :supplier, factory: :facilities_management_supplier_detail

@@ -307,7 +307,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def extension_period(period)
     return nil if !@procurement.extensions_required || @procurement.optional_call_off_extension(period).nil?
 
-    @procurement.extension_period_start_date(period).strftime('%d/%m/%Y') + ' - ' + @procurement.extension_period_start_date(period).strftime('%d/%m/%Y')
+    "#{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')} - #{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')}"
   end
 
   def add_tupe(sheet)
@@ -531,7 +531,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def sanitize_string_for_excel(string)
     return unless string
-    return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
+    return "’#{string}" if string.match?(/\A(@|=|\+|-)/)
 
     string
   end

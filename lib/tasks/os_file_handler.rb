@@ -27,7 +27,6 @@ module OrdnanceSurvey
     block.call(data_summary)
   end
 
-  # rubocop:disable Style/AndOr
   def self.stream_file(filename, data_summary, &block)
     data_summary[:updated_time] = File.mtime(filename)
     data_summary[:length]       = File.size(filename)
@@ -46,7 +45,6 @@ module OrdnanceSurvey
   ensure
     file_io&.try(&:close)
   end
-  # rubocop:enable Style/AndOr
 
   def self.untar_file(filename, summary, &block)
     summary[:updated_time] = File.mtime(filename)

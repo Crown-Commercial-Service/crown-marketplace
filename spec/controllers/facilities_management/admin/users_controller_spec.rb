@@ -4,14 +4,6 @@ RSpec.describe FacilitiesManagement::Admin::UsersController do
   let(:user) { build(:user, email: 'test@test.com') }
 
   controller(described_class) do
-    def new_challenge_path
-      super
-    end
-
-    def after_sign_in_path_for(resource)
-      super resource
-    end
-
     def confirm_user_registration_path
       params[:email] = 'test@test.com'
       super
@@ -20,7 +12,7 @@ RSpec.describe FacilitiesManagement::Admin::UsersController do
 
   describe 'After sign-in' do
     it 'redirects to the /facilities-management/admin page' do
-      expect(controller.after_sign_in_path_for(user)).to eq facilities_management_admin_path
+      expect(controller.send(:after_sign_in_path_for, user)).to eq facilities_management_admin_path
     end
 
     context 'when confirm user' do

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_procurement_building_no_services, class: FacilitiesManagement::ProcurementBuilding do
+  factory :facilities_management_procurement_building_no_services, class: 'FacilitiesManagement::ProcurementBuilding' do
     active { true }
     building { create :facilities_management_building }
     gia { 1002 }

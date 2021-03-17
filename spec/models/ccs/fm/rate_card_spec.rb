@@ -4,18 +4,18 @@ RSpec.describe CCS::FM::RateCard, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"
 
   it 'can contain entries' do
-    expect(CCS::FM::RateCard.count).to be > 0
+    expect(described_class.count).to be > 0
   end
 
   it 'contains data' do
-    expect(CCS::FM::RateCard.latest.data[:Prices].count).to be > 0
-    expect(CCS::FM::RateCard.latest.data[:Discounts].count).to be > 0
-    expect(CCS::FM::RateCard.latest.data[:Variances].count).to be > 0
+    expect(described_class.latest.data[:Prices].count).to be > 0
+    expect(described_class.latest.data[:Discounts].count).to be > 0
+    expect(described_class.latest.data[:Variances].count).to be > 0
   end
 
   it 'can retrieve latest entry' do
-    is_this_the_last_dated_record = CCS::FM::RateCard.latest
-    actual_last_record = CCS::FM::RateCard.where(updated_at: CCS::FM::RateCard.select('max(updated_at)')).first
+    is_this_the_last_dated_record = described_class.latest
+    actual_last_record = described_class.where(updated_at: described_class.select('max(updated_at)')).first
 
     expect(is_this_the_last_dated_record.source_file).to eq(actual_last_record.source_file)
     expect(is_this_the_last_dated_record.id).to eq(actual_last_record.id)
@@ -23,7 +23,7 @@ RSpec.describe CCS::FM::RateCard, type: :model do
   end
 
   it 'contains rates for services' do
-    rate_card = CCS::FM::RateCard.latest
+    rate_card = described_class.latest
 
     # sheet_name == 'Prices'
     # data['Prices'][rate_card['Supplier']][rate_card['Service Ref']] = rate_card

@@ -1,11 +1,11 @@
 <fieldset class="govuk-fieldset">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if  @procurement.errors[:security_policy_document_required].any? %>">
     <div class="govuk-!-margin-top-3">
-    <span class="govuk-heading-s govuk-!-margin-bottom-0">
-      <legend class="govuk-fieldset__legend">
-        <%= t('.question') %>
-      </legend>
-    </span>
+      <span class="govuk-heading-s govuk-!-margin-bottom-0">
+        <legend class="govuk-fieldset__legend">
+          <%= t('.question') %>
+        </legend>
+      </span>
     </div>
 
     <div class="govuk-!-margin-top-3">
@@ -48,9 +48,9 @@
               <p class="govuk-!-margin-left-3"><%= t('.document.guidance') %></p>
               <div class="govuk-!-margin-left-3">
                 <%= display_errors @procurement, :security_policy_document_file %>
-                <% if @procurement.security_policy_document_file.attachment.present? %>
+                <% if @procurement.security_policy_document_file.attached? %>
                   <%= f.label :security_policy_document_file, 'Uploaded file', class: "govuk-label ccs-font-weight-semi-bold" %>
-                  <%= ActiveStorage::Blob.where(id: @procurement.security_policy_document_file.attachment.blob_id).first.filename %> </br>
+                  <%= @procurement.security_policy_document_file.filename.to_s %> <br/>
                   <%= f.file_field :security_policy_document_file, class: 'govuk-file-upload' %>
                 <% else %>
                   <%= f.label :security_policy_document_file, 'Upload a file', class: "govuk-label ccs-font-weight-semi-bold" %>

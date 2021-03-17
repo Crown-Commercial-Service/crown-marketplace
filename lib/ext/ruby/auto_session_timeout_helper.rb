@@ -27,4 +27,4 @@ module AutoSessionTimeoutHelper
   end
 end
 
-ActionView::Base.send :include, AutoSessionTimeoutHelper
+ActionView::Base.include AutoSessionTimeoutHelper

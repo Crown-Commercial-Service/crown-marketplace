@@ -5,14 +5,14 @@ module FacilitiesManagement
 
       attr_accessor :user_email
 
-      belongs_to :user, foreign_key: :user_id, inverse_of: :supplier_admin, optional: true
+      belongs_to :user, inverse_of: :supplier_admin, optional: true
 
       validates :supplier_name, presence: true, uniqueness: true, length: { maximum: 100 }, on: :supplier_name
 
       validates :contact_email, :contact_name, :contact_phone, presence: true, on: :supplier_contact_information
       validates :contact_email, email: { allow_nil: true }, on: :supplier_contact_information
       validates :contact_name, length: { maximum: 100 }, on: :supplier_contact_information
-      validates :contact_phone, format: { with: /\A(?:[ \(\)-]*\d){9,11}\z/ }, length: { maximum: 15 }, on: :supplier_contact_information
+      validates :contact_phone, format: { with: /\A(?:[ ()-]*\d){9,11}\z/ }, length: { maximum: 15 }, on: :supplier_contact_information
 
       validates :duns, :registration_number, presence: true, on: :additional_supplier_information
       validates :duns, format: { with: /\A\d{9}\z/ }, on: :additional_supplier_information
