@@ -31,6 +31,12 @@ unless ARGV.any? { |a| a =~ /^gems/ } # Don't load anything when running the gem
         t.profile = 'rerun'
       end
 
+      Cucumber::Rake::Task.new({ accessibility: 'test:prepare' }, 'Run the accessibility features') do |t|
+        t.binary = vendored_cucumber_bin
+        t.fork = true # You may get faster startup if you set this to false
+        t.profile = 'accessibility'
+      end
+
       desc 'Run all features'
       task all: %i[ok wip]
 

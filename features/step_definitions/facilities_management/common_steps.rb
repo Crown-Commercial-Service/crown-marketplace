@@ -13,7 +13,7 @@ Given('I have buildings') do
 end
 
 Then 'I am on the {string} page' do |title|
-  expect(page.find('h1')).to have_content(title.to_s)
+  expect(page.find('h1')).to have_content(title)
 end
 
 Then 'I am on the page with secondary heading {string}' do |title|
@@ -76,4 +76,8 @@ end
 
 And('I click on the link with text {string}') do |button_text|
   page.find('a', text: button_text).send_keys(:return)
+end
+
+Then('I pause') do
+  # binding.pry
 end

@@ -2,6 +2,10 @@ Given('I have a procurement in DA draft at the {string} stage named {string}') d
   create(:facilities_management_procurement_direct_award, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: da_journey_state)
 end
 
+Given('I have a procurement with completed contract details named {string}') do |contract_name|
+  create(:facilities_management_procurement_with_contact_details, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: 'contract_details')
+end
+
 When('I answer the {string} contract detail question') do |contract_detail|
   contract_detail_page.contract_details.send(contract_detail.to_sym).question.click
 end
