@@ -1653,7 +1653,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when no volumes or standards are required for any services' do
         before do
-          procurement.update(service_codes: ['C.19', 'D.3'])
+          procurement.update(service_codes: ['C.1', 'C.19', 'D.3'])
 
           procurement_building1.procurement_building_services.delete_all
           procurement_building2.procurement_building_services.delete_all

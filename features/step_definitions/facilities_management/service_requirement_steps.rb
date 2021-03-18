@@ -102,3 +102,7 @@ end
 Then('the volume unit is {string}') do |unit|
   expect(service_requirement_page.volume_unit).to have_content(unit)
 end
+
+Then('the building should have the status {string}') do |status|
+  expect(entering_requirements_page.building_status.text).to eq status
+end

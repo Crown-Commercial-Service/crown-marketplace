@@ -1,9 +1,12 @@
 @javascript
-Feature: Buildings
+Feature: Buildings in entering requirements
 
   Background:
     Given I sign in and navigate to my account
-    And I click on 'Manage my buildings'
+    And I have an empty procurement for entering requirements named 'My buildings procurement'
+    When I navigate to the procurement 'My buildings procurement'
+    Then I am on the 'Requirements' page
+    And I click on 'Buildings'
     Then I am on the 'Buildings' page
 
   @add_address
