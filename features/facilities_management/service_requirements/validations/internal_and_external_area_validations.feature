@@ -1,3 +1,4 @@
+@pipeline
 Feature: Internal and external area validations
 
   Background: Internal and external area page

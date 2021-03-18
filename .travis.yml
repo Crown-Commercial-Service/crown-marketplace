@@ -35,7 +35,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
-  - bundle exec rake cucumber:ok CUCUMBER_FORMAT=progress
+  - bundle exec rake cucumber:pipeline
   - rm public/assets/.sprockets-manifest-*.json
 after_script:
   - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT

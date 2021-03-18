@@ -1,6 +1,6 @@
 Feature: Services
 
-  @javascript
+  @javascript @pipeline
   Scenario: Select services
     Given I sign in and navigate to my account
     And I have an empty procurement for entering requirements named 'My services procurement'

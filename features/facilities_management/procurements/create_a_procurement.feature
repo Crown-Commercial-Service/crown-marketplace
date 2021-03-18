@@ -1,13 +1,12 @@
 Feature: Create a procurement
-
-  Background: Navigate to create a procurement
+  
+  @pipeline
+  Scenario: Create a procurement
     Given I sign in and navigate to my account
     And I click on 'Start a procurement'
     Then I am on the 'What happens next' page
     And I click on 'Continue'
     Then I am on the 'Contract name' page
-  
-  Scenario: Create a procurement
     And I enter 'Test procurement 1' into the contract name field
     And I click on 'Save and continue'
     Then I am on the 'Requirements' page

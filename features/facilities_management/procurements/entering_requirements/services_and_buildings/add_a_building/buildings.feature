@@ -114,7 +114,7 @@ Feature: Buildings in entering requirements
     And I click on 'Save and continue'
     Then I am on the 'Building type' page
 
-  @add_address
+  @add_address @pipeline
   Scenario: Add a building complete journey
     And I click on 'Add a building'
     Then I am on the 'Add a building' page

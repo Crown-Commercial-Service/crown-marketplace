@@ -1,3 +1,4 @@
+@pipeline
 Feature: Create a procurement validations
 
   Background: Navigate to create a procurement

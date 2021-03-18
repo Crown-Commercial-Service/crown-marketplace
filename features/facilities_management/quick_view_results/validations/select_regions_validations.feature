@@ -1,3 +1,4 @@
+@pipeline
 Feature: Select region validations
 
   Scenario: No services selected
