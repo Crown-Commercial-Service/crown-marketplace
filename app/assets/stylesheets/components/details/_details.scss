@@ -1,17 +1,7 @@
-@import "govuk-frontend/components/details/details";
-
 .govuk-details {
   margin-bottom: 0;
 }
 
-.govuk-details__summary:focus {
-	outline: 3px solid rgba(0, 0, 0, 0);
-	color: #0b0c0c;
-	background-color: #fd0;
-	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-    text-decoration: none;
-
-  & .govuk-details__summary-text {
-    text-decoration: none;
-  }
+.govuk-details__text {
+  word-break: break-word;
 }

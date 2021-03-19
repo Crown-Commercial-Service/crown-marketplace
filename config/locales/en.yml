@@ -311,7 +311,6 @@ en:
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback: feedback
-      feedback_end_journey_html: <b> This is a new service - how did you find it? </b> Please complete <a href="%{link}" target="_blank" >a short survey</a> to help us improve it.
       feedback_html: This is a new service – your %{link} will help us to improve it.
       having_problems: Having problems with this service?
       privacy_link: Privacy policy

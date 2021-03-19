@@ -8,6 +8,6 @@ module Pages
     elements :number_of_floors_inputs, '.number-of-floors'
 
     element :volume_label, 'label'
-    element :volume_unit, '.ccs-unit-label'
+    element :volume_unit, '.govuk-input__suffix'
   end
 end

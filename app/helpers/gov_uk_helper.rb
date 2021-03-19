@@ -1,3 +1,7 @@
 module GovUKHelper
-  include GovUKHelper::StepByStepNavigation
+  include StepByStepNavigation
+  include Accordion
+  include Button
+  include Header
+  include NotificationBanner
 end

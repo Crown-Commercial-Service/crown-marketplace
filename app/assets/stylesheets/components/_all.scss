@@ -1,58 +1,24 @@
-/* Import from Govuk frontend, refer to govuk-frontend/components/_all.scss */
-@import "govuk-frontend/components/skip-link/skip-link";
-@import "govuk-frontend/components/breadcrumbs/breadcrumbs";
-@import "govuk-frontend/components/checkboxes/checkboxes";
-@import "govuk-frontend/components/date-input/date-input";
-@import "govuk-frontend/components/file-upload/file-upload";
-@import "govuk-frontend/components/hint/hint";
-@import "govuk-frontend/components/input/input";
-@import "govuk-frontend/components/panel/panel";
-@import "govuk-frontend/components/tabs/tabs";
-@import "govuk-frontend/components/radios/radios";
-@import "govuk-frontend/components/select/select";
-@import "govuk-frontend/components/textarea/textarea";
-@import "govuk-frontend/components/warning-text/warning-text";
-
+/* Import from Govuk frontend, refer to govuk-frontend/govuk/components/_all.scss */
+@import "govuk-frontend/govuk/components/all";
 
 /* Override with my own components */
+@import "button/button";
 @import "calculator-form/calculator-form";
-@import "details/details";
-@import "error-message/error-message";
-@import "error-summary/error-summary";
 @import "header/header";
 @import "footer/footer";
-@import "fieldset/fieldset";
 @import "fm-supplier-record/fm-supplier-record";
+@import "details/details";
 @import "inset-text/inset-text";
 @import "label/label";
 @import "logo/logo";
 @import "master-vendor-record/master-vendor-record";
 @import "neutral-vendor-record/neutral-vendor-record";
-@import "pagination/pagination";
 @import "panel/panel";
-@import "phase-banner/phase-banner";
 @import "sidebar/sidebar";
 @import "st-supplier-page/st-supplier-page";
 @import "supplier-record/supplier-record";
-@import "table/table";
-@import "tag/tag";
 @import "typography/typography";
-@import "print-page/print-page";
 /* CCS override and bespoke styles; re-used globally across all modules */
 @import "ccs-character-count/ccs-character-count";
-@import "input-type/input_type";
 @import "ccs-global/ccs-global";
-@import "step-by-step-nav/focused";
-@import "step-by-step-nav/step-by-step-header";
-@import "step-by-step-nav/step-by-step-nav";
-@import "step-by-step-nav/step-by-step-related";
-@import "step-by-step-nav/task-list";
-@import "step-by-step-nav/related-items";
-/* Componants updated with for GDS relsease 2019, added assets can be found here: https://github.com/alphagov/govuk-frontend */
-@import "back-link/back-link";
-@import "button/button";
-@import "checkboxes/checkboxes";
-@import "input/input";
-@import "link/link";
-@import "radios/radios";
-@import "accordions/accordions";
+@import "step-by-step-nav/all";

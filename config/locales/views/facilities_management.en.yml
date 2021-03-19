@@ -468,6 +468,7 @@ en:
   dashboard:
     index:
       admin_link: Managing framework and supplier data
+      supplier_link: Facilities management supplier account
   facilities_management:
     admin:
       admin_account:
@@ -2201,6 +2202,12 @@ en:
           sign_in_header: Sign in to your account
     users:
       sign_in_error: You must provide a correct username or password
+  header_navigation_links_helper:
+    admin_dashboard: Admin dashboard
+    back_to_start: Back to start
+    my_account: My account
+    my_dashboard: My dashboard
+    sign_out: Sign out
   shared:
     gateway:
       index:
