@@ -44,7 +44,7 @@ module Pages
       end
     end
 
-    section :security_policy_document, '#radio-inner-content' do
+    section :security_policy_document, '.govuk-radios__conditional' do
       element :name, '#facilities_management_procurement_security_policy_document_name'
       element :number, '#facilities_management_procurement_security_policy_document_version_number'
       element :date_day, '#facilities_management_procurement_security_policy_document_date_dd'

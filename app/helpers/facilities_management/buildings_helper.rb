@@ -25,8 +25,8 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def type_description(text, building, attribute)
-    if text == 'Other'
-      "#{text} — #{building[attribute].truncate(150)}"
+    if ['Other', 'other'].include?(text)
+      "Other — #{building[attribute].truncate(150)}"
     else
       text
     end

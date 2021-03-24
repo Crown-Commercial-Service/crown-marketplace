@@ -28,8 +28,4 @@ const common = {
   getCachedData(key) {
     if (localStorage) return JSON.parse(localStorage.getItem(key)) || [];
   },
-
-  calcCharsLeft(value, maxChars) {
-    return maxChars - value.length;
-  },
 };
