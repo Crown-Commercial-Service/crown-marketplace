@@ -10,16 +10,14 @@
         </ul>
     </div>
     <%=form_for @procurement_copy, url: facilities_management_procurement_copy_procurement_index_path, method: :post do |f, attr|%>
-        <div id="facilities_management_copy_contract" class="govuk-form-group govuk-!-width-one-half govuk-!-margin-bottom-6 <%= 'govuk-form-group--error' if @procurement_copy.errors.any?  %>">
-            <%= f.label :contract_name, t('.label'), class: 'govuk-heading-m' %>
-            <%= display_errors @procurement_copy, :contract_name %>
-            <%= hidden_field(:contract_id, find_contract_id) unless find_contract_id.nil? %>
-            <%= f.text_field :contract_name, class: 'govuk-input', maxlength: 100, id: 'facilities_management_procurement_contract_name' %>
-            <span id="facilities_management_procurement_supplier_character_left" class="govuk-hint govuk-character-count__message" aria-live="polite">
-                <%= t('.characters_remaining')%>
-            </span>
+        <div class="govuk-!-width-one-half govuk-!-margin-bottom-6">
+            <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
+                <%= f.label :contract_name, t('.label'), class: 'govuk-heading-m' %>
+                <%= displayed_error %>
+                <%= f.text_field :contract_name, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 100, id: 'facilities_management_procurement_contract_name' %>
+            <% end %>
         </div>
-        <%= f.submit pd.navigation_details.primary_text, { class: 'govuk-button govuk-!-margin-right-4', contract_id: find_contract_id, 'aria-label': "#{pd.navigation_details.primary_text}" } %>
+        <%= f.submit pd.navigation_details.primary_text, { class: 'govuk-button govuk-!-margin-right-4', 'aria-label': "#{pd.navigation_details.primary_text}" } %>
         <%= link_to pd.navigation_details.secondary_text, pd.navigation_details.secondary_url, class: 'govuk-button govuk-button--secondary', 'aria-label': "#{pd.navigation_details.secondary_text}" %>
     <% end %>
 <% end %>

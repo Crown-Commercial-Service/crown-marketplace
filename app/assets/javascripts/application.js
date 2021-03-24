@@ -18,4 +18,3 @@
 //= require_tree ./facilities_management
 //= require cp/cp-sign-in.js
 //= require global/global.js
-//= require_tree ./ccs_character-count

@@ -3,35 +3,35 @@ function FindAddressComponent() {
 }
 
 FindAddressComponent.prototype.init = function () {
-  this.postcodeSearch = document.getElementById('postcode-search');
-  this.postcodeChange = document.getElementById('postcode-change');
-  this.selectAnAddress = document.getElementById('select-an-address');
-  this.fullAddress = document.getElementById('full-address');
+  this.postcodeSearch = $('#postcode-search');
+  this.postcodeChange = $('#postcode-change');
+  this.selectAnAddress = $('#select-an-address');
+  this.fullAddress = $('#full-address');
 
-  this.findAddressBtn = document.getElementById('find-address-button');
-  this.searchAddress = document.getElementsByClassName('postcode-entry')[0];
-  this.changePostcodeLink = document.getElementById('change-input-1');
-  this.changeAddressLink = document.getElementById('change-input-2');
+  this.findAddressBtn = $('#find-address-button');
+  this.searchAddress = $('.postcode-entry').first();
+  this.changePostcodeLink = $('#change-input-1');
+  this.changeAddressLink = $('#change-input-2');
 
-  this.addressDropDown = document.getElementById('address-results-container');
+  this.addressDropDown = $('#address-results-container');
 
-  this.postcodeText = document.getElementById('postcode-on-view');
-  this.addressText = document.getElementById('address-text');
+  this.postcodeText = $('#postcode-on-view');
+  this.addressText = $('#address-text');
 
   this.objectName = $('#object_name').val();
   this.postcodeName = $('#postcode_name').val();
 
-  this.regionContainterPresent = document.querySelectorAll("[data-module='find-region']").length > 0;
+  this.regionContainterPresent = $("[data-module='find-region']").length > 0;
 
   this.setupSelectBoxesForAddress();
   this.setupEventListenersForAddress();
 
   if (this.regionContainterPresent) {
-    this.changeRegionLink = document.getElementById('change-input-3');
-    this.regionDropDown = document.getElementById('regions-container');
-    this.regionText = document.getElementById('region-text');
-    this.fullRegion = document.getElementById('full-region');
-    this.selectARegion = document.getElementById('select-a-region');
+    this.changeRegionLink = $('#change-input-3');
+    this.regionDropDown = $('#regions-container');
+    this.regionText = $('#region-text');
+    this.fullRegion = $('#full-region');
+    this.selectARegion = $('#select-a-region');
 
     this.setupSelectBoxesForRegions();
     this.setupEventListenersForRegions();
@@ -41,20 +41,20 @@ FindAddressComponent.prototype.init = function () {
 FindAddressComponent.prototype.setupSelectBoxesForAddress = function () {
   const selectAddress = this.selectAddress.bind(this);
 
-  this.addressDropDown.addEventListener('blur', (e) => {
+  this.addressDropDown.on('blur', (e) => {
     e.preventDefault();
     selectAddress();
   });
 
   if (!(/Windows/.test(navigator.userAgent))) {
-    $(this.addressDropDown).on('change', selectAddress);
+    this.addressDropDown.on('change', selectAddress);
   } else {
-    $(this.addressDropDown).on('click', function (e) {
+    this.addressDropDown.on('click', function () {
       if (this.selectedIndex > 0) {
         selectAddress();
       }
     });
-    $(this.addressDropDown).on('keypress', function (e) {
+    this.addressDropDown.on('keypress', function (e) {
       if (e.keyCode === 13 && this.selectedIndex > 0) {
         e.preventDefault();
         e.stopPropagation();
@@ -67,20 +67,20 @@ FindAddressComponent.prototype.setupSelectBoxesForAddress = function () {
 FindAddressComponent.prototype.setupSelectBoxesForRegions = function () {
   const selectRegion = this.selectRegion.bind(this);
 
-  this.regionDropDown.addEventListener('blur', (e) => {
+  this.regionDropDown.on('blur', (e) => {
     e.preventDefault();
     selectRegion();
   });
 
   if (!(/Windows/.test(navigator.userAgent))) {
-    $(this.regionDropDown).on('change', selectRegion);
+    this.regionDropDown.on('change', selectRegion);
   } else {
-    $(this.regionDropDown).on('click', function (e) {
+    this.regionDropDown.on('click', function () {
       if (this.selectedIndex > 0) {
         selectRegion();
       }
     });
-    $(this.regionDropDown).on('keypress', function (e) {
+    this.regionDropDown.on('keypress', function (e) {
       if (e.keyCode === 13 && this.selectedIndex > 0) {
         e.preventDefault();
         e.stopPropagation();
@@ -93,24 +93,24 @@ FindAddressComponent.prototype.setupSelectBoxesForRegions = function () {
 FindAddressComponent.prototype.setupEventListenersForAddress = function () {
   const module = this;
 
-  this.findAddressBtn.addEventListener('click', module.lookupInput.bind(this));
+  this.findAddressBtn.on('click', module.lookupInput.bind(this));
 
-  this.searchAddress.addEventListener('keypress', (e) => {
+  this.searchAddress.on('keypress', (e) => {
     if (e.keyCode === 13) {
       module.lookupInput(e);
     }
   });
 
-  this.changePostcodeLink.addEventListener('click', this.changePostcode.bind(this));
-  this.changeAddressLink.addEventListener('click', this.changeAddress.bind(this));
+  this.changePostcodeLink.on('click', this.changePostcode.bind(this));
+  this.changeAddressLink.on('click', this.changeAddress.bind(this));
 
-  $('#new_facilities_management_building').submit(function () {
-    module.errorShow(false, module.searchAddress, this.postcodeName, 'input');
+  $('#new_facilities_management_building').on('submit', () => {
+    module.errorShow(false, module.searchAddress, module.postcodeName, 'input');
   });
 };
 
 FindAddressComponent.prototype.setupEventListenersForRegions = function () {
-  this.changeRegionLink.addEventListener('click', this.changeRegion.bind(this));
+  this.changeRegionLink.on('click', this.changeRegion.bind(this));
 };
 
 FindAddressComponent.prototype.lookupInput = function (e) {
@@ -119,7 +119,7 @@ FindAddressComponent.prototype.lookupInput = function (e) {
 
   this.errorShow(false, module.searchAddress, this.postcodeName, 'input');
 
-  const input = common.destructurePostCode(this.searchAddress.value);
+  const input = common.destructurePostCode(this.searchAddress.val());
 
   if (input.valid) {
     module.findAddress(input.fullPostcode);
@@ -129,23 +129,21 @@ FindAddressComponent.prototype.lookupInput = function (e) {
 };
 
 FindAddressComponent.prototype.errorShow = function (show, input, attribute, inputError) {
-  const form = document.getElementById(`${attribute}-form-group`);
-
   if (show) {
     anyArbitraryName.global_formValidators[0].toggleError($(input), true, 'invalid');
   } else {
-    $(form).removeClass('govuk-form-group--error');
-    $(document.querySelector(`span[id='${attribute}-error']`)).remove();
+    $(`#${attribute}-form-group`).removeClass('govuk-form-group--error');
+    $(`span[id='${attribute}-error']`).remove();
     $(`#error_${this.objectName}_${attribute}`).remove();
-    $(document.querySelectorAll(`label[id='${attribute}-error'] > span`)).addClass('govuk-visually-hidden');
-    $(input).removeClass(`govuk-${inputError}--error`);
+    $(`label[id='${attribute}-error'] > span`).addClass('govuk-visually-hidden');
+    input.removeClass(`govuk-${inputError}--error`);
   }
 };
 
 FindAddressComponent.prototype.findAddress = function (postcode) {
   const module = this;
-  const valid_postcode = this.normalisePostcode(postcode);
-  const url = encodeURI(`/api/v2/postcodes/${valid_postcode}`);
+  const validPostcode = this.normalisePostcode(postcode);
+  const url = encodeURI(`/api/v2/postcodes/${validPostcode}`);
 
   $.ajax({
     type: 'GET',
@@ -168,46 +166,45 @@ FindAddressComponent.prototype.normalisePostcode = function (postcode) {
 FindAddressComponent.prototype.processAddress = function (result, postcode) {
   const module = this;
 
-  this.clearResultsList(this.addressDropDown);
+  this.addressDropDown.empty();
   this.setBlankOption(this.addressDropDown, result.length, 'Please select an address');
 
   if (result.length > 0) {
     module.addAddressOptions(result);
   }
 
-  this.postcodeText.innerText = postcode;
-  this.viewStates(2);
+  this.postcodeText.text(postcode);
+  this.updateView(2);
 };
 
 FindAddressComponent.prototype.addAddressOptions = function (addresses) {
-  for (let i = 0; i < addresses.length; i++) {
-    const address = addresses[i];
-    newOption = document.createElement('option');
+  addresses.forEach((address) => {
+    const newOption = document.createElement('option');
     newOption.value = address.summary_line;
     newOption.innerText = address.summary_line;
     newOption.dataset.address_line_1 = address.address_line_1;
     newOption.dataset.address_line_2 = address.address_line_2;
     newOption.dataset.address_town = address.address_town;
     newOption.dataset.address_postcode = address.address_postcode;
-    this.addressDropDown.add(newOption);
-  }
+    this.addressDropDown.append(newOption);
+  });
 };
 
 FindAddressComponent.prototype.setBlankOption = function (search, results, dropDownText) {
   const module = this;
 
   if (results === 0) {
-    var text = $(search).data('withdata-text-plural');
+    let text = search.data('withdata-text-plural');
     text = `0 ${text}`;
 
     module.setBlankOptionText(search, text, text);
   } else if (results === 1) {
-    var text = $(search).data('withdata-text-single');
+    let text = search.data('withdata-text-single');
     text = `${results} ${text}`;
 
     module.setBlankOptionText(search, text, dropDownText);
   } else {
-    var text = $(search).data('withdata-text-plural');
+    let text = search.data('withdata-text-plural');
     text = `${results} ${text}`;
 
     module.setBlankOptionText(search, text, dropDownText);
@@ -218,44 +215,34 @@ FindAddressComponent.prototype.setBlankOptionText = function (search, optionalTe
   const option = document.createElement('option');
   option.appendChild(document.createTextNode(text));
 
-  $(search).find('optgroup').attr('label', optionalText);
-  search.appendChild(option);
+  search.prepend(`<optgroup label="${optionalText}"> </optgroup>`);
+  search.append(option);
 };
 
 FindAddressComponent.prototype.selectAddress = function () {
-  let selectedOption = null;
+  const selectedOption = this.addressDropDown.find('option:selected');
 
-  if (this.addressDropDown.selectedIndex <= 0) return;
+  if (selectedOption.index() <= 1) return;
 
   this.errorShow(false, this.addressDropDown, 'base', 'select');
 
-  selectedOption = this.addressDropDown.options[this.addressDropDown.selectedIndex];
-
-  $('#address-line-1').val(selectedOption.dataset.address_line_1);
-  $('#address-line-2').val(selectedOption.dataset.address_line_2);
-  $('#address-town').val(selectedOption.dataset.address_town);
-  $(this.addressText).text(`${selectedOption.innerText} ${selectedOption.dataset.address_postcode}`);
+  $('#address-line-1').val(selectedOption.data('address_line_1'));
+  $('#address-line-2').val(selectedOption.data('address_line_2'));
+  $('#address-town').val(selectedOption.data('address_town'));
+  this.addressText.text(`${selectedOption.text()} ${selectedOption.data('address_postcode')}`);
 
   if (this.regionContainterPresent) {
     this.findRegion();
   } else {
-    this.viewStates(5);
-  }
-};
-
-FindAddressComponent.prototype.clearResultsList = function (list) {
-  if (list.options.length > 0) {
-    for (let i = list.options.length; i >= 0; i--) {
-      list.remove(i);
-    }
+    this.updateView(5);
   }
 };
 
 FindAddressComponent.prototype.findRegion = function () {
   const module = this;
-  const postcode = this.postcodeText.innerText;
-  const valid_postcode = this.normalisePostcode(postcode);
-  const url = encodeURI(`/api/v2/find-region-postcode/${valid_postcode}`);
+  const postcode = this.postcodeText.text();
+  const validPostcode = this.normalisePostcode(postcode);
+  const url = encodeURI(`/api/v2/find-region-postcode/${validPostcode}`);
 
   $.ajax({
     type: 'GET',
@@ -272,48 +259,45 @@ FindAddressComponent.prototype.findRegion = function () {
 };
 
 FindAddressComponent.prototype.processRegion = function (regions) {
-  this.clearResultsList(this.regionDropDown);
+  this.regionDropDown.empty();
   this.setBlankOption(this.regionDropDown, regions.length, 'Please select a region');
 
   if (regions.length > 0) {
-    for (let i = 0; i < regions.length; i++) {
-      const region = regions[i];
-      newOption = document.createElement('option');
+    regions.forEach((region) => {
+      const newOption = document.createElement('option');
       newOption.value = region.code;
       newOption.innerText = region.region;
       newOption.dataset.address_region = region.region;
       newOption.dataset.address_region_code = region.code;
-      this.regionDropDown.add(newOption);
-    }
+      this.regionDropDown.append(newOption);
+    });
   }
 
   if (regions.length === 1) {
     this.selectOneRegion();
-    this.viewStates(5);
+    this.updateView(5);
   } else {
-    this.viewStates(3);
+    this.updateView(3);
   }
 };
 
 FindAddressComponent.prototype.selectOneRegion = function () {
-  this.regionDropDown.options.selectedIndex = 1;
+  this.regionDropDown.find('option:eq(1)').attr('selected', 'selected');
   this.selectRegion();
 };
 
 FindAddressComponent.prototype.selectRegion = function () {
-  let selectedOption = null;
+  const selectedOption = this.regionDropDown.find('option:selected');
 
-  if (this.regionDropDown.selectedIndex <= 0) return;
+  if (selectedOption.index() <= 1) return;
 
   this.errorShow(false, this.regionDropDown, 'address_region', 'select');
 
-  selectedOption = this.regionDropDown.options[this.regionDropDown.selectedIndex];
+  $('#address-region').val(selectedOption.data('address_region'));
+  $('#address-region-code').val(selectedOption.data('address_region_code'));
+  this.regionText.text(selectedOption.data('address_region'));
 
-  $('#address-region').val(selectedOption.dataset.address_region);
-  $('#address-region-code').val(selectedOption.dataset.address_region_code);
-  $(this.regionText).text(selectedOption.dataset.address_region);
-
-  this.viewStates(4);
+  this.updateView(4);
 };
 
 FindAddressComponent.prototype.changePostcode = function (e) {
@@ -321,7 +305,7 @@ FindAddressComponent.prototype.changePostcode = function (e) {
   this.errorShow(false, this.addressDropDown, 'base', 'select');
   this.removeAddress();
   this.removeRegion();
-  this.viewStates(1);
+  this.updateView(1);
 };
 
 FindAddressComponent.prototype.changeAddress = function (e) {
@@ -329,14 +313,14 @@ FindAddressComponent.prototype.changeAddress = function (e) {
   this.errorShow(false, this.addressDropDown, 'base', 'select');
   this.removeAddress();
   this.removeRegion();
-  this.viewStates(1);
+  this.updateView(1);
 };
 
 FindAddressComponent.prototype.changeRegion = function (e) {
   e.preventDefault();
   this.errorShow(false, this.regionDropDown, 'address_region', 'select');
   this.removeRegion();
-  this.viewStates(3);
+  this.updateView(3);
 };
 
 FindAddressComponent.prototype.removeAddress = function () {
@@ -347,12 +331,12 @@ FindAddressComponent.prototype.removeAddress = function () {
 };
 
 FindAddressComponent.prototype.removeRegion = function () {
-  $(this.regionDropDown).prop('selectedIndex', 0);
+  this.regionDropDown.find('option:selected').prop('selected', false);
   $('#address-region').val('');
   $('#address-region-code').val('');
 };
 
-FindAddressComponent.prototype.viewStates = function (state) {
+FindAddressComponent.prototype.updateView = function (state) {
   this.showOrHideInputs(state === 1, this.postcodeSearch);
   this.showOrHideInputs(state === 1, this.findAddressBtn);
 
@@ -369,6 +353,10 @@ FindAddressComponent.prototype.viewStates = function (state) {
     this.showOrHideInputs(state === 4, this.changeRegionLink);
   }
 
+  this.updateFocus(state);
+};
+
+FindAddressComponent.prototype.updateFocus = function (state) {
   switch (state) {
     case 1:
       this.searchAddress.focus();
@@ -385,28 +373,24 @@ FindAddressComponent.prototype.viewStates = function (state) {
     case 5:
       this.changeAddressLink.focus();
       break;
+    default:
+      break;
   }
 };
 
 FindAddressComponent.prototype.showOrHideInputs = function (show, section) {
+  let tabindex;
+
   if (show) {
-    $(section).removeClass('govuk-visually-hidden');
-    var tabindex = 0;
+    section.removeClass('govuk-visually-hidden');
+    tabindex = 0;
   } else {
-    $(section).addClass('govuk-visually-hidden');
-    var tabindex = -1;
+    section.addClass('govuk-visually-hidden');
+    tabindex = -1;
   }
 
-  if (section.hasAttribute('tabindex')) {
-    section.tabIndex = tabindex;
-  }
-
-  const inputs = $(section).find('[tabindex]');
-
-  for (let i = 0; i < inputs.length; i++) {
-    const input = inputs[i];
-    input.tabIndex = tabindex;
-  }
+  if (section.attr('tabindex')) section.attr('tabIndex', tabindex);
+  section.find('[tabindex]').attr('tabIndex', tabindex);
 };
 
 $(() => {
