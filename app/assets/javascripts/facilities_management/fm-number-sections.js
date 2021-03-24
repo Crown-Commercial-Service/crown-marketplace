@@ -1,5 +1,6 @@
 const numberInput = {
   input: $('.ccs-number-field'),
+  form: $('form'),
 
   updateNumberWithCommas() {
     const number = this.input.val();
@@ -14,18 +15,6 @@ const numberInput = {
     this.input.val(number.toString().replace(/,/g, ''));
   },
 
-  getForm() {
-    let form;
-
-    if ($('.edit_facilities_management_procurement').length) {
-      form = $('.edit_facilities_management_procurement');
-    } if ($('.edit_facilities_management_procurement_building_service').length) {
-      form = $('.edit_facilities_management_procurement_building_service');
-    }
-
-    return form;
-  },
-
   showNumberWithCommas() {
     this.updateNumberWithCommas();
 
@@ -33,7 +22,7 @@ const numberInput = {
       this.updateNumberWithCommas();
     });
 
-    this.getForm().on('submit', () => {
+    this.form.on('submit', () => {
       this.updateNumberWithoutCommas();
     });
   },

@@ -2,7 +2,6 @@ $(() => {
   const bulkUploadStatus = {
     procurementID: $('#procurement_id').val(),
     spreadsheetImportID: $('#spreadsheet_import_id').val(),
-    url: '',
     interval: 1000,
     checks: 0,
 

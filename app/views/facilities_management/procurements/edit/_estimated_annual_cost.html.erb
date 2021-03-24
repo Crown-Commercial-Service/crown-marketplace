@@ -1,30 +1,21 @@
 <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, t('.heading') %>
 <fieldset class="govuk-fieldset govuk-!-width-three-quarters">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>" data-propertyname="Estimated cost">
-
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>">
     <%= hint_details(t('.do_you_know'), t('.content')) %>
-
+    <hr class="govuk-section-break govuk-section-break--s">
     <%= display_errors @procurement, :estimated_cost_known %>
-    <div class="radio-content-toggle govuk-radios govuk-radios govuk-!-margin-top-4">
-      <div class="govuk-radios__item">
-        <%= f.radio_button :estimated_cost_known, true, class: "govuk-radios__input", required: true %>
-        <%= f.label :estimated_cost_known, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
-        <div id="radio-inner-content" class="radio-inner-content govuk-!-margin-top-3 govuk-!-margin-bottom-3">
-          <div class="govuk-!-margin-left-3" data-propertyname="Estimated annual cost">
-            <%= f.label :estimated_annual_cost, t('.label'), class: "govuk-label" %>
-            <%= display_errors @procurement, :estimated_annual_cost %>
-            <div class="govuk-input__wrapper">
-              <div class="govuk-input__prefix" aria-hidden="true">£</div>
-              <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
-            </div>
-          </div>
+    <%= govuk_radios_conditional do %>
+      <%= govuk_radios_conditional_item(f, :estimated_cost_known, true, 'Yes') %>
+      <%= govuk_radios_conditional_area(:estimated_cost_known, true) do %>
+        <%= f.label :estimated_annual_cost, t('.label'), class: "govuk-label" %>
+        <%= display_errors @procurement, :estimated_annual_cost %>
+        <div class="govuk-input__wrapper">
+          <div class="govuk-input__prefix" aria-hidden="true">£</div>
+          <%= f.text_field :estimated_annual_cost, class: "govuk-input ccs-number-field ccs-integer-field govuk-input--width-20 #{'govuk-input--error' if @procurement.errors[:estimated_annual_cost].any? }", min: 1 %>
         </div>
-      </div>
-      <div class="govuk-radios__item">
-        <%= f.radio_button :estimated_cost_known, false, class: 'govuk-radios__input', required: true %>
-        <%= f.label :estimated_cost_known, 'No', value: false, class: "govuk-label govuk-radios__label" %>
-      </div>
-    </div>
+      <% end %>
+      <%= govuk_radios_conditional_item(f, :estimated_cost_known, false, 'No') %>
+    <% end %>
   </div>
 </fieldset>
