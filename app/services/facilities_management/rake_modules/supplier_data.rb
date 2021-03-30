@@ -93,5 +93,9 @@ module FacilitiesManagement::RakeModules::SupplierData
   def self.supplier_data_mapping
     supplier_data.map { |supplier_data| [supplier_data['supplier_name'], supplier_data['supplier_id']] }.to_h
   end
+
+  def self.current_supplier_data_mapping
+    FacilitiesManagement::SupplierDetail.pluck(:supplier_name, :supplier_id).to_h
+  end
 end
 # rubocop:enable Rails/Output
