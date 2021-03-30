@@ -811,7 +811,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
             end
 
             it 'deletes the file' do
-              expect(assigns(:procurement).security_policy_document_file.attachment.present?).to be false
+              expect(assigns(:procurement).reload.security_policy_document_file.attachment.present?).to be false
             end
           end
 

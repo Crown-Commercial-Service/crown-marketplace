@@ -106,7 +106,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def add_supplier_rates_to_rate_card(sheet)
     all_units_of_measurement = CCS::FM::UnitsOfMeasurement.all
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -118,7 +118,6 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @data_no_cafmhelp_removed.keys.collect { |k| @data_no_cafmhelp_removed[k].keys }
                              .flatten.uniq
                              .sort_by { |code| [code[0..code.index('.') - 1], code[code.index('.') + 1..-1].to_i] }.each do |s|
-
       # for each building type, I need to see if the actual building name (which can contain several building id's if the same service
       # is contained in several building) has the service. for example two buildings may have the type warehouse and contain the same same C.1 service
 
@@ -126,12 +125,12 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         @rate_card_data[:Prices][@supplier_id][s.to_sym][building_type_with_service_codes[:building_type].to_sym] if building_type_with_service_codes[:service_codes].include? s
       end
 
-      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: '%' + s + '%').first
+      unit_of_measurement_row = all_units_of_measurement.where("array_to_string(service_usage, '||') LIKE :code", code: "%#{s}%").first
       unit_of_measurement_value = begin
-                                    unit_of_measurement_row['unit_measure_label']
-                                  rescue NameError
-                                    nil
-                                  end
+        unit_of_measurement_row['unit_measure_label']
+      rescue NameError
+        nil
+      end
       new_row = ([s, rate_card_prices[s.to_sym][:'Service Name'], unit_of_measurement_value] << new_row).flatten
 
       styles = [standard_column_style, standard_column_style, standard_column_style]
@@ -150,7 +149,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     add_table_headings_for_pricing_variables(sheet)
     add_pricing_variables_to_rate_card_sheet(sheet)
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def add_pricing_variables_to_rate_card_sheet(sheet)
     rate_card_variances = @rate_card_data[:Variances][@supplier_id]
@@ -184,9 +183,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def contract_price_matrix
     @workbook.add_worksheet(name: 'Contract Price Matrix') do |sheet|
       header_row_style = sheet.styles.add_style sz: 12, b: true, alignment: { wrap_text: true, horizontal: :center, vertical: :center }, border: { style: :thin, color: '00000000' }
@@ -362,12 +359,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet["A#{service_count + 18}:B#{service_count + 22}"].each { |c| c.style = standard_column_style }
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/BlockLength
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def sanitize_string_for_excel(string)
-    return "'#{string}" if string.match?(/\A(@|=|\+|\-)/)
+    return "'#{string}" if string.match?(/\A(@|=|\+|-)/)
 
     string
   end

@@ -95,7 +95,7 @@ module FacilitiesManagement
     def uvals_for_building(building, procurement_building_services, spreadsheet_type = nil)
       services = spreadsheet_type == :da ? da_procurement_building_services(procurement_building_services) : procurement_building_services
 
-      building_uvals = services.map do |procurement_building_service|
+      services.map do |procurement_building_service|
         {
           building_id: building.building_id,
           service_code: procurement_building_service.code,
@@ -103,8 +103,6 @@ module FacilitiesManagement
           service_standard: procurement_building_service.service_standard
         }
       end
-
-      building_uvals
     end
 
     def da_procurement_building_services(procurement_building_services)
@@ -115,6 +113,7 @@ module FacilitiesManagement
       @procurement_da_services ||= CCS::FM::Service.direct_award_services(@procurement.id)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def uom_values(spreadsheet_type)
       uvals = @active_procurement_buildings.order_by_building_name.map { |building| uvals_for_building(building, spreadsheet_type) }
 
@@ -140,6 +139,7 @@ module FacilitiesManagement
 
       uvals
     end
+    # rubocop:enable Metrics/AbcSize
 
     def values_to_average
       if any_services_missing_framework_price?
@@ -189,10 +189,11 @@ module FacilitiesManagement
                                              building)
 
       uvals_remove_cafm_help.each do |v|
-        if v[:service_code] == 'G.3' || (v[:service_code] == 'G.1')
+        case v[:service_code]
+        when 'G.3', 'G.1'
           v[:occupants] = v[:uom_value].to_i
           v[:uom_value] = @gia.to_f
-        elsif v[:service_code] == 'G.5'
+        when 'G.5'
           v[:occupants] = 0
           v[:uom_value] = @external_area.to_f
         else
@@ -229,7 +230,7 @@ module FacilitiesManagement
     end
 
     def calculate_assessed_value
-      return buyer_input if buyer_input != 0.0 && sum_uom == 0.0 && sum_benchmark == 0.0
+      return buyer_input if buyer_input.to_d != 0.0.to_d && sum_uom.to_d == 0.0.to_d && sum_benchmark.to_d == 0.0.to_d
 
       values = buyer_input.zero? ? values_if_no_buyer_input : values_to_average
 

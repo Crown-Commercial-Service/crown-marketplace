@@ -61,7 +61,7 @@ module Base
       service = split_url[1]
       service_type ||= split_url[2] if split_url[2] == 'supplier' || split_url[2] == 'admin'
 
-      '/' + [service, service_type, 'sign-in'].compact.join('/') + '?expired=true'
+      "/#{[service, service_type, 'sign-in'].compact.join('/')}?expired=true"
     end
 
     def authorize_user

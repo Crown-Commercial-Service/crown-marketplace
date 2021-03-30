@@ -1,7 +1,7 @@
 module GovUKHelper::StepByStepNavigation
   def govuk_step_by_step_navigation(&block)
-    content_tag(:div, id: 'step-by-step-navigation', class: 'app-step-nav app-step-nav--large app-step-nav--active', data: { 'show-text': 'Show', 'hide-text': 'Hide', 'show-all-text': 'Show all', 'hide-all-text': 'Hide all' }) do
-      content_tag(:ol, class: 'app-step-nav__steps', &block)
+    tag.div(id: 'step-by-step-navigation', class: 'app-step-nav app-step-nav--large app-step-nav--active', data: { 'show-text': 'Show', 'hide-text': 'Hide', 'show-all-text': 'Show all', 'hide-all-text': 'Hide all' }) do
+      tag.ol(class: 'app-step-nav__steps', &block)
     end
   end
 

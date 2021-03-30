@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:spreadsheet_import) do
-    FacilitiesManagement::SpreadsheetImport.new.tap do |import|
-      import.procurement = procurement
-      import.aasm_state = 'importing'
+    create(:facilities_management_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing') do |import|
       import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')
     end
   end

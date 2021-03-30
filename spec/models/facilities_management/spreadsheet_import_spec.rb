@@ -98,7 +98,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
         allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_started?).and_return(spreadsheet_not_started_result)
         allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_ready?).and_return(spreadsheet_not_ready_result)
         # rubocop:enable RSpec/AnyInstance
-        import.valid?(:upload)
+        import.valid?(:basic_validation)
       end
 
       context 'when the file does not match the template' do

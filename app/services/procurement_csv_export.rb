@@ -204,8 +204,8 @@ class ProcurementCsvExport
   end
 
   def self.yes_no(flag)
-    return 'Yes' if flag.class == TrueClass
-    return 'No' if flag.class == FalseClass
+    return 'Yes' if flag.instance_of?(TrueClass)
+    return 'No' if flag.instance_of?(FalseClass)
 
     ''
   end
@@ -278,13 +278,13 @@ class ProcurementCsvExport
     return '' if procurement.optional_call_off_extensions.none?
 
     "#{helpers.pluralize(procurement.optional_call_off_extensions.count, 'extension')}, " +
-      procurement.optional_call_off_extensions.sorted.map { |ext| period_to_string(ext.years, ext.months) } .join(', ')
+      procurement.optional_call_off_extensions.sorted.map { |ext| period_to_string(ext.years, ext.months) }.join(', ')
   end
 
   def self.format_lot_number(lot_number)
     return '' if lot_number.blank?
 
-    'Sub-lot ' + lot_number
+    "Sub-lot #{lot_number}"
   end
 
   def self.localised_datetime(datetime)
@@ -356,16 +356,16 @@ class ProcurementCsvExport
 
   def self.da_suppliers(procurement)
     procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
+               .map { |s| supplier_names[s.supplier_id] }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.da_suppliers_costs(procurement)
     procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| delimited_with_pence(s.direct_award_value) } .join(LIST_ITEM_SEPARATOR)
+               .map { |s| delimited_with_pence(s.direct_award_value) }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.shortlisted_suppliers(procurement)
-    procurement.procurement_suppliers.map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.map { |s| supplier_names[s.supplier_id] }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_types(procurement)

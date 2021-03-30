@@ -8,8 +8,75 @@ RSpec.describe GenericJourney, type: :model do
   let(:params) { ActionController::Parameters.new }
   let(:paths) { instance_double('JourneyPaths') }
 
-  class SingleStep
-    include Steppable
+  before do
+    single_step_class = Class.new(described_class) do
+      include Steppable
+    end
+
+    stub_const('SingleStep', single_step_class)
+
+    first_step_with_attributes_class = Class.new(described_class) do
+      include Steppable
+      attribute :first_question
+      def next_step_class
+        SecondStepWithAttributes
+      end
+    end
+
+    stub_const('FirstStepWithAttributes', first_step_with_attributes_class)
+
+    second_step_with_attributes_class = Class.new(described_class) do
+      include Steppable
+      attribute :second_question
+    end
+
+    stub_const('SecondStepWithAttributes', second_step_with_attributes_class)
+
+    third_valid_step_class = Class.new(described_class) do
+      include Steppable
+    end
+
+    stub_const('ThirdValidStep', third_valid_step_class)
+
+    second_invalid_step_class = Class.new(described_class) do
+      include Steppable
+
+      def next_step_class
+        ThirdValidStep
+      end
+
+      def valid?(_context = nil)
+        false
+      end
+    end
+
+    stub_const('SecondInvalidStep', second_invalid_step_class)
+
+    first_valid_step_class = Class.new(described_class) do
+      include Steppable
+
+      def next_step_class
+        SecondInvalidStep
+      end
+    end
+
+    stub_const('FirstValidStep', first_valid_step_class)
+
+    second_step_class = Class.new(described_class) do
+      include Steppable
+    end
+
+    stub_const('SecondStep', second_step_class)
+
+    first_step_class = Class.new(described_class) do
+      include Steppable
+
+      def next_step_class
+        SecondStep
+      end
+    end
+
+    stub_const('FirstStep', first_step_class)
   end
 
   context 'when created with a single step journey' do
@@ -88,18 +155,6 @@ RSpec.describe GenericJourney, type: :model do
         expect(journey.next_step_path).to eq(:a_path)
         expect(paths).to have_received(:question)
       end
-    end
-  end
-
-  class SecondStep
-    include Steppable
-  end
-
-  class FirstStep
-    include Steppable
-
-    def next_step_class
-      SecondStep
     end
   end
 
@@ -260,30 +315,6 @@ RSpec.describe GenericJourney, type: :model do
     end
   end
 
-  class ThirdValidStep
-    include Steppable
-  end
-
-  class SecondInvalidStep
-    include Steppable
-
-    def next_step_class
-      ThirdValidStep
-    end
-
-    def valid?(_context = nil)
-      false
-    end
-  end
-
-  class FirstValidStep
-    include Steppable
-
-    def next_step_class
-      SecondInvalidStep
-    end
-  end
-
   context 'when the second step is invalid' do
     let(:first_step_class) { FirstValidStep }
     let(:slug) { ThirdValidStep.new.slug }
@@ -315,19 +346,6 @@ RSpec.describe GenericJourney, type: :model do
         expect(journey.next_step).to be_an_instance_of ThirdValidStep
       end
     end
-  end
-
-  class FirstStepWithAttributes
-    include Steppable
-    attribute :first_question
-    def next_step_class
-      SecondStepWithAttributes
-    end
-  end
-
-  class SecondStepWithAttributes
-    include Steppable
-    attribute :second_question
   end
 
   context 'when there are multiple steps with attributes' do

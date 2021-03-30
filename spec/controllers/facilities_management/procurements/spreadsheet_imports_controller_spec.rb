@@ -39,6 +39,7 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
       before do
         allow(spreadsheet_import).to receive(:save).and_return(valid)
         allow(spreadsheet_import).to receive(:save).with(context: :upload).and_return(valid)
+        allow(spreadsheet_import).to receive(:valid?).with(:basic_validation).and_return(valid)
         allow(FacilitiesManagement::SpreadsheetImport).to receive(:new).with(anything).and_return(spreadsheet_import)
         allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(spreadsheet_import.id).and_return(true)
         post :create, params: { procurement_id: procurement.id, facilities_management_spreadsheet_import: { spreadsheet_file: fake_file } }

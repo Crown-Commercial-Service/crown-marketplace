@@ -1,5 +1,5 @@
 class Changeosaddressview2 < ActiveRecord::Migration[5.2]
-  # rubocop:disable Metrics/MethodLength, BlockLength
+  # rubocop:disable Metrics/MethodLength, Metrics/BlockLength
   def change
     reversible do |dir|
       dir.up do
@@ -198,5 +198,5 @@ class Changeosaddressview2 < ActiveRecord::Migration[5.2]
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength, BlockLength
+  # rubocop:enable Metrics/MethodLength, Metrics/BlockLength
 end

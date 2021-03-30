@@ -47,7 +47,7 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM fm_static_data WHERE key = 'services';"
       db.query query
-      query = "INSERT INTO public.fm_static_data (key, value) VALUES('services', " + '\'[{"code": "C", "name": "Maintenance services"}, {"code": "D", "name": "Horticultural services"}, {"code": "E", "name": "Statutory obligations"}, {"code": "F", "name": "Catering services"}, {"code": "G", "name": "Cleaning services"}, {"code": "H", "name": "Workplace FM services"}, {"code": "I", "name": "Reception services"}, {"code": "J", "name": "Security services"}, {"code": "K", "name": "Waste services"}, {"code": "L", "name": "Miscellaneous FM services"}, {"code": "M", "name": "Computer-aided facilities management (CAFM)"}, {"code": "N", "name": "Helpdesk services"}, {"code": "O", "name": "Management of billable works"}]\');'
+      query = "INSERT INTO public.fm_static_data (key, value) VALUES('services', '[{\"code\": \"C\", \"name\": \"Maintenance services\"}, {\"code\": \"D\", \"name\": \"Horticultural services\"}, {\"code\": \"E\", \"name\": \"Statutory obligations\"}, {\"code\": \"F\", \"name\": \"Catering services\"}, {\"code\": \"G\", \"name\": \"Cleaning services\"}, {\"code\": \"H\", \"name\": \"Workplace FM services\"}, {\"code\": \"I\", \"name\": \"Reception services\"}, {\"code\": \"J\", \"name\": \"Security services\"}, {\"code\": \"K\", \"name\": \"Waste services\"}, {\"code\": \"L\", \"name\": \"Miscellaneous FM services\"}, {\"code\": \"M\", \"name\": \"Computer-aided facilities management (CAFM)\"}, {\"code\": \"N\", \"name\": \"Helpdesk services\"}, {\"code\": \"O\", \"name\": \"Management of billable works\"}]');"
       db.query query
     end
   rescue PG::Error => e
@@ -60,7 +60,7 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM fm_static_data WHERE key = 'work_packages';"
       db.query query
-      query = "INSERT INTO public.fm_static_data (key, value) VALUES('work_packages', \'" + data + "\' );"
+      query = "INSERT INTO public.fm_static_data (key, value) VALUES('work_packages', '#{data}' );"
       db.query query
     end
   rescue PG::Error => e
@@ -73,7 +73,7 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM fm_static_data WHERE key = 'bank_holidays';"
       db.query query
-      query = "INSERT INTO public.fm_static_data (key, value) VALUES('bank_holidays', \'" + data + "\' );"
+      query = "INSERT INTO public.fm_static_data (key, value) VALUES('bank_holidays', '#{data}' );"
       db.query query
     end
   rescue PG::Error => e
@@ -87,7 +87,7 @@ INSERT INTO public.fm_units_of_measurement (id, title_text, example_text, unit_t
       truncate_query = 'truncate table fm_security_types;'
       db.query truncate_query
       CSV.read(file_name, headers: true).each do |row|
-        column_names = row.headers.map { |i| '"' + i.to_s + '"' }.join(',')
+        column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
         values = row.fields.map { |i| "'#{i}'" }.join(',')
         query = "INSERT INTO fm_security_types (#{column_names}) values (#{values})"
         db.query query

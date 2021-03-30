@@ -17,11 +17,11 @@ module ApplicationHelper
   end
 
   def feedback_email_link
-    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'SupplyTeachers'
+    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'SupplyTeachers'
 
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'LegalServices'
+    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'LegalServices'
 
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:parent_name) == 'ManagementConsultancy'
+    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'ManagementConsultancy'
 
     link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/J1VQQI/', target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
@@ -55,8 +55,8 @@ module ApplicationHelper
     id_for_label = "#{form_object_name}_#{attribute}-info"
     label_for_id += "_#{attribute}" if form_object_name.exclude?(attribute.to_s)
 
-    content_tag :div, class: css_classes, data: { propertyname: readable_property_name } do
-      content_tag :div, class: form_group_css, data: top_level_data_options do
+    tag.div(class: css_classes, data: { propertyname: readable_property_name }) do
+      tag.div(class: form_group_css, data: top_level_data_options) do
         concat display_label(attribute, label_text, label_for_id, id_for_label) if label_text.present?
         concat display_potential_errors(model_object, attribute, "#{form_object_name}_#{attribute}")
         yield
@@ -66,29 +66,25 @@ module ApplicationHelper
   # rubocop:enable Metrics/ParameterLists
 
   def display_label(_attribute, text, form_object_name, _id_for_label)
-    content_tag :label, text, class: 'govuk-label', for: form_object_name
+    tag.label(text, class: 'govuk-label', for: form_object_name)
   end
 
-  def govuk_form_group_with_optional_error(journey, *attributes)
+  def govuk_form_group_with_optional_error(journey, *attributes, &block)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     css_classes = ['govuk-form-group']
     css_classes += ['govuk-form-group--error'] if attributes_with_errors.any?
 
-    content_tag :div, class: css_classes do
-      yield
-    end
+    tag.div(class: css_classes, &block)
   end
 
-  def govuk_fieldset_with_optional_error(journey, *attributes)
+  def govuk_fieldset_with_optional_error(journey, *attributes, &block)
     attributes_with_errors = attributes.select { |a| journey.errors[a].any? }
 
     options = { class: 'govuk-fieldset' }
     options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
 
-    content_tag :fieldset, options do
-      yield
-    end
+    tag.fieldset(options, &block)
   end
 
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)
@@ -109,7 +105,7 @@ module ApplicationHelper
     collection = validation_messages(model_object.class.name.underscore.downcase.to_sym, attributes)
     return if collection.empty?
 
-    content_tag :div, class: 'error-collection potenital-error', property_name: property_name(section_name, attributes) do
+    tag.div(class: 'error-collection potenital-error', property_name: property_name(section_name, attributes)) do
       multiple_validation_errors(model_object, attributes, form_object_name, collection)
     end
   end
@@ -131,7 +127,7 @@ module ApplicationHelper
     error = journey.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: "#{id_prefix}#{error_id(attribute)}", class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}" do
+    tag.span(id: "#{id_prefix}#{error_id(attribute)}", class: "govuk-error-message #{'govuk-!-margin-top-3' if margin}") do
       error.to_s
     end
   end
@@ -168,7 +164,7 @@ module ApplicationHelper
     error = model.errors[attribute].first
     return if error.blank?
 
-    content_tag :label, data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message' do
+    tag.label(data: { validation: get_client_side_error_type_from_model(model, attribute).to_s }, for: target, id: error_id(attribute), class: 'govuk-error-message') do
       "#{label_text} #{error}"
     end
   end
@@ -177,7 +173,7 @@ module ApplicationHelper
     error = object.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3' do
+    tag.span(id: error_id(attribute.to_s), class: 'govuk-error-message govuk-!-margin-top-3') do
       error.to_s
     end
   end
@@ -186,7 +182,7 @@ module ApplicationHelper
     error = object.errors[attribute].first
     return if error.blank?
 
-    content_tag :span, id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3' do
+    tag.span(id: error_id(object.id), class: 'govuk-error-message govuk-!-margin-top-3') do
       error.to_s
     end
   end
@@ -241,7 +237,7 @@ module ApplicationHelper
   end
 
   def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.parent_name.try(:underscore))
+    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.module_parent_name.try(:underscore))
   end
 
   def fm_landing_page
@@ -301,7 +297,7 @@ module ApplicationHelper
   end
 
   def service_name_param
-    @service_name_param ||= params[:service].nil? ? request&.controller_class&.parent_name&.underscore : params[:service]
+    @service_name_param ||= params[:service].nil? ? request&.controller_class&.module_parent_name&.underscore : params[:service]
   end
 
   def govuk_tag(status)
@@ -313,7 +309,7 @@ module ApplicationHelper
       not_required: 'govuk-tag--grey'
     }
 
-    content_tag :strong, I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status]
+    tag.strong(I18n.t(status, scope: 'shared.tags'), class: ['govuk-tag'] << extra_classes[status])
   end
 
   def govuk_tag_with_text(colour, text)
@@ -323,7 +319,7 @@ module ApplicationHelper
       red: 'govuk-tag--red'
     }
 
-    content_tag :strong, text, class: ['govuk-tag'] << extra_classes[colour]
+    tag.strong(text, class: ['govuk-tag'] << extra_classes[colour])
   end
 
   def da_eligible?(code)
@@ -335,15 +331,15 @@ module ApplicationHelper
   end
 
   def govuk_radio_driver
-    content_tag(:div, t('common.radio_driver'), class: 'govuk-radios__divider')
+    tag.div(t('common.radio_driver'), class: 'govuk-radios__divider')
   end
 
   def warning_text(text)
-    content_tag(:div, class: 'govuk-warning-text') do
-      concat(content_tag(:span, '!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
+    tag.div(class: 'govuk-warning-text') do
+      concat(tag.span('!', class: 'govuk-warning-text__icon', aria: { hidden: true }))
       concat(
-        content_tag(:strong, class: 'govuk-warning-text__text') do
-          concat(content_tag(:span, 'Warning', class: 'govuk-warning-text__assistive'))
+        tag.strong(class: 'govuk-warning-text__text') do
+          concat(tag.span('Warning', class: 'govuk-warning-text__assistive'))
           concat(text)
         end
       )

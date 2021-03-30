@@ -504,23 +504,28 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'creates procurement_suppliers' do
         expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
       end
+
       it 'creates procurement_suppliers with the right direct award value' do
         procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
+
       it 'creates procurement_suppliers with the right supplier id' do
         procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_ids[0]
       end
+
       it 'saves assessed_value' do
         procurement.set_state_to_results_if_possible
         expect(procurement.assessed_value).not_to be_nil
       end
+
       it 'saves lot_number' do
         procurement.set_state_to_results_if_possible
         expect(procurement.lot_number).not_to be_nil
       end
+
       it 'create a frozen rate' do
         procurement.set_state_to_results_if_possible
         expect(CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement.id).size).to eq 155
@@ -721,20 +726,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
         it 'procurement_building_services_not_used_in_calculation an empty list' do
           expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 0
-        end
-      end
-
-      context 'when customer has some services unpriced and when buyer input present' do
-        let(:codes) { %w[G.1 L.7 L.8] }
-        let(:services_standard) { [nil, nil, nil] }
-        let(:estimated_cost_known) { true }
-
-        it 'some_services_unpriced_and_no_buyer_input? returns false' do
-          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
-        end
-
-        it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
         end
       end
     end
@@ -1128,7 +1119,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when the name is not case sensitive' do
         it 'can be saved if name is not case sensitive' do
-          pension_fund2.name = pension_fund1.name + 'abc'
+          pension_fund2.name = "#{pension_fund1.name}abc"
           procurement.procurement_pension_funds = [pension_fund1, pension_fund2]
           expect(pension_fund1.case_sensitive_error).to eq false
           expect(pension_fund2.case_sensitive_error).to eq false
@@ -1175,15 +1166,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1191,15 +1182,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1207,15 +1198,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1223,15 +1214,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[D.3 M.1 O.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1239,15 +1230,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[C.1 M.1 N.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1255,15 +1246,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[C.1 C.2 C.3] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
     end
@@ -1275,15 +1266,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1291,15 +1282,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1307,15 +1298,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
     end
@@ -1938,7 +1929,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    context 'when considering authorised_contact_detail' do
+    context 'when considering notices_contact_detail' do
       let(:contact_detail) { :notices_contact_detail }
 
       context 'when there is no notices_contact_detail' do

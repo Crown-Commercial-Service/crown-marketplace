@@ -89,7 +89,7 @@ module FacilitiesManagement::ProcurementsHelper
 
     error = procurement_building.errors
 
-    content_tag :span, id: "#{procurement_building.building.building_name}-#{error.details[:service_codes].first[:error]}-error", class: 'govuk-error-message' do
+    tag.span(id: "#{procurement_building.building.building_name}-#{error.details[:service_codes].first[:error]}-error", class: 'govuk-error-message') do
       error[:service_codes].first.to_s
     end
   end
@@ -120,8 +120,8 @@ module FacilitiesManagement::ProcurementsHelper
 
   def procurement_building_row(form, building)
     if building.status == 'Ready'
-      content_tag(:div, class: 'govuk-checkboxes govuk-checkboxes--small') do
-        content_tag(:div, class: 'govuk-checkboxes__item') do
+      tag.div(class: 'govuk-checkboxes govuk-checkboxes--small') do
+        tag.div(class: 'govuk-checkboxes__item') do
           capture do
             concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @building_params[building.id] == '1'))
             concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
@@ -131,7 +131,7 @@ module FacilitiesManagement::ProcurementsHelper
         end
       end
     else
-      content_tag(:div, class: 'govuk-!-padding-left-7') do
+      tag.div(class: 'govuk-!-padding-left-7') do
         procurement_building_checkbox_text(building)
       end
     end
@@ -139,8 +139,8 @@ module FacilitiesManagement::ProcurementsHelper
 
   def procurement_building_checkbox_text(building)
     capture do
-      concat(content_tag(:span, building.building_name, class: 'govuk-fieldset__legend'))
-      concat(content_tag(:span, building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
+      concat(tag.span(building.building_name, class: 'govuk-fieldset__legend'))
+      concat(tag.span(building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
     end
   end
 
@@ -167,7 +167,7 @@ module FacilitiesManagement::ProcurementsHelper
       section_errors.each do |attribute|
         next unless errors[attribute]
 
-        concat(content_tag(:span, errors[attribute].to_s, id: error_id(attribute), class: 'govuk-error-message'))
+        concat(tag.span(errors[attribute].to_s, id: error_id(attribute), class: 'govuk-error-message'))
       end
     end
   end
@@ -200,7 +200,7 @@ module FacilitiesManagement::ProcurementsHelper
   end
 
   def section_id(section)
-    section.downcase.gsub(' ', '-') + '-tag'
+    "#{section.downcase.gsub(' ', '-')}-tag"
   end
 
   def work_packages_names

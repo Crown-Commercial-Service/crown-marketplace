@@ -2,7 +2,6 @@ require 'uk_postcode'
 module FacilitiesManagement
   class Building < ApplicationRecord
     belongs_to :user,
-               foreign_key: :user_id,
                inverse_of: :buildings
 
     scope :order_by_building_name, -> { order(Arel.sql('lower(building_name)')) }

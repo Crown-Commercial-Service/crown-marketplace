@@ -1,41 +1,51 @@
-$(function () {
-  if($('#bulk-upload-in-progress').length){
-    var procurement_id = document.getElementById('procurement_id').value
-    var spreadsheet_import_id = document.getElementById('spreadsheet_import_id').value
+$(() => {
+  const bulkUploadStatus = {
+    procurementID: $('#procurement_id').val(),
+    spreadsheetImportID: $('#spreadsheet_import_id').val(),
+    url: '',
+    interval: 1000,
+    checks: 0,
 
-    var url = '/facilities-management/procurements/' + procurement_id + '/spreadsheet_imports/' + spreadsheet_import_id + '/progress'
+    init() {
+      this.url = `/facilities-management/procurements/${this.procurementID}/spreadsheet_imports/${this.spreadsheetImportID}/progress`;
 
-    var interval = 15000;
+      setTimeout(this.checkUploadProgress, this.interval);
+    },
 
-    function checkUploadProgress() {
-      $.ajax({
-        type: 'GET',
-        url: url,
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function (data) {
-          processImportStatus(data.refresh);
-        },
-        complete: function (data) {
-          checkIfContinue(data)
-        }
-      });
-    }
-
-    function processImportStatus(status){
+    processImportStatus(status) {
       if (status) {
-        location.reload();
+        window.location.reload();
       }
-    }
+    },
 
-    function checkIfContinue(data){
+    checkIfContinue(data) {
       if (data.status === 200) {
         if (data.responseJSON.continue) {
-          setTimeout(checkUploadProgress, interval)
+          if (this.checks < 30) this.checks++;
+          if (this.checks === 30) this.interval = 1500;
+
+          setTimeout(this.checkUploadProgress, this.interval);
         }
       }
-    }
+    },
 
-    setTimeout(checkUploadProgress, interval);
+    checkUploadProgress() {
+      $.ajax({
+        type: 'GET',
+        url: bulkUploadStatus.url,
+        data: $(this).serialize(),
+        dataType: 'json',
+        success(data) {
+          bulkUploadStatus.processImportStatus(data.refresh);
+        },
+        complete(data) {
+          bulkUploadStatus.checkIfContinue(data);
+        },
+      });
+    },
+  };
+
+  if ($('#bulk-upload-in-progress').length) {
+    bulkUploadStatus.init();
   }
-})
+});

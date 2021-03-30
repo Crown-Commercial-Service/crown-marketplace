@@ -4,7 +4,6 @@ module FacilitiesManagement
       include AASM
 
       belongs_to :user,
-                 foreign_key: :user_id,
                  inverse_of: :management_reports
 
       acts_as_gov_uk_date :start_date, :end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
