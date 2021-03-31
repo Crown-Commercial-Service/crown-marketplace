@@ -4,6 +4,8 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
     @mapping_list = case list
                     when :supplier_name_to_id
                       supplier_name_to_id
+                    when :current_supplier_name_to_id
+                      current_supplier_name_to_id
                     when :id_to_supplier_name
                       id_to_supplier_name
                     end
@@ -50,6 +52,10 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
 
   def supplier_name_to_id
     FacilitiesManagement::RakeModules::SupplierData.supplier_data_mapping
+  end
+
+  def current_supplier_name_to_id
+    FacilitiesManagement::RakeModules::SupplierData.current_supplier_data_mapping
   end
 
   def id_to_supplier_name

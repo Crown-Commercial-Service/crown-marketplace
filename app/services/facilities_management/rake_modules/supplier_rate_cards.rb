@@ -1,78 +1,83 @@
-# rubocop:disable Rails/Output
 module FacilitiesManagement::RakeModules::SupplierRateCards
-  def self.create_fm_rate_cards_table
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      query =
-        'CREATE TABLE IF NOT EXISTS fm_rate_cards ( id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-          data jsonb, source_file text NOT NULL,
-                                     created_at timestamp without time zone NOT NULL,
-                                     updated_at timestamp without time zone NOT NULL);
-         CREATE UNIQUE INDEX IF NOT EXISTS fm_rate_cards_pkey ON fm_rate_cards(id uuid_ops);
-         CREATE INDEX IF NOT EXISTS idx_fm_rate_cards_gin ON fm_rate_cards USING GIN (data jsonb_ops);
-         CREATE INDEX IF NOT EXISTS idx_fm_rate_cards_ginp ON fm_rate_cards USING GIN (data jsonb_path_ops);'
-
-      db.query query
-    end
-  end
-
-  # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/AbcSize
-  def self.add_rate_cards_to_suppliers
-    create_fm_rate_cards_table
-
-    if Rails.env.production?
-      s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
-      object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['DIRECT_AWARD_DATA_KEY'])
-      object.get(response_target: 'data/facilities_management/DA_data.xlsx')
-      spreadsheet_path = 'data/facilities_management/DA_data.xlsx'
-    else
-      spreadsheet_path = Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
-    end
-
+  def self.import_rate_cards_for_suppliers(method)
     rate_cards_workbook = Roo::Spreadsheet.open(spreadsheet_path, extension: :xlsx)
-    spreadsheet_name = spreadsheet_path.to_s.split('/').last
-    data = {}
+    @data = { 'Prices' => lot_1a_suppliers, 'Discounts' => lot_1a_suppliers, 'Variances' => lot_1a_suppliers }
+    @method = method
 
-    ['Prices', 'Discounts', 'Variances'].each do |sheet_name|
-      sheet = rate_cards_workbook.sheet(sheet_name)
+    add_prices(rate_cards_workbook.sheet('Prices'))
+    add_variances(rate_cards_workbook.sheet('Variances'))
 
-      data[sheet_name] = {}
+    File.delete(spreadsheet_path) if File.exist?(spreadsheet_path) && Rails.env.production?
 
-      labels = sheet.row(1)
-      last_row = sheet.last_row
-      (2..last_row).each do |row_number|
-        row = sheet.row(row_number)
+    rate_card = CCS::FM::RateCard.create(data: converted_data, source_file: spreadsheet_name)
 
-        rate_card = labels.zip(row).to_h
-
-        # p rate_card
-        data[sheet_name][rate_card['Supplier']] = {} unless data[sheet_name][rate_card['Supplier']]
-
-        case sheet_name
-        when 'Prices'
-          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        when 'Discounts'
-          data[sheet_name][rate_card['Supplier']][rate_card['Service Ref']] = rate_card if rate_card['Service Ref']
-        when 'Variances'
-          data[sheet_name][rate_card['Supplier']] = rate_card
-        end
-      end
-
-      File.delete(spreadsheet_path) if File.exist?(spreadsheet_path) && Rails.env.production?
-    end
-
-    # CCS::FM::RateCard.all
-    p 'Converting supplier names to IDs'
-    converted_data = FacilitiesManagement::RakeModules::ConvertSupplierNames.new(:supplier_name_to_id).map_supplier_keys(data)
-
-    v = CCS::FM::RateCard.create(data: converted_data, source_file: spreadsheet_name)
-
-    # all_data.save
-    p "FM rate cards spreadsheet #{spreadsheet_name} (#{v.data.count} sheets) imported into database"
+    Rails.logger.info "FM rate cards spreadsheet #{spreadsheet_name} (#{rate_card.data.count} sheets) imported into database"
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
+
+  def self.spreadsheet_path
+    @spreadsheet_path ||= if Rails.env.production?
+                            s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
+                            object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['DIRECT_AWARD_DATA_KEY'])
+                            object.get(response_target: 'data/facilities_management/DA_data.xlsx')
+                            'data/facilities_management/DA_data.xlsx'
+                          else
+                            Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
+                          end
+  end
+
+  def self.spreadsheet_name
+    @spreadsheet_name ||= spreadsheet_path.to_s.split('/').last
+  end
+
+  def self.lot_1a_suppliers
+    FacilitiesManagement::SupplierDetail.all.select { |supplier| supplier.lot_data.keys.include? '1a' }.map { |supplier| [supplier.supplier_name, {}] }.to_h
+  end
+
+  def self.add_prices(sheet)
+    labels = sheet.row(1)[0..-2]
+    last_row = sheet.last_row
+
+    (2..last_row).each do |row_number|
+      row = sheet.row(row_number)
+      rate_card = labels.zip(row).to_h
+
+      next unless rate_card['Service Ref']
+
+      @data['Prices'][rate_card['Supplier']] ||= {}
+
+      @data['Prices'][rate_card['Supplier']][rate_card['Service Ref']] = rate_card
+      add_discounts(row.last.abs, rate_card)
+    end
+  end
+
+  def self.add_discounts(discount, rate_card)
+    @data['Discounts'][rate_card['Supplier']] ||= {}
+
+    @data['Discounts'][rate_card['Supplier']][rate_card['Service Ref']] = { 'Disc %' => discount }.merge(rate_card.slice('Supplier', 'Service Ref', 'Service Name'))
+  end
+
+  def self.add_variances(sheet)
+    labels = sheet.column(1)
+    last_column = sheet.last_column
+
+    (2..last_column).each do |column_number|
+      column = sheet.column(column_number)
+
+      rate_card = labels.zip(column).to_h
+
+      @data['Variances'][rate_card['Supplier']] ||= {}
+
+      @data['Variances'][rate_card['Supplier']] = rate_card
+    end
+  end
+
+  def self.converted_data
+    Rails.logger.info 'Converting supplier names to IDs'
+    case @method
+    when :add
+      FacilitiesManagement::RakeModules::ConvertSupplierNames.new(:supplier_name_to_id).map_supplier_keys(@data)
+    when :update
+      FacilitiesManagement::RakeModules::ConvertSupplierNames.new(:current_supplier_name_to_id).map_supplier_keys(@data)
+    end
+  end
 end
-# rubocop:enable Rails/Output
