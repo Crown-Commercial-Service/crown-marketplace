@@ -14,7 +14,7 @@ Feature: Security type in requirements - validations
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     And I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
     And I click on 'Skip this step'

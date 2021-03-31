@@ -27,11 +27,11 @@ Feature: Authorised representative detail
     And I enter 'tes@test.com' for the authorised representative detail 'Email'
     And I enter 'ST16 1AA' for the authorised representative detail 'Postcode'
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     And I click on 'Save and return'
     Then I am on the 'Authorised representative details' page
     And I should see 'Testim, Tester' for the contact detail name
-    And I should see 'Strafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
+    And I should see 'Stafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
     And I click on 'Continue'
     Then I am on the 'Contract details' page
     And my 'Authorised representative details' contact detail name is 'Testim, Tester'
@@ -39,7 +39,7 @@ Feature: Authorised representative detail
     And my 'Authorised representative details' contact details are as follows:
       | tes@test.com                                                |
       |  020 7946 0000                                                  |
-      | Strafford Delivery Office, Newport Road, Stafford ST16 1AA  |
+      | Stafford Delivery Office, Newport Road, Stafford ST16 1AA  |
 
   @javascript
   Scenario: Entering new details is selected - changing the details
@@ -52,11 +52,11 @@ Feature: Authorised representative detail
     And I enter ' 020 7946 0000' for the authorised representative detail 'Telephone number'
     And I enter 'ST16 1AA' for the authorised representative detail 'Postcode'
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     And I click on 'Save and return'
     Then I am on the 'Authorised representative details' page
     And I should see 'Testim, Tester' for the contact detail name
-    And I should see 'Strafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
+    And I should see 'Stafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
     Given I click on 'Change'
     Then I am on the 'New authorised representative details' page
     And I enter 'Testom' for the authorised representative detail 'Name'
