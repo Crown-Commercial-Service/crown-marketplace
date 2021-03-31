@@ -19,7 +19,6 @@ RSpec.shared_context 'with list of suppliers' do
      :"Dare, Heaney and Kozey",
      :"Rowe, Hessel and Heller",
      :"Kulas, Schultz and Moore",
-     :"Walsh, Murphy and Gaylord",
      :"Shields, Ratke and Parisian",
      :"Ullrich, Ratke and Botsford",
      :"Lebsack, Vandervort and Veum",

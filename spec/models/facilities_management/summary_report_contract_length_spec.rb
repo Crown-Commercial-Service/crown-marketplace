@@ -35,8 +35,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       context 'and with supplier id' do
         before { report.calculate_services_for_buildings(supplier_id) }
 
-        it 'returns £41,568.33 for direct award' do
-          expect(report.sum_uom.round(2)).to eq 41568.33
+        it 'returns £4,490.46 for direct award' do
+          expect(report.sum_uom.round(2)).to eq 4490.46
         end
       end
     end
@@ -64,8 +64,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       context 'and with supplier id' do
         before { report.calculate_services_for_buildings(supplier_id) }
 
-        it 'returns £230,304.97 for direct award' do
-          expect(report.sum_uom.round(2)).to eq 230304.97
+        it 'returns £26,327.38 for direct award' do
+          expect(report.sum_uom.round(2)).to eq 26327.38
         end
       end
     end
@@ -93,8 +93,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       context 'and with supplier id' do
         before { report.calculate_services_for_buildings(supplier_id) }
 
-        it 'returns £397,504.94 for direct award' do
-          expect(report.sum_uom.round(2)).to eq 397504.94
+        it 'returns £46,682.72 for direct award' do
+          expect(report.sum_uom.round(2)).to eq 46682.72
         end
       end
     end
