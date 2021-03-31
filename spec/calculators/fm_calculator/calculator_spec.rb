@@ -524,24 +524,24 @@ RSpec.describe FMCalculator::Calculator do
       context 'when the building type is General office - Customer Facing' do
         let(:building_type) { 'General office - Customer Facing' }
 
-        it 'returns £323,526.54' do
-          expect(calculator.calculate_total.round(2)).to eq 323526.54
+        it 'returns £316,167.27' do
+          expect(calculator.calculate_total.round(2)).to eq 316167.27
         end
       end
 
       context 'when the building type is Warehouses' do
         let(:building_type) { 'Warehouses' }
 
-        it 'returns £253,292.49' do
-          expect(calculator.calculate_total.round(2)).to eq 253292.49
+        it 'returns £182,464.84' do
+          expect(calculator.calculate_total.round(2)).to eq 182464.84
         end
       end
 
       context 'when the building type is Universities and Colleges' do
         let(:building_type) { 'Universities and Colleges' }
 
-        it 'returns £285,237.65' do
-          expect(calculator.calculate_total.round(2)).to eq 285237.65
+        it 'returns £239,765.88' do
+          expect(calculator.calculate_total.round(2)).to eq 239765.88
         end
       end
     end
@@ -553,53 +553,53 @@ RSpec.describe FMCalculator::Calculator do
       context 'when the building type is General office - Customer Facing' do
         let(:building_type) { 'General office - Customer Facing' }
 
-        it 'returns £147,778.38' do
-          expect(calculator.calculate_total.round(2)).to eq 147778.38
+        it 'returns £7,375.29' do
+          expect(calculator.calculate_total.round(2)).to eq 7375.29
         end
       end
 
       context 'when the building type is Restaurant and Catering Facilities' do
         let(:building_type) { 'Restaurant and Catering Facilities' }
 
-        it 'returns £147,778.38' do
-          expect(calculator.calculate_total.round(2)).to eq 147778.38
+        it 'returns £7,375.29' do
+          expect(calculator.calculate_total.round(2)).to eq 7375.29
         end
       end
 
       context 'when the building type is Nursing and Care Homes' do
         let(:building_type) { 'Nursing and Care Homes' }
 
-        it 'returns £147,778.38' do
-          expect(calculator.calculate_total.round(2)).to eq 147778.38
+        it 'returns £7,375.29' do
+          expect(calculator.calculate_total.round(2)).to eq 7375.29
         end
       end
     end
 
     context 'and the service is E.3' do
-      let(:service_ref) { 'E.3' }
+      let(:service_ref) { 'G.15' }
       let(:uom_vol) { 1997 }
 
       context 'when the building type is General office - Non Customer Facing' do
         let(:building_type) { 'General office - Non Customer Facing' }
 
-        it 'returns £1,777.19' do
-          expect(calculator.calculate_total.round(2)).to eq 1777.19
+        it 'returns £1,322.42' do
+          expect(calculator.calculate_total.round(2)).to eq 1322.42
         end
       end
 
       context 'when the building type is Primary School' do
         let(:building_type) { 'Primary School' }
 
-        it 'returns £1,066.31' do
-          expect(calculator.calculate_total.round(2)).to eq 1066.31
+        it 'returns £1,469.36' do
+          expect(calculator.calculate_total.round(2)).to eq 1469.36
         end
       end
 
       context 'when the building type is Community - Doctors, Dentist, Health Clinic' do
         let(:building_type) { 'Community - Doctors, Dentist, Health Clinic' }
 
-        it 'returns £1,112.10' do
-          expect(calculator.calculate_total.round(2)).to eq 1112.1
+        it 'returns £1,653.03' do
+          expect(calculator.calculate_total.round(2)).to eq 1653.03
         end
       end
     end

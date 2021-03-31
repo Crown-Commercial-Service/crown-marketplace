@@ -24,7 +24,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       sorted_list = results.sort_by { |_k, v| v }
 
-      expect(sorted_list.first).to eq [:"Halvorson, Corwin and O'Connell", 3105.6768582048003]
+      expect(sorted_list.first).to eq [:"Hickle-Schinner", 3125.8249008437565]
     end
 
     it 'price for one supplier with tupe' do
@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       supplier_name = :'Hickle-Schinner'
       report.calculate_services_for_buildings supplier_ids[supplier_name]
 
-      expect(report.direct_award_value.round(2)).to eq 27733.01
+      expect(report.direct_award_value.round(2)).to eq 3125.82
     end
 
     it 'can calculate a direct award procurement no tupe no london' do
