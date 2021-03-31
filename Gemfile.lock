@@ -676,7 +676,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   date_validator (>= 0.9.0)
-  devise (~> 4.7.2)
+  devise (~> 4.7.3)
   dotenv-rails (>= 2.7.6)
   down
   email_validator
@@ -687,7 +687,7 @@ DEPENDENCIES
   geocoder (>= 1.6.1)
   gov_uk_date_fields (>= 4.1.0)
   holidays
-  i18n-tasks (>= 0.9.31)
+  i18n-tasks (>= 0.9.33)
   jbuilder (~> 2.9, >= 2.9.1)
   jquery-rails (~> 4.4.0)
   json-jwt (>= 1.11.0)
@@ -714,7 +714,7 @@ DEPENDENCIES
   role_model (~> 0.8.2)
   rollbar (~> 2.24.0)
   roo (~> 2.8.2)
-  rspec-rails (>= 4.0.1)
+  rspec-rails (>= 4.0.2)
   rubocop
   rubocop-rails
   rubocop-rspec
