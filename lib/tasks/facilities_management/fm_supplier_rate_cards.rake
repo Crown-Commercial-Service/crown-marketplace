@@ -13,8 +13,4 @@ namespace :db do
       FacilitiesManagement::RakeModules::SupplierRateCards.import_rate_cards_for_suppliers(:update)
     end
   end
-
-  desc 'add static data to the database'
-  task static: :add_fmcards do
-  end
 end
