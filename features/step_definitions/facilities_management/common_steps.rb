@@ -78,6 +78,16 @@ And('I click on the link with text {string}') do |button_text|
   page.find('a', text: button_text).send_keys(:return)
 end
 
+And('I start a procurement') do
+  step "I click on 'Start a procurement'"
+  step "I am on the 'What happens next' page"
+  step "I click on 'Continue'"
+  step "I am on the 'Contract name' page"
+  step "I enter 'Test procurement' into the contract name field"
+  step "I click on 'Save and continue'"
+  step "I am on the 'Requirements' page"
+end
+
 Then('I pause') do
   # binding.pry
   pending 'This step is used for debugging features'

@@ -5,5 +5,8 @@ module Pages
 
     element :direct_award_route_to_market, '#facilities_management_procurement_route_to_market_da_draft'
     element :further_competition_route_to_market, '#facilities_management_procurement_route_to_market_further_competition_chosen'
+
+    element :estimated_contract_cost, '#estimated-contract-cost'
+    element :sublot, '#contract-sub-lot'
   end
 end
