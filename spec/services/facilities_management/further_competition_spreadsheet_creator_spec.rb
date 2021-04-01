@@ -4,6 +4,10 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
   let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia, assessed_value: 11541.72, lot_number: '1a') }
   let(:spreadsheet_builder) { described_class.new(procurement_with_buildings.id) }
 
+  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
+
+  include_context 'with list of suppliers'
+
   before do
     procurement_with_buildings.active_procurement_buildings.first.update(service_codes: ['C.1', 'H.4'])
     procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'B')
@@ -15,7 +19,6 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     let(:wb) do
       report = FacilitiesManagement::SummaryReport.new(procurement_with_buildings.id)
 
-      supplier_ids = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_ids.each do |supplier_id|
         report.calculate_services_for_buildings(supplier_id, :fc)
       end
