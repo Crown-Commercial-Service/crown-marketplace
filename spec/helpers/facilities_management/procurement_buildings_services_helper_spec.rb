@@ -141,4 +141,48 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesHelper, type: :
       end
     end
   end
+
+  describe '.per_annum_volume?' do
+    let(:result) { helper.per_annum_volume?(volume) }
+
+    context 'when the volume is no_of_appliances_for_testing' do
+      let(:volume) { :no_of_appliances_for_testing }
+
+      it 'returns true' do
+        expect(result).to be true
+      end
+    end
+
+    context 'when the volume is no_of_building_occupants' do
+      let(:volume) { :no_of_building_occupants }
+
+      it 'returns false' do
+        expect(result).to be false
+      end
+    end
+
+    context 'when the volume is no_of_consoles_to_be_serviced' do
+      let(:volume) { :no_of_consoles_to_be_serviced }
+
+      it 'returns true' do
+        expect(result).to be true
+      end
+    end
+
+    context 'when the volume is tones_to_be_collected_and_removed' do
+      let(:volume) { :tones_to_be_collected_and_removed }
+
+      it 'returns true' do
+        expect(result).to be true
+      end
+    end
+
+    context 'when the volume is no_of_units_to_be_serviced' do
+      let(:volume) { :no_of_units_to_be_serviced }
+
+      it 'returns true' do
+        expect(result).to be true
+      end
+    end
+  end
 end
