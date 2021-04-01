@@ -1184,7 +1184,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: code,
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, tupe: true)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, tupe: true, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1204,7 +1204,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
                                             building_id: create(:facilities_management_building_london).id,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1223,7 +1223,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: code,
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:cafm_procurement_building_service) do
         create(:facilities_management_procurement_building_service,
@@ -1248,7 +1248,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: code,
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:helpdesk_procurement_building_service) do
         create(:facilities_management_procurement_building_service,
@@ -1294,7 +1294,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: code,
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 2)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 2, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1313,7 +1313,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                code: 'C.11',
                service_standard: 'A',
                procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:procurement_building_service_1) do
         create(:facilities_management_procurement_building_service,

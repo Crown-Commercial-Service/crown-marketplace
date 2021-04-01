@@ -298,7 +298,11 @@ Given('I have {int} buildings') do |number_of_buildings|
 end
 
 Then('I select all services for the building') do
-  entering_requirements_page.select_all_services_checkbox.check
+  if @javascript
+    entering_requirements_page.select_all_services_checkbox.check
+  else
+    entering_requirements_page.all_checkboxes.each(&:check)
+  end
 end
 
 Then('I select the service {string} for the building') do |service|
