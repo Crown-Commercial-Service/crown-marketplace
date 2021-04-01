@@ -12,4 +12,8 @@ namespace :db do
   desc 'add static data to the database'
   task static: :aws do
   end
+
+  desc 'add static data to the database'
+  task static: :add_fmcards do
+  end
 end

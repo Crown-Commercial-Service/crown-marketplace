@@ -5,6 +5,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia) }
 
+  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
+
+  include_context 'with list of suppliers'
+
   context 'when testing FC report methods' do
     it 'create a further competition excel,very worksheets are there' do
       first_building = procurement_with_buildings.active_procurement_buildings.first
@@ -12,13 +16,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       report = described_class.new(procurement_with_buildings.id)
 
-      supplier_ids = CCS::FM::RateCard.latest.data[:Prices].keys
       supplier_ids.each do |supplier_id|
         report.calculate_services_for_buildings(supplier_id, :fc)
         expect(report.direct_award_value).to be > 0
       end
-
-      expect(report.assessed_value).to eq 7051.8122351067595
     end
   end
 
