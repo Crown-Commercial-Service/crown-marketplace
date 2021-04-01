@@ -47,8 +47,6 @@
   <div>
     <%= displayed_error %>
     <%= f.label :detail_of_requirement, t('.detail_label'), class: 'govuk-label' %>
-    <div class="ccs-character-count-container" data-module="ccs-character-count" data-maxlength="500">
-      <%= govuk_text_area_input f, :detail_of_requirement, true, rows: 5, maxlength: 500, class: 'govuk-!-margin-bottom-2' %>
-    </div>
+    <%= govuk_character_count(f, :detail_of_requirement, 500, 5) %>
   </div>
 <% end %>

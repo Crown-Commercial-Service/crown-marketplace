@@ -1455,7 +1455,6 @@ en:
         closing_direct_award_offer:
           are_you_sure_1: Are you sure you wish to close the
           are_you_sure_2: procurement?
-          characters_remaining: You have 500 characters remaining
           closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
           once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
           reason: Please provide a reason for closing this procurement
@@ -1466,7 +1465,6 @@ en:
           contract_start_date_caption: The contract start date is the ‘effective date’ - this is the date the final party signed the contract. For example, 01 11 2030.
           contract_will_not_be_signed_reason: Enter your reason why this contract will not be signed in the text box below. Once you have saved and continued, you will be presented with your options on how to proceed further.
           description: Do you confirm that both parties have signed and exchanged the contract?
-          input_remaining: You have 100 characters remaining
           no_caption: If you select 'No', you are confirming that this contract will never be signed, the offer will be withdrawn and the system will proceed to the next steps.
           yes_caption: If you select 'Yes', you must enter the confirmed contract start date and the contract end date.
         contract_offer_details:
@@ -1579,7 +1577,6 @@ en:
           signed: You confirmed that the contract period is between
       copy_procurement:
         new:
-          characters_remaining: You have 100 characters remaining
           heading: Create a new procurement using the service requirements and buildings you have previously entered.
           label: What do you want to call your contract?
           once_saved: 'Once saved under a new contract name:'
@@ -2158,7 +2155,6 @@ en:
         contract_summary_foot:
           respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
         edit:
-          characters_remaining: You have 500 characters remaining
           contract_name: 'Contract name:'
           contract_number: 'Contract number:'
           form_title: Do you accept the contract offer from

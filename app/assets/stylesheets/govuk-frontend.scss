@@ -84,3 +84,16 @@ body.js-enabled #ccs-accordion-with-basket {
     display : block;
   }
 }
+
+%govuk-section-break--s {
+  @include govuk-responsive-margin(2, "top");
+  @include govuk-responsive-margin(2, "bottom");
+}
+
+.govuk-section-break--s {
+  @extend %govuk-section-break--s;
+}
+
+.govuk-template {
+  background-color: #ffffff;
+}
