@@ -29,4 +29,8 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
   def page_heading
     params[:service_question] == 'area' ? t('facilities_management.procurement_buildings_services.area.heading') : @building_service.name
   end
+
+  def per_annum_volume?(volume)
+    %i[no_of_appliances_for_testing no_of_consoles_to_be_serviced tones_to_be_collected_and_removed no_of_units_to_be_serviced].include? volume
+  end
 end
