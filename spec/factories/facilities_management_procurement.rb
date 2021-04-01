@@ -1,8 +1,10 @@
 FactoryBot.define do
   factory :facilities_management_procurement_no_procurement_buildings, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
-    estimated_cost_known { 12345 }
+    estimated_cost_known { true }
+    estimated_annual_cost { 12345 }
     tupe { false }
+    extensions_required { false }
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
     initial_call_off_start_date { Time.zone.now + 6.months }

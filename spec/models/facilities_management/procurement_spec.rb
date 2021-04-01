@@ -109,6 +109,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when the estimated_annual_cost is not present' do
         it 'expected to not be valid' do
           procurement.estimated_cost_known = true
+          procurement.estimated_annual_cost = nil
           expect(procurement.valid?(:estimated_annual_cost)).to eq false
         end
       end

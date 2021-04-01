@@ -13,10 +13,11 @@
   <%= govuk_page_content(@page_description, @procurement, false, true) do |pd| %>
     <% unless @procurement.lot_number_selected_by_customer %>
       <h2 class="govuk-heading govuk-heading-l govuk-!-width-two-thirds"><%= t('.sub-text') %></h2>
-      <h2 class="govuk-heading govuk-heading-l"><%= t('.full-sub-lot') %>&nbsp;<%= @procurement.lot_number %></h2>
+      <h2 class="govuk-heading govuk-heading-l" id="contract-sub-lot"><%= t(".sub-lot-#{@procurement.lot_number}") %></h2>
       <h3 class="govuk-heading govuk-heading-m">
         <%= t('.estimated_cost') %>
-        <br/><span class="govuk-heading govuk-heading-l">
+        <br/>
+        <span class="govuk-heading govuk-heading-l" id="estimated-contract-cost">
           <% if @procurement.eligible_for_da %>
             <%= number_to_currency(lowest_supplier_price, precision: 2) %>
           <% else %>
@@ -48,7 +49,7 @@
           <%= t('.sub-text-FC-unpriced') %>
         </h1>
       <% end  %>
-      <h2 class="govuk-heading govuk-heading-l govuk-!-margin-bottom-1">
+      <h2 class="govuk-heading govuk-heading-l govuk-!-margin-bottom-1" id="contract-sub-lot">
         <%= t(".sub-lot-#{@procurement.lot_number}") %>
       </h2>
       <div class="govuk-hint">
