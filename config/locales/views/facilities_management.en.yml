@@ -995,6 +995,7 @@ en:
           service_hours: Total number of hours required per annum
           tones_to_be_collected_and_removed: Number of tonnes per annum
         unit_of_measure_title: Unit of measure
+        volume_example: If your initial call-off period is less than one year, please still enter a volume requirement for one full year. For example, if you require a volume of 100 per month, please enter 1200 into the field.
         volume_required: Volume required
       volume:
         question:
@@ -1029,6 +1030,7 @@ en:
         hour_heading: Please enter the total number of hours of this service required per year.
         hour_hint: The hours entered will be used to calculate the cost of this service.
         hour_label: Number of hours per year
+        volume_example: If your initial call-off period is less than one year, please still enter the number of hours required for one full year. For example, if you require 100 hours per month, please enter 1200 into the field.
       service_standards:
         detail_text:
           building_standards:
@@ -1073,6 +1075,11 @@ en:
           no_of_consoles_to_be_serviced: consoles
           no_of_units_to_be_serviced: units
           tones_to_be_collected_and_removed: tonnes
+        volume_example:
+          no_of_appliances_for_testing: If your initial call-off period is less than one year, please still enter the number of portable appliances that require testing for one full year. For example, if you have 100 portable appliances that require testing per month, please enter 1200 into the field.
+          no_of_consoles_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of consoles that require servicing for one full year. For example, if you have 100 consoles that require servicing per month, please enter 1200 into the field.
+          no_of_units_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of units that require servicing for one full year. For example, if you have 100 units that require servicing per month, please enter 1200 into the field.
+          tones_to_be_collected_and_removed: If your initial call-off period is less than one year, please still enter the number of tonnes that are collected, stored and removed for one full year. For example, if you have 100 tonnes that are collected, stored and removed per month, please enter 1200 into the field.
     procurements:
       choose_contract_value:
         can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
