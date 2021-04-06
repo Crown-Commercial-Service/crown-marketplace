@@ -1,32 +1,28 @@
 <div class="govuk-!-margin-top-5">
-  <div class="govuk-form-group <%= 'govuk-form-group--error' if extension_periods_error? || total_contract_length_error?%>" data-propertyname="Extensions choice">
+  <div class="govuk-form-group <%= 'govuk-form-group--error' if extension_periods_error? || total_contract_length_error? %>">
     <fieldset class="govuk-fieldset" role="group">
-    <legend class="govuk-fieldset__legend">
-    <span class="govuk-heading-m govuk-!-margin-bottom-0">
-      <%= t('.heading') %>
-    </span>
-    </legend>
-    <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
-    <% display_extension_error_anchor %>
-    <div class="govuk-radios govuk-!-margin-top-3" data-propertyname="Extensions choice">
-      <%= display_errors(f.object, :extensions_required)%>
-      <div class="govuk-radios__item">
-        <%= f.radio_button :extensions_required, true, class: "govuk-radios__input" %>
-        <%= f.label :extensions_required, 'Yes', value: true, class: 'govuk-label govuk-radios__label' %>
-        <div id="radio-inner-content-for-call-off-extensions" class="radio-inner-content govuk-!-margin-top-3">
-          <%= f.fields_for :optional_call_off_extensions, optional_call_off_extensions do |optional_period_field| %>
-            <%= render 'facilities_management/procurements/edit/contract_period/extension', f: optional_period_field %>
-          <% end %>
-          <button id="add-contract-extension-button" class="govuk-button govuk-button--secondary govuk-!-margin-left-3 govuk-!-margin-top-3" aria-label="<%= t('.add_extension_period') %>">
-            <%= t('.add_extension_period') %>
-          </button>
-        </div>
-      </div>
-      <div class="govuk-radios__item">
-        <%= f.radio_button :extensions_required, false, class: "govuk-radios__input" %>
-        <%= f.label :extensions_required, 'No', value: false, class: 'govuk-label govuk-radios__label' %>
-      </div>
-    </div>
+      <legend class="govuk-fieldset__legend">
+      <span class="govuk-heading-m govuk-!-margin-bottom-0">
+        <%= t('.heading') %>
+      </span>
+      </legend>
+      <p class="govuk-caption-m govuk-!-margin-top-0 govuk-!-width-two-thirds"><%= t('.description') %></p>
+      <% display_extension_error_anchor %>
+      <%= govuk_radios_conditional do %>
+        <%= display_errors f.object, :extensions_required %>
+        <%= govuk_radios_conditional_item(f, :extensions_required, true, 'Yes') %>
+        <%= govuk_radios_conditional_area(:extensions_required, true) do %>
+          <div id="radio-inner-content-for-call-off-extensions" class="radio-inner-content govuk-!-margin-top-3">
+            <%= f.fields_for :optional_call_off_extensions, optional_call_off_extensions do |optional_period_field| %>
+              <%= render 'facilities_management/procurements/edit/contract_period/extension', f: optional_period_field %>
+            <% end %>
+            <button id="add-contract-extension-button" class="govuk-button govuk-button--secondary govuk-!-margin-left-3 govuk-!-margin-top-3" aria-label="<%= t('.add_extension_period') %>">
+              <%= t('.add_extension_period') %>
+            </button>
+          </div>
+        <% end %>
+        <%= govuk_radios_conditional_item(f, :extensions_required, false, 'No') %>
+      <% end %>
     </fieldset>
   </div>
 </div>

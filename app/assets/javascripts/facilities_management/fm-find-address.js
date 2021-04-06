@@ -331,6 +331,8 @@ FindAddressComponent.prototype.removeAddress = function () {
 };
 
 FindAddressComponent.prototype.removeRegion = function () {
+  if (!this.regionContainterPresent) return;
+
   this.regionDropDown.find('option:selected').prop('selected', false);
   $('#address-region').val('');
   $('#address-region-code').val('');
