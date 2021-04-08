@@ -26,18 +26,18 @@ Feature: Invoicing contact detail
     And I enter 'tes@test.com' for the invoicing contact detail 'Email'
     And I enter 'ST16 1AA' for the invoicing contact detail 'Postcode'
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     And I click on 'Save and return'
     Then I am on the 'Invoicing contact details' page
     And I should see 'Testim, Tester' for the contact detail name
-    And I should see 'Strafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
+    And I should see 'Stafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
     And I click on 'Continue'
     Then I am on the 'Contract details' page
     And my 'Invoicing contact details' contact detail name is 'Testim, Tester'
     Then I open the details for the 'Invoicing contact details'
     And my 'Invoicing contact details' contact details are as follows:
       | tes@test.com                                                |
-      | Strafford Delivery Office, Newport Road, Stafford ST16 1AA  |
+      | Stafford Delivery Office, Newport Road, Stafford ST16 1AA  |
 
   @javascript
   Scenario: Entering new details is selected - changing the details
@@ -49,11 +49,11 @@ Feature: Invoicing contact detail
     And I enter 'tes@test.com' for the invoicing contact detail 'Email'
     And I enter 'ST16 1AA' for the invoicing contact detail 'Postcode'
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     And I click on 'Save and return'
     Then I am on the 'Invoicing contact details' page
     And I should see 'Testim, Tester' for the contact detail name
-    And I should see 'Strafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
+    And I should see 'Stafford Delivery Office, Newport Road, Stafford ST16 1AA' for the contact detail address
     Given I click on 'Change'
     Then I am on the 'New invoicing contact details' page
     And I enter 'Testom' for the invoicing contact detail 'Name'

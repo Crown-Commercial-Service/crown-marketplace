@@ -17,8 +17,8 @@ Feature: Buildings in entering requirements
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
-    Then the address 'Strafford Delivery Office, Newport Road, Stafford ST16 1AA' is displayed
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
+    Then the address 'Stafford Delivery Office, Newport Road, Stafford ST16 1AA' is displayed
     And the region 'Shropshire and Staffordshire' is displayed
     And I can't change the region
     Then I click on 'Save and continue'
@@ -90,7 +90,7 @@ Feature: Buildings in entering requirements
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     Then I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
     And I enter '300' for the building 'GIA'
@@ -106,7 +106,7 @@ Feature: Buildings in entering requirements
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     Then I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
     And I enter '0' for the building 'GIA'
@@ -122,7 +122,7 @@ Feature: Buildings in entering requirements
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     Then I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
     And I enter '300' for the building 'GIA'
@@ -136,7 +136,7 @@ Feature: Buildings in entering requirements
     And I click on 'Save and return to building details summary'
     Then I am on the buildings summary page for 'New building'
     And my building's 'Name' is 'New building'
-    And my building's 'Address' is 'Strafford Delivery Office, Newport Road, Stafford'
+    And my building's 'Address' is 'Stafford Delivery Office, Newport Road, Stafford'
     And my building's 'Region' is 'Shropshire and Staffordshire'
     And my building's 'Gross internal area' is '300'
     And my building's 'External area' is '600'
@@ -153,12 +153,12 @@ Feature: Buildings in entering requirements
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
     And I click on 'Find address'
-    And I select 'Strafford Delivery Office, Newport Road, Stafford' from the address drop down
+    And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     Then I click on 'Save and return to building details summary'
     Then I am on the buildings summary page for 'Test building'  
     And my building's 'Name' is 'Test building'
     And my building's 'Description' is 'My new building'
-    And my building's 'Address' is 'Strafford Delivery Office, Newport Road, Stafford'
+    And my building's 'Address' is 'Stafford Delivery Office, Newport Road, Stafford'
     And my building's status is 'INCOMPLETE'
     And I change the 'Gross internal area'
     Then I am on the 'Internal and external areas' page
