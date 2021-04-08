@@ -30,7 +30,6 @@ module FMCalculator
       end
 
       @building_type = building.building_type.to_sym if building
-      @results = {}
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -47,6 +46,7 @@ module FMCalculator
       @service_standard = service_standard
       @uom_vol = uom_vol.to_f
       @occupants = occupants
+      @results = {}
       self
     end
 
