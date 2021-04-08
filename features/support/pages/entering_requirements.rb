@@ -126,6 +126,7 @@ module Pages
     element :assigning_services_to_buildings_status, '.govuk-body > span > strong'
 
     element :select_all_services_checkbox, '#box-all'
+    elements :all_checkboxes, 'input[type=checkbox]'
 
     element :next_pagination, 'li.ccs-last > button'
     element :previous_pagination, 'li.ccs-first > button'
