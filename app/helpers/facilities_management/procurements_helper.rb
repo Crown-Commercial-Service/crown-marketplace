@@ -27,6 +27,7 @@ module FacilitiesManagement::ProcurementsHelper
 
     error_list << 'optional_call_off_extensions.years-error' if @procurement.errors[:'optional_call_off_extensions.years']
     error_list << 'optional_call_off_extensions.months-error' if @procurement.errors[:'optional_call_off_extensions.months']
+    error_list << 'optional_call_off_extensions.base-error' if @procurement.errors[:'optional_call_off_extensions.base']
 
     error_list.each do |error|
       concat(tag.span(id: error))
