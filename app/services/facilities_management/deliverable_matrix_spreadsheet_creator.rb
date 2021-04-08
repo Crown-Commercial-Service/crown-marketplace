@@ -281,7 +281,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.add_row ['2. Contract requirements'], style: bold_style
     add_initial_call_off_period(sheet)
     add_mobilisation_period(sheet)
-    sheet.add_row ['Date of First Indexation', (@procurement.initial_call_off_start_date + 1.year).strftime('%d/%m/%Y')]
+    sheet.add_row ['Date of First Indexation', @procurement.initial_call_off_period < 1.year ? 'Not applicable' : (@procurement.initial_call_off_start_date + 1.year).strftime('%d/%m/%Y')]
     add_extension_periods(sheet)
     add_tupe(sheet)
   end
@@ -307,7 +307,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   def extension_period(period)
     return nil if !@procurement.extensions_required || @procurement.optional_call_off_extension(period).nil?
 
-    "#{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')} - #{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')}"
+    "#{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')} - #{@procurement.extension_period_end_date(period).strftime('%d/%m/%Y')}"
   end
 
   def add_tupe(sheet)
