@@ -143,9 +143,9 @@ group :development, :test do
   gem 'rails-controller-testing', '>= 1.0.5'
   gem 'rspec-rails', '>= 4.0.2'
   gem 'shoulda-matchers', '>= 4.2.0'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
-  gem 'rubocop-rails', require: false
+  gem 'rubocop', '>= 1.11.0'
+  gem 'rubocop-rspec', '>= 2.2.0'
+  gem 'rubocop-rails', '>= 2.9.1', require: false
   gem 'rubyXL', '>= 3.4.6'
   gem 'i18n-tasks', '>= 0.9.33'
   gem 'poltergeist', '>= 1.18.1'
@@ -163,7 +163,7 @@ group :development do
 end
 
 group :test do
-  gem 'webmock'
+  gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.2.0', require: false
