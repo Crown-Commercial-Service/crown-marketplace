@@ -40,6 +40,35 @@ Given('I have a procurement in detailed search named {string} with the following
   @procurement_building_id = procurement.procurement_buildings.create(building: building, service_codes: service_codes, active: true).id
 end
 
+Given('I have a procurement in detailed search named {string} with the following services and multiple buildings:') do |contract_name, service_codes_table|
+  create(:facilities_management_building, building_name: 'Test building', user: @user, building_type: 'Warehouses')
+  create(:facilities_management_building_london, building_name: 'Test London building', user: @user, building_type: 'Primary School')
+
+  service_codes = service_codes_table.raw.flatten
+  procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
+
+  @user.buildings.each do |building|
+    procurement.procurement_buildings.create(building: building, active: true, service_codes: service_codes)
+  end
+end
+
+Given('I have direct award procurements') do
+  supplier = FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')
+
+  %w[sent accepted signed declined].each do |state|
+    procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: @user, contract_name: "Contract #{state}")
+
+    procurement.procurement_suppliers.create(supplier: supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
+  end
+end
+
+PROCUREMENT_SUPPLIER_ATTRIBUTES = {
+  sent: {},
+  accepted: { supplier_response_date: Time.zone.today - 3.days },
+  signed: { supplier_response_date: Time.zone.today - 3.days, contract_start_date: Time.zone.tomorrow, contract_end_date: Time.zone.tomorrow + 3.years, contract_signed_date: Time.zone.today },
+  declined: { supplier_response_date: Time.zone.today - 3.days, reason_for_declining: 'Some reason' }
+}.freeze
+
 Given('the GIA for {string} is {int}') do |building_name, gia|
   find_building(building_name).update(gia: gia)
 end
@@ -87,4 +116,16 @@ end
 
 Then('the contract name is shown to be {string}') do |contract_name|
   expect(procurement_page.contract_name.text).to eq contract_name
+end
+
+Then('I answer the question for {string} on contract details') do |contract_detail|
+  procurement_page.send(contract_detail).answer_question.click
+end
+
+Then('the assessed value is {string}') do |price|
+  expect(procurement_page.estimated_contract_cost).to have_content(price)
+end
+
+Then('the selected supplier is {string}') do |supplier|
+  expect(procurement_page.selected_supplier).to have_content(supplier)
 end

@@ -8,9 +8,9 @@ module FacilitiesManagement
 
       acts_as_gov_uk_date :start_date, :end_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
-      validate :dates_are_valid_dates
-      validates :start_date, date: { before_or_equal_to: proc { Time.zone.today } }, presence: true
-      validates :end_date, date: { before_or_equal_to: proc { Time.zone.today } }, presence: true
+      validate :start_date_valid_date, :end_date_valid_date
+      validates :start_date, date: { before_or_equal_to: proc { Time.zone.today } }, if: -> { errors[:start_date].none? }
+      validates :end_date, date: { before_or_equal_to: proc { Time.zone.today }, after_or_equal_to: proc { :start_date } }, if: -> { errors.none? }
 
       has_one_attached :management_report_csv
 
@@ -29,15 +29,6 @@ module FacilitiesManagement
 
       def generate_report_csv
         GenerateFMAdminReportJob.perform_later(id) unless management_report_csv.attached?
-      end
-
-      def dates_are_valid_dates
-        start_date_valid_date
-        end_date_valid_date
-
-        return if @errors.any?
-
-        @errors.add(:end_date, :must_be_before_start_date) unless start_date <= end_date
       end
 
       def end_date_valid_date

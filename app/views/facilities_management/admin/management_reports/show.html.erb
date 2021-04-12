@@ -18,8 +18,8 @@
     <h3 class="govuk-body-l"><%= t('.heading_sub_detail', start_date: @management_report.start_date.strftime('%d/%-m/%Y'), end_date: @management_report.end_date.strftime('%d/%-m/%Y')) %></h3>
     <%= render partial: @management_report.aasm_state %>
 
-    <a href="<%= new_facilities_management_admin_management_report_path %>" class="govuk-button" alt=<%= t('.download_btn_text') %> aria-label=<%= t('.download_btn_text') %>><%= t('.download_btn_text') %></a>
-
-    <a href="<%= facilities_management_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('.return_link') %></a>
+    <%= link_to t('.download_btn_text'), new_facilities_management_admin_management_report_path, class: 'govuk-button', aria: { label: t('.download_btn_text') } %>
+    <br/>
+    <%= link_to t('.return_link'), facilities_management_admin_path, class: 'govuk-link govuk-!-font-size-19', aria: { label: t('.return_link') } %>
   </div>
 </div>

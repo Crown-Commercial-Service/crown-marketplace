@@ -1,11 +1,12 @@
 <% unless @closed_contracts.empty? %>
   <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.closed_contracts')%></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Date</th>
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"> Status </th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.contract_name')%></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.buyer')%></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.date')%></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter" scope="col"><%= t('.status')%></th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -20,7 +21,8 @@
     </tbody>
   </table>
 <% else %>
+  <h2 class="govuk-table__caption--m"><%= t('.closed_contracts')%></h2>
   <hr class="govuk-section-break govuk-section-break--visible">
-    <span class="govuk-hint govuk-!-margin-top-3"> You do not have any items in this section </span>
+    <span class="govuk-hint govuk-!-margin-top-3"><%= t('.no_closed_contracts')%></span>
   <hr class="govuk-section-break govuk-section-break--visible">
 <% end %>
