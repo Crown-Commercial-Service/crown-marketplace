@@ -4,6 +4,7 @@ FactoryBot.define do
     estimated_cost_known { true }
     estimated_annual_cost { 12345 }
     tupe { false }
+    mobilisation_period_required { false }
     extensions_required { false }
     initial_call_off_period_years { 1 }
     initial_call_off_period_months { 0 }
@@ -131,5 +132,19 @@ FactoryBot.define do
     mobilisation_period_required { false }
     extensions_required { false }
     service_codes { ['C.1', 'C.2'] }
+  end
+
+  factory :facilities_management_procurement_completed_procurement_no_suppliers, parent: :facilities_management_procurement_entering_requirements_complete do
+    aasm_state { 'direct_award' }
+    da_journey_state { 'sent' }
+    route_to_market { 'Direct Award' }
+    payment_method { 'bacs' }
+    using_buyer_detail_for_invoice_details { true }
+    using_buyer_detail_for_notices_detail { true }
+    using_buyer_detail_for_authorised_detail { true }
+    security_policy_document_required { false }
+    local_government_pension_scheme { false }
+    governing_law { 'english' }
+    procurement_buildings { build_list :facilities_management_procurement_building, 2 }
   end
 end

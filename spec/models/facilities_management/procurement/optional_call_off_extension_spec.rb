@@ -233,7 +233,7 @@ RSpec.describe FacilitiesManagement::Procurement::OptionalCallOffExtension, type
 
       context 'and it is a already in use by another period' do
         let(:procurement) { optional_call_off_extension.procurement }
-        let(:new_extension) { procurement.optional_call_off_extensions.build(extension: 1) }
+        let(:new_extension) { procurement.optional_call_off_extensions.build(extension: 0, extension_required: 'true') }
 
         before { new_extension }
 

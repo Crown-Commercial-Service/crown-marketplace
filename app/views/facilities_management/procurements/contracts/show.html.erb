@@ -6,21 +6,10 @@
 
         <%= render partial: 'contract_offer_details' %>
 
-        <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-            <%= t('.requirements') %>
-        </h1>
+        <%= render partial: 'procurement_requirements', locals: { heading_text: t('.supplier'), heading_value: @contract.supplier.supplier_name } %>
 
-        <%= render partial: 'procurement_requirements_head' %>
-        <%= render partial: 'procurement_requirements' %>
-
-        <h1 class="govuk-heading-m govuk-!-margin-bottom-0">
-            <%= t('.supplier_contact_details') %>
-        </h1>
         <%= render partial: 'supplier_contact_details' %>
 
-        <h1 class="govuk-heading-m govuk-!-margin-bottom-2">
-            <%= t('.call_off_contract_documents') %>
-        </h1>
         <%= render partial: 'call_off_contract_documents' %>
 
         <%= render partial: 'awaiting_response' if  @contract.aasm_state == 'sent' %>

@@ -1,10 +1,11 @@
 <% unless @accepted_offers.empty? %>
   <table class="govuk-table">
+    <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.accepted_offers')%></caption>
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Contract name</th>
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Buyer</th>
-        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col">Accepted</th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.contract_name')%></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.buyer')%></th>
+        <th class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter govuk-!-padding-right-4" scope="col"><%= t('.accepted')%></th>
         <td class="govuk-table__header govuk-!-font-weight-bold govuk-!-width-one-quarter"></td>
       </tr>
     </thead>
@@ -20,7 +21,8 @@
     </tbody>
   </table>
 <% else %>
+  <h2 class="govuk-table__caption--m"><%= t('.accepted_offers')%></h2>
   <hr class="govuk-section-break govuk-section-break--visible">
-    <span class="govuk-hint govuk-!-margin-top-3"> You do not have any accepted offers </span>
+    <span class="govuk-hint govuk-!-margin-top-3"><%= t('.no_accepted_offers')%></span>
   <hr class="govuk-section-break govuk-section-break--visible">
 <% end %>

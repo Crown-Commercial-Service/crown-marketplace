@@ -1,38 +1,11 @@
 <%= govuk_page_content(@page_description, nil, false, true) do |pd|  %>
     <%= content_for :page_title, pd.heading_details.text %>
-    <h1 class="govuk-heading-m govuk-!-margin-top-9">
-        Received offers
-    </h1>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <%= render partial: 'received_offers' %>
+    <% %w[received_offers accepted_offers live_contracts closed_contracts].each do |table| %>
+        <hr class="govuk-section-break govuk-section-break--m">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <%= render partial: table %>
+            </div>
         </div>
-    </div>
-
-    <h1 class="govuk-heading-m govuk-!-margin-top-9">
-        Accepted offers
-    </h1>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <%= render partial: 'accepted_offers' %>
-        </div>
-    </div>
-
-    <h1 class="govuk-heading-m govuk-!-margin-top-9">
-        Contracts
-    </h1>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <%= render partial: 'live_contracts' %>
-        </div>
-    </div>
-
-    <h1 class="govuk-heading-m govuk-!-margin-top-9">
-        Closed
-    </h1>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <%= render partial: 'closed_contracts' %>
-        </div>
-    </div>
+    <% end %>
 <% end %>

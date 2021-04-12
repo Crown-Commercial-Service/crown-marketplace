@@ -1,4 +1,8 @@
 module Pages
+  def admin_page
+    @admin_page ||= Pages::Admin.new
+  end
+
   def building_page
     @building_page ||= Pages::Building.new
   end
@@ -7,8 +11,8 @@ module Pages
     @contract_detail_page ||= Pages::ContractDetail.new
   end
 
-  def da_draft_page
-    @da_draft_page ||= Pages::DaDraft.new
+  def direct_award_page
+    @direct_award_page ||= Pages::DirectAward.new
   end
 
   def entering_requirements_page
