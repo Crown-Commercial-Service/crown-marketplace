@@ -192,9 +192,11 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       year_total_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
       variance_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
+      table_count = 0
 
       sheet.add_row
-      sheet.add_row ['Table 1. Baseline service costs for year 1']
+      sheet.add_row ["Table #{table_count += 1}. Baseline service costs for year 1"]
+
       new_row = ['Service Reference', 'Service Name', 'Total']
       new_row += (1..@active_procurement_buildings.count).map { |index| "Building #{index}" }
 
@@ -299,13 +301,13 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       cell_refs = add_summation_row sheet, sorted_building_keys, 'Total Charges year 1', 2
 
-      sheet.add_row
-      sheet.add_row ['Table 2. Subsequent Years Total Charges']
-
       subsiquent_years_length = @data[sorted_building_keys.first].first[1][:subsequent_length_years]
       max_years = @data[sorted_building_keys.first].first[1][:contract_length_years].ceil
 
       if max_years > 1
+        sheet.add_row
+        sheet.add_row ["Table #{table_count += 1}. Subsequent Years Total Charges"]
+
         yearly_charge = sorted_building_keys.sum do |key|
           @data[key].sum { |s| s[1][:subsequent_yearly_charge] }
         end
@@ -321,7 +323,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
       sheet.add_row
       add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3, true
       sheet.add_row
-      sheet.add_row ['Table 3. Total charges per month']
+      sheet.add_row ["Table #{table_count + 1}. Total charges per month"]
       new_row2 = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
       sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
 
