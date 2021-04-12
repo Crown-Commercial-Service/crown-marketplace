@@ -1,1 +1,1 @@
-task(:default).clear.enhance(%i[rubocop spec cucumber:pipeline])
+task(:default).clear.enhance(%i[rubocop spec])
