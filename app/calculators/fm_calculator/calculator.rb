@@ -53,6 +53,7 @@ module FMCalculator
     # rubocop:disable Metrics/AbcSize
     def calculate_total
       subtotal1 = uom_deliverables + cleaning_additional_cost
+      subtotal1 *= @contract_length_years - @subsequent_length_years
 
       cafm = cafm(subtotal1)
       helpdesk = helpdesk(subtotal1)
@@ -71,7 +72,6 @@ module FMCalculator
 
       profit = profit(year_1_total_charges_subtotal)
       year_1_total_charges = year_1_total_charges_subtotal + profit
-      year_1_total_charges *= @contract_length_years - @subsequent_length_years
 
       subsequent_yearly_charge = subsequent_yearly_charge(year_1_total_charges, mobilisation)
 

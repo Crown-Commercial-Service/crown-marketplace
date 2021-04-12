@@ -70,10 +70,10 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'verify boilerplate text' do
-        expect(prices.row(32)[0]).to eq('NOTES')
+        expect(prices.row(30)[0]).to eq('NOTES')
+        expect(prices.row(31)[0]).to match(/^For service/)
+        expect(prices.row(32)[0]).to match(/^For service/)
         expect(prices.row(33)[0]).to match(/^For service/)
-        expect(prices.row(34)[0]).to match(/^For service/)
-        expect(prices.row(35)[0]).to match(/^For service/)
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
