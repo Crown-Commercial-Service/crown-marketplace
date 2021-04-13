@@ -53,7 +53,7 @@ en:
               too_long: The town or city name for this building must be 50 characters or less
             contact_email:
               blank: Enter an email address in the correct format, for example name@organisation.gov.uk
-              email: Enter an email address in the correct format, for example name@organisation.gov.uk
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
             contact_name:
               blank: You must enter a name for the contact
               too_long: The contact name cannot be more than 100 characters
@@ -75,7 +75,7 @@ en:
               account_must_be_supplier: The user must have supplier access
               account_must_be_unique: The user cannot belong to another supplier
               account_must_exist: The supplier must be registered with the facilities management service
-              email: Enter an email address in the correct format, for example name@organisation.gov.uk
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
         facilities_management/building:
           attributes:
             address_line_1:
