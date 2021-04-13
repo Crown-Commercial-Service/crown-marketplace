@@ -301,8 +301,10 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       cell_refs = add_summation_row sheet, sorted_building_keys, 'Total Charges year 1', 2
 
-      subsiquent_years_length = @data[sorted_building_keys.first].first[1][:subsequent_length_years]
-      max_years = @data[sorted_building_keys.first].first[1][:contract_length_years].ceil
+      contract_length_years = @data[sorted_building_keys.first].first[1][:contract_length_years]
+
+      subsiquent_years_length = (contract_length_years - 1).clamp(0, 10)
+      max_years = contract_length_years.ceil
 
       if max_years > 1
         sheet.add_row
@@ -320,18 +322,28 @@ class FacilitiesManagement::DirectAwardSpreadsheet
         end
       end
 
+      summation_rows_count = if max_years > 1
+                               max_years + 3
+                             else
+                               max_years + 1
+                             end
+
       sheet.add_row
-      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', max_years + 3, true
+      add_summation_row sheet, sorted_building_keys, 'Total Charge (total contract cost)', summation_rows_count, true
       sheet.add_row
       sheet.add_row ["Table #{table_count + 1}. Total charges per month"]
-      new_row2 = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
-      sheet.add_row new_row2, style: [standard_column_style, standard_column_style, standard_style]
 
       if max_years > 1
+        new_row = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / 12"]
+        sheet.add_row new_row, style: [standard_column_style, standard_column_style, standard_style]
+
         (2..max_years).each do |i|
           new_row = ["Year #{i} Monthly cost", nil, yearly_charge / 12.0]
           sheet.add_row new_row, style: [standard_column_style, standard_column_style, standard_style]
         end
+      else
+        new_row = ['Year 1 Monthly cost', nil, "= #{cell_refs.first} / #{(12 * contract_length_years).round}"]
+        sheet.add_row new_row, style: [standard_column_style, standard_column_style, standard_style]
       end
 
       sheet.add_row
