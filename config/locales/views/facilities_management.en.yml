@@ -30,10 +30,10 @@ en:
         facilities_management/admin/rates:
           attributes:
             benchmark:
-              not_a_number: The rate must be a number, like 2.60 or 8
+              not_a_number: The rate must be a number, like 0.26 or 1
               out_of_range: The rate must be less than or equal to 1
             framework:
-              not_a_number: The rate must be a number, like 2.60 or 8
+              not_a_number: The rate must be a number, like 0.26 or 1
               out_of_range: The rate must be less than or equal to 1
         facilities_management/admin/suppliers_admin:
           attributes:
@@ -564,7 +564,7 @@ en:
           note: The tick boxes in the first column indicate the services this supplier can provide.
           percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
-          rate_error: The rate must be a number, like 2.60 or 8
+          rate_error: The rate must be a number, like 0.26 or 1
           return_link: Return to supplier framework data
           services_and_prices: Services and prices
           td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
