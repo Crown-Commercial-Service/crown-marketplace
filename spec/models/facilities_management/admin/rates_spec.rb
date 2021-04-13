@@ -32,7 +32,7 @@ RSpec.describe FacilitiesManagement::Admin::Rates, type: :model do
 
         it 'has the correct error message' do
           rate.valid? rate_field
-          expect(rate.errors[rate_field].first).to eq 'The rate must be a number, like 2.60 or 8'
+          expect(rate.errors[rate_field].first).to eq 'The rate must be a number, like 0.26 or 1'
         end
       end
 
@@ -53,7 +53,7 @@ RSpec.describe FacilitiesManagement::Admin::Rates, type: :model do
 
         it 'has the correct error message' do
           rate.valid? rate_field
-          expect(rate.errors[rate_field].first).to eq 'The rate must be a number, like 2.60 or 8'
+          expect(rate.errors[rate_field].first).to eq 'The rate must be a number, like 0.26 or 1'
         end
       end
 
