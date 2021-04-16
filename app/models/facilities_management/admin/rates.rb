@@ -4,24 +4,12 @@ module FacilitiesManagement
       self.table_name = 'fm_rates'
 
       validates :framework, numericality: true, allow_blank: true, on: :framework
-      validate :validate_framework_in_range, on: :framework
+      validates :framework, numericality: { less_than_or_equal_to: 1 }, allow_blank: true, on: :framework, if: -> { range_validation_required? }
 
       validates :benchmark, numericality: true, allow_blank: true, on: :benchmark
-      validate :validate_benchmark_in_range, on: :benchmark
+      validates :benchmark, numericality: { less_than_or_equal_to: 1 }, allow_blank: true, on: :benchmark, if: -> { range_validation_required? }
 
       private
-
-      def validate_framework_in_range
-        return unless range_validation_required?
-
-        errors.add(:framework, :out_of_range) if framework.to_f > 1
-      end
-
-      def validate_benchmark_in_range
-        return unless range_validation_required?
-
-        errors.add(:benchmark, :out_of_range) if benchmark.to_f > 1
-      end
 
       def range_validation_required?
         RATES_USING_PERCENTAGE.include?(code) && errors.none?

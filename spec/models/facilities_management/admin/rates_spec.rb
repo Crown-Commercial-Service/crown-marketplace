@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::Rates, type: :model do
-  subject(:rate) { described_class.new }
+  subject(:rate) { described_class.new(code: rate_code) }
+
+  let(:rate_code) { 'M.1' }
 
   %i[benchmark framework].each do |rate_field|
     describe rate_field.to_s do
@@ -83,8 +85,6 @@ RSpec.describe FacilitiesManagement::Admin::Rates, type: :model do
   end
 
   describe 'range_validation_required?' do
-    before { rate.code = rate_code }
-
     context 'when the rate uses percentage' do
       %w[M.1 N.1 M.140 M.141 M.142 M.144 M.148 B.1].each do |code|
         let(:rate_code) { code }
