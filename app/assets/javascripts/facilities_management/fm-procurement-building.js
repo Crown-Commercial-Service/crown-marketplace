@@ -1,43 +1,42 @@
-$(function() {
-  if ($("#building-missing-region").length) {
-    var regionDropDown = document.getElementById("facilities_management_building_address_region");
-    var changeRegion = document.getElementById("change-region");
+const regionDropDown = $('#facilities_management_building_address_region');
+const changeRegion = $('#change-region');
 
-    $(regionDropDown).on("change", function(e) {
-      selectRegion(e)
-    });
+function selectRegion() {
+  const value = regionDropDown.find(':selected').text();
 
-    $(changeRegion).on("click", function(e) {
-      changeregion(e)
-    });
+  if (value) {
+    regionDropDown.attr('tabIndex', -1);
+    changeRegion.attr('tabIndex', 0);
+    changeRegion.get(0).focus();
 
-    function selectRegion(e) {
-      let value = e.target.value;
-
-      if (value) {
-        regionDropDown.tabIndex = -1;
-        changeRegion.tabIndex = 0;
-        changeRegion.focus();
-
-        $(".govuk-error-summary").hide();
-        $("#address_region-error").hide();
-        $("#address_region-form-group").removeClass("govuk-form-group--error");
-        $("#building-region").text(value);
-        $("#select-region").hide();
-        $("#region-selection").show();
-      }
-    }
-
-    function changeregion(e) {
-      e.preventDefault();
-
-      regionDropDown.tabIndex = 0;
-      changeRegion.tabIndex = -1;
-      regionDropDown.focus();
-
-      $(regionDropDown).prop("selectedIndex", 0);
-      $("#region-selection").hide();
-      $("#select-region").show();
-    }
+    $('.govuk-error-summary').hide();
+    $('#address_region-error').hide();
+    $('#address_region-form-group').removeClass('govuk-form-group--error');
+    $('#building-region').text(value);
+    $('#select-region').hide();
+    $('#region-selection').show();
   }
-})
+}
+
+function changeregion(e) {
+  e.preventDefault();
+
+  regionDropDown.attr('tabIndex', 0);
+  changeRegion.attr('tabIndex', -1);
+  regionDropDown.get(0).focus();
+
+  $(regionDropDown).prop('selectedIndex', 0);
+  $('#region-selection').hide();
+  $('#select-region').show();
+}
+$(() => {
+  if ($('#building-missing-region').length) {
+    $(regionDropDown).on('change', () => {
+      selectRegion();
+    });
+
+    $(changeRegion).on('click', (e) => {
+      changeregion(e);
+    });
+  }
+});

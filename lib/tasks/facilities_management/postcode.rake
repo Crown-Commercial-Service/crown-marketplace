@@ -25,8 +25,8 @@ namespace :db do
     o.parse!(nargs)
     options[:folder] = args[:folder] if options.empty? # support debugging
 
-    p "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
-    Rails.logger.info "Creating postcode database and local import from #{(options[:folder] || Rails.root.join('data', 'local_postcodes'))}"
+    p "Creating postcode database and local import from #{options[:folder] || Rails.root.join('data', 'local_postcodes')}"
+    Rails.logger.info "Creating postcode database and local import from #{options[:folder] || Rails.root.join('data', 'local_postcodes')}"
 
     OrdnanceSurvey.create_postcode_table
     OrdnanceSurvey.create_address_lookup_view
@@ -109,6 +109,12 @@ namespace :db do
     OrdnanceSurvey.create_new_postcode_views
     p 'Import address from local FM directory'
     OrdnanceSurvey.import_sample_addresses
+  end
+
+  if Rails.env.test?
+    desc 'add static data to the database'
+    task static: :sample_address_import do
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength

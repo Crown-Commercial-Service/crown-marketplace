@@ -4,6 +4,8 @@ require 'roo'
 
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::TextHelper
+  include FacilitiesManagement::Procurements::ContractDatesHelper
 
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
@@ -279,33 +281,33 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     sheet.add_row ['2. Contract requirements'], style: bold_style
     add_initial_call_off_period(sheet)
     add_mobilisation_period(sheet)
-    sheet.add_row ['Date of First Indexation', (@procurement.initial_call_off_start_date + 1.year).strftime('%d/%m/%Y')]
+    sheet.add_row ['Date of First Indexation', @procurement.initial_call_off_period < 1.year ? 'Not applicable' : (@procurement.initial_call_off_start_date + 1.year).strftime('%d/%m/%Y')]
     add_extension_periods(sheet)
     add_tupe(sheet)
   end
 
   def add_mobilisation_period(sheet)
-    sheet.add_row ['Mobilisation Period', ("#{@procurement.mobilisation_period} weeks" if @procurement.mobilisation_period_required)]
-    sheet.add_row ['Mobilisation Start Date', ((@procurement.initial_call_off_start_date - @procurement.mobilisation_period.weeks - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
-    sheet.add_row ['Mobilisation End Date', ((@procurement.initial_call_off_start_date - 1.day).strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation Period', (mobilisation_period if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation Start Date', (@procurement.mobilisation_start_date.strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
+    sheet.add_row ['Mobilisation End Date', (@procurement.mobilisation_end_date.strftime('%d/%m/%Y') if @procurement.mobilisation_period_required)]
   end
 
   def add_initial_call_off_period(sheet)
-    sheet.add_row ['Initial Call-Off Period', "#{@procurement.initial_call_off_period} years"]
+    sheet.add_row ['Initial Call-Off Period', initial_call_off_period]
     sheet.add_row ['Initial Call-Off Period Start Date', @procurement.initial_call_off_start_date.strftime('%d/%m/%Y')]
-    sheet.add_row ['Initial Call-Off Period End Date', (@procurement.initial_call_off_start_date + @procurement.initial_call_off_period.years - 1.day).strftime('%d/%m/%Y')]
+    sheet.add_row ['Initial Call-Off Period End Date', @procurement.initial_call_off_end_date.strftime('%d/%m/%Y')]
   end
 
   def add_extension_periods(sheet)
-    (1..4).each do |period|
-      sheet.add_row ["Extension Period #{period}", extension_period(period)]
+    (0..3).each do |period|
+      sheet.add_row ["Extension Period #{period + 1}", extension_period(period)]
     end
   end
 
   def extension_period(period)
-    return nil if !@procurement.extensions_required || @procurement.try("optional_call_off_extensions_#{period}").nil?
+    return nil if !@procurement.extensions_required || @procurement.optional_call_off_extension(period).nil?
 
-    @procurement.try("extension_period_#{period}_start_date").strftime('%d/%m/%Y') + ' - ' + @procurement.try("extension_period_#{period}_end_date").strftime('%d/%m/%Y')
+    "#{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')} - #{@procurement.extension_period_end_date(period).strftime('%d/%m/%Y')}"
   end
 
   def add_tupe(sheet)
@@ -529,7 +531,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def sanitize_string_for_excel(string)
     return unless string
-    return "’#{string}" if string.match?(/\A(@|=|\+|\-)/)
+    return "’#{string}" if string.match?(/\A(@|=|\+|-)/)
 
     string
   end

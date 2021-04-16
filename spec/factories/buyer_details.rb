@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :buyer_detail, class: FacilitiesManagement::BuyerDetail do
+  factory :buyer_detail, class: 'FacilitiesManagement::BuyerDetail' do
     full_name { 'MyString' }
     job_title { 'MyString' }
     telephone_number { '07500404040' }

@@ -14,13 +14,6 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
         end
       end
 
-      context 'when signed in as the buyer that created the procurement' do
-        it 'returns the path' do
-          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
-          expect(response).to have_http_status(:found)
-        end
-      end
-
       context 'when signed in as the supplier that the procurement belongs to' do
         login_fm_supplier
         it 'returns the path' do

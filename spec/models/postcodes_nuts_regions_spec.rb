@@ -5,6 +5,7 @@ RSpec.describe PostcodesNutsRegion, type: :model do
     postcode_nuts_save_record = described_class.new(postcode: 'AB101AB', code: 'UKM50').save
     expect(postcode_nuts_save_record).to eq(true)
   end
+
   it 'Get a record' do
     postcode_nuts_save_record = described_class.new(postcode: 'AB101AB', code: 'UKM50').save
     expect(postcode_nuts_save_record).to eq(true)

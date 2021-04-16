@@ -5,9 +5,9 @@
   @include govuk-text-colour;
   position: relative;
   padding: 10px;
-  background: govuk-colour("grey-4");
-  border-top: solid 1px govuk-colour("grey-2");
-  border-bottom: solid 1px govuk-colour("grey-2");
+  background: ccs-colour("grey-4");
+  border-top: solid 1px ccs-colour("grey-2");
+  border-bottom: solid 1px ccs-colour("grey-2");
 
   @include govuk-media-query($from: tablet) {
     padding: govuk-spacing(3);

@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'when user is a buyer and has incomplete details' do
+    context 'when user is a buyer is missing most of the details' do
       it 'will return true' do
         user.roles = %i[buyer fm_access]
         user.buyer_detail = FacilitiesManagement::BuyerDetail.new

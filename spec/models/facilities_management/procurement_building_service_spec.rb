@@ -554,7 +554,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    context 'when code = C.5' do
+    context 'when validating the lift data' do
       before do
         procurement_building_service.code = 'C.5'
       end
@@ -764,15 +764,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
 
-      context 'when code doesn\'t require ppm standards' do
-        it 'will be false when K.6' do
-          procurement_building_service.code = 'K.6'
-          expect(procurement_building_service.requires_service_standard?).to eq false
-        end
-      end
-    end
-
-    describe '#requires_service_standard?' do
       context 'when code requires building standards' do
         it 'will be true when C.7' do
           procurement_building_service.code = 'C.7'
@@ -780,15 +771,6 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
 
-      context 'when code doesn\'t require building standards' do
-        it 'will be false when K.1' do
-          procurement_building_service.code = 'K.1'
-          expect(procurement_building_service.requires_service_standard?).to eq false
-        end
-      end
-    end
-
-    describe '#requires_service_standard?' do
       context 'when code requires cleaning standards' do
         it 'will be true when G.5' do
           procurement_building_service.code = 'G.5'
@@ -796,7 +778,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
         end
       end
 
-      context 'when code doesn\'t require cleaning standards' do
+      context "when code doesn't require a service standard" do
         it 'will be false when K.6' do
           procurement_building_service.code = 'K.6'
           expect(procurement_building_service.requires_service_standard?).to eq false
@@ -1050,7 +1032,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingService, type: :model do
       end
     end
 
-    context 'when the detail_of_requirement is blank' do
+    context 'when the detail_of_requirement is empty' do
       before { procurement_building_service.detail_of_requirement = '' }
 
       it 'is not valid' do

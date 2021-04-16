@@ -26,6 +26,7 @@ sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 #    service postgresql start 11
 #    sudo -u postgres createuser --superuser root; sudo -u postgres createdb root
 
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 curl -sL https://deb.nodesource.com/setup_8.x | bash -
 apt-get install -y nodejs
 alias node=nodejs

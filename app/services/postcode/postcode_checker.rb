@@ -100,7 +100,7 @@ module Postcode
             args = %i[access_key secret_access_key bucket region].zip([access_key, secret_access_key, bucket, region]).to_h
             Rake::Task[task_name].execute(args)
           rescue StandardError => e
-            Rails.logger.info("\e[5;37;41m\n" + e.to_s + "\033[0m\n")
+            Rails.logger.info("\e[5;37;41m\n#{e}\e[0m\n")
             raise e
           end
         end

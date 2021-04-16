@@ -19,7 +19,7 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
       render("facilities_management/procurement_buildings_services/#{association.to_s.singularize}", ff: builder)
     end
-    link_to(name, '#', class: 'add-lifts ' + args[:class], data: { id: id, fields: fields.gsub('\n', '') })
+    link_to(name, '#', class: "add-lifts #{args[:class]}", data: { id: id, fields: fields.gsub('\n', '') })
   end
 
   def form_model
@@ -28,5 +28,9 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
 
   def page_heading
     params[:service_question] == 'area' ? t('facilities_management.procurement_buildings_services.area.heading') : @building_service.name
+  end
+
+  def per_annum_volume?(volume)
+    %i[no_of_appliances_for_testing no_of_consoles_to_be_serviced tones_to_be_collected_and_removed no_of_units_to_be_serviced].include? volume
   end
 end

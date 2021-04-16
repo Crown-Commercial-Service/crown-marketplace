@@ -15,8 +15,8 @@
 
 .ccs-govuk-panel--confirmation {
   color: govuk-colour("black");
-  background: govuk-colour("green-2");
-  border-left: 3px solid govuk-colour("green-3");
+  background: ccs-colour("green-2");
+  border-left: 3px solid ccs-colour("green-3");
 }
 
 .ccs-govuk-panel__title {
@@ -32,4 +32,8 @@
 
 .ccs-govuk-panel__body {
   @include govuk-font($size: 19);
+}
+
+.govuk-panel--confirmation {
+  background: govuk-colour("turquoise");
 }

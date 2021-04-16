@@ -1,9 +1,12 @@
 FactoryBot.define do
-  factory :facilities_management_procurement_no_procurement_buildings, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_no_procurement_buildings, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
-    estimated_cost_known { 12345 }
+    estimated_cost_known { true }
+    estimated_annual_cost { 12345 }
     tupe { false }
-    initial_call_off_period { 1 }
+    extensions_required { false }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
     initial_call_off_start_date { Time.zone.now + 6.months }
     service_codes { ['C.1', 'C.2'] }
     association :user
@@ -17,10 +20,13 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions_1 { 1 }
-    optional_call_off_extensions_2 { 1 }
-    optional_call_off_extensions_3 { 1 }
-    optional_call_off_extensions_4 { 1 }
+    optional_call_off_extensions do
+      build_list(:facilities_management_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
+        optional_call_off_extension.extension = index
+        optional_call_off_extension.years = index
+        optional_call_off_extension.months = (index + 1) % 4
+      end
+    end
   end
 
   factory :facilities_management_procurement_detailed_search, parent: :facilities_management_procurement do
@@ -32,10 +38,13 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions_1 { 1 }
-    optional_call_off_extensions_2 { 1 }
-    optional_call_off_extensions_3 { 1 }
-    optional_call_off_extensions_4 { 1 }
+    optional_call_off_extensions do
+      build_list(:facilities_management_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
+        optional_call_off_extension.extension = index
+        optional_call_off_extension.years = index
+        optional_call_off_extension.months = (index + 1) % 4
+      end
+    end
   end
 
   factory :facilities_management_procurement_direct_award, parent: :facilities_management_procurement do
@@ -82,11 +91,12 @@ FactoryBot.define do
     procurement_buildings { build_list :facilities_management_procurement_building_london, 2 }
   end
 
-  factory :facilities_management_procurement_for_further_competition, class: FacilitiesManagement::Procurement do
+  factory :facilities_management_procurement_for_further_competition, class: 'FacilitiesManagement::Procurement' do
     contract_name { Faker::Name.unique.name }
     estimated_cost_known { false }
     tupe { false }
-    initial_call_off_period { 1 }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
     service_codes { ['C.1', 'C.2'] }
     association :user
     procurement_buildings { build_list :facilities_management_procurement_building_for_further_competition, 1 }
@@ -104,5 +114,22 @@ FactoryBot.define do
 
   factory :facilities_management_procurement_with_lifts, parent: :facilities_management_procurement_no_procurement_buildings do
     procurement_buildings { build_list :facilities_management_procurement_building_with_lifts, 1 }
+  end
+
+  factory :facilities_management_procurement_entering_requirements, class: 'FacilitiesManagement::Procurement' do
+    contract_name { Faker::Name.unique.name }
+    aasm_state { 'detailed_search' }
+    association :user
+  end
+
+  factory :facilities_management_procurement_entering_requirements_complete, parent: :facilities_management_procurement_entering_requirements do
+    estimated_cost_known { false }
+    tupe { false }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    mobilisation_period_required { false }
+    extensions_required { false }
+    service_codes { ['C.1', 'C.2'] }
   end
 end

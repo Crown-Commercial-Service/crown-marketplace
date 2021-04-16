@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= page_title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0c0c" />
+
+    <link rel="shortcut icon" href="<%= image_path('favicon.ico') %>" type="image/x-icon" />
+    <link rel="mask-icon" href="<%= image_path('mask-icon.svg') %>" color="#0b0c0c">
+    <% %w[ 180x180 167x167 152x152 ].each do |size| %>
+      <link rel="apple-touch-icon" sizes="<%= size %>" href="<%= image_path("ccs-apple-touch-icon-#{size}.png") %>">
+    <% end %>
+
+    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+
+    <%= render partial: '/shared/google_analytics' %>
+  </head>
+  <body class="govuk-template__body error-box">
+    <script>
+      document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script>
+    <% if Rails.env.production? && current_user %>
+      <%= auto_session_timeout_js %>
+    <% end %>
+
+    <div class="error-content">
+      <a href="#main-content" class="govuk-skip-link"><%= t('layouts.application.skip') %></a>
+      <%= render partial: '/layouts/cookie-banner' %>
+      <%= service_header_banner %>
+
+      <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">
+        <%= render partial: '/layouts/phase-banner' %>
+
+        <div id="main-content" >
+          <div class="back-button-wrapper govuk-!-margin-top-3 govuk-!-margin-bottom-7">
+            <%= render(partial: '/layouts/back-link') if @back_path.present? %>
+          </div>
+
+          <%= yield %>
+        </div>
+      </main>
+    </div>
+    
+    <%= render partial: '/layouts/footer' %>
+
+    <%= javascript_include_tag 'application' %>
+    <%= render partial: '/layouts/init-js' %>
+  </body>
+</html>

@@ -1,45 +1,47 @@
-$(function () {
-  if ($(".ccs-number-field").length) {
-    var input = document.querySelector('.ccs-number-field');
-    var form
+const numberInput = {
+  input: $('.ccs-number-field'),
+  form: $('form'),
 
-    if ($('.edit_facilities_management_procurement').length) {
-      form = document.querySelector('.edit_facilities_management_procurement');
-    } else if ($('.edit_facilities_management_procurement_building_service').length) {
-      form = document.querySelector('.edit_facilities_management_procurement_building_service');
-    }
+  updateNumberWithCommas() {
+    const number = this.input.val();
+    const numberString = number.toString().replace(/,/g, '');
 
-    input.value = numberWithCommas(input.value)
+    this.input.val(numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+  },
 
-    $(input).on("keyup",function (e) {
-      input.value = numberWithCommas(input.value)
+  updateNumberWithoutCommas() {
+    const number = this.input.val();
+
+    this.input.val(number.toString().replace(/,/g, ''));
+  },
+
+  showNumberWithCommas() {
+    this.updateNumberWithCommas();
+
+    this.input.on('keyup', () => {
+      this.updateNumberWithCommas();
     });
-    
-    form.addEventListener("submit", function(e){
-      input.value = numberWithoutCommas(input.value)
-    });    
-  }
 
-  if($(".ccs-integer-field").length) {
-    limitInputToInteger();
-  }
+    this.form.on('submit', () => {
+      this.updateNumberWithoutCommas();
+    });
+  },
 
-  function numberWithCommas(number) {
-    var numberString = number.toString().replace(/,/g, "");
-    return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  function numberWithoutCommas(number) {
-    return number.toString().replace(/,/g, "");
-  }
-
-  function limitInputToInteger() {
-    var input = document.querySelector('.ccs-integer-field');
-
-    $(input).on("keypress",function (e) {
-      if ((e.which < 48 || e.which > 57)) {
+  limitInputToInteger() {
+    $('.ccs-integer-field').on('keypress', (e) => {
+      if ((e.key < '0' || e.key > '9')) {
         e.preventDefault();
       }
     });
+  },
+};
+
+$(() => {
+  if ($('.ccs-number-field').length) {
+    numberInput.showNumberWithCommas();
+  }
+
+  if ($('.ccs-integer-field').length) {
+    numberInput.limitInputToInteger();
   }
 });

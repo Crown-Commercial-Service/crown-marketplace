@@ -1,6 +1,5 @@
 @import "../../settings";
 
-@import "../error-message/error-message";
 @import "../label/label";
 
 @include govuk-exports("govuk/component/character-count") {

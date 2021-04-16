@@ -5,7 +5,7 @@
 <% end %>
 <div class="procurement">
   <div class="services chooser-component <%= "govuk-form-group--error" if @procurement.errors[:service_codes].any? %>">
-    <div id="ccs-dynamic-accordian" class="govuk-grid-row">
+    <div id="ccs-accordion-with-basket" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <%= render partial: 'service_codes_checkboxes', locals: { heading: t('.question'), subtitle: @procurement.detailed_search? ? t('.subtitle_html') : t('.subtitle_quick_search'), service_specification_doc: t('.service_specification_doc')} %>
       </div>

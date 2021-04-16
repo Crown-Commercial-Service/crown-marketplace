@@ -10,9 +10,7 @@ module Base
     end
 
     def create
-      if Rails.env.development?
-        super
-      else
+      if Rails.env.production?
         self.resource ||= User.new
         @result = Cognito::SignInUser.new(params[:user][:email], params[:user][:password], request.cookies.blank?)
         @result.call
@@ -22,6 +20,8 @@ module Base
         else
           result_unsuccessful_path
         end
+      else
+        super
       end
     end
 
@@ -61,7 +61,7 @@ module Base
       service = split_url[1]
       service_type ||= split_url[2] if split_url[2] == 'supplier' || split_url[2] == 'admin'
 
-      '/' + [service, service_type, 'sign-in'].compact.join('/') + '?expired=true'
+      "/#{[service, service_type, 'sign-in'].compact.join('/')}?expired=true"
     end
 
     def authorize_user

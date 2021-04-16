@@ -17,7 +17,7 @@ module OrdnanceSurvey
   extend ActiveSupport::NumberHelper
 
   def self.create_postcode_table
-    str   = File.read(Rails.root + 'data/postcode/PostgreSQL_AddressBase_Plus_CreateTable.sql')
+    str   = File.read(Rails.root.join('data', 'postcode', 'PostgreSQL_AddressBase_Plus_CreateTable.sql'))
     query = str.slice str.index('CREATE TABLE')..str.length
     query.sub!('<INSERTTABLENAME>', 'os_address')
     query.sub!('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS')
@@ -235,7 +235,7 @@ module OrdnanceSurvey
     :csv if filename.include? '.csv'
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def self.import_postcodes_locally(directory)
     if Dir.exist?(directory)
       beginning_time = Time.current
@@ -282,7 +282,6 @@ module OrdnanceSurvey
 
   EXCLUDED_POSTCODE_AREAS = %w[GY IM JE].freeze
 
-  # rubocop:disable CyclomaticComplexity, PerceivedComplexity
   def self.import_postcodes(folder_root, access_key, secret_key, bucket, region)
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
@@ -325,6 +324,6 @@ module OrdnanceSurvey
   rescue PG::Error => e
     puts e.message
   end
-  # rubocop:enable  CyclomaticComplexity, PerceivedComplexity, Metrics/AbcSize
+  # rubocop:enable  Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 end
 # rubocop:enable Metrics/ModuleLength, Rails/Output

@@ -12,8 +12,8 @@ class FacilitiesManagement::ServiceSpecificationParser
   DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'service_specifications.csv')
 
   WORK_PACKAGE_REGEX = /^work package ([A-Z]) /i.freeze
-  SERVICE_REGEX = /^[0-9]+\.[^\.]*[Ss]ervice\s+([A-Z]:{1,2}[0-9]+)/.freeze
-  GENERIC_CLAUSE_REGEX = /^[0-9]+\.[^\.]*generic/i.freeze
+  SERVICE_REGEX = /^[0-9]+\.[^.]*[Ss]ervice\s+([A-Z]:{1,2}[0-9]+)/.freeze
+  GENERIC_CLAUSE_REGEX = /^[0-9]+\.[^.]*generic/i.freeze
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity
@@ -103,7 +103,7 @@ class FacilitiesManagement::ServiceSpecificationParser
 
   def split_number_and_clause(str)
     number = nil
-    match = str.match(/\A[\d\.]+/) # Must have a '#santize'd string
+    match = str.match(/\A[\d.]+/) # Must have a '#santize'd string
 
     if match
       str.slice!(match[0])

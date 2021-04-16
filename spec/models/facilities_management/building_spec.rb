@@ -5,26 +5,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     it { is_expected.to belong_to(:user) }
   end
 
-  describe '#building_standard' do
-    subject(:building) { create(:facilities_management_building) }
-
-    context 'when testing for standard building' do
-      it 'will return STANDARD for general building' do
-        expect(building.building_standard).to eq('STANDARD')
-      end
-    end
-
-    context 'when testing for non-standard building' do
-      before do
-        building.building_type = 'Data Centre Operations'
-      end
-
-      it 'will return NON-STANDARD for Data Centre Operations' do
-        expect(building.building_standard).to eq('NON-STANDARD')
-      end
-    end
-  end
-
   describe 'default values' do
     subject(:building) { create(:facilities_management_building_defaults) }
 
@@ -54,11 +34,9 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     end
 
     context 'when the building name is a duplicate' do
-      let(:duplicate_building) { create(:facilities_management_building, user: building.user) }
+      let(:duplicate_building) { create(:facilities_management_building, user: building.user, building_name: 'sas') }
 
-      before do
-        duplicate_building.update(building_name: building.building_name)
-      end
+      before { duplicate_building.building_name = building.building_name }
 
       it 'is not valid' do
         expect(duplicate_building.valid?(:all)).to eq false
@@ -105,7 +83,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
     context 'when the building name is within range' do
       before do
-        building.description = 'a' * 50
+        building.building_name = 'a' * 50
       end
 
       it 'is valid' do
@@ -169,7 +147,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have gia errors' do
-          expect(building.errors.details[:gia].first.dig(:error)).to eq :blank
+          expect(building.errors.details[:gia].first[:error]).to eq :blank
         end
 
         it 'will have the correct error message' do
@@ -188,7 +166,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_an_integer
+          expect(building.errors.details[:gia].first[:error]).to eq :not_an_integer
         end
 
         it 'will have the correct error message' do
@@ -207,7 +185,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :not_a_number
+          expect(building.errors.details[:gia].first[:error]).to eq :not_a_number
         end
 
         it 'will have the correct error message' do
@@ -226,7 +204,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :less_than_or_equal_to
+          expect(building.errors.details[:gia].first[:error]).to eq :less_than_or_equal_to
         end
 
         it 'will have the correct error message' do
@@ -251,7 +229,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have gia errors' do
-          expect(building.errors.details[:external_area].first.dig(:error)).to eq :blank
+          expect(building.errors.details[:external_area].first[:error]).to eq :blank
         end
 
         it 'will have the correct error message' do
@@ -270,7 +248,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_an_integer
+          expect(building.errors.details[:external_area].first[:error]).to eq :not_an_integer
         end
 
         it 'will have the correct error message' do
@@ -289,7 +267,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :not_a_number
+          expect(building.errors.details[:external_area].first[:error]).to eq :not_a_number
         end
 
         it 'will have the correct error message' do
@@ -308,7 +286,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will have the correct error' do
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :less_than_or_equal_to
+          expect(building.errors.details[:external_area].first[:error]).to eq :less_than_or_equal_to
         end
 
         it 'will have the correct error message' do
@@ -329,13 +307,13 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:external_area) { 0 }
 
         it 'will be invalid' do
-          expect(building.errors.details.dig(:gia).first.dig(:error)).to eq :combined_area
-          expect(building.errors.details.dig(:external_area).first.dig(:error)).to eq :combined_area
+          expect(building.errors.details[:gia].first[:error]).to eq :combined_area
+          expect(building.errors.details[:external_area].first[:error]).to eq :combined_area
         end
 
         it 'will have the correct error messages' do
-          expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0.'
-          expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0.'
+          expect(building.errors[:gia].first).to eq 'Internal area must be greater than 0, if the external area is 0'
+          expect(building.errors[:external_area].first).to eq 'External area must be greater than 0, if the internal area is 0'
         end
       end
 
@@ -366,7 +344,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid' do
           building.valid? :security
-          expect(building.errors.details.dig(:security_type).first.dig(:error)).to eq :blank
+          expect(building.errors.details[:security_type].first[:error]).to eq :blank
         end
       end
 
@@ -407,7 +385,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
 
         it 'will be invalid' do
-          expect(building.errors.details.dig(:other_security_type).first.dig(:error)).to eq :blank
+          expect(building.errors.details[:other_security_type].first[:error]).to eq :blank
         end
       end
 
@@ -489,7 +467,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           end
 
           it 'will be invalid' do
-            expect(building.errors.details.dig(:other_building_type).first.dig(:error)).to eq :blank
+            expect(building.errors.details[:other_building_type].first[:error]).to eq :blank
           end
         end
 
@@ -544,18 +522,18 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
-          expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
+          expect(building.errors.details[:address_line_1].first[:error]).to eq :blank
         end
 
         it 'will be valid if no postcode given' do
           building.address_postcode = nil
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_1)).to eq []
+          expect(building.errors.details[:address_line_1]).to eq []
         end
 
         it 'will be invalid if a postcode is given' do
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :blank
+          expect(building.errors.details[:address_line_1].first[:error]).to eq :blank
         end
 
         it 'will have the correct error message' do
@@ -571,18 +549,18 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
-          expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          expect(building.errors.details[:address_line_1].first[:error]).to eq :too_long
         end
 
         it 'will be valid if no postcode given' do
           building.address_postcode = nil
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_1)).to eq []
+          expect(building.errors.details[:address_line_1]).to eq []
         end
 
         it 'will be invalid if a postcode is given' do
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_1).first.dig(:error)).to eq :too_long
+          expect(building.errors.details[:address_line_1].first[:error]).to eq :too_long
         end
 
         it 'will have the correct error message' do
@@ -600,18 +578,18 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
-          expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          expect(building.errors.details[:address_line_2].first[:error]).to eq :too_long
         end
 
         it 'will be valid if no postcode given' do
           building.address_postcode = nil
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_2)).to eq []
+          expect(building.errors.details[:address_line_2]).to eq []
         end
 
         it 'will be invalid if a postcode is given' do
           building.valid? :all
-          expect(building.errors.details.dig(:address_line_2).first.dig(:error)).to eq :too_long
+          expect(building.errors.details[:address_line_2].first[:error]).to eq :too_long
         end
 
         it 'will have the correct error message' do
@@ -715,21 +693,21 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         context 'when manually adding an address' do
           it 'will be invalid' do
             building.valid? :add_address
-            expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            expect(building.errors.details[:address_postcode].first[:error]).to eq :blank
           end
         end
 
         context 'when creating a building' do
           it 'will be invalid' do
             building.valid? :new
-            expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            expect(building.errors.details[:address_postcode].first[:error]).to eq :blank
           end
         end
 
         context 'when editing a building' do
           it 'will be invalid' do
-            building.valid? :new
-            expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :blank
+            building.valid? :building_details
+            expect(building.errors.details[:address_postcode].first[:error]).to eq :blank
           end
         end
       end
@@ -739,7 +717,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           it 'will be invalid' do
             building.address_postcode = 'something'
             building.valid? :building_details
-            expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
+            expect(building.errors.details[:address_postcode].first[:error]).to eq :invalid
           end
         end
 
@@ -747,7 +725,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           it 'will be invalid' do
             building.address_postcode = '1XX X11'
             building.valid? :building_details
-            expect(building.errors.details.dig(:address_postcode).first.dig(:error)).to eq :invalid
+            expect(building.errors.details[:address_postcode].first[:error]).to eq :invalid
           end
         end
       end
@@ -761,7 +739,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
 
       it 'will be invalid' do
-        expect(building.errors.details.dig(:base).first.dig(:error)).to eq :not_selected
+        expect(building.errors.details[:base].first[:error]).to eq :not_selected
       end
     end
   end

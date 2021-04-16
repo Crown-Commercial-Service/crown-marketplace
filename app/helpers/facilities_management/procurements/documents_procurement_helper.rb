@@ -40,7 +40,7 @@ module FacilitiesManagement
           zip.print deliverable_matrix_spreadsheet.to_xlsx
 
           if @procurement.security_policy_document_file.attached? && @procurement.security_policy_document_required?
-            zip.put_next_entry 'SEC_POLICY-' + file_policy.blob.filename.to_s
+            zip.put_next_entry "SEC_POLICY-#{file_policy.blob.filename}"
             zip.print file_policy.download
           end
 
@@ -86,6 +86,7 @@ module FacilitiesManagement
 
         view = ActionView::Base.new(ActionController::Base.view_paths, {})
         view.assign(view_assignement)
+        view.class_eval { include FacilitiesManagement::Procurements::ContractDatesHelper }
         view.render(file: 'facilities_management/procurements/contracts/documents/call_off_schedule.docx.caracal')
       end
 

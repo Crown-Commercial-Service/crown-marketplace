@@ -1,5 +1,3 @@
-require 'fm_calculator/fm_direct_award_calculator.rb'
-
 module FacilitiesManagement
   class Procurement < ApplicationRecord
     include AASM
@@ -8,11 +6,13 @@ module FacilitiesManagement
 
     # buyer
     belongs_to :user,
-               foreign_key: :user_id,
                inverse_of: :procurements
 
     before_save :update_procurement_building_services, if: :service_codes_changed?
     before_save :set_state_to_results, if: :buyer_selected_contract_value?
+
+    has_many :optional_call_off_extensions, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+    accepts_nested_attributes_for :optional_call_off_extensions, allow_destroy: true
 
     has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
     has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
@@ -46,15 +46,9 @@ module FacilitiesManagement
     validates :security_policy_document_file, size: { less_than: 10.megabytes }
     validates :security_policy_document_file, antivirus: true
 
-    attr_accessor :mobilisation_start_date
     # attribute to hold and validate the user's selection from the view
     attribute :route_to_market
     validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
-
-    # attributes to hold and validate optional call off extension
-    attribute :call_off_extension_2
-    attribute :call_off_extension_3
-    attribute :call_off_extension_4
 
     # For making a copy of a procurement
     amoeba do
@@ -104,7 +98,7 @@ module FacilitiesManagement
     end
 
     def unanswered_contract_date_questions?
-      initial_call_off_period.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
+      initial_call_off_period_years.nil? || initial_call_off_period_months.nil? || initial_call_off_start_date.nil? || mobilisation_period_required.nil? || mobilisation_period_required.nil?
     end
 
     # rubocop:disable Metrics/BlockLength
@@ -278,60 +272,42 @@ module FacilitiesManagement
     SEARCH = %i[quick_search detailed_search detailed_search_bulk_upload choose_contract_value results].freeze
     SEARCH_ORDER = SEARCH.map(&:to_s)
 
-    DIRECT_AWARD_VALUE_RANGE = (0..0.149999999e7).freeze
+    DIRECT_AWARD_VALUE_RANGE = (0..1.49999999e6).freeze
 
     MAX_NUMBER_OF_PENSIONS = 99
 
+    def initial_call_off_period
+      initial_call_off_period_years.years + initial_call_off_period_months.months
+    end
+
     def initial_call_off_end_date
-      initial_call_off_start_date + initial_call_off_period.years - 1.day
+      period_end_date(initial_call_off_start_date, initial_call_off_period)
     end
 
-    def extension_period_1_start_date
-      return nil if optional_call_off_extensions_1.nil?
-
-      initial_call_off_start_date + initial_call_off_period.years
+    def mobilisation_start_date
+      mobilisation_end_date - mobilisation_period.weeks
     end
 
-    def extension_period_1_end_date
-      return nil if optional_call_off_extensions_1.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years - 1.day
+    def mobilisation_end_date
+      initial_call_off_start_date - 1.day
     end
 
-    def extension_period_2_start_date
-      return nil if optional_call_off_extensions_2.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1).years
+    def extension_period_start_date(extension)
+      initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..(extension - 1))).sum(&:period) + 1.day
     end
 
-    def extension_period_2_end_date
-      return nil if optional_call_off_extensions_2.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years - 1.day
+    def extension_period_end_date(extension)
+      initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..extension)).sum(&:period)
     end
 
-    def extension_period_3_start_date
-      return nil if optional_call_off_extensions_3.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2).years
+    def optional_call_off_extension(extension)
+      optional_call_off_extensions.find_by(extension: extension)
     end
 
-    def extension_period_3_end_date
-      return nil if optional_call_off_extensions_3.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years - 1.day
-    end
-
-    def extension_period_4_start_date
-      return nil if optional_call_off_extensions_4.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3).years
-    end
-
-    def extension_period_4_end_date
-      return nil if optional_call_off_extensions_4.nil?
-
-      initial_call_off_start_date + (initial_call_off_period + optional_call_off_extensions_1 + optional_call_off_extensions_2 + optional_call_off_extensions_3 + optional_call_off_extensions_4).years - 1.day
+    def build_optional_call_off_extensions
+      (0..3).each do |extension|
+        optional_call_off_extensions.find_or_initialize_by(extension: extension)
+      end
     end
 
     def sent_offers
@@ -364,18 +340,6 @@ module FacilitiesManagement
       procurement_suppliers.unsent.where(direct_award_value: DIRECT_AWARD_VALUE_RANGE)
     end
 
-    def mobilisation_period_start_date
-      return nil if mobilisation_period.nil?
-
-      mobilisation_period_end_date - mobilisation_period.weeks
-    end
-
-    def mobilisation_period_end_date
-      return nil if mobilisation_period.nil?
-
-      initial_call_off_start_date - 1.day
-    end
-
     def first_unsent_contract
       procurement_suppliers.find_by(aasm_state: 'unsent')
     end
@@ -385,7 +349,7 @@ module FacilitiesManagement
     end
 
     def procurement_building_service_codes_and_standards
-      procurement_building_services.map { |s| [s.code, s.service_standard] } .uniq
+      procurement_building_services.map { |s| [s.code, s.service_standard] }.uniq
     end
 
     def active_procurement_buildings_with_attribute_distinct(attribute)
@@ -464,13 +428,16 @@ module FacilitiesManagement
 
     def contract_period_status
       relevant_attributes = [
-        initial_call_off_period,
+        initial_call_off_period_years,
+        initial_call_off_period_months,
         initial_call_off_start_date,
         mobilisation_period_required,
         extensions_required
       ]
 
-      relevant_attributes.all?(&:nil?) ? :not_started : :completed
+      return :not_started if relevant_attributes.all?(&:nil?)
+
+      relevant_attributes.any?(&:nil?) ? :incomplete : :completed
     end
 
     def services_status
@@ -510,8 +477,7 @@ module FacilitiesManagement
     end
 
     def remove_existing_spreadsheet_import
-      spreadsheet_import.remove_spreadsheet_file
-      spreadsheet_import.delete
+      spreadsheet_import.destroy
     end
 
     def sorted_active_procurement_buildings
@@ -524,7 +490,7 @@ module FacilitiesManagement
     end
 
     def services_require_questions?
-      (service_codes & services_requiring_questions).any?
+      (procurement_building_service_codes & services_requiring_questions).any?
     end
 
     def can_be_deleted?
@@ -560,7 +526,7 @@ module FacilitiesManagement
     def save_data_for_procurement
       self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
       self.lot_number_selected_by_customer = false
-      self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
+      self.eligible_for_da = FMCalculator::DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
       set_suppliers_for_procurement
     end
 
@@ -656,5 +622,11 @@ module FacilitiesManagement
     end
 
     VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx'].freeze
+
+    def period_end_date(start_date, period)
+      end_date = start_date + period
+      end_date -= 1.day if start_date.day == end_date.day
+      end_date
+    end
   end
 end

@@ -5,7 +5,7 @@
       <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
       <p>
-        <%= link_to 'Sign in with Cognito', local_session_path, role: 'button', class: 'govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8' %>
+        <%= govuk_button_start('Sign in with Cognito', local_session_path, class: 'govuk-!-margin-top-2 govuk-!-margin-bottom-8') %>
       </p>
     </div>
   </div>

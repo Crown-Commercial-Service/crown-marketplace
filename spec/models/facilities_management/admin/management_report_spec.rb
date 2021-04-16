@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the start date is a valid date' do
-        expect(management_report.errors.details[:start_date].first.dig(:error)).to eq(:not_a_date)
+        expect(management_report.errors.details[:start_date].first[:error]).to eq(:not_a_date)
       end
 
       it 'has the correct error message' do
@@ -41,8 +41,9 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the end date is a valid date' do
-        expect(management_report.errors.details[:end_date].first.dig(:error)).to eq(:not_a_date)
+        expect(management_report.errors.details[:end_date].first[:error]).to eq(:not_a_date)
       end
+
       it 'has the correct error message' do
         expect(management_report.errors[:end_date].first).to eq 'Enter a valid ‘To’ date'
       end
@@ -56,7 +57,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the start date is date in the past' do
-        expect(management_report.errors.details[:start_date].first.dig(:error)).to eq(:date_before_or_equal_to)
+        expect(management_report.errors.details[:start_date].first[:error]).to eq(:date_before_or_equal_to)
       end
 
       it 'has the correct error message' do
@@ -72,7 +73,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the end date is date in the past' do
-        expect(management_report.errors.details[:end_date].first.dig(:error)).to eq(:date_before_or_equal_to)
+        expect(management_report.errors.details[:end_date].first[:error]).to eq(:date_before_or_equal_to)
       end
 
       it 'has the correct error message' do
@@ -89,7 +90,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'is not valid' do
-        expect(management_report.errors.details[:end_date].first.dig(:error)).to eq(:must_be_before_start_date)
+        expect(management_report.errors.details[:end_date].first[:error]).to eq(:must_be_before_start_date)
       end
 
       it 'has the correct error message' do

@@ -207,8 +207,18 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
 
     describe 'GET summary' do
       context 'when the user wants to edit contract_periods' do
+        context 'when the contract periods are not started' do
+          before { procurement.update(initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+          it 'redirects to the edit page with contract_period step' do
+            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
+
+            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'contract_period')
+          end
+        end
+
         context 'when the contract periods are not complete' do
-          before { procurement.update(initial_call_off_period: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+          before { procurement.update(initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
 
           it 'redirects to the edit page with contract_period step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
@@ -218,6 +228,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         context 'when the contract periods are complete' do
+          before { procurement.update(mobilisation_period_required: false, extensions_required: false) }
+
           it 'renders the summary page' do
             get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
 
@@ -830,10 +842,10 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       end
 
       describe '#pagination' do
-        let(:building1) { create(:facilities_management_building, user: procurement.user) }
-        let(:building2) { create(:facilities_management_building, user: procurement.user) }
-        let(:building3) { create(:facilities_management_building, user: procurement.user) }
-        let(:building4) { create(:facilities_management_building, user: procurement.user) }
+        let(:building1) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 1') }
+        let(:building2) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 2') }
+        let(:building3) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 3') }
+        let(:building4) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 4') }
 
         let(:building1_active) { '1' }
         let(:building2_active) { '0' }
@@ -1018,7 +1030,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         let(:spreadsheet_action) { :deliverables_matrix }
 
         it 'downloads the document with the right filename' do
-          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx"'
+          expect(response.headers['Content-Disposition']).to include 'filename="Attachment 2 - Statement of Requirements - Deliverables Matrix %28DA%29.xlsx"'
         end
       end
 
@@ -1027,7 +1039,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         let(:spreadsheet_action) { :price_matrix }
 
         it 'downloads the document with the right filename' do
-          expect(response.headers['Content-Disposition']).to eq 'attachment; filename="Attachment 3 - Price Matrix (DA).xlsx"'
+          expect(response.headers['Content-Disposition']).to include 'filename="Attachment 3 - Price Matrix %28DA%29.xlsx"'
         end
       end
     end

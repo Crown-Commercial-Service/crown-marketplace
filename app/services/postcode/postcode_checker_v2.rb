@@ -5,12 +5,12 @@ module Postcode
   class PostcodeCheckerV2
     def self.destructure_postcode(postcode)
       result = { valid: false, input: normalise_postcode(postcode) }
-      input  = ('' + normalise_postcode(postcode)).strip
+      input  = normalise_postcode(postcode).to_s.strip
       matches = input.match(/^(([A-Z][A-Z]{0,1})([0-9][A-Z0-9]{0,1})) {0,}(([0-9])([A-Z]{2}))$/i)
       unless matches.nil?
         result = {
           valid: true,
-          full_postcode: matches[1] + ' ' + matches[4],
+          full_postcode: "#{matches[1]} #{matches[4]}",
           postcode_area: matches[2],
           out_code: matches[1],
           postcode_district: matches[1],

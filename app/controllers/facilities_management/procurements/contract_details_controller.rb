@@ -20,7 +20,6 @@ module FacilitiesManagement
 
       def edit; end
 
-      # rubocop:disable Metrics/CyclomaticComplexity
       def update
         case @page_name
         when :pricing, :what_next, :important_information
@@ -39,7 +38,6 @@ module FacilitiesManagement
           update_contract_details
         end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity
 
       private
 
@@ -112,7 +110,6 @@ module FacilitiesManagement
         if @procurement.save(context: @page_name)
           route_after_update
         else
-          remove_invalid_security_policy_document_file if @page_name == :security_policy_document
           set_page_detail_from_view_name
           render :edit
         end
@@ -179,17 +176,7 @@ module FacilitiesManagement
       end
 
       def create_contact_data(contact)
-        @procurement.send('build_' + contact) if @procurement.send(contact).blank?
-      end
-
-      def remove_invalid_security_policy_document_file
-        # This is so that activestorage destroys invalid files. Proper validations will come with Rails 6, but
-        # for now, this is the best, albeit ugliest, workaround. User will lose their original security policy document
-        # if trying to replace it with an invalid one.
-        return if @procurement.errors[:security_policy_document_file].none?
-
-        @procurement.reload.security_policy_document_file.purge
-        @procurement.assign_attributes(procurement_params.except(:security_policy_document_file))
+        @procurement.send("build_#{contact}") if @procurement.send(contact).blank?
       end
 
       def create_first_pension_fund

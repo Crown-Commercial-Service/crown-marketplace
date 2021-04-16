@@ -18,6 +18,10 @@ addons:
   postgresql: '11'
 sudo: true
 before_install:
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+  - mkdir geckodriver
+  - tar -xzf geckodriver-v0.29.0-linux64.tar.gz -C geckodriver
+  - export PATH=$PATH:$PWD/geckodriver
   - gem install bundler
 before_script:
   - sudo apt-get -qq update
@@ -31,6 +35,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake assets:precompile
   - bundle exec rake
+  - bundle exec rake cucumber:pipeline
   - rm public/assets/.sprockets-manifest-*.json
 after_script:
   - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT

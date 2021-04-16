@@ -7,6 +7,7 @@ module FacilitiesManagement::Supplier::SupplierRatesHelper
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def self.work_package_to_services(services, work_packages)
     full_services = []
 
@@ -24,4 +25,5 @@ module FacilitiesManagement::Supplier::SupplierRatesHelper
       full_services.push(service)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end

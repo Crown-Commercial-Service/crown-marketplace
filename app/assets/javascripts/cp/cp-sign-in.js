@@ -1,56 +1,45 @@
-function cReg(){
-    return new RegExp ("^.{8,}");
+function cReg() {
+  return new RegExp('^.{8,}');
 }
-function pReg(){
-    return new RegExp("^(?=.*?[#?!@£$%^&*-])");
+function pReg() {
+  return new RegExp('^(?=.*?[#?!@£$%^&*-])');
 }
-function uReg(){
-    return new RegExp("^(?=.*?[A-Z])");
+function uReg() {
+  return new RegExp('^(?=.*?[A-Z])');
 }
-function numReg(){
-    return new RegExp("^(?=.*[0-9])");
-}
-function emailReg(){
-    return new RegExp("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})");
+function numReg() {
+  return new RegExp('^(?=.*[0-9])');
 }
 
-function passwordStrength(t){
-    var theTests = [
-        [cReg(), $('#passeight')],
-        [pReg(), $('#passsymbol')],
-        [uReg(), $('#passcap')],
-        [numReg(),$('#passnum')]
-    ];
-    var arrayLength = theTests.length;
+function passwordStrength(input) {
+  const theTests = [
+    [cReg(), $('#passeight')],
+    [pReg(), $('#passsymbol')],
+    [uReg(), $('#passcap')],
+    [numReg(), $('#passnum')],
+  ];
 
-    t.on('keyup', function(){
-        for (var i = 0; i < arrayLength; i++) {
-            if(theTests[i][0].test($(this).val())){
-                theTests[i][1].removeClass('wrong').addClass('correct');
-            }else{
-                theTests[i][1].removeClass('correct').addClass('wrong');
-            }
-        }
+  input.on('keyup', () => {
+    theTests.forEach((test) => {
+      if (test[0].test(input.val())) {
+        test[1].removeClass('wrong').addClass('correct');
+      } else {
+        test[1].removeClass('correct').addClass('wrong');
+      }
     });
+  });
 }
 
+$(() => {
+  const form = $('#main-content form.ccs-form');
 
+  if (form.length) {
+    const formIDs = ['cop_sign_in_form', 'cop_change_password_form', 'cop_register', 'cop_confirmation_code', 'cog_forgot_password_request_form', 'cog_forgot_password_reset_form'];
 
-
-
-
-
-jQuery(document).ready(function(){
-    var f = $('#main-content').find('form.ccs-form');
-
-    if(f.length){
-      var formIDs = ['cop_sign_in_form','cop_change_password_form','cop_register','cop_confirmation_code','cog_forgot_password_request_form','cog_forgot_password_reset_form'];
-
-      $.each(formIDs, function(i, val){
-        if(f.is('#'+val)){
-            var pass01 = 'password01';   
-            passwordStrength($('#'+pass01));
-        }
-      });
-    }
+    formIDs.forEach((formID) => {
+      if (form.is(`#${formID}`)) {
+        passwordStrength($('#password01'));
+      }
+    });
+  }
 });

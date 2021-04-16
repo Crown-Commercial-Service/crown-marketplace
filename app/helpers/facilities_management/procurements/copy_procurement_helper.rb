@@ -24,7 +24,7 @@ module FacilitiesManagement::Procurements::CopyProcurementHelper
   def find_contract_id
     return nil if params[:contract_id].nil?
 
-    params[:contract_id].class == String ? params[:contract_id] : params[:contract_id].keys.first
+    params[:contract_id].instance_of?(String) ? params[:contract_id] : params[:contract_id].keys.first
   end
 
   private

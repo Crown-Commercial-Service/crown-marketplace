@@ -517,9 +517,8 @@ class FacilitiesManagement::SpreadsheetImporter
       save_lift_data(procurement_building_service, pbs[:object]) if procurement_building_service.code == 'C.5'
       procurement_building_service.save
       pbs[:object] = procurement_building_service
+      pbs[:object].reload
     end
-
-    building[:procurement_building][:procurement_building_services].each { |pbs| pbs[:object].reload }
   end
 
   def save_lift_data(procurement_building_service, object)

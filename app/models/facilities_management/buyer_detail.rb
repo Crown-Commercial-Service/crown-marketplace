@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class BuyerDetail < ApplicationRecord
-    belongs_to :user, foreign_key: :user_id, inverse_of: :buyer_detail
+    belongs_to :user, inverse_of: :buyer_detail
 
     attr_accessor :postcode_entry
 

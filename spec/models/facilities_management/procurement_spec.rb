@@ -109,6 +109,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       context 'when the estimated_annual_cost is not present' do
         it 'expected to not be valid' do
           procurement.estimated_cost_known = true
+          procurement.estimated_annual_cost = nil
           expect(procurement.valid?(:estimated_annual_cost)).to eq false
         end
       end
@@ -275,7 +276,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when all statuses are not_started or cannot_start' do
         before do
-          %i[estimated_cost_known tupe initial_call_off_period initial_call_off_start_date mobilisation_period_required extensions_required].each do |attribute|
+          %i[estimated_cost_known tupe initial_call_off_period_years initial_call_off_period_months initial_call_off_start_date mobilisation_period_required extensions_required].each do |attribute|
             procurement[attribute] = nil
           end
           procurement.service_codes = []
@@ -504,23 +505,28 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       it 'creates procurement_suppliers' do
         expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::ProcurementSupplier.count }.by(2)
       end
+
       it 'creates procurement_suppliers with the right direct award value' do
         procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.direct_award_value).to eq da_value_test
         expect(procurement.procurement_suppliers.last.direct_award_value).to eq da_value_test1
       end
+
       it 'creates procurement_suppliers with the right supplier id' do
         procurement.set_state_to_results_if_possible
         expect(procurement.procurement_suppliers.first.supplier_id).to eq supplier_ids[0]
       end
+
       it 'saves assessed_value' do
         procurement.set_state_to_results_if_possible
         expect(procurement.assessed_value).not_to be_nil
       end
+
       it 'saves lot_number' do
         procurement.set_state_to_results_if_possible
         expect(procurement.lot_number).not_to be_nil
       end
+
       it 'create a frozen rate' do
         procurement.set_state_to_results_if_possible
         expect(CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement.id).size).to eq 155
@@ -723,20 +729,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
           expect(procurement.procurement_building_services_not_used_in_calculation.size).to eq 0
         end
       end
-
-      context 'when customer has some services unpriced and when buyer input present' do
-        let(:codes) { %w[G.1 L.7 L.8] }
-        let(:services_standard) { [nil, nil, nil] }
-        let(:estimated_cost_known) { true }
-
-        it 'some_services_unpriced_and_no_buyer_input? returns false' do
-          expect(procurement.some_services_unpriced_and_no_buyer_input?).to be false
-        end
-
-        it 'does save lot number' do
-          expect(procurement.lot_number).not_to be nil
-        end
-      end
     end
   end
 
@@ -897,152 +889,209 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe 'initial_call_off_period' do
+    before do
+      procurement.initial_call_off_period_years = initial_call_off_period_years
+      procurement.initial_call_off_period_months = initial_call_off_period_months
+    end
+
+    context 'when the years are 0 and months 3' do
+      let(:initial_call_off_period_years) { 0 }
+      let(:initial_call_off_period_months) { 3 }
+
+      it 'is 3 months' do
+        expect(procurement.initial_call_off_period).to eq(3.months)
+      end
+    end
+
+    context 'when the years are 4 and months are 0' do
+      let(:initial_call_off_period_years) { 4 }
+      let(:initial_call_off_period_months) { 0 }
+
+      it 'is 4 years' do
+        expect(procurement.initial_call_off_period).to eq(4.years)
+      end
+    end
+
+    context 'when the years are 2 and months are 6' do
+      let(:initial_call_off_period_years) { 2 }
+      let(:initial_call_off_period_months) { 6 }
+
+      it 'is 2 years and 6 months' do
+        expect(procurement.initial_call_off_period).to eq(2.years + 6.months)
+      end
+    end
+  end
+
+  describe 'initial_call_off_end_date' do
+    before do
+      procurement.initial_call_off_period_years = initial_call_off_period_years
+      procurement.initial_call_off_period_months = initial_call_off_period_months
+      procurement.initial_call_off_start_date = initial_call_off_start_date
+    end
+
+    context 'when the start date is 2022/03/01 and the period is 3 years and 4 months' do
+      let(:initial_call_off_start_date) { Time.new(2022, 3, 1).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 3 }
+      let(:initial_call_off_period_months) { 4 }
+
+      it 'the initial call-off end date is 2025/06/30' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2025, 6, 30).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2021/28/02 and the period is 6 years and 1 month' do
+      let(:initial_call_off_start_date) { Time.new(2021, 2, 28).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 6 }
+      let(:initial_call_off_period_months) { 1 }
+
+      it 'the initial call-off end date is 2027/03/27' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2027, 3, 27).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2021/07/18 and the period is 1 years and 7 months' do
+      let(:initial_call_off_start_date) { Time.new(2021, 7, 18).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 1 }
+      let(:initial_call_off_period_months) { 7 }
+
+      it 'the initial call-off end date is 2023/02/17' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2023, 2, 17).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2024/02/29 and the period is 5 years and 0 months' do
+      let(:initial_call_off_start_date) { Time.new(2024, 2, 29).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 5 }
+      let(:initial_call_off_period_months) { 0 }
+
+      it 'the initial call-off end date is 2029/02/28' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2029, 2, 28).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2022/01/31 and the period is 0 years and 5 months' do
+      let(:initial_call_off_start_date) { Time.new(2022, 1, 31).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 0 }
+      let(:initial_call_off_period_months) { 5 }
+
+      it 'the initial call-off end date is 2022/06/30' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2022, 6, 30).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2023/10/10 and the period is 6 years and 3 months' do
+      let(:initial_call_off_start_date) { Time.new(2023, 10, 10).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 6 }
+      let(:initial_call_off_period_months) { 3 }
+
+      it 'the initial call-off end date is 2030/01/9' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2030, 1, 9).in_time_zone('London').to_date)
+      end
+    end
+  end
+
+  describe 'mobilisation period start and end dates' do
+    context 'when considering the mobilisation_end_date' do
+      it 'is one day before the initial_call_off_start_date' do
+        expect(procurement.mobilisation_end_date).to eq(procurement.initial_call_off_start_date - 1.day)
+      end
+    end
+
+    context 'when considering the mobilisation_start_date' do
+      before { procurement.mobilisation_period = mobilisation_period }
+
+      context 'and the mobilisation_period is 2 weeks' do
+        let(:mobilisation_period) { 2 }
+
+        it 'is 2 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 2.weeks - 1.day)
+        end
+      end
+
+      context 'and the mobilisation_period is 4 weeks' do
+        let(:mobilisation_period) { 4 }
+
+        it 'is 4 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 4.weeks - 1.day)
+        end
+      end
+
+      context 'and the mobilisation_period is 8 weeks' do
+        let(:mobilisation_period) { 8 }
+
+        it 'is 8 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 8.weeks - 1.day)
+        end
+      end
+    end
+  end
+
   describe 'extension periods start and end dates' do
     let(:procurement) { create(:facilities_management_procurement_with_extension_periods) }
 
-    describe '#extension_period_1_start_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the initial call off period has ended' do
-          initial_call_off_period_end_date = procurement.initial_call_off_start_date + procurement.initial_call_off_period.years - 1.day
-
-          expect(procurement.extension_period_1_start_date).to eq(initial_call_off_period_end_date + 1.day)
+    describe 'extension_period_start_date' do
+      context 'when there is one extenesion period' do
+        it 'is expected to return the date one day after the end of the initial call off period' do
+          expect(procurement.extension_period_start_date(0)).to eq(procurement.initial_call_off_end_date + 1.day)
         end
       end
 
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_1 = nil
+      context 'when there is a second extension period' do
+        it 'is expected to return the date one day after the end of the first extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
 
-          expect(procurement.extension_period_1_start_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_1_end_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the initial call off period has ended' do
-          extension_2_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1).years
-
-          expect(procurement.extension_period_1_end_date).to eq(extension_2_start_date - 1.day)
+          expect(procurement.extension_period_start_date(1)).to eq(extension_period_start_date + 1.day)
         end
       end
 
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_1 = nil
+      context 'when there is a third extension period' do
+        it 'is expected to return the date one day after the end of the second extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
 
-          expect(procurement.extension_period_1_end_date).to be_nil
+          expect(procurement.extension_period_start_date(2)).to eq(extension_period_start_date + 1.day)
+        end
+      end
+
+      context 'when there is a forth extension period' do
+        it 'is expected to return the date one day after the end of the third extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
+
+          expect(procurement.extension_period_start_date(3)).to eq(extension_period_start_date + 1.day)
         end
       end
     end
 
-    describe '#extension_period_2_start_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the first extension period period has ended' do
-          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1)
-          extension_period_1_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
+    describe 'extension_period_end_date' do
+      context 'when there is one extenesion period' do
+        it 'is expected to return the date one year after the end of the initial call off period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
 
-          expect(procurement.extension_period_2_start_date).to eq(extension_period_1_end_date + 1.day)
+          expect(procurement.extension_period_end_date(0)).to eq(extension_period_end_date)
         end
       end
 
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_2 = nil
+      context 'when there is a second extension period' do
+        it 'is expected to return the date one year after the end of the first extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
 
-          expect(procurement.extension_period_2_start_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_2_end_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the first extension period has ended' do
-          extension_3_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2).years
-
-          expect(procurement.extension_period_2_end_date).to eq(extension_3_start_date - 1.day)
+          expect(procurement.extension_period_end_date(1)).to eq(extension_period_end_date)
         end
       end
 
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_2 = nil
+      context 'when there is a third extension period' do
+        it 'is expected to return the date one year after the end of the second extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
 
-          expect(procurement.extension_period_2_end_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_3_start_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the second extension period period has ended' do
-          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2)
-          extension_period_2_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
-
-          expect(procurement.extension_period_3_start_date).to eq(extension_period_2_end_date + 1.day)
+          expect(procurement.extension_period_end_date(2)).to eq(extension_period_end_date)
         end
       end
 
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_3 = nil
+      context 'when there is a forth extension period' do
+        it 'is expected to return the date one year after the end of the third extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..3).sum(&:period)
 
-          expect(procurement.extension_period_3_start_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_3_end_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the initial call off period has ended' do
-          extension_4_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3).years
-
-          expect(procurement.extension_period_3_end_date).to eq(extension_4_start_date - 1.day)
-        end
-      end
-
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_3 = nil
-
-          expect(procurement.extension_period_3_end_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_4_start_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the third extension period has ended' do
-          expected_years = (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3)
-          extension_period_3_end_date = procurement.initial_call_off_start_date + expected_years.years - 1.day
-
-          expect(procurement.extension_period_4_start_date).to eq(extension_period_3_end_date + 1.day)
-        end
-      end
-
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_4 = nil
-
-          expect(procurement.extension_period_4_end_date).to be_nil
-        end
-      end
-    end
-
-    describe '#extension_period_4_end_date' do
-      context 'when there is an extension period selected' do
-        it 'is expected to return a date after the initial call off period has ended' do
-          extension_5_start_date = procurement.initial_call_off_start_date + (procurement.initial_call_off_period + procurement.optional_call_off_extensions_1 + procurement.optional_call_off_extensions_2 + procurement.optional_call_off_extensions_3 + procurement.optional_call_off_extensions_4).years
-
-          expect(procurement.extension_period_4_end_date).to eq(extension_5_start_date - 1.day)
-        end
-      end
-
-      context 'when an extension period isn\'t selected' do
-        it 'is expected to return nil' do
-          procurement.optional_call_off_extensions_4 = nil
-
-          expect(procurement.extension_period_4_end_date).to be_nil
+          expect(procurement.extension_period_end_date(3)).to eq(extension_period_end_date)
         end
       end
     end
@@ -1071,7 +1120,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when the name is not case sensitive' do
         it 'can be saved if name is not case sensitive' do
-          pension_fund2.name = pension_fund1.name + 'abc'
+          pension_fund2.name = "#{pension_fund1.name}abc"
           procurement.procurement_pension_funds = [pension_fund1, pension_fund2]
           expect(pension_fund1.case_sensitive_error).to eq false
           expect(pension_fund2.case_sensitive_error).to eq false
@@ -1118,15 +1167,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1134,15 +1183,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1150,15 +1199,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1166,15 +1215,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[D.3 M.1 O.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq true
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq true
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1182,15 +1231,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[C.1 M.1 N.1] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1198,15 +1247,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[C.1 C.2 C.3] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
     end
@@ -1218,15 +1267,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[L.6 L.7 L.8] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns true' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq true
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq true
         end
       end
 
@@ -1234,15 +1283,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 D.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
 
@@ -1250,15 +1299,15 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
         let(:codes) { %w[G.1 G.2 L.6] }
 
         it 'all_services_unpriced_and_no_buyer_input returns false' do
-          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:all_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'some_services_unpriced_and_no_buyer_input returns true' do
-          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)). to eq false
+          expect(procurement.send(:some_services_unpriced_and_no_buyer_input?)).to eq false
         end
 
         it 'all_services_missing_framework_and_benchmark_price? returns false' do
-          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)). to eq false
+          expect(procurement.send(:all_services_missing_framework_and_benchmark_price?)).to eq false
         end
       end
     end
@@ -1335,12 +1384,104 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
+  describe '.contract_name_status' do
+    subject(:status) { procurement.contract_name_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, contract_name: contract_name) }
+
+    context 'when the contract name section has not been completed' do
+      let(:contract_name) { '' }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the contract name section has been completed' do
+      let(:contract_name) { 'My contract name' }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.estimated_annual_cost_status' do
+    subject(:status) { procurement.estimated_annual_cost_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, estimated_cost_known: estimated_cost_known) }
+
+    context 'when the estimated cost section has not been completed' do
+      let(:estimated_cost_known) { nil }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the estimated cost section has not been' do
+      let(:estimated_cost_known) { false }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.tupe_status' do
+    subject(:status) { procurement.tupe_status }
+
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, tupe: tupe) }
+
+    context 'when the tupe section has not been completed' do
+      let(:tupe) { nil }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the tupe section has been completed' do
+      let(:tupe) { true }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.contract_period_status' do
+    subject(:status) { procurement.contract_period_status }
+
+    context 'when all contract period sections have not been started' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when all contract period sections have not been completed' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:incomplete)
+      end
+    end
+
+    context 'when all contract period sections have been completed' do
+      let(:procurement) { create(:facilities_management_procurement_detailed_search, mobilisation_period_required: false, extensions_required: false) }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
   describe '.services_status' do
     subject(:status) { procurement.services_status }
 
-    let(:procurement) do
-      create(:facilities_management_procurement_detailed_search, service_codes: service_codes)
-    end
+    let(:procurement) { create(:facilities_management_procurement_detailed_search, service_codes: service_codes) }
 
     context 'when user has not yet selected services' do
       let(:service_codes) { [] }
@@ -1504,7 +1645,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when no volumes or standards are required for any services' do
         before do
-          procurement.update(service_codes: ['C.19', 'D.3'])
+          procurement.update(service_codes: ['C.1', 'C.19', 'D.3'])
 
           procurement_building1.procurement_building_services.delete_all
           procurement_building2.procurement_building_services.delete_all
@@ -1789,7 +1930,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
       end
     end
 
-    context 'when considering authorised_contact_detail' do
+    context 'when considering notices_contact_detail' do
       let(:contact_detail) { :notices_contact_detail }
 
       context 'when there is no notices_contact_detail' do
