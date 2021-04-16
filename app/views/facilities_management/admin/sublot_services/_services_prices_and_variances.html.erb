@@ -12,7 +12,7 @@
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
           <li>
-            <%= link_to t('.rate_error'), "##{ @invalid_services.keys.first}_label", data: {errortype: 'invalid-input'} %>
+            <%= link_to t(".#{first_error_type}"), "##{ @invalid_services.keys.first}_label", data: {errortype: 'invalid-input'} %>
           </li>
       </ul>
     </div>
@@ -44,7 +44,7 @@
               <%= service['name'] %>
             </legend>
           </th>
-          <% list_service_types.each do |service_type| %>
+          <% list_service_types(service['code']).each do |service_type| %>
             <th scope="col" class="govuk-table__header app-custom-class govuk-!-font-weight-bold left"><%= service_type %></th>
           <% end %>
         </tr>
@@ -66,13 +66,13 @@
 
                 <%= label_tag "rates_#{work_pckg['code']}", "#{work_pckg['code']} #{work_pckg['name']}", id: "#{work_pckg['code']}_label", class: 'govuk-label govuk-checkboxes__label' %>
               </div>
-                <%= sublot_1a_error_message if service_has_error?(work_pckg['code']) %>
+                <%= sublot_1a_error_message(@invalid_services[work_pckg['code']].first[1][:error_type]) if service_has_error?(work_pckg['code']) %>
               </div>
             </th>
-            <% list_service_types.each do |service_type|   %>
+            <% list_service_types_price.each do |service_type|   %>
               <td class="govuk-table__cell supplier-rates-td">
                 <% if service_type_has_error(work_pckg['code'], service_type) %>
-                  <% input_value = @invalid_services[work_pckg['code']][service_type] %>
+                  <% input_value = @invalid_services[work_pckg['code']][service_type][:value] %>
                   <% class_list = 'govuk-input govuk-input--width-3 govuk-input--error' %>
                 <% else %>
                   <% input_value = determine_rate_card_service_price_text(service_type, work_pckg['code'], @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts) %>
@@ -106,12 +106,12 @@
       <% variance_has_error = service_has_error?(variance) %>
       <tr class="govuk-table__row <%= 'govuk-form-group--error' if variance_has_error %>">
       <th scope="row" class="govuk-table__header govuk-!-width-two-thirds govuk-!-font-weight-regular supplier-rates-td  <%= 'govuk-!-padding-left-2' if variance_has_error %>">
-        <%= label_tag "rate[#{variance}]", t(".#{variance_names[i]}", id: "#{variance}_label") %>
-        <%= sublot_1a_error_message if variance_has_error %>
+        <%= label_tag "rate[#{variance}]", t(".#{variance_names[i]}"), id: "#{variance}_label" %>
+        <%= sublot_1a_error_message(@invalid_services[variance][:error_type]) if variance_has_error %>
       </th>
       <td class="govuk-table__cell supplier-rates-td">
         <% if variance_has_error %>
-          <% input_value =  @invalid_services[variance] %>
+          <% input_value =  @invalid_services[variance][:value] %>
           <% class_list = 'govuk-input govuk-input--width-3 govuk-input--error' %>
         <% else %>
           <% input_value = @variance_supplier_data[variance_values[i].to_sym] %>
