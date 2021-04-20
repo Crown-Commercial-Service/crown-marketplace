@@ -124,10 +124,6 @@ RUN apk add nginx
 RUN mkdir -p /run/nginx
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-RUN apk add nginx
-RUN mkdir -p /run/nginx
-COPY default.conf /etc/nginx/conf.d/default.conf
-
 # Run the web app on port 8080
 ENV PORT=8080
 EXPOSE 8080
