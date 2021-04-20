@@ -21,6 +21,7 @@ module FacilitiesManagement
           @spreadsheet_import.start_import!
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
+          @spreadsheet_import.destroy
           render :new
         end
       end
