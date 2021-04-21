@@ -107,3 +107,7 @@ body.js-enabled #ccs-accordion-with-basket {
 .error-content {
   flex: 1 0 auto;
 }
+
+.govuk-no-border th, .govuk-no-border td {
+  border: 0 !important;
+}
