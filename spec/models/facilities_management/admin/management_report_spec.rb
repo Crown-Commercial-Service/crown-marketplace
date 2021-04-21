@@ -10,8 +10,41 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:start_date) }
-    it { is_expected.to validate_presence_of(:end_date) }
+    context 'when the start date is blank' do
+      before do
+        management_report.start_date_dd = ''
+        management_report.start_date_mm = ''
+        management_report.start_date_yyyy = ''
+
+        management_report.save
+      end
+
+      it 'verifies that the start date is a valid date' do
+        expect(management_report.errors.of_kind?(:start_date, :not_a_date)).to be true
+      end
+
+      it 'has the correct error message' do
+        expect(management_report.errors[:start_date].first).to eq 'Enter a valid ‘From’ date'
+      end
+    end
+
+    context 'when the end date is blank' do
+      before do
+        management_report.end_date_dd = ''
+        management_report.end_date_mm = ''
+        management_report.end_date_yyyy = ''
+
+        management_report.save
+      end
+
+      it 'verifies that the end date is a valid date' do
+        expect(management_report.errors.of_kind?(:end_date, :not_a_date)).to be true
+      end
+
+      it 'has the correct error message' do
+        expect(management_report.errors[:end_date].first).to eq 'Enter a valid ‘To’ date'
+      end
+    end
 
     context 'when the start date is invalid' do
       before do
@@ -23,7 +56,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the start date is a valid date' do
-        expect(management_report.errors.details[:start_date].first[:error]).to eq(:not_a_date)
+        expect(management_report.errors.of_kind?(:start_date, :not_a_date)).to be true
       end
 
       it 'has the correct error message' do
@@ -41,7 +74,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the end date is a valid date' do
-        expect(management_report.errors.details[:end_date].first[:error]).to eq(:not_a_date)
+        expect(management_report.errors.of_kind?(:end_date, :not_a_date)).to be true
       end
 
       it 'has the correct error message' do
@@ -57,7 +90,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the start date is date in the past' do
-        expect(management_report.errors.details[:start_date].first[:error]).to eq(:date_before_or_equal_to)
+        expect(management_report.errors.of_kind?(:start_date, :date_before_or_equal_to)).to be true
       end
 
       it 'has the correct error message' do
@@ -73,7 +106,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'verifies that the end date is date in the past' do
-        expect(management_report.errors.details[:end_date].first[:error]).to eq(:date_before_or_equal_to)
+        expect(management_report.errors.of_kind?(:end_date, :date_before_or_equal_to)).to be true
       end
 
       it 'has the correct error message' do
@@ -90,7 +123,7 @@ RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
       end
 
       it 'is not valid' do
-        expect(management_report.errors.details[:end_date].first[:error]).to eq(:must_be_before_start_date)
+        expect(management_report.errors.of_kind?(:end_date, :date_after_or_equal_to)).to be true
       end
 
       it 'has the correct error message' do

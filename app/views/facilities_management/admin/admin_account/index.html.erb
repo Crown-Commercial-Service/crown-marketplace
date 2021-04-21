@@ -2,10 +2,14 @@
 <div class="govuk-body">
   <div class="govuk-grid-row govuk-!-padding-left-3">
     <span class="govuk-caption-l"><%= @current_login_email %></span>
-    <span class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
-    <h1 class="govuk-heading-m govuk-!-margin-0"><%= t('.dashboard_assessed_value') %></h1>
+    <h1 class="govuk-heading-xl"><%= t('.dashboard_header') %></span>
   </div>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.dashboard_assessed_value') %></span>
+    </div>
+  </div>
   <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <%= account_dashboard_panel(t('.dashboard_average_rate'), edit_facilities_management_admin_service_rate_path(slug: 'average-framework-rates'), t('.dashboard_manage_rate')) %>

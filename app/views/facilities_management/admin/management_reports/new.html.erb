@@ -58,4 +58,4 @@
 
 <% end %>
 
-<a href="<%= facilities_management_admin_path %>" class="govuk-link govuk-caption-m" alt="Return to admin dashboard" aria-label="Return to admin dashboard"><%= t('.return_link') %></a>
+<%= link_to t('.return_link'), facilities_management_admin_path, class: 'govuk-link govuk-!-font-size-19', aria: { label: t('.return_link') } %>
