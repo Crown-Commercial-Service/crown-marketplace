@@ -204,8 +204,8 @@ class ProcurementCsvExport
   end
 
   def self.yes_no(flag)
-    return 'Yes' if flag.class == TrueClass
-    return 'No' if flag.class == FalseClass
+    return 'Yes' if flag.instance_of?(TrueClass)
+    return 'No' if flag.instance_of?(FalseClass)
 
     ''
   end
@@ -266,7 +266,7 @@ class ProcurementCsvExport
   def self.format_period_start_end(procurement)
     return '' if procurement.unanswered_contract_date_questions?
 
-    "#{procurement.initial_call_off_period} years, " +
+    "#{initial_call_off_period(procurement)}, " +
       [procurement.initial_call_off_start_date.strftime(DATE_FORMAT),
        procurement.initial_call_off_end_date.strftime(DATE_FORMAT)].join(' - ')
   end
@@ -275,23 +275,16 @@ class ProcurementCsvExport
     return '' if procurement.extensions_required.nil?
     return 'None' unless procurement.extensions_required
 
-    extensions = [
-      procurement.optional_call_off_extensions_1,
-      procurement.optional_call_off_extensions_2,
-      procurement.optional_call_off_extensions_3,
-      procurement.optional_call_off_extensions_4
-    ].compact
+    return '' if procurement.optional_call_off_extensions.none?
 
-    return '' if extensions.none?
-
-    "#{helpers.pluralize(extensions.size, 'extension')}, " +
-      extensions.map { |ext| helpers.pluralize(ext, 'year') } .join(', ')
+    "#{helpers.pluralize(procurement.optional_call_off_extensions.count, 'extension')}, " +
+      procurement.optional_call_off_extensions.sorted.map { |ext| period_to_string(ext.years, ext.months) }.join(', ')
   end
 
   def self.format_lot_number(lot_number)
     return '' if lot_number.blank?
 
-    'Sub-lot ' + lot_number
+    "Sub-lot #{lot_number}"
   end
 
   def self.localised_datetime(datetime)
@@ -341,27 +334,38 @@ class ProcurementCsvExport
     procurement.estimated_cost_known ? delimited_with_pence(procurement.estimated_annual_cost) : 'None'
   end
 
+  def self.initial_call_off_period(procurement)
+    period_to_string(procurement.initial_call_off_period_years, procurement.initial_call_off_period_months)
+  end
+
   def self.mobilisation_period(procurement)
     return '' if procurement.mobilisation_period_required.nil?
     return 'None' if !procurement.mobilisation_period_required || procurement.mobilisation_period.nil?
 
-    "#{procurement.mobilisation_period} weeks, " +
-      [procurement.mobilisation_period_start_date.strftime(DATE_FORMAT),
-       procurement.mobilisation_period_end_date.strftime(DATE_FORMAT)].join(' - ')
+    "#{helpers.pluralize(procurement.mobilisation_period, 'weeks')}, " +
+      [procurement.mobilisation_start_date.strftime(DATE_FORMAT),
+       procurement.mobilisation_end_date.strftime(DATE_FORMAT)].join(' - ')
+  end
+
+  def self.period_to_string(years, months)
+    years_text = years.positive? ? helpers.pluralize(years, 'year') : nil
+    months_text = months.positive? ? helpers.pluralize(months, 'month') : nil
+
+    [years_text, months_text].compact.join(' and ')
   end
 
   def self.da_suppliers(procurement)
     procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
+               .map { |s| supplier_names[s.supplier_id] }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.da_suppliers_costs(procurement)
     procurement.procurement_suppliers.sort_by(&:direct_award_value)
-               .map { |s| delimited_with_pence(s.direct_award_value) } .join(LIST_ITEM_SEPARATOR)
+               .map { |s| delimited_with_pence(s.direct_award_value) }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.shortlisted_suppliers(procurement)
-    procurement.procurement_suppliers.map { |s| supplier_names[s.supplier_id] } .join(LIST_ITEM_SEPARATOR)
+    procurement.procurement_suppliers.map { |s| supplier_names[s.supplier_id] }.join(LIST_ITEM_SEPARATOR)
   end
 
   def self.building_types(procurement)

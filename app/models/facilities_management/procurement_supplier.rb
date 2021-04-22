@@ -5,7 +5,7 @@ module FacilitiesManagement
 
     default_scope { order(direct_award_value: :asc) }
     belongs_to :procurement, class_name: 'FacilitiesManagement::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_suppliers
-    belongs_to :supplier, foreign_key: :supplier_id, inverse_of: :contracts, class_name: 'FacilitiesManagement::SupplierDetail'
+    belongs_to :supplier, inverse_of: :contracts, class_name: 'FacilitiesManagement::SupplierDetail'
 
     has_one_attached :contract_documents_zip
 
@@ -221,7 +221,7 @@ module FacilitiesManagement
 
     # Custom Validation
     def real_date?(date)
-      DateTime.new(send((date.to_s + '_yyyy').to_sym).to_i, send((date.to_s + '_mm').to_sym).to_i, send((date.to_s + '_dd').to_sym).to_i).in_time_zone('London')
+      DateTime.new(send("#{date}_yyyy".to_sym).to_i, send("#{date}_mm".to_sym).to_i, send("#{date}_dd".to_sym).to_i).in_time_zone('London')
       true
     rescue StandardError
       false
@@ -244,7 +244,7 @@ module FacilitiesManagement
     AWAITING_SIGNATURE_REMINDER_DAYS = 14
 
     def convert_to_boolean(contract_boolean)
-      send(contract_boolean + '=', ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))
+      send("#{contract_boolean}=", ActiveModel::Type::Boolean.new.cast(send(contract_boolean)))
     end
 
     def generate_contract_number
@@ -283,7 +283,7 @@ module FacilitiesManagement
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-decline-reason': reason_for_declining,
         'da-offer-1-accept-date': format_date_time_numeric(supplier_response_date),
-        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/procurements/' + procurement.id + '/contracts/' + id
+        'da-offer-1-link': "#{ENV['RAILS_ENV_URL']}/facilities-management/procurements/#{procurement.id}/contracts/#{id}"
       }.to_json
 
       # TODO: This prevents crashing on local when sidekiq isn't running
@@ -299,7 +299,7 @@ module FacilitiesManagement
         'da-offer-1-buyer-1': procurement.user.buyer_detail.organisation_name,
         'da-offer-1-name': procurement.contract_name,
         'da-offer-1-expiry': format_date_time_numeric(contract_expiry_date),
-        'da-offer-1-link': ENV['RAILS_ENV_URL'] + '/facilities-management/supplier/contracts/' + id,
+        'da-offer-1-link': "#{ENV['RAILS_ENV_URL']}/facilities-management/supplier/contracts/#{id}",
         'da-offer-1-supplier-1': supplier_name,
         'da-offer-1-reference': contract_number,
         'da-offer-1-not-signed-reason': reason_for_not_signing,

@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement) do
     create(:facilities_management_procurement_with_extension_periods,
-           initial_call_off_period: 7,
+           initial_call_off_period_years: 7,
            lot_number_selected_by_customer: lot_number_selected_by_customer)
   end
 
@@ -34,17 +34,17 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         # rubocop:disable RSpec/ExampleLength
         it 'results has the correct values' do
           expected = {
-            subtotal1: 2339,
-            year1totalcharges: 2758,
+            subtotal1: 3752,
+            year_1_total_charges: 4810,
             cafm: 0,
             helpdesk: 0,
-            variance: 0,
-            tupe: 0,
-            manage: 96,
-            corporate: 120,
-            profit: 131,
-            mobilisation: 70,
-            subyearstotal: 2677
+            london_variance: 0,
+            tupe_risk_premium: 0,
+            management_overhead: 535,
+            corporate_overhead: 207,
+            profit: 129,
+            mobilisation: 188,
+            subsequent_yearly_charge: 4581
           }
 
           expected.each do |key, rounded_value|
@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
         # rubocop:enable RSpec/ExampleLength
 
         it 'sum uom is correct' do
-          expect(report.sum_uom.round).to eq(18821)
+          expect(report.sum_uom.round).to eq(32294)
         end
 
         it 'sum benchmark is correct' do
@@ -78,13 +78,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       end
 
       it 'sum benchmark is correct' do
-        expect(report.sum_benchmark.round).to eq(22101)
+        expect(report.sum_benchmark.round).to eq(22189)
       end
     end
   end
-
-  # TODO: public method #uom_values isn't called from anywhere and errors when
-  # called. It may need removing.
 
   describe '#values_to_average' do
     subject(:values_to_average) { report.values_to_average }
@@ -94,7 +91,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     before { report.calculate_services_for_buildings(supplier_id) }
 
     it 'contains correct values' do
-      expect(values_to_average.map(&:round)).to eq([18821, 0])
+      expect(values_to_average.map(&:round)).to eq([32294, 0])
     end
 
     # TODO: contexts:
@@ -111,7 +108,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       it 'returns expected number of suppliers' do
         expect(selected_suppliers.first.class).to eq(FacilitiesManagement::SupplierDetail)
-        expect(selected_suppliers.size).to eq(16)
+        expect(selected_suppliers.size).to eq(15)
       end
     end
 

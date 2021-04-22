@@ -37,7 +37,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns title stored in locale file with prefix' do
-        expected_title = 'Error: ' + t('layouts.application.title')
+        expected_title = "Error: #{t('layouts.application.title')}"
         expect(helper.page_title).to eq(expected_title)
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns title stored in locale file with prefix' do
-        expected_title = 'Error: ' + t('layouts.application.title')
+        expected_title = "Error: #{t('layouts.application.title')}"
         expect(helper.page_title).to eq(expected_title)
       end
     end
@@ -62,7 +62,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns fields joined by semi-colons' do
-        expected_title = 'prefix: page: section: ' + t('layouts.application.title')
+        expected_title = "prefix: page: section: #{t('layouts.application.title')}"
         expect(helper.page_title).to eq(expected_title)
       end
     end
@@ -80,11 +80,11 @@ RSpec.describe ApplicationHelper, type: :helper do
       let(:html) { helper.hidden_fields_for_previous_steps_and_responses(journey) }
 
       it 'renders hidden field for question 1' do
-        expect(html).to have_css('input[type="hidden"][name="question-1"][value="answer-1"]', visible: false)
+        expect(html).to have_css('input[type="hidden"][name="question-1"][value="answer-1"]', visible: :hidden)
       end
 
       it 'renders hidden field for question 2' do
-        expect(html).to have_css('input[type="hidden"][name="question-2"][value="answer-2"]', visible: false)
+        expect(html).to have_css('input[type="hidden"][name="question-2"][value="answer-2"]', visible: :hidden)
       end
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'will return a populated hash when the attribute has translations' do
         proc = FacilitiesManagement::Procurement.new
 
-        validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period)
+        validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period_years)
         expect(validation_message.class.name).to eq 'Hash'
         expect(validation_message.empty?).to eq false
       end
@@ -138,7 +138,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when rendering HTML' do
       it 'will list elements' do
-        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period, 'facilities_management_procurement_initial_call_off_period')
+        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period_years, 'facilities_management_procurement_initial_call_off_period')
         expect(validation_output).to include('div')
       end
     end

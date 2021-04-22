@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.4'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -33,9 +33,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'geocoder', '>= 1.6.1'
 gem 'activerecord-postgis-adapter', '>= 5.2.2'
 gem 'uk_postcode'
-gem 'axlsx', github: 'randym/axlsx', branch: 'release-3.0.0'
 gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx', '>= 3.0.2'
+gem 'caxlsx', '>= 3.1.0'
 gem 'caxlsx_rails', '>= 0.6.2'
 gem 'phonejack'
 gem 'holidays'
@@ -45,14 +44,13 @@ gem 'jquery-rails', '~> 4.4.0'
 gem 'rollbar', '~> 2.24.0'
 
 # for dfe sign in
-gem 'omniauth', '~> 1.9.0'
-gem 'omniauth-oauth2', '~> 1.6.0'
-# updating to the latest gem version causes an error when response_type is :code. A fix is coming but has not been merged in yet, so will be using this forked repo until then
-gem 'omniauth_openid_connect', git: 'https://github.com/iceraluk/omniauth_openid_connect.git'
+gem 'omniauth', '~> 2.0.0'
+gem 'omniauth-oauth2', '~> 1.7.1'
+
 gem 'json-jwt', '>= 1.11.0'
 
 # for authentication
-gem 'devise', '~> 4.7.2'
+gem 'devise', '~> 4.7.3'
 
 # for timing out when session expires
 gem 'auto-session-timeout', '~> 0.9.6'
@@ -116,7 +114,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.0'
+gem 'active_storage_validations', '>= 0.9.1'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -142,12 +140,13 @@ group :development, :test do
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 4.0.1'
+  gem 'rspec-rails', '>= 4.0.2'
   gem 'shoulda-matchers', '>= 4.2.0'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
+  gem 'rubocop', '>= 1.11.0'
+  gem 'rubocop-rspec', '>= 2.2.0'
+  gem 'rubocop-rails', '>= 2.9.1', require: false
   gem 'rubyXL', '>= 3.4.6'
-  gem 'i18n-tasks', '>= 0.9.31'
+  gem 'i18n-tasks', '>= 0.9.33'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
@@ -163,7 +162,12 @@ group :development do
 end
 
 group :test do
-  gem 'webmock'
+  gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
+  gem 'cucumber-rails', '>= 2.2.0', require: false
+  gem 'database_cleaner', '>= 2.0.1'
+  gem 'site_prism'
+  gem 'axe-core-capybara'
+  gem 'axe-core-cucumber'
 end

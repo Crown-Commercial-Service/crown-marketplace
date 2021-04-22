@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::Supplier::SupplierRatesHelper, type: :helpe
           { 'code': 'P.1', 'has_standards': true, 'work_package_code': 'P' },
           { 'code': 'P.2', 'has_standards': true, 'work_package_code': 'P' }
         ]
-        work_packages_with_rates = FacilitiesManagement::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates_list)
+        work_packages_with_rates = described_class.add_rates_to_work_packages(work_packages, rates_list)
         expect(work_packages_with_rates[0]['rates']).to be_an_instance_of(Array)
       end
     end

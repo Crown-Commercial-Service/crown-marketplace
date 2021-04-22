@@ -13,7 +13,7 @@ module FacilitiesManagement
     before_action :set_current_step, only: %i[show edit]
     before_action :set_view_name, only: :show
     before_action :set_page_detail_from_view_name, only: :show, if: -> { page_definitions.key?(@view_name.to_sym) }
-    before_action :set_summary_data, only: :summary
+    before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
     def index
       @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -29,9 +29,7 @@ module FacilitiesManagement
       redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
     end
 
-    def summary
-      redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if @procurement.send("#{@summary_page}_status") == :not_started
-    end
+    def summary; end
 
     def new
       @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
@@ -365,15 +363,9 @@ module FacilitiesManagement
               :initial_call_off_start_date_dd,
               :initial_call_off_start_date_mm,
               :initial_call_off_start_date_yyyy,
-              :initial_call_off_period,
+              :initial_call_off_period_years,
+              :initial_call_off_period_months,
               :mobilisation_period,
-              :optional_call_off_extensions_1,
-              :optional_call_off_extensions_2,
-              :optional_call_off_extensions_3,
-              :optional_call_off_extensions_4,
-              :call_off_extension_2,
-              :call_off_extension_3,
-              :call_off_extension_4,
               :mobilisation_period_required,
               :extensions_required,
               :lot_number,
@@ -383,7 +375,8 @@ module FacilitiesManagement
               procurement_buildings_attributes: [:id,
                                                  :building_id,
                                                  :active,
-                                                 service_codes: []]
+                                                 { service_codes: [] }],
+              optional_call_off_extensions_attributes: %i[id extension years months extension_required]
             )
     end
 
@@ -400,6 +393,7 @@ module FacilitiesManagement
       @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
       set_buildings if params['step'] == 'buildings'
       set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
+      @procurement.build_optional_call_off_extensions if params['step'] == 'contract_period'
     end
 
     def set_buildings
@@ -409,10 +403,20 @@ module FacilitiesManagement
       set_paginated_buildings_data
     end
 
-    def set_summary_data
-      @summary_page = params['summary']
+    def summary_page
+      @summary_page ||= params['summary']
+    end
 
-      case @summary_page
+    def redirect_to_edit_from_summary
+      redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if summary_page_status == :not_started || (summary_page == 'contract_period' && summary_page_status == :incomplete)
+    end
+
+    def summary_page_status
+      @summary_page_status ||= @procurement.send("#{summary_page}_status")
+    end
+
+    def set_summary_data
+      case summary_page
       when 'buildings'
         set_active_procurement_buildings
       when 'service_requirements'

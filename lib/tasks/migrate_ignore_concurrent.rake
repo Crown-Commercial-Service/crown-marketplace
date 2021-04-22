@@ -1,7 +1,7 @@
 namespace :db do
   namespace :migrate do
     desc 'Run db:migrate but ignore ActiveRecord::ConcurrentMigrationError errors update'
-    # rubocop:disable RedundantBegin, HandleExceptions
+    # rubocop:disable Style/RedundantBegin
     task ignore_concurrent: :environment do
       begin
         Rake::Task['db:migrate'].invoke
@@ -9,6 +9,6 @@ namespace :db do
         # Do nothing
       end
     end
-    # rubocop:enable RedundantBegin, HandleExceptions
+    # rubocop:enable Style/RedundantBegin
   end
 end

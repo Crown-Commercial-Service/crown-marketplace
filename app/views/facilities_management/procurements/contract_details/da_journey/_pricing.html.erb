@@ -12,20 +12,23 @@
   <span class="govuk-!-font-size-19"><%= t('.lowest_price_supplier') %> </span>
 </blockquote>
 
-<table class="govuk-summary-list govuk-!-width-two-thirds" >
-  <tbody>
-    <tr class="govuk-summary-list__value govuk-heading-m govuk-!-margin-bottom-0 govuk-!-padding-0">
-      <td class= "govuk-!-width-full"></td>
-      <td style="min-width:10em; text-align:right;"></td>
-    </tr>
-  <% sorted_supplier_list[1..-1].each.with_index(2) do |supplier, index| %>
-    <tr class="govuk-summary-list__value govuk-heading-m govuk-!-margin-bottom-0">
-      <td class= "govuk-!-width-full"><%= "Supplier #{index}" %></td>
-      <td style="min-width:10em; text-align:right;"><%= number_to_currency(supplier[:price]) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <hr class="govuk-section-break govuk-section-break--visible">
+    <dl class="govuk-summary-list">
+      <% sorted_supplier_list[1..-1].each.with_index(2) do |supplier, index| %>
+        <div class="govuk-summary-list__row govuk-heading-m">
+          <dt class="govuk-summary-list__key">
+            <%= "Supplier #{index}" %>
+          </dt>
+          <dd class="govuk-summary-list__value ccs-summary-list__value">
+            <%= number_to_currency(supplier[:price]) %>
+          </dd>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+</div>
 
 <div class="govuk-body govuk-!-width-two-thirds govuk-!-margin-bottom-4">
   <p>

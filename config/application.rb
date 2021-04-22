@@ -7,6 +7,8 @@ require 'active_job/railtie'
 require 'active_record/railtie'
 require 'active_storage/engine'
 require 'action_controller/railtie'
+# require 'action_mailbox/engine'
+# require 'action_text/engine'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 # require "action_cable/engine"
@@ -20,7 +22,10 @@ Bundler.require(*Rails.groups)
 module Marketplace
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    # config.load_defaults 5.2
+    config.load_defaults 6.0
+
+    Rails.autoloaders.main.ignore(Rails.root.join('storage'))
 
     config.autoload_paths += %W[#{config.root}/app/workers #{config.root}/storage]
 
@@ -60,6 +65,8 @@ module Marketplace
     end
 
     config.active_job.queue_adapter = :sidekiq unless Rails.env.test?
+
+    config.exceptions_app = routes
   end
 
   def self.feedback_email_address
@@ -117,7 +124,7 @@ module Marketplace
     return unless dfe_signin_enabled?
 
     # Workaround for env var value including quotes in test environment
-    URI.parse(dfe_signin_url.sub(/^\"/, '').sub(/\"$/, ''))
+    URI.parse(dfe_signin_url.sub(/^"/, '').sub(/"$/, ''))
   end
 
   def self.dfe_signin_client_id

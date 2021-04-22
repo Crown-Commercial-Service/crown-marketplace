@@ -13,7 +13,7 @@
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row" id="contract-period">
       <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.initial_call_off_period') %> </th>
-      <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"><%= initial_call_off_period(@procurement.initial_call_off_period)%></td>
+      <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"><%= initial_call_off_period %></td>
     </tr>
     <tr class="govuk-table__row" id="contract-period-description">
       <td class="govuk-table__cell govuk-!-padding-right-2"></td>
@@ -35,15 +35,14 @@
       </tr>
     <% end %>
     <% if @procurement.extensions_required %>
-      <% (1..4).each do |period| %>
-        <% break if @procurement.send("optional_call_off_extensions_#{period}").nil? %>
-        <tr class="govuk-table__row" id="<%= "call-off-extension-#{period}" %>">
-          <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.optional_call_off_extension_period') %> <%= period %> </th>
-          <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"> <%= pluralize(@procurement.send("optional_call_off_extensions_#{period}"), 'year') %> </td>
+      <% @procurement.optional_call_off_extensions.sorted.each do |optional_call_off_extension| %>
+        <tr class="govuk-table__row" id="<%= "call-off-extension-#{optional_call_off_extension.extension}" %>">
+          <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.optional_call_off_extension_period') %> <%= optional_call_off_extension.extension + 1 %> </th>
+          <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"> <%= optional_call_off_extensions_period(optional_call_off_extension) %> </td>
         </tr>
-        <tr class="govuk-table__row" id="<%= "call-off-extension-#{period}-description" %>">
+        <tr class="govuk-table__row" id="<%= "call-off-extension-#{optional_call_off_extension.extension}-description" %>">
           <td class="govuk-table__cell govuk-!-padding-right-2"></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"> <%= extension_period_description(period) %> </td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"> <%= extension_period_description(optional_call_off_extension.extension) %> </td>
         </tr>
       <% end %>
     <% else %>

@@ -1,18 +1,7 @@
 <div class="govuk-body">
   <div class="grid-column-two-thirds">
     <a class="govuk-back-link govuk-!-margin-top-6 ccs-no-print" aria-label=<%= t('.back') %> href="."><%= t('.back') %></a>
-    <% if @what_was_deleted %>
-      <div class="govuk-grid-row govuk-!-padding-left-3">
-        <div class="govuk-inset-text cmp-inset-text--success ">
-          <h1 class="govuk-heading-m">
-            <%= t('.deleted') %>
-          </h1>
-          <div class="govuk-body">
-            <%= t('.was_deleted', contract_name: @what_was_deleted) %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= govuk_notification_banner(:success, t('.deleted')) { t('.was_deleted', contract_name: @what_was_deleted) } if @what_was_deleted %>
 
     <h1 class="govuk-heading-xl"><%= t('.manage_procurements') %></h1>
     <% content_for :page_title, t('.manage_procurements') %>
@@ -20,32 +9,32 @@
     <br>
 
     <div class="ccs-info-panel">
-      <h1 class="govuk-heading-m"><%= t('.searches_title') %></h1>
+      <h2 class="govuk-heading-m"><%= t('.searches_title') %></h2>
       <%= render partial: 'facilities_management/procurements/dashboard_tables/searches' %>
     </div>
 
     <div class="ccs-info-panel">
-      <h1 class="govuk-heading-l govuk-!-font-size-27"><%= t('.direct_award_title') %></h1>
+      <h2 class="govuk-heading-l govuk-!-font-size-27"><%= t('.direct_award_title') %></h2>
 
-      <h2 class="govuk-heading-m"><%= t('.in-draft-title') %></h2>
+      <h3 class="govuk-heading-m"><%= t('.in-draft-title') %></h3>
 
       <%= render partial: 'facilities_management/procurements/dashboard_tables/in_draft' %>
 
-      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.sent_offers') %></h1>
+      <h3 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.sent_offers') %></h3>
 
       <%= render partial: 'facilities_management/procurements/dashboard_tables/sent_offers' %>
 
-      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.contracts_title') %></h1>
+      <h3 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.contracts_title') %></h3>
 
       <%= render partial: 'facilities_management/procurements/dashboard_tables/contracts' %>
 
-      <h1 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.closed_title') %></h1>
+      <h3 class="govuk-heading-m govuk-!-margin-top-8"><%= t('.closed_title') %></h3>
 
       <%= render partial: 'facilities_management/procurements/dashboard_tables/closed' %>
     </div>
 
     <div class="ccs-info-panel">
-      <h1 class="govuk-heading-m"><%= t('.further_competition') %></h1>
+      <h2 class="govuk-heading-m"><%= t('.further_competition') %></h2>
       <%= render partial: 'facilities_management/procurements/dashboard_tables/further_competition' %>
     </div>
   </div>

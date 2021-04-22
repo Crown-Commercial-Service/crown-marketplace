@@ -468,24 +468,23 @@ docx.p 'EFFECTIVE DATE & DATE THE CONTRACT PERIOD / TERM COMMENCES:  [Day Month 
 
 docx.p 'MOBILISATION PERIOD: None', font: 'Calibri' unless @procurement.mobilisation_period_required
 
-docx.p "MOBILISATION PERIOD: #{@procurement.mobilisation_period} weeks – #{@procurement.mobilisation_period_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_period_end_date.strftime('%d-%m-%Y')}", font: 'Calibri' if @procurement.mobilisation_period_required
+docx.p "MOBILISATION PERIOD: #{mobilisation_period} – #{@procurement.mobilisation_start_date.strftime('%d-%m-%Y')} to #{@procurement.mobilisation_end_date.strftime('%d-%m-%Y')}", font: 'Calibri' if @procurement.mobilisation_period_required
 
 docx.p "START DATE / DATE THE CALL-OFF INITIAL PERIOD COMMENCES / DATE CONTRACT YEAR 1 COMMENCES: #{@procurement.initial_call_off_start_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
 docx.p "DATE CALL-OFF INITIAL PERIOD ENDS: #{@procurement.initial_call_off_end_date.strftime('%d-%m-%Y')}", font: 'Calibri'
 
-docx.p "CALL-OFF INITIAL PERIOD: #{@procurement.initial_call_off_period} years", font: 'Calibri'
+docx.p "CALL-OFF INITIAL PERIOD: #{initial_call_off_period}", font: 'Calibri'
 
 docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.extensions_required ? 'Yes' : 'None'}", font: 'Calibri'
 
-(1..4).each do |call_off_period|
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: Not used", font: 'Calibri' if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
-
-  next if !@procurement.extensions_required || !@procurement.send("optional_call_off_extensions_#{call_off_period}?")
-
-  start_date_method = "extension_period_#{call_off_period}_start_date"
-  end_date_method = "extension_period_#{call_off_period}_end_date"
-  docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period}: #{@procurement.send(start_date_method).strftime('%d-%m-%Y')} to #{@procurement.send(end_date_method).strftime('%d-%m-%Y')}", font: 'Calibri'
+(0..3).each do |call_off_period|
+  if !@procurement.extensions_required || @procurement.optional_call_off_extension(call_off_period).nil?
+    docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period + 1}: Not used", font: 'Calibri'
+    next
+  else
+    docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period + 1}: #{@procurement.extension_period_start_date(call_off_period).strftime('%d-%m-%Y')} to #{@procurement.extension_period_end_date(call_off_period).strftime('%d-%m-%Y')}", font: 'Calibri'
+  end
 end
 
 docx.p
@@ -523,9 +522,13 @@ docx.page
 
 docx.p 'INDEXATION', bold: true, font: 'Calibri'
 
-docx.p "The Payment Index that shall be applied in relation to indexation shall be the Consumer Price Index.
-    Indexation shall only apply from #{(@procurement.initial_call_off_start_date + 1.year).strftime('%d-%m-%Y')} and shall be applied on every yearly anniversary of the Start Date.
-    Indexation shall be applied to the Baseline Monthly Payment.", font: 'Calibri'
+if @procurement.initial_call_off_period < 1.year
+  docx.p 'Not Applicable', font: 'Calibri'
+else 
+  docx.p "The Payment Index that shall be applied in relation to indexation shall be the Consumer Price Index.
+          Indexation shall only apply from #{(@procurement.initial_call_off_start_date + 1.year).strftime('%d-%m-%Y')} and shall be applied on every yearly anniversary of the Start Date.
+          Indexation shall be applied to the Baseline Monthly Payment.", font: 'Calibri'
+end
 
 docx.p
 

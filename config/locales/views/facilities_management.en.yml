@@ -30,9 +30,11 @@ en:
         facilities_management/admin/rates:
           attributes:
             benchmark:
-              not_a_number: The rate must be a number, like 2.60 or 8
+              not_a_number: The rate must be a number, like 0.26 or 1
+              out_of_range: The rate must be less than or equal to 1
             framework:
-              not_a_number: The rate must be a number, like 2.60 or 8
+              not_a_number: The rate must be a number, like 0.26 or 1
+              out_of_range: The rate must be less than or equal to 1
         facilities_management/admin/suppliers_admin:
           attributes:
             address_county:
@@ -51,7 +53,7 @@ en:
               too_long: The town or city name for this building must be 50 characters or less
             contact_email:
               blank: Enter an email address in the correct format, for example name@organisation.gov.uk
-              email: Enter an email address in the correct format, for example name@organisation.gov.uk
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
             contact_name:
               blank: You must enter a name for the contact
               too_long: The contact name cannot be more than 100 characters
@@ -73,7 +75,7 @@ en:
               account_must_be_supplier: The user must have supplier access
               account_must_be_unique: The user cannot belong to another supplier
               account_must_exist: The supplier must be registered with the facilities management service
-              email: Enter an email address in the correct format, for example name@organisation.gov.uk
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
         facilities_management/building:
           attributes:
             address_line_1:
@@ -103,14 +105,14 @@ en:
               too_long: Building description must be 50 characters or less
             external_area:
               blank: External area must be a number between 0 and 999,999,999
-              combined_area: External area must be greater than 0, if the internal area is 0.
+              combined_area: External area must be greater than 0, if the internal area is 0
               less_than_or_equal_to: External area must be a number between 0 and 999,999,999
               not_a_number: External area must be a whole number
               not_an_integer: Enter a whole number for the size of external area of this building
               required: External area must be greater than 0
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
-              combined_area: Internal area must be greater than 0, if the external area is 0.
+              combined_area: Internal area must be greater than 0, if the external area is 0
               less_than_or_equal_to: Internal area must be a number between 0 and 999,999,999
               not_a_number: Gross Internal Area (GIA) must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
@@ -171,6 +173,8 @@ en:
               service_requirements_incomplete: "‘Service requirements’ must be ‘COMPLETED’"
               services_incomplete: "‘Services’ must be ‘COMPLETED’"
               services_not_present: You must select at least one service
+              total_contract_length: Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total
+              total_contract_period: The total initial call-off period must be between 1 month and 7 years
               tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
@@ -197,19 +201,23 @@ en:
               after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
               not_a_date: Initial call-off period end date is not a valid date
-            initial_call_off_period:
-              blank: Enter initial call-off period
-              greater_than_or_equal_to: Initial call-off period must be between 1 and 7 years
-              less_than_or_equal_to: Initial call-off period must be between 1 and 7 years
-              not_a_number: Enter initial call-off period
-              not_an_integer: Initial call-off period must be a whole number
+            initial_call_off_period_months:
+              blank: Enter the months for the initial call-off period
+              greater_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              less_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              not_a_number: The months for the initial call-off period must be a whole number
+              not_an_integer: The months for the initial call-off period must be a whole number
+            initial_call_off_period_years:
+              blank: Enter the years for the initial call-off period
+              greater_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              less_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              not_a_number: The years for the initial call-off period must be a whole number
+              not_an_integer: The years for the initial call-off period must be a whole number
               not_present: You must answer all questions about ‘Contract period’
             initial_call_off_start_date:
-              after: Initial call-off period start date must be today or in the future
-              after_2100: Initial call-off period start date cannot be later than 31 December 2100
-              after_or_equal_to: Initial call-off period start date must be today or in the future
               blank: Enter a valid initial call-off start date
               date_after_or_equal_to: Initial call-off period start date must be today or in the future
+              date_before: Initial call-off period start date cannot be later than 31 December 2100
               not_a_date: Enter a valid initial call-off start date
             local_government_pension_scheme:
               inclusion: Select one answer
@@ -221,8 +229,8 @@ en:
             mobilisation_period:
               blank: Enter mobilisation period length
               greater_than: Mobilisation length must be between 1 and 52 weeks
-              greater_than_or_equal_to: Mobilisation period must be a minimum of 4 weeks when TUPE is selected
-              less_than_or_equal_to: Mobilisation length cannot be more than 52 weeks
+              greater_than_or_equal_to: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
               not_a_number: Enter mobilisation length
               not_an_integer: Enter mobilisation length as a whole number
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
@@ -237,23 +245,6 @@ en:
               taken: This name is already in use
               too_long: Search name must be 100 characters or less
               too_short: Enter the name for the search
-            optional_call_off_extensions_1:
-              blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
-              not_an_integer: Extension period must be a whole number and greater than 0
-              too_long: Call-off contract period, including extensions, must not be more than 10 years in total
-            optional_call_off_extensions_2:
-              blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
-              not_an_integer: Extension period must be a whole number and greater than 0
-            optional_call_off_extensions_3:
-              blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
-              not_an_integer: Extension period must be a whole number and greater than 0
-            optional_call_off_extensions_4:
-              blank: Enter extension period
-              greater_than_or_equal_to: Extension period must be a whole number and greater than 0
-              not_an_integer: Extension period must be a whole number and greater than 0
             payment_method:
               inclusion: Select one payment method
               not_present_contract_details: You must answer the question about ‘Payment method’
@@ -304,6 +295,21 @@ en:
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
               not_present_contract_details: You must answer the question about ‘Notices contact details’
+        facilities_management/procurement/optional_call_off_extension:
+          attributes:
+            base:
+              minimum_period: The total for extension period %{extension} must be greater than 1 month
+            months:
+              blank: Enter the months for the extension period
+              greater_than_or_equal_to: The months for the extension period must be between 0 and 11
+              less_than_or_equal_to: The months for the extension period must be between 0 and 11
+              not_a_number: The months for the extension period must be a whole number
+              not_an_integer: The months for the extension period must be a whole number
+            years:
+              blank: Enter the years for the extension period
+              greater_than_or_equal_to: The years for the extension period must be greater than or equal to 0
+              not_a_number: The years for the extension period must be a whole number
+              not_an_integer: The years for the extension period must be a whole number
         facilities_management/procurement_authorised_contact_detail:
           attributes:
             email:
@@ -462,6 +468,7 @@ en:
   dashboard:
     index:
       admin_link: Managing framework and supplier data
+      supplier_link: Facilities management supplier account
   facilities_management:
     admin:
       admin_account:
@@ -509,6 +516,7 @@ en:
           heading: Average framework rates
           heading_two: Average framework variances
           leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate_percentage_a: Rate (%)
           rate_pound_a: Rate (£)
         call-off-benchmark-rates:
@@ -517,6 +525,7 @@ en:
           heading_two: Benchmark variances
           leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
           note: "*Use this column for normal price if Standard A isn’t applicable"
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate_a: Rate (£) *Standard A
           rate_b: Rate (£) Standard B
           rate_c: Rate (£) Standard C
@@ -553,8 +562,9 @@ en:
           heading: Sub-lot 1a services, prices, and variances
           item: Item
           note: The tick boxes in the first column indicate the services this supplier can provide.
+          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
-          rate_error: The rate must be a number, like 2.60 or 8
+          rate_error: The rate must be a number, like 0.26 or 1
           return_link: Return to supplier framework data
           services_and_prices: Services and prices
           td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
@@ -799,6 +809,68 @@ en:
         name: RM3830 Service requirements and standards.pdf
         text: Read the service specification document
     home:
+      accessibility_statement:
+        CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+        ability_net: AbilityNet (opens in a new tab)
+        ability_net_link: https://mcmw.abilitynet.org.uk/
+        accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
+        accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard (opens in a new tab)
+        accessibility_regulations_1: The accessibility regulations
+        accessibility_regulations_2: if they’re not essential to providing our services.
+        accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
+        accessibility_regulations_link_text: do not require us to fix PDFs or other documents published before 23 September 2018 (opens in a new tab)
+        any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
+        call: call 0345 410 2222
+        email: email
+        email_link: info@crowncommercial.gov.uk
+        equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
+        equality_link: https://www.equalityadvisoryservice.com/
+        equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
+        heading: Facilities Management (FM) Accessibility statement
+        heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
+        heading_enforcement: Enforcement procedure
+        heading_how_accessible: How accessible this website is
+        heading_how_we_tested: How we tested this website
+        heading_non_accessible: Non accessible content
+        heading_non_compliance: Non compliance with the accessibility regulations
+        heading_preparation: Preparation of this accessibility statement
+        heading_reporting: Reporting accessibility problems with this website
+        heading_technical_information: Technical information about this website’s accessibility
+        heading_what_to_do: What to do if you cannot access parts of this website
+        if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
+        list_1_change_colours: change colours, contrast levels and fonts
+        list_1_navigate_keyboard: navigate most of the website using just a keyboard
+        list_1_navigate_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+        list_1_navigate_speach: navigate most of the website using speech recognition software
+        list_2_contrast: the contrast on some text may not be enough
+        list_2_page_view: page view is not optimised for viewing on mobile devices
+        list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
+        many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
+        market_place_link: https://marketplace.service.crowncommercial.gov.uk/facilities-management
+        non_text_contrast_heading: Non-Text Contrast
+        non_text_contrast_issue: When reviewing pages there is not enough contrast between the visual boundaries of user interface components in a selected or focus state and the background. This mainly affects buttons and some text input fields on certain pages.
+        non_text_contrast_this_falls: This fails WCAG 2.1 AA success criterion 1.4.11(b) (non-text contrast). We plan to fix this by December 2020.
+        page_optimisation_heading: Pages not optimised for mobile
+        page_optimisation_issue: When viewing the website on mobile devices, pages with tables render incorrectly and may be hard to interpret by users. This mainly affects pages with tables with a high number of columns and content.
+        page_optimisation_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
+        pdfs_and_docs: PDFs and other documents
+        plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
+        some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+        the_complete_journey: The complete Facilities Management journey was tested, this included every page a buyer or supplier would progress through in-order to complete the procurement activity.  The administration screens used for the maintenance of the digital service were also tested for accessibility, this area of functionality is only used by a small selection of CCS staff.
+        the_content: The content listed below is non-accessible for the following reasons.
+        this_statement: This accessibility statement applies to the Facilities Management digital service which can be found at the following URL
+        this_statement_date: This statement was prepared on 8th October 2020. It will be reviewed and updated as required.
+        this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
+        this_website_partially_1: This website is partially compliant with the
+        this_website_partially_2: due to the non-compliances listed below.
+        two_D_heading: Two-dimensional scrolling is present
+        two_D_issue: When viewing pages at 1280px width and 400% zoom, two-dimensional scrolling is required to view content. This mainly affects pages with tables with a high number of columns and content.
+        two_D_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
+        we_are_always_looking_html: 'We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: %{email}.'
+        we_know: 'We know some parts of this website are not fully accessible:'
+        website_last_tested: This website was last tested on Monday 5th October 2020. The test was carried out by Zoonou Ltd.
+        website_text_simple: We’ve also made the website text as simple as possible to understand.
+        well_consider: We’ll consider your request and get back to you in five working days.
       index:
         1_title: 1. Quick view suppliers
         1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
@@ -923,6 +995,7 @@ en:
           service_hours: Total number of hours required per annum
           tones_to_be_collected_and_removed: Number of tonnes per annum
         unit_of_measure_title: Unit of measure
+        volume_example: If your initial call-off period is less than one year, please still enter a volume requirement for one full year. For example, if you require a volume of 100 per month, please enter 1200 into the field.
         volume_required: Volume required
       volume:
         question:
@@ -957,6 +1030,7 @@ en:
         hour_heading: Please enter the total number of hours of this service required per year.
         hour_hint: The hours entered will be used to calculate the cost of this service.
         hour_label: Number of hours per year
+        volume_example: If your initial call-off period is less than one year, please still enter the number of hours required for one full year. For example, if you require 100 hours per month, please enter 1200 into the field.
       service_standards:
         detail_text:
           building_standards:
@@ -975,7 +1049,7 @@ en:
           building_standards:
             standard_A: Standard A - the general or normal service level
             standard_B: Standard B - this is the minimum level of service required
-            standard_C: Standard C - this level of service will be bespoke and site or area specific.
+            standard_C: Standard C - this level of service will be bespoke and site or area specific
           cleaning_standards:
             standard_A: Standard A - the general or normal service level
             standard_B: Standard B - the highest service level
@@ -1001,13 +1075,12 @@ en:
           no_of_consoles_to_be_serviced: consoles
           no_of_units_to_be_serviced: units
           tones_to_be_collected_and_removed: tonnes
+        volume_example:
+          no_of_appliances_for_testing: If your initial call-off period is less than one year, please still enter the number of portable appliances that require testing for one full year. For example, if you have 100 portable appliances that require testing per month, please enter 1200 into the field.
+          no_of_consoles_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of consoles that require servicing for one full year. For example, if you have 100 consoles that require servicing per month, please enter 1200 into the field.
+          no_of_units_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of units that require servicing for one full year. For example, if you have 100 units that require servicing per month, please enter 1200 into the field.
+          tones_to_be_collected_and_removed: If your initial call-off period is less than one year, please still enter the number of tonnes that are collected, stored and removed for one full year. For example, if you have 100 tonnes that are collected, stored and removed per month, please enter 1200 into the field.
     procurements:
-      call_off_extensions:
-        add_extension_period: Add another extension period
-        description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
-        heading: Do you want the option to extend your call-off contract?
-        remove: Remove
-        unit: years
       choose_contract_value:
         can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
         change_requirements_description: If you wish to change your requirements, click the 'Change requirements' button below.
@@ -1206,10 +1279,7 @@ en:
               framework_sublot_value: RM3830, sub-lot 1a
               initial_call_off_period: Initial call-off period
               mobilisation_period: Mobilisation period
-              optional_call_off_extensions_1: Optional call-off extension period 1
-              optional_call_off_extensions_2: Optional call-off extension period 2
-              optional_call_off_extensions_3: Optional call-off extension period 3
-              optional_call_off_extensions_4: Optional call-off extension period 4
+              optional_call_off_extension: Optional call-off extension period %{extension}
               route_to_market: Route to market
               supplier: Supplier
           what_next:
@@ -1392,7 +1462,6 @@ en:
         closing_direct_award_offer:
           are_you_sure_1: Are you sure you wish to close the
           are_you_sure_2: procurement?
-          characters_remaining: You have 500 characters remaining
           closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
           once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
           reason: Please provide a reason for closing this procurement
@@ -1403,7 +1472,6 @@ en:
           contract_start_date_caption: The contract start date is the ‘effective date’ - this is the date the final party signed the contract. For example, 01 11 2030.
           contract_will_not_be_signed_reason: Enter your reason why this contract will not be signed in the text box below. Once you have saved and continued, you will be presented with your options on how to proceed further.
           description: Do you confirm that both parties have signed and exchanged the contract?
-          input_remaining: You have 100 characters remaining
           no_caption: If you select 'No', you are confirming that this contract will never be signed, the offer will be withdrawn and the system will proceed to the next steps.
           yes_caption: If you select 'Yes', you must enter the confirmed contract start date and the contract end date.
         contract_offer_details:
@@ -1456,10 +1524,6 @@ en:
           title: Your procurement has been closed
         procurement_requirements:
           buildings_services: Buildings and services
-          call_off_extensions_1: Optional call-off extension period 1
-          call_off_extensions_2: Optional call-off extension period 2
-          call_off_extensions_3: Optional call-off extension period 3
-          call_off_extensions_4: Optional call-off extension period 4
           contract_name: Contract name
           contract_number: Contract number
           contract_value: Contract value
@@ -1469,6 +1533,7 @@ en:
           framework_details: RM3830, sub-lot 1a
           initial_call_off_period: Initial call-off period
           mobilisation_period: Mobilisation period
+          optional_call_off_extension: Optional call-off extension period %{extension}
           route_to_market: Route to market
         procurement_requirements_head:
           supplier: Supplier
@@ -1519,7 +1584,6 @@ en:
           signed: You confirmed that the contract period is between
       copy_procurement:
         new:
-          characters_remaining: You have 100 characters remaining
           heading: Create a new procurement using the service requirements and buildings you have previously entered.
           label: What do you want to call your contract?
           once_saved: 'Once saved under a new contract name:'
@@ -1579,7 +1643,7 @@ en:
           my_buildings: My buildings
           new_buildings: New buildings
           new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
-          no_saved_buildings: You have no saved buildings. Click on ‘Add a building' to start setting up your building(s)
+          no_saved_buildings: You have no saved buildings. Click on 'Add a building' to start setting up your building(s)
           page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
           page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
           status: Status
@@ -1589,6 +1653,31 @@ en:
           contract_name_question: What do you want to call your contract?
           heading: Contract name
         contract_period:
+          extension:
+            aria_label_months: Optional extension %{extension} months
+            aria_label_years: Optional extension %{extension} years
+            extension_period: Extension period %{extension}
+            months: months
+            remove: Remove
+            years: years
+          initial_call_off_period:
+            aria_label_months: The month part of the initial call off period
+            aria_label_years: The year part of the initial call off period
+            description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
+            example: For example, 01 11 2030.
+            heading: Initial call-off period
+            initial_call_off_period_start_date: Initial call-off period start date
+            unit_months: months
+            unit_years: years
+          mobilisation_period:
+            description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
+            heading: Do you need a mobilisation period?
+            unit: weeks
+            warning: A minimum of 4 weeks required if TUPE is involved.
+          optional_call_off_extensions:
+            add_extension_period: Add another extension period
+            description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+            heading: Do you want the option to extend your call-off contract?
           title: Contract period
         detailed_search: Detailed search
         estimated_annual_cost:
@@ -1707,12 +1796,6 @@ en:
         searches_title: Searches
         sent_offers: Sent offers
         was_deleted: "'%{contract_name}' was deleted."
-      initial_call_off_period:
-        description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
-        example: For example, 01 11 2030.
-        heading: Initial call-off period
-        initial_call_off_period_start_date: Initial call-off period start date
-        unit: years
       missing_regions_summary:
         before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
         building_address: Building address
@@ -1722,11 +1805,6 @@ en:
         heading: Review your buildings
         return_link: Return to procurements dashboard
         select_region: Select region
-      mobilisation_period:
-        description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
-        heading: Do you need a mobilisation period?
-        unit: weeks
-        warning: A minimum of 4 weeks required if TUPE is involved.
       new:
         cancel_text: Return to your account
         no_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
@@ -1776,7 +1854,6 @@ en:
         estimated_cost_calc_logic_4_html: Your estimated cost has been calculated using a combination of available framework and benchmark pricing. <br/>This cost has been used to place you in the correct sub-lot.
         estimated_cost_how: How your estimated cost was calculated?
         fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
-        full-sub-lot: Sub-lot
         further_competition_html: "<b>Further competition</b>"
         hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
         hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
@@ -2084,7 +2161,6 @@ en:
         contract_summary_foot:
           respond_to_offer: Please click on the button below to either accept or decline. If you accept, you will be given guidance about how to sign the contract. If you wish to decline you will also be asked to input a reason.
         edit:
-          characters_remaining: You have 500 characters remaining
           contract_name: 'Contract name:'
           contract_number: 'Contract number:'
           form_title: Do you accept the contract offer from
@@ -2128,6 +2204,12 @@ en:
           sign_in_header: Sign in to your account
     users:
       sign_in_error: You must provide a correct username or password
+  header_navigation_links_helper:
+    admin_dashboard: Admin dashboard
+    back_to_start: Back to start
+    my_account: My account
+    my_dashboard: My dashboard
+    sign_out: Sign out
   shared:
     gateway:
       index:

@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_092431) do
+ActiveRecord::Schema.define(version: 2021_03_18_135321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.bigint "external_area"
     t.index "lower(building_name)", name: "index_fm_buildings_on_lower_building_name"
     t.index ["id"], name: "index_facilities_management_buildings_on_id", unique: true
+    t.index ["user_id", "building_name"], name: "index_building_bulding_name_and_user_id", unique: true
     t.index ["user_id"], name: "idx_buildings_user_id"
   end
 
@@ -165,6 +166,16 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.index ["id"], name: "facilities_management_procurement_contact_detail_id_idx"
   end
 
+  create_table "facilities_management_procurement_optional_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_procurement_id"
+    t.integer "extension"
+    t.integer "years"
+    t.integer "months"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_procurement_id"], name: "index_optional_call_off_on_fm_procurements_id"
+  end
+
   create_table "facilities_management_procurement_pension_funds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_procurement_id", null: false
     t.string "name", limit: 150
@@ -172,6 +183,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_procurement_id"], name: "index_fm_procurement_pension_funds_on_fm_procurement_id"
+    t.index ["name", "facilities_management_procurement_id"], name: "index_pension_funds_name_and_procurement_id", unique: true
   end
 
   create_table "facilities_management_procurement_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -206,14 +218,10 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "contract_name", limit: 100
     t.integer "estimated_annual_cost"
     t.boolean "tupe"
-    t.integer "initial_call_off_period"
+    t.integer "initial_call_off_period_years"
     t.date "initial_call_off_start_date"
     t.date "initial_call_off_end_date"
     t.integer "mobilisation_period"
-    t.integer "optional_call_off_extensions_1"
-    t.integer "optional_call_off_extensions_2"
-    t.integer "optional_call_off_extensions_3"
-    t.integer "optional_call_off_extensions_4"
     t.boolean "estimated_cost_known"
     t.boolean "mobilisation_period_required"
     t.boolean "extensions_required"
@@ -234,6 +242,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "contract_datetime"
     t.boolean "lot_number_selected_by_customer", default: false
     t.string "governing_law"
+    t.integer "initial_call_off_period_months"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 
@@ -244,6 +253,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
+    t.index ["lot_number", "region_code", "facilities_management_supplier_id"], name: "index_regional_availabilities_on_lot_number_and_region_code", unique: true
     t.index ["lot_number"], name: "index_fm_regional_availabilities_on_lot_number"
   end
 
@@ -254,6 +264,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
+    t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
   end
 
@@ -285,6 +296,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
     t.string "address_county", limit: 255
     t.string "address_postcode", limit: 255
     t.index ["contact_email"], name: "index_facilities_management_supplier_details_on_contact_email"
+    t.index ["supplier_name"], name: "index_facilities_management_supplier_details_on_supplier_name", unique: true
     t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
   end
 
@@ -716,6 +728,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_092431) do
   add_foreign_key "facilities_management_procurement_building_services", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_buildings", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_contact_details", "facilities_management_procurements"
+  add_foreign_key "facilities_management_procurement_optional_call_off_extensions", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_pension_funds", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurement_suppliers", "facilities_management_procurements"
   add_foreign_key "facilities_management_procurements", "users"

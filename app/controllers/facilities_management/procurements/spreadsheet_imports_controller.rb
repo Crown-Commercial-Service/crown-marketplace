@@ -17,11 +17,11 @@ module FacilitiesManagement
         (cancel_and_return && return) if params[:cancel_and_return].present?
 
         @spreadsheet_import = SpreadsheetImport.new(spreadsheet_import_params)
-        if @spreadsheet_import.save(context: :upload)
+        if @spreadsheet_import.save(context: :upload) && @spreadsheet_import.valid?(:basic_validation)
           @spreadsheet_import.start_import!
           redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @spreadsheet_import.procurement.id, id: @spreadsheet_import.id)
         else
-          @spreadsheet_import.remove_spreadsheet_file
+          @spreadsheet_import.destroy
           render :new
         end
       end

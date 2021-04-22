@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_admin_supplier_detail, class: FacilitiesManagement::Admin::SuppliersAdmin do
+  factory :facilities_management_admin_supplier_detail, class: 'FacilitiesManagement::Admin::SuppliersAdmin' do
     supplier_id { SecureRandom.uuid }
     supplier_name { Faker::Name.unique.name }
     contact_name { Faker::Name.unique.name }

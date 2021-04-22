@@ -2,37 +2,31 @@ class User < ApplicationRecord
   include RoleModel
 
   has_many  :procurements,
-            foreign_key: :user_id,
             inverse_of: :user,
             class_name: 'FacilitiesManagement::Procurement',
             dependent: :destroy
 
   has_one :buyer_detail,
-          foreign_key: :user_id,
           inverse_of: :user,
           class_name: 'FacilitiesManagement::BuyerDetail',
           dependent: :destroy
 
   has_one :supplier_detail,
-          foreign_key: :user_id,
           inverse_of: :user,
           class_name: 'FacilitiesManagement::SupplierDetail',
           dependent: :destroy
 
   has_one :supplier_admin,
-          foreign_key: :user_id,
           inverse_of: :user,
           class_name: 'FacilitiesManagement::Admin::SuppliersAdmin',
           dependent: :destroy
 
   has_many :buildings,
-           foreign_key: :user_id,
            class_name: 'FacilitiesManagement::Building',
            inverse_of: :user,
            dependent: :destroy
 
   has_many :management_reports,
-           foreign_key: :user_id,
            inverse_of: :user,
            class_name: 'FacilitiesManagement::Admin::ManagementReport',
            dependent: :nullify

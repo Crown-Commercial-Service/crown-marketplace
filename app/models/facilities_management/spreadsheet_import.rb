@@ -11,7 +11,8 @@ module FacilitiesManagement
     validates :spreadsheet_file, antivirus: { message: :malicious }, on: :upload
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', message: :wrong_content_type }, on: :upload
-    validate :spreadsheet_basic_data_validation, on: :upload
+    validate :spreadsheet_basic_data_validation, on: :basic_validation
+    after_validation :remove_spreadsheet_file, if: -> { errors.any? }, on: :basic_validation
 
     serialize :import_errors
 
@@ -31,9 +32,6 @@ module FacilitiesManagement
 
       event :fail do
         transitions from: %i[upload importing], to: :failed
-        after do
-          remove_spreadsheet_file
-        end
       end
     end
 
@@ -42,16 +40,10 @@ module FacilitiesManagement
     end
 
     def state_to_string
-      case aasm_state
-      when 'importing'
-        [:grey, 'Upload in progress']
-      when 'succeeded'
-        [:blue, 'Upload completed']
-      when 'failed'
-        [:red, 'Upload failed']
-      end
+      STATES_TO_STRINGS[aasm_state.to_sym]
     end
 
+    STATES_TO_STRINGS = { importing: [:grey, 'Upload in progress'], succeeded: [:blue, 'Upload completed'], failed: [:red, 'Upload failed'] }.freeze
     BUILDING_ATTRIBUTES = %i[building_name description address_line_1 address_line_2 address_town address_postcode gia external_area building_type other_building_type security_type other_security_type].freeze
     SERVICE_MATRIX_ATTRIBUTES = %i[service_codes building].freeze
 
@@ -182,15 +174,15 @@ module FacilitiesManagement
     end
 
     def service_volume_codes_with_attributes
-      FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:volume).map do |code|
-        [code, FacilitiesManagement::ServicesAndQuestions.service_detail(code)[:context][:volume].first]
-      end.to_h
+      FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:volume).index_with do |code|
+        FacilitiesManagement::ServicesAndQuestions.service_detail(code)[:context][:volume].first
+      end
     end
 
     def service_hour_codes_with_attributes
-      FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:service_hours).map do |code|
-        [code, %i[service_hours detail_of_requirement]]
-      end.to_h
+      FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:service_hours).index_with do |_code|
+        %i[service_hours detail_of_requirement]
+      end
     end
 
     def spreadsheet_file_attached

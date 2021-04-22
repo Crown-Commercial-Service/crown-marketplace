@@ -29,6 +29,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
     @invalid_services.empty?
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def validate_data
     @data.each do |service_key, service|
       service.each do |service_type_key, _|
@@ -46,6 +47,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
       end
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def validate_rates
     ['M.140', 'M.141', 'M.142', 'M.144', 'M.148', 'B.1'].each do |code|
@@ -95,7 +97,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
 
     return false if more_than_max_decimals?(user_entered_value)
 
-    user_entered_value.to_f <= 100
+    user_entered_value.to_f <= 1
   end
 
   def more_than_max_decimals?(user_entered_value)

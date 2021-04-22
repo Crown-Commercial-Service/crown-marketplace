@@ -38,23 +38,16 @@ module FacilitiesManagement
       end
 
       def supplier_params
-        params.require(:facilities_management_admin_suppliers_admin).permit(permitted_params)
+        params.require(:facilities_management_admin_suppliers_admin).permit(PERMITED_PARAMS[@page])
       end
 
-      def permitted_params
-        case @page
-        when :supplier_name
-          %i[supplier_name]
-        when :supplier_contact_information
-          %i[contact_name contact_email contact_phone]
-        when :additional_supplier_information
-          %i[duns registration_number]
-        when :supplier_address
-          %i[address_line_1 address_line_2 address_town address_county address_postcode]
-        when :supplier_user
-          %i[user_email]
-        end
-      end
+      PERMITED_PARAMS = {
+        supplier_name: %i[supplier_name],
+        supplier_contact_information: %i[contact_name contact_email contact_phone],
+        additional_supplier_information: %i[duns registration_number],
+        supplier_address: %i[address_line_1 address_line_2 address_town address_county address_postcode],
+        supplier_user: %i[user_email]
+      }.freeze
     end
   end
 end

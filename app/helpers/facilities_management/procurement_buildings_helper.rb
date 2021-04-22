@@ -10,11 +10,11 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   end
 
   def building_summary(title, vlaue)
-    content_tag :div, class: 'govuk-grid-row govuk-!-margin-bottom-6' do
-      content_tag :div, class: 'govuk-grid-column-two-thirds' do
+    tag.div(class: 'govuk-grid-row govuk-!-margin-bottom-6') do
+      tag.div(class: 'govuk-grid-column-two-thirds') do
         capture do
-          concat(content_tag(:h3, title, class: 'govuk-heading-s govuk-!-margin-bottom-2'))
-          concat(content_tag(:span, vlaue, class: 'govuk-body'))
+          concat(tag.h3(title, class: 'govuk-heading-s govuk-!-margin-bottom-2'))
+          concat(tag.span(vlaue, class: 'govuk-body'))
         end
       end
     end
