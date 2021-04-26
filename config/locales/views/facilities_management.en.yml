@@ -471,7 +471,7 @@ en:
       supplier_link: Facilities management supplier account
   facilities_management:
     admin:
-      admin_account:
+      home:
         index:
           dashboard_assessed_value: Assessed value
           dashboard_average_rate: Average framework rates

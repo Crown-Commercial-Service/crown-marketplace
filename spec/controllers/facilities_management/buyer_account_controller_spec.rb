@@ -1,6 +1,8 @@
 require 'rails_helper'
 module FacilitiesManagement
   RSpec.describe BuyerAccountController, type: :controller do
+    let(:default_params) { { service: 'facilities_management' } }
+
     describe 'GET #buyer_account' do
       it 'returns http success' do
         get :buyer_account

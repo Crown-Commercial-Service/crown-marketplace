@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :controller do
   extend APIRequestStubs
 
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: subject.current_user) }
   let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
   let(:user) { subject.current_user }

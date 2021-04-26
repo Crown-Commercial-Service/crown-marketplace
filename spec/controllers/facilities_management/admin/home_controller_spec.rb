@@ -1,28 +1,32 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/supplier' } }
+RSpec.describe FacilitiesManagement::Admin::HomeController do
+  let(:default_params) { { service: 'facilities_management/admin' } }
 
-  describe '#index' do
-    subject(:index) { get :index }
+  describe 'GET #index' do
+    context 'when logged in as fm admin' do
+      login_fm_admin
 
-    context 'when signed in' do
-      login_fm_supplier
+      before { get :index }
 
-      it 'redirects to supplier dashboard' do
-        expect(index).to redirect_to(facilities_management_supplier_dashboard_index_path)
+      it 'renders the index page' do
+        expect(response).to render_template(:index)
       end
     end
 
-    context 'when not signed in' do
-      it 'redirects to supplier sign in' do
-        expect(index).to redirect_to(facilities_management_supplier_new_user_session_path)
+    context 'when not logged in as fm admin' do
+      login_fm_buyer
+
+      before { get :index }
+
+      it 'redirects to the not permitted page' do
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
   end
 
   describe 'GET accessibility_statement' do
-    login_fm_supplier
+    login_fm_admin
 
     it 'renders the accessibility_statement page' do
       get :accessibility_statement
@@ -31,7 +35,7 @@ RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller
   end
 
   describe 'GET cookies' do
-    login_fm_supplier
+    login_fm_admin
 
     it 'renders the cookies page' do
       get :cookies

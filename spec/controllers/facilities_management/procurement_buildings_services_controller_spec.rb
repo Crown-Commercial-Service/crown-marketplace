@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement_building_service) { create(:facilities_management_procurement_building_service, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user))) }
 
   describe 'GET #edit' do

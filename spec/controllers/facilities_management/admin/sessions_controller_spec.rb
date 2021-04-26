@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::SessionsController do
+  let(:default_params) { { service: 'facilities_management/admin' } }
   let(:user) { build(:user) }
 
   describe 'After sign-up' do

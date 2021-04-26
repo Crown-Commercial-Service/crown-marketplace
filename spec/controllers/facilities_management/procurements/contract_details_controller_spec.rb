@@ -2,6 +2,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, user: subject.current_user, aasm_state: 'da_draft') }
 
   login_fm_buyer_with_details

@@ -3,6 +3,7 @@ module Base
     skip_forgery_protection
     before_action :authenticate_user!, except: %i[new create destroy active timeout]
     before_action :authorize_user, except: %i[new create destroy active timeout]
+    before_action :validate_service, except: %i[destroy active timeout]
 
     def new
       @result = Cognito::SignInUser.new(nil, nil, nil)

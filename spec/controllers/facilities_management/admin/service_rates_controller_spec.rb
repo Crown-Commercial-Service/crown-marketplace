@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin' } }
+
   login_fm_admin
 
   describe 'GET edit' do
