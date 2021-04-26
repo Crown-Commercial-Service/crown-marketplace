@@ -9,13 +9,13 @@
         <div class="govuk-footer__meta-item">
           <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
             <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.cookie_link"), facilities_management_cookies_path(service: service_name_param), class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
+              <%= link_to t("layouts.application.cookie_link"), cookies_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
             </li>
             <li class="govuk-footer__inline-list-item">
               <%= link_to t("layouts.application.privacy_link"), 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice', class: 'govuk-footer__link', aria: { label: t('layouts.application.privacy_link_aria_label') }, target: "_blank" %>
             </li>
             <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.accessibility_statement_link"), facilities_management_accessibility_statement_path(service: service_name_param), class: 'govuk-footer__link', aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
+              <%= link_to t("layouts.application.accessibility_statement_link"), accessibility_statement_path, class: 'govuk-footer__link', aria: { label: t('layouts.application.accessibility_statement_link_aria_label') } %>
             </li>
             <li class="govuk-footer__inline-list-item">
               <%= t("layouts.application.crown_copyright") %>

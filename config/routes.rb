@@ -35,12 +35,12 @@ Rails.application.routes.draw do
 
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
-    namespace 'facilities_management', path: 'facilities-management' do
+    namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
       concerns %i[authenticatable registrable]
-      namespace :supplier do
+      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
         concerns :authenticatable
       end
-      namespace :admin do
+      namespace :admin, defaults: { service: 'facilities_management/admin' } do
         concerns :authenticatable
       end
     end
@@ -49,11 +49,15 @@ Rails.application.routes.draw do
     get 'timeout' => 'base/sessions#timeout'
   end
 
-  namespace 'facilities_management', path: 'facilities-management' do
-    get '/', to: 'buyer_account#buyer_account'
-    get '/not-permitted', to: 'home#not_permitted'
+  concern :shared_pages do
     get '/accessibility-statement', to: 'home#accessibility_statement'
     get '/cookies', to: 'home#cookies'
+  end
+
+  namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
+    concerns :shared_pages
+    get '/', to: 'buyer_account#buyer_account'
+    get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
     get '/gateway', to: 'gateway#index'
     get '/gateway/validate/:id', to: 'gateway#validate'
@@ -107,15 +111,17 @@ Rails.application.routes.draw do
     resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
       get 'edit-address', as: :edit_address
     end
-    namespace :supplier do
+    namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+      concerns :shared_pages
       get '/', to: 'home#index'
       resources :dashboard, only: :index
       resources :contracts, only: %i[show edit update], controller: 'contracts' do
         resources :sent, only: %i[index], controller: 'sent'
       end
     end
-    namespace :admin, path: 'admin' do
-      get '/', to: 'admin_account#index'
+    namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+      concerns :shared_pages
+      get '/', to: 'home#index'
       get '/gateway', to: 'gateway#index'
       resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
       resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
@@ -131,10 +137,10 @@ Rails.application.routes.draw do
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
-  get '/404', to: 'errors#not_found'
-  get '/422', to: 'errors#unacceptable'
-  get '/500', to: 'errors#internal_error'
-  get '/503', to: 'errors#service_unavailable'
+  get '/404', to: 'errors#not_found', as: :errors_404
+  get '/422', to: 'errors#unacceptable', as: :errors_422
+  get '/500', to: 'errors#internal_error', as: :errors_500
+  get '/503', to: 'errors#service_unavailable', as: :errors_503
 
   namespace :api, defaults: { format: :json } do
     namespace :v2 do

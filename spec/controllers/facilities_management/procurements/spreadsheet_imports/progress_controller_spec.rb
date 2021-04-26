@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImports::ProgressController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:spreadsheet_import) { create(:facilities_management_procurement_spreadsheet_import, procurement: procurement) }
   let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: subject.current_user) }
   let(:user) { subject.current_user }

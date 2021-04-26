@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::HomeController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
+
   describe 'GET index' do
     it 'renders the index page' do
       get :index
@@ -20,34 +22,6 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
       get :accessibility_statement
       expect(response).to render_template(:accessibility_statement)
     end
-
-    context 'when from an admin page' do
-      before { get :accessibility_statement, params: { service: 'facilities_management/admin' } }
-
-      render_views
-
-      it 'renders the accessibility_statement page' do
-        expect(response).to render_template(:accessibility_statement)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'facilities_management/admin/_header-banner')
-      end
-    end
-
-    context 'when from an suppliers page' do
-      before { get :accessibility_statement, params: { service: 'facilities_management/supplier' } }
-
-      render_views
-
-      it 'renders the accessibility_statement page' do
-        expect(response).to render_template(:accessibility_statement)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'facilities_management/supplier/_header-banner')
-      end
-    end
   end
 
   describe 'GET cookies' do
@@ -55,32 +29,16 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
       get :cookies
       expect(response).to render_template(:cookies)
     end
+  end
 
-    context 'when from an admin page' do
-      before { get :cookies, params: { service: 'facilities_management/admin' } }
+  describe 'validate service' do
+    context 'when the service is not a valid service' do
+      let(:default_params) { { service: 'apprenticeships' } }
 
-      render_views
+      it 'renders the erros_not_found page' do
+        get :index
 
-      it 'renders the cookies page' do
-        expect(response).to render_template(:cookies)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'facilities_management/admin/_header-banner')
-      end
-    end
-
-    context 'when from an suppliers page' do
-      before { get :cookies, params: { service: 'facilities_management/supplier' } }
-
-      render_views
-
-      it 'renders the cookies page' do
-        expect(response).to render_template(:cookies)
-      end
-
-      it 'renders the correct header banner' do
-        expect(response).to render_template(partial: 'facilities_management/supplier/_header-banner')
+        expect(response).to redirect_to errors_404_path
       end
     end
   end
