@@ -5,6 +5,7 @@ module Api
   module V2
     class PostcodesController < FacilitiesManagement::FrameworkController
       protect_from_forgery with: :exception
+      before_action :validate_service, except: :show
 
       # GET /postcodes/SW1A 2AA
       # GET /postcodes/SW1A 2AA.json

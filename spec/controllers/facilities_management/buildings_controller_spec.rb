@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
+
   render_views
+
   describe 'GET #index' do
     context 'when logging in as a fm buyer with details' do
       it 'returns http success' do

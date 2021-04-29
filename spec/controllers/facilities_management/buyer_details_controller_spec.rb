@@ -2,6 +2,8 @@ require 'rails_helper'
 # rubocop:disable RSpec/NamedSubject
 module FacilitiesManagement
   RSpec.describe BuyerDetailsController, type: :controller do
+    let(:default_params) { { service: 'facilities_management' } }
+
     render_views
 
     describe 'GET edit with buyer' do

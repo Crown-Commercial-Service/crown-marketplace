@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Admin::UsersController do
+  let(:default_params) { { service: 'facilities_management/admin' } }
   let(:user) { build(:user, email: 'test@test.com') }
 
   controller(described_class) do

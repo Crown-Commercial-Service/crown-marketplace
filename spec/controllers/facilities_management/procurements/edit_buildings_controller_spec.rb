@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type: :controller do
   render_views
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search', user: subject.current_user) }
   let(:procurement_id) { procurement.id }
 

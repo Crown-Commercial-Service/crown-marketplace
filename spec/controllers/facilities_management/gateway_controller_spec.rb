@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::GatewayController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
+
   describe 'GET index' do
     context 'when not signed in' do
       it 'renders the gateway page' do
