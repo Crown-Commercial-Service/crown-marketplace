@@ -18,16 +18,15 @@ RSpec.feature 'Authentication', type: :feature do
 
   scenario 'Unauthenticated users cannot access protected pages' do
     OmniAuth.config.test_mode = false
-    visit '/facilities-management/gateway'
+    visit '/facilities-management/sign-in'
 
-    expect(page).to have_text('Sign in with Cognito')
+    expect(page).to have_text('Sign in to your account')
   end
 
   scenario 'Users can sign in using AWS Cognito' do
     OmniAuth.config.test_mode = false
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/gateway'
-    click_on 'Sign in with Cognito'
+    visit '/facilities-management/sign-in'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
@@ -37,8 +36,7 @@ RSpec.feature 'Authentication', type: :feature do
 
   scenario 'Users can sign in using AWS Cognito with capitals in email' do
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/gateway'
-    click_on 'Sign in with Cognito'
+    visit '/facilities-management/sign-in'
     fill_in 'Email', with: user.email.upcase
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
@@ -48,14 +46,13 @@ RSpec.feature 'Authentication', type: :feature do
 
   scenario 'Users signed in using AWS Cognito can sign out' do
     user = create(:user, :with_detail, roles: %i[buyer fm_access])
-    visit '/facilities-management/gateway'
-    click_on 'Sign in with Cognito'
+    visit '/facilities-management/sign-in'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: 'ValidPassword!'
     click_button 'Sign in'
     click_on 'Sign out'
 
-    visit '/facilities-management/gateway'
-    expect(page).to have_text('Sign in with Cognito')
+    visit '/facilities-management/sign-in'
+    expect(page).to have_text('Sign in to your account')
   end
 end
