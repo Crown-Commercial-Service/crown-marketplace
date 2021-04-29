@@ -9,7 +9,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
 
     context 'when logged in as the fm buyer that created the procurement' do
       it 'returns http success' do
-        get :edit, params: { id: procurement_building_service.id }
+        get :edit, params: { id: procurement_building_service.id, service_question: 'lifts' }
         expect(response).to have_http_status(:ok)
       end
     end
@@ -22,9 +22,17 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       end
     end
 
+    context 'when the step is not recognised' do
+      it 'redirects to the procurement buildings page' do
+        get :edit, params: { id: procurement_building_service.id, service_question: 'elavator' }
+
+        expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+      end
+    end
+
     context 'when on the show page' do
       it 'renders the edit page' do
-        get :edit, params: { id: procurement_building_service.id }
+        get :edit, params: { id: procurement_building_service.id, service_question: 'lifts' }
 
         expect(response).to render_template('edit')
       end

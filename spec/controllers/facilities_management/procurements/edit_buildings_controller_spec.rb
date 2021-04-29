@@ -89,6 +89,14 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
 
     before { get :edit, params: { id: building.id, procurement_id: procurement_id, step: step } }
 
+    context 'when the step is not recognised' do
+      let(:step) { 'external_area' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_edit_building_path(id: building.id, procurement_id: procurement_id)
+      end
+    end
+
     context 'when the step is building_details' do
       let(:step) { 'building_details' }
 

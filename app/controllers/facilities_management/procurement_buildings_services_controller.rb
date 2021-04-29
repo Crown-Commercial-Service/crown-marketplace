@@ -2,6 +2,7 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   before_action :set_building_and_service_data
   before_action :authorize_user
   before_action :set_partial
+  before_action :redirect_if_unrecognised_step, only: :edit
   before_action :create_first_lift, if: -> { @partial_prefix == 'lifts' }, only: :edit
 
   def edit; end
@@ -102,6 +103,12 @@ class FacilitiesManagement::ProcurementBuildingsServicesController < FacilitiesM
   def create_first_lift
     @building_service.lifts.build if @building_service.lifts.empty?
   end
+
+  def redirect_if_unrecognised_step
+    redirect_to facilities_management_procurement_building_path(@procurement_building) unless RECOGNISED_STEPS.include? @partial_prefix
+  end
+
+  RECOGNISED_STEPS = %w[lifts service_hours volumes service_standards area].freeze
 
   protected
 

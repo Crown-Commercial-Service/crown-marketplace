@@ -8,6 +8,7 @@ module FacilitiesManagement
       before_action :set_contract
       before_action :authorize_user
       before_action :redirect_if_contract_cannot_be_updated, only: %i[edit update]
+      before_action :redirect_if_unrecognised_name, only: :edit
       before_action :set_page_detail, only: %i[show edit]
       before_action :assign_contract_attributes, only: :update
 
@@ -86,7 +87,7 @@ module FacilitiesManagement
             redirect_to facilities_management_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           else
             @contract.not_sign!
-            redirect_to facilities_management_procurement_contract_path(@procurement.id, contract_id: @contract.id)
+            redirect_to facilities_management_procurement_contract_path(procurement_id: @procurement.id, id: @contract.id)
           end
         else
           set_page_detail
@@ -125,6 +126,12 @@ module FacilitiesManagement
                 :contract_end_date_yyyy
               )
       end
+
+      def redirect_if_unrecognised_name
+        redirect_to facilities_management_procurement_contract_path(procurement_id: @procurement.id, id: @contract.id) unless RECOGNISED_NAMES.include? params[:name]
+      end
+
+      RECOGNISED_NAMES = %w[withdraw signed next_supplier].freeze
 
       protected
 
