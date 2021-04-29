@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::Admin::SessionsController do
 
   describe 'After sign-out' do
     it 'redirects to the /facilities-management/admin/start page' do
-      expect(controller.send(:after_sign_out_path_for, user)).to eq facilities_management_admin_gateway_path
+      expect(controller.send(:after_sign_out_path_for, user)).to eq facilities_management_admin_new_user_session_path
     end
   end
 end
