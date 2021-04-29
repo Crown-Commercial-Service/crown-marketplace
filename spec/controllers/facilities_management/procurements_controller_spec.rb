@@ -207,6 +207,14 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     end
 
     describe 'GET summary' do
+      context 'when the summary page is not recognised' do
+        it 'redirects to the show page' do
+          get :summary, params: { procurement_id: procurement.id, summary: 'contract_name' }
+
+          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        end
+      end
+
       context 'when the user wants to edit contract_periods' do
         context 'when the contract periods are not started' do
           before { procurement.update(initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
@@ -299,6 +307,14 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     end
 
     describe 'GET edit' do
+      context 'when the step is not recognised' do
+        it 'redirects to the show page' do
+          get :edit, params: { id: procurement.id, step: 'services_and_buildings' }
+
+          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        end
+      end
+
       it 'renders the correct template' do
         get :edit, params: { id: procurement.id, step: 'tupe' }
 

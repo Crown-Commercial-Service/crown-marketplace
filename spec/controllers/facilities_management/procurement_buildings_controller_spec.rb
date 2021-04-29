@@ -34,6 +34,36 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
     end
   end
 
+  describe 'GET #edit' do
+    login_fm_buyer_with_details
+
+    before { get :edit, params: { id: procurement_building.id, step: step } }
+
+    context 'when the step is not recognised' do
+      let(:step) { 'missing_service' }
+
+      it 'redirects to the  procurement show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+      end
+    end
+
+    context 'when the step is missing_regions' do
+      let(:step) { 'missing_region' }
+
+      it 'renders the template' do
+        expect(response).to render_template :edit
+      end
+    end
+
+    context 'when the step is buildings_and_services' do
+      let(:step) { 'buildings_and_services' }
+
+      it 'renders the template' do
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
   describe 'PATCH #update' do
     login_fm_buyer_with_details
 
