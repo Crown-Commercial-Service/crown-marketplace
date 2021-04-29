@@ -34,7 +34,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
     @data.each do |service_key, service|
       service.each do |service_type_key, _|
         numeric_result_valid = numeric?(@data[service_key][service_type_key])
-        range_result_valid = if service_type_key.include?('%') && numeric_result_valid
+        range_result_valid = if range_validation_required(service_type_key, service_key) && numeric_result_valid
                                value_in_range?(@data[service_key][service_type_key])
                              else
                                true
@@ -43,7 +43,7 @@ class FacilitiesManagement::Admin::SublotServicesValidator
         next if numeric_result_valid && range_result_valid
 
         @invalid_services[service_key] = {} unless @invalid_services.keys.include? service_key
-        @invalid_services[service_key][service_type_key] = @data[service_key][service_type_key]
+        @invalid_services[service_key][service_type_key] = { value: @data[service_key][service_type_key], error_type: error_type(numeric_result_valid) }
       end
     end
   end
@@ -51,14 +51,19 @@ class FacilitiesManagement::Admin::SublotServicesValidator
 
   def validate_rates
     ['M.140', 'M.141', 'M.142', 'M.144', 'M.148', 'B.1'].each do |code|
-      next if numeric?(@rates[code]) && value_in_range?(@rates[code])
+      numeric_result_valid = numeric?(@rates[code])
+      next if numeric_result_valid && value_in_range?(@rates[code])
 
-      @invalid_services[code] = @rates[code]
+      @invalid_services[code] = { value: @rates[code], error_type: error_type(numeric_result_valid) }
     end
 
-    return if numeric?(@rates['M.146']) && !more_than_max_decimals?(@rates['M.146'])
+    m_146_numeric = numeric?(@rates['M.146'])
 
-    @invalid_services['M.146'] = @rates['M.146']
+    return if m_146_numeric && !more_than_max_decimals?(@rates['M.146'])
+
+    error_type = m_146_numeric ? 'rate_error_more_than_max_decimals' : 'rate_error_not_a_number'
+
+    @invalid_services['M.146'] = { value: @rates['M.146'], error_type: error_type }
   end
 
   def update_data
@@ -86,6 +91,10 @@ class FacilitiesManagement::Admin::SublotServicesValidator
     end
   end
 
+  def range_validation_required(service_type_key, service_key)
+    service_type_key.include?('%') || ['M.1', 'N.1'].include?(service_key)
+  end
+
   def numeric?(user_entered_value)
     return true if user_entered_value.blank?
 
@@ -104,5 +113,11 @@ class FacilitiesManagement::Admin::SublotServicesValidator
     return false if user_entered_value.blank?
 
     (BigDecimal(user_entered_value) - BigDecimal(user_entered_value).floor).to_s.size - 2 > 20
+  end
+
+  def error_type(numeric_result_valid)
+    return 'rate_error_not_a_number' unless numeric_result_valid
+
+    'rate_error_less_than_or_equal_to'
   end
 end

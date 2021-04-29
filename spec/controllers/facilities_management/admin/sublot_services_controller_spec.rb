@@ -141,7 +141,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
           end
 
           it 'has the correct errors' do
-            expect(assigns(:invalid_services)).to match('C.1' => { 'Call Centre Operations (£)' => 'TARDIS' }, 'G.4' => { 'Direct Award Discount (%)' => '1.005', 'Special Schools (£)' => 'Doctor' })
+            expect(assigns(:invalid_services)).to match('C.1' => { 'Call Centre Operations (£)' => { value: 'TARDIS', error_type: 'rate_error_not_a_number' } }, 'G.4' => { 'Direct Award Discount (%)' => { value: '1.005', error_type: 'rate_error_less_than_or_equal_to' }, 'Special Schools (£)' => { value: 'Doctor', error_type: 'rate_error_not_a_number' } })
           end
         end
       end
@@ -168,7 +168,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
           end
 
           it 'has the correct errors' do
-            expect(assigns(:invalid_services)).to match('B.1' => '1.0001')
+            expect(assigns(:invalid_services)).to match('B.1' => { value: '1.0001', error_type: 'rate_error_less_than_or_equal_to' })
           end
         end
       end
