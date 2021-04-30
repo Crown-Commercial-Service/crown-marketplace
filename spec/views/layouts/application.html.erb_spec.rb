@@ -10,6 +10,9 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
       end
       helper_method :ccs_homepage_url
     end
+    cookies[:crown_marketplace_google_analytics_enabled] = 'true'
+    allow(cookies.class).to receive(:new).and_return(cookies)
+    allow(Marketplace).to receive(:google_analytics_tracking_id).and_return('123')
   end
 
   describe 'feedback links' do

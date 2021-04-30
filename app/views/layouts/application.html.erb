@@ -19,7 +19,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
 
-    <%= render partial: '/shared/google_analytics' %>
+    <%= render partial: '/shared/google_analytics' if cookies[:crown_marketplace_google_analytics_enabled] == 'true' && Marketplace.google_analytics_tracking_id.present? %>
   </head>
   <body class="govuk-template__body">
     <script>
@@ -31,7 +31,7 @@
 
     <div id="wrapper">
       <a href="#main-content" class="govuk-skip-link"><%= t('.skip') %></a>
-      <%= render partial: '/layouts/cookie-banner' %>
+      <%= render partial: '/layouts/cookie-banner' unless cookies[:crown_marketplace_cookie_settings_viewed] == 'true' || controller.action_name == 'cookie_settings' %>
       <%= service_header_banner %>
 
       <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">

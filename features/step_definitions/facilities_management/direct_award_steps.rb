@@ -3,6 +3,7 @@ Given('I logout and sign in the supplier {string}') do |email|
   create_supplier(email)
   FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770').update(user: @supplier_user)
   visit facilities_management_supplier_new_user_session_path
+  update_banner_cookie(true) if @javascript
   fill_in 'email', with: @supplier_user.email
   fill_in 'password', with: nil
   click_on 'Sign in'

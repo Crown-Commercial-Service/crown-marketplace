@@ -1,0 +1,171 @@
+<%= content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+    <p>
+      <%= t('.what_are_cookies') %>
+    </p>
+    <p>
+      <%= t('home.cookies.website_has_4_services') %>
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('home.cookies.facilities_management') %></li>
+      <li><%= t('home.cookies.legal_services') %></li>
+      <li><%= t('home.cookies.management_consultancy') %></li>
+      <li><%= t('home.cookies.supply_teachers') %></li>
+    </ul>
+    <p>
+      <%= t('.policy_will_apply') %>
+    <p>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= t('home.cookies.measure_website_use') %>
+    </h2>
+
+    <p>
+      <%= t('home.cookies.we_use_ga') %>
+    </p>
+
+    <div class="govuk-inset-text">
+      <%= t('.we_do_not_let') %>
+    </div>
+
+    <p>
+      <%= t('home.cookies.ga_list') %>
+    </p>
+    
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('home.cookies.ga_list_1') %></li>
+      <li><%= t('home.cookies.ga_list_2') %></li>
+      <li><%= t('home.cookies.ga_list_3') %></li>
+    </ul>
+
+    <p>
+      <%= t('.ga_sets_following_cookies') %>
+    </p>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.expires') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.expires') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.expires') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= t('home.cookies.strictly_necessary_cookies') %>
+    </h2>
+
+    <h3 class="govuk-heading-s">
+      <%= t('.cookies_message') %>
+    </h3>
+
+    <p>
+      <%= t('.you_may_see_a_banner') %>
+    </p>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t('.cookie_message_1.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_1.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_1.expires') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t('.cookie_message_2.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_2.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_2.expires') %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="govuk-heading-s">
+      <%= t('.reg_and_sign_in') %>
+    </h3>
+
+    <p>
+      <%= t('.reg_and_sign_in_cookies') %>
+    </p>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.name') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.purpose') %></th>
+          <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"><%= t('home.cookies.expires') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.expires') %></td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.name') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.purpose') %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.expires') %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h2 class="govuk-heading-m">
+      <%= t('.change_your_settings') %>
+    </h2>
+
+    <p>
+      <%= t('.change_settings_html', change_settings_link: link_to(t('.change_settings_link_text'), cookie_settings_path, class: 'govuk-link--no-visited-state') ) %>
+    </p>
+
+    <p>
+      <%= t('.last_updated') %>
+    </p>
+  </div>
+</div>
