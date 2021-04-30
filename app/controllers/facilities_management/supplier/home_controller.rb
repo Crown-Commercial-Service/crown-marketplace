@@ -1,6 +1,5 @@
 class FacilitiesManagement::Supplier::HomeController < FacilitiesManagement::Supplier::FrameworkController
-  before_action :authenticate_user!, except: %i[index accessibility_statement cookies]
-  before_action :authorize_user, except: %i[index accessibility_statement cookies]
+  before_action :authenticate_user!, :authorize_user, except: %i[index accessibility_statement cookie_policy cookie_settings]
 
   def index
     if user_signed_in?
@@ -11,10 +10,14 @@ class FacilitiesManagement::Supplier::HomeController < FacilitiesManagement::Sup
   end
 
   def accessibility_statement
-    render 'facilities_management/home/accessibility_statement'
+    render 'home/accessibility_statement'
   end
 
-  def cookies
-    render 'facilities_management/home/cookies'
+  def cookie_policy
+    render 'home/cookie_policy'
+  end
+
+  def cookie_settings
+    render 'home/cookie_settings'
   end
 end
