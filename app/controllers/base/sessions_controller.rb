@@ -50,11 +50,11 @@ module Base
     protected
 
     def after_sign_in_path_for(resource)
-      stored_location_for(resource) || gateway_url
+      stored_location_for(resource) || sign_in_url
     end
 
     def after_sign_out_path_for(_resource)
-      gateway_url
+      sign_in_url
     end
 
     def session_expired_sign_in_path

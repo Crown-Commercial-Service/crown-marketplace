@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError, 'Not Found'
   end
 
-  def gateway_url
-    determine_non_admin_gateway_url
+  def sign_in_url
+    determine_non_admin_after_sign_in
   end
 
   def handle_unverified_request
@@ -22,17 +22,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def determine_non_admin_gateway_url
-    case controller_path.split('/').first
-    when 'supply_teachers'
-      st_gateway_path
-    when 'management_consultancy'
-      management_consultancy_gateway_url
-    when 'facilities_management'
+  def determine_non_admin_after_sign_in
+    if controller_path.split('/').first == 'facilities_management'
       session[:return_to] = request.fullpath
       facilities_management_url_for_user_type
-    when 'legal_services'
-      legal_services_gateway_url
     else
       facilities_management_url
     end
@@ -41,7 +34,7 @@ class ApplicationController < ActionController::Base
   def facilities_management_url_for_user_type
     return facilities_management_supplier_new_user_session_url if controller_path.split('/')[1] == 'supplier' && controller_path.split('/')[2] == 'contracts'
 
-    facilities_management_gateway_url
+    facilities_management_new_user_session_path
   end
 
   delegate :ccs_homepage_url, to: Marketplace
@@ -66,15 +59,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       super
     else
-      redirect_to gateway_url
-    end
-  end
-
-  def st_gateway_path
-    if request.headers['REQUEST_PATH']&.include?('/supply-teachers/admin')
-      supply_teachers_admin_user_session_url
-    else
-      supply_teachers_gateway_url
+      redirect_to sign_in_url
     end
   end
 

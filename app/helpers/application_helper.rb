@@ -259,7 +259,7 @@ module ApplicationHelper
   end
 
   def fm_back_to_start_page
-    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
+    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
   end
 
   def passwords_page

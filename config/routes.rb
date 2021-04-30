@@ -59,8 +59,6 @@ Rails.application.routes.draw do
     get '/', to: 'buyer_account#buyer_account'
     get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
-    get '/gateway', to: 'gateway#index'
-    get '/gateway/validate/:id', to: 'gateway#validate'
     get '/buyer_account', to: 'buyer_account#buyer_account'
     resources :buildings, only: %i[index show edit update new create] do
       member do
@@ -122,7 +120,6 @@ Rails.application.routes.draw do
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :shared_pages
       get '/', to: 'home#index'
-      get '/gateway', to: 'gateway#index'
       resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
       resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
         resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]

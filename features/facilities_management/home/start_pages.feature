@@ -9,14 +9,12 @@ Feature: Start pages
     When I go to the facilities management start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
-    And I click on 'Sign in with Cognito'
     Then I am on the 'Sign in to your account' page
 
   Scenario: Logging on user without details
     When I go to the facilities management start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
-    And I click on 'Sign in with Cognito'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer without details
     And I am on the 'Manage your details' page
@@ -25,7 +23,6 @@ Feature: Start pages
     When I go to the facilities management start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
-    And I click on 'Sign in with Cognito'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer with details
     And I am on the Your account page
@@ -34,7 +31,6 @@ Feature: Start pages
     When I go to the facilities management start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
-    And I click on 'Sign in with Cognito'
     And I am on the 'Sign in to your account' page
     Then I should sign in as an fm buyer with details
     And I am on the Your account page

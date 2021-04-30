@@ -2239,9 +2239,6 @@ en:
     my_dashboard: My dashboard
     sign_out: Sign out
   shared:
-    gateway:
-      index:
-        heading: CCS Marketplace
     passwords:
       edit:
         confirm_new_password: Confirm new password
