@@ -156,6 +156,14 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
     before { get :edit, params: { id: building.id, step: step } }
 
+    context 'when the step is not recognised' do
+      let(:step) { 'contract_name' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_building_path(building)
+      end
+    end
+
     context 'when the step is building_details' do
       let(:step) { 'building_details' }
 

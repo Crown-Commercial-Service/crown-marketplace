@@ -110,6 +110,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         get :edit, params: { procurement_id: procurement.id, page: page }
       end
 
+      context 'when the page is not recognised' do
+        let(:page) { 'payment_period' }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_procurement_contract_details_path
+        end
+      end
+
       context 'when updating payment method' do
         let(:page) { 'payment_method' }
 

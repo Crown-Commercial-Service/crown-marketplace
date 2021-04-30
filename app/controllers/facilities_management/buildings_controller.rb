@@ -11,6 +11,7 @@ module FacilitiesManagement
     before_action :create_new_building, only: :new
     before_action :define_all_buildings, only: :index
     before_action :build_page_data, only: %i[show edit update add_address]
+    before_action :redirect_if_unrecognised_step, only: :edit
     before_action :authorize_user
     before_action :build_page_description, only: %i[index show new edit add_address]
     before_action :initialize_building_details, only: :show
@@ -47,6 +48,10 @@ module FacilitiesManagement
 
     def define_all_buildings
       @page_data[:model_object] = current_user.buildings.order_by_building_name.page(params[:page])
+    end
+
+    def redirect_if_unrecognised_step
+      redirect_to facilities_management_building_path(@page_data[:model_object]) unless RECOGNISED_STEPS.include? params[:step]
     end
 
     protected

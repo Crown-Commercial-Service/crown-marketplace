@@ -10,6 +10,7 @@ module FacilitiesManagement
       before_action :initialise_page_data
       before_action :create_new_building, only: :new
       before_action :build_page_data, only: %i[show edit update add_address]
+      before_action :redirect_if_unrecognised_step, only: :edit
       before_action :authorize_user
       before_action :build_page_description, only: %i[show new edit add_address]
       before_action :initialize_building_details, only: :show
@@ -44,6 +45,10 @@ module FacilitiesManagement
 
       def set_procurement
         @procurement = current_user.procurements.find(params[:procurement_id])
+      end
+
+      def redirect_if_unrecognised_step
+        redirect_to facilities_management_procurement_edit_building_path(@procurement, @page_data[:model_object]) unless RECOGNISED_STEPS.include? params[:step]
       end
 
       protected

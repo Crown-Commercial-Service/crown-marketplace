@@ -97,7 +97,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:reason_for_not_signing) { 'The supplier did not respond' }
 
         it 'redirects to facilities_management_procurement_contract_closed_index_path' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement.id, contract_id: contract.id)
+          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement.id, contract.id)
         end
 
         it 'updates the dates' do
@@ -256,6 +256,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
     let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement) }
 
     login_fm_buyer_with_details
+
+    context 'when the name is not recognised' do
+      it 'redirects to the show page' do
+        get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'withold' }
+
+        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+      end
+    end
 
     context 'when offering to next supplier' do
       let(:ineligible_contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }

@@ -135,5 +135,7 @@ module SharedBuildingsControllerMethods
   def id_present?
     @page_data[:model_object].respond_to?(:id) && @page_data[:model_object][:id].present?
   end
+
+  RECOGNISED_STEPS = %w[building_details gia type security].freeze
 end
 # rubocop:enable Metrics/ModuleLength
