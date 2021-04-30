@@ -9,7 +9,10 @@
         <div class="govuk-footer__meta-item">
           <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
             <li class="govuk-footer__inline-list-item">
-              <%= link_to t("layouts.application.cookie_link"), cookies_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_link_aria_label') } %>
+              <%= link_to t("layouts.application.cookie_policy_link"), cookie_policy_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_policy_link_aria_label') } %>
+            </li>
+            <li class="govuk-footer__inline-list-item">
+              <%= link_to t("layouts.application.cookie_settings_link"), cookie_settings_path, class: "govuk-footer__link", aria: { label: t('layouts.application.cookie_settings_link_aria_label') } %>
             </li>
             <li class="govuk-footer__inline-list-item">
               <%= link_to t("layouts.application.privacy_link"), 'https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice/crown-commercial-service-privacy-notice', class: 'govuk-footer__link', aria: { label: t('layouts.application.privacy_link_aria_label') }, target: "_blank" %>

@@ -1,20 +1,23 @@
 module FacilitiesManagement
   module Admin
     class HomeController < FacilitiesManagement::Admin::FrameworkController
-      before_action :redirect_if_needed
-      before_action :authenticate_user!
-      before_action :authorize_user
+      before_action :redirect_if_needed, only: :index
+      before_action :authenticate_user!, :authorize_user, except: %i[accessibility_statement cookie_policy cookie_settings]
 
       def index
         @current_login_email = current_user.email.to_s
       end
 
       def accessibility_statement
-        render 'facilities_management/home/accessibility_statement'
+        render 'home/accessibility_statement'
       end
 
-      def cookies
-        render 'facilities_management/home/cookies'
+      def cookie_policy
+        render 'home/cookie_policy'
+      end
+
+      def cookie_settings
+        render 'home/cookie_settings'
       end
 
       private

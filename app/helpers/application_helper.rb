@@ -267,7 +267,7 @@ module ApplicationHelper
   end
 
   def cookies_page
-    controller.action_name == 'cookies'
+    controller.action_name == 'cookie_policy' || controller.action_name == 'cookie_settings'
   end
 
   def accessibility_statement_page
@@ -378,14 +378,25 @@ module ApplicationHelper
     end
   end
 
-  def cookies_path
+  def cookie_policy_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_cookies_path
+      facilities_management_admin_cookie_policy_path
     when 'facilities_management/supplier'
-      facilities_management_supplier_cookies_path
+      facilities_management_supplier_cookie_policy_path
     else
-      facilities_management_cookies_path
+      facilities_management_cookie_policy_path
+    end
+  end
+
+  def cookie_settings_path
+    case params[:service]
+    when 'facilities_management/admin'
+      facilities_management_admin_cookie_settings_path
+    when 'facilities_management/supplier'
+      facilities_management_supplier_cookie_settings_path
+    else
+      facilities_management_cookie_settings_path
     end
   end
 

@@ -30,16 +30,25 @@ RSpec.describe FacilitiesManagement::Admin::HomeController do
 
     it 'renders the accessibility_statement page' do
       get :accessibility_statement
-      expect(response).to render_template('facilities_management/home/accessibility_statement')
+      expect(response).to render_template('home/accessibility_statement')
     end
   end
 
-  describe 'GET cookies' do
+  describe 'GET cookie_policy' do
     login_fm_admin
 
-    it 'renders the cookies page' do
-      get :cookies
-      expect(response).to render_template('facilities_management/home/cookies')
+    it 'renders the cookie policy page' do
+      get :cookie_policy
+      expect(response).to render_template('home/cookie_policy')
+    end
+  end
+
+  describe 'GET cookie_settings' do
+    login_fm_admin
+
+    it 'renders the cookie settings page' do
+      get :cookie_settings
+      expect(response).to render_template('home/cookie_settings')
     end
   end
 
