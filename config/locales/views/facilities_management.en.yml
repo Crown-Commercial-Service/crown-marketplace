@@ -1754,6 +1754,7 @@ en:
         search_result_body_html: Here are the suppliers that can provide your services to your building(s). We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search:
         cancel_text: Return to your account
+        download_results: Download quick view results
         no_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
         quick_view_results: Quick view results
         save_and_continue: Continue to procurement
