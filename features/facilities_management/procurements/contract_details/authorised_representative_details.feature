@@ -37,9 +37,9 @@ Feature: Authorised representative detail
     And my 'Authorised representative details' contact detail name is 'Testim, Tester'
     Then I open the details for the 'Authorised representative details'
     And my 'Authorised representative details' contact details are as follows:
-      | tes@test.com                                                |
-      |  020 7946 0000                                                  |
-      | Stafford Delivery Office, Newport Road, Stafford ST16 1AA  |
+      | tes@test.com                                              |
+      | 020 7946 0000                                             |
+      | Stafford Delivery Office, Newport Road, Stafford ST16 1AA |
 
   @javascript
   Scenario: Entering new details is selected - changing the details
@@ -77,7 +77,7 @@ Feature: Authorised representative detail
     Then I open the details for the 'Authorised representative details'
     And my 'Authorised representative details' contact details are as follows:
       | tes@test.com                                    |
-      |  020 7946 0000                                      |
+      | 020 7946 0000                                   |
       | Littleton Mews, Clay Street, Penkridge ST19 5AF |
 
   @javascript
@@ -110,7 +110,7 @@ Feature: Authorised representative detail
     Then I open the details for the 'Authorised representative details'
     And my 'Authorised representative details' contact details are as follows:
       | jewelofempire@hardhaigh.palac.gov.ma                        |
-      |  020 7946 0000                                                  |
+      | 020 7946 0000                                               |
       | Hardhaigh Palace, Alba Cavanich, Mor Ardain, Alrest SI4 5GX |
     
   Scenario: Return links work and options are reset
