@@ -55,6 +55,7 @@ FactoryBot.define do
 
   factory :facilities_management_procurement_further_competition, parent: :facilities_management_procurement do
     aasm_state { 'further_competition' }
+    assessed_value { rand(500..5000) }
   end
 
   factory :facilities_management_procurement_with_contact_details, parent: :facilities_management_procurement_with_extension_periods do

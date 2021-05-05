@@ -75,8 +75,9 @@ Rails.application.routes.draw do
 
     resources :procurements do
       get 'delete'
-      get 'further_competition_spreadsheet'
       get 'summary', to: 'procurements#summary'
+      get 'quick_view_results_spreadsheet'
+      get 'further_competition_spreadsheet'
       get 'deliverables_matrix'
       get 'price_matrix'
       namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
