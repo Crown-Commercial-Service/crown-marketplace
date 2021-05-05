@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
   end
 
-  rescue_from ActionController::UnknownFormat do
+  rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
     raise ActionController::RoutingError, 'Not Found'
   end
 
