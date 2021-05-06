@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.6'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.7'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -53,7 +53,7 @@ gem 'json-jwt', '>= 1.11.0'
 gem 'devise', '~> 4.7.3'
 
 # for timing out when session expires
-gem 'auto-session-timeout', '~> 0.9.6'
+gem 'auto-session-timeout', '~> 0.9.7'
 
 # for cognito
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
@@ -114,7 +114,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.1'
+gem 'active_storage_validations', '>= 0.9.2'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -140,13 +140,13 @@ group :development, :test do
   gem 'launchy'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 4.0.2'
+  gem 'rspec-rails', '>= 5.0.1'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
   gem 'rubocop-rails', '>= 2.9.1', require: false
   gem 'rubyXL', '>= 3.4.6'
-  gem 'i18n-tasks', '>= 0.9.33'
+  gem 'i18n-tasks', '>= 0.9.34'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
