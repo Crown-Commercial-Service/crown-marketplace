@@ -2,7 +2,7 @@
   "name": "marketplace",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.13.15",
+    "@babel/core": "^7.13.8",
     "@babel/plugin-external-helpers": "^7.12.13",
     "@babel/plugin-transform-modules-umd": "^7.13.0",
     "@hmcts/frontend": "0.0.29-alpha",
