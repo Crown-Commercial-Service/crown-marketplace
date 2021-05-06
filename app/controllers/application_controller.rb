@@ -23,9 +23,12 @@ class ApplicationController < ActionController::Base
   private
 
   def determine_non_admin_after_sign_in
-    if controller_path.split('/').first == 'facilities_management'
+    case controller_path.split('/').first
+    when 'facilities_management'
       session[:return_to] = request.fullpath
       facilities_management_url_for_user_type
+    when 'crown_marketplace'
+      crown_marketplace_new_user_session_path
     else
       facilities_management_url
     end
@@ -67,5 +70,5 @@ class ApplicationController < ActionController::Base
     redirect_to errors_404_path unless VALID_SERVICE_NAMES.include? params[:service]
   end
 
-  VALID_SERVICE_NAMES = %w[facilities_management facilities_management/supplier facilities_management/admin facilities_management/procurements].freeze
+  VALID_SERVICE_NAMES = %w[facilities_management facilities_management/supplier facilities_management/admin facilities_management/procurements crown_marketplace].freeze
 end

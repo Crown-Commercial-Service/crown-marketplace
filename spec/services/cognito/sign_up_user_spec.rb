@@ -7,8 +7,21 @@ RSpec.describe Cognito::SignUpUser do
     let(:password_confirmation) { 'ValidPass123!' }
     let(:roles) { %i[buyer st_access] }
     let(:email_list) { ['crowncommercial.gov.uk', 'email.com', 'tmail.com', 'kmail.com', 'cmail.com', 'jmail.com', 'cheemail.com'] }
+    let(:allow_list_file) { Tempfile.new('allow_list.txt') }
 
     let(:aws_client) { instance_double(Aws::CognitoIdentityProvider::Client) }
+
+    before do
+      allow_list_file.write(email_list.join("\n"))
+      allow_list_file.close
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(AllowedEmailDomain).to receive(:allow_list_file_path).and_return(allow_list_file.path)
+      # rubocop:enable RSpec/AnyInstance
+    end
+
+    after do
+      allow_list_file.unlink
+    end
 
     describe '#validations' do
       let(:response) { described_class.new(email, password, password_confirmation, roles) }
@@ -17,7 +30,6 @@ RSpec.describe Cognito::SignUpUser do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow(response).to receive(:safelist).and_return(email_list)
       end
 
       context 'when password shorter than 8 characters' do
@@ -80,14 +92,12 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
     end
-    # rubocop:disable RSpec/AnyInstance
 
     context 'when success' do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_return(JSON[{ user_sub: '12345'.to_json }])
         allow(aws_client).to receive(:admin_add_user_to_group).and_return(JSON[{ user_sub: '12345'.to_json }])
-        allow_any_instance_of(described_class).to receive(:safelist).and_return(email_list)
       end
 
       it 'creates user' do
@@ -114,7 +124,6 @@ RSpec.describe Cognito::SignUpUser do
       before do
         allow(Aws::CognitoIdentityProvider::Client).to receive(:new).and_return(aws_client)
         allow(aws_client).to receive(:sign_up).and_raise(Aws::CognitoIdentityProvider::Errors::ServiceError.new('oops', 'Oops'))
-        allow_any_instance_of(described_class).to receive(:safelist).and_return(email_list)
       end
 
       it 'does not create user' do
@@ -138,5 +147,3 @@ RSpec.describe Cognito::SignUpUser do
     end
   end
 end
-
-# rubocop:enable RSpec/AnyInstance

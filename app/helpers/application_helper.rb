@@ -384,6 +384,8 @@ module ApplicationHelper
       facilities_management_admin_cookie_policy_path
     when 'facilities_management/supplier'
       facilities_management_supplier_cookie_policy_path
+    when 'crown_marketplace'
+      crown_marketplace_cookie_policy_path
     else
       facilities_management_cookie_policy_path
     end
@@ -395,6 +397,8 @@ module ApplicationHelper
       facilities_management_admin_cookie_settings_path
     when 'facilities_management/supplier'
       facilities_management_supplier_cookie_settings_path
+    when 'crown_marketplace'
+      crown_marketplace_cookie_settings_path
     else
       facilities_management_cookie_settings_path
     end
@@ -406,6 +410,8 @@ module ApplicationHelper
       facilities_management_admin_accessibility_statement_path
     when 'facilities_management/supplier'
       facilities_management_supplier_accessibility_statement_path
+    when 'crown_marketplace'
+      crown_marketplace_accessibility_statement_path
     else
       facilities_management_accessibility_statement_path
     end
