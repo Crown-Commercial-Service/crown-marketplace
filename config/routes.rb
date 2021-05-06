@@ -45,6 +45,10 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
+      concerns :authenticatable
+    end
+
     get 'active'  => 'base/sessions#active'
     get 'timeout' => 'base/sessions#timeout'
   end
@@ -134,6 +138,16 @@ Rails.application.routes.draw do
     get '/start', to: 'journey#start', as: 'journey_start'
     get '/:slug', to: 'journey#question', as: 'journey_question'
     get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+  end
+
+  namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
+    concerns :shared_pages
+    get '/not-permitted', to: 'home#not_permitted'
+    get '/', to: 'home#index'
+    resources :allow_list, path: 'allow-list', only: %i[index new create]
+    delete '/allow-list/destroy', to: 'allow_list#destroy'
+    get '/allow-list/delete', to: 'allow_list#delete'
+    get '/allow-list/search_allow_list', to: 'allow_list#search_allow_list'
   end
 
   get '/404', to: 'errors#not_found', as: :errors_404

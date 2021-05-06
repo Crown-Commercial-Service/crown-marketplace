@@ -23,7 +23,7 @@ class HomeController < ApplicationController
 
   private
 
-  CROWN_MARKETPLACE_SERVICES = %w[auth facilities_management legal_services management_consultancy supply_teachers].freeze
+  CROWN_MARKETPLACE_SERVICES = %w[auth facilities_management legal_services management_consultancy supply_teachers crown_marketplace].freeze
 
   def service_name
     @service_name ||= params[:service].gsub('_', '-')

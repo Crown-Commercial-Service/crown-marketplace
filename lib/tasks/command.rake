@@ -4,9 +4,11 @@ module Command
 
     return unless ENV['RAKE_TASK_LIST']
 
-    ENV['RAKE_TASK_LIST'].split(',').each do |rake_task|
-      p "Running: #{rake_task}"
-      Rake::Task[rake_task].invoke
+    DistributedLocks.distributed_lock(156) do
+      ENV['RAKE_TASK_LIST'].split(',').each do |rake_task|
+        p "Running: #{rake_task}"
+        Rake::Task[rake_task].invoke
+      end
     end
   end
 end

@@ -1,4 +1,3 @@
-@pipeline
 Feature: Prices and variance
 
   Scenario: Changing the supplier values changes the results
