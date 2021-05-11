@@ -1071,6 +1071,55 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
     end
   end
+
+  describe 'GET quick_view_results_spreadsheet' do
+    login_fm_buyer_with_details
+
+    before do
+      procurement.update(aasm_state: aasm_state)
+      get :quick_view_results_spreadsheet, params: { procurement_id: procurement.id }
+    end
+
+    context 'when the procurement is not in quick search' do
+      let(:aasm_state) { 'detailed_search' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+      end
+    end
+
+    context 'when the procurement is in quick search' do
+      let(:aasm_state) { 'quick_search' }
+
+      it 'does download a spreadsheet' do
+        expect(response.headers['Content-Disposition']).to include 'filename="Quick view results %28New search%29.xlsx"'
+      end
+    end
+  end
+
+  describe 'GET further_competition_spreadsheet' do
+    let(:procurement) { create(:facilities_management_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
+
+    login_fm_buyer_with_details
+
+    before { get :further_competition_spreadsheet, params: { procurement_id: procurement.id } }
+
+    context 'when the procurement is not in further competition' do
+      let(:aasm_state) { 'direct_award' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+      end
+    end
+
+    context 'when the procurement is in further competition' do
+      let(:aasm_state) { 'further_competition' }
+
+      it 'does download a spreadsheet' do
+        expect(response.headers['Content-Disposition']).to include 'filename="further_competition_procurement_summary.xlsx"'
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/NestedGroups
 # rubocop:enable RSpec/AnyInstance

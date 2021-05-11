@@ -13,6 +13,7 @@
       </div>
     </div>
     <%= render partial: 'filter_details', locals: { form: f } %>
+    <%= link_to t('.download_results'), facilities_management_procurement_quick_view_results_spreadsheet_path(@procurement), class: 'govuk-button govuk-button--secondary', 'aria-label': t('.download_results'), download: '' %>
     <div class="govuk-!-margin-top-8">
       <p class="govuk-body">
         <%= t('.save_text') %>

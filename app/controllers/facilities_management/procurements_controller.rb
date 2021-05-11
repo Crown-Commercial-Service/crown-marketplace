@@ -81,10 +81,24 @@ module FacilitiesManagement
 
     def what_happens_next; end
 
+    def quick_view_results_spreadsheet
+      if @procurement.quick_search?
+        spreadsheet_builder = FacilitiesManagement::QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
+      else
+        redirect_to facilities_management_procurement_path(id: @procurement.id)
+      end
+    end
+
     def further_competition_spreadsheet
-      spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
-      spreadsheet_builder.build
-      send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      if @procurement.further_competition?
+        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      else
+        redirect_to facilities_management_procurement_path(id: @procurement.id)
+      end
     end
 
     def deliverables_matrix
