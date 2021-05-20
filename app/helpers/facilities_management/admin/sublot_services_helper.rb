@@ -1,6 +1,18 @@
 module FacilitiesManagement::Admin::SublotServicesHelper
-  def list_service_types
-    @list_service_types ||= ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
+  def list_service_types_price
+    @list_service_types_price ||= ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
+  end
+
+  def list_service_types_variance
+    @list_service_types_variance ||= ['Direct Award Discount (%)', 'General office - Customer Facing (%)', 'General office - Non Customer Facing (%)', 'Call Centre Operations (%)', 'Warehouses (%)', 'Restaurant and Catering Facilities (%)', 'Pre-School (%)', 'Primary School (%)', 'Secondary Schools (%)', 'Special Schools (%)', 'Universities and Colleges (%)', 'Community - Doctors, Dentist, Health Clinic (%)', 'Nursing and Care Homes (%)']
+  end
+
+  def list_service_types(service_code)
+    if ['M', 'N'].include?(service_code)
+      list_service_types_variance
+    else
+      list_service_types_price
+    end
   end
 
   def variance_names
@@ -12,7 +24,7 @@ module FacilitiesManagement::Admin::SublotServicesHelper
   end
 
   def variances
-    ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
+    @variances ||= ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1']
   end
 
   def determine_rate_card_service_price_text(service_type, work_pckg_code, supplier_data_ratecard_prices, supplier_data_ratecard_discounts)
@@ -31,10 +43,16 @@ module FacilitiesManagement::Admin::SublotServicesHelper
     service_has_error?(code) ? @invalid_services[code].keys.include?(service_type) : false
   end
 
-  def sublot_1a_error_message
+  def sublot_1a_error_message(error_type)
     tag.span class: 'govuk-error-message' do
       concat(tag.span('Error:', class: 'govuk-visually-hidden'))
-      concat(t('facilities_management.admin.sublot_services.services_prices_and_variances.rate_error'))
+      concat(t("facilities_management.admin.sublot_services.services_prices_and_variances.#{error_type}"))
     end
+  end
+
+  def first_error_type
+    return @invalid_services.first[1].first[1][:error_type] unless variances.include? @invalid_services.first[0]
+
+    @invalid_services.first[1][:error_type]
   end
 end

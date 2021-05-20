@@ -2,6 +2,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, user: subject.current_user, aasm_state: 'da_draft') }
 
   login_fm_buyer_with_details
@@ -107,6 +108,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
       before do
         procurement.update(da_journey_state: 'contract_details')
         get :edit, params: { procurement_id: procurement.id, page: page }
+      end
+
+      context 'when the page is not recognised' do
+        let(:page) { 'payment_period' }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_procurement_contract_details_path
+        end
       end
 
       context 'when updating payment method' do

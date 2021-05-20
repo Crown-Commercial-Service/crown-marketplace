@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
+
   render_views
+
   describe 'GET #index' do
     context 'when logging in as a fm buyer with details' do
       it 'returns http success' do
@@ -152,6 +155,14 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     login_fm_buyer_with_details
 
     before { get :edit, params: { id: building.id, step: step } }
+
+    context 'when the step is not recognised' do
+      let(:step) { 'contract_name' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_building_path(building)
+      end
+    end
 
     context 'when the step is building_details' do
       let(:step) { 'building_details' }

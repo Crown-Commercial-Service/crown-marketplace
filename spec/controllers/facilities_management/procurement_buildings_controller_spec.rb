@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user)) }
 
   describe 'GET #show' do
@@ -29,6 +30,36 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
         get :show, params: { id: procurement_building.id }
 
         expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+      end
+    end
+  end
+
+  describe 'GET #edit' do
+    login_fm_buyer_with_details
+
+    before { get :edit, params: { id: procurement_building.id, step: step } }
+
+    context 'when the step is not recognised' do
+      let(:step) { 'missing_service' }
+
+      it 'redirects to the  procurement show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+      end
+    end
+
+    context 'when the step is missing_regions' do
+      let(:step) { 'missing_region' }
+
+      it 'renders the template' do
+        expect(response).to render_template :edit
+      end
+    end
+
+    context 'when the step is buildings_and_services' do
+      let(:step) { 'buildings_and_services' }
+
+      it 'renders the template' do
+        expect(response).to render_template :edit
       end
     end
   end

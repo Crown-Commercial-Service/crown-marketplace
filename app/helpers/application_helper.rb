@@ -227,10 +227,8 @@ module ApplicationHelper
   end
 
   def service_header_banner
-    if service_name_param && lookup_context.template_exists?("#{service_name_param}/_header-banner")
-      render partial: "#{service_name_param}/header-banner"
-    elsif service_name_param&.include? 'admin'
-      render partial: 'layouts/admin/header-banner'
+    if params[:service]
+      render partial: "#{params[:service]}/header-banner"
     else
       render partial: 'layouts/header-banner'
     end
@@ -261,7 +259,7 @@ module ApplicationHelper
   end
 
   def fm_back_to_start_page
-    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::GatewayController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
+    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
   end
 
   def passwords_page
@@ -269,7 +267,7 @@ module ApplicationHelper
   end
 
   def cookies_page
-    controller.action_name == 'cookies'
+    controller.action_name == 'cookie_policy' || controller.action_name == 'cookie_settings'
   end
 
   def accessibility_statement_page
@@ -294,10 +292,6 @@ module ApplicationHelper
 
   def format_money(cost, precision = 2)
     number_to_currency(cost, precision: precision, unit: '£')
-  end
-
-  def service_name_param
-    @service_name_param ||= params[:service].nil? ? request&.controller_class&.module_parent_name&.underscore : params[:service]
   end
 
   def govuk_tag(status)
@@ -381,6 +375,39 @@ module ApplicationHelper
         concat(text)
         concat(tag.span(t("common.#{file_type}_html"), class: 'govuk-visually-hidden')) if show_doc_image
       end
+    end
+  end
+
+  def cookie_policy_path
+    case params[:service]
+    when 'facilities_management/admin'
+      facilities_management_admin_cookie_policy_path
+    when 'facilities_management/supplier'
+      facilities_management_supplier_cookie_policy_path
+    else
+      facilities_management_cookie_policy_path
+    end
+  end
+
+  def cookie_settings_path
+    case params[:service]
+    when 'facilities_management/admin'
+      facilities_management_admin_cookie_settings_path
+    when 'facilities_management/supplier'
+      facilities_management_supplier_cookie_settings_path
+    else
+      facilities_management_cookie_settings_path
+    end
+  end
+
+  def accessibility_statement_path
+    case params[:service]
+    when 'facilities_management/admin'
+      facilities_management_admin_accessibility_statement_path
+    when 'facilities_management/supplier'
+      facilities_management_supplier_accessibility_statement_path
+    else
+      facilities_management_accessibility_statement_path
     end
   end
 end

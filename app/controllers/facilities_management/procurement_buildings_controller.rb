@@ -3,6 +3,7 @@ module FacilitiesManagement
     before_action :set_procurement_building_data
     before_action :authorize_user
     before_action :set_step, only: %i[edit update]
+    before_action :redirect_if_unrecognised_step, only: :edit
     before_action :set_volume_procurement_building_services, only: :show
     before_action :set_standards_procurement_building_services, only: :show
 
@@ -73,6 +74,12 @@ module FacilitiesManagement
     def set_standards_procurement_building_services
       @standards_procurement_building_services = @procurement_building.sorted_procurement_building_services.select(&:requires_service_standard?)
     end
+
+    def redirect_if_unrecognised_step
+      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
+    end
+
+    RECOGNISED_STEPS = %w[buildings_and_services missing_region].freeze
 
     protected
 

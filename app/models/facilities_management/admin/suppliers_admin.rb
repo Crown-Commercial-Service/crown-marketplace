@@ -9,9 +9,9 @@ module FacilitiesManagement
 
       validates :supplier_name, presence: true, uniqueness: true, length: { maximum: 100 }, on: :supplier_name
 
-      validates :contact_email, :contact_name, :contact_phone, presence: true, on: :supplier_contact_information
-      validates :contact_email, email: { allow_nil: true }, on: :supplier_contact_information
+      validates :contact_name, :contact_email, :contact_phone, presence: true, on: :supplier_contact_information
       validates :contact_name, length: { maximum: 100 }, on: :supplier_contact_information
+      validates :contact_email, email: { allow_nil: true }, on: :supplier_contact_information
       validates :contact_phone, format: { with: /\A(?:[ ()-]*\d){9,11}\z/ }, length: { maximum: 15 }, on: :supplier_contact_information
 
       validates :duns, :registration_number, presence: true, on: :additional_supplier_information

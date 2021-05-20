@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Supplier::SentController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/supplier' } }
+
   describe '#index' do
     subject(:index) { get :index, params: { contract_id: contract.id } }
 
@@ -25,8 +27,8 @@ RSpec.describe FacilitiesManagement::Supplier::SentController, type: :controller
     end
 
     context 'when not signed in' do
-      it 'redirects to FM gateway' do
-        expect(index).to redirect_to('/facilities-management/gateway')
+      it 'redirects to FM sign-in' do
+        expect(index).to redirect_to('/facilities-management/sign-in')
       end
     end
   end

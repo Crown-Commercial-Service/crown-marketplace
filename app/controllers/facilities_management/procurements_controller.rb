@@ -7,6 +7,8 @@ module FacilitiesManagement
     before_action :set_deleted_action_occurred, only: :index
     before_action :redirect_from_delete_if_needed, only: %i[delete destroy]
     before_action :redirect_to_contract_details_if_da_draft, only: :show
+    before_action :redirect_if_unrecognised_step, only: :edit
+    before_action :redirect_if_unrecognised_summary_page, only: :summary
     before_action :ready_buildings, only: %i[show summary edit update]
     before_action :set_procurement_data, only: %i[show summary edit update]
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
@@ -79,10 +81,24 @@ module FacilitiesManagement
 
     def what_happens_next; end
 
+    def quick_view_results_spreadsheet
+      if @procurement.quick_search?
+        spreadsheet_builder = FacilitiesManagement::QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
+      else
+        redirect_to facilities_management_procurement_path(id: @procurement.id)
+      end
+    end
+
     def further_competition_spreadsheet
-      spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
-      spreadsheet_builder.build
-      send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      if @procurement.further_competition?
+        spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+      else
+        redirect_to facilities_management_procurement_path(id: @procurement.id)
+      end
     end
 
     def deliverables_matrix
@@ -335,6 +351,17 @@ module FacilitiesManagement
     def redirect_to_contract_details_if_da_draft
       redirect_to facilities_management_procurement_contract_details_path(procurement_id: @procurement.id) if @procurement.da_draft?
     end
+
+    def redirect_if_unrecognised_step
+      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
+    end
+
+    def redirect_if_unrecognised_summary_page
+      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_SUMMARY_PAGES.include? summary_page
+    end
+
+    RECOGNISED_STEPS = %w[services regions contract_name estimated_annual_cost tupe contract_period buildings].freeze
+    RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
 
     def sent_offers
       current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }

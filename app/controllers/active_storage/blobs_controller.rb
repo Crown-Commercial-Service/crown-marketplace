@@ -2,6 +2,7 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
   include Rails.application.routes.url_helpers
   before_action :authenticate_user!
   before_action :authorize_user
+  before_action :validate_service, except: :show
   include ActiveStorage::SetBlob
 
   rescue_from CanCan::AccessDenied do

@@ -293,6 +293,140 @@ en:
       - plc
       - LLP
   home:
+    accessibility_statement:
+      CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+      ability_net: AbilityNet (opens in a new tab)
+      ability_net_link: https://mcmw.abilitynet.org.uk/
+      accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
+      accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard (opens in a new tab)
+      accessibility_regulations_1: The accessibility regulations
+      accessibility_regulations_2: if they’re not essential to providing our services.
+      accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
+      accessibility_regulations_link_text: do not require us to fix PDFs or other documents published before 23 September 2018 (opens in a new tab)
+      any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
+      call: call 0345 410 2222
+      email: email
+      email_link: info@crowncommercial.gov.uk
+      equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
+      equality_link: https://www.equalityadvisoryservice.com/
+      equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
+      heading: Facilities Management (FM) Accessibility statement
+      heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
+      heading_enforcement: Enforcement procedure
+      heading_how_accessible: How accessible this website is
+      heading_how_we_tested: How we tested this website
+      heading_non_accessible: Non accessible content
+      heading_non_compliance: Non compliance with the accessibility regulations
+      heading_preparation: Preparation of this accessibility statement
+      heading_reporting: Reporting accessibility problems with this website
+      heading_technical_information: Technical information about this website’s accessibility
+      heading_what_to_do: What to do if you cannot access parts of this website
+      if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
+      list_1_change_colours: change colours, contrast levels and fonts
+      list_1_navigate_keyboard: navigate most of the website using just a keyboard
+      list_1_navigate_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+      list_1_navigate_speach: navigate most of the website using speech recognition software
+      list_2_contrast: the contrast on some text may not be enough
+      list_2_page_view: page view is not optimised for viewing on mobile devices
+      list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
+      many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
+      market_place_link: https://marketplace.service.crowncommercial.gov.uk/facilities-management
+      non_text_contrast_heading: Non-Text Contrast
+      non_text_contrast_issue: When reviewing pages there is not enough contrast between the visual boundaries of user interface components in a selected or focus state and the background. This mainly affects buttons and some text input fields on certain pages.
+      non_text_contrast_this_falls: This fails WCAG 2.1 AA success criterion 1.4.11(b) (non-text contrast). We plan to fix this by December 2020.
+      page_optimisation_heading: Pages not optimised for mobile
+      page_optimisation_issue: When viewing the website on mobile devices, pages with tables render incorrectly and may be hard to interpret by users. This mainly affects pages with tables with a high number of columns and content.
+      page_optimisation_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
+      pdfs_and_docs: PDFs and other documents
+      plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
+      some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
+      the_complete_journey: The complete Facilities Management journey was tested, this included every page a buyer or supplier would progress through in-order to complete the procurement activity.  The administration screens used for the maintenance of the digital service were also tested for accessibility, this area of functionality is only used by a small selection of CCS staff.
+      the_content: The content listed below is non-accessible for the following reasons.
+      this_statement: This accessibility statement applies to the Facilities Management digital service which can be found at the following URL
+      this_statement_date: This statement was prepared on 8th October 2020. It will be reviewed and updated as required.
+      this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
+      this_website_partially_1: This website is partially compliant with the
+      this_website_partially_2: due to the non-compliances listed below.
+      two_D_heading: Two-dimensional scrolling is present
+      two_D_issue: When viewing pages at 1280px width and 400% zoom, two-dimensional scrolling is required to view content. This mainly affects pages with tables with a high number of columns and content.
+      two_D_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
+      we_are_always_looking_html: 'We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: %{email}.'
+      we_know: 'We know some parts of this website are not fully accessible:'
+      website_last_tested: This website was last tested on Monday 5th October 2020. The test was carried out by Zoonou Ltd.
+      website_text_simple: We’ve also made the website text as simple as possible to understand.
+      well_consider: We’ll consider your request and get back to you in five working days.
+    cookie_policy:
+      change_settings_html: You can %{change_settings_link}.
+      change_settings_link_text: change which cookies you’re happy for us to use
+      change_your_settings: Change your settings
+      cookie_message_1:
+        expires: 1 year
+        name: crown_marketplace_google_analytics_enabled
+        purpose: Saves your cookie consent settings for Google Analytics
+      cookie_message_2:
+        expires: 1 year
+        name: crown_marketplace_cookie_settings_viewed
+        purpose: Lets us know that you’ve viewed your cookie consent settings
+      cookies_message: Cookies message
+      ga_cookies_1:
+        expires: 2 years
+        name: _ga
+        purpose: This cookie allows Google to track unique users via a client identifier that is randomly generated
+      ga_cookies_2:
+        expires: 10 minutes
+        name: _gat
+        purpose: This cookie is used to monitor and track visitors’ behaviour on the site anonymously
+      ga_cookies_3:
+        expires: 24 hours
+        name: _gid
+        purpose: This cookie is used to group the user behaviour
+      ga_sets_following_cookies: Google Analytics sets the following cookies.
+      heading: Details about cookies on Crown Marketplace
+      last_updated: Last updated 30 April 2021
+      policy_will_apply: This cookie policy is applicable to all four services
+      reg_and_sign_in: Registration and sign in
+      reg_and_sign_in_cookie_1:
+        expires: 20 minutes
+        name: reset_email
+        purpose: This cookie holds the email of the user when resetting their password
+      reg_and_sign_in_cookie_2:
+        expires: 20 minutes
+        name: session
+        purpose: This cookie holds the session id when a user is challenged while logging in
+      reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
+      we_do_not_let: We do not allow Google to use or share the data about how you use this site.
+      what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
+      you_may_see_a_banner: You may see a banner when you visit Crown Marketplace inviting you to accept cookies or review your settings. We’ll set cookies so that your computer knows you’ve seen it and not to show it again, and also to store your settings.
+    cookie_settings:
+      always_need_to_be_on: They always need to be on.
+      cookie_settings: Cookie settings
+      cookies_saved: Your cookie settings were saved
+      dont_use_cookies: Do not use cookies that measure my website use
+      essential_cookies: These essential cookies do things like remember the notifications you have seen so we do not show them to you again.
+      find_out_more: Find out more about cookies on Crown Marketplace
+      heading: Cookies on Crown Marketplace
+      save_changes: Save changes
+      settings_will_apply: The settings you choose on this page will apply to all four services
+      the_number_we_use: We use 2 types of cookie. You can choose which cookies you're happy for us to use.
+      use_cookies: Use cookies that measure my website use
+      what_are_cookies: Cookies are files saved on your phone, tablet or computer when you visit a website.
+      why_we_use_them: We use cookies to store information about how you use the Crown Marketplace website, such as the pages you visit.
+    cookies:
+      expires: Expires
+      facilities_management: Facilities Management
+      ga_list: 'Google Analytics sets cookies that store anonymised information about:'
+      ga_list_1: how you got to the site
+      ga_list_2: the pages you visit on Crown Marketplace, and how long you spend on each page
+      ga_list_3: what you click on while you're visiting the site
+      legal_services: Legal Services
+      management_consultancy: Management Consultancy
+      measure_website_use: Cookies that measure website use
+      name: Name
+      purpose: Purpose
+      strictly_necessary_cookies: Strictly necessary cookies
+      supply_teachers: Supply Teachers
+      we_use_ga: We use Google Analytics to measure how you use the website so we can improve it based on user needs.
+      website_has_4_services: 'The Crown Marketplace website contains the following four services:'
     index:
       facilities_management_link: Find a facilities management supplier
       legal_services_link: Find legal service for the wider public sector
@@ -309,8 +443,10 @@ en:
       back: Back
       back_aria_label: Back to the previous page
       beta: beta
-      cookie_link: Cookies
-      cookie_link_aria_label: How we use cookies
+      cookie_policy_link: Cookie policy
+      cookie_policy_link_aria_label: How we use cookies
+      cookie_settings_link: Cookie settings
+      cookie_settings_link_aria_label: Change you cookie settings
       crown_copyright: "© Crown copyright"
       error_prefix: Error
       feedback: feedback
@@ -322,6 +458,17 @@ en:
       support_html: Email %{link} or call %{phone} for support.
       support_link_aria_label: Email us for support with this service
       title: Crown Commercial Service
+    cookie-banner:
+      accept_cookies: Accept analytics cookies
+      change_cookie_settings_html: You can %{cookie_settings_link} at any time.
+      change_cookie_settings_link: change your cookie settings
+      cookies_accepted: You’ve accepted all analytics cookies.
+      cookies_on_crown_marketplace: Cookies on Crown Marketplace
+      cookies_rejected: You’ve rejected all analytics cookies.
+      reject_cookies: Reject analytics cookies
+      view_cookies: View cookies
+      we_use_some_analytics_cookies: We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      we_use_some_essential_cookies: We use some essential cookies to make this service work.
     logotype:
       ccs_logo_title: Crown Commercial Service logo
   miles:

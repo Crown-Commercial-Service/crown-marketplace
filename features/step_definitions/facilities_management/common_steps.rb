@@ -1,5 +1,6 @@
 Given 'I sign in and navigate to my account' do
   visit facilities_management_new_user_session_path
+  update_banner_cookie(true) if @javascript
   create_user_with_details
   fill_in 'email', with: @user.email
   fill_in 'password', with: nil

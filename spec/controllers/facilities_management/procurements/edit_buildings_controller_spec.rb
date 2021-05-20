@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type: :controller do
   render_views
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search', user: subject.current_user) }
   let(:procurement_id) { procurement.id }
 
@@ -87,6 +88,14 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
     login_fm_buyer_with_details
 
     before { get :edit, params: { id: building.id, procurement_id: procurement_id, step: step } }
+
+    context 'when the step is not recognised' do
+      let(:step) { 'external_area' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_edit_building_path(id: building.id, procurement_id: procurement_id)
+      end
+    end
 
     context 'when the step is building_details' do
       let(:step) { 'building_details' }

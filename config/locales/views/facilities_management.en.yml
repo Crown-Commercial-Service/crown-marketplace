@@ -19,9 +19,9 @@ en:
         facilities_management/admin/management_report:
           attributes:
             end_date:
+              date_after_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
               date_before_or_equal_to: The ‘To’ date must be today or in the past
               invalid: Enter a valid ‘To’ date
-              must_be_before_start_date: The ‘To’ date must be the same or after the ‘From’ date
               not_a_date: Enter a valid ‘To’ date
             start_date:
               date_before_or_equal_to: The ‘From’ date must be today or in the past
@@ -30,11 +30,11 @@ en:
         facilities_management/admin/rates:
           attributes:
             benchmark:
+              less_than_or_equal_to: The rate must be less than or equal to 1
               not_a_number: The rate must be a number, like 0.26 or 1
-              out_of_range: The rate must be less than or equal to 1
             framework:
+              less_than_or_equal_to: The rate must be less than or equal to 1
               not_a_number: The rate must be a number, like 0.26 or 1
-              out_of_range: The rate must be less than or equal to 1
         facilities_management/admin/suppliers_admin:
           attributes:
             address_county:
@@ -471,7 +471,7 @@ en:
       supplier_link: Facilities management supplier account
   facilities_management:
     admin:
-      admin_account:
+      home:
         index:
           dashboard_assessed_value: Assessed value
           dashboard_average_rate: Average framework rates
@@ -564,7 +564,9 @@ en:
           note: The tick boxes in the first column indicate the services this supplier can provide.
           percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
-          rate_error: The rate must be a number, like 0.26 or 1
+          rate_error_less_than_or_equal_to: The rate must be less than or equal to 1
+          rate_error_more_than_max_decimals: The rate muse not have more than 20 decimal places
+          rate_error_not_a_number: The rate must be a number, like 0.26 or 1
           return_link: Return to supplier framework data
           services_and_prices: Services and prices
           td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
@@ -809,68 +811,6 @@ en:
         name: RM3830 Service requirements and standards.pdf
         text: Read the service specification document
     home:
-      accessibility_statement:
-        CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-        ability_net: AbilityNet (opens in a new tab)
-        ability_net_link: https://mcmw.abilitynet.org.uk/
-        accessibility_guidelines_link: https://www.w3.org/TR/WCAG21/
-        accessibility_guidelines_link_text: Web Content Accessibility Guidelines version 2.1 AA standard (opens in a new tab)
-        accessibility_regulations_1: The accessibility regulations
-        accessibility_regulations_2: if they’re not essential to providing our services.
-        accessibility_regulations_link: http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made
-        accessibility_regulations_link_text: do not require us to fix PDFs or other documents published before 23 September 2018 (opens in a new tab)
-        any_new_PDFs: Any new PDFs or Word documents we publish will meet accessibility standards.
-        call: call 0345 410 2222
-        email: email
-        email_link: info@crowncommercial.gov.uk
-        equality: The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint,
-        equality_link: https://www.equalityadvisoryservice.com/
-        equality_link_text: contact the Equality Advisory and Support Service (EASS) (opens in a new tab)
-        heading: Facilities Management (FM) Accessibility statement
-        heading_content_not_in_scope: Content that’s not within the scope of the accessibility regulations
-        heading_enforcement: Enforcement procedure
-        heading_how_accessible: How accessible this website is
-        heading_how_we_tested: How we tested this website
-        heading_non_accessible: Non accessible content
-        heading_non_compliance: Non compliance with the accessibility regulations
-        heading_preparation: Preparation of this accessibility statement
-        heading_reporting: Reporting accessibility problems with this website
-        heading_technical_information: Technical information about this website’s accessibility
-        heading_what_to_do: What to do if you cannot access parts of this website
-        if_you_need: 'If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:'
-        list_1_change_colours: change colours, contrast levels and fonts
-        list_1_navigate_keyboard: navigate most of the website using just a keyboard
-        list_1_navigate_listen: listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
-        list_1_navigate_speach: navigate most of the website using speech recognition software
-        list_2_contrast: the contrast on some text may not be enough
-        list_2_page_view: page view is not optimised for viewing on mobile devices
-        list_2_text_reflow: the text will not reflow in a single column when you change the size of the browser window. This means you may need to scroll horizontally (across instead of up and down) on certain pages
-        many_of_our_older: Many of our older PDFs and Word documents do not meet accessibility standards – for example, they may not be structured so they’re accessible to a screen reader. This does not meet WCAG 2.1 success criterion 4.1.2 (name, role, value).
-        market_place_link: https://marketplace.service.crowncommercial.gov.uk/facilities-management
-        non_text_contrast_heading: Non-Text Contrast
-        non_text_contrast_issue: When reviewing pages there is not enough contrast between the visual boundaries of user interface components in a selected or focus state and the background. This mainly affects buttons and some text input fields on certain pages.
-        non_text_contrast_this_falls: This fails WCAG 2.1 AA success criterion 1.4.11(b) (non-text contrast). We plan to fix this by December 2020.
-        page_optimisation_heading: Pages not optimised for mobile
-        page_optimisation_issue: When viewing the website on mobile devices, pages with tables render incorrectly and may be hard to interpret by users. This mainly affects pages with tables with a high number of columns and content.
-        page_optimisation_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
-        pdfs_and_docs: PDFs and other documents
-        plan_to_fix: By September 2020, we plan to either fix these or replace them with accessible HTML pages.
-        some_of_our: Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with contract information, and forms published as Word documents.
-        the_complete_journey: The complete Facilities Management journey was tested, this included every page a buyer or supplier would progress through in-order to complete the procurement activity.  The administration screens used for the maintenance of the digital service were also tested for accessibility, this area of functionality is only used by a small selection of CCS staff.
-        the_content: The content listed below is non-accessible for the following reasons.
-        this_statement: This accessibility statement applies to the Facilities Management digital service which can be found at the following URL
-        this_statement_date: This statement was prepared on 8th October 2020. It will be reviewed and updated as required.
-        this_website: 'This website is run by Crown Commercial Service (CCS). We want as many people as possible to be able to use this website. For example, that means you should be able to:'
-        this_website_partially_1: This website is partially compliant with the
-        this_website_partially_2: due to the non-compliances listed below.
-        two_D_heading: Two-dimensional scrolling is present
-        two_D_issue: When viewing pages at 1280px width and 400% zoom, two-dimensional scrolling is required to view content. This mainly affects pages with tables with a high number of columns and content.
-        two_D_this_falls: This fails WCAG 2.1 AA success criterion 1.4.10 (reflow). We plan to fix this by December 2020.
-        we_are_always_looking_html: 'We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: %{email}.'
-        we_know: 'We know some parts of this website are not fully accessible:'
-        website_last_tested: This website was last tested on Monday 5th October 2020. The test was carried out by Zoonou Ltd.
-        website_text_simple: We’ve also made the website text as simple as possible to understand.
-        well_consider: We’ll consider your request and get back to you in five working days.
       index:
         1_title: 1. Quick view suppliers
         1_we_will_tell_you_html: "<li>which suppliers can meet your needs</li>"
@@ -1439,6 +1379,7 @@ en:
           you_sign_2: this will happen offline (outside this portal)
           you_sign_3: usually within 2 working days
         call_off_contract_documents:
+          call_off_contract_documents: Call-off contract documents
           call_out_leading: Download Call-off contract
           colating: COLLATING DOCUMENTS
           colating_message: Call-off contract will be available for download shortly
@@ -1534,9 +1475,8 @@ en:
           initial_call_off_period: Initial call-off period
           mobilisation_period: Mobilisation period
           optional_call_off_extension: Optional call-off extension period %{extension}
+          requirements: Requirements
           route_to_market: Route to market
-        procurement_requirements_head:
-          supplier: Supplier
         sent:
           no_suppliers:
             description: Unfortunately, there are no further suppliers available who can meet your requirements.
@@ -1565,8 +1505,8 @@ en:
             what_happens_next: What happens next
             what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
         show:
-          call_off_contract_documents: Call-off contract documents
-          requirements: Requirements
+          supplier: Supplier
+        supplier_contact_details:
           supplier_contact_details: Supplier contact details
       contracts_helper:
         warning_message:
@@ -1814,6 +1754,7 @@ en:
         search_result_body_html: Here are the suppliers that can provide your services to your building(s). We are showing you potential suppliers from all three sub-lots, however, your procurement will fall into only one sub-lot dependent on your potential total contract value (which excludes billable works, optional extension periods and VAT).
       quick_search:
         cancel_text: Return to your account
+        download_results: Download quick view results
         no_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
         quick_view_results: Quick view results
         save_and_continue: Continue to procurement
@@ -2151,6 +2092,8 @@ en:
           list04_2: If you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier.
           list04_title: 4. Withdraw before signing
           what_happens_next: What happens next
+        buyer_contact_details:
+          buyer_contact_details: Buyer contact details
         contract_offer_details:
           accepted_contract_offer: You accepted this contract offer on
           contract_closed_on: This contract offer was closed on
@@ -2167,8 +2110,6 @@ en:
           'no': 'No'
           reason_for_declining: When you decline a contract offer you need to give a reason. Please input your answer into the box below. The reason given will be shared with the buyer and CCS.
           'yes': 'Yes'
-        procurement_requirements_head:
-          buyer: Buyer
         received_contract_offer:
           list01_1: You should review the offer to see if you wish to accept the contract or decline the offer. An overview of the contract is shown, and you should download the zip file containing the contract documents for review.
           list01_2: The buyer contact details are also shown, which will allow you to contact the buyer to clarify any uncertainty before responding to the offer. Please note however this is not an opportunity to engage in negotiation with a buyer.
@@ -2184,9 +2125,35 @@ en:
           list04_title: 4. Not responding in time
           what_happens_next: What happens next
         show:
-          buyer_contact_details: Buyer contact details
-          call_off_contract_documents: Call off contract documents
-          requirements: Requirements
+          buyer: Buyer
+      dashboard:
+        accepted_offers:
+          accepted: Accepted
+          accepted_offers: Accepted offers
+          buyer: Buyer
+          contract_name: Contract name
+          no_accepted_offers: You do not have any accepted offers
+        closed_contracts:
+          buyer: Buyer
+          closed_contracts: Closed
+          contract_name: Contract name
+          date: Date
+          no_closed_contracts: You do not have any items in this section
+          status: Status
+        live_contracts:
+          buyer: Buyer
+          contract_name: Contract name
+          end_date: End date
+          live_contracts: Contracts
+          no_live_contracts: You do not have any live contracts
+          start_date: Start date
+        received_offers:
+          action_required: ACTION REQUIRED
+          buyer: Buyer
+          contract_name: Contract name
+          date_offer_expires: Date offer expires
+          no_received_offers: You do not have any received offers
+          received_offers: Received offers
       sent:
         accepted_offer:
           title: You have accepted this contract offer
@@ -2211,9 +2178,6 @@ en:
     my_dashboard: My dashboard
     sign_out: Sign out
   shared:
-    gateway:
-      index:
-        heading: CCS Marketplace
     passwords:
       edit:
         confirm_new_password: Confirm new password

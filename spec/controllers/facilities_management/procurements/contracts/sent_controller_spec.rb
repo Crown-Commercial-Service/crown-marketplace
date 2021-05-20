@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Procurements::Contracts::SentController, type: :controller do
-  login_fm_buyer_with_details
-
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, user: subject.current_user) }
   let(:supplier) { create(:facilities_management_supplier_detail) }
   let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+
+  login_fm_buyer_with_details
 
   describe 'GET index' do
     context 'when user enter a url for a contract that the user has sent' do

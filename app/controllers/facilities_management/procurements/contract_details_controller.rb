@@ -9,6 +9,7 @@ module FacilitiesManagement
       before_action :redirect_if_not_in_contract_details, only: :edit
       before_action :return_to_results, only: :update, if: -> { params['return_to_results'].present? }
       before_action :set_page_name
+      before_action :redirect_if_unrecognised_page_name, only: :edit
       before_action :set_page_detail_from_view_name, only: %i[show edit]
       before_action :delete_incomplete_contact_details, only: %i[show edit]
       before_action :reset_security_policy_document_page, only: :show, if: -> { @page_name == :contract_details }
@@ -269,6 +270,12 @@ module FacilitiesManagement
                        params[:page].to_sym
                      end
       end
+
+      def redirect_if_unrecognised_page_name
+        redirect_to facilities_management_procurement_contract_details_path unless RECOGNISED_PAGE_NAMES.include? @page_name
+      end
+
+      RECOGNISED_PAGE_NAMES = %i[authorised_representative governing_law invoicing_contact_details local_government_pension_scheme new_authorised_representative_address new_authorised_representative new_invoicing_contact_details_address new_invoicing_contact_details new_notices_contact_details_address new_notices_contact_details notices_contact_details payment_method pension_funds security_policy_document].freeze
 
       protected
 

@@ -19,5 +19,19 @@ module Pages
         elements :details, 'li'
       end
     end
+
+    section :results_container, '#proc-CCS-fm-suppliers-long-list' do
+      section :'1a', 'div > div:nth-child(1) > table > tbody' do
+        elements :suppliers, 'tr'
+      end
+
+      section :'1b', 'div > div:nth-child(2) > table > tbody' do
+        elements :suppliers, 'tr'
+      end
+
+      section :'1c', 'div > div:nth-child(3) > table > tbody' do
+        elements :suppliers, 'tr'
+      end
+    end
   end
 end

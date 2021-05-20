@@ -3,6 +3,7 @@ require 'rails_helper'
 # rubocop:disable RSpec/AnyInstance
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management' } }
   let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search', user: subject.current_user) }
 
   context 'without buyer details' do
@@ -206,6 +207,14 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     end
 
     describe 'GET summary' do
+      context 'when the summary page is not recognised' do
+        it 'redirects to the show page' do
+          get :summary, params: { procurement_id: procurement.id, summary: 'contract_name' }
+
+          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        end
+      end
+
       context 'when the user wants to edit contract_periods' do
         context 'when the contract periods are not started' do
           before { procurement.update(initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
@@ -298,6 +307,14 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     end
 
     describe 'GET edit' do
+      context 'when the step is not recognised' do
+        it 'redirects to the show page' do
+          get :edit, params: { id: procurement.id, step: 'services_and_buildings' }
+
+          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        end
+      end
+
       it 'renders the correct template' do
         get :edit, params: { id: procurement.id, step: 'tupe' }
 
@@ -1052,6 +1069,55 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       procurement.update(aasm_state: 'detailed_search', user_id: create(:user).id)
       patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { contract_name: 'Updated name' } }
       expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+    end
+  end
+
+  describe 'GET quick_view_results_spreadsheet' do
+    login_fm_buyer_with_details
+
+    before do
+      procurement.update(aasm_state: aasm_state)
+      get :quick_view_results_spreadsheet, params: { procurement_id: procurement.id }
+    end
+
+    context 'when the procurement is not in quick search' do
+      let(:aasm_state) { 'detailed_search' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+      end
+    end
+
+    context 'when the procurement is in quick search' do
+      let(:aasm_state) { 'quick_search' }
+
+      it 'does download a spreadsheet' do
+        expect(response.headers['Content-Disposition']).to include 'filename="Quick view results %28New search%29.xlsx"'
+      end
+    end
+  end
+
+  describe 'GET further_competition_spreadsheet' do
+    let(:procurement) { create(:facilities_management_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
+
+    login_fm_buyer_with_details
+
+    before { get :further_competition_spreadsheet, params: { procurement_id: procurement.id } }
+
+    context 'when the procurement is not in further competition' do
+      let(:aasm_state) { 'direct_award' }
+
+      it 'redirects to the show page' do
+        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+      end
+    end
+
+    context 'when the procurement is in further competition' do
+      let(:aasm_state) { 'further_competition' }
+
+      it 'does download a spreadsheet' do
+        expect(response.headers['Content-Disposition']).to include 'filename="further_competition_procurement_summary.xlsx"'
+      end
     end
   end
 end

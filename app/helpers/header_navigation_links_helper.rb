@@ -1,18 +1,18 @@
 module HeaderNavigationLinksHelper
-  def facilities_management_navigation_links
+  def default_navigation_links
     navigation_links = []
 
-    navigation_links << back_to_start_link unless page_does_not_require_back_to_start?
-    navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
+    navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_path } unless landing_or_admin_page || not_permitted_page
     navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
 
     navigation_links.compact
   end
 
-  def default_navigation_links
+  def facilities_management_navigation_links
     navigation_links = []
 
-    navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_path } unless landing_or_admin_page || not_permitted_page
+    navigation_links << back_to_start_link unless page_does_not_require_back_to_start?
+    navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
     navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
 
     navigation_links.compact
@@ -33,31 +33,6 @@ module HeaderNavigationLinksHelper
     navigation_links << { link_text: supplier_back_to_start_text, link_url: facilities_management_supplier_path } unless fm_supplier_login_page
     navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
     navigation_links << sign_out_link(facilities_management_supplier_destroy_user_session_path)
-
-    navigation_links.compact
-  end
-
-  def facilities_management_procurement_navigation_links
-    navigation_links = []
-
-    unless page_does_not_require_back_to_start?
-      link_text = controller.controller_name == 'buildings' || controller.class.module_parent == FacilitiesManagement::Procurements ? t('header_navigation_links_helper.my_account') : t('header_navigation_links_helper.back_to_start')
-
-      navigation_links << { link_text: link_text, link_url: facilities_management_path }
-    end
-
-    navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
-    navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
-
-    navigation_links.compact
-  end
-
-  def facilities_management_contract_navigation_links
-    navigation_links = []
-
-    navigation_links << { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_path } unless page_does_not_require_back_to_start?
-    navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
-    navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
 
     navigation_links.compact
   end

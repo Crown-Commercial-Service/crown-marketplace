@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/supplier' } }
+
   describe 'PUT update' do
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: user) }
