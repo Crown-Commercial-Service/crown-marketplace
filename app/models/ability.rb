@@ -31,6 +31,7 @@ class Ability
     can :read, :all
     can :manage, FacilitiesManagement::Admin
     can :manage, FacilitiesManagement::Admin::ManagementReport
+    can :manage, FacilitiesManagement::Admin::Upload
   end
 
   def fm_supplier_specific_auth(user)

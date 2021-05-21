@@ -1,0 +1,55 @@
+<%= content_for :page_title, t('.heading') %>
+<%= admin_breadcrumbs({ link_text: t('.supplier_framework_data'), link_url: facilities_management_admin_supplier_framework_data_path },
+                      { link_text: t('.heading') })%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-xl"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <%= link_to t('.create_new'), new_facilities_management_admin_upload_path, class: 'govuk-button'  %>
+    <hr class="govuk-section-break govuk-section-break--m">
+  </div>
+</div>
+
+<% if @latest_upload.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption"><%= t('.current_data') %></caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t('.name') %></th>
+            <th class="govuk-table__header" scope="col"><%= t('.date') %></th>
+            <td class="govuk-table__header"></td>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr>
+            <td class="govuk-table__cell"><%= t('.file_name') %></td>
+            <td class="govuk-table__cell"><%= format_date_time @latest_upload.created_at %></td>
+            <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@latest_upload.supplier_data_file, disposition: 'attachment', admin_upload_id: @latest_upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <table class="govuk-table">
+      <caption class="govuk-table__caption"><%= t('.table_caption') %></caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col"><%= t('.name') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('.date') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('.status') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%= render partial: 'upload', collection: @uploads %>
+      </tbody>
+    </table>
+    <%= paginate @uploads, views_prefix: 'shared', window: 0, outer_window: 2 %>
+  </div>
+</div>

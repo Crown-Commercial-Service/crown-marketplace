@@ -1,0 +1,44 @@
+<%= content_for :page_title, t('.heading') %>
+<%= admin_breadcrumbs({ link_text: t('.supplier_framework_data'), link_url: facilities_management_admin_supplier_framework_data_path },
+                      { link_text: t('.manage_supplier_framework_data'), link_url: facilities_management_admin_uploads_path },
+                      { link_text: t('.heading') })%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render partial: 'shared/error_summary', locals: { errors: @upload.errors } %>
+    <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5 cmp-page-heading"><%= t('.heading') %></h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t('.download_templates') %></h2>
+    <p><%= t('.you_can_download') %></p>
+    <div>
+      <%= link_to_generated_file_for_download(facilities_management_admin_uploads_spreadsheet_template_path, :xlsx, t('.template_file_name'), true) %>
+    </div>
+  </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--m">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t('.upload_title') %></h2>
+    <span class="govuk-caption-m govuk-!-margin-bottom-7"><%= t('.upload_caption') %></span>
+    
+    <%= form_with model: @upload, url: facilities_management_admin_uploads_path, method: :post, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+      <%= govuk_form_group_with_optional_error(f.object, :supplier_data_file) do %>
+        <%= f.label :supplier_data_file, t('.file_label'), class: 'govuk-label' %>
+        <div class="govuk-!-margin-top-2 govuk-!-width-two-thirds">
+          <%= display_error f.object, :supplier_data_file %>
+          <%= tag(:hr, class: 'govuk-section-break govuk-!-margin-top-4') if f.object.errors[:supplier_data_file].any? %>
+          <span class="<%= 'govuk-file-upload--error' if f.object.errors[:supplier_data_file].any? %>">
+            <%= f.file_field :supplier_data_file, class: 'govuk-file-upload' %>
+          </span>
+        </div>
+      <% end  %>
+      <%= f.submit t('.upload_data'), class: 'govuk-button', name: t('.upload_data') %>
+      <br/>
+      <%= link_to t('.return'), facilities_management_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <% end %>
+  </div>
+</div>

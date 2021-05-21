@@ -131,6 +131,10 @@ Rails.application.routes.draw do
         resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
         resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
       end
+      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
+        get '/progress', action: :progress
+      end
+      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
