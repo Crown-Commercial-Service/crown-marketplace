@@ -37,6 +37,15 @@ module HeaderNavigationLinksHelper
     navigation_links.compact
   end
 
+  def crown_marketplace_navigation_links
+    navigation_links = []
+
+    navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: crown_marketplace_path } if user_signed_in? && request.original_fullpath != crown_marketplace_path && request.original_fullpath != crown_marketplace_allow_list_index_path
+    navigation_links << sign_out_link(crown_marketplace_destroy_user_session_path)
+
+    navigation_links.compact
+  end
+
   def sign_out_link(sign_out_path)
     { link_text: t('header_navigation_links_helper.sign_out'), link_url: sign_out_path, options: { method: :delete } } if user_signed_in?
   end

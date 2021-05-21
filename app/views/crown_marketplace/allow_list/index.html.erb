@@ -1,0 +1,52 @@
+<%= content_for :page_title, t('.heading_title') %>
+
+<%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: params[:email_domain_added]) } unless params[:email_domain_added].blank? %>
+<%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: params[:email_domain_removed]) } unless params[:email_domain_removed].blank? %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t('.heading_title') %></h1>
+    <p>
+      <%= t('.in_order_to') %>
+    </p>
+    <p>
+      <%= t('.the_four_Services_are') %>
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= t('.facilities_management') %></li>
+      <li><%= t('.legal_services') %></li>
+      <li><%= t('.management_consultancy') %></li>
+      <li><%= t('.supply_teachers') %></li>
+    </ul>
+    <p>
+      <%= t('.you_can_add') %>
+    </p>
+    <div class='govuk-!-margin-bottom-4'>
+      <%= link_to t('.add_new_email_domain'), new_crown_marketplace_allow_list_path, class: 'govuk-button govuk-button' %>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row" id="allow-list-search-container">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: crown_marketplace_allow_list_search_allow_list_path, model: @allowed_email_domain, method: :get, remote: true, html: { specialvalidation: true } do |f| %>
+      <%= hidden_field_tag :email_domain_added, params[:email_domain_added] %>
+      <%= f.label :email_domain, t('.find_an_email_domain'), class: 'govuk-label--m' %>
+      <p class="govuk-hint" id="allow-list-search-hint">
+        <%= t('.enter_an_email_domain') %>
+      </p>
+      <div id="domain-not-found" hidden>
+        <span class="govuk-error-message">
+          <%= t('.not_in_allow_list') %>
+        </span>
+      </div>
+      <%= f.text_field  :email_domain, class: 'govuk-input govuk-!-width-three-quarters govuk-!-margin-right-2', type: 'search', aria: { describedby: 'allow-list-search-hint' } %>
+      <%= f.submit t('.search'), class: 'govuk-button govuk-button--secondary' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" id="allow-list-table">
+    <%= render(partial: 'allow_list_table', locals: { paginated_allow_list: @paginated_allow_list, email_domain_added: params[:email_domain_added] }) %>
+  </div>
+</div>

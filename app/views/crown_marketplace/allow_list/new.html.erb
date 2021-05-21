@@ -1,0 +1,29 @@
+<%= content_for :page_title, t('.heading') %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @allowed_email_domain.errors } %>
+
+<%= form_with url: crown_marketplace_allow_list_index_path, model: @allowed_email_domain, method: :post, local: true, html: { specialvalidation: true } do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), nil, nil, nil, nil)) %>
+
+      <%= form_group_with_error f.object, :email_domain do |displayed_error| %>
+        <%= label_details(f, :email_domain, t('.email_domain_label'), t('.email_domain_hint')) %>
+        <p class="govuk-body govuk-!-margin-top-4"><%= t('.email_domain_must') %></p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><%= t('.email_domain_must_1') %></li>
+          <li><%= t('.email_domain_must_2') %></li>
+          <li><%= t('.email_domain_must_3') %></li>
+        </ul>
+        <%= displayed_error %>
+        <%= f.text_field :email_domain, class: 'govuk-input govuk-input--width-30 govuk-!-margin-top-4' %>
+      <% end %>
+
+      <div class="govuk-!-margin-top-5">
+        <%= f.submit t('.save_and_continue'), class: 'govuk-button' %>
+        <br />
+        <%= link_to t('.return_to_allow_list'), crown_marketplace_allow_list_index_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': t('.return_to_allow_list') %>
+      </div>
+    </div>
+  </div>
+<% end %>
