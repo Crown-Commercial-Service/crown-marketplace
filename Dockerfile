@@ -61,10 +61,6 @@ ARG APP_RUN_RAKE_TASKS
 LABEL app_run_rake_tasks=$APP_RUN_RAKE_TASKS
 ENV APP_RUN_RAKE_TASKS=$APP_RUN_RAKE_TASKS
 
-ARG APP_RUN_FM_STATIC_TASK
-LABEL app_run_fm_static_task=$APP_RUN_FM_STATIC_TASK
-ENV APP_RUN_FM_STATIC_TASK=$APP_RUN_FM_STATIC_TASK
-
 ARG CLAMAV_SERVER_IP
 LABEL clam_av_server_ip=$CLAMAV_SERVER_IP
 ENV CLAMAV_SERVER_IP=$CLAMAV_SERVER_IP
@@ -119,10 +115,6 @@ ENV RAILS_LOG_TO_STDOUT=true
 
 # Compile assets
 RUN GOOGLE_GEOCODING_API_KEY=dummy SECRET_KEY_BASE=dummy APP_RUN_PRECOMPILE_ASSETS="FALSE" bundle exec rails assets:precompile
-
-RUN apk add nginx
-RUN mkdir -p /run/nginx
-COPY default.conf /etc/nginx/conf.d/default.conf
 
 RUN apk add nginx
 RUN mkdir -p /run/nginx
