@@ -36,9 +36,9 @@ RSpec.describe FacilitiesManagement::QuickViewResultsSpreadsheetCreator do
     let(:sheet) { work_book.sheet('Supplier shortlists') }
 
     it 'has the correct suppliers' do
-      expect(sheet.column(1)[7..-1]).to eq ['Bogan-Koch', 'Dare, Heaney and Kozey', 'Dickinson-Abbott', "Halvorson, Corwin and O'Connell", 'Hirthe-Mills', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Marvin, Kunde and Cartwright', "O'Keefe LLC", "O'Keefe-Mitchell", 'Shields, Ratke and Parisian', nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-      expect(sheet.column(2)[7..-1]).to eq ['Abbott-Dooley', 'Bogan-Koch', 'Dickens and Sons', 'Dickinson-Abbott', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', "Halvorson, Corwin and O'Connell", 'Kemmer Inc', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Mann Group', 'Marvin, Kunde and Cartwright', 'Mayert, Kohler and Schowalter', 'Nader, Prosacco and Gaylord', "O'Keefe LLC", "O'Keefe-Mitchell", 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Treutel Inc', 'Wiza, Kunde and Gibson']
-      expect(sheet.column(3)[7..-1]).to eq ['Abbott-Dooley', 'Dickens and Sons', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Huels, Borer and Rowe', 'Kemmer Inc', 'Koch-Kirlin', 'Mann Group', 'Mayert, Kohler and Schowalter', 'Nader, Prosacco and Gaylord', 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Terry-Konopelski', 'Treutel Inc', 'Wiza, Kunde and Gibson', nil, nil, nil, nil, nil]
+      expect(sheet.column(1)[7..]).to eq ['Bogan-Koch', 'Dare, Heaney and Kozey', 'Dickinson-Abbott', "Halvorson, Corwin and O'Connell", 'Hirthe-Mills', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Marvin, Kunde and Cartwright', "O'Keefe LLC", "O'Keefe-Mitchell", 'Shields, Ratke and Parisian', nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      expect(sheet.column(2)[7..]).to eq ['Abbott-Dooley', 'Bogan-Koch', 'Dickens and Sons', 'Dickinson-Abbott', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', "Halvorson, Corwin and O'Connell", 'Kemmer Inc', 'Lebsack, Vandervort and Veum', 'Leffler-Strosin', 'Mann Group', 'Marvin, Kunde and Cartwright', 'Mayert, Kohler and Schowalter', 'Nader, Prosacco and Gaylord', "O'Keefe LLC", "O'Keefe-Mitchell", 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Treutel Inc', 'Wiza, Kunde and Gibson']
+      expect(sheet.column(3)[7..]).to eq ['Abbott-Dooley', 'Dickens and Sons', 'Ebert Inc', 'Feest-Blanda', 'Gleichner, Thiel and Weissnat', 'Graham-Farrell', 'Huels, Borer and Rowe', 'Kemmer Inc', 'Koch-Kirlin', 'Mann Group', 'Mayert, Kohler and Schowalter', 'Nader, Prosacco and Gaylord', 'Orn-Welch', 'Sanford LLC', 'Sanford-Lubowitz', 'Smitham-Brown', 'Terry-Konopelski', 'Treutel Inc', 'Wiza, Kunde and Gibson', nil, nil, nil, nil, nil]
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::QuickViewResultsSpreadsheetCreator do
     it 'has the correct buyer details' do
       buyer_details = ['My quick view test', nil, nil, buyer_detail.organisation_name, buyer_detail.full_organisation_address, buyer_detail.full_name, buyer_detail.job_title, buyer_detail.email, buyer_detail.telephone_number.to_i]
 
-      expect(sheet.column(2)[1..-1]).to eq buyer_details
+      expect(sheet.column(2)[1..]).to eq buyer_details
     end
   end
 end

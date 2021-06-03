@@ -1,5 +1,9 @@
 # Crown Marketplace
 
+[![Build Status](https://travis-ci.com/Crown-Commercial-Service/crown-marketplace.svg?branch=master)](https://travis-ci.com/Crown-Commercial-Service/crown-marketplace)
+[![Maintainability](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/maintainability)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/37cd5c1a9986ca396884/test_coverage)](https://codeclimate.com/github/Crown-Commercial-Service/crown-marketplace/test_coverage)
+
 ## Prerequisites
 
 ### Ubuntu
