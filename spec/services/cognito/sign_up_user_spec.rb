@@ -33,20 +33,42 @@ RSpec.describe Cognito::SignUpUser do
       end
 
       context 'when password shorter than 8 characters' do
-        let(:password) { 'Pass!' }
-        let(:password_confirmation) { 'Pass!' }
+        let(:password) { 'Pass1!' }
+        let(:password_confirmation) { 'Pass1!' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:password].first).to eq 'Password must be 8 characters or more'
         end
       end
 
       context 'when password does not contain at least one uppercase letter' do
-        let(:password) { 'password!' }
-        let(:password_confirmation) { 'password!' }
+        let(:password) { 'password1!' }
+        let(:password_confirmation) { 'password1!' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:password].first).to eq 'Password must include a capital letter'
+        end
+      end
+
+      context 'when password does not contain at least one symbol' do
+        let(:password) { 'Password123' }
+        let(:password_confirmation) { 'Password123' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:password].first).to eq 'Password must include a special character'
+        end
+      end
+
+      context 'when password does not contain at least one number' do
+        let(:password) { 'Password!' }
+        let(:password_confirmation) { 'Password!' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:password].first).to eq 'Password must include a number'
         end
       end
 
@@ -54,8 +76,9 @@ RSpec.describe Cognito::SignUpUser do
         let(:password) { '' }
         let(:password_confirmation) { 'ValidPass123!' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:password].first).to eq 'Enter a password'
         end
       end
 
@@ -63,24 +86,36 @@ RSpec.describe Cognito::SignUpUser do
         let(:password) { 'SomeOtherPass123!' }
         let(:password_confirmation) { 'ValidPass123!' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:password_confirmation].first).to eq "Passwords don't match"
         end
       end
 
       context 'when email is nil' do
         let(:email) { '' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Enter an email address in the correct format, like name@example.com'
+        end
+      end
+
+      context 'when email domain contains an uppercase character' do
+        let(:email) { 'uSer@cheemail.com' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Email address cannot contain any capital letters'
         end
       end
 
       context 'when email domain not in safelist' do
         let(:email) { 'user@test.com' }
 
-        it 'is invalid' do
+        it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'You must use a public sector email'
         end
       end
 
