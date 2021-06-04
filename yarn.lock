@@ -1483,10 +1483,10 @@ globals@^11.1.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-govuk-frontend@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.11.0.tgz#5bc38629ec8b290220c2c389dcd664114a045db1"
-  integrity sha512-1hW/3etYBtKPM+PNdWVOijvWVI3mpYL8eb7WLTtlh/Qxf2mCp6LkCsZk9I034n4EJBYQ5jlUWsUlTOOIypftpg==
+govuk-frontend@^3.12.0:
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.12.0.tgz#55d7057ed8f480a3f83ffeae54b68e0fc81607a3"
+  integrity sha512-+mM8BqEUqsBVSV/ud0dEhE8OmMdhkK53eEUp5YyPN+y3mwcdRnwwP2A2B5qFdFi6E6j/2AYuCG8l5kXD+JXNxA==
 
 har-schema@^2.0.0:
   version "2.0.0"
