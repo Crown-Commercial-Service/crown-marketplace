@@ -123,7 +123,7 @@ module FacilitiesManagement
         when :invoicing_contact_details, :authorised_representative, :notices_contact_details
           route_new_contact_detail
         when :new_invoicing_contact_details, :new_authorised_representative, :new_notices_contact_details
-          redirect_to facilities_management_procurement_contract_details_edit_path(page: @page_name[4..-1])
+          redirect_to facilities_management_procurement_contract_details_edit_path(page: @page_name[4..])
         when :new_invoicing_contact_details_address, :new_authorised_representative_address, :new_notices_contact_details_address
           redirect_to facilities_management_procurement_contract_details_edit_path(page: @page_name[0..-9])
         else

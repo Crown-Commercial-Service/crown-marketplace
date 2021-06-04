@@ -15,7 +15,7 @@ module Postcode
           out_code: matches[1],
           postcode_district: matches[1],
           in_code: matches[4],
-          larger_in_code: matches[4][0..-1],
+          larger_in_code: matches[4][0..],
           postcode_sector: matches[5],
           unit_postcode: matches[6]
         }

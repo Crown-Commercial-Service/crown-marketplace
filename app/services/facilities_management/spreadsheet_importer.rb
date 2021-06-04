@@ -145,7 +145,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def building_columns(sheet)
-    columns = sheet.row(BUILDINGS_COMPLETE_ROW)[1..-1]
+    columns = sheet.row(BUILDINGS_COMPLETE_ROW)[1..]
     index = columns.reverse.index { |x| x == 'Complete' } + 1
 
     columns[0..-index]
@@ -169,7 +169,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def get_service_codes(matrix_sheet, col, index)
-    matrix_column = matrix_sheet.column(col)[3..-1].map { |value| value == 'Yes' }
+    matrix_column = matrix_sheet.column(col)[3..].map { |value| value == 'Yes' }
     procurement_building_hash = @procurement_array[index][:procurement_building]
     procurement_building = procurement_building_hash[:object]
     procurement_building_services = procurement_building_hash[:procurement_building_services]
@@ -311,7 +311,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def get_service_hours_from_sheet(sheet, col)
-    service_hour_column = sheet.column(col)[3..-1]
+    service_hour_column = sheet.column(col)[3..]
     SERVICE_HOUR_CODES.map.with_index do |code, index|
       [code, { service_hours: service_hour_column[index * 2], detail_of_requirement: ActionController::Base.helpers.strip_tags(service_hour_column[index * 2 + 1].to_s) }]
     end.to_h
