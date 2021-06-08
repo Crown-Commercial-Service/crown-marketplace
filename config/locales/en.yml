@@ -288,14 +288,13 @@ en:
         facilities_management: Facilities Management
         find_an_email_domain: Find an email domain
         heading_title: Allow list
-        in_order_to: In order to create and account for any of the Crown Marketplace services, the user must use an email which has a domain contained within this list.
+        in_order_to: In order to create an account for three of the Crown Marketplace services, the user must use an email which has a domain contained within this list.
         legal_services: Legal Services
         management_consultancy: Management Consultancy
         not_in_allow_list: The email domain could not be found in the Allow list
         removed: Email domain removed
         search: Search
-        supply_teachers: Supply Teachers
-        the_four_Services_are: 'The four Crown Marketplace services are:'
+        the_four_Services_are: 'The three Crown Marketplace services are:'
         was_added: "'%{email_domain}' was added to the allow list"
         was_removed: "'%{email_domain}' was removed from the allow list"
         you_can_add: You can add a new email domain by clicking the 'Add a new email domain' button.
