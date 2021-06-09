@@ -59,10 +59,12 @@ en:
           attributes:
             email:
               blank: Enter an email address in the correct format, like name@example.com
+              invalid: Email address cannot contain any capital letters
               not_on_safelist: You must use a public sector email
             password:
               blank: Enter a password
               invalid_no_capitals: Password must include a capital letter
+              invalid_no_number: Password must include a number
               invalid_no_symbol: Password must include a special character
               too_short: Password must be 8 characters or more
             password_confirmation:
