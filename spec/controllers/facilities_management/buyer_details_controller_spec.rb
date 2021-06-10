@@ -37,8 +37,8 @@ module FacilitiesManagement
 
         before { get :edit, params: { id: subject.current_user.id } }
 
-        pending 'redirects to not found' do
-          expect(response).to have_http_status(:found)
+        it 'redirects to the unrecognised page' do
+          expect(response).to redirect_to facilities_management_unrecognised_framework_path
         end
       end
     end

@@ -381,7 +381,7 @@ module ApplicationHelper
     when 'crown_marketplace'
       crown_marketplace_cookie_policy_path
     else
-      facilities_management_cookie_policy_path
+      facilities_management_cookie_policy_path(framework: params[:framework])
     end
   end
 
@@ -394,7 +394,7 @@ module ApplicationHelper
     when 'crown_marketplace'
       crown_marketplace_cookie_settings_path
     else
-      facilities_management_cookie_settings_path
+      facilities_management_cookie_settings_path(framework: params[:framework])
     end
   end
 
@@ -407,7 +407,7 @@ module ApplicationHelper
     when 'crown_marketplace'
       crown_marketplace_accessibility_statement_path
     else
-      facilities_management_accessibility_statement_path
+      facilities_management_accessibility_statement_path(framework: params[:framework])
     end
   end
 end
