@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ServiceSpecificationParser do
+RSpec.describe FacilitiesManagement::RM3830::ServiceSpecificationParser do
   subject(:service_specification) { described_class.new.call(service_code, work_package_code) }
 
   describe 'regular expressions' do
