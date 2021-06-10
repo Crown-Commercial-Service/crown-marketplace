@@ -73,15 +73,15 @@ Rails.application.routes.draw do
       get 'edit-address', as: :edit_address
     end
 
-    namespace 'rm3830', path: 'RM3830' do
-      get '/', to: 'buyer_account#index'
-    end
-    get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
-    get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
-
     get '/:framework/start', to: 'journey#start', as: 'journey_start'
     get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
     get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+
+    namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+      get '/', to: 'buyer_account#index'
+      get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
+    end
+    get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
     resources :procurements do
       get 'delete'
