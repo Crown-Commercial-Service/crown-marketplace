@@ -29,13 +29,13 @@ module Buildings::BuildingsControllerNavigation
 
   def next_link(save_and_return, step)
     if save_and_return || step == 'security'
-      facilities_management_building_path(@page_data[:model_object].id)
+      facilities_management_building_path(params[:framework], @page_data[:model_object].id)
     else
-      edit_facilities_management_building_path(@page_data[:model_object].id, step: next_step(step.to_sym).to_s)
+      edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: next_step(step.to_sym).to_s)
     end
   end
 
   def update_address_link
-    edit_facilities_management_building_path(@page_data[:model_object].id, step: 'building_details')
+    edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: 'building_details')
   end
 end
