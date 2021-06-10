@@ -4,7 +4,7 @@ module FacilitiesManagement
     before_action :authenticate_user!
     before_action :authorize_user
 
-    def buyer_account
+    def index
       @current_login_email = current_user.email.to_s
       @buyer_detail = FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)
     end
