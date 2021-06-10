@@ -9,24 +9,27 @@ class JourneyPaths
     homepage_path
   end
 
-  def question(slug, params = nil)
+  def question(framework, slug, params = nil)
     if params
       if slug
         journey_question_path(journey: @journey_name,
+                              framework: framework,
                               slug: slug,
                               params: params)
       else
         journey_question_path(journey: @journey_name,
+                              framework: framework,
                               slug: 'sorry',
                               params: params)
       end
     else
       journey_question_path(journey: @journey_name,
+                            framework: framework,
                             slug: slug)
     end
   end
 
-  def answer(slug)
-    journey_answer_path(journey: @journey_name, slug: slug)
+  def answer(framework, slug)
+    journey_answer_path(journey: @journey_name, framework: framework, slug: slug)
   end
 end

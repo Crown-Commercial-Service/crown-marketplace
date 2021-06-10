@@ -62,7 +62,6 @@ Rails.application.routes.draw do
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :shared_pages
     get '/', to: 'home#framework'
-    # match '/' => redirect('/facilities-management/RM3830'), via: [:get]
     get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
     resources :buildings, only: %i[index show edit update new create] do
@@ -80,9 +79,9 @@ Rails.application.routes.draw do
     get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
     get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    get '/:framework/start', to: 'journey#start', as: 'journey_start'
+    get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 
     resources :procurements do
       get 'delete'
@@ -169,8 +168,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/:journey/start', to: 'journey#start', as: 'journey_start'
-  get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
-  get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+  get '/:journey/:framework/start', to: 'journey#start', as: 'journey_start'
+  get '/:journey/:framework/:slug', to: 'journey#question', as: 'journey_question'
+  get '/:journey/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end
 # rubocop:enable Metrics/BlockLength

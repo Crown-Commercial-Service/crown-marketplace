@@ -6,8 +6,8 @@
       <%= render partial: 'shared/error_summary', locals: { errors: f.object.errors } %>
     </div>
   <%end %>
-  <% site_title = { "services" => t('facilities_management.journey.choose_services.heading'),
-                    "regions" => t('facilities_management.journey.choose_locations.heading'),
+  <% site_title = { "services" => t('facilities_management.rm3830.journey.choose_services.heading'),
+                    "regions" => t('facilities_management.rm3830.journey.choose_locations.heading'),
   } %>
   <div class="govuk-clearfix">
     <% if !@procurement.persisted? || @procurement.quick_search?%>
