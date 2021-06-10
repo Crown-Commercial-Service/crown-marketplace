@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :shared_pages
+    get '/', to: 'home#framework'
+    # match '/' => redirect('/facilities-management/RM3830'), via: [:get]
     get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
     resources :buildings, only: %i[index show edit update new create] do
@@ -72,7 +74,9 @@ Rails.application.routes.draw do
       get 'edit-address', as: :edit_address
     end
 
-    get '/', to: 'buyer_account#index'
+    namespace 'rm3830', path: 'RM3830' do
+      get '/', to: 'buyer_account#index'
+    end
     get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
     get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
