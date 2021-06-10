@@ -19,7 +19,7 @@ module FacilitiesManagement
       @add_address_form_details ||= if id_present?
                                       { url: facilities_management_building_url(@page_data[:model_object].id), method: :patch }
                                     else
-                                      { url: facilities_management_buildings_path, method: :post }
+                                      { url: facilities_management_buildings_path(params[:framework]), method: :post }
                                     end
     end
 
@@ -30,7 +30,7 @@ module FacilitiesManagement
     end
 
     def redirect_if_unrecognised_step
-      redirect_to facilities_management_building_path(@page_data[:model_object]) unless RECOGNISED_STEPS.include? params[:step]
+      redirect_to facilities_management_building_path(params[:framework], @page_data[:model_object]) unless RECOGNISED_STEPS.include? params[:step]
     end
 
     protected

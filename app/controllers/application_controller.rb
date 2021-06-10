@@ -8,8 +8,10 @@ class ApplicationController < ActionController::Base
     redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
   end
 
-  rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
-    raise ActionController::RoutingError, 'Not Found'
+  if Rails.env.production?
+    rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
+      raise ActionController::RoutingError, 'Not Found'
+    end
   end
 
   def sign_in_url
@@ -35,9 +37,13 @@ class ApplicationController < ActionController::Base
   end
 
   def facilities_management_url_for_user_type
-    return facilities_management_supplier_new_user_session_url if controller_path.split('/')[1] == 'supplier' && controller_path.split('/')[2] == 'contracts'
+    return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
 
-    facilities_management_new_user_session_path
+    if params[:framework] == 'RM3830'
+      facilities_management_rm3830_new_user_session_path
+    else
+      facilities_management_unrecognised_framework_path
+    end
   end
 
   delegate :ccs_homepage_url, to: Marketplace

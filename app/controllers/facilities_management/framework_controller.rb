@@ -3,6 +3,7 @@ module FacilitiesManagement
     before_action :authenticate_user!
     before_action :authorize_user
     before_action :redirect_to_buyer_detail
+    before_action :redirect_if_unrecognised_framework
 
     protected
 
@@ -11,11 +12,15 @@ module FacilitiesManagement
     end
 
     def buyer_path
-      edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
+      edit_facilities_management_buyer_detail_path(params[:framework], FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
     end
 
     def redirect_to_buyer_detail
       redirect_to(buyer_path) if !path_an_exception? && current_user&.fm_buyer_details_incomplete?
+    end
+
+    def redirect_if_unrecognised_framework
+      redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
     end
 
     private

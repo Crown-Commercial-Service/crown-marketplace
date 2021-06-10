@@ -4,10 +4,6 @@ module ApplicationHelper
   include GovUKHelper
   include HeaderNavigationLinksHelper
 
-  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze
-  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/home'].freeze
-
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -228,50 +224,6 @@ module ApplicationHelper
     end
   end
 
-  def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.module_parent_name.try(:underscore))
-  end
-
-  def fm_landing_page
-    (FACILITIES_MANAGEMENT_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index')
-  end
-
-  def fm_buyer_landing_page
-    request.path_info.include? 'buyer-account'
-  end
-
-  def fm_activate_account_landing_page
-    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
-  end
-
-  def fm_supplier_landing_page
-    request.path_info.include? 'supplier'
-  end
-
-  def fm_supplier_login_page
-    controller.controller_name == 'sessions' && controller.action_name == 'new'
-  end
-
-  def fm_back_to_start_page
-    [FacilitiesManagement::BuyerAccountController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
-  end
-
-  def passwords_page
-    controller.controller_name == 'passwords'
-  end
-
-  def cookies_page
-    controller.action_name == 'cookie_policy' || controller.action_name == 'cookie_settings'
-  end
-
-  def accessibility_statement_page
-    controller.action_name == 'accessibility_statement'
-  end
-
-  def not_permitted_page
-    controller.action_name == 'not_permitted'
-  end
-
   def format_date(date_object)
     date_object&.in_time_zone('London')&.strftime '%e %B %Y'
   end
@@ -375,39 +327,39 @@ module ApplicationHelper
   def cookie_policy_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_cookie_policy_path
+      facilities_management_admin_cookie_policy_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_policy_path
+      facilities_management_supplier_cookie_policy_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_cookie_policy_path
     else
-      facilities_management_cookie_policy_path
+      facilities_management_cookie_policy_path(framework: params[:framework])
     end
   end
 
   def cookie_settings_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_cookie_settings_path
+      facilities_management_admin_cookie_settings_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_settings_path
+      facilities_management_supplier_cookie_settings_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_cookie_settings_path
     else
-      facilities_management_cookie_settings_path
+      facilities_management_cookie_settings_path(framework: params[:framework])
     end
   end
 
   def accessibility_statement_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_accessibility_statement_path
+      facilities_management_admin_accessibility_statement_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_accessibility_statement_path
+      facilities_management_supplier_accessibility_statement_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_accessibility_statement_path
     else
-      facilities_management_accessibility_statement_path
+      facilities_management_accessibility_statement_path(framework: params[:framework])
     end
   end
 end
