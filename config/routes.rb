@@ -64,12 +64,12 @@ Rails.application.routes.draw do
     get '/', to: 'home#framework'
     get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
-    resources :buildings, only: %i[index show edit update new create] do
+    resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
       member do
         match 'add_address', via: %i[get post patch]
       end
     end
-    resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
+    resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
     end
 

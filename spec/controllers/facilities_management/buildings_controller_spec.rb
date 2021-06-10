@@ -1,13 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
 
   render_views
 
   describe 'GET #index' do
     context 'when logging in as a fm buyer with details' do
       it 'returns http success' do
+        get :index
+        expect(response).to have_http_status(:found)
+      end
+    end
+
+    context 'when the framework is not recognised' do
+      let(:framework) { 'RM3840' }
+
+      pending 'redirects to not found' do
         get :index
         expect(response).to have_http_status(:found)
       end
@@ -29,7 +39,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :index
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
   end
@@ -57,7 +67,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'has correct backlink text and destination' do
         get :new
         expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
-        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path(framework)
       end
     end
   end
@@ -133,7 +143,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         expect(assigns(:page_description).back_button.text).to eq 'Return to buildings'
-        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_buildings_path(framework)
       end
     end
 
@@ -160,7 +170,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       let(:step) { 'contract_name' }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_building_path(building)
+        expect(response).to redirect_to facilities_management_building_path(framework, building)
       end
     end
 
@@ -177,7 +187,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         expect(assigns(:page_description).back_button.text).to eq 'Return to building details summary'
-        expect(assigns(:page_description).back_button.url).to eq facilities_management_building_path(building, step: 'building_details')
+        expect(assigns(:page_description).back_button.url).to eq facilities_management_building_path(framework, building, step: 'building_details')
       end
     end
 
@@ -194,7 +204,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
-        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(framework, building, step: 'building_details')
       end
     end
 
@@ -211,7 +221,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         expect(assigns(:page_description).back_button.text).to eq 'Return to building size'
-        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'gia')
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(framework, building, step: 'gia')
       end
     end
 
@@ -228,7 +238,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'has correct backlink text and destination' do
         expect(assigns(:page_description).back_button.text).to eq 'Return to building type'
-        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'type')
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(framework, building, step: 'type')
       end
     end
   end
@@ -293,7 +303,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         post :create, params: { save_and_return: '', facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
         expect(response).to have_http_status(:found)
         id = controller.current_user.buildings.first.id
-        expect(response.headers['Location']).to redirect_to(facilities_management_building_path(id))
+        expect(response.headers['Location']).to redirect_to(facilities_management_building_path(framework, id))
       end
     end
 
@@ -348,7 +358,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'will not reject an empty region for when none can be selected' do
         patch :update, params: { id: building.id, step: 'building_details', facilities_management_building: { address_line_1: 'line 2', address_town: 'town 2', address_line_2: 'line 22', address_postcode: 'SW2A 1AA', address_region: 'test', address_region_code: 'test_code' } }
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'gia')
+        expect(response).to redirect_to edit_facilities_management_building_path(framework, building.id, step: 'gia')
         building.reload
         expect(building[:address_postcode]).to eq('SW2A 1AA')
       end
@@ -380,7 +390,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         it 'redirects to next step' do
           patch :update, params: { id: building.id, step: 'gia', facilities_management_building: { gia: '5432' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'type')
+          expect(response).to redirect_to edit_facilities_management_building_path(framework, building.id, step: 'type')
           building.reload
           expect(building.gia).to eq(5432)
         end
@@ -403,7 +413,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         it 'returns validation message' do
           patch :update, params: { id: building.id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'security')
+          expect(response).to redirect_to edit_facilities_management_building_path(framework, building.id, step: 'security')
           building.reload
           expect(building.building_type).to eq('other')
         end
@@ -426,7 +436,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
         it 'returns validation message' do
           patch :update, params: { id: building.id, step: 'security', facilities_management_building: { security_type: 'other', other_security_type: 'test' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to facilities_management_building_path
+          expect(response).to redirect_to facilities_management_building_path(framework)
           building.reload
           expect(building.security_type).to eq('other')
         end
@@ -446,7 +456,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'has correct backlink text and destination' do
         get :add_address, params: { id: building.id }
         expect(assigns(:page_description).back_button.text).to eq 'Return to building details'
-        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(building, step: 'building_details')
+        expect(assigns(:page_description).back_button.url).to eq edit_facilities_management_building_path(framework, building, step: 'building_details')
       end
 
       it 'will display validation error' do
@@ -458,7 +468,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'will render the edit page' do
         patch :update, params: { id: building.id, step: 'add_address', facilities_management_building: { address_line_1: 'line1', address_town: 'town', address_postcode: 'SW1A 1AA' } }
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to edit_facilities_management_building_path(building.id, step: 'building_details')
+        expect(response).to redirect_to edit_facilities_management_building_path(framework, building.id, step: 'building_details')
         building.reload
         expect(building.address_town).to eq('town')
       end
