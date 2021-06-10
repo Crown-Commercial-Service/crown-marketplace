@@ -4,6 +4,6 @@ module FacilitiesManagement::BuyerDetailsHelper
   end
 
   def cant_find_address_link
-    facilities_management_buyer_detail_edit_address_path(@buyer_detail, update_address: true)
+    facilities_management_buyer_detail_edit_address_path(params[:framework], @buyer_detail, update_address: true)
   end
 end
