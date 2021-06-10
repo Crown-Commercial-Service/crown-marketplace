@@ -11,7 +11,7 @@ module FacilitiesManagement
     end
 
     def buyer_path
-      edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
+      edit_facilities_management_buyer_detail_path(params[:framework], FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user))
     end
 
     def redirect_to_buyer_detail
