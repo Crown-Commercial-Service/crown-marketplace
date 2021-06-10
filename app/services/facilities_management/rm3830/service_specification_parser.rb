@@ -8,7 +8,7 @@
 # template v3.0.xlsx' file and export just the 'Service Descriptions' tab as a
 # CSV named according to the DATA_FILE_PATH constant.
 
-class FacilitiesManagement::ServiceSpecificationParser
+class FacilitiesManagement::RM3830::ServiceSpecificationParser
   DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'service_specifications.csv')
 
   WORK_PACKAGE_REGEX = /^work package ([A-Z]) /i.freeze

@@ -34,7 +34,7 @@
                       <span style="font-weight:lighter;" class="govuk-!-font-size-16" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
                       <div>
                         <%# TODO: work_package and service vars are named the wrong way around %>
-                        <%= link_to t('.learn_more'), facilities_management_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank', class: 'govuk-!-font-size-16' %>
+                        <%= link_to t('.learn_more'), facilities_management_rm3830_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank', class: 'govuk-!-font-size-16' %>
                         <%= govuk_tag_with_text(:grey, t('common.da_eligible')) if da_eligible?(work_package['code']) %>
                       </div>
                     </label>
