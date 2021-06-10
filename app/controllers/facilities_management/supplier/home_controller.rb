@@ -1,13 +1,5 @@
 class FacilitiesManagement::Supplier::HomeController < FacilitiesManagement::Supplier::FrameworkController
-  before_action :authenticate_user!, :authorize_user, except: %i[index accessibility_statement cookie_policy cookie_settings]
-
-  def index
-    if user_signed_in?
-      redirect_to facilities_management_supplier_dashboard_index_path
-    else
-      redirect_to facilities_management_supplier_new_user_session_path
-    end
-  end
+  before_action :authenticate_user!, :authorize_user, :redirect_if_unrecognised_framework, except: %i[accessibility_statement cookie_policy cookie_settings framework unrecognised_framework]
 
   def accessibility_statement
     render 'home/accessibility_statement'
@@ -20,4 +12,10 @@ class FacilitiesManagement::Supplier::HomeController < FacilitiesManagement::Sup
   def cookie_settings
     render 'home/cookie_settings'
   end
+
+  def framework
+    redirect_to facilities_management_rm3830_supplier_path
+  end
+
+  def unrecognised_framework; end
 end

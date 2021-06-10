@@ -3,40 +3,14 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Admin::HomeController do
   let(:default_params) { { service: 'facilities_management/admin' } }
 
-  describe 'GET #index' do
-    context 'when logged in as fm admin' do
-      login_fm_admin
-
-      before { get :index }
-
-      it 'renders the index page' do
-        expect(response).to render_template(:index)
-      end
-    end
-
-    context 'when not logged in as fm admin' do
-      login_fm_buyer
-
-      before { get :index }
-
-      it 'redirects to the not permitted page' do
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
-      end
-    end
-  end
-
   describe 'GET accessibility_statement' do
-    login_fm_admin
-
     it 'renders the accessibility_statement page' do
       get :accessibility_statement
-      expect(response).to render_template('home/accessibility_statement')
+      expect(response).to render_template(:accessibility_statement)
     end
   end
 
   describe 'GET cookie_policy' do
-    login_fm_admin
-
     it 'renders the cookie policy page' do
       get :cookie_policy
       expect(response).to render_template('home/cookie_policy')
@@ -44,23 +18,25 @@ RSpec.describe FacilitiesManagement::Admin::HomeController do
   end
 
   describe 'GET cookie_settings' do
-    login_fm_admin
-
     it 'renders the cookie settings page' do
       get :cookie_settings
       expect(response).to render_template('home/cookie_settings')
     end
   end
 
-  describe 'validate service' do
-    context 'when the service is not a valid service' do
-      let(:default_params) { { service: 'apprenticeships' } }
+  describe 'GET framework' do
+    it 'redirects to the RM3830 home page' do
+      get :framework
+      expect(response).to redirect_to facilities_management_rm3830_admin_path
+    end
+  end
 
-      it 'renders the erros_not_found page' do
-        get :index
+  describe 'GET unrecognised_framework' do
+    login_fm_supplier
 
-        expect(response).to redirect_to errors_404_path
-      end
+    it 'renders the unrecognised_framework page' do
+      get :unrecognised_framework
+      expect(response).to render_template(:unrecognised_framework)
     end
   end
 end
