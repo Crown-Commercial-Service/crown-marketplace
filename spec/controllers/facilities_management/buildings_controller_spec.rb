@@ -8,6 +8,8 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
   describe 'GET #index' do
     context 'when logging in as a fm buyer with details' do
+      login_fm_buyer_with_details
+
       it 'returns http success' do
         get :index
         expect(response).to have_http_status(:found)
@@ -15,11 +17,13 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     end
 
     context 'when the framework is not recognised' do
+      login_fm_buyer_with_details
+
       let(:framework) { 'RM3840' }
 
-      pending 'redirects to not found' do
+      it 'redirects to the unrecognised page' do
         get :index
-        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to facilities_management_unrecognised_framework_path
       end
     end
 

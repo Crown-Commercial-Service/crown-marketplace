@@ -1,5 +1,5 @@
 When 'I go to the facilities management start page' do
-  visit facilities_management_start_path
+  visit facilities_management_rm3830_start_path
 end
 
 Given('I sign in without details') do

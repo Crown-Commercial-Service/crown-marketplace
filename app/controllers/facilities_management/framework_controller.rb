@@ -3,6 +3,7 @@ module FacilitiesManagement
     before_action :authenticate_user!
     before_action :authorize_user
     before_action :redirect_to_buyer_detail
+    before_action :redirect_if_unrecognised_framework
 
     protected
 
@@ -18,6 +19,10 @@ module FacilitiesManagement
       redirect_to(buyer_path) if !path_an_exception? && current_user&.fm_buyer_details_incomplete?
     end
 
+    def redirect_if_unrecognised_framework
+      redirect_to facilities_management_unrecognised_framework_path unless RECOGNISED_FRAMEWORKS.include? params[:framework]
+    end
+
     private
 
     def path_an_exception?
@@ -25,5 +30,7 @@ module FacilitiesManagement
 
       %w[users sign-in sign-out resend_confirmation_email sign-up domain-not-on-safelist buyer-details api not-permitted cookies accessibility-statement].any? { |path_section| full_path.include?(path_section) }
     end
+
+    RECOGNISED_FRAMEWORKS = ['RM3830'].freeze
   end
 end

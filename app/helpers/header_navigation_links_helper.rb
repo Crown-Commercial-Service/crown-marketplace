@@ -52,7 +52,7 @@ module HeaderNavigationLinksHelper
 
   def back_to_start_link
     if !current_user || page_with_back_to_start?
-      { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_start_path }
+      { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_rm3830_start_path }
     elsif !current_user.fm_buyer_details_incomplete?
       { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_path }
     end

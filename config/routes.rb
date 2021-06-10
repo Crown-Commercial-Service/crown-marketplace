@@ -63,7 +63,8 @@ Rails.application.routes.draw do
     concerns :shared_pages
     get '/', to: 'home#framework'
     get '/not-permitted', to: 'home#not_permitted'
-    get '/start', to: 'home#index'
+    get '/unrecognised-framework', to: 'home#unrecognised_framework'
+
     resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
       member do
         match 'add_address', via: %i[get post patch]
@@ -73,11 +74,8 @@ Rails.application.routes.draw do
       get 'edit-address', as: :edit_address
     end
 
-    get '/:framework/start', to: 'journey#start', as: 'journey_start'
-    get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
-
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+      get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
     end
@@ -141,6 +139,10 @@ Rails.application.routes.draw do
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
+
+    get '/:framework/start', to: 'journey#start', as: 'journey_start'
+    get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
