@@ -8,8 +8,10 @@ class ApplicationController < ActionController::Base
     redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
   end
 
-  rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
-    raise ActionController::RoutingError, 'Not Found'
+  if Rails.env.production?
+    rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
+      raise ActionController::RoutingError, 'Not Found'
+    end
   end
 
   def sign_in_url

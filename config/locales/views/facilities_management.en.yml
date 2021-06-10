@@ -858,7 +858,7 @@ en:
         help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
         view_more: View more building types
     buyer_account:
-      buyer_account:
+      index:
         buyer_account_dashboard: Buyer account dashboard
         buyer_account_title: Your account
         further_information_help: "(opens in a new tab)"
