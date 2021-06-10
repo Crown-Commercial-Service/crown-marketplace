@@ -61,21 +61,24 @@ Rails.application.routes.draw do
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :shared_pages
-    get '/', to: 'buyer_account#buyer_account'
     get '/not-permitted', to: 'home#not_permitted'
     get '/start', to: 'home#index'
-    get '/buyer_account', to: 'buyer_account#buyer_account'
     resources :buildings, only: %i[index show edit update new create] do
       member do
         match 'add_address', via: %i[get post patch]
       end
     end
+    resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
+      get 'edit-address', as: :edit_address
+    end
+
+    get '/', to: 'buyer_account#index'
     get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
-    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
-    match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
-    get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
-    get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
     get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
+
+    get '/start', to: 'journey#start', as: 'journey_start'
+    get '/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 
     resources :procurements do
       get 'delete'
@@ -112,9 +115,6 @@ Rails.application.routes.draw do
     end
     resources :procurement_buildings, only: %i[show edit update]
     resources :procurement_buildings_services, only: %i[edit update]
-    resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
-      get 'edit-address', as: :edit_address
-    end
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
       concerns :shared_pages
       get '/', to: 'home#index'
@@ -138,10 +138,6 @@ Rails.application.routes.draw do
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
-
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
