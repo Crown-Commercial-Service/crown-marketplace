@@ -29,7 +29,7 @@ module FacilitiesManagement
 
       def show
         redirect_to facilities_management_rm3830_procurements_path if @procurement.da_journey_state == 'sent'
-        redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
+        redirect_to facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
       end
 
       def summary; end
@@ -196,10 +196,10 @@ module FacilitiesManagement
 
       def start_bulk_upload
         @procurement.start_detailed_search_bulk_upload! if @procurement.may_start_detailed_search_bulk_upload?
-        if params['bulk_upload_spreadsheet'] == t('facilities_management.procurements.spreadsheet.save_and_return_link')
+        if params['bulk_upload_spreadsheet'] == t('facilities_management.rm3830.procurements.spreadsheet.save_and_return_link')
           redirect_to facilities_management_rm3830_procurements_path
         else
-          redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
+          redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
         end
       end
 
