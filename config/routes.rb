@@ -93,6 +93,8 @@ Rails.application.routes.draw do
           get '/edit', action: 'edit'
         end
         resources :contracts, only: %i[show edit update], controller: '/facilities_management/rm3830/procurements/contracts' do
+          resources :sent, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/closed'
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -101,8 +103,6 @@ Rails.application.routes.draw do
 
     resources :procurements, only: [] do
       resources :contracts, only: %i[], controller: 'procurements/contracts' do
-        resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
-        resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
         namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do
           get '/call-off-schedule', action: :call_off_schedule
           get '/call-off-schedule-2', action: :call_off_schedule_2
