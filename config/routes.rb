@@ -95,6 +95,11 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[show edit update], controller: '/facilities_management/rm3830/procurements/contracts' do
           resources :sent, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/sent'
           resources :closed, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/closed'
+          namespace :documents, controller: '/facilities_management/rm3830/procurements/contracts/documents' do
+            get '/call-off-schedule', action: :call_off_schedule
+            get '/call-off-schedule-2', action: :call_off_schedule_2
+            get '/zip', action: :zip_contracts
+          end
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -102,14 +107,6 @@ Rails.application.routes.draw do
     end
 
     resources :procurements, only: [] do
-      resources :contracts, only: %i[], controller: 'procurements/contracts' do
-        namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do
-          get '/call-off-schedule', action: :call_off_schedule
-          get '/call-off-schedule-2', action: :call_off_schedule_2
-          get '/zip', action: :zip_contracts
-          get '/download/zip', action: :download_zip_contracts
-        end
-      end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
         get '/progress', action: :progress
