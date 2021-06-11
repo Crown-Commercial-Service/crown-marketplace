@@ -1,4 +1,4 @@
-module FacilitiesManagement::Procurements::ContractDatesHelper
+module FacilitiesManagement::RM3830::Procurements::ContractDatesHelper
   def initial_call_off_period
     period_to_string(@procurement.initial_call_off_period_years, @procurement.initial_call_off_period_months)
   end

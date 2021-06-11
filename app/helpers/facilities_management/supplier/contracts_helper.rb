@@ -1,5 +1,5 @@
 module FacilitiesManagement::Supplier::ContractsHelper
-  include FacilitiesManagement::ProcurementsHelper
+  include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def warning_title
     t(@contract.aasm_state, scope: TITLE_TRANSLATION_SCOPE)

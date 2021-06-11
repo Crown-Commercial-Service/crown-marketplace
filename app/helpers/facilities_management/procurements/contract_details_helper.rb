@@ -1,5 +1,5 @@
 module FacilitiesManagement::Procurements::ContractDetailsHelper
-  include FacilitiesManagement::ProcurementsHelper
+  include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def show_page_content
     options = case @page_name

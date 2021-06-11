@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper do
   describe '.journey_step_url_former' do
     let(:service_codes) { ['C.1', 'D.1', 'E.1', 'F.1', 'G.1'] }
     let(:result) { helper.journey_step_url_former(journey_step: journey_step, region_codes: region_codes, service_codes: service_codes) }

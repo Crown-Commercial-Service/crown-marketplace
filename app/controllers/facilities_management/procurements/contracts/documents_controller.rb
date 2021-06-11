@@ -19,7 +19,7 @@ module FacilitiesManagement
         end
 
         def zip_contracts
-          file_stream = FacilitiesManagement::Procurements::DocumentsProcurementHelper.build_download_zip_file(params[:contract_id])
+          file_stream = FacilitiesManagement::RM3830::Procurements::DocumentsProcurementHelper.build_download_zip_file(params[:contract_id])
           send_data file_stream.read, filename: 'review_your_contract.zip', type: 'application/zip'
         end
 

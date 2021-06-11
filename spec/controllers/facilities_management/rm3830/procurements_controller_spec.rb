@@ -2,8 +2,8 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/AnyInstance
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
   let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search', user: subject.current_user) }
 
   context 'without buyer details' do
