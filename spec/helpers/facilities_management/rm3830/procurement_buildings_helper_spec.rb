@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :helper do
   describe '#get_service_question' do
     context 'when question is service_standard' do
       it 'will return service_standards' do

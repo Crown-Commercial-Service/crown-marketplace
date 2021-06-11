@@ -65,7 +65,7 @@ Given('the external area for {string} is {int}') do |building_name, external_are
 end
 
 Given('I navigate to the service requirements page') do
-  visit facilities_management_procurement_building_path(id: @procurement_building_id)
+  visit facilities_management_rm3830_procurement_building_path(id: @procurement_building_id)
 end
 
 Then('I should see my procurement name') do

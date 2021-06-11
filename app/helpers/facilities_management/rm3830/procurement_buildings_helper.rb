@@ -1,4 +1,4 @@
-module FacilitiesManagement::ProcurementBuildingsHelper
+module FacilitiesManagement::RM3830::ProcurementBuildingsHelper
   def checked?(object_value, value)
     object_value == value
   end

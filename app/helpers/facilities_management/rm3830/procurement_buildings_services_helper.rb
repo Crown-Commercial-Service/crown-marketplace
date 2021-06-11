@@ -1,4 +1,4 @@
-module FacilitiesManagement::ProcurementBuildingsServicesHelper
+module FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper
   def volume_question(pbs)
     [] unless pbs.this_service[:context].key? :volume
     pbs.this_service[:context][:volume]&.first
@@ -27,7 +27,7 @@ module FacilitiesManagement::ProcurementBuildingsServicesHelper
   end
 
   def page_heading
-    params[:service_question] == 'area' ? t('facilities_management.procurement_buildings_services.area.heading') : @building_service.name
+    params[:service_question] == 'area' ? t('facilities_management.rm3830.procurement_buildings_services.area.heading') : @building_service.name
   end
 
   def per_annum_volume?(volume)
