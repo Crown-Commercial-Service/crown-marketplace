@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::EditBuildingsController, type: :controller do
   render_views
-  let(:default_params) { { service: 'facilities_management' } }
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search', user: subject.current_user) }
   let(:procurement_id) { procurement.id }
 
@@ -32,7 +33,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :new, params: { procurement_id: procurement_id }
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
   end
@@ -93,7 +94,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
       let(:step) { 'external_area' }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_procurement_edit_building_path(id: building.id, procurement_id: procurement_id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_edit_building_path(id: building.id, procurement_id: procurement_id)
       end
     end
 
@@ -206,7 +207,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
         post :create, params: { procurement_id: procurement_id, save_and_return: '', facilities_management_building: { building_name: 'name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
         expect(response).to have_http_status(:found)
         id = controller.current_user.buildings.first.id
-        expect(response.headers['Location']).to redirect_to(facilities_management_procurement_edit_building_path(id: id, procurement_id: procurement_id))
+        expect(response.headers['Location']).to redirect_to(facilities_management_rm3830_procurement_edit_building_path(id: id, procurement_id: procurement_id))
       end
     end
 
@@ -252,7 +253,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
         it 'redirects to next step' do
           patch :update, params: { id: building.id, procurement_id: procurement_id, step: 'gia', facilities_management_building: { gia: '5432' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to edit_facilities_management_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'type')
+          expect(response).to redirect_to edit_facilities_management_rm3830_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'type')
           building.reload
           expect(building.gia).to eq(5432)
         end
@@ -275,7 +276,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
         it 'returns validation message' do
           patch :update, params: { id: building.id, procurement_id: procurement_id, step: 'type', facilities_management_building: { building_type: 'other', other_building_type: 'test' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to edit_facilities_management_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'security')
+          expect(response).to redirect_to edit_facilities_management_rm3830_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'security')
           building.reload
           expect(building.building_type).to eq('other')
         end
@@ -298,7 +299,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
         it 'returns validation message' do
           patch :update, params: { id: building.id, procurement_id: procurement_id, step: 'security', facilities_management_building: { security_type: 'other', other_security_type: 'test' } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to facilities_management_procurement_edit_building_path(procurement_id: procurement_id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_edit_building_path(procurement_id: procurement_id)
           building.reload
           expect(building.security_type).to eq('other')
         end
@@ -323,7 +324,7 @@ RSpec.describe FacilitiesManagement::Procurements::EditBuildingsController, type
       it 'will render the edit page' do
         patch :update, params: { id: building.id, procurement_id: procurement_id, step: 'add_address', facilities_management_building: { address_line_1: 'line1', address_town: 'town', address_postcode: 'SW1A 1AA' } }
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to edit_facilities_management_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'building_details')
+        expect(response).to redirect_to edit_facilities_management_rm3830_procurement_edit_building_path(building.id, procurement_id: procurement_id, step: 'building_details')
         building.reload
         expect(building.address_town).to eq('town')
       end

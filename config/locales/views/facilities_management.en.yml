@@ -1012,9 +1012,6 @@ en:
               joint_schedule_7:
                 file_name: Joint Schedule 7 - Financial Distress (DA) v3.0.pdf
                 title: Joint Schedule 7 - Financial Distress
-      edit_buildings:
-        show:
-          return_to_buildings: Return to buildings
     registrations:
       domain_not_on_safelist:
         heading: You must use a public sector email address
