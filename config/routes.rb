@@ -78,16 +78,18 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
+      get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
+      resources :procurements do
+        get 'delete'
+        get 'summary', to: 'procurements#summary'
+        get 'quick_view_results_spreadsheet'
+        get 'further_competition_spreadsheet'
+        get 'deliverables_matrix'
+        get 'price_matrix'
+      end
     end
-    get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
-    resources :procurements do
-      get 'delete'
-      get 'summary', to: 'procurements#summary'
-      get 'quick_view_results_spreadsheet'
-      get 'further_competition_spreadsheet'
-      get 'deliverables_matrix'
-      get 'price_matrix'
+    resources :procurements, only: [] do
       namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
         get '/', action: 'show'
         put '/', action: 'update'

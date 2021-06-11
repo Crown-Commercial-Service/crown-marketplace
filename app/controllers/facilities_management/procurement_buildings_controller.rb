@@ -27,7 +27,7 @@ module FacilitiesManagement
       @building.add_region_code_from_address_region
 
       if @building.save(context: :all)
-        redirect_to facilities_management_procurement_path(@procurement)
+        redirect_to facilities_management_rm3830_procurement_path(@procurement)
       else
         render :edit
       end
@@ -37,7 +37,7 @@ module FacilitiesManagement
       @procurement_building.assign_attributes(procurement_building_params)
 
       if @procurement_building.save(context: @step.to_sym)
-        redirect_to facilities_management_procurement_summary_path(@procurement, summary: @step)
+        redirect_to facilities_management_rm3830_procurement_summary_path(@procurement, summary: @step)
       else
         render :edit
       end
@@ -76,7 +76,7 @@ module FacilitiesManagement
     end
 
     def redirect_if_unrecognised_step
-      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
+      redirect_to facilities_management_rm3830_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
     end
 
     RECOGNISED_STEPS = %w[buildings_and_services missing_region].freeze

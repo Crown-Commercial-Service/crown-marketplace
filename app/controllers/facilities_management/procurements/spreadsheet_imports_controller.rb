@@ -55,7 +55,7 @@ module FacilitiesManagement
       end
 
       def redirect_to_requirements
-        redirect_to facilities_management_procurement_path(@procurement) unless @procurement.detailed_search_bulk_upload?
+        redirect_to facilities_management_rm3830_procurement_path(@procurement) unless @procurement.detailed_search_bulk_upload?
       end
 
       def initialize_errors
@@ -86,7 +86,7 @@ module FacilitiesManagement
       def cancel_and_return
         @procurement.spreadsheet_import.destroy if @procurement.spreadsheet_import.present?
 
-        redirect_to facilities_management_procurement_path(id: @procurement.id, 'spreadsheet': true)
+        redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id, 'spreadsheet': true)
       end
 
       protected

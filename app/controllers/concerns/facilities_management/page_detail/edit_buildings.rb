@@ -9,9 +9,9 @@ module FacilitiesManagement::PageDetail::EditBuildings
         primary_url: new_facilities_management_procurement_edit_building_path(procurement_id: params[:procurement_id]),
         secondary_name: 'return_to_buildings',
         secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-        secondary_url: edit_facilities_management_procurement_path(params[:procurement_id], step: 'buildings'),
+        secondary_url: edit_facilities_management_rm3830_procurement_path(params[:procurement_id], step: 'buildings'),
         back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
-        back_url: edit_facilities_management_procurement_path(params[:procurement_id], step: 'buildings')
+        back_url: edit_facilities_management_rm3830_procurement_path(params[:procurement_id], step: 'buildings')
       },
       new: {
         caption1: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),

@@ -71,7 +71,7 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
       end
 
       it 'redirects to the spreadsheet template page' do
-        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id, 'spreadsheet': true)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id, 'spreadsheet': true)
       end
 
       it 'deletes the spreadsheet import' do
