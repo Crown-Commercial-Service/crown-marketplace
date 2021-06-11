@@ -9,7 +9,7 @@
             <li><%= t('.you_will_be_able')%></li>
         </ul>
     </div>
-    <%=form_for @procurement_copy, url: facilities_management_procurement_copy_procurement_index_path, method: :post do |f, attr|%>
+    <%=form_for @procurement_copy, url: facilities_management_rm3830_procurement_copy_procurement_index_path, method: :post do |f, attr|%>
         <div class="govuk-!-width-one-half govuk-!-margin-bottom-6">
             <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
                 <%= f.label :contract_name, t('.label'), class: 'govuk-heading-m' %>
