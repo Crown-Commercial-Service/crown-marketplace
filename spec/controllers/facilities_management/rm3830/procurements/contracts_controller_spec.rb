@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, type: :controller do
   extend APIRequestStubs
 
-  let(:default_params) { { service: 'facilities_management' } }
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: subject.current_user) }
   let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
   let(:user) { subject.current_user }
@@ -97,7 +98,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:reason_for_not_signing) { 'The supplier did not respond' }
 
         it 'redirects to facilities_management_procurement_contract_closed_index_path' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement.id, contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement.id, contract.id)
         end
 
         it 'updates the dates' do
@@ -174,7 +175,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
       end
     end
   end
@@ -246,7 +247,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :show, params: { procurement_id: procurement.id, id: contract.id }
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
   end
@@ -261,7 +262,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       it 'redirects to the show page' do
         get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'withold' }
 
-        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
       end
     end
 
@@ -301,7 +302,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'sent' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -309,7 +310,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'accepted' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -317,7 +318,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'signed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -350,7 +351,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:procurement_state) { 'closed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
     end
@@ -384,7 +385,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'signed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -417,7 +418,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:procurement_state) { 'closed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
     end
@@ -432,7 +433,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'sent' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -448,7 +449,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'signed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -456,7 +457,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'not_signed' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -464,7 +465,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'declined' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -472,7 +473,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'expired' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
 
@@ -480,7 +481,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
         let(:state) { 'withdrawn' }
 
         it 'redirects to the contract summary' do
-          expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
         end
       end
     end
@@ -493,7 +494,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractsController, type: :c
       end
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: procurement.id, id: contract.id)
       end
     end
   end

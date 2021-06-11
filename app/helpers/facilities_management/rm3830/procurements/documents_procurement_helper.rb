@@ -88,7 +88,7 @@ module FacilitiesManagement
           view = ActionView::Base.new(ActionController::Base.view_paths, {})
           view.assign(view_assignement)
           view.class_eval { include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper }
-          view.render(file: 'facilities_management/procurements/contracts/documents/call_off_schedule.docx.caracal')
+          view.render(file: 'facilities_management/rm3830/procurements/contracts/documents/call_off_schedule.docx.caracal')
         end
 
         # this document generation relies on
@@ -108,7 +108,7 @@ module FacilitiesManagement
 
           view = ActionView::Base.new(ActionController::Base.view_paths, {})
           view.assign(view_assignement)
-          view.render(file: 'facilities_management/procurements/contracts/documents/call_off_schedule_2.docx.caracal')
+          view.render(file: 'facilities_management/rm3830/procurements/contracts/documents/call_off_schedule_2.docx.caracal')
         end
 
         def self.generate_final_zip(contract_id)
