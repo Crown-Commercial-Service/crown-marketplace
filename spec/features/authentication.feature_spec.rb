@@ -23,7 +23,7 @@ RSpec.feature 'Authentication', type: :feature do
     expect(page).to have_text('Sign in to your account')
   end
 
-  scenario 'Users can sign in using AWS Cognito' do
+  pending 'Users can sign in using AWS Cognito' do
     OmniAuth.config.test_mode = false
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
     visit '/facilities-management/sign-in'
@@ -34,7 +34,7 @@ RSpec.feature 'Authentication', type: :feature do
     expect(page).to have_text('Find a facilities management supplier')
   end
 
-  scenario 'Users can sign in using AWS Cognito with capitals in email' do
+  pending 'Users can sign in using AWS Cognito with capitals in email' do
     user = create(:user, :without_detail, roles: %i[buyer fm_access])
     visit '/facilities-management/sign-in'
     fill_in 'Email', with: user.email.upcase

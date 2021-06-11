@@ -10,9 +10,10 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
     context 'when logging in as a fm buyer with details' do
       login_fm_buyer_with_details
 
-      it 'returns http success' do
+      it 'render the index' do
         get :index
-        expect(response).to have_http_status(:found)
+
+        expect(response).to render_template(:index)
       end
     end
 

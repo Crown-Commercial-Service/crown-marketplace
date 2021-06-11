@@ -38,7 +38,7 @@
       </div>
       <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-5">
         <%= link_to t('.return_to_requirements'), facilities_management_rm3830_procurement_path(@procurement), class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.return_to_requirements')}" if @procurement.detailed_search? %>
-        <%= link_to t('.cancel_and_return'), facilities_management_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
+        <%= link_to t('.cancel_and_return'), facilities_management_rm3830_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19', 'aria-label': "#{t('.cancel_and_return')}" if @procurement.quick_search? %>
       </div>
     <% end %>
   </div>

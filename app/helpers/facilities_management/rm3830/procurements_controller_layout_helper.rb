@@ -59,7 +59,7 @@ module FacilitiesManagement::RM3830::ProcurementsControllerLayoutHelper
   def set_quick_search_or_what_happens_next_page_definitions
     {
       back_text: 'Return to your account',
-      back_url: facilities_management_path,
+      back_url: facilities_management_rm3830_path,
       caption1: @procurement.contract_name,
       page_title: quick_search_page_title
     }
