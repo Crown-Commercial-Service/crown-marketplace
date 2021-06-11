@@ -5,6 +5,6 @@ class CrownMarketplace::FrameworkController < ::ApplicationController
   protected
 
   def authorize_user
-    authorize! :manage, AllowedEmailDomain
+    authorize! :read, AllowedEmailDomain
   end
 end

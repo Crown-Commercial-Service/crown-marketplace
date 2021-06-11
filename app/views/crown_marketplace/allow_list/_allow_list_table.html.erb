@@ -11,13 +11,19 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-padding-right-2" colspan="2"><%= t('.no_email_domains_found') %></td>
       </tr>
-    <% else %>
+    <% elsif can? :manage, AllowedEmailDomain %>
       <% paginated_allow_list.each do |domain| %>
         <tr class="govuk-table__row" style="<%= 'background: #F0FFF1' if domain == email_domain_added %>">
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= domain %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2">
             <%= link_to t('.remove'), crown_marketplace_allow_list_delete_path(email_domain: domain), class: 'govuk-link--no-visited-state' %>
           </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <% paginated_allow_list.each do |domain| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-padding-right-2" colspan="2"><%= domain %></td>
         </tr>
       <% end %>
     <% end %>

@@ -1,5 +1,5 @@
 class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkController
-  before_action :set_allowed_email_domain
+  before_action :authorize_user, :set_allowed_email_domain
   before_action :set_allow_list, :set_paginated_allow_list, only: %i[index search_allow_list]
 
   def index; end
@@ -45,5 +45,13 @@ class CrownMarketplace::AllowListController < CrownMarketplace::FrameworkControl
 
   def allowed_email_domain_params
     params.require(:allowed_email_domain).permit(:email_domain) if params[:allowed_email_domain]
+  end
+
+  def authorize_user
+    if ['new', 'create', 'delete', 'destroy'].include? action_name
+      authorize! :manage, AllowedEmailDomain
+    else
+      authorize! :read, AllowedEmailDomain
+    end
   end
 end

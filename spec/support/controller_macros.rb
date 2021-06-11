@@ -49,4 +49,12 @@ module ControllerMacros
       sign_in user
     end
   end
+
+  def login_crown_marketplcae_read_only
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      user = FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[allow_list_access])
+      sign_in user
+    end
+  end
 end
