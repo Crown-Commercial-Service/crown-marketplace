@@ -9,19 +9,19 @@ module FacilitiesManagement::PageDetail::Procurements
     page_definitions = {
       caption1: @procurement.contract_name,
       continuation_text: 'Continue',
-      return_url: facilities_management_procurements_path,
+      return_url: facilities_management_rm3830_procurements_path,
       return_text: 'Return to procurement dashboard',
       back_text: 'Back',
-      back_url: facilities_management_procurements_path,
+      back_url: facilities_management_rm3830_procurements_path,
       page_title: 'Results',
       primary_name: 'continue_from_results',
       secondary_name: 'change_requirements',
       secondary_text: 'Change requirements',
-      secondary_url: facilities_management_procurements_path
+      secondary_url: facilities_management_rm3830_procurements_path
     }
     if @procurement.lot_number_selected_by_customer
       page_definitions[:secondary_name] = 'change_the_contract_value'
-      page_definitions[:secondary_url] = facilities_management_procurements_path
+      page_definitions[:secondary_url] = facilities_management_rm3830_procurements_path
       page_definitions[:secondary_text] = 'Return to estimated contract cost'
     end
     page_definitions
@@ -40,7 +40,7 @@ module FacilitiesManagement::PageDetail::Procurements
       {
         page_title: 'Further competition',
         secondary_text: 'Return to results',
-        secondary_url: facilities_management_procurement_path,
+        secondary_url: facilities_management_rm3830_procurement_path,
         continuation_text: 'Save as further competition'
       }
     else
@@ -65,13 +65,13 @@ module FacilitiesManagement::PageDetail::Procurements
       default: {
         caption1: @procurement.contract_name,
         continuation_text: 'Continue',
-        return_url: facilities_management_procurements_path,
+        return_url: facilities_management_rm3830_procurements_path,
         return_text: 'Return to procurement dashboard',
         secondary_name: 'change_requirements',
         secondary_text: 'Change requirements',
-        secondary_url: facilities_management_procurements_path,
+        secondary_url: facilities_management_rm3830_procurements_path,
         back_text: 'Back',
-        back_url: facilities_management_procurements_path
+        back_url: facilities_management_rm3830_procurements_path
       },
       quick_search: set_quick_search_or_what_happens_next_page_definitions,
       what_happens_next: set_quick_search_or_what_happens_next_page_definitions,

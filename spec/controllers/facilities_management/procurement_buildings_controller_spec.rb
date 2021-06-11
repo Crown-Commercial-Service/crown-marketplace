@@ -43,7 +43,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
       let(:step) { 'missing_service' }
 
       it 'redirects to the  procurement show page' do
-        expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement_building.procurement)
       end
     end
 
@@ -76,7 +76,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
         let(:address_region) { 'Cardiff and Vale of Glamorgan' }
 
         it 'redirects to the procurement show page' do
-          expect(response).to redirect_to facilities_management_procurement_path(procurement_building.procurement)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement_building.procurement)
         end
       end
 
@@ -106,7 +106,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
         let(:service_codes) { ['', 'C.1'] }
 
         it 'redirects to the procurement summary page' do
-          expect(response).to redirect_to facilities_management_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
+          expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
         end
       end
     end

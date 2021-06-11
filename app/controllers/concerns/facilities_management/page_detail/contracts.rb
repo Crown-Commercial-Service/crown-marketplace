@@ -44,10 +44,10 @@ module FacilitiesManagement::PageDetail::Contracts
       default: {
         back_label: 'Back',
         back_text: 'Back',
-        back_url: facilities_management_procurements_path,
+        back_url: facilities_management_rm3830_procurements_path,
         caption1: @procurement.contract_name,
         return_text: 'Return to procurements dashboard',
-        return_url: facilities_management_procurements_path,
+        return_url: facilities_management_rm3830_procurements_path,
       },
       show: {
         page_title: 'Contract summary',

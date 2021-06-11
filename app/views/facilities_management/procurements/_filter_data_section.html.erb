@@ -7,7 +7,7 @@
     </div>
     <div class="govuk-grid-row govuk-!-padding-1 filter-component-container-grey" style="float: right">
       <%= link_to change_title, change_link, class: 'govuk-link govuk-!-font-size-19'  unless @procurement.persisted? %>
-      <%= link_to change_title, edit_facilities_management_procurement_path(@procurement.id, step: section_name + 's'), class: 'govuk-link govuk-!-font-size-19'  if @procurement.persisted? %>
+      <%= link_to change_title, edit_facilities_management_rm3830_procurement_path(@procurement.id, step: section_name + 's'), class: 'govuk-link govuk-!-font-size-19'  if @procurement.persisted? %>
     </div>
 
     <div class="govuk-grid-row filter-component-container-grey" style="clear: both">

@@ -27,7 +27,7 @@ module FacilitiesManagement
     end
 
     def show
-      redirect_to facilities_management_procurements_path if @procurement.da_journey_state == 'sent'
+      redirect_to facilities_management_rm3830_procurements_path if @procurement.da_journey_state == 'sent'
       redirect_to facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
     end
 
@@ -45,11 +45,11 @@ module FacilitiesManagement
       if @procurement.save(context: :contract_name)
         if @procurement.region_codes.empty?
           @procurement.start_detailed_search!
-          redirect_to facilities_management_procurement_path(@procurement)
+          redirect_to facilities_management_rm3830_procurement_path(@procurement)
         elsif params[:save_for_later].present?
-          redirect_to facilities_management_procurements_path
+          redirect_to facilities_management_rm3830_procurements_path
         else
-          redirect_to facilities_management_procurement_path(@procurement, 'what_happens_next': true)
+          redirect_to facilities_management_rm3830_procurement_path(@procurement, 'what_happens_next': true)
         end
       else
         @errors = @procurement.errors
@@ -60,7 +60,7 @@ module FacilitiesManagement
     end
 
     def edit
-      redirect_to facilities_management_procurement_path(@procurement) if params[:step].nil?
+      redirect_to facilities_management_rm3830_procurement_path(@procurement) if params[:step].nil?
 
       @back_link = FacilitiesManagement::ProcurementRouter.new(@procurement.id, @procurement.aasm_state).back_link
     end
@@ -76,7 +76,7 @@ module FacilitiesManagement
 
     def destroy
       FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
-      redirect_to facilities_management_procurements_path(deleted: @procurement.contract_name)
+      redirect_to facilities_management_rm3830_procurements_path(deleted: @procurement.contract_name)
     end
 
     def what_happens_next; end
@@ -87,7 +87,7 @@ module FacilitiesManagement
         spreadsheet_builder.build
         send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
       else
-        redirect_to facilities_management_procurement_path(id: @procurement.id)
+        redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
       end
     end
 
@@ -97,7 +97,7 @@ module FacilitiesManagement
         spreadsheet_builder.build
         send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
       else
-        redirect_to facilities_management_procurement_path(id: @procurement.id)
+        redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
       end
     end
 
@@ -116,7 +116,7 @@ module FacilitiesManagement
     end
 
     def redirect_from_delete_if_needed
-      redirect_to facilities_management_procurements_path unless @procurement.can_be_deleted?
+      redirect_to facilities_management_rm3830_procurements_path unless @procurement.can_be_deleted?
     end
 
     def set_view_name
@@ -196,7 +196,7 @@ module FacilitiesManagement
     def start_bulk_upload
       @procurement.start_detailed_search_bulk_upload! if @procurement.may_start_detailed_search_bulk_upload?
       if params['bulk_upload_spreadsheet'] == t('facilities_management.procurements.spreadsheet.save_and_return_link')
-        redirect_to facilities_management_procurements_path
+        redirect_to facilities_management_rm3830_procurements_path
       else
         redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: @procurement.id)
       end
@@ -210,12 +210,12 @@ module FacilitiesManagement
 
     def change_the_contract_value
       @procurement.set_state_to_choose_contract_value!
-      redirect_to facilities_management_procurement_path(@procurement)
+      redirect_to facilities_management_rm3830_procurement_path(@procurement)
     end
 
     def continue_to_summary
       @procurement.set_state_to_detailed_search!
-      redirect_to facilities_management_procurement_path(@procurement)
+      redirect_to facilities_management_rm3830_procurement_path(@procurement)
     end
 
     def continue_to_results
@@ -228,9 +228,9 @@ module FacilitiesManagement
 
       if can_continue_to_results
         @procurement.set_state_to_results_if_possible! unless @procurement.results?
-        redirect_to facilities_management_procurement_path(@procurement)
+        redirect_to facilities_management_rm3830_procurement_path(@procurement)
       else
-        redirect_to facilities_management_procurement_path(@procurement, validate: true)
+        redirect_to facilities_management_rm3830_procurement_path(@procurement, validate: true)
       end
     end
 
@@ -238,7 +238,7 @@ module FacilitiesManagement
       @procurement.assign_attributes(procurement_params)
       if @procurement.valid?(:choose_contract_value)
         @procurement.set_state_to_results!
-        redirect_to facilities_management_procurement_path(@procurement)
+        redirect_to facilities_management_rm3830_procurement_path(@procurement)
       else
         set_view_name
         render :show
@@ -249,9 +249,9 @@ module FacilitiesManagement
       @procurement.assign_attributes(service_codes: procurement_params[:service_codes])
       if @procurement.save(context: :service_codes)
         if @procurement.quick_search?
-          redirect_to facilities_management_procurement_path(id: @procurement.id)
+          redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         else
-          redirect_to facilities_management_procurement_summary_path(@procurement, summary: 'services')
+          redirect_to facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'services')
         end
       else
         params[:step] = 'services'
@@ -262,7 +262,7 @@ module FacilitiesManagement
     def update_region_codes
       @procurement.assign_attributes(region_codes: procurement_params[:region_codes])
       if @procurement.save(context: :region_codes)
-        redirect_to facilities_management_procurement_path(id: @procurement.id)
+        redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
       else
         params[:step] = 'regions'
         render :edit
@@ -272,7 +272,7 @@ module FacilitiesManagement
     def exit_detailed_search_bulk_upload
       @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
 
-      redirect_to facilities_management_procurement_path(@procurement)
+      redirect_to facilities_management_rm3830_procurement_path(@procurement)
     end
 
     def paginate_procurement_buildings
@@ -294,7 +294,7 @@ module FacilitiesManagement
       @procurement.assign_attributes(procurement_buildings_attributes: @building_params.map { |building_id, active| { id: current_procurement_buildings[building_id], building_id: building_id, active: active } })
 
       if @procurement.save(context: :buildings)
-        redirect_to facilities_management_procurement_summary_path(@procurement, summary: 'buildings')
+        redirect_to facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'buildings')
       else
         params[:step] = 'buildings'
         set_paginated_buildings_data
@@ -331,7 +331,7 @@ module FacilitiesManagement
 
       if @procurement.valid?(:route_to_market)
         set_route_to_market
-        redirect_to facilities_management_procurement_path(@procurement, fc_chosen: @procurement.route_to_market == 'further_competition_chosen')
+        redirect_to facilities_management_rm3830_procurement_path(@procurement, fc_chosen: @procurement.route_to_market == 'further_competition_chosen')
       else
         @view_name = 'results'
         initialize_page_description_from_view_name
@@ -353,11 +353,11 @@ module FacilitiesManagement
     end
 
     def redirect_if_unrecognised_step
-      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
+      redirect_to facilities_management_rm3830_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
     end
 
     def redirect_if_unrecognised_summary_page
-      redirect_to facilities_management_procurement_path(@procurement) unless RECOGNISED_SUMMARY_PAGES.include? summary_page
+      redirect_to facilities_management_rm3830_procurement_path(@procurement) unless RECOGNISED_SUMMARY_PAGES.include? summary_page
     end
 
     RECOGNISED_STEPS = %w[services regions contract_name estimated_annual_cost tupe contract_period buildings].freeze
@@ -435,7 +435,7 @@ module FacilitiesManagement
     end
 
     def redirect_to_edit_from_summary
-      redirect_to edit_facilities_management_procurement_path(@procurement, step: @summary_page) if summary_page_status == :not_started || (summary_page == 'contract_period' && summary_page_status == :incomplete)
+      redirect_to edit_facilities_management_rm3830_procurement_path(@procurement, step: @summary_page) if summary_page_status == :not_started || (summary_page == 'contract_period' && summary_page_status == :incomplete)
     end
 
     def summary_page_status

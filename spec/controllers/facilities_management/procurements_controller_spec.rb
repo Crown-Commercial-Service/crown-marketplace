@@ -211,7 +211,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         it 'redirects to the show page' do
           get :summary, params: { procurement_id: procurement.id, summary: 'contract_name' }
 
-          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
         end
       end
 
@@ -222,7 +222,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'redirects to the edit page with contract_period step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'contract_period')
+            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'contract_period')
           end
         end
 
@@ -232,7 +232,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'redirects to the edit page with contract_period step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'contract_period')
+            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'contract_period')
           end
         end
 
@@ -256,7 +256,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'redirects to the edit page with services step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'services' }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'services')
+            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'services')
           end
         end
 
@@ -282,7 +282,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           it 'redirects to the edit page with buildings step' do
             get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
 
-            expect(response).to redirect_to edit_facilities_management_procurement_path(procurement, step: 'buildings')
+            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'buildings')
           end
         end
 
@@ -311,7 +311,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         it 'redirects to the show page' do
           get :edit, params: { id: procurement.id, step: 'services_and_buildings' }
 
-          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
         end
       end
 
@@ -331,8 +331,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             get :edit, params: { id: procurement.id, step: 'tupe' }
           end
 
-          it 'will have facilities_management_procurement_path as the back_link' do
-            expect(assigns(:back_link)).to eq facilities_management_procurement_path(id: procurement.id)
+          it 'will have facilities_management_rm3830_procurement_path as the back_link' do
+            expect(assigns(:back_link)).to eq facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'renders the edit page' do
@@ -370,25 +370,25 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
     describe 'POST create' do
       context 'with a valid record' do
         context 'when Save and continue is selected with no region codes' do
-          it 'redirects to facilities_management_procurement_path for the new record' do
+          it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id)
           end
         end
 
         context 'when Save and continue is selected with region codes' do
-          it 'redirects to facilities_management_procurement_path for the new record' do
+          it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
-            expect(response).to redirect_to facilities_management_procurement_path(new_procurement.id, 'what_happens_next': true)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
         end
 
         context 'when Save for later is selected' do
           it 'redirects to show path' do
             post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
-            expect(response).to redirect_to facilities_management_procurements_path
+            expect(response).to redirect_to facilities_management_rm3830_procurements_path
           end
         end
       end
@@ -410,7 +410,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'redirects to the show page for the record' do
-          expect(response).to redirect_to facilities_management_procurement_path(procurement.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement.id)
         end
 
         it 'correctly updates the provided params' do
@@ -463,8 +463,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.aasm_state).to eq 'detailed_search_bulk_upload'
         end
 
-        it 'will redirect to the facilities_management_procurements_path' do
-          expect(response).to redirect_to facilities_management_procurements_path
+        it 'will redirect to the facilities_management_rm3830_procurements_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurements_path
         end
       end
 
@@ -479,8 +479,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.aasm_state).to eq 'detailed_search'
         end
 
-        it 'will redirect to the facilities_management_procurements_path' do
-          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        it 'will redirect to the facilities_management_rm3830_procurements_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
         end
       end
 
@@ -490,8 +490,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           patch :update, params: { id: procurement.id, change_requirements: 'Change requirements' }
         end
 
-        it 'redirects to facilities_management_procurement_path' do
-          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        it 'redirects to facilities_management_rm3830_procurement_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
         end
 
         it 'changes the state to detailed search' do
@@ -519,8 +519,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
-          it 'redirects to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+          it 'redirects to facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
           end
 
           it 'changes the state to results' do
@@ -536,8 +536,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             patch :update, params: { id: procurement.id, continue_to_results: 'Continue to results' }
           end
 
-          it 'redirects to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement, validate: true)
+          it 'redirects to facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement, validate: true)
           end
 
           it 'the state does not change' do
@@ -553,8 +553,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           patch :update, params: { id: procurement.id, change_the_contract_value: 'Change contract value' }
         end
 
-        it 'redirects to facilities_management_procurement_path' do
-          expect(response).to redirect_to facilities_management_procurement_path(procurement)
+        it 'redirects to facilities_management_rm3830_procurement_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
         end
 
         it 'changes the state to detailed search' do
@@ -591,7 +591,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           before { patch :update, params: { id: procurement.id, continue_from_change_contract_value: 'Continue', facilities_management_procurement: { lot_number: '1a', lot_number_selected_by_customer: true } } }
 
           it 'renders the show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
           end
 
           it 'changes the state to results' do
@@ -630,8 +630,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'da_draft' } }
           end
 
-          it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'false')
+          it 'will redirect to facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement, fc_chosen: 'false')
           end
 
           it 'will change the state to da_draft' do
@@ -645,8 +645,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition' } }
           end
 
-          it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'false')
+          it 'will redirect to facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement, fc_chosen: 'false')
           end
 
           it 'will change the state to further_competition' do
@@ -660,8 +660,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition_chosen' } }
           end
 
-          it 'will redirect to facilities_management_procurement_path' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement, fc_chosen: 'true')
+          it 'will redirect to facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement, fc_chosen: 'true')
           end
 
           it 'will not change the state to further_competition' do
@@ -678,8 +678,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'regions', region_codes: region_codes } }
         end
 
-        it 'redirects to edit_facilities_management_procurement_path' do
-          expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+        it 'redirects to edit_facilities_management_rm3830_procurement_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
         end
 
         it 'updates the regions in the procurement' do
@@ -698,8 +698,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
               patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'services', service_codes: service_codes } }
             end
 
-            it 'redirects to edit_facilities_management_procurement_path' do
-              expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            it 'redirects to edit_facilities_management_rm3830_procurement_path' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
             end
 
             it 'updates the service codes' do
@@ -727,8 +727,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
               patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'regions', region_codes: region_codes } }
             end
 
-            it 'redirects to edit_facilities_management_procurement_path' do
-              expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            it 'redirects to edit_facilities_management_rm3830_procurement_path' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
             end
 
             it 'updates the region codes' do
@@ -763,7 +763,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             end
 
             it 'redirects to services summary page' do
-              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
+              expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
             end
 
             it 'updates the service codes' do
@@ -780,7 +780,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                 end
 
                 it 'redirects to services summary page' do
-                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
+                  expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
@@ -805,7 +805,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
                 end
 
                 it 'redirects to services summary page' do
-                  expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'services')
+                  expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
                 end
 
                 it 'updates the service codes' do
@@ -841,7 +841,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
           end
         end
 
@@ -853,7 +853,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           end
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(procurement)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
           end
         end
       end
@@ -960,7 +960,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
             end
 
             it 'redirects to the summary page' do
-              expect(response).to redirect_to facilities_management_procurement_summary_path(procurement, summary: 'buildings')
+              expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'buildings')
             end
           end
 
@@ -997,7 +997,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'redirects facilities_management_procurements' do
-          expect(response).to redirect_to facilities_management_procurements_path
+          expect(response).to redirect_to facilities_management_rm3830_procurements_path
         end
       end
     end
@@ -1012,8 +1012,8 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
           expect(procurement.class.where(id: procurement.id)).not_to exist
         end
 
-        it 'redirects facilities_management_procurements_path' do
-          expect(response).to redirect_to facilities_management_procurements_path(deleted: procurement.contract_name)
+        it 'redirects facilities_management_rm3830_procurements_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurements_path(deleted: procurement.contract_name)
         end
       end
 
@@ -1024,7 +1024,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
         end
 
         it 'redirects facilities_management_procurements' do
-          expect(response).to redirect_to facilities_management_procurements_path
+          expect(response).to redirect_to facilities_management_rm3830_procurements_path
         end
       end
     end
@@ -1084,7 +1084,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       let(:aasm_state) { 'detailed_search' }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
       end
     end
 
@@ -1108,7 +1108,7 @@ RSpec.describe FacilitiesManagement::ProcurementsController, type: :controller d
       let(:aasm_state) { 'direct_award' }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
       end
     end
 

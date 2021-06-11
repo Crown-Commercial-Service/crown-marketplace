@@ -21,7 +21,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:state) { aasm_state }
 
           it 'redirects to the procurements_controller' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
         end
       end
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:state) { aasm_state }
 
           it 'redirects to the procurements_controller' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
         end
       end
@@ -983,7 +983,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'pricing', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1013,7 +1013,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'what_next', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1043,7 +1043,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'important_information', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1089,7 +1089,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'contract_details', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1119,7 +1119,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review_and_generate', change_requirements: 'Change requirements' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to detailed_search' do
@@ -1143,7 +1143,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review_and_generate', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1185,7 +1185,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do
@@ -1239,7 +1239,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'sending', return_to_results: 'Return to results' } }
 
           it 'redirects to the procurement show page' do
-            expect(response).to redirect_to facilities_management_procurement_path(id: procurement.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
           it 'updates the aasm_state to results' do

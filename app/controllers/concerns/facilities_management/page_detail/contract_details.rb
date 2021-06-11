@@ -12,13 +12,13 @@ module FacilitiesManagement::PageDetail::ContractDetails
         page_title: t("facilities_management.procurements.contract_details.page_title.#{@page_name}"),
         caption1: @procurement.contract_name,
         continuation_text: 'Continue',
-        return_url: facilities_management_procurements_path,
+        return_url: facilities_management_rm3830_procurements_path,
         return_text: 'Return to procurement dashboard',
         secondary_name: 'return_to_results',
         secondary_text: 'Return to results',
-        secondary_url: facilities_management_procurements_path,
+        secondary_url: facilities_management_rm3830_procurements_path,
         back_text: 'Back',
-        back_url: facilities_management_procurements_path
+        back_url: facilities_management_rm3830_procurements_path
       },
       pricing: {
         continuation_text: 'Continue to direct award'

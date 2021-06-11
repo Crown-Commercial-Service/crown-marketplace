@@ -2,7 +2,7 @@
 
 <div class="govuk-grid-row" id="building-missing-region">
   <div class="govuk-grid-column-two-thirds">
-    <%= link_to t('.return_link'), facilities_management_procurement_summary_path(@procurement, summary: 'buildings_and_services'),  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
+    <%= link_to t('.return_link'), facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'buildings_and_services'),  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
     <%= render partial: 'shared/error_summary', locals: { errors: @procurement_building.errors } %>
     <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
   </div>
@@ -15,7 +15,7 @@
       </h2>
       <%= displayed_error %>
       <p class='govuk-hint'>
-        <%= t('.select_all_that_apply_html', services_link: link_to(t('.services_link_text'), facilities_management_procurement_summary_path(@procurement, summary: 'services'), class: 'govuk-link govuk-link--no-visited-state')) %>
+        <%= t('.select_all_that_apply_html', services_link: link_to(t('.services_link_text'), facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'services'), class: 'govuk-link govuk-link--no-visited-state')) %>
       </p>
     </div>
   </div>
@@ -48,6 +48,6 @@
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= link_to t('.return_link'), facilities_management_procurement_summary_path(@procurement, summary: 'buildings_and_services'),  'aria-label': t('.return_link'), class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <%= link_to t('.return_link'), facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'buildings_and_services'),  'aria-label': t('.return_link'), class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>
