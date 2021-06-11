@@ -479,6 +479,23 @@ en:
             call_out_leading: Download Call-off contract
             colating: COLLATING DOCUMENTS
             colating_message: Call-off contract will be available for download shortly
+          closed:
+            contract_closed:
+              info: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+              title: Your procurement has been closed
+            contract_signed:
+              contract_award_notification_form: Contract award notification form
+              contract_period: 'Your live contract period is between:'
+              email_address: 'email address: '
+              email_html: <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
+              email_subject: 'email subject: RM3830 contract award notification.'
+              info_1: You have confirmed that both parties have signed.
+              info_2: What to do next
+              next: Send your completed contract award notification form to Crown Commercial Service
+              number: Your live contract reference number
+              title: Contract signed
+            index:
+              return_text: Return to procurements dashboard
           closing_direct_award_offer:
             are_you_sure_1: Are you sure you wish to close the
             are_you_sure_2: procurement?
@@ -556,6 +573,33 @@ en:
             optional_call_off_extension: Optional call-off extension period %{extension}
             requirements: Requirements
             route_to_market: Route to market
+          sent:
+            no_suppliers:
+              description: Unfortunately, there are no further suppliers available who can meet your requirements.
+              footer_description_1: This procurement will automatically be closed, and can be viewed in the closed section of your procurements dashboard.
+              footer_description_2: If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+              next_steps: 'Depending on the reasons given for the suppliers declining your contract offer, your next steps could be:'
+              next_steps_list_1: to amend your requirements
+              next_steps_list_2: to run a further competition to allow suppliers more flexibility in their solution
+              title: Supplier shortlist
+            sent:
+              accepts_header: 1. If the supplier accepts the offer
+              accepts_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
+              accepts_list_2: the supplier will sign the contract and send it back to you (offline)
+              accepts_list_3: you will then sign the contract and send it back to the supplier (offline)
+              accepts_list_4: you will confirm on this portal that the contract has been signed by both parties
+              declines_header: 2. If the supplier declines the offer
+              declines_list_1: you will be notified that they have declined your offer, and provided a reason why
+              declines_list_2: 'you have the choice to:'
+              declines_list_2_sub_1: "- offer the contract to the next placed supplier (after reviewing their price)"
+              declines_list_2_sub_2: "- switch to a further competition"
+              declines_list_2_sub_3: "- change your requirements"
+              declines_list_2_sub_4: "- stop the process"
+              further_information: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
+              header: Your contract was sent
+              procurement_sent_to: The ‘%{contract_name}’ (%{contract_number}) contract was sent to %{supplier_name}.
+              what_happens_next: What happens next
+              what_happens_next_sub: The supplier has 2 working days (48 hours) to accept or decline your offer.
           show:
             supplier: Supplier
           supplier_contact_details:

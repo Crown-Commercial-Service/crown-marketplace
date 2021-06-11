@@ -73,7 +73,7 @@ module FacilitiesManagement
             @contract.save!
             @contract.withdraw! if @contract.may_withdraw?
             @procurement.set_state_to_closed!
-            redirect_to facilities_management_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+            redirect_to facilities_management_rm3830_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
           else
             initialize_page_description
             render :edit
@@ -84,7 +84,7 @@ module FacilitiesManagement
           if @contract.valid?(:confirmation_of_signed_contract)
             if @contract.contract_signed
               @contract.sign!
-              redirect_to facilities_management_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
+              redirect_to facilities_management_rm3830_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
             else
               @contract.not_sign!
               redirect_to facilities_management_rm3830_procurement_contract_path(procurement_id: @procurement.id, id: @contract.id)
@@ -99,17 +99,17 @@ module FacilitiesManagement
           next_contract = @procurement.unsent_direct_award_offers.first
           @procurement.offer_to_next_supplier
           @procurement.save
-          redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
+          redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(@procurement.id, contract_id: next_contract.id)
         end
 
         def redirect_to_last_contract_closed_page
           last_contract = @procurement.procurement_suppliers.where(direct_award_value: Procurement::DIRECT_AWARD_VALUE_RANGE).last
-          redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
+          redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(@procurement.id, contract_id: last_contract.id)
         end
 
         def no_more_suppliers
           @procurement.set_state_to_closed!
-          redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: @contract.id)
+          redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(@procurement.id, contract_id: @contract.id)
         end
 
         def contract_params
