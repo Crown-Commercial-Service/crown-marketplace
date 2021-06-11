@@ -17,13 +17,7 @@ module ApplicationHelper
   end
 
   def feedback_email_link
-    return link_to(t('common.feedback'), Marketplace.supply_teachers_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'SupplyTeachers'
-
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/BGBL4/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'LegalServices'
-
-    return link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/MIIJB/', target: '_blank', rel: 'noopener', class: 'govuk-link') if controller.class.try(:module_parent_name) == 'ManagementConsultancy'
-
-    link_to(t('common.feedback'), 'https://www.smartsurvey.co.uk/s/J1VQQI/', target: '_blank', rel: 'noopener', class: 'govuk-link')
+    link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
 
   def support_email_link(label)

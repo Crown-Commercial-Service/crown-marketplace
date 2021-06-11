@@ -77,8 +77,8 @@ module Marketplace
     'info@crowncommercial.gov.uk'
   end
 
-  def self.supply_teachers_survey_link
-    'https://www.smartsurvey.co.uk/s/S4MVR/'
+  def self.fm_survey_link
+    ENV['FM_SURVEY_LINK']
   end
 
   def self.support_telephone_number

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'layouts/application.html.erb', type: :view do
+  let(:support_link_feedback_address) { 'https://www.smartsurvey.co.uk/s/J1VQQI/' }
+
   before do
     view.extend(ApplicationHelper)
     allow(view).to receive(:user_signed_in?).and_return(false)
@@ -13,6 +15,7 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
     cookies[:crown_marketplace_google_analytics_enabled] = 'true'
     allow(cookies.class).to receive(:new).and_return(cookies)
     allow(Marketplace).to receive(:google_analytics_tracking_id).and_return('123')
+    allow(Marketplace).to receive(:fm_survey_link).and_return(support_link_feedback_address)
   end
 
   describe 'feedback links' do
@@ -33,14 +36,11 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
         .and_return(feedback_email_address)
       allow(Marketplace).to receive(:support_email_address)
         .and_return(support_email_address)
-      allow(Marketplace).to receive(:support_link_feedback_address)
-        .and_return(support_email_address)
     end
 
     context 'when feedback email address is present' do
       let(:feedback_email_address) { 'feedback@something.com' }
       let(:support_email_address) { 'support@something.com' }
-      let(:support_link_feedback_address) { 'https://www.smartsurvey.co.uk/s/J1VQQI/' }
 
       it 'displays link to feedback email address in beta banner' do
         render
