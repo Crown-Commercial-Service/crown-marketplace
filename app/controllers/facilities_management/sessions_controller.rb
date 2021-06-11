@@ -32,7 +32,7 @@ module FacilitiesManagement
     end
 
     def redirect_for_spreadsheet_upload(session_return_path)
-      new_facilities_management_procurement_spreadsheet_import_path(procurement_id: session_return_path.split('/')[3])
+      new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: session_return_path.split('/')[3])
     end
   end
 end

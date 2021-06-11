@@ -925,6 +925,176 @@ en:
           save_and_return_link: Save and return to procurements dashboard
           services_and_buildings_template: Services and buildings template
           uploading: 2. Uploading your spreadsheet
+        spreadsheet_imports:
+          error_partials:
+            other_errors:
+              other_description: Your spreadsheet is incomplete and not ready for upload. Please refer to the instructions tab within your services and buildings template for further assistance.
+          errors:
+            building_errors:
+              address_line_1:
+                blank: The building address line 1 cannot be blank
+                too_long: The building address line 1 cannot be more than 100 characters
+              address_line_2:
+                too_long: The building address line 2 cannot be more than 100 characters
+              address_postcode:
+                blank: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+                invalid: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+                too_short: The building postcode is not valid. Enter a valid postcode, like AA1 1AA
+              address_town:
+                blank: The building town/city cannot be blank
+                too_long: The building town/city cannot be more than 30 characters
+              building_name:
+                taken: The building name cannot be duplicated
+                too_long: The building name cannot be more than 50 characters
+              building_type:
+                blank: The building type must be from the selection
+                inclusion: The building type must be from the selection
+              description:
+                too_long: The building description cannot be more than 50 characters
+              external_area:
+                blank: The building external area must be a number between 1 and 999,999,999
+                combined_area: The building external area must be greater than 0, if the gross internal area is 0
+                less_than_or_equal_to: The building external area must be a number between 1 and 999,999,999
+                not_a_number: The building external area must be a number between 1 and 999,999,999
+                not_an_integer: The building external area must be a number between 1 and 999,999,999
+                required: The building external area must be a number between 1 and 999,999,999
+                too_long: The building external area must be a number between 1 and 999,999,999
+              gia:
+                blank: The building gross internal area must be a number between 1 and 999,999,999
+                combined_area: The building gross internal area must be greater than 0, if the external area is 0
+                less_than_or_equal_to: The building gross internal area must be a number between 1 and 999,999,999
+                not_a_number: The building gross internal area must be a number between 1 and 999,999,999
+                not_an_integer: The building gross internal area must be a number between 1 and 999,999,999
+                required: The building gross internal area must be a number between 1 and 999,999,999
+                too_long: The building gross internal area must be a number between 1 and 999,999,999
+              other_building_type:
+                blank: The building type-other cannot be blank
+                too_long: The building type-other cannot be more than 150 characters
+              other_security_type:
+                blank: The building security clearance-other cannot be blank
+                too_long: The building security clearance-other cannot be more than 150 characters
+              security_type:
+                blank: The building security clearance must be from the selection
+                inclusion: The building security clearance must be from the selection
+            lift_errors:
+              lifts:
+                invalid: There is a problem with your number of lifts or floors
+              number_of_floors:
+                invalid: The number of floors must be a number between 1 and 999
+            service_hour_errors:
+              detail_of_requirement:
+                blank: The detail of requirement cannot be blank
+                too_long: The detail of requirement cannot be more than 500 characters
+              service_hours:
+                greater_than_or_equal_to: The number of hours required must be a number between 1 and 999,999,999
+                less_than_or_equal_to: The number of hours required must be a number between 1 and 999,999,999
+                not_a_number: The number of hours required must be a number between 1 and 999,999,999
+                not_an_integer: The number of hours required must be a number between 1 and 999,999,999
+            service_matrix_errors:
+              building:
+                external_area_too_small: The building has service(s) that require an external area greater than 0 sqm
+                gia_too_small: The building has service(s) that require a gross internal area greater than 0 sqm
+              service_codes:
+                invalid: The building does not have any services selected
+                invalid_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_cafm: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_cafm_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_cafm_helpdesk: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_cafm_helpdesk_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_cleaning: "'Mobile cleaning’ and ‘Routine cleaning’ are the same, but differ by delivery method. Please choose one of these services only"
+                invalid_helpdesk: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                invalid_helpdesk_billable: CAFM system, Helpdesk and/or Management of billable works cannot be the only selected services within a building
+                multiple_standards_for_one_service: The building has multiple service standards selected. Please choose one of these service standards only
+            service_volume_errors:
+              no_of_appliances_for_testing:
+                blank: The building has service(s) that requires the input of the number of appliances for testing
+                invalid: The volume must be a number between 1 and 999,999,999
+              no_of_building_occupants:
+                blank: The building has service(s) that requires the input of the number of building occupants
+                invalid: The volume must be a number between 1 and 999,999,999
+              no_of_consoles_to_be_serviced:
+                blank: The building has service(s) that requires the input of the number of consoles to be serviced
+                invalid: The volume must be a number between 1 and 999,999,999
+              no_of_units_to_be_serviced:
+                blank: The building has service(s) that requires the input of the number of units to be serviced
+                invalid: The volume must be a number between 1 and 999,999,999
+              tones_to_be_collected_and_removed:
+                blank: The building has service(s) that requires the input of the number of tonnes to be collected and removed
+                invalid: The volume must be a number between 1 and 999,999,999
+          failed:
+            building_name: Building name
+            building_number: Building number
+            error_description: Error description
+            return_to_procurement_dashboard: Return to procurements dashboard
+            service_name: Service name
+            start_again: Start your upload again
+          failed_generic:
+            description: Your service and building information failed to upload.
+            generic_message: This is due to issues with your spreadsheet.
+            what_next: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
+          failed_non_generic:
+            description: Your service and building information failed to upload and we have provided a list of  issues to help you to fix these.
+            here_are_steps: Here are the steps you need to take next.
+            hint_text: The information below is sorted in order of the ‘Services and buildings template’ tabs. If one of the tabs is missing, it means that there are no issues on that tab.
+            list_of_issues: List of issues
+            step_1: Review all issues listed below
+            step_2: Fix and edit your services and buildings template
+            step_3: Re-upload your file, by clicking on the ‘Start your upload again’ button at the bottom of this page
+            title:
+              building_errors: Building information
+              lift_errors: Service volumes 2
+              other_errors: Other
+              service_hour_errors: Service volumes 3
+              service_matrix_errors: Service matrix
+              service_volume_errors: Service volumes 1
+            what_next: What to do next
+          failed_template:
+            description: Your service and building information failed to upload.
+            fail_reason:
+              not_ready: The file could not be processed. Cell B10 must be 'Ready' on the Instructions tab of your template
+              not_started: The file is using the 'Services and buildings template', but is empty
+              template_invalid: The file must use the 'Services and buildings template'
+            what_next:
+              not_ready: Return to upload your spreadsheet and ensure that you have completed the provided spreadsheet template.
+              not_started: Return to upload your spreadsheet and ensure that you have completed the provided spreadsheet template.
+              template_invalid: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
+          importing:
+            checking_files: Checking file
+            complete: Complete
+            dashboard_link: Return to procurements dashboard
+            file_uploaded: File uploaded
+            processing_file: Processing file
+            review: After a successful upload, you can continue to review your procurement.
+            saving_data: Saving the data
+            upload_progress: Upload progress
+            warning_text: If it has been more than 30 minutes, and the upload status has not changed, click on the 'Return to upload your spreadsheet' link above, to go back to retry the upload. If you close this page during the upload, you can access this procurement by clicking on ‘Continue a procurement’ in your account.
+          new:
+            cancel_and_return: Cancel and return to services and buildings template
+            check: How to check your spreadsheet is ready
+            check_details: Please check cell B10 on the Instructions tab in your spreadsheet indicates 'Ready to upload'
+            description: When you are ready to upload your completed services and building spreadsheet, please select the correct file from your computer using the file selector.
+            heading: Upload your spreadsheet
+            once_selected: Once you have selected your file below, please click on the 'upload my services and buildings' button.
+            upload: Upload your file
+            upload_and_continue: Upload my services and buildings
+            upload_size: Supported format is .xlsx and maximum file is 10mb
+            warning: Any requirements that you have already entered or uploaded for this procurement will be overwritten when you upload your file.
+          show:
+            heading: File upload status
+            return_to_upload: Return to upload your spreadsheet
+          succeeded:
+            about: About the procurement summary
+            buildings: buildings
+            completed: 'Within your procurement summary you will notice that the following items within section 2 Services and buildings are now shown as ''completed'':'
+            continue_to_procurement: Continue to procurement
+            return_to_dashboard: Return to procurements dashboard
+            review: If you click into each section you can review your information, and make any amends if required.
+            service_requirements: service requirements
+            services: services
+            services_to_buildings: assigning services to buildings
+            successful: Your service and building information have been successfully uploaded and the details placed into the relevant sections within your procurement.
+          upload:
+            procurement_link: Go to procurement
         summary:
           buildings:
             building: building
