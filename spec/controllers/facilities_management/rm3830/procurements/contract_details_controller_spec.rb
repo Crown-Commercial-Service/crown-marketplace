@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_procurement, user: subject.current_user, aasm_state: 'da_draft') }
 
   login_fm_buyer_with_details
@@ -98,7 +99,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:state) { da_journey_state }
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
         end
       end
@@ -114,7 +115,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         let(:page) { 'payment_period' }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_procurement_contract_details_path
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -131,7 +132,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -148,7 +149,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -165,7 +166,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to invoicing contact details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'invoicing_contact_details')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'invoicing_contact_details')
         end
       end
 
@@ -182,7 +183,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to new invoicing contact details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
         end
       end
 
@@ -199,7 +200,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -216,7 +217,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to authorised representative details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'authorised_representative')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'authorised_representative')
         end
       end
 
@@ -233,7 +234,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to new authorised representative details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
         end
       end
 
@@ -250,7 +251,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -267,7 +268,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to notices contact details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'notices_contact_details')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'notices_contact_details')
         end
       end
 
@@ -284,7 +285,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to new notices contact details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
         end
       end
 
@@ -301,7 +302,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -318,7 +319,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
 
@@ -335,7 +336,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to Local Government Pension Scheme'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_edit_path(procurement, page: 'local_government_pension_scheme')
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'local_government_pension_scheme')
         end
       end
 
@@ -365,7 +366,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
 
         it 'has correct backlink text and destination' do
           expect(assigns(:page_description).back_button.text).to eq 'Return to contract details'
-          expect(assigns(:page_description).back_button.url).to eq facilities_management_procurement_contract_details_path
+          expect(assigns(:page_description).back_button.url).to eq facilities_management_rm3830_procurement_contract_details_path
         end
       end
     end
@@ -396,7 +397,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:payment_method) { 'bacs' }
 
           it 'redirects to show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates payment_method' do
@@ -427,14 +428,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           context 'and invoicing contact details exist' do
             let(:invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail, procurement: procurement) }
 
-            it 'will redirect to facilities_management_procurement_contract_details_path if the invoice_contact_detail is not blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
             end
           end
 
           context 'and invoicing contact details do exist' do
-            it 'will redirect to facilities_management_procurement_contract_details_edit_path if the invoicing contact details are blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_edit_path if the invoicing contact details are blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
             end
           end
         end
@@ -443,7 +444,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:using_buyer_detail_for_invoice_details) { true }
 
           it 'will redirect to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
         end
 
@@ -474,14 +475,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           context 'and authorised contact details exist' do
             let(:authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail, procurement: procurement) }
 
-            it 'will redirect to facilities_management_procurement_contract_details_path if the invoice_contact_detail is not blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
             end
           end
 
           context 'and authorised contact details do exist' do
-            it 'will redirect to facilities_management_procurement_contract_details_edit_path if the authorised contact details are blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_edit_path if the authorised contact details are blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
             end
           end
         end
@@ -490,7 +491,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:using_buyer_detail_for_authorised_detail) { true }
 
           it 'will redirect to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
         end
 
@@ -521,14 +522,14 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           context 'and notices contact details exist' do
             let(:notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail, procurement: procurement) }
 
-            it 'will redirect to facilities_management_procurement_contract_details_path if the invoice_contact_detail is not blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
             end
           end
 
           context 'and notices contact details do exist' do
-            it 'will redirect to facilities_management_procurement_contract_details_edit_path if the notices contact details are blank' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
+            it 'will redirect to facilities_management_rm3830_procurement_contract_details_edit_path if the notices contact details are blank' do
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
             end
           end
         end
@@ -537,7 +538,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:using_buyer_detail_for_notices_detail) { true }
 
           it 'will redirect to the show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
         end
 
@@ -570,8 +571,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when valid details are entered' do
           let(:address_attributes) { contact_details_hash(empty_invoice_contact_detail.id, invoice_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'invoicing_contact_details')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'invoicing_contact_details')
           end
 
           it 'updates the procurement to have the full details' do
@@ -608,8 +609,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when valid details are entered' do
           let(:address_attributes) { contact_details_hash(empty_authorised_contact_detail.id, authorised_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'authorised_representative')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'authorised_representative')
           end
 
           it 'updates the procurement to have the full details' do
@@ -646,8 +647,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when valid details are entered' do
           let(:address_attributes) { contact_details_hash(empty_notices_contact_detail.id, notices_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'notices_contact_details')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'notices_contact_details')
           end
 
           it 'updates the procurement to have the full details' do
@@ -688,8 +689,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when a valid address is entered' do
           let(:address_attributes) { contact_details_address_hash(empty_invoice_contact_detail.id, invoice_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_invoicing_contact_details')
           end
 
           it 'updates the procurement to have an address' do
@@ -723,8 +724,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when a valid address is entered' do
           let(:address_attributes) { contact_details_address_hash(empty_authorised_contact_detail.id, authorised_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_authorised_representative')
           end
 
           it 'updates the procurement to have an address' do
@@ -758,8 +759,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when a valid address is entered' do
           let(:address_attributes) { contact_details_address_hash(empty_notices_contact_detail.id, notices_contact_detail) }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'new_notices_contact_details')
           end
 
           it 'updates the procurement to have an address' do
@@ -798,7 +799,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: false } } }
 
           it 'redirects to show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates security_policy_document' do
@@ -828,7 +829,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
             let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
 
             it 'redirects to show page' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_path
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
             end
 
             it 'updates security_policy_document' do
@@ -861,16 +862,16 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when yes is selected' do
           let(:local_government_pension_scheme) { true }
 
-          it 'redirects to facilities_management_procurement_contract_details_edit_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_edit_path(procurement, page: 'pension_funds')
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_edit_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_edit_path(procurement, page: 'pension_funds')
           end
         end
 
         context 'when no is selected' do
           let(:local_government_pension_scheme) { false }
 
-          it 'redirects to facilities_management_procurement_contract_details_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
         end
       end
@@ -883,8 +884,8 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
         context 'when valid pensions are entered' do
           let(:procurement_pension_funds_attributes) { { '0': { case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": false } } }
 
-          it 'redirects to facilities_management_procurement_contract_details_path' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+          it 'redirects to facilities_management_rm3830_procurement_contract_details_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the procurement to have the pensions' do
@@ -943,7 +944,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           let(:governing_law) { 'english' }
 
           it 'redirects to show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates governing_law' do
@@ -971,7 +972,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'pricing', continue_da: 'Continue to direct award' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to what_next' do
@@ -1001,7 +1002,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'what_next', continue_da: 'Continue to direct award' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to important_information' do
@@ -1031,7 +1032,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'important_information', continue_da: 'Continue' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to contract_details' do
@@ -1064,7 +1065,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
             before { put :update, params: { procurement_id: procurement.id, page: 'contract_details', continue_da: 'Continue' } }
 
             it 'redirects to the contract details show page' do
-              expect(response).to redirect_to facilities_management_procurement_contract_details_path
+              expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
             end
 
             it 'updates the da_journey_state to review_and_generate' do
@@ -1107,7 +1108,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review_and_generate', continue_da: 'Generate documents' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to review' do
@@ -1131,7 +1132,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review_and_generate', change_contract_details: 'Change contact details' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to contract_details' do
@@ -1161,7 +1162,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review', continue_da: 'Create final contract and send to supplier' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to sending' do
@@ -1173,7 +1174,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'review', return_to_review_and_generate: 'Return to review and generate' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to review_and_generate' do
@@ -1227,7 +1228,7 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDetailsController, ty
           before { put :update, params: { procurement_id: procurement.id, page: 'sending', return_to_review: 'Cancel, return to review your contract' } }
 
           it 'redirects to the contract details show page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_details_path
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
           end
 
           it 'updates the da_journey_state to review' do
