@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         end
 
         it 'redirects to file upload status page on first navigation' do
-          expect(response).to redirect_to facilities_management_procurement_spreadsheet_import_path(
+          expect(response).to redirect_to facilities_management_rm3830_procurement_spreadsheet_import_path(
             procurement, procurement.spreadsheet_import
           )
         end
@@ -449,7 +449,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         end
 
         it 'will redirect to the spreadsheet import path' do
-          expect(response).to redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+          expect(response).to redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
         end
       end
 
