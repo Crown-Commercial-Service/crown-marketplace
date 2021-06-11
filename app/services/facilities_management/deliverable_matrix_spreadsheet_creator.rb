@@ -5,7 +5,7 @@ require 'roo'
 class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
-  include FacilitiesManagement::Procurements::ContractDatesHelper
+  include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper
 
   def initialize(contract_id)
     @contract = FacilitiesManagement::ProcurementSupplier.find(contract_id)
