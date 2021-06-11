@@ -350,7 +350,7 @@ module FacilitiesManagement
       end
 
       def redirect_to_contract_details_if_da_draft
-        redirect_to facilities_management_procurement_contract_details_path(procurement_id: @procurement.id) if @procurement.da_draft?
+        redirect_to facilities_management_rm3830_procurement_contract_details_path(procurement_id: @procurement.id) if @procurement.da_draft?
       end
 
       def redirect_if_unrecognised_step

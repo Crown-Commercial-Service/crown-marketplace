@@ -201,7 +201,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         it 'redirects to contract_details' do
           get :show, params: { id: procurement.id }
 
-          expect(response).to redirect_to facilities_management_procurement_contract_details_path(procurement_id: procurement.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path(procurement_id: procurement.id)
         end
       end
     end
