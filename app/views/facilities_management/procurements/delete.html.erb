@@ -1,4 +1,4 @@
-<%= form_for @procurement, url: facilities_management_procurement_path(@procurement), method: :delete, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
+<%= form_for @procurement, url: facilities_management_rm3830_procurement_path(@procurement), method: :delete, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
   <div class="govuk-error-summary" role="alert">
     <h2 class="govuk-error-summary__title" id="error-summary-title">
       <%= t('.are_you_sure', contract_name: @procurement.contract_name) %>

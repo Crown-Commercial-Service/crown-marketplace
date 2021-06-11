@@ -131,9 +131,9 @@ module FacilitiesManagement::ProcurementsHelper
   def link_url(section)
     case section
     when 'contract_period', 'services', 'buildings', 'buildings_and_services', 'service_requirements'
-      facilities_management_procurement_summary_path(@procurement, summary: section)
+      facilities_management_rm3830_procurement_summary_path(@procurement, summary: section)
     else
-      edit_facilities_management_procurement_path(@procurement, step: section)
+      edit_facilities_management_rm3830_procurement_path(@procurement, step: section)
     end
   end
 

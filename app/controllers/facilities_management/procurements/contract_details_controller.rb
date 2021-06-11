@@ -47,7 +47,7 @@ module FacilitiesManagement
       end
 
       def redirect_if_not_da_draft
-        redirect_to facilities_management_procurement_path(id: @procurement.id) unless @procurement.da_draft?
+        redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id) unless @procurement.da_draft?
       end
 
       def redirect_if_not_in_contract_details
@@ -56,7 +56,7 @@ module FacilitiesManagement
 
       def return_to_results
         @procurement.return_to_results!
-        redirect_to facilities_management_procurement_path(@procurement)
+        redirect_to facilities_management_rm3830_procurement_path(@procurement)
       end
 
       def continue_da_journey
@@ -76,7 +76,7 @@ module FacilitiesManagement
       def route_review_and_generate
         if params[:change_requirements].present?
           @procurement.set_state_to_detailed_search!
-          redirect_to facilities_management_procurement_path(@procurement)
+          redirect_to facilities_management_rm3830_procurement_path(@procurement)
         elsif params[:change_contract_details].present?
           @procurement.update(da_journey_state: :contract_details)
           redirect_to facilities_management_procurement_contract_details_path

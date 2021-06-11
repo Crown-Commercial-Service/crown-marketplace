@@ -31,7 +31,7 @@
     <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-4">
       <h3 class="govuk-heading-l"><%= t('.file_download') %></h3>
       <p class="govuk-body-l"><%= t('.download_file_in_format') %></p>
-      <%= link_to_generated_file_for_download(facilities_management_procurement_further_competition_spreadsheet_path(@procurement.id), :xlsx, t('.file_name', procurement_name: @procurement.contract_name), true) %>
+      <%= link_to_generated_file_for_download(facilities_management_rm3830_procurement_further_competition_spreadsheet_path(@procurement.id), :xlsx, t('.file_name', procurement_name: @procurement.contract_name), true) %>
     </div>
   </div>
 <% end %>

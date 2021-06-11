@@ -14,7 +14,7 @@ module FacilitiesManagement
       def create
         @procurement_copy.assign_attributes(procurement_params)
         if @procurement_copy.save(context: :contract_name)
-          redirect_to facilities_management_procurement_path(@procurement_copy.id)
+          redirect_to facilities_management_rm3830_procurement_path(@procurement_copy.id)
         else
           @errors = @procurement.errors
           set_procurement_data
