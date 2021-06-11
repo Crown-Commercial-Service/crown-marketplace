@@ -86,28 +86,28 @@ Rails.application.routes.draw do
         get 'further_competition_spreadsheet'
         get 'deliverables_matrix'
         get 'price_matrix'
-        namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/rm3830/procurements/contract_details' do
+        namespace 'contract_details', path: 'contract-details', controller: 'procurements/contract_details' do
           get '/', action: 'show'
           put '/', action: 'update'
           patch '/', action: 'update'
           get '/edit', action: 'edit'
         end
-        resources :contracts, only: %i[show edit update], controller: '/facilities_management/rm3830/procurements/contracts' do
-          resources :sent, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/sent'
-          resources :closed, only: %i[index], controller: '/facilities_management/rm3830/procurements/contracts/closed'
-          namespace :documents, controller: '/facilities_management/rm3830/procurements/contracts/documents' do
+        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
+          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+          namespace :documents, controller: 'procurements/contracts/documents' do
             get '/call-off-schedule', action: :call_off_schedule
             get '/call-off-schedule-2', action: :call_off_schedule_2
             get '/zip', action: :zip_contracts
           end
         end
+        resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[edit update]
     end
 
     resources :procurements, only: [] do
-      resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
         get '/progress', action: :progress
       end

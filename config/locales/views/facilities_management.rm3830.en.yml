@@ -623,6 +623,13 @@ en:
             not_signed: Accepted, not signed
             sent: Sent
             signed: Accepted and signed
+        copy_procurement:
+          new:
+            heading: Create a new procurement using the service requirements and buildings you have previously entered.
+            label: What do you want to call your contract?
+            once_saved: 'Once saved under a new contract name:'
+            you_will_be_able: you will be able to choose from the contract options of direct award (if eligible) or further competition
+            you_will_have_option: you will have the option to amend your requirements (if needed), and re-run your results
         dashboard_tables:
           closed:
             contract_name: Contract name

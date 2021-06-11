@@ -1014,13 +1014,6 @@ en:
               joint_schedule_7:
                 file_name: Joint Schedule 7 - Financial Distress (DA) v3.0.pdf
                 title: Joint Schedule 7 - Financial Distress
-      copy_procurement:
-        new:
-          heading: Create a new procurement using the service requirements and buildings you have previously entered.
-          label: What do you want to call your contract?
-          once_saved: 'Once saved under a new contract name:'
-          you_will_be_able: you will be able to choose from the contract options of direct award (if eligible) or further competition
-          you_will_have_option: you will have the option to amend your requirements (if needed), and re-run your results
       edit_buildings:
         show:
           return_to_buildings: Return to buildings
