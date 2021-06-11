@@ -1,6 +1,6 @@
 # rubocop:disable Metrics/ModuleLength
-module FacilitiesManagement::ProcurementsHelper
-  include FacilitiesManagement::Procurements::ContractDatesHelper
+module FacilitiesManagement::RM3830::ProcurementsHelper
+  include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper
 
   def journey_step_url_former(journey_step:, region_codes: nil, service_codes: nil)
     "/facilities-management/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"

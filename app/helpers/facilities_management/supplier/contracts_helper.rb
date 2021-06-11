@@ -1,5 +1,5 @@
 module FacilitiesManagement::Supplier::ContractsHelper
-  include FacilitiesManagement::ProcurementsHelper
+  include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def warning_message
     warning_messages = { sent: "This contract offer expires on #{format_date_time(@contract.contract_expiry_date)}. <br/> The buyer is waiting for a response before the offer expiry deadline shown above.",

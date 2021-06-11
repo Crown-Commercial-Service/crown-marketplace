@@ -1,5 +1,5 @@
 module FacilitiesManagement::Procurements::ContractsHelper
-  include FacilitiesManagement::ProcurementsHelper
+  include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def warning_title
     if @contract.closed?

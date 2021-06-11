@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper do
   describe '#building_services_status?' do
     context 'when supplied truthy' do
       it 'will return \'Complete\'' do

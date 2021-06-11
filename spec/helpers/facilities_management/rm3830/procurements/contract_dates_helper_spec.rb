@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDatesHelper, type: :helper do
   include ApplicationHelper
 
   let(:procurement) { create(:facilities_management_procurement, user: create(:user)) }
