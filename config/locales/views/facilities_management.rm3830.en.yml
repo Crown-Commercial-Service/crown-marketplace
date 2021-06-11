@@ -447,6 +447,133 @@ en:
           return_to_what_happens_next: Return to what happens next
           return_to_your_account: Return to your account
           save_and_continue: Save and continue
+        contracts:
+          awaiting_response:
+            else_declined: If the supplier doesn’t respond within 2 working days (48 hours), they are deemed to have declined the offer.
+            if_accepted_header: If the supplier accepts the offer
+            if_accepted_list_1: the system will notify you that they have accepted your offer, and give you the suppliers contact details
+            if_accepted_list_2: the supplier will sign the contract and send it back to you (offline)
+            if_accepted_list_3: you will then sign the contract and send it back to the supplier (offline)
+            if_accepted_list_4: you will confirm on this portal that the contract has been signed by both parties
+            if_declined_header: If the supplier declines the offer
+            if_declined_list_1: "- offer the contract to the next placed supplier (after reviewing their price)"
+            if_declined_list_2: "- switch to a further competition"
+            if_declined_list_3: "- change your requirements"
+            if_declined_list_4: "- stop the process"
+            if_declined_list_header_1: you will be notified that they have declined your offer, and be provided with a reason why
+            if_declined_list_header_2: 'you have the choice to:'
+            title: What happens next
+            two_working_days: The supplier has 2 working days (48 hours) to accept or decline your offer.
+          awaiting_signature:
+            confirmation_1: once the contract has been signed by both parties, the contract is said to have been executed and is a live contract. The day the final signature took place is called the ‘effective date’ , and the term of the contract is calculated forwards from this date
+            confirmation_2: you can then click on the link below to confirm that the contract is now signed, and on which date. The procurement dashboard will detail your live contracts, which is useful when it comes to contract management and renewal
+            supplier_signs_1: the supplier will sign the contract and send it back to you
+            supplier_signs_2: this will happen offline (outside this portal)
+            supplier_signs_3: usually within 5 working days
+            title: What happens next
+            you_sign_1: you can then complete the ‘effective date’ on page 4 of the order form (this is the date the contract is fully signed), sign the contract, and share with the supplier
+            you_sign_2: this will happen offline (outside this portal)
+            you_sign_3: usually within 2 working days
+          call_off_contract_documents:
+            call_off_contract_documents: Call-off contract documents
+            call_out_leading: Download Call-off contract
+            colating: COLLATING DOCUMENTS
+            colating_message: Call-off contract will be available for download shortly
+          closing_direct_award_offer:
+            are_you_sure_1: Are you sure you wish to close the
+            are_you_sure_2: procurement?
+            closed_message: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            once_closed: Once closed, you will not be able to reopen this procurement to progress it. If this procurement has been offered to a supplier, the supplier will be immediately notified that you are closing this procurement, and your offer is now withdrawn.
+            reason: Please provide a reason for closing this procurement
+          confirmation_of_signed_contract:
+            contract_end_date: Enter contract end date
+            contract_end_date_caption: The contract end date should be the same as the end of your initial call-off period. For example, 01 11 2030.
+            contract_start_date: Enter contract start date
+            contract_start_date_caption: The contract start date is the ‘effective date’ - this is the date the final party signed the contract. For example, 01 11 2030.
+            contract_will_not_be_signed_reason: Enter your reason why this contract will not be signed in the text box below. Once you have saved and continued, you will be presented with your options on how to proceed further.
+            description: Do you confirm that both parties have signed and exchanged the contract?
+            no_caption: If you select 'No', you are confirming that this contract will never be signed, the offer will be withdrawn and the system will proceed to the next steps.
+            yes_caption: If you select 'Yes', you must enter the confirmed contract start date and the contract end date.
+          contract_offer_details:
+            closed_reason: Your reason for closing this contract offer was
+            declined: The supplier declined this contract offer on
+            expired: The supplier did not respond to this offer and it expired on
+            not_signed_1: You confirmed on
+            not_signed_2: that the contract has not been signed.
+            reason_for_not_signed: Your reason for not signing this contract offer was
+            sent: You sent this contract offer to the supplier on
+            sent_accepted: The supplier accepted the contract offer on
+            signed_confirmed_1: You confirmed on the
+            signed_confirmed_2: that the contract has been signed by both parties.
+            supplier_declined_reason: The supplier’s reason for declining was
+          contract_summary_foot:
+            close: You can close this procurement by clicking on the ‘Close this procurement’ button below, it will then be viewable in the closed section of your procurements dashboard. If you click on the procurement in the dashboard you will have the option to create a copy of the requirements for use in a new/similar procurement, or further competition. This is a quick way to amend some of your requirements and re-run the results.
+            confirm: Use the ‘confirm if contract signed or not’ button below to confirm whether or not the contract was signed.
+            confirm_and_close: You can still withdraw this contract offer; if you need to, use the ‘Close this procurement’ button below, which will withdraw the offer from the supplier, and close the procurement.
+            expired: The supplier did not respond within the required timescale, so this has been automatically recorded as declined with ‘no response’ as the reason.
+            next_steps: Available next steps
+            next_supplier: You can look at the next lowest priced supplier and the option of offering them your contract. Click on the ‘View next supplier’s price’ button below.
+            or: or
+            reuse: If you wish to reuse this procurement’s requirements in a new/similar procurement, or further competition, please click on the button below to create a copy and save under a new contract name.
+            withdraw: You can withdraw this contract offer if you need to. Use the button below which will withdraw the offer made to the supplier and close the procurement.
+          edit:
+            close_this_procurement: Close this procurement
+            confirm_and_send: Confirm and send offer to supplier
+            page_title: Close this procurement
+            save_and_continue: Save and continue
+          next_supplier:
+            about_the_price: About the price
+            about_the_price_description: The price shown is the contract value, excluding VAT, based on the contract terms and service requirements you have entered.
+            close: You can close this procurement
+            close_point_1: by clicking on the button below, it will then be viewable in the closed section of your procurements dashboard.
+            close_point_2: You will then have the option to create a copy of the requirements for use in a new/similar procurement, or further competition
+            download_docs_description: If you download documents and amend offline, the changes will not be reflected within the online documents that will be sent to a supplier.
+            download_documents: Download all contract documents
+            next_lowest: The next lowest supplier who can deliver the services to your buildings is
+            next_steps: Available next steps
+            offer: You can offer your contract to this supplier
+            offer_list_1: we have generated your contract documents using this supplier’s details and pricing
+            offer_list_2: the supplier will have 2 working days to respond to your offer
+            price: The contract price with this supplier is
+            return_to_dashboard: You can return to your procurements dashboard
+            return_to_dashboard_description: you can simply return to your procurements dashboard in which you will find a saved copy of this contract for when you are ready
+          procurement_closed:
+            closed_1: The
+            closed_2: procurement has been closed.
+            description: Closed procurements can be viewed in the closed section of your procurements dashboard, where you have the option to create a copy of the requirements for use in a new/similar procurement, or further competition.
+            title: Your procurement has been closed
+          procurement_requirements:
+            buildings_services: Buildings and services
+            contract_name: Contract name
+            contract_number: Contract number
+            contract_value: Contract value
+            date_of_first_indexation: Date of first indexation
+            direct_award: Direct award
+            framework: Framework, sub-lot
+            framework_details: RM3830, sub-lot 1a
+            initial_call_off_period: Initial call-off period
+            mobilisation_period: Mobilisation period
+            optional_call_off_extension: Optional call-off extension period %{extension}
+            requirements: Requirements
+            route_to_market: Route to market
+          show:
+            supplier: Supplier
+          supplier_contact_details:
+            supplier_contact_details: Supplier contact details
+        contracts_helper:
+          warning_message:
+            accepted: Awaiting your confirmation of signed contract.
+            closed: You closed this contract offer on
+            declined: The supplier declined this offer on
+            expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
+            last_closed_1: The contract offer was automatically closed on
+            last_closed_2: when you tried to offer the procurement to the next supplier, but there were no more suppliers.
+            last_closed_3: The contract offer was automatically closed when you offered the procurement to the next supplier on
+            not_signed_1: You confirmed on the
+            not_signed_2: that the contract has not been signed
+            sent_1: This contract offer expires on
+            sent_2: The supplier has not yet responded.
+            signed: You confirmed that the contract period is between
         dashboard_tables:
           closed:
             contract_name: Contract name

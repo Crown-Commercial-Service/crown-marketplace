@@ -57,7 +57,7 @@ module FacilitiesManagement::PageDetail::Contracts
         back_text: 'Return to procurements dashboard',
       },
       edit: {
-        back_url: facilities_management_procurement_contract_path(@procurement),
+        back_url: facilities_management_rm3830_procurement_contract_path(@procurement),
         page_title: edit_page_title,
         continuation_text: 'Close this procurement',
         secondary_text: edit_secondary_text,
