@@ -11,15 +11,15 @@
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.payment_method.nil? %>">
           <% case @procurement.payment_method %>
           <% when 'bacs' %>
-            <%= t('facilities_management.procurements.contract_details.edit_partials.payment_method.bacs_payment') %>
+            <%= t('facilities_management.rm3830.procurements.contract_details.edit_partials.payment_method.bacs_payment') %>
           <% when 'card' %>
-            <%= t('facilities_management.procurements.contract_details.edit_partials.payment_method.government_procurement_card') %>
+            <%= t('facilities_management.rm3830.procurements.contract_details.edit_partials.payment_method.government_procurement_card') %>
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(procurement_id: @procurement.id, page: 'payment_method') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(procurement_id: @procurement.id, page: 'payment_method') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(procurement_id: @procurement.id, page: 'payment_method') unless @procurement.payment_method.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(procurement_id: @procurement.id, page: 'payment_method') unless @procurement.payment_method.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:payment_method].any? %>
@@ -43,11 +43,11 @@
               <%= "Address: #{@procurement.invoice_contact_detail.contact_address}"%>
             <% end %>
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'invoicing_contact_details') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'invoicing_contact_details') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'invoicing_contact_details') unless @procurement.using_buyer_detail_for_invoice_details.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'invoicing_contact_details') unless @procurement.using_buyer_detail_for_invoice_details.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:using_buyer_detail_for_invoice_details].any? %>
@@ -73,11 +73,11 @@
               <%= "Address: #{@procurement.authorised_contact_detail.contact_address}"%>
             <% end %>
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'authorised_representative') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'authorised_representative') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'authorised_representative') unless @procurement.using_buyer_detail_for_authorised_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'authorised_representative') unless @procurement.using_buyer_detail_for_authorised_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:using_buyer_detail_for_authorised_detail].any? %>
@@ -101,11 +101,11 @@
               <%= "Address: #{@procurement.notices_contact_detail.contact_address}"%>
             <% end %>
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'notices_contact_details') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'notices_contact_details') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'notices_contact_details') unless @procurement.using_buyer_detail_for_notices_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'notices_contact_details') unless @procurement.using_buyer_detail_for_notices_detail.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:using_buyer_detail_for_notices_detail].any? %>
@@ -127,11 +127,11 @@
           <% when false %>
             Not applicable
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'security_policy_document') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'security_policy_document') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'security_policy_document') unless @procurement.security_policy_document_required.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'security_policy_document') unless @procurement.security_policy_document_required.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:security_policy_document_required].any? %>
@@ -151,16 +151,16 @@
                   <li> <%= "#{pension_fund.name}, #{pension_fund.percentage}%" %> </li>
                 <% end %>
               </ul>
-              <%= link_to 'Add or remove pension funds', facilities_management_procurement_contract_details_edit_path(page: 'pension_funds'), 'tabindex': -1, class: "govuk-link--no-visited-state govuk-!-padding-left-0" unless @procurement.da_journey_state == 'review_and_generate' %>
+              <%= link_to 'Add or remove pension funds', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'pension_funds'), 'tabindex': -1, class: "govuk-link--no-visited-state govuk-!-padding-left-0" unless @procurement.da_journey_state == 'review_and_generate' %>
             <% end %>
           <% when false %>
             Not applicable
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'local_government_pension_scheme') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'local_government_pension_scheme') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'local_government_pension_scheme') unless @procurement.local_government_pension_scheme.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'local_government_pension_scheme') unless @procurement.local_government_pension_scheme.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:local_government_pension_scheme].any? %>
@@ -174,17 +174,17 @@
         <td class=" govuk-table__cell <%= 'govuk-link govuk-link--no-visited-state' if @procurement.governing_law.nil? %>">
           <% case @procurement.governing_law %>
           <% when 'english' %>
-            <%= t('facilities_management.procurements.contract_details.edit_partials.governing_law.english') %>
+            <%= t('facilities_management.rm3830.procurements.contract_details.edit_partials.governing_law.english') %>
           <% when 'scottish' %>
-            <%= t('facilities_management.procurements.contract_details.edit_partials.governing_law.scottish') %>
+            <%= t('facilities_management.rm3830.procurements.contract_details.edit_partials.governing_law.scottish') %>
           <% when 'northern_ireland' %>
-            <%= t('facilities_management.procurements.contract_details.edit_partials.governing_law.northern_ireland') %>
+            <%= t('facilities_management.rm3830.procurements.contract_details.edit_partials.governing_law.northern_ireland') %>
           <% else %>
-            <%= link_to 'Answer question', facilities_management_procurement_contract_details_edit_path(page: 'governing_law') %>
+            <%= link_to 'Answer question', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'governing_law') %>
           <% end %>
         </td>
         <td class="govuk-table__cell govuk-!-padding-left-2">
-          <%= link_to 'Change', facilities_management_procurement_contract_details_edit_path(page: 'governing_law') unless @procurement.governing_law.nil? || @procurement.da_journey_state == 'review_and_generate' %>
+          <%= link_to 'Change', facilities_management_rm3830_procurement_contract_details_edit_path(page: 'governing_law') unless @procurement.governing_law.nil? || @procurement.da_journey_state == 'review_and_generate' %>
         </td>
       </tr>
       <% if @procurement.errors[:governing_law].any? %>

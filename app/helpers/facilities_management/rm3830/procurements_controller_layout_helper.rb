@@ -34,9 +34,9 @@ module FacilitiesManagement::RM3830::ProcurementsControllerLayoutHelper
 
   def quick_search_page_title
     if params['what_happens_next'].present?
-      t('facilities_management.procurements.what_happens_next.heading')
+      t('facilities_management.rm3830.procurements.what_happens_next.heading')
     else
-      t('facilities_management.procurements.quick_search.quick_view_results')
+      t('facilities_management.rm3830.procurements.quick_search.quick_view_results')
     end
   end
 

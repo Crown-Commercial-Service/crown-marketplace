@@ -1,4 +1,4 @@
-module FacilitiesManagement::Procurements::ContractDetailsHelper
+module FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper
   include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def show_page_content
@@ -15,7 +15,7 @@ module FacilitiesManagement::Procurements::ContractDetailsHelper
   end
 
   def partial_prefix
-    @partial_prefix ||= 'facilities_management/procurements/contract_details/edit_partials'
+    @partial_prefix ||= 'facilities_management/rm3830/procurements/contract_details/edit_partials'
   end
 
   def sorted_supplier_list
@@ -40,7 +40,7 @@ module FacilitiesManagement::Procurements::ContractDetailsHelper
   end
 
   def cant_find_address_link
-    facilities_management_procurement_contract_details_edit_path(page: @address_step)
+    facilities_management_rm3830_procurement_contract_details_edit_path(page: @address_step)
   end
 
   def security_policy_document_file_type

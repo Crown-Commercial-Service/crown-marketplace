@@ -86,18 +86,18 @@ Rails.application.routes.draw do
         get 'further_competition_spreadsheet'
         get 'deliverables_matrix'
         get 'price_matrix'
+        namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/rm3830/procurements/contract_details' do
+          get '/', action: 'show'
+          put '/', action: 'update'
+          patch '/', action: 'update'
+          get '/edit', action: 'edit'
+        end
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[edit update]
     end
 
     resources :procurements, only: [] do
-      namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
-        get '/', action: 'show'
-        put '/', action: 'update'
-        patch '/', action: 'update'
-        get '/edit', action: 'edit'
-      end
       resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
         resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
         resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
