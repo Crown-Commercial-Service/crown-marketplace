@@ -21,11 +21,7 @@ module FacilitiesManagement
     end
 
     def framework
-      if params[:framework] == 'RM6870'
-        redirect_to facilities_management_rm6870_path
-      else
-        redirect_to facilities_management_rm3830_path
-      end
+      redirect_to facilities_management_rm3830_path
     end
   end
 end

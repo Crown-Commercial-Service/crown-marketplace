@@ -100,7 +100,7 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   end
 
   def continue_button_text
-    FacilitiesManagement::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
+    FacilitiesManagement::RM3830::ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
   end
 
   def service_name(service_code)
