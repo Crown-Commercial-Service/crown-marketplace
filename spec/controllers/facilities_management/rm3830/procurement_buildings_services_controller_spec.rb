@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesController, type: :controller do
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
   let(:procurement_building_service) { create(:facilities_management_procurement_building_service, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user))) }
 
   describe 'GET #edit' do
@@ -26,7 +27,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       it 'redirects to the procurement buildings page' do
         get :edit, params: { id: procurement_building_service.id, service_question: 'elavator' }
 
-        expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
       end
     end
 
@@ -44,7 +45,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :edit, params: { id: procurement_building_service.id }
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
   end
@@ -65,8 +66,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the lift data is valid' do
         let(:lifts) { [10, 13, 7, 6] }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the lift data correctly' do
@@ -95,8 +96,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
         let(:service_hours) { 506 }
         let(:detail_of_requirement) { 'Detail of the requirement' }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the service hour data correctly' do
@@ -127,8 +128,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the no_of_appliances_for_testing data is valid' do
         let(:no_of_appliances_for_testing) { 506 }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the no_of_appliances_for_testing data correctly' do
@@ -155,8 +156,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the tones_to_be_collected_and_removed data is valid' do
         let(:tones_to_be_collected_and_removed) { 1000 }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the tones_to_be_collected_and_removed data correctly' do
@@ -183,8 +184,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the no_of_units_to_be_serviced data is valid' do
         let(:no_of_units_to_be_serviced) { 350 }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the no_of_units_to_be_serviced data correctly' do
@@ -211,8 +212,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the no_of_consoles_to_be_serviced data is valid' do
         let(:no_of_consoles_to_be_serviced) { 340 }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the no_of_consoles_to_be_serviced data correctly' do
@@ -239,8 +240,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the no_of_building_occupants data is valid' do
         let(:no_of_building_occupants) { 150 }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the no_of_building_occupants data correctly' do
@@ -267,8 +268,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the routine cleaning data is valid' do
         let(:service_standard) { 'A' }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the routine cleaning service standards data correctly' do
@@ -295,8 +296,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the building and fabric maintenance data is valid' do
         let(:service_standard) { 'B' }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the building and fabric maintenance service standards data correctly' do
@@ -323,8 +324,8 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
       context 'when the mechanical and electrical engineering maintenance data is valid' do
         let(:service_standard) { 'C' }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
 
         it 'updates the mechanical and electrical engineering maintenance service standards data correctly' do
@@ -411,18 +412,18 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesController, typ
         let(:code) { 'G.5' }
         let(:codes) { ['C.1', 'G.5'] }
 
-        it 'redirects to facilities_management_procurement_building_path' do
-          expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        it 'redirects to facilities_management_rm3830_procurement_building_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
         end
       end
       # rubocop:enable RSpec/NestedGroups
     end
 
     context 'when updating neither lift or service hour data' do
-      it 'redirects to facilities_management_procurement_building_path' do
+      it 'redirects to facilities_management_rm3830_procurement_building_path' do
         patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: nil } }
 
-        expect(response).to redirect_to facilities_management_procurement_building_path(procurement_building_service.procurement_building)
+        expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
       end
     end
   end

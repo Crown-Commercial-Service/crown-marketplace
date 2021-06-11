@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
   let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user)) }
 
   describe 'GET #show' do
@@ -29,7 +30,7 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsController, type: :cont
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :show, params: { id: procurement_building.id }
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :helper do
   describe '.cell_class' do
     let(:context) { nil }
     let(:answer) { nil }

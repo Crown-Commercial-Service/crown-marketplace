@@ -1,4 +1,4 @@
-module FacilitiesManagement::ProcurementBuildingsHelper
+module FacilitiesManagement::RM3830::ProcurementBuildingsHelper
   def cell_class(context, answer, errors)
     css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
     css_class << 'govuk-border-bottom_none' if errors || (context == :service_hours && answer.present?)

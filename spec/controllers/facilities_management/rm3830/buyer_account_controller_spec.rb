@@ -1,6 +1,7 @@
 require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::BuyerAccountController, type: :controller do
-  let(:default_params) { { service: 'facilities_management' } }
+  let(:default_params) { { service: 'facilities_management', framework: framework } }
+  let(:framework) { 'RM3830' }
 
   describe 'GET #index' do
     it 'returns http success' do
@@ -30,7 +31,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuyerAccountController, type: :cont
       it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
         get :index
 
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(controller.current_user.buyer_detail)
+        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
       end
     end
 
