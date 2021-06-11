@@ -943,145 +943,6 @@ en:
         you_can_progress: 'You can progress through these three steps:'
         you_will_tell_us: You will tell us
         youneedtoknow: 'You need to know:'
-    procurement_buildings:
-      buildings_and_services:
-        heading: Assigning services to a building
-        or: or
-        question: Which of your services are required within this building?
-        return_link: Return to assigning services to buildings summary page
-        save_and_return: Save and return
-        select_all: Select all
-        select_all_that_apply_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
-        services_link_text: Services
-      missing_region:
-        building_address: Building address
-        building_name: Building name
-        change_link: Change
-        change_link_aria_label: Change region
-        for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
-        heading: Confirm your building's region
-        prompt: Please select a region
-        region: Region
-        return_link: Return to review your buildings
-        select_region: Select region
-        we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
-      show:
-        answer_question: Answer question
-        change: Change
-        description: Description
-        detail_of_requirement: Detail of requirement
-        external_area_error: External area must be greater than 0
-        gia_error: Gross internal area must be greater than 0
-        heading: Service requirements
-        help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
-        help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
-        list_item_1: Service volumes - this is where you can check or input the volume required for each service.
-        list_item_2: Service standards - if applicable, this is where you can select the standard of service required.
-        list_title: 'All the services that you require for this building are listed below, split into two sections:'
-        no_data: No input required
-        return_to_requirements: Return to service requirements summary
-        service_name: Service name
-        service_standards: 2. Service standards
-        service_volumes: 1. Service volumes
-        standard: Standard
-        status: 'Status:'
-        the_standard_required: The service standard required
-        unit_of_measure:
-          external_area: External area - number of square metres
-          gia: Gross Internal Area - number of square metres
-          lift_data: Total number of lift entrances
-          no_of_appliances_for_testing: Number of appliances to be tested per annum
-          no_of_building_occupants: The number of building occupants
-          no_of_consoles_to_be_serviced: Number of consoles per annum
-          no_of_units_to_be_serviced: Number of units per annum
-          service_hours: Total number of hours required per annum
-          tones_to_be_collected_and_removed: Number of tonnes per annum
-        unit_of_measure_title: Unit of measure
-        volume_example: If your initial call-off period is less than one year, please still enter a volume requirement for one full year. For example, if you require a volume of 100 per month, please enter 1200 into the field.
-        volume_required: Volume required
-      volume:
-        question:
-          no_of_appliances_for_testing: How many appliances to be tested per annum?
-          no_of_building_occupants: How many building occupants?
-          no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
-          no_of_units_to_be_serviced: How many units to be serviced per annum?
-          size_of_external_area: What is the size of the external area (in square metres)?
-          tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
-    procurement_buildings_services:
-      area:
-        heading: Internal and external areas
-      edit:
-        return_to_service_requirements: Return to service requirements
-        save_and_return: Save and return
-      lift:
-        no_of_floors: Number of floors
-      lifts:
-        description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.
-        floors: How many lifts are in this building, and how many floors does each lift service?
-      service_hours:
-        detail_example: See an example
-        detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
-        detail_example_2: 2 x people
-        detail_example_3: 1 x person working Monday - Friday, 9am-5pm, totalling 2080 hours
-        detail_example_4: 1 x person Monday - Wednesday, 9am - 5pm, totalling 1248 hours
-        detail_example_5: It is suggested that you base the hours on a standard of 52 weeks x 7 days in one year. Adjustments for bank holidays etc can then be made within contract if necessary.
-        detail_example_6: Please ensure the total of the values in the detail match the total number of hours input above.
-        detail_heading: Please detail below when the service hours should be provided per week, and the number of people to provide those hours of service.
-        detail_hint: This information will be used to inform the supplier of your requirements.
-        detail_label: Detail of requirement
-        hour_heading: Please enter the total number of hours of this service required per year.
-        hour_hint: The hours entered will be used to calculate the cost of this service.
-        hour_label: Number of hours per year
-        volume_example: If your initial call-off period is less than one year, please still enter the number of hours required for one full year. For example, if you require 100 hours per month, please enter 1200 into the field.
-      service_standards:
-        detail_text:
-          building_standards:
-            standard_A: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
-            standard_B: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
-            standard_C: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
-          cleaning_standards:
-            standard_A: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
-            standard_B: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
-            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-          ppm_standards:
-            standard_A: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
-            standard_B: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
-            standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
-        detail_title:
-          building_standards:
-            standard_A: Standard A - the general or normal service level
-            standard_B: Standard B - this is the minimum level of service required
-            standard_C: Standard C - this level of service will be bespoke and site or area specific
-          cleaning_standards:
-            standard_A: Standard A - the general or normal service level
-            standard_B: Standard B - the highest service level
-            standard_C: Standard C  - a bespoke service level
-          ppm_standards:
-            standard_A: Standard A - the general or normal service level
-            standard_B: Standard B - this is the minimum level of service required
-            standard_C: Standard C  - a bespoke service level
-        direct_award_eligible: Direct award eligible
-        heading: Which service standard do you want for this service in this building?
-        hint_text: To understand the differences between the standards, please read the brief descriptions, or alternatively open the service specification document below and go to the service standards section.
-        warning: Please note that only Standard A is suitable for direct award, the other standards require a further competition.
-      volumes:
-        question:
-          no_of_appliances_for_testing: How many portable appliances will require testing each year within this building?
-          no_of_building_occupants: How many building occupants (building users) are there in this building?
-          no_of_consoles_to_be_serviced: How many consoles are to be serviced each year within this building?
-          no_of_units_to_be_serviced: How many units are to be serviced each year within this building?
-          tones_to_be_collected_and_removed: How many tonnes are to be collected, stored and removed each year within this building?
-        unit:
-          no_of_appliances_for_testing: appliances
-          no_of_building_occupants: occupants
-          no_of_consoles_to_be_serviced: consoles
-          no_of_units_to_be_serviced: units
-          tones_to_be_collected_and_removed: tonnes
-        volume_example:
-          no_of_appliances_for_testing: If your initial call-off period is less than one year, please still enter the number of portable appliances that require testing for one full year. For example, if you have 100 portable appliances that require testing per month, please enter 1200 into the field.
-          no_of_consoles_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of consoles that require servicing for one full year. For example, if you have 100 consoles that require servicing per month, please enter 1200 into the field.
-          no_of_units_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of units that require servicing for one full year. For example, if you have 100 units that require servicing per month, please enter 1200 into the field.
-          tones_to_be_collected_and_removed: If your initial call-off period is less than one year, please still enter the number of tonnes that are collected, stored and removed for one full year. For example, if you have 100 tonnes that are collected, stored and removed per month, please enter 1200 into the field.
     procurements:
       contract_details:
         da_journey:
@@ -1575,13 +1436,6 @@ en:
           return_to_buildings: Return to buildings
       quick_search:
         quick_view_results: Quick view results
-      results:
-        hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
-        hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
-        hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
-        sub-lot-1a: Sub-lot 1a
-        sub-lot-1b: Sub-lot 1b
-        sub-lot-1c: Sub-lot 1c
       spreadsheet:
         save_and_return_link: Save and return to procurements dashboard
       spreadsheet_imports:
@@ -1804,6 +1658,145 @@ en:
           return_text: Return to your account
           service_selected: service selected
           services_selected: services selected
+      procurement_buildings:
+        buildings_and_services:
+          heading: Assigning services to a building
+          or: or
+          question: Which of your services are required within this building?
+          return_link: Return to assigning services to buildings summary page
+          save_and_return: Save and return
+          select_all: Select all
+          select_all_that_apply_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
+          services_link_text: Services
+        missing_region:
+          building_address: Building address
+          building_name: Building name
+          change_link: Change
+          change_link_aria_label: Change region
+          for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
+          heading: Confirm your building's region
+          prompt: Please select a region
+          region: Region
+          return_link: Return to review your buildings
+          select_region: Select region
+          we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
+        show:
+          answer_question: Answer question
+          change: Change
+          description: Description
+          detail_of_requirement: Detail of requirement
+          external_area_error: External area must be greater than 0
+          gia_error: Gross internal area must be greater than 0
+          heading: Service requirements
+          help_line_1: We need to understand more about the services that you require in this building. Please complete any missing information, and check that you are happy with any pre-populated volumes.
+          help_line_2: The status indicator above will confirm when all questions have been answered for this building - you can then click on the 'return to service requirement summary' hyperlink at the bottom of the page.
+          list_item_1: Service volumes - this is where you can check or input the volume required for each service.
+          list_item_2: Service standards - if applicable, this is where you can select the standard of service required.
+          list_title: 'All the services that you require for this building are listed below, split into two sections:'
+          no_data: No input required
+          return_to_requirements: Return to service requirements summary
+          service_name: Service name
+          service_standards: 2. Service standards
+          service_volumes: 1. Service volumes
+          standard: Standard
+          status: 'Status:'
+          the_standard_required: The service standard required
+          unit_of_measure:
+            external_area: External area - number of square metres
+            gia: Gross Internal Area - number of square metres
+            lift_data: Total number of lift entrances
+            no_of_appliances_for_testing: Number of appliances to be tested per annum
+            no_of_building_occupants: The number of building occupants
+            no_of_consoles_to_be_serviced: Number of consoles per annum
+            no_of_units_to_be_serviced: Number of units per annum
+            service_hours: Total number of hours required per annum
+            tones_to_be_collected_and_removed: Number of tonnes per annum
+          unit_of_measure_title: Unit of measure
+          volume_example: If your initial call-off period is less than one year, please still enter a volume requirement for one full year. For example, if you require a volume of 100 per month, please enter 1200 into the field.
+          volume_required: Volume required
+        volume:
+          question:
+            no_of_appliances_for_testing: How many appliances to be tested per annum?
+            no_of_building_occupants: How many building occupants?
+            no_of_consoles_to_be_serviced: How many consoles to be serviced per annum?
+            no_of_units_to_be_serviced: How many units to be serviced per annum?
+            size_of_external_area: What is the size of the external area (in square metres)?
+            tones_to_be_collected_and_removed: How many tonnes to be collected and removed per annum?
+      procurement_buildings_services:
+        area:
+          heading: Internal and external areas
+        edit:
+          return_to_service_requirements: Return to service requirements
+          save_and_return: Save and return
+        lift:
+          no_of_floors: Number of floors
+        lifts:
+          description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.
+          floors: How many lifts are in this building, and how many floors does each lift service?
+        service_hours:
+          detail_example: See an example
+          detail_example_1: 'For example, if your required total number of hours per year is 3328, your detail could be:'
+          detail_example_2: 2 x people
+          detail_example_3: 1 x person working Monday - Friday, 9am-5pm, totalling 2080 hours
+          detail_example_4: 1 x person Monday - Wednesday, 9am - 5pm, totalling 1248 hours
+          detail_example_5: It is suggested that you base the hours on a standard of 52 weeks x 7 days in one year. Adjustments for bank holidays etc can then be made within contract if necessary.
+          detail_example_6: Please ensure the total of the values in the detail match the total number of hours input above.
+          detail_heading: Please detail below when the service hours should be provided per week, and the number of people to provide those hours of service.
+          detail_hint: This information will be used to inform the supplier of your requirements.
+          detail_label: Detail of requirement
+          hour_heading: Please enter the total number of hours of this service required per year.
+          hour_hint: The hours entered will be used to calculate the cost of this service.
+          hour_label: Number of hours per year
+          volume_example: If your initial call-off period is less than one year, please still enter the number of hours required for one full year. For example, if you require 100 hours per month, please enter 1200 into the field.
+        service_standards:
+          detail_text:
+            building_standards:
+              standard_A: Regularly planned maintenance regime which aims to keep all elements of the structure, fabric and finishes and overall appearance of the Property at an acceptable performance level.
+              standard_B: Will provide for an enhanced maintenance approach whereby certain elements of fabric require a higher level of attention due to the environment or circumstances in which it is situated. Used in very rare circumstances.
+              standard_C: It is likely to offer unique challenges to the Supplier and require a deviation from the normal approach, with an enhanced or reduced fabric maintenance requirement (an example could be the maintenance of the front door for No 10, Downing Street which is constantly in the public eye).
+            cleaning_standards:
+              standard_A: Typical for all occupied or generally accessed areas including public access spaces and general office areas.
+              standard_B: Typical for prestige and high visibility areas. This is classed as exceptional and should only be required in very rare circumstances.
+              standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+            ppm_standards:
+              standard_A: A fully planned preventative maintenance regime ensuring compliance with all associated statutory, mandatory or regulatory requirements together with sector / organisation compliance needs and will include business critical maintenance activities. Synergy with SFG20 tasks red, pink and amber.
+              standard_B: Includes a fully planned preventative maintenance regime ensuring compliance with all associated statutory and mandatory requirements. Synergy with SFG20 tasks red and pink.
+              standard_C: Typical for highly sensitive or specialist areas such as laboratories, data centres etc, or for buildings that require a lesser service level e.g. mothballed buildings, garages or warehouses.
+          detail_title:
+            building_standards:
+              standard_A: Standard A - the general or normal service level
+              standard_B: Standard B - this is the minimum level of service required
+              standard_C: Standard C - this level of service will be bespoke and site or area specific
+            cleaning_standards:
+              standard_A: Standard A - the general or normal service level
+              standard_B: Standard B - the highest service level
+              standard_C: Standard C  - a bespoke service level
+            ppm_standards:
+              standard_A: Standard A - the general or normal service level
+              standard_B: Standard B - this is the minimum level of service required
+              standard_C: Standard C  - a bespoke service level
+          direct_award_eligible: Direct award eligible
+          heading: Which service standard do you want for this service in this building?
+          hint_text: To understand the differences between the standards, please read the brief descriptions, or alternatively open the service specification document below and go to the service standards section.
+          warning: Please note that only Standard A is suitable for direct award, the other standards require a further competition.
+        volumes:
+          question:
+            no_of_appliances_for_testing: How many portable appliances will require testing each year within this building?
+            no_of_building_occupants: How many building occupants (building users) are there in this building?
+            no_of_consoles_to_be_serviced: How many consoles are to be serviced each year within this building?
+            no_of_units_to_be_serviced: How many units are to be serviced each year within this building?
+            tones_to_be_collected_and_removed: How many tonnes are to be collected, stored and removed each year within this building?
+          unit:
+            no_of_appliances_for_testing: appliances
+            no_of_building_occupants: occupants
+            no_of_consoles_to_be_serviced: consoles
+            no_of_units_to_be_serviced: units
+            tones_to_be_collected_and_removed: tonnes
+          volume_example:
+            no_of_appliances_for_testing: If your initial call-off period is less than one year, please still enter the number of portable appliances that require testing for one full year. For example, if you have 100 portable appliances that require testing per month, please enter 1200 into the field.
+            no_of_consoles_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of consoles that require servicing for one full year. For example, if you have 100 consoles that require servicing per month, please enter 1200 into the field.
+            no_of_units_to_be_serviced: If your initial call-off period is less than one year, please still enter the number of units that require servicing for one full year. For example, if you have 100 units that require servicing per month, please enter 1200 into the field.
+            tones_to_be_collected_and_removed: If your initial call-off period is less than one year, please still enter the number of tonnes that are collected, stored and removed for one full year. For example, if you have 100 tonnes that are collected, stored and removed per month, please enter 1200 into the field.
       procurements:
         choose_contract_value:
           can_you_estimate_cost: Can you estimate if adding the cost of these services will move your estimated contract cost into a different value band than the one currently shown?
@@ -2095,8 +2088,14 @@ en:
           estimated_cost_how: How your estimated cost was calculated?
           fc_list_html: "<li>shortlisted suppliers are invited to compete against each other to give you the best outcome</li> <li>both price and quality are tested in a further competition</li> <li>you can tailor service requirements and terms and conditions to suit your needs</li> <li>a tender period is involved in a further competition, so timescales are longer than a direct award</li>\n"
           further_competition_html: "<b>Further competition</b>"
+          hint-text-unpriced-sub-lot-1a: Suitable for contract value up to £7million
+          hint-text-unpriced-sub-lot-1b: Suitable for contract value between £7 million and £50 million
+          hint-text-unpriced-sub-lot-1c: Suitable for contract value over £50m
           no_suitable_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
           print_page: Print this page
+          sub-lot-1a: Sub-lot 1a
+          sub-lot-1b: Sub-lot 1b
+          sub-lot-1c: Sub-lot 1c
           sub-text: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           sub-text-FC-unpriced: 'Based on the information you have provided, and your selection of the correct value range, your procurement is eligible for the following sub-lot:'
           suppliers_shortlisted_html: <span style="font-size:larger">%{count}</span> supplier(s) shortlisted

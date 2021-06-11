@@ -62,7 +62,7 @@
         <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_error %>"><%= service.name %></td>
         <td class="<%= cell_classes %>"><%= t(".unit_of_measure.#{context}") %></td>
         <% if service.send(context).blank? %>
-          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
+          <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"><%= link_to t('.answer_question'), edit_facilities_management_rm3830_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"></td>
         <% else %>
           <% case context %>
@@ -71,7 +71,7 @@
           <% else %>
             <td class="govuk-table__cell govuk-!-padding-right-2 <%= 'govuk-border-bottom_none' if service_has_error %>"><%= service.send(context) %></td>
           <% end %>
-          <td class="<%= cell_classes %>"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
+          <td class="<%= cell_classes %>"><%= link_to t('.change'), edit_facilities_management_rm3830_procurement_buildings_service_path(service, service_question: get_service_question(context)) %></td>
         <% end %>
       </tr>
       <% if context == :service_hours && service.uval.present? %>
@@ -130,11 +130,11 @@
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= service.name %></td>
           <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.the_standard_required') %></td>
           <% if service.service_standard.nil?%>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.answer_question'), edit_facilities_management_rm3830_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
             <td class="govuk-table__cell govuk-!-padding-right-2"></td>
           <% else %>
             <td class="govuk-table__cell govuk-!-padding-right-2"> <%= "Standard #{service.service_standard}" %> </td>
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.change'), edit_facilities_management_rm3830_procurement_buildings_service_path(service, service_question: 'service_standards') %></td>
           <% end %>
         </tr>
       <% end %>

@@ -87,6 +87,8 @@ Rails.application.routes.draw do
         get 'deliverables_matrix'
         get 'price_matrix'
       end
+      resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings_services, only: %i[edit update]
     end
 
     resources :procurements, only: [] do
@@ -116,8 +118,6 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :procurement_buildings, only: %i[show edit update]
-    resources :procurement_buildings_services, only: %i[edit update]
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
       concerns :shared_pages
       get '/', to: 'home#index'

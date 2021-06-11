@@ -1,0 +1,3 @@
+<%= form_for form_object, url: facilities_management_rm3830_procurement_building_path(@procurement_building, step: @step), method: :put, html: { multipart: true } do |f| %>
+  <%= render partial: @step, locals: { f: f } %>
+<% end %>
