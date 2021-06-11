@@ -18,7 +18,7 @@ module FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper
     new_object = form.object.send(association).klass.new
     id = new_object.object_id
     fields = form.fields_for(association, new_object, child_index: id) do |builder|
-      render("facilities_management/procurement_buildings_services/#{association.to_s.singularize}", ff: builder)
+      render("facilities_management/rm3830/procurement_buildings_services/#{association.to_s.singularize}", ff: builder)
     end
     link_to(name, '#', class: "add-lifts #{args[:class]}", data: { id: id, fields: fields.gsub('\n', '') })
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHelper, type: :helper do
   describe '.error_message' do
     context 'when considering building errors' do
       let(:model) { :building_errors }
