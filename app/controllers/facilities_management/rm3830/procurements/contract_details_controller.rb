@@ -102,7 +102,7 @@ module FacilitiesManagement
           else
             @procurement.move_to_next_da_step
             @procurement.set_state_to_direct_award!
-            redirect_to facilities_management_procurement_contract_sent_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
+            redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(@procurement.id, contract_id: @procurement.procurement_suppliers.first.id)
           end
         end
 

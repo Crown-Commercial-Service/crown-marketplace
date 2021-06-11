@@ -1212,7 +1212,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           end
 
           it 'redirects to the sent page' do
-            expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement_id: procurement.id, contract_id: contract.id)
+            expect(response).to redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(procurement_id: procurement.id, contract_id: contract.id)
           end
 
           it 'updates the da_journey_state to sent' do

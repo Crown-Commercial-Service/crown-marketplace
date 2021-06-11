@@ -25,8 +25,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       context 'when a reason for closing is given' do
         let(:reason_for_closing) { 'Taking too long' }
 
-        it 'redirects to facilities_management_procurement_contract_closed_index_path' do
-          expect(response).to redirect_to facilities_management_procurement_contract_closed_index_path(procurement.id, contract_id: first_contract.id)
+        it 'redirects to facilities_management_rm3830_procurement_contract_closed_index_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_closed_index_path(procurement.id, contract_id: first_contract.id)
         end
 
         it 'updates the reason for closing' do
@@ -59,8 +59,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       context 'when the buyer gives a valid date' do
         let(:end_date_yyyy) { end_date.year.to_s }
 
-        it 'redirects to facilities_management_procurement_contract_closed_index_path' do
-          expect(response).to redirect_to facilities_management_procurement_contract_closed_index_path(procurement.id, contract_id: contract.id)
+        it 'redirects to facilities_management_rm3830_procurement_contract_closed_index_path' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_closed_index_path(procurement.id, contract_id: contract.id)
         end
 
         it 'updates the dates' do
@@ -97,7 +97,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       context 'when the buyer gives a valid reason' do
         let(:reason_for_not_signing) { 'The supplier did not respond' }
 
-        it 'redirects to facilities_management_procurement_contract_closed_index_path' do
+        it 'redirects to facilities_management_rm3830_procurement_contract_closed_index_path' do
           expect(response).to redirect_to facilities_management_rm3830_procurement_contract_path(procurement.id, contract.id)
         end
 
@@ -133,8 +133,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
         put :update, params: { procurement_id: procurement.id, id: last_contract.id, name: 'next_supplier' }
       end
 
-      it 'redirects to facilities_management_procurement_contract_sent_index_path' do
-        expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: last_contract.id)
+      it 'redirects to facilities_management_rm3830_procurement_contract_sent_index_path' do
+        expect(response).to redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(procurement.id, contract_id: last_contract.id)
       end
 
       it 'sets the procurement state to closed' do
@@ -156,8 +156,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
         put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'next_supplier' }
       end
 
-      it 'redirects to facilities_management_procurement_contract_sent_index_path' do
-        expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: next_contract.id)
+      it 'redirects to facilities_management_rm3830_procurement_contract_sent_index_path' do
+        expect(response).to redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(procurement.id, contract_id: next_contract.id)
       end
 
       it 'sets the next procurement state to sent' do
@@ -283,7 +283,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
         it 'redirects to the sent contract page for the last sent contract' do
           get :edit, params: { procurement_id: procurement.id, id: ineligible_contract.id, name: 'next_supplier' }
 
-          expect(response).to redirect_to facilities_management_procurement_contract_sent_index_path(procurement.id, contract_id: contract.id)
+          expect(response).to redirect_to facilities_management_rm3830_procurement_contract_sent_index_path(procurement.id, contract_id: contract.id)
         end
       end
     end
