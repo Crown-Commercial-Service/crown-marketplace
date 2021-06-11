@@ -92,13 +92,15 @@ Rails.application.routes.draw do
           patch '/', action: 'update'
           get '/edit', action: 'edit'
         end
+        resources :contracts, only: %i[show edit update], controller: '/facilities_management/rm3830/procurements/contracts' do
+        end
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[edit update]
     end
 
     resources :procurements, only: [] do
-      resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
+      resources :contracts, only: %i[], controller: 'procurements/contracts' do
         resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
         resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
         namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do

@@ -30,6 +30,6 @@ module FacilitiesManagement::PageDetail::CopyProcurement
   end
 
   def page_back_url
-    @contract.nil? ? facilities_management_rm3830_procurement_path(id: @procurement.id) : facilities_management_procurement_contract_path(procurement_id: @procurement.id, id: find_contract_id)
+    @contract.nil? ? facilities_management_rm3830_procurement_path(id: @procurement.id) : facilities_management_rm3830_procurement_contract_path(procurement_id: @procurement.id, id: find_contract_id)
   end
 end

@@ -1171,25 +1171,6 @@ en:
           supplier: Supplier
         supplier_contact_details:
           supplier_contact_details: Supplier contact details
-      contracts_helper:
-        warning_message:
-          accepted: Awaiting your confirmation of signed contract.
-          closed: The contract offer was automatically closed when you offered the procurement to the next supplier on %{contract_closed_date}.
-          declined: The supplier declined this offer on %{supplier_response_date}.
-          expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
-          last_offer: The contract offer was automatically closed on %{contract_closed_date} when you tried to offer the procurement to the next supplier, but there were no more suppliers.
-          not_signed: You confirmed on the %{contract_not_signed_date} that the contract has not been signed.
-          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The supplier has not yet responded.
-          signed: You confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
-          withdrawn: You closed this contract offer on %{contract_closed_date}.
-        warning_title:
-          accepted: Accepted, awaiting contract signature
-          closed: Closed
-          declined: Declined
-          expired: Not responded
-          not_signed: Accepted, not signed
-          sent: Sent
-          signed: Accepted and signed
       copy_procurement:
         new:
           heading: Create a new procurement using the service requirements and buildings you have previously entered.
