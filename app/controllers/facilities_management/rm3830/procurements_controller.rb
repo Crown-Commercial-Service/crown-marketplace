@@ -63,7 +63,7 @@ module FacilitiesManagement
       def edit
         redirect_to facilities_management_rm3830_procurement_path(@procurement) if params[:step].nil?
 
-        @back_link = FacilitiesManagement::ProcurementRouter.new(@procurement.id, @procurement.aasm_state).back_link
+        @back_link = ProcurementRouter.new(@procurement.id, @procurement.aasm_state).back_link
       end
 
       def update
@@ -121,11 +121,11 @@ module FacilitiesManagement
       end
 
       def set_view_name
-        @view_name = FacilitiesManagement::ProcurementRouter.new(@procurement.id,
-                                                                 @procurement.aasm_state,
-                                                                 step: params[:step],
-                                                                 what_happens_next: params[:what_happens_next].present?,
-                                                                 further_competition_chosen: params[:fc_chosen] == 'true').view
+        @view_name = ProcurementRouter.new(@procurement.id,
+                                           @procurement.aasm_state,
+                                           step: params[:step],
+                                           what_happens_next: params[:what_happens_next].present?,
+                                           further_competition_chosen: params[:fc_chosen] == 'true').view
       end
 
       def update_procurement
@@ -136,7 +136,7 @@ module FacilitiesManagement
 
           set_current_step
 
-          redirect_to FacilitiesManagement::ProcurementRouter.new(@procurement.id, @procurement.aasm_state, step: @current_step).route
+          redirect_to ProcurementRouter.new(@procurement.id, @procurement.aasm_state, step: @current_step).route
         else
           set_step_param
           set_view_name unless @procurement.quick_search?

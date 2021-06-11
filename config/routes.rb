@@ -86,7 +86,7 @@ Rails.application.routes.draw do
         get 'further_competition_spreadsheet'
         get 'deliverables_matrix'
         get 'price_matrix'
-        namespace 'contract_details', path: 'contract-details', controller: 'procurements/contract_details' do
+        namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/rm3830/procurements/contract_details' do
           get '/', action: 'show'
           put '/', action: 'update'
           patch '/', action: 'update'

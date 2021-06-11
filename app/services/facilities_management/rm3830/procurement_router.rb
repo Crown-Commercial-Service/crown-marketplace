@@ -1,4 +1,4 @@
-class FacilitiesManagement::ProcurementRouter
+class FacilitiesManagement::RM3830::ProcurementRouter
   include Rails.application.routes.url_helpers
 
   QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze

@@ -24,7 +24,7 @@ module FacilitiesManagement::PageDetail::Buildings
       },
       index: {
         page_title: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
-        back_url: facilities_management_path
+        back_url: facilities_management_path(framework: params[:framework])
       },
       new: {
         back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
