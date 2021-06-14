@@ -504,36 +504,8 @@ en:
       service_rates:
         average-framework-rates:
           heading: Average framework rates
-          heading_two: Average framework variances
-          leading_text: Manage the average framework rates and variances that are used in the calculation of call-off assessed values.
-          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
-          rate_percentage_a: Rate (%)
-          rate_pound_a: Rate (£)
         call-off-benchmark-rates:
-          benchmark_text: Percentage is displayed as a decimal. Example 15% = 0.15
           heading: Call-off benchmark rates
-          heading_two: Benchmark variances
-          leading_text: Manage the call-off benchmark rates and variances that are used in the calculation of call-off assessed values.
-          note: "*Use this column for normal price if Standard A isn’t applicable"
-          percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
-          rate_a: Rate (£) *Standard A
-          rate_b: Rate (£) Standard B
-          rate_c: Rate (£) Standard C
-          rate_percentage_a: Rate (%)
-          rate_pound_a: Rate (£)
-        edit:
-          return_link: Return to admin dashboard
-          update_button: Save and return to dashboard
-        variance_table:
-          item: Item
-          rate: Rate
-          td_cleaning: 'Cleaning consumables per building user (£) <br /> (applicable to services: G.1 routine cleaning, and  <br /> G.3. mobile cleaning)'
-          td_corporate: Corporate overhead (%)
-          td_london: London location percentage variance (%)
-          td_mobilisation: Direct award mobilisation (%)
-          td_overhead: Management overhead (%) <br /> Workpackage A - contract management
-          td_profit: Profit (%)
-          td_tupe: Direct award TUPE risk premium (%)
       sessions:
         new:
           admin_sign_in_header: Sign in to your administration dashboard

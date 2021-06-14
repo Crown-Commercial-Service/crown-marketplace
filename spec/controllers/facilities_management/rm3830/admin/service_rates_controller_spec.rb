@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin' } }
+RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   login_fm_admin
 

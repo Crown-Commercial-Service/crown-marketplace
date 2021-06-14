@@ -89,7 +89,6 @@ Rails.application.routes.draw do
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :shared_pages
       concerns :framework
-      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
       resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
         resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
         resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
@@ -152,6 +151,7 @@ Rails.application.routes.draw do
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/', to: 'home#index'
+        resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
       end
     end
 
