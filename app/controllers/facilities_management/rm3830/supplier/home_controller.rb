@@ -5,7 +5,7 @@ class FacilitiesManagement::RM3830::Supplier::HomeController < FacilitiesManagem
     if user_signed_in?
       redirect_to facilities_management_rm3830_supplier_dashboard_index_path
     else
-      redirect_to facilities_management_supplier_new_user_session_path
+      redirect_to facilities_management_rm3830_supplier_new_user_session_path
     end
   end
 end
