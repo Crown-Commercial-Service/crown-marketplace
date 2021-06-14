@@ -32,7 +32,7 @@ module HeaderNavigationLinksHelper
 
     navigation_links << { link_text: supplier_back_to_start_text, link_url: facilities_management_rm3830_supplier_path } unless fm_supplier_login_page
     navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
-    navigation_links << sign_out_link(facilities_management_supplier_destroy_user_session_path)
+    navigation_links << sign_out_link(facilities_management_rm3830_supplier_destroy_user_session_path)
 
     navigation_links.compact
   end

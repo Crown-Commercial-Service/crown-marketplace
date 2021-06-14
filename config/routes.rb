@@ -38,9 +38,9 @@ Rails.application.routes.draw do
     namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
       namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
         concerns %i[authenticatable registrable]
-      end
-      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-        concerns :authenticatable
+        namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+          concerns :authenticatable
+        end
       end
       namespace :admin, defaults: { service: 'facilities_management/admin' } do
         concerns :authenticatable

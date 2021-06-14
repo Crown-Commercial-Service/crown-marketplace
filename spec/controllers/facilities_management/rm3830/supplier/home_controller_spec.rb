@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::HomeController, type: :co
 
     context 'when not signed in' do
       it 'redirects to supplier sign in' do
-        expect(index).to redirect_to(facilities_management_supplier_new_user_session_path)
+        expect(index).to redirect_to(facilities_management_rm3830_supplier_new_user_session_path)
       end
     end
   end

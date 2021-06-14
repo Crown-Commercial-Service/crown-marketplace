@@ -909,10 +909,6 @@ en:
           list04_1: Until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed.
           list04_2: If you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier.
           list04_title: 4. Withdraw before signing
-      sessions:
-        new:
-          email_hint_html: Enter the email address you used to register
-          sign_in_header: Sign in to your account
     users:
       sign_in_error: You must provide a correct username or password
   header_navigation_links_helper:
