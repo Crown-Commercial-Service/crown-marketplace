@@ -4,6 +4,14 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::HomeController do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   describe 'GET #index' do
+    context 'when not logged in' do
+      before { get :index }
+
+      it 'redirects to the sign in page' do
+        expect(response).to redirect_to facilities_management_rm3830_admin_new_user_session_path
+      end
+    end
+
     context 'when logged in as fm admin' do
       login_fm_admin
 

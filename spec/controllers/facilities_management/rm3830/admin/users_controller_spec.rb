@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::UsersController do
-  let(:default_params) { { service: 'facilities_management/admin' } }
+RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
   let(:user) { build(:user, email: 'test@test.com') }
 
   controller(described_class) do
@@ -18,7 +18,7 @@ RSpec.describe FacilitiesManagement::Admin::UsersController do
 
     context 'when confirm user' do
       it 'redirects to the /facilities-management/admin/users/confirm_new page' do
-        expect(controller.confirm_user_registration_path).to eq facilities_management_admin_users_confirm_path(email: user.email)
+        expect(controller.confirm_user_registration_path).to eq facilities_management_rm3830_admin_users_confirm_path(email: user.email)
       end
     end
   end

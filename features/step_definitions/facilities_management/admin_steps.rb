@@ -1,5 +1,5 @@
 Given('I sign in as an admin and navigate to my dashboard') do
-  visit facilities_management_admin_new_user_session_path
+  visit facilities_management_rm3830_admin_new_user_session_path
   update_banner_cookie(true) if @javascript
   create_admin_user_with_details
   fill_in 'email', with: @user.email
@@ -24,7 +24,7 @@ end
 
 Given('I sign out and sign in the admin user') do
   step "I click on 'Sign out'"
-  visit facilities_management_admin_new_user_session_path
+  visit facilities_management_rm3830_admin_new_user_session_path
   fill_in 'email', with: @user.email
   fill_in 'password', with: nil
   click_on 'Sign in'
