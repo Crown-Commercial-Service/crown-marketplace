@@ -4,10 +4,6 @@ module ApplicationHelper
   include GovUKHelper
   include HeaderNavigationLinksHelper
 
-  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
-  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze
-  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/rm3830/home'].freeze
-
   def miles_to_metres(miles)
     DistanceConverter.miles_to_metres(miles)
   end
@@ -226,50 +222,6 @@ module ApplicationHelper
     else
       render partial: 'layouts/header-banner'
     end
-  end
-
-  def landing_or_admin_page
-    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.module_parent_name.try(:underscore))
-  end
-
-  def fm_landing_page
-    (FACILITIES_MANAGEMENT_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index')
-  end
-
-  def fm_buyer_landing_page
-    request.path_info.include? 'buyer-account'
-  end
-
-  def fm_activate_account_landing_page
-    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
-  end
-
-  def fm_supplier_landing_page
-    request.path_info.include? 'supplier'
-  end
-
-  def fm_supplier_login_page
-    controller.controller_name == 'sessions' && controller.action_name == 'new'
-  end
-
-  def fm_back_to_start_page
-    [FacilitiesManagement::RM3830::BuyerAccountController, FacilitiesManagement::SessionsController, FacilitiesManagement::RegistrationsController, FacilitiesManagement::PasswordsController].include? controller.class
-  end
-
-  def passwords_page
-    controller.controller_name == 'passwords'
-  end
-
-  def cookies_page
-    controller.action_name == 'cookie_policy' || controller.action_name == 'cookie_settings'
-  end
-
-  def accessibility_statement_page
-    controller.action_name == 'accessibility_statement'
-  end
-
-  def not_permitted_page
-    controller.action_name == 'not_permitted'
   end
 
   def format_date(date_object)

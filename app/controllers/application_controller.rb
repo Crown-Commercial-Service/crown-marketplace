@@ -39,7 +39,11 @@ class ApplicationController < ActionController::Base
   def facilities_management_url_for_user_type
     return facilities_management_supplier_new_user_session_url if controller_path.split('/')[1] == 'supplier' && controller_path.split('/')[2] == 'contracts'
 
-    facilities_management_new_user_session_path
+    if params[:framework] == 'RM3830'
+      facilities_management_rm3830_new_user_session_path
+    else
+      facilities_management_unrecognised_framework_path
+    end
   end
 
   delegate :ccs_homepage_url, to: Marketplace

@@ -3,7 +3,7 @@ module HeaderNavigationLinksHelper
     navigation_links = []
 
     navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_path(framework: params[:framework]) } unless landing_or_admin_page || not_permitted_page
-    navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
+    navigation_links << sign_out_link(default_sign_out_path)
 
     navigation_links.compact
   end
@@ -13,7 +13,7 @@ module HeaderNavigationLinksHelper
 
     navigation_links << back_to_start_link unless page_does_not_require_back_to_start?
     navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
-    navigation_links << sign_out_link(facilities_management_destroy_user_session_path)
+    navigation_links << sign_out_link(facilities_management_rm3830_destroy_user_session_path)
 
     navigation_links.compact
   end
@@ -77,4 +77,56 @@ module HeaderNavigationLinksHelper
   def supplier_back_to_start_text
     passwords_page || cookies_page || accessibility_statement_page ? t('header_navigation_links_helper.back_to_start') : t('header_navigation_links_helper.my_dashboard')
   end
+
+  def default_sign_out_path
+    facilities_management_rm3830_destroy_user_session_path
+  end
+
+  def fm_buyer_landing_page
+    request.path_info.include? 'buyer-account'
+  end
+
+  def fm_supplier_landing_page
+    request.path_info.include? 'supplier'
+  end
+
+  def landing_or_admin_page
+    (PLATFORM_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index') || controller.action_name == 'landing_page' || ADMIN_CONTROLLERS.include?(controller.class.module_parent_name.try(:underscore))
+  end
+
+  def fm_landing_page
+    (FACILITIES_MANAGEMENT_LANDINGPAGES.include?(controller.class.controller_path) && controller.action_name == 'index')
+  end
+
+  def fm_back_to_start_page
+    [FacilitiesManagement::RM3830::BuyerAccountController, FacilitiesManagement::RM3830::SessionsController, FacilitiesManagement::RM3830::RegistrationsController, FacilitiesManagement::RM3830::PasswordsController].include? controller.class
+  end
+
+  def not_permitted_page
+    controller.action_name == 'not_permitted'
+  end
+
+  def cookies_page
+    controller.action_name == 'cookie_policy' || controller.action_name == 'cookie_settings'
+  end
+
+  def accessibility_statement_page
+    controller.action_name == 'accessibility_statement'
+  end
+
+  def fm_activate_account_landing_page
+    controller.controller_name == 'users' && controller.action_name == 'confirm_new'
+  end
+
+  def passwords_page
+    controller.controller_name == 'passwords'
+  end
+
+  def fm_supplier_login_page
+    controller.controller_name == 'sessions' && controller.action_name == 'new'
+  end
+
+  ADMIN_CONTROLLERS = ['supply_teachers/admin', 'management_consultancy/admin', 'legal_services/admin'].freeze
+  FACILITIES_MANAGEMENT_LANDINGPAGES = ['facilities_management/rm3830/home'].freeze
+  PLATFORM_LANDINGPAGES = ['', 'legal_services/home', 'supply_teachers/home', 'management_consultancy/home'].freeze
 end
