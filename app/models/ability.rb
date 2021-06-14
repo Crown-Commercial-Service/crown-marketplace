@@ -41,8 +41,12 @@ class Ability
   end
 
   def allow_list_specific_auth(user)
-    return unless user.has_role?(:allow_list_access) && user.has_role?(:ccs_employee)
+    return unless user.has_role?(:allow_list_access)
 
-    can :manage, AllowedEmailDomain
+    if user.has_role?(:ccs_employee)
+      can :manage, AllowedEmailDomain
+    else
+      can :read, AllowedEmailDomain
+    end
   end
 end

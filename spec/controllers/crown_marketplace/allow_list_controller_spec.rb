@@ -19,7 +19,7 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
 
   describe 'GET index' do
     context 'when not logged in with allow list access' do
-      login_fm_admin
+      login_fm_buyer
 
       it 'redirects to the not permited path' do
         get :index
@@ -28,7 +28,17 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
       end
     end
 
-    context 'when logged in with allow list access' do
+    context 'when logged in with read only allow list access' do
+      login_crown_marketplcae_read_only
+
+      it 'renders the index page' do
+        get :index
+
+        expect(response).to render_template(:index)
+      end
+    end
+
+    context 'when logged in with full allow list access' do
       login_crown_marketplcae_admin
 
       it 'renders the index page' do
@@ -40,12 +50,24 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
   end
 
   describe 'GET new' do
-    login_crown_marketplcae_admin
+    context 'when logged in with read only allow list access' do
+      login_crown_marketplcae_read_only
 
-    it 'renders the new page' do
-      get :new
+      it 'redirects to the not permited path' do
+        get :new
 
-      expect(response).to render_template(:new)
+        expect(response).to redirect_to not_permitted_url(service: 'crown_marketplace')
+      end
+    end
+
+    context 'when logged in with full allow list access' do
+      login_crown_marketplcae_admin
+
+      it 'renders the new page' do
+        get :new
+
+        expect(response).to render_template(:new)
+      end
     end
   end
 
@@ -72,26 +94,54 @@ RSpec.describe CrownMarketplace::AllowListController, type: :controller do
   end
 
   describe 'GET search_allow_list' do
-    login_crown_marketplcae_admin
+    context 'when logged in with read only allow list access' do
+      login_crown_marketplcae_read_only
 
-    before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
+      before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
 
-    it 'renders the search_allow_list page' do
-      expect(response).to render_template(:search_allow_list)
+      it 'renders the search_allow_list page' do
+        expect(response).to render_template(:search_allow_list)
+      end
+
+      it 'has a shortened allow list' do
+        expect(assigns(:paginated_allow_list)).to eq ['cheemail.com', 'email.com']
+      end
     end
 
-    it 'has a shortened allow list' do
-      expect(assigns(:paginated_allow_list)).to eq ['cheemail.com', 'email.com']
+    context 'when logged in with full allow list access' do
+      login_crown_marketplcae_admin
+
+      before { get :search_allow_list, params: { allowed_email_domain: { email_domain: 'email' } }, xhr: true }
+
+      it 'renders the search_allow_list page' do
+        expect(response).to render_template(:search_allow_list)
+      end
+
+      it 'has a shortened allow list' do
+        expect(assigns(:paginated_allow_list)).to eq ['cheemail.com', 'email.com']
+      end
     end
   end
 
   describe 'GET delete' do
-    login_crown_marketplcae_admin
+    context 'when logged in with read only allow list access' do
+      login_crown_marketplcae_read_only
 
-    it 'renders the delete page' do
-      get :delete, params: { email_domain: 'email' }
+      it 'redirects to the not permited path' do
+        get :delete, params: { email_domain: 'email' }
 
-      expect(response).to render_template(:delete)
+        expect(response).to redirect_to not_permitted_url(service: 'crown_marketplace')
+      end
+    end
+
+    context 'when logged in with full allow list access' do
+      login_crown_marketplcae_admin
+
+      it 'renders the delete page' do
+        get :delete, params: { email_domain: 'email' }
+
+        expect(response).to render_template(:delete)
+      end
     end
   end
 

@@ -16,12 +16,14 @@
       <li><%= t('.legal_services') %></li>
       <li><%= t('.management_consultancy') %></li>
     </ul>
-    <p>
-      <%= t('.you_can_add') %>
-    </p>
-    <div class='govuk-!-margin-bottom-4'>
-      <%= link_to t('.add_new_email_domain'), new_crown_marketplace_allow_list_path, class: 'govuk-button govuk-button' %>
-    </div>
+    <% if can? :manage, AllowedEmailDomain %>
+      <p>
+        <%= t('.you_can_add') %>
+      </p>
+      <div class='govuk-!-margin-bottom-4'>
+        <%= link_to t('.add_new_email_domain'), new_crown_marketplace_allow_list_path, class: 'govuk-button govuk-button' %>
+      </div>
+    <% end %>
   </div>
 </div>
 
