@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin::SupplierDetailsHelper
+module FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper
   def contact_detail(attribute, supplier = @supplier)
     supplier[attribute].presence || 'None'
   end

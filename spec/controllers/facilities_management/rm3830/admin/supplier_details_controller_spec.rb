@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin' } }
+RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
   let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
 
   login_fm_admin
@@ -57,7 +57,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       end
 
       it 'renders the correct partial' do
-        expect(response).to render_template(partial: 'facilities_management/admin/supplier_details/_supplier_name')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/supplier_details/_supplier_name')
       end
 
       it 'sets the supplier' do
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       end
 
       it 'renders the correct partial' do
-        expect(response).to render_template(partial: 'facilities_management/admin/supplier_details/_supplier_contact_information')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/supplier_details/_supplier_contact_information')
       end
 
       it 'sets the supplier' do
@@ -97,7 +97,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       end
 
       it 'renders the correct partial' do
-        expect(response).to render_template(partial: 'facilities_management/admin/supplier_details/_additional_supplier_information')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/supplier_details/_additional_supplier_information')
       end
 
       it 'sets the supplier' do
@@ -117,7 +117,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       end
 
       it 'renders the correct partial' do
-        expect(response).to render_template(partial: 'facilities_management/admin/supplier_details/_supplier_address')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/supplier_details/_supplier_address')
       end
 
       it 'sets the supplier' do
@@ -149,7 +149,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         let(:supplier_name) { 'Pollyanna' }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_detail_path
         end
       end
     end
@@ -170,7 +170,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         let(:contact_name) { 'Ness' }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_detail_path
         end
       end
     end
@@ -191,7 +191,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         let(:duns) { '123456789' }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_detail_path
         end
       end
     end
@@ -212,7 +212,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         let(:address_postcode) { 'AA1 1AA' }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_detail_path
         end
       end
     end
@@ -234,7 +234,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         let(:user_email) { user.email }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_detail_path
         end
       end
     end
