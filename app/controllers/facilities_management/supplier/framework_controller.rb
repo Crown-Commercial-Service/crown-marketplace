@@ -10,6 +10,6 @@ class FacilitiesManagement::Supplier::FrameworkController < ::ApplicationControl
   end
 
   def redirect_if_unrecognised_framework
-    # redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
+    redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
   end
 end

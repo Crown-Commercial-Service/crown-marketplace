@@ -1385,3 +1385,7 @@ en:
             title: You have declined this contract offer
           index:
             link_text: Return to dashboard
+        sessions:
+          new:
+            email_hint_html: Enter the email address you used to register
+            sign_in_header: Sign in to your account
