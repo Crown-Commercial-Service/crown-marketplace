@@ -76,16 +76,19 @@ Rails.application.routes.draw do
         match 'add_address', via: %i[get post patch]
       end
     end
+
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
     end
+
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
       concerns :shared_pages
       concerns :framework
     end
+
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :shared_pages
-      get '/', to: 'home#index'
+      concerns :framework
       resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
       resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
         resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
@@ -145,6 +148,10 @@ Rails.application.routes.draw do
         resources :contracts, only: %i[show edit update], controller: 'contracts' do
           resources :sent, only: %i[index], controller: 'sent'
         end
+      end
+
+      namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        get '/', to: 'home#index'
       end
     end
 

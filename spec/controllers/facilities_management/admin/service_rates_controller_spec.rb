@@ -51,7 +51,7 @@ RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :contr
         let(:rate_B1_value) { 0.1456 }
 
         it 'redirects to the home page' do
-          expect(response).to redirect_to facilities_management_admin_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_path
         end
 
         it 'updates the rates' do
@@ -83,7 +83,7 @@ RSpec.describe FacilitiesManagement::Admin::ServiceRatesController, type: :contr
         let(:rate_B1_value) { 0.1456 }
 
         it 'redirects to the home page' do
-          expect(response).to redirect_to facilities_management_admin_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_path
         end
 
         it 'updates the rates' do

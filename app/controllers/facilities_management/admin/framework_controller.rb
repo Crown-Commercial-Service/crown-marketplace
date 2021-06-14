@@ -3,6 +3,7 @@ module FacilitiesManagement
     class FrameworkController < ::ApplicationController
       before_action :authenticate_user!
       before_action :authorize_user
+      before_action :redirect_if_unrecognised_framework
 
       protected
 
@@ -22,7 +23,7 @@ module FacilitiesManagement
       end
 
       def redirect_if_lot_out_of_range
-        redirect_to facilities_management_admin_path unless ['1a', '1b', '1c'].include? @lot
+        redirect_to facilities_management_rm3830_admin_path unless ['1a', '1b', '1c'].include? @lot
       end
 
       def set_supplier
@@ -32,6 +33,10 @@ module FacilitiesManagement
 
       def set_lot
         @lot = params[:lot]
+      end
+
+      def redirect_if_unrecognised_framework
+        redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
       end
     end
   end
