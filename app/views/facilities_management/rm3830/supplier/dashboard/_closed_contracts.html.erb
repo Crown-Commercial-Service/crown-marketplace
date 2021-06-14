@@ -12,7 +12,7 @@
     <tbody class="govuk-table__body">
       <% @closed_contracts.each do |closed_contract| %>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-4"> <%= link_to closed_contract.procurement.contract_name, facilities_management_supplier_contract_path(closed_contract.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
+          <td class="govuk-table__cell govuk-!-padding-right-4"> <%= link_to closed_contract.procurement.contract_name, facilities_management_rm3830_supplier_contract_path(closed_contract.id), class: 'govuk-link govuk-link--no-visited-state' %> </td>
           <td class="govuk-table__cell govuk-!-padding-right-4"> <%= closed_contract.procurement.user.buyer_detail.organisation_name %> </td>
           <td class="govuk-table__cell govuk-!-padding-right-4"> <%= format_date closed_contract.closed_date %> </td>
           <td class="govuk-table__cell"> <%= FacilitiesManagement::RM3830::Supplier::DashboardHelper::SUPPLIER_STATUS[closed_contract.aasm_state.to_sym] %> </td>

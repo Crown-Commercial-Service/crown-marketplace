@@ -1,4 +1,4 @@
-module FacilitiesManagement::Supplier::ContractsHelper
+module FacilitiesManagement::RM3830::Supplier::ContractsHelper
   include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def warning_message
@@ -44,7 +44,7 @@ module FacilitiesManagement::Supplier::ContractsHelper
         return_url: facilities_management_rm3830_supplier_dashboard_index_path
       },
       edit: {
-        back_url: facilities_management_supplier_contract_path(@contract.id),
+        back_url: facilities_management_rm3830_supplier_contract_path(@contract.id),
         back_label: 'Return to contract summary',
         back_text: 'Return to contract summary',
         page_title: 'Respond to the contract offer',

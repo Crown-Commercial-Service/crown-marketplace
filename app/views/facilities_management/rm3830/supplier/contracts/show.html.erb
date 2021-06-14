@@ -19,7 +19,7 @@
     <% case @contract.aasm_state %>
     <% when 'sent' %>
       <div class='govuk-!-margin-top-5'>
-        <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button', 'aria-label': "#{pd.navigation_details.primary_text}") %>
+        <%= link_to(pd.navigation_details.primary_text, edit_facilities_management_rm3830_supplier_contract_path(@contract.id), role: 'button', class: 'govuk-link govuk-!-font-size-19 govuk-button', 'aria-label': "#{pd.navigation_details.primary_text}") %>
         <br/>
         <%= link_to(pd.navigation_details.return_text, @page_description.navigation_details.return_url, role: 'button', class: 'govuk-link govuk-!-font-size-19', 'aria-label': "#{pd.navigation_details.return_text}") %>
       </div>

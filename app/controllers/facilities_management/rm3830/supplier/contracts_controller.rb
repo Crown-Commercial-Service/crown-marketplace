@@ -1,4 +1,4 @@
-class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement::Supplier::FrameworkController
+class FacilitiesManagement::RM3830::Supplier::ContractsController < FacilitiesManagement::Supplier::FrameworkController
   include FacilitiesManagement::PageDetail::Supplier::Contracts
 
   before_action :set_contract
@@ -9,7 +9,7 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
   def show; end
 
   def edit
-    redirect_to facilities_management_supplier_contract_path unless @contract.sent?
+    redirect_to facilities_management_rm3830_supplier_contract_path unless @contract.sent?
   end
 
   def update
@@ -20,7 +20,7 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
       else
         @contract.decline!
       end
-      redirect_to facilities_management_supplier_contract_sent_index_path(@contract.id)
+      redirect_to facilities_management_rm3830_supplier_contract_sent_index_path(@contract.id)
     else
       initialize_page_description
       render :edit
