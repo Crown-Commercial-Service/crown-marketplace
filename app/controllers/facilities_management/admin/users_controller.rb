@@ -9,7 +9,7 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
-        stored_location_for(resource) || facilities_management_admin_path
+        stored_location_for(resource) || facilities_management_rm3830_admin_path
       end
 
       def confirm_user_registration_path

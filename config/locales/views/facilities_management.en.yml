@@ -476,21 +476,6 @@ en:
       supplier_link: Facilities management supplier account
   facilities_management:
     admin:
-      home:
-        index:
-          dashboard_assessed_value: Assessed value
-          dashboard_average_rate: Average framework rates
-          dashboard_calloff_rate: Call-off benchmark rates
-          dashboard_header: RM3830 administration dashboard
-          dashboard_manage_calloff_rate: Manage the call-off benchmark rates and variances
-          dashboard_manage_rate: Manage the average framework rates and variances
-          dashboard_manage_supplier_details: Manage the details of the suppliers
-          dashboard_management_report_detail: Download the management data in CSV format
-          dashboard_management_report_header: Management report
-          dashboard_supplier_data: Supplier data
-          dashboard_supplier_details: Supplier details
-          dashboard_supplier_framework_data: Supplier framework data
-          dashboard_supplier_prices: Manage supplier services, prices and regions
       management_reports:
         completed:
           file_generated_date: Created on %{created_at}

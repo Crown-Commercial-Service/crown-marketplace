@@ -14,7 +14,7 @@ module FacilitiesManagement
         #  return edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)) if current_user.fm_buyer_details_incomplete?
 
         # stored_location_for(resource) || facilities_management_path
-        facilities_management_admin_path
+        facilities_management_rm3830_admin_path
       end
       # rubocop:enable Lint/UnusedMethodArgument
 
