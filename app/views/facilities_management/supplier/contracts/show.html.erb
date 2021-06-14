@@ -5,11 +5,11 @@
   <%= render partial: 'contract_offer_details' %>
 
   <div class="govuk-!-font-size-19">
-    <%= render partial: 'facilities_management/procurements/contracts/procurement_requirements', locals: { heading_text: t('.buyer'), heading_value: @procurement.user.buyer_detail.organisation_name } %>
+    <%= render partial: 'facilities_management/rm3830/procurements/contracts/procurement_requirements', locals: { heading_text: t('.buyer'), heading_value: @procurement.user.buyer_detail.organisation_name } %>
 
     <%= render partial: 'buyer_contact_details' %>
 
-    <%= render partial: 'facilities_management/procurements/contracts/call_off_contract_documents' %>
+    <%= render partial: 'facilities_management/rm3830/procurements/contracts/call_off_contract_documents' %>
 
     <%= render partial: 'received_contract_offer' if @contract.aasm_state == 'sent' %>
     <%= render partial: 'accepted_contract_offer' if @contract.aasm_state == 'accepted' %>

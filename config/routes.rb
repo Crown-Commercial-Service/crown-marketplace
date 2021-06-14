@@ -36,7 +36,9 @@ Rails.application.routes.draw do
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
     namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-      concerns %i[authenticatable registrable]
+      namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+        concerns %i[authenticatable registrable]
+      end
       namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
         concerns :authenticatable
       end

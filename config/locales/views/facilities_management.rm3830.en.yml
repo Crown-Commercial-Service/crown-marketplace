@@ -319,8 +319,72 @@ en:
               change_schedule:
                 guidance: If you wish to make changes to a schedule, you will need to consider switching to a further competition where documents can be amended. Schedules cannot be amended.
               contract_documents:
+                call_off_schedule_1:
+                  file_name: Call-Off Schedule 1 Transparency Reports (DA) v3.0.pdf
+                  title: Call-off Schedule 1 - Transparency Reports
+                call_off_schedule_10:
+                  file_name: Call-Off Schedule 10 - Exit Management (DA) v3.0.pdf
+                  title: Call-off Schedule 10 - Exit Management
+                call_off_schedule_13:
+                  file_name: Call-Off Schedule 13 - Mobilisation Plan and Testing (DA) v3.0.pdf
+                  title: Call-off Schedule 13 - Mobilisation Plan and Testing
                 call_off_schedule_2:
+                  file_name: "#"
                   title: Call-off Schedule 2 - Staff Transfer
+                call_off_schedule_24:
+                  file_name: Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
+                  title: Call-Off Schedule 24 (O) - Scottish Law
+                call_off_schedule_25:
+                  file_name: Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
+                  title: Call-Off Schedule 25 (O) - Northern Ireland Law
+                call_off_schedule_3:
+                  file_name: Call-Off Schedule 3 - Continuous Improvement (DA) v3.0.pdf
+                  title: Call-off Schedule 3 - Continuous Improvement
+                call_off_schedule_4:
+                  file_name: Call-Off Schedule 4 - Facilities Management (DA) v3.0.pdf
+                  title: Call-off Schedule 4 - Facilities Management
+                call_off_schedule_4A:
+                  file_name: Call-Off Schedule 4A - Billable Works and Projects (DA) v3.0.pdf
+                  title: Call-off Schedule 4A - Billable Work and Projects
+                call_off_schedule_5:
+                  file_name: Call-Off Schedule 5 - Call-Off Pricing (DA) v3.0.pdf
+                  title: Call-off Schedule 5 - Call-off Pricing
+                call_off_schedule_6:
+                  file_name: Call-Off Schedule 6 - TUPE Surcharge (DA) v3.0.pdf
+                  title: Call-off Schedule 6 - TUPE Surcharge
+                call_off_schedule_7:
+                  file_name: Call-Off Schedule 7 - Key Staff (DA) v3.0.pdf
+                  title: Call-off Schedule 7 - Key Staff
+                call_off_schedule_8:
+                  file_name: Call-Off Schedule 8 - Business Continuity and Disaster Recovery (DA) v3.0.pdf
+                  title: Call-off Schedule 8 - Business Continuity and Disaster Recovery
+                call_off_schedule_9:
+                  file_name: Call-Off Schedule 9 - Security (DA) v3.0.pdf
+                  title: Call-off Schedule 9 - Security
+                joint_schedule_1:
+                  file_name: Joint Schedule 1 - Definitions (DA) v3.0.pdf
+                  title: Joint Schedule 1 - Definitions
+                joint_schedule_10:
+                  file_name: Joint Schedule 10 - Rectification Plan (DA) v3.0.pdf
+                  title: Joint Schedule 10 - Rectification Plan
+                joint_schedule_11:
+                  file_name: Joint Schedule 11 - Processing Data (DA) v3.0.pdf
+                  title: Joint Schedule 11 - Processing Data
+                joint_schedule_2:
+                  file_name: Joint Schedule 2 - Variation Form (DA) v3.0.pdf
+                  title: Joint Schedule 2 - Variation Form
+                joint_schedule_3:
+                  file_name: Joint Schedule 3 - Insurance Requirements (DA) v3.0.pdf
+                  title: Joint Schedule 3 - Insurance Requirements
+                joint_schedule_5:
+                  file_name: Joint Schedule 5 - Corporate Social Responsibility (DA) v3.0.pdf
+                  title: Joint Schedule 5 - Corporate Social Responsibility
+                joint_schedule_6:
+                  file_name: Joint Schedule 6 - Key Subcontractors (DA) v3.0.pdf
+                  title: Joint Schedule 6 - Key Subcontractors
+                joint_schedule_7:
+                  file_name: Joint Schedule 7 - Financial Distress (DA) v3.0.pdf
+                  title: Joint Schedule 7 - Financial Distress
               documents:
                 heading: 1. Contract documents
                 text: Please review the contract documents below. These documents will form the contract between the supplier and your organisation.
@@ -1219,6 +1283,18 @@ en:
           step_3_content_2_list_2: a download of your procurement requirements
           step_3_title: Routes to market
           steps: The steps shown below outline the process that you'll follow within this portal.
+      registrations:
+        domain_not_on_safelist:
+          heading: You must use a public sector email address
+          lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+          line_01: The email you used doesn’t belong to a recognised public sector domain.
+          line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+          list_01: you think your domain should be recognised
+          list_02: you still can’t create an account
       service_specification:
         show:
           service_specification: Service specification
+      sessions:
+        new:
+          email_hint_html: Enter the email address you used to set up your account.
+          sign_in_header: Sign in to your account

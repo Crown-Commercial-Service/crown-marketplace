@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::UsersController do
-  let(:default_params) { { service: 'facilities_management' } }
+RSpec.describe FacilitiesManagement::RM3830::UsersController do
+  let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
 
   describe '#challenge_new' do
     before do

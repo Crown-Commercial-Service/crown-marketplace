@@ -111,7 +111,7 @@ ignore_unused:
   - suppliers.*
   - companies.*
   - facilities_management.rm3830.procurement_buildings.volume.question.*
-  - facilities_management.procurements.contract_details.da_journey.review.contract_documents.*
+  - facilities_management.rm3830.procurements.contract_details.da_journey.review.contract_documents.*
   - home.index.supply_teachers_link
   - home.index.management_consultancy_link
   - home.index.legal_services_link
@@ -120,8 +120,8 @@ ignore_unused:
   - facilities_management.rm3830.procurements.results.sub-lot-1*
   - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_text.*
   - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_title.*
-  - facilities_management.procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
-  - facilities_management.procurements.contracts.procurement_requirements.call_off_extensions_*
+  - facilities_managementrm3830..procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
+  - facilities_management.rm3830.procurements.contracts.procurement_requirements.call_off_extensions_*
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'
