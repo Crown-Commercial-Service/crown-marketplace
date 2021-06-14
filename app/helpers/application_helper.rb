@@ -327,9 +327,9 @@ module ApplicationHelper
   def cookie_policy_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_cookie_policy_path
+      facilities_management_admin_cookie_policy_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_policy_path
+      facilities_management_supplier_cookie_policy_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_cookie_policy_path
     else
@@ -340,9 +340,9 @@ module ApplicationHelper
   def cookie_settings_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_cookie_settings_path
+      facilities_management_admin_cookie_settings_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_settings_path
+      facilities_management_supplier_cookie_settings_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_cookie_settings_path
     else
@@ -353,9 +353,9 @@ module ApplicationHelper
   def accessibility_statement_path
     case params[:service]
     when 'facilities_management/admin'
-      facilities_management_admin_accessibility_statement_path
+      facilities_management_admin_accessibility_statement_path(framework: params[:framework])
     when 'facilities_management/supplier'
-      facilities_management_supplier_accessibility_statement_path
+      facilities_management_supplier_accessibility_statement_path(framework: params[:framework])
     when 'crown_marketplace'
       crown_marketplace_accessibility_statement_path
     else

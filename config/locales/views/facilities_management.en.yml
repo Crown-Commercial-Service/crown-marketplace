@@ -944,51 +944,6 @@ en:
           what_happens_next: What happens next
         show:
           buyer: Buyer
-      contracts_helper:
-        warning_message:
-          accepted: Awaiting buyer confirmation of signed contract.
-          declined: You declined this contract offer on %{supplier_response_date}.
-          expired_html: You did not respond to this contract offer within the required timescales,<br/> therefore it was automatically declined with the reason of 'no response'.
-          not_signed_html: The buyer has recorded this contract as 'not signed' on %{contract_not_signed_date}.<br> The contract offer has therefore been closed.
-          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The buyer is waiting for a response before the offer expiry deadline shown above.
-          signed: The buyer confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
-          withdrawn_html: The buyer withdrew this contract offer and closed this procurement on <br/> %{contract_closed_date}.
-        warning_title:
-          accepted: Accepted
-          declined: Declined
-          expired: Not responded
-          not_signed: Not signed
-          sent: Received contract offer
-          signed: Accepted and signed
-          withdrawn: Withdrawn
-      dashboard:
-        accepted_offers:
-          accepted: Accepted
-          accepted_offers: Accepted offers
-          buyer: Buyer
-          contract_name: Contract name
-          no_accepted_offers: You do not have any accepted offers
-        closed_contracts:
-          buyer: Buyer
-          closed_contracts: Closed
-          contract_name: Contract name
-          date: Date
-          no_closed_contracts: You do not have any items in this section
-          status: Status
-        live_contracts:
-          buyer: Buyer
-          contract_name: Contract name
-          end_date: End date
-          live_contracts: Contracts
-          no_live_contracts: You do not have any live contracts
-          start_date: Start date
-        received_offers:
-          action_required: ACTION REQUIRED
-          buyer: Buyer
-          contract_name: Contract name
-          date_offer_expires: Date offer expires
-          no_received_offers: You do not have any received offers
-          received_offers: Received offers
       sent:
         accepted_offer:
           title: You have accepted this contract offer

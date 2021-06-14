@@ -61,11 +61,15 @@ Rails.application.routes.draw do
     get '/cookie-settings', to: 'home#cookie_settings'
   end
 
+  concern :framework do
+    get '/', to: 'home#framework'
+    get '/unrecognised-framework', to: 'home#unrecognised_framework'
+  end
+
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
     concerns :shared_pages
-    get '/', to: 'home#framework'
+    concerns :framework
     get '/not-permitted', to: 'home#not_permitted'
-    get '/unrecognised-framework', to: 'home#unrecognised_framework'
 
     resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
       member do
@@ -74,6 +78,14 @@ Rails.application.routes.draw do
     end
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
+    end
+
+    namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+      concerns :shared_pages
+      concerns :framework
+      resources :contracts, only: %i[show edit update], controller: 'contracts' do
+        resources :sent, only: %i[index], controller: 'sent'
+      end
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
@@ -115,14 +127,10 @@ Rails.application.routes.draw do
       end
       resources :procurement_buildings, only: %i[show edit update]
       resources :procurement_buildings_services, only: %i[edit update]
-    end
 
-    namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-      concerns :shared_pages
-      get '/', to: 'home#index'
-      resources :dashboard, only: :index
-      resources :contracts, only: %i[show edit update], controller: 'contracts' do
-        resources :sent, only: %i[index], controller: 'sent'
+      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+        get '/', to: 'home#index'
+        resources :dashboard, only: :index
       end
     end
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do

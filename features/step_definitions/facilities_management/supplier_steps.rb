@@ -1,9 +1,9 @@
 Then('I navigate to the supplier dashboard') do
-  visit facilities_management_supplier_path
+  visit facilities_management_rm3830_supplier_path
 end
 
 Given('I go to the facilities management supplier start page') do
-  visit facilities_management_supplier_new_user_session_path
+  visit facilities_management_rm3830_supplier_new_user_session_path
   update_banner_cookie(true) if @javascript
 end
 
@@ -34,7 +34,7 @@ Given('I logout and sign in the supplier {string}') do |email|
   step "I click on 'Sign out'"
   create_supplier_with_email(email)
   find_supplier.update(user: @supplier_user)
-  visit facilities_management_supplier_new_user_session_path
+  visit facilities_management_rm3830_supplier_new_user_session_path
   update_banner_cookie(true) if @javascript
   fill_in 'email', with: @supplier_user.email
   fill_in 'password', with: nil
@@ -44,7 +44,7 @@ end
 
 Given('I logout and sign in the supplier again') do
   step "I click on 'Sign out'"
-  visit facilities_management_supplier_new_user_session_path
+  visit facilities_management_rm3830_supplier_new_user_session_path
   fill_in 'email', with: @supplier_user.email
   fill_in 'password', with: nil
   click_on 'Sign in'
@@ -90,7 +90,7 @@ Then('the buyers reason for withdrawing is:') do |reason_for_closing|
 end
 
 Then('sign in supplier') do
-  visit facilities_management_supplier_new_user_session_path
+  visit facilities_management_rm3830_supplier_new_user_session_path
   update_banner_cookie(true) if @javascript
   fill_in 'email', with: @supplier_user.email
   fill_in 'password', with: nil

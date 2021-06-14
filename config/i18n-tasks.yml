@@ -123,7 +123,7 @@ ignore_unused:
   - facilities_managementrm3830..procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
   - facilities_management.rm3830.procurements.contracts.procurement_requirements.call_off_extensions_*
   - facilities_management.rm3830.procurements.contracts_helper.*
-  - facilities_management.supplier.contracts_helper.*
+  - facilities_management.rm3830.supplier.contracts_helper.*
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'
