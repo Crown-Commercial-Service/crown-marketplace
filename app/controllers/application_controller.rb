@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def facilities_management_url_for_user_type
-    return facilities_management_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier' && controller_path.split('/')[3] == 'contracts'
+    return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
 
     if params[:framework] == 'RM3830'
       facilities_management_rm3830_new_user_session_path
