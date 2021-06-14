@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading', number: @upload.short_uuid) %>
 <%= admin_breadcrumbs({ text: t('.supplier_framework_data'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
-                      { text: t('.manage_supplier_framework_data'), link: facilities_management_admin_uploads_path },
+                      { text: t('.manage_supplier_framework_data'), link: facilities_management_rm3830_admin_uploads_path },
                       { text: t('.heading', number: @upload.short_uuid) })%>
 
 <div class="govuk-grid-row">
@@ -51,6 +51,6 @@
         </tr>
       </tbody>
     </table>
-    <%= link_to t('.return'), facilities_management_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <%= link_to t('.return'), facilities_management_rm3830_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>
