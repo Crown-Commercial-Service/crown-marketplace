@@ -86,7 +86,6 @@ Rails.application.routes.draw do
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns %i[shared_pages framework]
-      resources :management_reports, only: %i[new create show]
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
@@ -149,6 +148,7 @@ Rails.application.routes.draw do
         end
         get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
         resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
+        resources :management_reports, only: %i[new create show]
       end
     end
 
