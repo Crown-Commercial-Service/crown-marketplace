@@ -27,7 +27,7 @@ RSpec.describe FacilitiesManagement::Admin::HomeController do
   describe 'GET framework' do
     it 'redirects to the RM3830 home page' do
       get :framework
-      expect(response).to redirect_to facilities_management_rm3830_path
+      expect(response).to redirect_to facilities_management_rm3830_admin_path
     end
   end
 

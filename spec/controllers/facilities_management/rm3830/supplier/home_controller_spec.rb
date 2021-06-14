@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Supplier::HomeController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/supplier' } }
+  let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe '#index' do
     subject(:index) { get :index }
