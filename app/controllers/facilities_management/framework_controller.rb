@@ -20,7 +20,7 @@ module FacilitiesManagement
     end
 
     def redirect_if_unrecognised_framework
-      redirect_to facilities_management_unrecognised_framework_path unless RECOGNISED_FRAMEWORKS.include? params[:framework]
+      redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
     end
 
     private
@@ -30,7 +30,5 @@ module FacilitiesManagement
 
       %w[users sign-in sign-out resend_confirmation_email sign-up domain-not-on-safelist buyer-details api not-permitted cookies accessibility-statement].any? { |path_section| full_path.include?(path_section) }
     end
-
-    RECOGNISED_FRAMEWORKS = ['RM3830'].freeze
   end
 end

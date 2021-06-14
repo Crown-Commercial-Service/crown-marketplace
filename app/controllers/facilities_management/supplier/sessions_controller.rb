@@ -9,11 +9,11 @@ class FacilitiesManagement::Supplier::SessionsController < Base::SessionsControl
   def after_sign_in_path_for(resource)
     return session[:return_to] unless session[:return_to].nil?
 
-    stored_location_for(resource) || facilities_management_supplier_path
+    stored_location_for(resource) || facilities_management_rm3830_supplier_path
   end
 
   def after_sign_out_path_for(_resource)
-    facilities_management_supplier_path
+    facilities_management_rm3830_supplier_path
   end
 
   def new_session_path

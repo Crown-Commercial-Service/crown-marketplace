@@ -30,7 +30,7 @@ module HeaderNavigationLinksHelper
   def facilites_management_supplier_navigation_links
     navigation_links = []
 
-    navigation_links << { link_text: supplier_back_to_start_text, link_url: facilities_management_supplier_path } unless fm_supplier_login_page
+    navigation_links << { link_text: supplier_back_to_start_text, link_url: facilities_management_rm3830_supplier_path } unless fm_supplier_login_page
     navigation_links << navigation_link_supplier_and_buyer if not_permitted_page && user_signed_in?
     navigation_links << sign_out_link(facilities_management_supplier_destroy_user_session_path)
 
@@ -60,7 +60,7 @@ module HeaderNavigationLinksHelper
 
   def navigation_link_supplier_and_buyer
     if current_user&.has_role?(:supplier)
-      { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: facilities_management_supplier_dashboard_index_path }
+      { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: facilities_management_rm3830_supplier_dashboard_index_path }
     elsif current_user&.has_role?(:buyer)
       { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_rm3830_start_path }
     end

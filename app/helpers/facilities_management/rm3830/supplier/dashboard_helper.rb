@@ -1,4 +1,4 @@
-module FacilitiesManagement::Supplier::DashboardHelper
+module FacilitiesManagement::RM3830::Supplier::DashboardHelper
   def accepted_page
     ['accepted', 'live', 'not signed', 'withdrawn']
   end

@@ -942,34 +942,6 @@ en:
           what_happens_next: What happens next
         show:
           buyer: Buyer
-      dashboard:
-        accepted_offers:
-          accepted: Accepted
-          accepted_offers: Accepted offers
-          buyer: Buyer
-          contract_name: Contract name
-          no_accepted_offers: You do not have any accepted offers
-        closed_contracts:
-          buyer: Buyer
-          closed_contracts: Closed
-          contract_name: Contract name
-          date: Date
-          no_closed_contracts: You do not have any items in this section
-          status: Status
-        live_contracts:
-          buyer: Buyer
-          contract_name: Contract name
-          end_date: End date
-          live_contracts: Contracts
-          no_live_contracts: You do not have any live contracts
-          start_date: Start date
-        received_offers:
-          action_required: ACTION REQUIRED
-          buyer: Buyer
-          contract_name: Contract name
-          date_offer_expires: Date offer expires
-          no_received_offers: You do not have any received offers
-          received_offers: Received offers
       sent:
         accepted_offer:
           title: You have accepted this contract offer
