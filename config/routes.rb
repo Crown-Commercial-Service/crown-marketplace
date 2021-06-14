@@ -79,13 +79,24 @@ Rails.application.routes.draw do
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
     end
-
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
       concerns :shared_pages
       concerns :framework
-      resources :contracts, only: %i[show edit update], controller: 'contracts' do
-        resources :sent, only: %i[index], controller: 'sent'
+    end
+    namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+      concerns :shared_pages
+      get '/', to: 'home#index'
+      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
+      resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
+        resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
+        resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
       end
+      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
+        get '/progress', action: :progress
+      end
+      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
+      resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
+      resources :management_reports, only: %i[new create show]
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
@@ -131,22 +142,10 @@ Rails.application.routes.draw do
       namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
         get '/', to: 'home#index'
         resources :dashboard, only: :index
+        resources :contracts, only: %i[show edit update], controller: 'contracts' do
+          resources :sent, only: %i[index], controller: 'sent'
+        end
       end
-    end
-    namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns :shared_pages
-      get '/', to: 'home#index'
-      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
-      resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
-        resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
-        resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
-      end
-      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
-        get '/progress', action: :progress
-      end
-      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
-      resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
-      resources :management_reports, only: %i[new create show]
     end
 
     get '/:framework/start', to: 'journey#start', as: 'journey_start'

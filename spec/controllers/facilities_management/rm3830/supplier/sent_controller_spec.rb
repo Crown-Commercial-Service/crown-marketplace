@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::SentController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/supplier' } }
+RSpec.describe FacilitiesManagement::RM3830::Supplier::SentController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe '#index' do
     subject(:index) { get :index, params: { contract_id: contract.id } }

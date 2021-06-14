@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/supplier' } }
+RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/supplier', framework: 'RM3830' } }
 
   describe 'PUT update' do
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
@@ -20,8 +20,8 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
         put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: true } }
       end
 
-      it 'redirects to facilities_management_supplier_contract_sent_index_path' do
-        expect(response).to redirect_to facilities_management_supplier_contract_sent_index_path(contract.id)
+      it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_sent_index_path(contract.id)
       end
 
       it 'updates the state of the contract to accepted' do
@@ -39,8 +39,8 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
           put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: false, reason_for_declining: reason_for_declining } }
         end
 
-        it 'redirects to facilities_management_supplier_contract_sent_index_path' do
-          expect(response).to redirect_to facilities_management_supplier_contract_sent_index_path(contract.id)
+        it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
+          expect(response).to redirect_to facilities_management_rm3830_supplier_contract_sent_index_path(contract.id)
         end
 
         it 'updates the state of the contract to declined' do
@@ -132,7 +132,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'accepted' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'signed' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
 
@@ -148,7 +148,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'not_signed' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
 
@@ -156,7 +156,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'declined' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'expired' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe FacilitiesManagement::Supplier::ContractsController, type: :contr
       let(:state) { 'withdrawn' }
 
       it 'redirects to the contract summary' do
-        expect(response).to redirect_to facilities_management_supplier_contract_path(id: contract.id)
+        expect(response).to redirect_to facilities_management_rm3830_supplier_contract_path(id: contract.id)
       end
     end
   end
