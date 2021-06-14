@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin' } }
+RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
   let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
   let(:supplier_id) { supplier.supplier_id }
 
@@ -49,7 +49,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         end
 
         it 'renders the correct partial' do
-          expect(response).to render_template(partial: 'facilities_management/admin/sublot_services/_services_prices_and_variances')
+          expect(response).to render_template(partial: 'facilities_management/rm3830/admin/sublot_services/_services_prices_and_variances')
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         end
 
         it 'renders the correct partial' do
-          expect(response).to render_template(partial: 'facilities_management/admin/sublot_services/_services')
+          expect(response).to render_template(partial: 'facilities_management/rm3830/admin/sublot_services/_services')
         end
 
         it 'assigns the sublot region name' do
@@ -77,7 +77,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         end
 
         it 'renders the correct partial' do
-          expect(response).to render_template(partial: 'facilities_management/admin/sublot_services/_services')
+          expect(response).to render_template(partial: 'facilities_management/rm3830/admin/sublot_services/_services')
         end
 
         it 'assigns the sublot region name' do
@@ -106,7 +106,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
 
       context 'when updating the service selection for lot 1a' do
         it 'redirects to the supplier_framework_data_path' do
-          expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
         end
 
         it 'updates the services correctly' do
@@ -120,7 +120,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do
-            expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+            expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
           end
 
           it 'updates the discount data correctly' do
@@ -152,7 +152,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do
-            expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+            expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
           end
 
           it 'updated the variances correctly' do
@@ -183,7 +183,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         let(:services) { ['C.1', 'D.4'] }
 
         it 'redirects to the supplier_framework_data_path' do
-          expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
         end
 
         it 'updates the services correctly' do
@@ -196,7 +196,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         let(:services) { [] }
 
         it 'redirects to the supplier_framework_data_path' do
-          expect(response).to redirect_to facilities_management_admin_supplier_framework_data_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_framework_data_path
         end
 
         it 'updates the services correctly' do

@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin::SublotServicesHelper
+module FacilitiesManagement::RM3830::Admin::SublotServicesHelper
   def list_service_types_price
     @list_service_types_price ||= ['Direct Award Discount (%)', 'General office - Customer Facing (£)', 'General office - Non Customer Facing (£)', 'Call Centre Operations (£)', 'Warehouses (£)', 'Restaurant and Catering Facilities (£)', 'Pre-School (£)', 'Primary School (£)', 'Secondary Schools (£)', 'Special Schools (£)', 'Universities and Colleges (£)', 'Community - Doctors, Dentist, Health Clinic (£)', 'Nursing and Care Homes (£)']
   end
