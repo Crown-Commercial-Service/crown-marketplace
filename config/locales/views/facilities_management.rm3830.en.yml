@@ -76,6 +76,10 @@ en:
             td_overhead: Management overhead (%) <br /> Workpackage A - contract management
             td_profit: Profit (%)
             td_tupe: Direct award TUPE risk premium (%)
+        sessions:
+          new:
+            admin_sign_in_header: Sign in to your administration dashboard
+            email_hint_html: Enter the email address you used to register
         sublot_regions:
           edit:
             leading_text: The tick boxes indicate the regions to which this supplier can provide services.

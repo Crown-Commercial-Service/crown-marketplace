@@ -41,9 +41,9 @@ Rails.application.routes.draw do
         namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
           concerns :authenticatable
         end
-      end
-      namespace :admin, defaults: { service: 'facilities_management/admin' } do
-        concerns :authenticatable
+        namespace :admin, defaults: { service: 'facilities_management/admin' } do
+          concerns :authenticatable
+        end
       end
     end
 
