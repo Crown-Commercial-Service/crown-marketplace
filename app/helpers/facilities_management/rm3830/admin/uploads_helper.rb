@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin::UploadsHelper
+module FacilitiesManagement::RM3830::Admin::UploadsHelper
   def upload_status_tag(status)
     case status
     when 'published'

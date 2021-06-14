@@ -67,8 +67,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-    concerns :shared_pages
-    concerns :framework
+    concerns %i[shared_pages framework]
     get '/not-permitted', to: 'home#not_permitted'
 
     resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
@@ -82,17 +81,11 @@ Rails.application.routes.draw do
     end
 
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-      concerns :shared_pages
-      concerns :framework
+      concerns %i[shared_pages framework]
     end
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns :shared_pages
-      concerns :framework
-      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
-        get '/progress', action: :progress
-      end
-      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
+      concerns %i[shared_pages framework]
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end
@@ -152,6 +145,10 @@ Rails.application.routes.draw do
           resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
           resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
         end
+        resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
+          get '/progress', action: :progress
+        end
+        get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
       end
     end
 

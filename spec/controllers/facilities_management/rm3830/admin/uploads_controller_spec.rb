@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::UploadsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin' } }
+RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
 
   describe 'GET index' do
     context 'when not logged in' do
       it 'redirects to the sign-in' do
         get :index
-        expect(response).to redirect_to facilities_management_new_user_session_path
+        expect(response).to redirect_to facilities_management_rm3830_new_user_session_path
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe FacilitiesManagement::Admin::UploadsController, type: :controller
       let(:valid) { true }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_admin_upload_path(upload)
+        expect(response).to redirect_to facilities_management_rm3830_admin_upload_path(upload)
       end
 
       it 'changes the state to in_progress' do
@@ -124,7 +124,7 @@ RSpec.describe FacilitiesManagement::Admin::UploadsController, type: :controller
 
       it 'renders the show template and the in_progress partial' do
         expect(response).to render_template(:show)
-        expect(response).to render_template(partial: 'facilities_management/admin/uploads/_in_progress')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/uploads/_in_progress')
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe FacilitiesManagement::Admin::UploadsController, type: :controller
 
       it 'renders the show template and the failed partial' do
         expect(response).to render_template(:show)
-        expect(response).to render_template(partial: 'facilities_management/admin/uploads/_failed')
+        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/uploads/_failed')
       end
     end
   end
