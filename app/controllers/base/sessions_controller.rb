@@ -43,7 +43,7 @@ module Base
       begin
         redirect_to session_expired_sign_in_path
       rescue ActionController::RoutingError
-        redirect_to facilities_management_new_user_session_path(expired: true)
+        redirect_to default_sign_in_path
       end
     end
 
@@ -59,10 +59,13 @@ module Base
 
     def session_expired_sign_in_path
       split_url = params[:url].split('/')
-      service = split_url[1]
       service_type ||= split_url[2] if split_url[2] == 'supplier' || split_url[2] == 'admin'
 
-      "/#{[service, service_type, 'sign-in'].compact.join('/')}?expired=true"
+      "/#{[split_url[1], params[:framework], service_type, 'sign-in'].compact.join('/')}?expired=true"
+    end
+
+    def default_sign_in_path
+      facilities_management_rm3830_new_user_session_path(expired: true)
     end
 
     def authorize_user
