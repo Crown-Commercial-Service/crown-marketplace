@@ -9,7 +9,7 @@ Given('I sign in as an admin and navigate to my dashboard') do
 end
 
 Given('I go to the admin dashboard') do
-  visit facilities_management_admin_path
+  visit facilities_management_rm3830_admin_path
   expect(page.find('h1')).to have_content('RM3830 administration dashboard')
 end
 

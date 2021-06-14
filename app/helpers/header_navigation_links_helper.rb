@@ -21,7 +21,7 @@ module HeaderNavigationLinksHelper
   def facilites_management_admin_navigation_links
     navigation_links = []
 
-    navigation_links << { link_text: t('header_navigation_links_helper.admin_dashboard'), link_url: facilities_management_admin_path } if user_signed_in? && request.original_fullpath != facilities_management_admin_path
+    navigation_links << { link_text: t('header_navigation_links_helper.admin_dashboard'), link_url: facilities_management_rm3830_admin_path } if user_signed_in? && request.original_fullpath != facilities_management_rm3830_admin_path
     navigation_links << sign_out_link(facilities_management_admin_destroy_user_session_path)
 
     navigation_links.compact

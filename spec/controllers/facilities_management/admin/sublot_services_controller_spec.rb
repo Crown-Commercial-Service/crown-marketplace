@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesController, type: :con
         let(:lot_number) { '1e' }
 
         it 'redirect to admin home page' do
-          expect(response).to redirect_to facilities_management_admin_path
+          expect(response).to redirect_to facilities_management_rm3830_admin_path
         end
       end
     end

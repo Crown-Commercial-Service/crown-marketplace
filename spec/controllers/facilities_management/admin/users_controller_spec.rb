@@ -13,7 +13,7 @@ RSpec.describe FacilitiesManagement::Admin::UsersController do
 
   describe 'After sign-in' do
     it 'redirects to the /facilities-management/admin page' do
-      expect(controller.send(:after_sign_in_path_for, user)).to eq facilities_management_admin_path
+      expect(controller.send(:after_sign_in_path_for, user)).to eq facilities_management_rm3830_admin_path
     end
 
     context 'when confirm user' do

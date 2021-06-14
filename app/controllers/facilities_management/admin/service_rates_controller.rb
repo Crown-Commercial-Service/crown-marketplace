@@ -13,7 +13,7 @@ module FacilitiesManagement
           render :edit
         else
           save_updated_rates
-          redirect_to facilities_management_admin_path
+          redirect_to facilities_management_rm3830_admin_path
         end
       end
 
