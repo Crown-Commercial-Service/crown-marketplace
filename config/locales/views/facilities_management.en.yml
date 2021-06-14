@@ -510,16 +510,7 @@ en:
         new:
           admin_sign_in_header: Sign in to your administration dashboard
           email_hint_html: Enter the email address you used to register
-      sublot_regions:
-        edit:
-          leading_text: The tick boxes indicate the regions to which this supplier can provide services.
-          return_link: Return to supplier framework data
-          update_button: Save and return to supplier framework data
       sublot_services:
-        services:
-          note: The tick boxes in the first column indicate the services this supplier can provide.
-          return_button: Return to supplier framework data
-          update_button: Save and return to supplier framework data
         services_prices_and_variances:
           error_message:
             greater_than_or_equal_to: The rate must be greater than or equal to 0
@@ -602,15 +593,6 @@ en:
       supplier_framework_data:
         index:
           heading: Supplier framework data
-          manage_supplier_framework_data: "'Manage supplier framework data'"
-          manage_supplier_framework_data_html: You can navigate to %{link}, to bulk upload the supplier framework data.
-          regions: Regions
-          return_link: Return to admin dashboard
-          service_prices: Services, prices and variances
-          services: Services
-          sub_lot_1a: Sub-lot 1a
-          sub_lot_1b: Sub-lot 1b
-          sub_lot_1c: Sub-lot 1c
       uploads:
         failed:
           below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.

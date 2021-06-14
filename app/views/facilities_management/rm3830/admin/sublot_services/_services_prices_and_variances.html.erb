@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
   { text: t('.heading') }
 )%>
 
@@ -33,7 +33,7 @@
 </p>
 
 <div style="width: 3000px !important;">
-<%= form_with url: facilities_management_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: true } do |f| %>
+<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: true } do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
@@ -125,6 +125,6 @@
   </table>
 
   <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_sublot_data_services_prices', aria: { label: 'update_sublot_data_services_prices' } %><br/>
-  <%= link_to t('.return_link'), facilities_management_admin_supplier_framework_data_path, class: 'govuk-link govuk-!-font-size-19' %>
+  <%= link_to t('.return_link'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-!-font-size-19' %>
   <% end %>
 </div>

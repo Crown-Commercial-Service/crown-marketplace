@@ -1,6 +1,6 @@
 <%= content_for :page_title, @lot_name %>
 <%= admin_breadcrumbs(
-  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
   { text: @lot_name }
 )%>
 
@@ -12,7 +12,7 @@
   <%= t('.note') %>
 </p>
 
-<%= form_with url: facilities_management_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: false } do |f| %>
+<%= form_with url: facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path, class: 'ccs-form', method: :put, local: 'false', html: { specialvalidation: false } do |f| %>
   <% @full_services.each do |service| %>
     <fieldset class="govuk-fieldset">
       <table class="govuk-table">
@@ -50,5 +50,5 @@
     </fieldset>
   <% end %>
   <%= f.submit t('.update_button'), class: 'govuk-button', name: 'update_benchmark_rates', aria: { label:  t('.update_button') }%>
-  <%= link_to t('.return_button'), facilities_management_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
+  <%= link_to t('.return_button'), facilities_management_rm3830_admin_supplier_framework_data_path, class: 'govuk-link govuk-caption-m' %>
 <% end %>
