@@ -1,4 +1,4 @@
-class FacilitiesManagement::Supplier::DashboardController < FacilitiesManagement::Supplier::FrameworkController
+class FacilitiesManagement::RM3830::Supplier::DashboardController < FacilitiesManagement::Supplier::FrameworkController
   include FacilitiesManagement::PageDetail::Supplier::Dashboard
 
   before_action :set_supplier
