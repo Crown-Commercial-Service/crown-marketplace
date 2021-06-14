@@ -20,7 +20,7 @@ module FacilitiesManagement
       end
 
       def framework
-        redirect_to facilities_management_rm3830_path
+        redirect_to facilities_management_rm3830_admin_path
       end
 
       def unrecognised_framework; end
