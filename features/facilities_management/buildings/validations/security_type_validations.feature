@@ -2,7 +2,7 @@
 Feature: Security type - validations
 
   Background: Navigate to Security type page
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Manage my buildings'
     Then I am on the 'Buildings' page
     And I click on 'Add a building'
