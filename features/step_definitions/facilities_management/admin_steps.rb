@@ -50,7 +50,7 @@ Then('I go to a quick view with the following services and regions:') do |servic
   service_codes_param = service_codes.map { |code| "service_codes[]=#{code}" }.join('&')
   region_codes_param = region_codes.map { |code| "region_codes[]=#{code}" }.join('&')
 
-  visit "/facilities-management/procurements/new?journey=facilities-management&#{region_codes_param}&#{service_codes_param}"
+  visit "/facilities-management/RM3830/procurements/new?journey=facilities-management&#{region_codes_param}&#{service_codes_param}"
   expect(page.find('h1')).to have_content('Quick view results')
 end
 
