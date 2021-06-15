@@ -40,7 +40,6 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
       before do
         allow(spreadsheet_import).to receive(:save).and_return(valid)
         allow(spreadsheet_import).to receive(:save).with(context: :upload).and_return(valid)
-        allow(spreadsheet_import).to receive(:valid?).with(:basic_validation).and_return(valid)
         allow(FacilitiesManagement::SpreadsheetImport).to receive(:new).with(anything).and_return(spreadsheet_import)
         allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(spreadsheet_import.id).and_return(true)
         post :create, params: { procurement_id: procurement.id, facilities_management_spreadsheet_import: { spreadsheet_file: fake_file } }
@@ -91,6 +90,65 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
 
     it 'assigns the correct spreadsheet import' do
       expect(assigns(:spreadsheet_import)).to eq spreadsheet_import
+    end
+  end
+
+  describe 'GET progress' do
+    let(:result) { JSON.parse(response.body) }
+
+    context 'when the user can view the spreadsheet' do
+      before do
+        spreadsheet_import.update(data_import_state: state)
+        get :progress, params: { spreadsheet_import_id: spreadsheet_import.id, procurement_id: procurement.id }
+      end
+
+      context 'when the spreadsheet is checking_file' do
+        let(:state) { 'checking_file' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
+
+      context 'when the spreadsheet is processing_file' do
+        let(:state) { 'processing_file' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
+
+      context 'when the spreadsheet is checking_processed_data' do
+        let(:state) { 'checking_processed_data' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
+
+      context 'when the spreadsheet is saving_data' do
+        let(:state) { 'saving_data' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
+
+      context 'when the spreadsheet is data_import_succeed' do
+        let(:state) { 'data_import_succeed' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
+
+      context 'when the spreadsheet is data_import_failed' do
+        let(:state) { 'data_import_failed' }
+
+        it 'returns true for continue' do
+          expect(result['import_status']).to eq state
+        end
+      end
     end
   end
 end

@@ -3,10 +3,9 @@
     <%= t('.description')%>
   </div>
   <div class="govuk-grid-column-three-quarters govuk-body-m">
-    <%= t('.generic_message')%>
+    <%= t(".fail_reason.#{@spreadsheet_import.import_errors[:other_errors][:file_check_error]}") %>
   </div>
   <div class="govuk-grid-column-three-quarters govuk-body-m">
-    <%= t('.what_next')%>
+    <%= t(".what_next.#{@spreadsheet_import.import_errors[:other_errors][:file_check_error]}") %>
   </div>
 </div>
-
