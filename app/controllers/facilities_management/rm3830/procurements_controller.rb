@@ -113,7 +113,7 @@ module FacilitiesManagement
       private
 
       def back_path
-        helpers.journey_step_url_former(journey_step: 'locations', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
+        helpers.journey_step_url_former(journey_step: 'locations', framework: 'RM3830', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes) if @procurement.service_codes.present?
       end
 
       def redirect_from_delete_if_needed

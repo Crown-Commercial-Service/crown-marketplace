@@ -1,5 +1,16 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/rm3830/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/rm3830/journey/choose_services:
+          attributes:
+            service_codes:
+              too_short: Select at least one service you need to include in your procurement
   facilities_management:
     rm3830:
       admin:
