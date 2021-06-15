@@ -58,7 +58,7 @@ Given('I upload security policy document that is {string}') do |option|
              when 'valid'
                Rails.root.join('public', 'Authorised Customer List.docx')
              when 'invalid'
-               Rails.root.join('features', 'facilities_management', 'procurements', 'contract_details', 'validations', 'security_policy_document_validations.feature')
+               Rails.root.join('features', 'facilities_management', 'rm3830', 'procurements', 'contract_details', 'validations', 'security_policy_document_validations.feature')
              end
 
   contract_detail_page.security_policy_document.file.attach_file(filepath)
