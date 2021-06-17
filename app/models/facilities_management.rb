@@ -4,4 +4,5 @@ module FacilitiesManagement
   end
 
   RECOGNISED_FRAMEWORKS = ['RM3830'].freeze
+  DEFAULT_FRAMEWORK = 'RM3830'.freeze
 end
