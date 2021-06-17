@@ -76,6 +76,14 @@ en:
               account_must_be_unique: The user cannot belong to another supplier
               account_must_exist: The supplier must be registered with the facilities management service
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+        facilities_management/admin/upload:
+          attributes:
+            supplier_data_file:
+              malicious: The 'Supplier framework data' file contains a virus
+              not_attached: Select the 'Supplier framework data' file
+              too_large: The 'Supplier framework data' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier framework data' file does not contain the expected content type
+              wrong_extension: The 'Supplier framework data' file must be an XLSX
         facilities_management/building:
           attributes:
             address_line_1:
@@ -637,6 +645,8 @@ en:
           user_email_question: Changing the user email will change who can view the supplier dashboard.
       supplier_framework_data:
         index:
+          click_here: Click here
+          click_here_to_html: "%{link} to bulk upload the supplier framework data."
           heading: Supplier framework data
           regions: Regions
           return_link: Return to admin dashboard
@@ -645,6 +655,74 @@ en:
           sub_lot_1a: Sub-lot 1a
           sub_lot_1b: Sub-lot 1b
           sub_lot_1c: Sub-lot 1c
+      uploads:
+        failed:
+          below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
+          details: Details
+          error_details:
+            file_check_failed: Something went wrong when checking the files, please try uploading the files again
+            file_process_failed: Something went wrong when processing the files, please try uploading the files again
+            file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
+            pricing_sheet_headers_incorrect: 'Make sure the ''Prices'' sheet has the following headers: ''Supplier'', ''Service Ref'', ''Service Name'', ''Unit of Measure'', ''General office - Customer Facing'', ''General office - Non Customer Facing'', ''Call Centre Operations'', ''Warehouses'', ''Restaurant and Catering Facilities'', ''Pre-School'', ''Primary School'', ''Secondary Schools'', ''Special Schools'', ''Universities and Colleges'', ''Community - Doctors, Dentist, Health Clinic'', ''Nursing and Care Homes'', ''Direct Award Discount %'''
+            supplier_details_missing_sheets: The 'Supplier framework data' file should have 2 sheets with the names 'Prices' and 'Variances'
+            upload_failed: Something went wrong with the file upload, please try uploading the files again
+            variances_sheet_headers_incorrect: 'Make sure the ''Variances'' sheet has the following headers: ''Supplier'', ''Management Overhead %'', ''Corporate Overhead %'', ''Profit %'', ''London Location Variance Rate (%)'', ''Cleaning Consumables per Building User (£)'', ''TUPE Risk Premium (DA %)'', ''Mobilisation Cost (DA %)'''
+          error_name:
+            file_check_failed: File check failed
+            file_process_failed: File processing failed
+            file_publish_failed: File publishing failed
+            pricing_sheet_headers_incorrect: The 'Prices' sheet has incorrect headers
+            supplier_details_missing_sheets: The 'Supplier framework data' file is missing sheets
+            upload_failed: Upload failed
+            variances_sheet_headers_incorrect: The 'Variances' sheet has incorrect headers
+          errors_with_upload: Errors with the upload
+          issue: Issue
+        in_progress:
+          checking_file: Checking file
+          complete: Complete
+          file_uploaded: File uploaded
+          processing_data: Processing data
+          publishing_data: Publishing data
+          upload_progress: Upload progress
+        index:
+          caption: Facilities Management
+          create_new: Create a new data upload
+          current_data: Current published data
+          date: Date
+          download: Download
+          file_name: Supplier framework data
+          heading: Manage supplier framework data
+          name: Name
+          status: Status
+          supplier_framework_data: Supplier framework data
+          table_caption: Previous uploads
+        new:
+          caption: Facilities Management
+          download_templates: Download file templates
+          file_label: Supplier framework data
+          heading: New data upload
+          manage_supplier_framework_data: Manage supplier framework data
+          return: Return to 'Manage supplier framework data'
+          supplier_framework_data: Supplier framework data
+          template_file_name: RM3830 Supplier Framework Data (template)
+          upload_caption: Supported file format is .xlsx and maximum file size is 10mb
+          upload_data: Upload data
+          upload_title: Upload the supplier framework data
+          you_can_download: You can download an excel file containing an empty template for the supplier framework data
+        show:
+          caption: Management consultancy
+          datetime: 'Date of file upload:'
+          download: Download
+          file_name: Supplier framework data
+          files: Uploaded files
+          heading: 'Upload session #%{number}'
+          manage_supplier_framework_data: Manage supplier framework data
+          name: File name
+          return: Return to 'Manage supplier framework data'
+          status: 'Status:'
+          supplier_framework_data: Supplier framework data
+        upload:
+          upload_name: 'Upload session #%{number}'
     basket:
       or_text: or
       selectall_text: Select all

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_135321) do
+ActiveRecord::Schema.define(version: 2021_05_24_080329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 2021_03_18_135321) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "facilities_management_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 30
+    t.string "supplier_data_file", limit: 255
+    t.text "import_errors", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
