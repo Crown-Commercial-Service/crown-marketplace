@@ -102,7 +102,7 @@ Rails.application.routes.draw do
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
-        resources :progress, only: :index, defaults: { format: :json }, controller: 'procurements/spreadsheet_imports/progress'
+        get '/progress', action: :progress
       end
       resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
         member do

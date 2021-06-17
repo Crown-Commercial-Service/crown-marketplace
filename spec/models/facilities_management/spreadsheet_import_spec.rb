@@ -21,6 +21,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
       it 'set the state to importing' do
         expect(import.importing?).to be true
       end
+
+      it 'changes the data_import_state to in_progress' do
+        expect(import.data_import_state?).to be true
+      end
     end
 
     context 'when succeed is called' do
@@ -66,6 +70,100 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
     end
   end
 
+  describe 'data_import_state' do
+    before { import.update(aasm_state: 'importing') }
+
+    it 'starts at not_started state' do
+      expect(import.data_import_state).to eq('not_started')
+    end
+
+    context 'when start_upload is called' do
+      before do
+        allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
+        import.start_upload!
+      end
+
+      it 'starts the worker' do
+        expect(FacilitiesManagement::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
+      end
+
+      it 'set the state to in_progress' do
+        expect(import.in_progress?).to be true
+      end
+    end
+
+    context 'when check_file is called' do
+      before do
+        import.update(data_import_state: 'in_progress')
+        import.check_file!
+      end
+
+      it 'changes the state to checking_file' do
+        expect(import.checking_file?).to be true
+      end
+    end
+
+    context 'when process_file is called' do
+      before do
+        import.update(data_import_state: 'checking_file')
+        import.process_file!
+      end
+
+      it 'changes the state to processing_file' do
+        expect(import.processing_file?).to be true
+      end
+    end
+
+    context 'when check_processed_data is called' do
+      before do
+        import.update(data_import_state: 'processing_file')
+        import.check_processed_data!
+      end
+
+      it 'changes the state to checking_processed_data' do
+        expect(import.checking_processed_data?).to be true
+      end
+    end
+
+    context 'when save_data is called' do
+      before do
+        import.update(data_import_state: 'checking_processed_data')
+        import.save_data!
+      end
+
+      it 'changes the state to saving_data' do
+        expect(import.saving_data?).to be true
+      end
+    end
+
+    context 'when data_saved is called' do
+      before do
+        import.update(data_import_state: 'saving_data')
+        import.data_saved!
+      end
+
+      it 'changes the state to data_import_succeed' do
+        expect(import.data_import_succeed?).to be true
+      end
+
+      it 'changes the aasm_state to succeeded' do
+        expect(import.succeeded?).to be true
+      end
+    end
+
+    context 'when fail_data_import is called' do
+      before { import.fail_data_import! }
+
+      it 'changes the state to data_import_failed' do
+        expect(import.data_import_failed?).to be true
+      end
+
+      it 'changes the aasm_state to failed' do
+        expect(import.failed?).to be true
+      end
+    end
+  end
+
   describe 'spreadsheet_file' do
     context 'when not attached' do
       before { import.valid?(:upload) }
@@ -87,48 +185,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
 
       it 'wrong content type message' do
         expect(import.errors[:spreadsheet_file]).to include 'The selected file does not contain the expected content type'
-      end
-    end
-
-    context 'when considering basic validations' do
-      before do
-        import.spreadsheet_file.attach(io: File.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH), filename: 'test.xlsx')
-        # rubocop:disable RSpec/AnyInstance
-        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:template_valid?).and_return(template_valid_result)
-        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_started?).and_return(spreadsheet_not_started_result)
-        allow_any_instance_of(FacilitiesManagement::SpreadsheetImporter).to receive(:spreadsheet_not_ready?).and_return(spreadsheet_not_ready_result)
-        # rubocop:enable RSpec/AnyInstance
-        import.valid?(:basic_validation)
-      end
-
-      context 'when the file does not match the template' do
-        let(:template_valid_result) { false }
-        let(:spreadsheet_not_started_result) { false }
-        let(:spreadsheet_not_ready_result) { false }
-
-        it 'has the correct error message' do
-          expect(import.errors[:spreadsheet_file].first).to eq "The selected file must use the 'Services and buildings template'"
-        end
-      end
-
-      context 'when the file is not started' do
-        let(:template_valid_result) { true }
-        let(:spreadsheet_not_started_result) { true }
-        let(:spreadsheet_not_ready_result) { false }
-
-        it 'has the correct error message' do
-          expect(import.errors[:spreadsheet_file].first).to eq "The selected file is using the 'Services and buildings template', but is empty"
-        end
-      end
-
-      context 'when the file is not ready' do
-        let(:template_valid_result) { true }
-        let(:spreadsheet_not_started_result) { false }
-        let(:spreadsheet_not_ready_result) { true }
-
-        it 'has the correct error message' do
-          expect(import.errors[:spreadsheet_file].first).to eq "The selected file could not be uploaded. Cell B10 must be 'Ready' on the Instructions tab of your template"
-        end
       end
     end
   end

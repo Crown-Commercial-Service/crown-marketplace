@@ -81,6 +81,7 @@ gem 'down'
 
 # state machine
 gem 'aasm', '~> 5.0'
+gem 'after_commit_everywhere', '~> 1.0'
 
 # for running background jobs
 gem 'sidekiq', '~> 6.0.7'
