@@ -54,7 +54,7 @@ Feature: Changing the supplier details and seeing how they affect procurements
 
   Scenario: Changing the supplier and checking the supplier account
     Given I logout and sign in the supplier 'abernathy-and-sons@yopmail.com'
-    Then I should see the following contracts in the table in the correct state:
+    Then I should see the following contracts on the dashboard in the section:
       | Received offers | Contract sent     |
       | Accepted offers | Contract accepted |
       | Contracts       | Contract signed   |
@@ -70,7 +70,7 @@ Feature: Changing the supplier details and seeing how they affect procurements
     And I click on 'Save and return'
     Then I am on the 'Supplier details' page
     And I navigate to the supplier dashboard
-    Then I should see the following contracts in the table in the correct state:
+    Then I should see the following contracts on the dashboard in the section:
       | Received offers | Contract sent     |
       | Accepted offers | Contract accepted |
       | Contracts       | Contract signed   |

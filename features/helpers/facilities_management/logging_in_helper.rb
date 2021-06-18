@@ -12,7 +12,13 @@ def create_admin_user_with_details
   allow_any_instance_of(Cognito::UpdateUser).to receive(:call).with(anything).and_return(true)
 end
 
-def create_supplier(email)
+def create_supplier
+  @supplier_user = create(:user, confirmed_at: Time.zone.now, roles: %i[supplier fm_access])
+  allow_any_instance_of(Cognito::UpdateUser).to receive(:call).and_return(true)
+  allow_any_instance_of(Cognito::UpdateUser).to receive(:call).with(anything).and_return(true)
+end
+
+def create_supplier_with_email(email)
   @supplier_user = create(:user, confirmed_at: Time.zone.now, roles: %i[supplier fm_access], email: email)
   allow_any_instance_of(Cognito::UpdateUser).to receive(:call).and_return(true)
   allow_any_instance_of(Cognito::UpdateUser).to receive(:call).with(anything).and_return(true)
