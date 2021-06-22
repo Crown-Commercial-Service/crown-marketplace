@@ -2,7 +2,7 @@
 Feature: Cookie settings
 
   Background: Go to start page
-    Given I go to the facilities management start page
+    Given I go to the facilities management RM3830 start page
     And the cookie banner 'is' visible
   
   Scenario: Selecting links in the banner - view cookies

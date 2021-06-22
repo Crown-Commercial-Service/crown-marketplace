@@ -1,7 +1,7 @@
 Feature: Expired contract
 
   Background: The contract I sent has been expired
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
     And I have a contract that has been 'expired' called 'Expired contract'
     And I click on 'Continue a procurement'
     Then I navigate to the contract 'Expired contract' in 'Sent offers'

@@ -18,7 +18,7 @@ Given('I go to the buyer dashboard') do
 end
 
 Given('I go to the facilities management admin start page') do
-  visit facilities_management_admin_new_user_session_path
+  visit facilities_management_rm3830_admin_new_user_session_path
   update_banner_cookie(true) if @javascript
 end
 
