@@ -1,7 +1,7 @@
 Feature: Buyer footer links - signed out
 
   Background: Buyer on start page
-    Given I go to the facilities management start page
+    Given I go to the facilities management RM3830 start page
 
   Scenario: Cookies policy
     When I click on 'Cookie policy'

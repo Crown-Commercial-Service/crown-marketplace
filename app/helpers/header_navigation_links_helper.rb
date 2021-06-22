@@ -55,6 +55,7 @@ module HeaderNavigationLinksHelper
   def sign_out_link(sign_out_path)
     { link_text: t('header_navigation_links_helper.sign_out'), link_url: sign_out_path, options: { method: :delete } } if user_signed_in?
   end
+
   def back_to_start_link(framework)
     if !current_user || page_with_back_to_start?
       { link_text: t('header_navigation_links_helper.back_to_start'), link_url: "/facilities-management/#{framework}/start" }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::ContractsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper, type: :helper do
   describe '.supplier_contract_reason_id' do
     subject(:result) { helper.supplier_contract_reason_id(state) }
 

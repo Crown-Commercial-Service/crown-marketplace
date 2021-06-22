@@ -1,7 +1,7 @@
 Feature: Buyer footer links - signed in
 
   Background: Buyer signs in
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
 
   Scenario: Cookies policy
     When I click on 'Cookie policy'
