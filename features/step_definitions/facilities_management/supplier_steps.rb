@@ -11,12 +11,15 @@ Given('I sign in as a supplier and navigate to my account') do
   create_supplier
   supplier = find_supplier
   supplier.update(user: @supplier_user)
-  visit facilities_management_supplier_new_user_session_path
-  update_banner_cookie(true) if @javascript
-  fill_in 'email', with: @supplier_user.email
-  fill_in 'password', with: nil
-  click_on 'Sign in'
-  expect(page.find('h1')).to have_content('Direct award dashboard')
+  step 'sign in supplier'
+end
+
+Given('I sign in as a supplier and navigate to my account and there are contracts') do
+  create_supplier
+  supplier = find_supplier
+  supplier.update(user: @supplier_user)
+  create_contracts(create(:user, :with_detail), supplier)
+  step 'sign in supplier'
 end
 
 Given('I log in as a supplier with a contract in {string} named {string}') do |state, contract_name|
@@ -24,12 +27,7 @@ Given('I log in as a supplier with a contract in {string} named {string}') do |s
   supplier = find_supplier
   supplier.update(user: @supplier_user)
   create_contract_for_supplier(contract_name, supplier, state)
-  visit facilities_management_supplier_new_user_session_path
-  update_banner_cookie(true) if @javascript
-  fill_in 'email', with: @supplier_user.email
-  fill_in 'password', with: nil
-  click_on 'Sign in'
-  expect(page.find('h1')).to have_content('Direct award dashboard')
+  step 'sign in supplier'
 end
 
 Given('I logout and sign in the supplier {string}') do |email|
@@ -89,6 +87,15 @@ end
 
 Then('the buyers reason for withdrawing is:') do |reason_for_closing|
   expect(contract_page.reason_for_closing).to have_content("The buyer’s reason for withdrawing this contract offer was: '#{reason_for_closing.raw.flatten.join("\r ")}'.")
+end
+
+Then('sign in supplier') do
+  visit facilities_management_supplier_new_user_session_path
+  update_banner_cookie(true) if @javascript
+  fill_in 'email', with: @supplier_user.email
+  fill_in 'password', with: nil
+  click_on 'Sign in'
+  expect(page.find('h1')).to have_content('Direct award dashboard')
 end
 
 def create_contract_for_supplier(contract_name, supplier, state)
