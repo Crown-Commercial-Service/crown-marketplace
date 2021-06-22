@@ -2,6 +2,23 @@ Then('I navigate to the supplier dashboard') do
   visit facilities_management_supplier_path
 end
 
+Given('I go to the facilities management supplier start page') do
+  visit facilities_management_supplier_new_user_session_path
+  update_banner_cookie(true) if @javascript
+end
+
+Given('I sign in as a supplier and navigate to my account') do
+  create_supplier
+  supplier = find_supplier
+  supplier.update(user: @supplier_user)
+  visit facilities_management_supplier_new_user_session_path
+  update_banner_cookie(true) if @javascript
+  fill_in 'email', with: @supplier_user.email
+  fill_in 'password', with: nil
+  click_on 'Sign in'
+  expect(page.find('h1')).to have_content('Direct award dashboard')
+end
+
 Given('I log in as a supplier with a contract in {string} named {string}') do |state, contract_name|
   create_supplier
   supplier = find_supplier

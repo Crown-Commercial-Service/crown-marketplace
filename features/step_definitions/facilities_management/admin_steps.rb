@@ -17,6 +17,11 @@ Given('I go to the buyer dashboard') do
   visit '/facilities-management'
 end
 
+Given('I go to the facilities management admin start page') do
+  visit facilities_management_admin_new_user_session_path
+  update_banner_cookie(true) if @javascript
+end
+
 Given('I sign out and sign in the admin user') do
   step "I click on 'Sign out'"
   visit facilities_management_admin_new_user_session_path
