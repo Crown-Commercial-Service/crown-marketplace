@@ -79,6 +79,14 @@ And('I click on the link with text {string}') do |button_text|
   page.find('a', text: button_text).send_keys(:return)
 end
 
+Then('I am on a {string} page') do |option|
+  expect(page.find('#wrapper > header > div > div.govuk-header__content > span')).to have_content(PAGE_HEADING[option])
+end
+
+Then('I refresh the page') do
+  page.driver.browser.navigate.refresh
+end
+
 And('I start a procurement') do
   step "I click on 'Start a procurement'"
   step "I am on the 'What happens next' page"
@@ -93,3 +101,9 @@ Then('I pause') do
   # binding.pry
   pending 'This step is used for debugging features'
 end
+
+PAGE_HEADING = {
+  'buyer' => 'Find a facilities management supplier',
+  'supplier' => 'Facilities management supplier account',
+  'admin' => 'Managing framework and supplier data'
+}.freeze
