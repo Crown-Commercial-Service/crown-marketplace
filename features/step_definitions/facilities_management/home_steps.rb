@@ -61,3 +61,15 @@ Then('I choose to {string} cookies') do |option|
     page.find('#ga_cookie_usage_false').choose
   end
 end
+
+Given('I enter {string} for my email') do |email|
+  fill_in 'email', with: email
+end
+
+Given('I enter {string} for the password') do |password|
+  fill_in 'password01', with: password
+end
+
+Given('I enter {string} for the password confirmation') do |password_confirmation|
+  fill_in 'password02', with: password_confirmation
+end
