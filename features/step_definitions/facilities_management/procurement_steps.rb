@@ -53,13 +53,7 @@ Given('I have a procurement in detailed search named {string} with the following
 end
 
 Given('I have direct award procurements') do
-  supplier = FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')
-
-  %w[sent accepted signed declined].each do |state|
-    procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: @user, contract_name: "Contract #{state}")
-
-    procurement.procurement_suppliers.create(supplier: supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
-  end
+  create_contracts(@user, FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
 end
 
 Given('the GIA for {string} is {int}') do |building_name, gia|

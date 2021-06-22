@@ -1,6 +1,6 @@
 Feature: Sent contract
 
-  Background: The contract I sent has been declined
+  Background: I navigate to my sent contract
     Given I sign in and navigate to my account
     And I have a contract that has been 'sent' called 'Sent contract'
     And I click on 'Continue a procurement'
