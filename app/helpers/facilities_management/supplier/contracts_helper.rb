@@ -53,4 +53,17 @@ module FacilitiesManagement::Supplier::ContractsHelper
       }
     }.freeze
   end
+
+  def supplier_contract_reason_id(state)
+    case state
+    when 'not_signed'
+      'reason-for-not-signing'
+    when 'declined'
+      'reason-for-declining'
+    when 'withdrawn'
+      'reason-for-closing'
+    else
+      'no-reason-required'
+    end
+  end
 end

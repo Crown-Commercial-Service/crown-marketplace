@@ -44,37 +44,14 @@ Then('I enter {string} years and {string} month for the contract period') do |ye
   add_contract_period(years, months)
 end
 
-def add_contract_period(years, months)
-  @contract_period_years = years.to_i
-  @contract_period_months = months.to_i
-
-  entering_requirements_page.initial_call_off_period_years.set(years)
-  entering_requirements_page.initial_call_off_period_months.set(months)
-end
-
 Then('I enter {string} as the inital call-off period start date') do |date|
-  add_initial_call_off_period_dates(*case date.downcase
-                                     when 'today'
-                                       Time.zone.today.strftime('%d/%m/%Y')
-                                     when 'yesterday'
-                                       Time.zone.yesterday.strftime('%d/%m/%Y')
-                                     when 'tomorrow'
-                                       Time.zone.tomorrow.strftime('%d/%m/%Y')
-                                     else
-                                       date
-                                     end.split('/'))
+  add_initial_call_off_period_dates(*date_options(date))
 end
 
 Then('I enter an inital call-off period start date {int} years and {int} months into the future') do |years, months|
   @initial_call_off_period_start_date = Time.zone.today + years.years + months.months
 
   add_initial_call_off_period_dates(*@initial_call_off_period_start_date.strftime('%d/%m/%Y').split('/'))
-end
-
-def add_initial_call_off_period_dates(day, month, year)
-  entering_requirements_page.initial_call_off_period_day.set(day)
-  entering_requirements_page.initial_call_off_period_month.set(month)
-  entering_requirements_page.initial_call_off_period_year.set(year)
 end
 
 Then('I select {string} for mobilisation period required') do |option|
@@ -133,17 +110,6 @@ Then('the remove button for extension {int} should be {string}') do |extension, 
   element_visivility_expectations(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").remove, status)
 end
 
-def element_visivility_expectations(element, status)
-  case status
-  when 'hidden'
-    expect(element[:class]).to include('govuk-visually-hidden')
-    expect(element[:tabindex]).to eq '-1'
-  when 'visible'
-    expect(element[:class]).not_to include('govuk-visually-hidden')
-    expect(element[:tabindex]).to eq '0'
-  end
-end
-
 Then('extension {int} should be {string}') do |extension, status|
   case status
   when 'hidden'
@@ -159,10 +125,6 @@ end
 
 Then('my inital call off period length is {string}') do |initial_call_off_period_length|
   expect(entering_requirements_page.contract_period_summary.initial_call_off_period_length).to have_content(initial_call_off_period_length)
-end
-
-def format_date_period(start_date, end_date)
-  "#{start_date.strftime('%e %B %Y')} to #{end_date.strftime('%e %B %Y')}".split(' ').join(' ')
 end
 
 Then('my inital call off period is correct given the contract start date') do
@@ -189,18 +151,6 @@ end
 
 Then('the length of extension period {int} is {string}') do |extension, extension_length|
   expect(entering_requirements_page.contract_period_summary.send(:"extension_#{extension}_length")).to have_content(extension_length)
-end
-
-def extension_start_date(extension)
-  additional_period = (1..(extension - 1)).sum { |index| @contract_extentsions[index] }
-
-  @initial_call_off_end_date + additional_period + 1.day
-end
-
-def extension_end_date(extension)
-  additional_period = (1..extension).sum { |index| @contract_extentsions[index] }
-
-  @initial_call_off_end_date + additional_period
 end
 
 Then('extension period {int} is correct given the contract start date') do |extension|
@@ -333,12 +283,6 @@ Then('the assigning services to buildings status should be {string}') do |status
   expect(entering_requirements_page.assigning_services_to_buildings_status.text).to eq status.downcase
 end
 
-def building_selected_services(building_name)
-  entering_requirements_page.find(:xpath, "//td[* = '#{building_name}']/following-sibling::td")
-end
-
-alias building_status building_selected_services
-
 Then('the building named {string} should have no services selected') do |building_name|
   expect(building_status(building_name)).to have_content('No service selected')
 end
@@ -370,14 +314,6 @@ end
 
 Then('the service requirements status for {string} is {string}') do |building_name, status|
   expect(building_status(building_name)).to have_content(status.downcase)
-end
-
-def create_completed_procurement(contract_name, **options)
-  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
-  building = create(:facilities_management_building, building_name: 'Test building', user: @user)
-
-  procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)
-  procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') }
 end
 
 Given('I have a completed procurement for entering requirements named {string} with an initial call off period in the past') do |contract_name|
@@ -421,4 +357,53 @@ end
 
 Then('I select {string} for the missing region') do |region|
   entering_requirements_page.region_drop_down.find(:option, region).select_option
+end
+
+def add_contract_period(years, months)
+  @contract_period_years = years.to_i
+  @contract_period_months = months.to_i
+
+  entering_requirements_page.initial_call_off_period_years.set(years)
+  entering_requirements_page.initial_call_off_period_months.set(months)
+end
+
+def add_initial_call_off_period_dates(day, month, year)
+  entering_requirements_page.initial_call_off_period_day.set(day)
+  entering_requirements_page.initial_call_off_period_month.set(month)
+  entering_requirements_page.initial_call_off_period_year.set(year)
+end
+
+def element_visivility_expectations(element, status)
+  case status
+  when 'hidden'
+    expect(element[:class]).to include('govuk-visually-hidden')
+    expect(element[:tabindex]).to eq '-1'
+  when 'visible'
+    expect(element[:class]).not_to include('govuk-visually-hidden')
+    expect(element[:tabindex]).to eq '0'
+  end
+end
+
+def extension_start_date(extension)
+  additional_period = (1..(extension - 1)).sum { |index| @contract_extentsions[index] }
+
+  @initial_call_off_end_date + additional_period + 1.day
+end
+
+def extension_end_date(extension)
+  additional_period = (1..extension).sum { |index| @contract_extentsions[index] }
+
+  @initial_call_off_end_date + additional_period
+end
+
+def building_status(building_name)
+  entering_requirements_page.find(:xpath, "//td[* = '#{building_name}']/following-sibling::td")
+end
+
+def create_completed_procurement(contract_name, **options)
+  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
+  building = create(:facilities_management_building, building_name: 'Test building', user: @user)
+
+  procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)
+  procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') }
 end

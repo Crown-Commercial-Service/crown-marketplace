@@ -8,9 +8,9 @@
         <%= @contract.contract_number %>
     </div>
 </div>
-<h1 class="govuk-heading-m govuk-!-margin-bottom-2">
+<h2 class="govuk-heading-m govuk-!-margin-bottom-2">
     <%= t('.info_1') %>
-</h1>
+</h2>
 <div class="govuk-body govuk-!-margin-bottom-5">
     <%= t('.contract_period') %><br />
     <%= "#{format_date @contract.contract_start_date}" %> and <%= "#{format_date @contract.contract_end_date}." %> 
