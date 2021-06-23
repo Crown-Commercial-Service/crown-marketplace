@@ -1,8 +1,8 @@
 <%= content_for :page_title, t(".page_title.#{@page}") %>
 <%= admin_breadcrumbs(
-  { link_text: t('facilities_management.admin.supplier_details.index.heading'), link_url: facilities_management_admin_supplier_details_path },
-  { link_text: current_supplier_name, link_url: facilities_management_admin_supplier_detail_path },
-  { link_text: t(".page_title.#{@page}") }
+  { text: t('facilities_management.admin.supplier_details.index.heading'), link: facilities_management_admin_supplier_details_path },
+  { text: current_supplier_name, link: facilities_management_admin_supplier_detail_path },
+  { text: t(".page_title.#{@page}") }
 ) %>
 
 <%= form_with model: @supplier, url: facilities_management_admin_supplier_detail_path(page: @page), local: 'false', html: { specialvalidation: true } do |f| %>
