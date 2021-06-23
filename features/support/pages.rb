@@ -19,6 +19,10 @@ module Pages
     @entering_requirements_page ||= EnteringRequirements.new
   end
 
+  def home_page
+    @home_page ||= Home.new
+  end
+
   def procurement_page
     @procurement_page ||= Procurement.new
   end

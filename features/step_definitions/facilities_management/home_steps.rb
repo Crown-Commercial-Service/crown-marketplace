@@ -2,6 +2,16 @@ When 'I go to the facilities management start page' do
   visit facilities_management_start_path
 end
 
+Given('I sign in without details') do
+  visit facilities_management_new_user_session_path
+  update_banner_cookie(true) if @javascript
+  create_user_without_details
+  fill_in 'email', with: @user.email
+  fill_in 'password', with: nil
+  click_on 'Sign in'
+  expect(page.find('h1')).to have_content('Manage your details')
+end
+
 Then('I should sign in as an fm buyer without details') do
   create_user_without_details
   step 'I sign in'
@@ -10,6 +20,10 @@ end
 Then('I should sign in as an fm buyer with details') do
   create_user_with_details
   step 'I sign in'
+end
+
+When('I go to the not permitted page') do
+  visit not_permitted_path(service: 'facilities_management')
 end
 
 Then('I am on the Your account page') do
@@ -72,4 +86,14 @@ end
 
 Given('I enter {string} for the password confirmation') do |password_confirmation|
   fill_in 'password02', with: password_confirmation
+end
+
+Then('there are no header navigation links') do
+  expect(home_page.navigation_links).to be_empty
+end
+
+Then('I should see the following navigation links:') do |navigation_links|
+  home_page.navigation_links.zip(navigation_links.raw.flatten).each do |actual, expected|
+    expect(actual).to have_content expected
+  end
 end
