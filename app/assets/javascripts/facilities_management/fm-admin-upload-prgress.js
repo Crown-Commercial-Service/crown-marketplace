@@ -19,6 +19,11 @@ const adminStateToProgress = {
     wait: 500,
     state: 'progress-2',
   },
+  checking_processed_data: {
+    progress: 50,
+    wait: 500,
+    state: 'progress-2',
+  },
   publishing_data: {
     progress: 70,
     wait: 500,

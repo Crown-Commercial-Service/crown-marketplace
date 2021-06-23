@@ -4,6 +4,7 @@ module FacilitiesManagement
       include AASM
 
       self.table_name = 'facilities_management_admin_uploads'
+      serialize :import_errors, Array
 
       has_one_attached :supplier_data_file
 
@@ -15,6 +16,7 @@ module FacilitiesManagement
         state :in_progress
         state :checking_file
         state :processing_file
+        state :checking_processed_data
         state :publishing_data
         state :published
         state :failed
@@ -30,14 +32,17 @@ module FacilitiesManagement
         event :process_file do
           transitions from: :checking_file, to: :processing_file
         end
+        event :check_processed_data do
+          transitions from: :processing_file, to: :checking_processed_data
+        end
         event :publish_data do
-          transitions from: :processing_file, to: :publishing_data
+          transitions from: :checking_processed_data, to: :publishing_data
         end
         event :publish do
           transitions from: :publishing_data, to: :published
         end
         event :fail do
-          transitions from: %i[not_started in_progress checking_file processing_file publishing_data published], to: :failed
+          transitions from: %i[not_started in_progress checking_file processing_file checking_processed_data publishing_data published], to: :failed
         end
       end
 

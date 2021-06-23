@@ -96,8 +96,18 @@ RSpec.describe FacilitiesManagement::Admin::Upload, type: :model do
       end
     end
 
-    context 'when publish_data is called' do
+    context 'when check_processed_data is called' do
       before { upload.update(aasm_state: 'processing_file') }
+
+      it 'changes the state to checking_processed_data' do
+        upload.check_processed_data!
+
+        expect(upload.checking_processed_data?).to be true
+      end
+    end
+
+    context 'when publish_data is called' do
+      before { upload.update(aasm_state: 'checking_processed_data') }
 
       it 'changes the state to publishing_data' do
         upload.publish_data!

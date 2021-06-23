@@ -14,6 +14,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m"><%= t('.download_templates') %></h2>
     <p><%= t('.you_can_download') %></p>
+    <div class="govuk-inset-text"><strong><%= t('.tip') %></strong></div>
     <div>
       <%= link_to_generated_file_for_download(facilities_management_admin_uploads_spreadsheet_template_path, :xlsx, t('.template_file_name'), true) %>
     </div>

@@ -4,170 +4,6 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
   let(:validator) { described_class.new(params, latest_rate_card, prices, discounts, variance) }
   let(:supplier_id) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons').supplier_id.to_sym }
 
-  describe 'validation methods' do
-    let(:params) { {} }
-    let(:latest_rate_card) { nil }
-    let(:prices) { nil }
-    let(:discounts) { nil }
-    let(:variance) { nil }
-
-    describe '.numeric?' do
-      let(:result) { validator.send(:numeric?, value) }
-
-      context 'when the number is nil' do
-        let(:value) { nil }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is empty' do
-        let(:value) { '' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is white space' do
-        let(:value) { '  ' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is an integer' do
-        let(:value) { '1' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is a float' do
-        let(:value) { '1.1' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is not numeric' do
-        let(:value) { 'Bob' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-    end
-
-    describe '.more_than_max_decimals?' do
-      let(:result) { validator.send(:more_than_max_decimals?, value) }
-
-      context 'when the number is nil' do
-        let(:value) { nil }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when the number is empty' do
-        let(:value) { '' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when the number is white space' do
-        let(:value) { '  ' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when there are 20 significant ficures after the decimal point' do
-        let(:value) { '1.12345678901234567890' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when there are 21 significant ficures after the decimal point' do
-        let(:value) { '1.123456789012345678901' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-    end
-
-    describe '.value_in_range?' do
-      let(:result) { validator.send(:value_in_range?, value) }
-
-      context 'when the number is nil' do
-        let(:value) { nil }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is empty' do
-        let(:value) { '' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is white space' do
-        let(:value) { '  ' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when there are more than max decimals' do
-        let(:value) { '0.123456789012345678901' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when the number is more than 1' do
-        let(:value) { '1.00000001' }
-
-        it 'returns false' do
-          expect(result).to be false
-        end
-      end
-
-      context 'when the number is 1' do
-        let(:value) { '1' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-
-      context 'when the number is less than 1' do
-        let(:value) { '0.9999999' }
-
-        it 'returns true' do
-          expect(result).to be true
-        end
-      end
-    end
-  end
-
   describe '.save' do
     let(:params) { ActionController::Parameters.new('data': data, 'rate': rate) }
     let(:latest_rate_card) { CCS::FM::RateCard.latest }
@@ -205,8 +41,8 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
     end
 
     context 'when the data and rates are not valid' do
-      let(:data) { { 'E.2': { 'Direct Award Discount (%)': 'geoff', 'Restaurant and Catering Facilities (£)': 'Crazy' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': 'Henry VIII' }, 'N.1': { 'Primary School (£)': '1.0004' } } }
-      let(:rate) { { 'M.142': '1.016', 'M.146': '41.910000000000000000001' } }
+      let(:data) { { 'E.2': { 'Direct Award Discount (%)': 'geoff', 'Restaurant and Catering Facilities (£)': 'Crazy' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': 'Henry VIII' }, 'M.1': { 'Special Schools (£)': '-0.1' }, 'N.1': { 'Primary School (£)': '1.0004' } } }
+      let(:rate) { { 'M.141': '0.910000000000000000001', 'M.142': '1.016', 'M.146': '-1.3' } }
 
       it 'returns false' do
         expect(validator.save).to be false
@@ -215,11 +51,13 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
       it 'has the right error messages' do
         validator.save
         expect(validator.invalid_services).to match(
-          'E.2' => { 'Direct Award Discount (%)' => { value: 'geoff', error_type: 'rate_error_not_a_number' }, 'Restaurant and Catering Facilities (£)' => { value: 'Crazy', error_type: 'rate_error_not_a_number' } },
-          'H.5' => { 'Pre-School (£)' => { value: 'Henry VIII', error_type: 'rate_error_not_a_number' } },
-          'N.1' => { 'Primary School (£)' => { value: '1.0004', error_type: 'rate_error_less_than_or_equal_to' } },
-          'M.142' => { value: '1.016', error_type: 'rate_error_less_than_or_equal_to' },
-          'M.146' => { value: '41.910000000000000000001', error_type: 'rate_error_more_than_max_decimals' }
+          'E.2' => { 'Direct Award Discount (%)' => { value: 'geoff', error_type: 'not_a_number' }, 'Restaurant and Catering Facilities (£)' => { value: 'Crazy', error_type: 'not_a_number' } },
+          'H.5' => { 'Pre-School (£)' => { value: 'Henry VIII', error_type: 'not_a_number' } },
+          'M.1' => { 'Special Schools (£)' => { value: '-0.1', error_type: 'greater_than_or_equal_to' } },
+          'N.1' => { 'Primary School (£)' => { value: '1.0004', error_type: 'less_than_or_equal_to' } },
+          'M.141' => { value: '0.910000000000000000001', error_type: 'more_than_max_decimals' },
+          'M.142' => { value: '1.016', error_type: 'less_than_or_equal_to' },
+          'M.146' => { value: '-1.3', error_type: 'greater_than_or_equal_to' }
         )
       end
     end
