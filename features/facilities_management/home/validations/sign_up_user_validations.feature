@@ -2,7 +2,7 @@
 Feature: Sign up user
 
   Background: navigate to create an account page
-    Given I go to the facilities management start page
+    Given I go to the facilities management RM3830 start page
     And I am on the 'Find a facilities management supplier' page
     When I click on 'Start now'
     Then I am on the 'Sign in to your account' page

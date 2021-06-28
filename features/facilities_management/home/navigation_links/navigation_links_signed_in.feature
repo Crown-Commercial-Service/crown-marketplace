@@ -1,10 +1,10 @@
 Feature: Navigation links when signed in
 
   Background: I navigate to my account page
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
 
   Scenario: Start page
-    When I go to the facilities management start page
+    When I go to the facilities management RM3830 start page
     And I should see the following navigation links:
       | Sign out |
 
@@ -78,16 +78,8 @@ Feature: Navigation links when signed in
     And I click on 'Sign out'
     And I am on the 'Sign in to your account' page
 
-  Scenario: Home page - Back to start
-    And I should see the following navigation links:
-      | Back to start |
-      | Sign out      |
-    And I click on 'Back to start'
-    And I am on the 'Find a facilities management supplier' page
-
   Scenario: Home page - Sign out
-      And I should see the following navigation links:
-      | Back to start |
+    And I should see the following navigation links:
       | Sign out      |
     And I click on 'Sign out'
     And I am on the 'Sign in to your account' page
