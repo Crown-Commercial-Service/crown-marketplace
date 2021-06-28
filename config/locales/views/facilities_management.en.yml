@@ -564,14 +564,16 @@ en:
           return_button: Return to supplier framework data
           update_button: Save and return to supplier framework data
         services_prices_and_variances:
+          error_message:
+            greater_than_or_equal_to: The rate must be greater than or equal to 0
+            less_than_or_equal_to: The rate must be less than or equal to 1
+            more_than_max_decimals: The rate muse not have more than 20 decimal places
+            not_a_number: The rate must be a number, like 0.26 or 1
           heading: Sub-lot 1a services, prices, and variances
           item: Item
           note: The tick boxes in the first column indicate the services this supplier can provide.
           percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
-          rate_error_less_than_or_equal_to: The rate must be less than or equal to 1
-          rate_error_more_than_max_decimals: The rate muse not have more than 20 decimal places
-          rate_error_not_a_number: The rate must be a number, like 0.26 or 1
           return_link: Return to supplier framework data
           services_and_prices: Services and prices
           td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
@@ -657,20 +659,42 @@ en:
           below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
           details: Details
           error_details:
+            discounts_less_than_or_equal_to_html: 'The following suppliers have discounts that are greater than 100%: %{list} Make sure all discounts are 100% or less'
+            discounts_more_than_max_decimals_html: 'The following suppliers have discounts with more than 20 decimal places: %{list} Make sure all discounts have no more than 20 decimal places'
+            discounts_not_a_number_html: 'The following suppliers have discounts that are not numbers: %{list} Make sure all discounts are numbers, for example 0.26 or 1'
             file_check_failed: Something went wrong when checking the files, please try uploading the files again
             file_process_failed: Something went wrong when processing the files, please try uploading the files again
             file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
+            prices_blank_html: 'The following suppliers have blank prices: %{list} Make sure all prices have been filled in for each service. If a supplier does not offer a service, remove that row from the spreadsheet'
+            prices_greater_than_or_equal_to_html: 'The following suppliers have prices that are less than 0: %{list} Make sure all prices are greater than or equal to 0'
+            prices_not_a_number_html: 'The following suppliers have prices that are not numbers: %{list} Make sure all prices are numbers, for example 0.26 or 1'
             pricing_sheet_headers_incorrect: 'Make sure the ''Prices'' sheet has the following headers: ''Supplier'', ''Service Ref'', ''Service Name'', ''Unit of Measure'', ''General office - Customer Facing'', ''General office - Non Customer Facing'', ''Call Centre Operations'', ''Warehouses'', ''Restaurant and Catering Facilities'', ''Pre-School'', ''Primary School'', ''Secondary Schools'', ''Special Schools'', ''Universities and Colleges'', ''Community - Doctors, Dentist, Health Clinic'', ''Nursing and Care Homes'', ''Direct Award Discount %'''
-            supplier_details_missing_sheets: The 'Supplier framework data' file should have 2 sheets with the names 'Prices' and 'Variances'
+            supplier_data_missing_sheets: The 'Supplier framework data' file should have 2 sheets with the names 'Prices' and 'Variances'
             upload_failed: Something went wrong with the file upload, please try uploading the files again
+            variances_blank_html: 'The following suppliers have ''Cleaning consumables per building'' as blank: %{list} Make sure ''Cleaning consumables per building'' has been filled in for all suppliers'
+            variances_greater_than_or_equal_to_html: 'The following suppliers have variances that are less than 0: %{list} Make sure all variances are greater than or equal to 0'
+            variances_less_than_or_equal_to_html: 'The following suppliers have variances that are greater than 100%: %{list} Make sure all variances are 100% or less (excluding ''Cleaning consumables per building'')'
+            variances_more_than_max_decimals_html: 'The following suppliers have variances with more than 20 decimal places: %{list} Make sure all variances have no more than 20 decimal places (excluding ''Cleaning consumables per building'')'
+            variances_not_a_number_html: 'The following suppliers have variances that are not numbers: %{list} Make sure all variances are numbers, for example 0.26 or 1'
             variances_sheet_headers_incorrect: 'Make sure the ''Variances'' sheet has the following headers: ''Supplier'', ''Management Overhead %'', ''Corporate Overhead %'', ''Profit %'', ''London Location Variance Rate (%)'', ''Cleaning Consumables per Building User (£)'', ''TUPE Risk Premium (DA %)'', ''Mobilisation Cost (DA %)'''
           error_name:
+            discounts_less_than_or_equal_to: There are suppliers with discounts greater than 100%
+            discounts_more_than_max_decimals: There are suppliers with discounts that have more than 20 decimal places
+            discounts_not_a_number: There are suppliers with discounts that are not numbers
             file_check_failed: File check failed
             file_process_failed: File processing failed
             file_publish_failed: File publishing failed
+            prices_blank: There are suppliers with blank prices
+            prices_greater_than_or_equal_to: There are suppliers with prices less than 0
+            prices_not_a_number: There are suppliers with prices that are not numbers
             pricing_sheet_headers_incorrect: The 'Prices' sheet has incorrect headers
-            supplier_details_missing_sheets: The 'Supplier framework data' file is missing sheets
+            supplier_data_missing_sheets: The 'Supplier framework data' file is missing sheets
             upload_failed: Upload failed
+            variances_blank: There are suppliers where 'Cleaning consumables per building' is blank
+            variances_greater_than_or_equal_to: There are suppliers with variances less than 0
+            variances_less_than_or_equal_to: There are suppliers with variances greater than 100%
+            variances_more_than_max_decimals: There are suppliers with variances that have more than 20 decimal places
+            variances_not_a_number: There are suppliers with variances that are not numbers
             variances_sheet_headers_incorrect: The 'Variances' sheet has incorrect headers
           errors_with_upload: Errors with the upload
           issue: Issue
@@ -702,6 +726,7 @@ en:
           return: Return to 'Manage supplier framework data'
           supplier_framework_data: Supplier framework data
           template_file_name: RM3830 Supplier Framework Data (template)
+          tip: If there are services that a supplier does not offer, remove these rows from the spreadsheet before upload
           upload_caption: Supported file format is .xlsx and maximum file size is 10mb
           upload_data: Upload data
           upload_title: Upload the supplier framework data

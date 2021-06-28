@@ -19,8 +19,14 @@
       <tbody class="govuk-table__body">
         <% @upload.import_errors.each do |error| %>
           <tr>
-            <td class="govuk-table__cell"><%= t(".error_name.#{error}") %></td>
-            <td class="govuk-table__cell"><%= t(".error_details.#{error}") %></td>
+            <td class="govuk-table__cell"><%= t(".error_name.#{error[:error]}") %></td>
+            <td class="govuk-table__cell">
+              <% if error[:details] %>
+                <%= get_admin_upload_error_details(error[:error], error[:details]) %>
+              <% else %>
+                <%= t(".error_details.#{error[:error]}") %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
