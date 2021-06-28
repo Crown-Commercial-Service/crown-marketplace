@@ -73,16 +73,8 @@ Feature: Navigation links when signed in
     And I click on 'Sign out'
     And I am on the 'Sign in to your account' page
 
-  Scenario: Supplier dashboard - My dashboard
-    And I should see the following navigation links:
-      | My dashboard  |
-      | Sign out      |
-    And I click on 'My dashboard'
-    And I am on the 'Direct award dashboard' page
-
   Scenario: Supplier dashboard - Sign out
       And I should see the following navigation links:
-      | My dashboard  |
       | Sign out      |
     And I click on 'Sign out'
     And I am on the 'Sign in to your account' page

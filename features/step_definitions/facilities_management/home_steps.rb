@@ -3,7 +3,7 @@ When 'I go to the facilities management RM3830 start page' do
 end
 
 Given('I sign in without details') do
-  visit facilities_management_new_user_session_path
+  visit facilities_management_rm3830_new_user_session_path
   update_banner_cookie(true) if @javascript
   create_user_without_details
   fill_in 'email', with: @user.email

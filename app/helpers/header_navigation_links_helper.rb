@@ -68,7 +68,7 @@ module HeaderNavigationLinksHelper
     if current_user&.has_role?(:supplier)
       { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: "/facilities-management/#{framework}/supplier/dashboard" }
     elsif current_user&.has_role?(:buyer)
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: "/facilities-management/#{framework}/start" }
+      { link_text: t('header_navigation_links_helper.my_account'), link_url: "/facilities-management/#{framework}" }
     end
   end
 

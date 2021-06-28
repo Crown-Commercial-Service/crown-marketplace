@@ -2,7 +2,7 @@
 Feature: Contract summary accessibility
 
   Scenario Outline: Contract summary
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
     And I have a contract that has been '<state>' called 'My contract'
     And I click on 'Continue a procurement'
     Then I navigate to the contract 'My contract' in '<location>'
@@ -18,7 +18,7 @@ Feature: Contract summary accessibility
       | signed      | Contracts   |
 
   Scenario: Closed contract
-    Given I sign in and navigate to my account
+    Given I sign in and navigate to my account for 'RM3830'
     And I have a contract that has been 'sent' called 'My contract'
     And I click on 'Continue a procurement'
     Then I navigate to the contract 'My contract' in 'Sent offers'

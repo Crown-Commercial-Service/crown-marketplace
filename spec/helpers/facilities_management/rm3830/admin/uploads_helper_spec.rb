@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::UploadsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsHelper, type: :helper do
   describe 'get_admin_upload_error_details' do
     let(:error_details) { helper.get_admin_upload_error_details(error, details) }
 
