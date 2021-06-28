@@ -16,7 +16,7 @@ Feature: Navigation links when signed out
     And I should see the following navigation links:
       | Back to start |
     And I click on 'Back to start'
-    And I am on the 'Sign in to your account' page
+    And I am on the 'Sign in to your administration dashboard' page
 
   Scenario: Cookies settings
     When I click on 'Cookie settings'
@@ -24,7 +24,7 @@ Feature: Navigation links when signed out
     And I should see the following navigation links:
       | Back to start |
     And I click on 'Back to start'
-    And I am on the 'Sign in to your account' page
+    And I am on the 'Sign in to your administration dashboard' page
 
   Scenario: Accessibility statement
     When I click on 'Accessibility statement'
@@ -32,4 +32,4 @@ Feature: Navigation links when signed out
     And I should see the following navigation links:
       | Back to start |
     And I click on 'Back to start'
-    And I am on the 'Sign in to your account' page
+    And I am on the 'Sign in to your administration dashboard' page
