@@ -1,4 +1,4 @@
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, t('.heading') %>
 
 <div class="govuk-heading-l">

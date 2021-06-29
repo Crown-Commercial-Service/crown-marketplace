@@ -1,8 +1,25 @@
 # rubocop:disable Metrics/ModuleLength
-module SharedBuildingsControllerMethods
+module FacilitiesManagement::BuildingsConcern
   extend ActiveSupport::Concern
 
-  def create_building_action
+  included do
+    before_action :initialise_page_data
+    before_action :create_new_building, only: :new
+    before_action :build_page_data, only: %i[show edit update add_address]
+    before_action :redirect_if_unrecognised_step, only: :edit
+    before_action :authorize_user
+    before_action :build_page_description, only: %i[show new edit add_address]
+  end
+
+  def new; end
+
+  def add_address; end
+
+  def show; end
+
+  def edit; end
+
+  def create
     @page_data[:model_object] = current_user.buildings.build(building_params)
     set_postcode_data
 
@@ -18,7 +35,7 @@ module SharedBuildingsControllerMethods
     end
   end
 
-  def update_building_action
+  def update
     @page_data[:model_object].assign_attributes(building_params)
     set_postcode_data
 
@@ -95,10 +112,6 @@ module SharedBuildingsControllerMethods
 
   def region_needs_resolution?
     @page_data[:model_object].address_region_code.blank?
-  end
-
-  def initialize_building_details
-    @building_details = building_details
   end
 
   def multiple_regions?

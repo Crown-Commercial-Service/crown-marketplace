@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module Procurements
     class ContractDetailsController < FacilitiesManagement::FrameworkController
-      include FacilitiesManagement::Procurements::ContractDetailsControllerLayoutHelper
+      include FacilitiesManagement::PageDetail::ContractDetails
 
       before_action :set_procurement
       before_action :authorize_user
@@ -10,7 +10,7 @@ module FacilitiesManagement
       before_action :return_to_results, only: :update, if: -> { params['return_to_results'].present? }
       before_action :set_page_name
       before_action :redirect_if_unrecognised_page_name, only: :edit
-      before_action :set_page_detail_from_view_name, only: %i[show edit]
+      before_action :initialize_page_description_from_view_name, only: %i[show edit]
       before_action :delete_incomplete_contact_details, only: %i[show edit]
       before_action :reset_security_policy_document_page, only: :show, if: -> { @page_name == :contract_details }
       before_action :delete_incomplete_pension_data, only: :show, if: -> { @page_name == :contract_details && pension_data_incomplete? }
@@ -68,7 +68,7 @@ module FacilitiesManagement
         if @procurement.valid?(:contract_details)
           continue_da_journey
         else
-          set_page_detail_from_view_name
+          initialize_page_description_from_view_name
           render :show
         end
       end
@@ -111,7 +111,7 @@ module FacilitiesManagement
         if @procurement.save(context: @page_name)
           route_after_update
         else
-          set_page_detail_from_view_name
+          initialize_page_description_from_view_name
           render :edit
         end
       end
@@ -199,7 +199,7 @@ module FacilitiesManagement
         if @procurement.update(procurement_pension_funds_attributes: updated_pension_funds)
           redirect_to facilities_management_procurement_contract_details_path
         else
-          set_page_detail_from_view_name
+          initialize_page_description_from_view_name
           render :edit
         end
       end
