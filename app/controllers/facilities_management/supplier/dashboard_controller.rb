@@ -1,9 +1,8 @@
 class FacilitiesManagement::Supplier::DashboardController < FacilitiesManagement::Supplier::FrameworkController
-  include FacilitiesManagement::ControllerLayoutHelper
-  include FacilitiesManagement::Supplier::DashboardHelper
+  include FacilitiesManagement::PageDetail::Supplier::Dashboard
 
   before_action :set_supplier
-  before_action :set_page_detail
+  before_action :initialize_page_description
 
   def index
     if !@supplier.nil?

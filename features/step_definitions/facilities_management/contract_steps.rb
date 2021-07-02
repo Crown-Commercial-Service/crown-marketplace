@@ -85,16 +85,16 @@ Then('I enter the reason for not signing:') do |reason_for_not_signing|
 end
 
 Then('the contract dates are correct on the contract signed page') do
-  expect(contract_page.contract_signed_page.contract_dates).to have_content("#{format_date @contract_start_date} and #{format_date @contract_end_date}")
+  expect(contract_page.contract_signed_page.contract_dates).to have_content(contract_dates_description)
 end
 
 Then('the contract dates are correct for {string} on the procurement dashboard') do |contract_name|
-  expect(procurement_page.send(:Contracts).find('a', text: contract_name).find(:xpath, '../../td[2]')).to have_content(format_date(@contract_start_date))
-  expect(procurement_page.send(:Contracts).find('a', text: contract_name).find(:xpath, '../../td[3]')).to have_content(format_date(@contract_end_date))
+  expect(procurement_page.send(:Contracts).find('a', text: contract_name).find(:xpath, '../../td[2]')).to have_content(format_date(@contract_start_date).squish)
+  expect(procurement_page.send(:Contracts).find('a', text: contract_name).find(:xpath, '../../td[3]')).to have_content(format_date(@contract_end_date).squish)
 end
 
 Then('the contract dates are correct on the contract summary page') do
-  expect(contract_page.key_details).to have_content("#{format_date @contract_start_date} and #{format_date @contract_end_date}")
+  expect(contract_page.key_details).to have_content(contract_dates_description)
 end
 
 Then('there is contract named {string} in {string}') do |contract_name, table|
@@ -144,4 +144,8 @@ def add_contract_end_date(day, month, year)
   contract_page.contract_option.contract_end_date_day.set(day)
   contract_page.contract_option.contract_end_date_month.set(month)
   contract_page.contract_option.contract_end_date_year.set(year)
+end
+
+def contract_dates_description
+  "#{format_date @contract_start_date} and #{format_date @contract_end_date}".squish
 end

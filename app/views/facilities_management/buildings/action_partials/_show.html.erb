@@ -12,7 +12,7 @@
   <div class="govuk-table govuk-!-width-three-quarters" data-module="table" id="fm-buildings-container">
     <table style="width:100%; border-collapse: collapse;">
       <tbody>
-      <% @building_details.each do |attribute, building_detail| %>
+      <% building_rows.each do |attribute, building_detail| %>
         <tr style="border-top : 1px solid #CCCCCC;">
           <th class="govuk-!-width-one-third govuk-table__cell"><%= building_detail[:row_name] %></th>
           <% if building_detail[:row_text].present?%>

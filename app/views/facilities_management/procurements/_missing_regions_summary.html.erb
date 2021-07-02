@@ -3,7 +3,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= link_to t('.return_link'), facilities_management_procurements_path,  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
-    <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
+    <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
   </div>
 </div>
 

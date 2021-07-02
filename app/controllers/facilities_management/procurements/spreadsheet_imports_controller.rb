@@ -1,7 +1,6 @@
 module FacilitiesManagement
   module Procurements
     class SpreadsheetImportsController < FacilitiesManagement::FrameworkController
-      include FacilitiesManagement::ControllerLayoutHelper
       before_action :set_procurement
       before_action :authorize_user
       before_action :set_spreadsheet_import, only: %i[show destroy progress]

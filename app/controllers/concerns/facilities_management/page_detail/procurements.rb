@@ -1,5 +1,5 @@
-module FacilitiesManagement::ProcurementsControllerLayoutHelper
-  include FacilitiesManagement::ControllerLayoutHelper
+module FacilitiesManagement::PageDetail::Procurements
+  include FacilitiesManagement::PageDetail
 
   def page_details
     @page_details ||= page_definitions[:default].merge(page_definitions[@view_name.to_sym])

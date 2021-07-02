@@ -1,4 +1,17 @@
 module FacilitiesManagement::BuildingsHelper
+  def building_rows
+    {
+      building_name: { row_name: t('facilities_management.buildings.action_partials.show.caption_name'), row_text: @page_data[:model_object].building_name, step: 'building_details' },
+      building_description: { row_name: t('facilities_management.buildings.action_partials.show.caption_desc'), row_text: @page_data[:model_object].description, step: 'building_details' },
+      address: { row_name: t('facilities_management.buildings.action_partials.show.caption_addr'), row_text: @page_data[:model_object].address_line_1, step: 'building_details' },
+      region: { row_name: t('facilities_management.buildings.action_partials.show.caption_region_nuts'), row_text: @page_data[:model_object].address_region, step: 'building_details' },
+      gia: { row_name: t('facilities_management.buildings.action_partials.show.caption_gia'), row_text: @page_data[:model_object].gia, step: 'gia' },
+      external_area: { row_name: t('facilities_management.buildings.action_partials.show.caption_external_area'), row_text: @page_data[:model_object].external_area, step: 'gia' },
+      building_type: { row_name: t('facilities_management.buildings.action_partials.show.caption_type'), row_text: @page_data[:model_object].building_type, step: 'type' },
+      security_type: { row_name: t('facilities_management.buildings.action_partials.show.caption_sec'), row_text: @page_data[:model_object].security_type, step: 'security' }
+    }
+  end
+
   def address?(building)
     return false if building.blank?
 

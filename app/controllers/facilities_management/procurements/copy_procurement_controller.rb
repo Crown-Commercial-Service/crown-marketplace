@@ -1,14 +1,13 @@
 module FacilitiesManagement
   module Procurements
     class CopyProcurementController < FacilitiesManagement::FrameworkController
-      include FacilitiesManagement::ControllerLayoutHelper
-      include FacilitiesManagement::Procurements::CopyProcurementHelper
+      include FacilitiesManagement::PageDetail::CopyProcurement
 
       before_action :set_procurement_data
       before_action :authorize_user
       before_action :set_contract_data
       before_action :duplicate_procurement
-      before_action :set_page_detail
+      before_action :initialize_page_description
 
       def new; end
 

@@ -1,5 +1,5 @@
 <% content_for :page_title, t('.tupe_title') %>
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.tupe_title'), @procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.tupe_title'), @procurement.contract_name, nil, nil, nil)) %>
 <fieldset class="govuk-fieldset">
   <%= form_group_with_error(f.object, :tupe) do |displayed_error| %>
     <%= hint_details(t('.first_question'), t('.body_text_html')) %>

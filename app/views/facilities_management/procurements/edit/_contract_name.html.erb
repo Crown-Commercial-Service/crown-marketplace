@@ -1,4 +1,4 @@
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
 <% content_for :page_title, 'Contract name' %>
 <div class="govuk-form-group <%='govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="Contract name"
      style="<%= 'padding-left:1em' if @procurement.errors[:contract_name].any?%>">
