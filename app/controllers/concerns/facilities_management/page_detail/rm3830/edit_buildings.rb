@@ -1,4 +1,4 @@
-module FacilitiesManagement::PageDetail::EditBuildings
+module FacilitiesManagement::PageDetail::RM3830::EditBuildings
   include FacilitiesManagement::PageDetail::Buildings
 
   # rubocop:disable Metrics/AbcSize
@@ -42,7 +42,7 @@ module FacilitiesManagement::PageDetail::EditBuildings
     if @page_data[:model_object].id.nil?
       'javascript:history.back()'
     else
-      edit_facilities_management_procurement_edit_building_path(@page_data[:model_object].id, step: 'building_details')
+      edit_facilities_management_rm3830_procurement_edit_building_path(@page_data[:model_object].id, step: 'building_details')
     end
   end
 
@@ -58,7 +58,7 @@ module FacilitiesManagement::PageDetail::EditBuildings
       continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
       secondary_name: 'save_and_return',
       secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-      back_url: facilities_management_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: params[:procurement_id]),
+      back_url: facilities_management_rm3830_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: params[:procurement_id]),
       back_text: edit_back_text
     }
 
@@ -67,7 +67,7 @@ module FacilitiesManagement::PageDetail::EditBuildings
     if %w[gia type security].include? params[:step]
       details[:return_url] = next_link(false, params[:step])
       details[:return_text] = I18n.t('facilities_management.buildings.page_definitions.skip_this_step')
-      details[:back_url] = edit_facilities_management_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: params[:procurement_id], step: previous_step(params[:step].to_sym))
+      details[:back_url] = edit_facilities_management_rm3830_procurement_edit_building_path(@page_data[:model_object].id, procurement_id: params[:procurement_id], step: previous_step(params[:step].to_sym))
     end
 
     details

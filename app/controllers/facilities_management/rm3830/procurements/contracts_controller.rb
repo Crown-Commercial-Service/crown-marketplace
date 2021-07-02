@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM3830
     module Procurements
       class ContractsController < FacilitiesManagement::FrameworkController
-        include FacilitiesManagement::PageDetail::Contracts
+        include FacilitiesManagement::PageDetail::RM3830::Contracts
 
         before_action :set_procurement
         before_action :set_contract

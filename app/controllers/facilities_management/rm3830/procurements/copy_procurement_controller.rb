@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM3830
     module Procurements
       class CopyProcurementController < FacilitiesManagement::FrameworkController
-        include FacilitiesManagement::PageDetail::CopyProcurement
+        include FacilitiesManagement::PageDetail::RM3830::CopyProcurement
 
         before_action :set_procurement_data
         before_action :authorize_user

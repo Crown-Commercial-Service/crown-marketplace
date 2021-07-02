@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module RM3830
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      include FacilitiesManagement::PageDetail::Procurements
+      include FacilitiesManagement::PageDetail::RM3830::Procurements
 
       before_action :set_procurement, except: %i[index new create what_happens_next]
       before_action :authorize_user
