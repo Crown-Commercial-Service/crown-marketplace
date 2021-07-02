@@ -1,4 +1,4 @@
-module FacilitiesManagement::PageDetail::CopyProcurement
+module FacilitiesManagement::PageDetail::RM3830::CopyProcurement
   include FacilitiesManagement::PageDetail
 
   def page_details(*)

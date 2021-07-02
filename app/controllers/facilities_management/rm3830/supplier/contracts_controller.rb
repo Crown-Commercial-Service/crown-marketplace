@@ -1,5 +1,5 @@
 class FacilitiesManagement::RM3830::Supplier::ContractsController < FacilitiesManagement::Supplier::FrameworkController
-  include FacilitiesManagement::PageDetail::Supplier::Contracts
+  include FacilitiesManagement::PageDetail::RM3830::Supplier::Contracts
 
   before_action :set_contract
   before_action :authorize_user

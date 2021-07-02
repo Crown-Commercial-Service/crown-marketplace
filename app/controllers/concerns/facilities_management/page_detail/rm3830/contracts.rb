@@ -1,4 +1,4 @@
-module FacilitiesManagement::PageDetail::Contracts
+module FacilitiesManagement::PageDetail::RM3830::Contracts
   include FacilitiesManagement::PageDetail
 
   def page_details(action)

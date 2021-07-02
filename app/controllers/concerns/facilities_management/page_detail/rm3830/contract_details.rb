@@ -1,5 +1,5 @@
 # rubocop:disable Metrics/ModuleLength, Metrics/MethodLength, Metrics/AbcSize
-module FacilitiesManagement::PageDetail::ContractDetails
+module FacilitiesManagement::PageDetail::RM3830::ContractDetails
   include FacilitiesManagement::PageDetail
 
   def page_details

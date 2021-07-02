@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM3830
     module Procurements
       class ContractDetailsController < FacilitiesManagement::FrameworkController
-        include FacilitiesManagement::PageDetail::ContractDetails
+        include FacilitiesManagement::PageDetail::RM3830::ContractDetails
 
         before_action :set_procurement
         before_action :authorize_user

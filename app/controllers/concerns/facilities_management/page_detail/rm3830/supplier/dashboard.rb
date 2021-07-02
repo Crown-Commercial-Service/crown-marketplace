@@ -1,4 +1,4 @@
-module FacilitiesManagement::PageDetail::Supplier::Dashboard
+module FacilitiesManagement::PageDetail::RM3830::Supplier::Dashboard
   include FacilitiesManagement::PageDetail
 
   def page_definitions

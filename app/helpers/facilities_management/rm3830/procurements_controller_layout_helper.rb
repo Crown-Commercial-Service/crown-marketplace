@@ -1,10 +1,5 @@
-<<<<<<< HEAD:app/controllers/concerns/facilities_management/page_detail/procurements.rb
-module FacilitiesManagement::PageDetail::Procurements
-  include FacilitiesManagement::PageDetail
-=======
 module FacilitiesManagement::RM3830::ProcurementsControllerLayoutHelper
-  include FacilitiesManagement::ControllerLayoutHelper
->>>>>>> 9ff8c51c2 (Move the procurement parts to rm3830):app/helpers/facilities_management/rm3830/procurements_controller_layout_helper.rb
+  include FacilitiesManagement::PageDetail
 
   def page_details
     @page_details ||= page_definitions[:default].merge(page_definitions[@view_name.to_sym])
