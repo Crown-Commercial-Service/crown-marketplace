@@ -3,7 +3,7 @@ module FacilitiesManagement
     module Procurements
       class EditBuildingsController < FacilitiesManagement::FrameworkController
         include Procurements::EditBuildingsControllerNavigation
-        include FacilitiesManagement::PageDetail::EditBuildings
+        include FacilitiesManagement::PageDetail::Buildings
         include FacilitiesManagement::FindAddressConcern
         include BuildingsConcern
 
