@@ -1,7 +1,7 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
-  { link_text: t('.heading') }
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: t('.heading') }
 )%>
 
 <% if @invalid_services.any? %>

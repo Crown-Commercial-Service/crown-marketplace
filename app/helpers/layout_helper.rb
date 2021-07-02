@@ -206,15 +206,6 @@ module LayoutHelper
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
-  def govuk_details(summary_text, reduce_padding = false, &block)
-    tag.details(class: 'govuk-details', data: { module: 'govuk-details' }) do
-      capture do
-        concat(tag.summary(tag.span(summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
-        concat(tag.div(class: "govuk-details__text #{'govuk-!-padding-bottom-0 govuk-!-padding-top-0' if reduce_padding}", &block))
-      end
-    end
-  end
-
   def generate_label_text(obj, attribute, label_text = {})
     if label_text.key?(attribute)
       label_text[attribute]
@@ -257,40 +248,6 @@ module LayoutHelper
     capture do
       concat(tag.h2(heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
       concat(tag.div(class: 'govuk-body govuk-!-padding-left-5', &block))
-    end
-  end
-
-  def admin_breadcrumbs(*breadcrumbs)
-    tag.div(class: 'govuk-breadcrumbs') do
-      tag.ol(class: 'govuk-breadcrumbs__list') do
-        capture do
-          concat(admin_breadcrumb_link('Home', facilities_management_admin_path))
-          breadcrumbs.each do |breadcrumb|
-            concat(admin_breadcrumb_link(breadcrumb[:link_text], breadcrumb[:link_url]))
-          end
-        end
-      end
-    end
-  end
-
-  def admin_breadcrumb_link(link_text, link_url)
-    tag.li(class: 'govuk-breadcrumbs__list-item') do
-      if link_url.present?
-        link_to link_text, link_url, class: 'govuk-breadcrumbs__link'
-      else
-        link_text
-      end
-    end
-  end
-
-  def account_dashboard_panel(link_text, link_url, description)
-    tag.div(class: 'govuk-grid-column-one-third') do
-      tag.div(class: 'fm-buyer-account-panel') do
-        capture do
-          concat(link_to(link_text, link_url, class: 'fm-buyer-account-panel__title'))
-          concat(tag.p(description, class: 'fm-buyer-account-panel__body'))
-        end
-      end
     end
   end
 end

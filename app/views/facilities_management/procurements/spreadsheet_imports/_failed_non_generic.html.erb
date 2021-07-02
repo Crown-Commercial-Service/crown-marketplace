@@ -40,7 +40,7 @@
         <h3 class="govuk-heading-m">
           <%= t(".title.#{attribute}") %>
         </h3>
-        <%= govuk_details(pluralize(error_count(error_list, attribute), 'Issue'), false) do %>
+        <%= govuk_details(pluralize(error_count(error_list, attribute), 'Issue')) do %>
           <%= render(partial: "facilities_management/procurements/spreadsheet_imports/error_partials/#{attribute}", locals: { error_list: error_list }) %>
         <% end %>
       </div>

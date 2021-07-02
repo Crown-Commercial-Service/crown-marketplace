@@ -1,7 +1,7 @@
 <%= content_for :page_title, @lot_name %>
 <%= admin_breadcrumbs(
-  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
-  { link_text: @lot_name }
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: @lot_name }
 )%>
 
 <div class="govuk-grid-column-one-thirds">
