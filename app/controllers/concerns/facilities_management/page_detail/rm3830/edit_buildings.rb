@@ -6,7 +6,7 @@ module FacilitiesManagement::PageDetail::RM3830::EditBuildings
     @page_definitions ||= {
       default: {
         continuation_text: I18n.t('facilities_management.buildings.page_definitions.create_new_building'),
-        primary_url: new_facilities_management_procurement_edit_building_path(procurement_id: params[:procurement_id]),
+        primary_url: new_facilities_management_rm3830_procurement_edit_building_path(procurement_id: params[:procurement_id]),
         secondary_name: 'return_to_buildings',
         secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
         secondary_url: edit_facilities_management_rm3830_procurement_path(params[:procurement_id], step: 'buildings'),
