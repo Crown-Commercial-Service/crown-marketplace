@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_113607) do
+ActiveRecord::Schema.define(version: 2021_07_05_112634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -251,6 +251,8 @@ ActiveRecord::Schema.define(version: 2021_06_24_113607) do
     t.boolean "lot_number_selected_by_customer", default: false
     t.string "governing_law"
     t.integer "initial_call_off_period_months"
+    t.string "framework", limit: 6
+    t.index ["framework"], name: "index_facilities_management_procurements_on_framework"
     t.index ["user_id"], name: "index_facilities_management_procurements_on_user_id"
   end
 

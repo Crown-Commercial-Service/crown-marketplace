@@ -9,16 +9,21 @@ module ProcurementValidator
     validates :region_codes, presence: true, on: :region_codes
 
     # validations on :contract_name step
-    before_validation :remove_excess_whitespace_from_name, on: :contract_name
-    validates :contract_name, presence: true, on: %i[contract_name]
-    validates :contract_name, uniqueness: { scope: :user }, on: :contract_name
-    validates :contract_name, length: 1..100, on: :contract_name
+    with_options on: :contract_name do
+      before_validation :remove_excess_whitespace_from_name
+      validates :contract_name, presence: true
+      validates :contract_name, length: 1..100
+    end
 
     # validations on :estimated_annual_cost step
-    validates :estimated_cost_known, inclusion: { in: [true, false] }, on: %i[estimated_annual_cost]
-    validates :estimated_annual_cost, presence: true, if: -> { estimated_cost_known? }, on: :estimated_annual_cost
-    validates :estimated_annual_cost, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }, if: -> { estimated_cost_known? }, on: :estimated_annual_cost
+    with_options on: :estimated_annual_cost do
+      validates :estimated_cost_known, inclusion: { in: [true, false] }
 
+      with_options if: -> { estimated_cost_known? } do
+        validates :estimated_annual_cost, presence: true
+        validates :estimated_annual_cost, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 999999999 }
+      end
+    end
     # validations on :procurement_buildings step
     validate :at_least_one_active_procurement_building, on: :buildings
 
@@ -38,31 +43,42 @@ module ProcurementValidator
 
     validates :governing_law, inclusion: { in: %w[english scottish northern_ireland] }, on: %i[governing_law]
 
-    validates :initial_call_off_period_years, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 7 }, on: :contract_period
-    validates :initial_call_off_period_months, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 11 }, on: :contract_period
-    validate :initial_call_off_period_length, on: :contract_period
+    with_options on: :contract_period do
+      validates :initial_call_off_period_years, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 7 }
+      validates :initial_call_off_period_months, presence: true, numericality: { allow_nil: false, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 11 }
+      validate :initial_call_off_period_length
 
-    validate :initial_call_off_start_date_present, :initial_call_off_start_date_real, on: :contract_period
-    validates :initial_call_off_start_date, date: { after_or_equal_to: proc { Time.zone.today }, before: proc { Time.new(2100).in_time_zone('London') } }, on: :contract_period
+      validate :initial_call_off_start_date_present, :initial_call_off_start_date_real
+      validates :initial_call_off_start_date, date: { after_or_equal_to: proc { Time.zone.today }, before: proc { Time.new(2100).in_time_zone('London') } }
 
-    validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_period
-    validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required }, on: :contract_period
+      validates :mobilisation_period_required, inclusion: { in: [true, false] }, on: :contract_period
+      validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 52 }, if: -> { mobilisation_period_required }
 
-    validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }, on: :contract_period
-    validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { tupe && mobilisation_period_required }, on: :contract_period
+      validates :mobilisation_period_required, inclusion: { in: [true], message: :not_valid_with_tupe }, if: -> { tupe }
+      validates :mobilisation_period, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 4, less_than_or_equal_to: 52 }, if: -> { tupe && mobilisation_period_required }
 
-    validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }, on: :contract_period
+      validate  :mobilisation_start_date_validation, if: -> { mobilisation_period_required && initial_call_off_start_date.present? && mobilisation_period.present? && mobilisation_period <= 52 }
 
-    validates :extensions_required, inclusion: { in: [true, false] }, on: :contract_period
+      validates :extensions_required, inclusion: { in: [true, false] }
 
-    after_validation :total_contract_length, :remove_empty_extensions, on: :contract_period
-    #
-    # End of validation rules for contract-dates
-    #############################################
-    validates :security_policy_document_required, inclusion: { in: [true, false] }, on: :security_policy_document
-    validates :security_policy_document_name, presence: true, if: :security_policy_document_required?, on: :security_policy_document
-    validates :security_policy_document_version_number, presence: true, if: :security_policy_document_required?, on: :security_policy_document
-    validate :security_policy_document_date_valid?, if: :security_policy_document_required?, on: :security_policy_document
+      after_validation :total_contract_length, :remove_empty_extensions
+    end
+
+    with_options on: :security_policy_document do
+      validates :security_policy_document_required, inclusion: { in: [true, false] }
+
+      with_options if: :security_policy_document_required? do
+        validates :security_policy_document_name, presence: true
+        validates :security_policy_document_version_number, presence: true
+        validate :security_policy_document_date_valid?
+        validates :security_policy_document_file, attached: true
+      end
+
+      validate :security_policy_document_file_ext_validation
+      validates :security_policy_document_file, content_type: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document]
+      validates :security_policy_document_file, size: { less_than: 10.megabytes }
+      validates :security_policy_document_file, antivirus: true
+    end
 
     # Additional validations for the 'Continue' button on the 'Detailed search summary' page - validating on :all
     validate :all_buildings_have_regions, on: :continue
@@ -72,9 +88,11 @@ module ProcurementValidator
     validate :validate_contract_details, on: :contract_details
 
     # Validation for the choose_contract_value page
-    validates :lot_number, presence: true, inclusion: { in: %w[1a 1b 1c] }, on: :choose_contract_value
-    validate :lot_number_in_range, on: :choose_contract_value
-    validates :lot_number_selected_by_customer, acceptance: true, on: :choose_contract_value
+    with_options on: :choose_contract_value do
+      validates :lot_number, presence: true, inclusion: { in: %w[1a 1b 1c] }
+      validate :lot_number_in_range
+      validates :lot_number_selected_by_customer, acceptance: true
+    end
 
     private
 
