@@ -112,3 +112,12 @@ end
 Then('the selected supplier is {string}') do |supplier|
   expect(procurement_page.selected_supplier).to have_content(supplier)
 end
+
+Then('I choose to delete the procurement named {string}') do |contract_name|
+  procurement_page.find('th', text: contract_name).find(:xpath, '../td[4]/a').click
+end
+
+Then('my procurement {string} has successfully been deleted') do |contract_name|
+  expect(procurement_page.find('.govuk-notification-banner__heading')).to have_content('Your item was deleted')
+  expect(procurement_page.find('.govuk-notification-banner__content > p')).to have_content("'#{contract_name}' was deleted")
+end
