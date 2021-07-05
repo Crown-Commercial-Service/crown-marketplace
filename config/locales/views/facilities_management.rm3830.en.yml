@@ -1055,10 +1055,12 @@ en:
             stage: Stage
             supplier: Supplier
         delete:
-          are_you_sure: Are you sure you want to delete '%{contract_name}'? This action cannot be un-done.
+          are_you_sure: Are you sure you want to delete '%{contract_name}'?
           cancel: Cancel
           cancel_delete: Cancel delete
+          cannot_be_un_done: This action cannot be un-done.
           confirm_delete: Confirm delete
+          page_title: Delete procurement
         edit:
           buildings:
             add_a_building: Add a building

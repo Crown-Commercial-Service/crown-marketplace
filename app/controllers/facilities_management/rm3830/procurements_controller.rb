@@ -73,7 +73,9 @@ module FacilitiesManagement
         update_procurement && return if params.key?(:facilities_management_procurement)
       end
 
-      def delete; end
+      def delete
+        render layout: 'error'
+      end
 
       def destroy
         FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
