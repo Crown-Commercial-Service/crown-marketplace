@@ -12,6 +12,7 @@ module ProcurementValidator
     with_options on: :contract_name do
       before_validation :remove_excess_whitespace_from_name
       validates :contract_name, presence: true
+      validates :contract_name, uniqueness: { scope: %i[user framework] }
       validates :contract_name, length: 1..100
     end
 

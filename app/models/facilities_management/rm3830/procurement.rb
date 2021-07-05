@@ -18,8 +18,6 @@ module FacilitiesManagement
       # Belongs to a buyer
       belongs_to :user, inverse_of: :rm3830_procurements
 
-      validates :contract_name, uniqueness: { scope: :user }, on: :contract_name
-
       before_save :update_procurement_building_services, if: :service_codes_changed?
       before_save :set_state_to_results, if: :buyer_selected_contract_value?
 

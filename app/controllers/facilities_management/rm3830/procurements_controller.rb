@@ -70,7 +70,7 @@ module FacilitiesManagement
         return if updates_for_show_pages
         return if updates_for_edit_pages
 
-        update_procurement && return if params.key?(:facilities_management_procurement)
+        update_procurement && return if params.key?(:facilities_management_rm3830_procurement)
       end
 
       def delete
@@ -132,7 +132,7 @@ module FacilitiesManagement
 
       def update_procurement
         assign_procurement_parameters
-        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+        if @procurement.save(context: params[:facilities_management_rm3830_procurement][:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
           @procurement.reload
 
@@ -153,10 +153,10 @@ module FacilitiesManagement
         # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
         # that action - resulting in clearing the service_code collection in the store will not happen
         # we can however validate and push the custom message to the client from here
-        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
+        # !WHY?! The browser is not sending the [:facilities_management_rm3830_procurement][:service_codes] value as empty
         #        if no checkboxes are checked
         #        Can the procurement_params specification not establish defaults?
-        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services && params[:facilities_management_procurement][:service_codes].nil?
+        @procurement.service_codes = [] if params[:facilities_management_rm3830_procurement][:step].try(:to_sym) == :services && params[:facilities_management_rm3830_procurement][:service_codes].nil?
       end
 
       PARAMS_METHODS_SHOW = {
@@ -182,7 +182,7 @@ module FacilitiesManagement
       end
 
       def updates_for_edit_pages
-        update_step = params.dig('facilities_management_procurement', 'step')&.to_sym
+        update_step = params.dig('facilities_management_rm3830_procurement', 'step')&.to_sym
 
         case update_step
         when :services
@@ -400,7 +400,7 @@ module FacilitiesManagement
 
       def set_current_step
         @current_step = nil
-        @current_step ||= params[:facilities_management_procurement][:step] if params['next_step'].present?
+        @current_step ||= params[:facilities_management_rm3830_procurement][:step] if params['next_step'].present?
       end
 
       def set_procurement
@@ -453,7 +453,7 @@ module FacilitiesManagement
       end
 
       def set_step_param
-        params[:step] = params[:facilities_management_procurement][:step] unless @procurement.quick_search?
+        params[:step] = params[:facilities_management_rm3830_procurement][:step] unless @procurement.quick_search?
       end
 
       def ready_buildings
