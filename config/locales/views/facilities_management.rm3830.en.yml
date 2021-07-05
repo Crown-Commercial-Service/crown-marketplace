@@ -11,6 +11,144 @@ en:
           attributes:
             service_codes:
               too_short: Select at least one service you need to include in your procurement
+  activerecord:
+    errors:
+      models:
+        facilities_management/rm3830/procurement:
+          attributes:
+            base:
+              buildings_and_services_incomplete: "‘Assigning services to buildings’ must be ‘COMPLETED’"
+              buildings_incomplete: "‘Buildings’ must be ‘COMPLETED’"
+              contract_period_incomplete: "‘Contract period’ must be ‘COMPLETED’"
+              estimated_annual_cost_incomplete: "‘Estimated annual cost’ must be ‘COMPLETED’"
+              initial_call_off_period_in_past: Initial call-off period start date must not be in the past
+              mobilisation_period_in_past: Mobilisation period start date must not be in the past
+              mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
+              service_requirements_incomplete: "‘Service requirements’ must be ‘COMPLETED’"
+              services_incomplete: "‘Services’ must be ‘COMPLETED’"
+              services_not_present: You must select at least one service
+              total_contract_length: Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total
+              total_contract_period: The total initial call-off period must be between 1 month and 7 years
+              tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
+            contract_name:
+              blank: Enter your contract name
+              not_present: You must answer the question about ‘Contract name’
+              taken: This contract name is already in use
+              too_long: Your contract name must be 100 characters or fewer
+              too_short: Enter your contract name
+            estimated_annual_cost:
+              blank: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
+              greater_than_or_equal_to: The estimated annual cost must be an amount of money, such as £12,000 or £1,200
+              less_than_or_equal_to: Estimated annual cost must be a number between 1 and 999,999,999
+              not_a_number: The estimated annual cost must be an amount of money
+              not_an_integer: Estimated annual cost must be a number between 1 and 999,999,999
+            estimated_cost_known:
+              inclusion: Select one option
+              not_present: You must answer the question about ‘Estimated annual cost’
+            extensions_required:
+              inclusion: Select one option for call-off contract extension
+            governing_law:
+              blank: Select one option
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Governing law’
+            initial_call_off_end_date:
+              after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              date_after_or_equal_to: Initial call-off period end date cannot be before the initial call-off start date
+              not_a_date: Initial call-off period end date is not a valid date
+            initial_call_off_period_months:
+              blank: Enter the months for the initial call-off period
+              greater_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              less_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              not_a_number: The months for the initial call-off period must be a whole number
+              not_an_integer: The months for the initial call-off period must be a whole number
+            initial_call_off_period_years:
+              blank: Enter the years for the initial call-off period
+              greater_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              less_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              not_a_number: The years for the initial call-off period must be a whole number
+              not_an_integer: The years for the initial call-off period must be a whole number
+              not_present: You must answer all questions about ‘Contract period’
+            initial_call_off_start_date:
+              blank: Enter a valid initial call-off start date
+              date_after_or_equal_to: Initial call-off period start date must be today or in the future
+              date_before: Initial call-off period start date cannot be later than 31 December 2100
+              not_a_date: Enter a valid initial call-off start date
+            local_government_pension_scheme:
+              inclusion: Select one answer
+              not_present: Select one answer
+              not_present_contract_details: You must answer the question about ‘Local Government Pension Scheme’
+            lot_number:
+              blank: Please select one option
+              inclusion: Please select one option
+            mobilisation_period:
+              blank: Enter mobilisation period length
+              greater_than: Mobilisation length must be between 1 and 52 weeks
+              greater_than_or_equal_to: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
+              not_a_number: Enter mobilisation length
+              not_an_integer: Enter mobilisation length as a whole number
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_period_required:
+              inclusion: Select one option for mobilisation period
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_start_date:
+              greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
+            name:
+              blank: Enter the name for the search
+              invalid: Search name must only include letters a to z, numbers, hyphens, spaces and apostrophes
+              taken: This name is already in use
+              too_long: Search name must be 100 characters or less
+              too_short: Enter the name for the search
+            payment_method:
+              inclusion: Select one payment method
+              not_present_contract_details: You must answer the question about ‘Payment method’
+            procurement_building_services:
+              invalid_html: You have to answer one or more questions on "%{building_name}". Service requirement status must be ‘Complete’
+            procurement_buildings:
+              invalid: Select at least one building
+              not_present: Select at least one building
+            region_codes:
+              blank: Select at least one region you need to include in your procurement
+              invalid: Select at least one region you need to include in your procurement
+            route_to_market:
+              inclusion: Select one option
+            security_policy_document_date:
+              not_a_date: The selected date is not valid
+            security_policy_document_file:
+              antivirus_virus_detected: The selected file contains a virus
+              blank: The selected file is empty
+              content_type_invalid: The selected file must be a DOC, DOCX or PDF
+              file_size_out_of_range: The selected file must be smaller than 10MB
+              wrong_extension: The selected file must be a DOC, DOCX or PDF
+            security_policy_document_name:
+              blank: Enter a security policy document name
+            security_policy_document_required:
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Security policy’
+            security_policy_document_version_number:
+              blank: Enter a security policy document version number
+            service_codes:
+              blank: Select at least one service you need to include in your procurement
+              invalid: Select at least one service you need to include in your procurement
+              invalid_billable: You must select another service to include 'Management of billable works'
+              invalid_cafm: You must select another service to include 'CAFM system'
+              invalid_cafm_billable: You must select another service to include 'CAFM system', 'Management of billable works'
+              invalid_cafm_helpdesk: You must select another service to include 'CAFM system', 'Helpdesk services'
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'
+              invalid_helpdesk: You must select another service to include 'Helpdesk services'
+              invalid_helpdesk_billable: You must select another service to include 'Helpdesk services', 'Management of billable works'
+            tupe:
+              inclusion: Select one option
+              not_present: You must answer the question about ‘TUPE’
+            using_buyer_detail_for_authorised_detail:
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Authorised representative details’
+            using_buyer_detail_for_invoice_details:
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Invoicing contact details’
+            using_buyer_detail_for_notices_detail:
+              inclusion: Select one option
+              not_present_contract_details: You must answer the question about ‘Notices contact details’
   facilities_management:
     rm3830:
       admin:

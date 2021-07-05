@@ -10,20 +10,9 @@
         <div class="govuk-heading-m govuk-!-margin-left-1">
           <strong><%=t('.requirements') %></strong>
         </div>
-        
-        <%  selected_service = @procurement.errors.any? ? @procurement.service_codes : params[:service_codes]  %>
-        <%  selected_region = @procurement.errors.any? ? @procurement.region_codes : params[:region_codes]  %>
 
-        <% selected_service.each do |service_code| %>
-          <%= form.hidden_field :service_codes, value: service_code, multiple: true %>
-        <% end %>
-
-        <% selected_region.each do |region_code| %>
-          <%= form.hidden_field :region_codes, value: region_code, multiple: true %>
-        <% end %>
-
-        <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.services'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', framework: 'RM3830', region_codes: selected_region, service_codes: selected_service), collection: services } %>
-        <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.regions'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', framework: 'RM3830', region_codes: selected_region, service_codes: selected_service), collection: regions } %>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'service', section_title: t('.services'), change_title: t('.change_add_service'), change_link: journey_step_url_former(journey_step: 'services', framework: 'RM3830', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), collection: services } %>
+        <%= render partial: 'filter_data_section', locals: { section_name: 'region', section_title: t('.regions'), change_title: t('.change_add_region'), change_link: journey_step_url_former(journey_step: 'locations', framework: 'RM3830', region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), collection: regions } %>
       </div>
     </div>
   </div>

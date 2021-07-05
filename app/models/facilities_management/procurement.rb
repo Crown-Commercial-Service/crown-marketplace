@@ -2,8 +2,7 @@ module FacilitiesManagement
   class Procurement < ApplicationRecord
     include ProcurementValidator
 
-    # Belongs to a buyer
-    belongs_to :user, inverse_of: :procurements
+    self.abstract_class = true
 
     has_many :optional_call_off_extensions, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
     accepts_nested_attributes_for :optional_call_off_extensions, allow_destroy: true
