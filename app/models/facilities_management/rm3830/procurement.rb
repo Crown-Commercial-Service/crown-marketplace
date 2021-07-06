@@ -18,18 +18,11 @@ module FacilitiesManagement
       # Belongs to a buyer
       belongs_to :user, inverse_of: :rm3830_procurements
 
-      before_save :update_procurement_building_services, if: :service_codes_changed?
       before_save :set_state_to_results, if: :buyer_selected_contract_value?
 
       # attribute to hold and validate the user's selection from the view
       attribute :route_to_market
       validates :route_to_market, inclusion: { in: %w[da_draft further_competition_chosen further_competition] }, on: :route_to_market
-
-      # For making a copy of a procurement
-      amoeba do
-        exclude_association :procurement_suppliers
-        exclude_association :active_procurement_buildings
-      end
 
       def create_procurement_copy
         procurement_copy = amoeba_dup
@@ -44,32 +37,6 @@ module FacilitiesManagement
           procurement_copy.security_policy_document_file.attach(security_policy_document_file.blob)
         end
         procurement_copy
-      end
-
-      def assign_contract_number_fc
-        self.contract_number = generate_contract_number_fc
-      end
-
-      def assign_contract_datetime
-        self.contract_datetime = Time.now.in_time_zone('London').strftime('%d/%m/%Y -%l:%M%P')
-      end
-
-      def generate_contract_number_fc
-        ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
-      end
-
-      def self.used_further_competition_contract_numbers_for_current_year
-        where('contract_number like ?', 'RM3860-FC%')
-          .where('contract_number like ?', "%-#{Date.current.year}")
-          .pluck(:contract_number)
-          .map { |contract_number| contract_number.split('-')[1].split('FC')[1] }
-      end
-
-      def before_each_procurement_pension_funds(new_pension_fund)
-        new_pension_fund.case_sensitive_error = false
-        procurement_pension_funds.each do |saved_pension_fund|
-          new_pension_fund.case_sensitive_error = true if (saved_pension_fund.name_downcase == new_pension_fund.name_downcase) && (saved_pension_fund.object_id != new_pension_fund.object_id)
-        end
       end
 
       def unanswered_contract_date_questions?
@@ -250,52 +217,6 @@ module FacilitiesManagement
       DIRECT_AWARD_VALUE_RANGE = (0..1.49999999e6).freeze
 
       MAX_NUMBER_OF_PENSIONS = 99
-
-      def initial_call_off_period
-        initial_call_off_period_years.years + initial_call_off_period_months.months
-      end
-
-      def initial_call_off_end_date
-        period_end_date(initial_call_off_start_date, initial_call_off_period)
-      end
-
-      def mobilisation_start_date
-        mobilisation_end_date - mobilisation_period.weeks
-      end
-
-      def mobilisation_end_date
-        initial_call_off_start_date - 1.day
-      end
-
-      def extension_period_start_date(extension)
-        initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..(extension - 1))).sum(&:period) + 1.day
-      end
-
-      def extension_period_end_date(extension)
-        initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..extension)).sum(&:period)
-      end
-
-      def optional_call_off_extension(extension)
-        optional_call_off_extensions.find_by(extension: extension)
-      end
-
-      def build_optional_call_off_extensions
-        (0..3).each do |extension|
-          optional_call_off_extensions.find_or_initialize_by(extension: extension)
-        end
-      end
-
-      def sent_offers
-        procurement_suppliers.where(aasm_state: %w[sent accepted declined expired not_signed]).reject(&:closed?)
-      end
-
-      def live_contracts
-        procurement_suppliers.where(aasm_state: 'signed')
-      end
-
-      def closed_contracts
-        procurement_suppliers.where.not(aasm_state: 'unsent').select(&:closed?)
-      end
 
       def set_close_date
         procurement_suppliers.where.not(aasm_state: 'unsent').last.update(contract_closed_date: DateTime.now.in_time_zone('London'))
@@ -535,13 +456,6 @@ module FacilitiesManagement
         lot_number_selected_by_customer_changed? && aasm_state == 'choose_contract_value' && lot_number_selected_by_customer
       end
 
-      def update_procurement_building_services
-        procurement_buildings.each do |building|
-          building.service_codes.select! { |service_code| service_codes&.include? service_code }
-        end
-        procurement_building_services.where.not(code: service_codes).destroy_all
-      end
-
       def more_than_max_pensions?
         procurement_pension_funds.reject(&:marked_for_destruction?).size >= MAX_NUMBER_OF_PENSIONS
       end
@@ -589,14 +503,6 @@ module FacilitiesManagement
       def service_question_complete_for_codes?(codes, context)
         procurement_building_services.where(code: codes).pluck(context).all?(&:present?)
       end
-
-      def security_policy_document_file_ext_validation
-        return unless security_policy_document_file.attached?
-
-        errors.add(:security_policy_document_file, :wrong_extension) if VALID_FILE_EXTENSIONS.none? { |extension| security_policy_document_file.blob.filename.to_s.end_with?(extension) }
-      end
-
-      VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx'].freeze
 
       def period_end_date(start_date, period)
         end_date = start_date + period
