@@ -43,7 +43,7 @@ module FacilitiesManagement
       private
 
       def set_procurement
-        @procurement = Procurement.find(params[:id] || params[:procurement_id])
+        @procurement = current_user.procurements.find(params[:id] || params[:procurement_id])
       end
 
       def redirect_if_not_da_draft
@@ -241,27 +241,25 @@ module FacilitiesManagement
       end
 
       def procurement_params
-        params.require(:facilities_management_procurement)
-              .permit(
-                :security_policy_document_required,
-                :security_policy_document_name,
-                :security_policy_document_version_number,
-                :security_policy_document_date_dd,
-                :security_policy_document_date_mm,
-                :security_policy_document_date_yyyy,
-                :security_policy_document_file,
-                :payment_method,
-                :using_buyer_detail_for_invoice_details,
-                :using_buyer_detail_for_authorised_detail,
-                :using_buyer_detail_for_notices_detail,
-                :local_government_pension_scheme,
-                :governing_law,
-                procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error],
-                invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode],
-                authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number],
-                notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]
-              )
+        params.require(:facilities_management_procurement).permit(*PAGE_PERMITTED_PARAMS[@page_name])
       end
+
+      PAGE_PERMITTED_PARAMS = {
+        payment_method: [:payment_method],
+        invoicing_contact_details: [:using_buyer_detail_for_invoice_details],
+        new_invoicing_contact_details: [invoice_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]],
+        new_invoicing_contact_details_address: [invoice_contact_detail_attributes: %i[id organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]],
+        authorised_representative: [:using_buyer_detail_for_authorised_detail],
+        new_authorised_representative: [authorised_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number]],
+        new_authorised_representative_address: [authorised_contact_detail_attributes: %i[id organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode telephone_number]],
+        notices_contact_details: [:using_buyer_detail_for_notices_detail],
+        new_notices_contact_details: [notices_contact_detail_attributes: %i[id name job_title email organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]],
+        new_notices_contact_details_address: [notices_contact_detail_attributes: %i[id organisation_address_line_1 organisation_address_line_2 organisation_address_town organisation_address_county organisation_address_postcode]],
+        security_policy_document: %i[security_policy_document_required security_policy_document_name security_policy_document_version_number security_policy_document_date_dd security_policy_document_date_mm security_policy_document_date_yyyy security_policy_document_file],
+        local_government_pension_scheme: [:local_government_pension_scheme],
+        pension_funds: [procurement_pension_funds_attributes: %i[id name percentage _destroy case_sensitive_error]],
+        governing_law: [:governing_law]
+      }.freeze
 
       def set_page_name
         @page_name = if action_name == 'show'

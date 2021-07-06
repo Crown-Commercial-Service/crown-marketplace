@@ -69,8 +69,6 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     it { is_expected.to have_one(:authorised_contact_detail).class_name('FacilitiesManagement::ProcurementAuthorisedContactDetail') }
     it { is_expected.to have_one(:notices_contact_detail).class_name('FacilitiesManagement::ProcurementNoticesContactDetail') }
     it { is_expected.to have_one(:invoice_contact_detail).class_name('FacilitiesManagement::ProcurementInvoiceContactDetail') }
-    it { is_expected.to validate_content_type_of(:security_policy_document_file).allowing('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
-    it { is_expected.to validate_content_type_of(:security_policy_document_file).rejecting('text/plain', 'text/xml', 'image/png') }
   end
 
   describe '#contract_name' do
@@ -1957,30 +1955,107 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
     end
   end
 
-  describe '.security_policy_document_file' do
+  describe 'validations on security_policy_document' do
+    let(:security_policy_document_required) { true }
+    let(:security_policy_document_name) { 'My Security Policy' }
+    let(:security_policy_document_version_number) { '42' }
+    let(:security_policy_document_date_dd) { nil }
+    let(:security_policy_document_date_mm) { nil }
+    let(:security_policy_document_date_yyyy) { nil }
+
+    let(:security_policy_document_file) { Tempfile.new([content_type, ".#{extension}"]) }
+    let(:security_policy_document_file_path) { fixture_file_upload(security_policy_document_file.path, content_type) }
+    let(:content_type) { 'application/pdf' }
+    let(:extension) { 'pdf' }
+
     before do
-      procurement.security_policy_document_required = true
-      procurement.security_policy_document_file = security_policy_document_file
+      procurement.security_policy_document_required = security_policy_document_required
+      procurement.security_policy_document_name = security_policy_document_name
+      procurement.security_policy_document_version_number = security_policy_document_version_number
+      procurement.security_policy_document_date_dd = security_policy_document_date_dd
+      procurement.security_policy_document_date_mm = security_policy_document_date_mm
+      procurement.security_policy_document_date_yyyy = security_policy_document_date_yyyy
+      procurement.security_policy_document_file = security_policy_document_file_path
     end
 
-    context 'when a file is uploaded with the wrong extension' do
-      let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+    after do
+      security_policy_document_file.unlink
+    end
 
-      it 'is not valid' do
-        expect(procurement.save).to be false
+    context 'when considering security_policy_document_required' do
+      context 'and security_policy_document_required is nil' do
+        let(:security_policy_document_required) { nil }
+
+        it 'is not valid and has the correct error messages' do
+          expect(procurement).not_to be_valid(:security_policy_document)
+          expect(procurement.errors[:security_policy_document_required].first).to eq 'Select one option'
+        end
       end
 
-      it 'has the correct error message' do
-        procurement.save
-        expect(procurement.errors[:security_policy_document_file].first).to eq 'The selected file must be a DOC, DOCX or PDF'
+      context 'and security_policy_document_required is false' do
+        let(:security_policy_document_required) { false }
+        let(:security_policy_document_name) { nil }
+        let(:security_policy_document_version_number) { nil }
+        let(:security_policy_document_file_path) { nil }
+
+        it 'is valid' do
+          expect(procurement).to be_valid(:security_policy_document)
+        end
       end
     end
 
-    context 'when a file is uploaded with the correct extension' do
-      let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+    context 'when considering security_policy_document_name' do
+      let(:security_policy_document_name) { nil }
 
-      it 'saves the file successfully' do
-        expect(procurement.save).to be true
+      it 'is not valid and has the correct error messages' do
+        expect(procurement).not_to be_valid(:security_policy_document)
+        expect(procurement.errors[:security_policy_document_name].first).to eq 'Enter a security policy document name'
+      end
+    end
+
+    context 'when considering security_policy_document_version_number' do
+      let(:security_policy_document_version_number) { nil }
+
+      it 'is not valid and has the correct error messages' do
+        expect(procurement).not_to be_valid(:security_policy_document)
+        expect(procurement.errors[:security_policy_document_version_number].first).to eq 'Enter a security policy document version number'
+      end
+    end
+
+    context 'when considering security_policy_document_date' do
+      context 'and it is not a real date' do
+        let(:security_policy_document_date_dd) { '29' }
+        let(:security_policy_document_date_mm) { '02' }
+        let(:security_policy_document_date_yyyy) { '2021' }
+
+        it 'is not valid and has the correct error messages' do
+          expect(procurement).not_to be_valid(:security_policy_document)
+          expect(procurement.errors[:security_policy_document_date].first).to eq 'The selected date is not valid'
+        end
+      end
+    end
+
+    context 'when considering the file content' do
+      context 'and the content types are valid' do
+        [['application/pdf', 'pdf'], ['application/msword', 'doc'], ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'docx']].each do |content_type, extension|
+          let(:content_type) { content_type }
+          let(:extension) { extension }
+
+          it 'is valid' do
+            expect(procurement).to be_valid(:security_policy_document)
+          end
+        end
+      end
+
+      context 'and the content types are not valid' do
+        [['text/plain', 'txt'], ['text/xml', 'xml'], ['image/png', 'png']].each do |content_type, extension|
+          let(:content_type) { content_type }
+          let(:extension) { extension }
+
+          it 'is not valid' do
+            expect(procurement).not_to be_valid(:security_policy_document)
+          end
+        end
       end
     end
   end
@@ -2003,6 +2078,70 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       it 'adds the contract date time' do
         expect(procurement.contract_datetime).to be_present
+      end
+    end
+  end
+
+  describe 'valid on contract_details' do
+    let(:payment_method) { 'bacs' }
+    let(:using_buyer_detail_for_invoice_details) { true }
+    let(:using_buyer_detail_for_authorised_detail) { true }
+    let(:using_buyer_detail_for_notices_detail) { true }
+    let(:security_policy_document_required) { false }
+    let(:local_government_pension_scheme) { false }
+    let(:governing_law) { 'english' }
+
+    before do
+      procurement.payment_method = payment_method
+      procurement.using_buyer_detail_for_invoice_details = using_buyer_detail_for_invoice_details
+      procurement.using_buyer_detail_for_authorised_detail = using_buyer_detail_for_authorised_detail
+      procurement.using_buyer_detail_for_notices_detail = using_buyer_detail_for_notices_detail
+      procurement.security_policy_document_required = security_policy_document_required
+      procurement.local_government_pension_scheme = local_government_pension_scheme
+      procurement.governing_law = governing_law
+    end
+
+    context 'when no contact details hve been answered' do
+      let(:payment_method) { nil }
+      let(:using_buyer_detail_for_invoice_details) { nil }
+      let(:using_buyer_detail_for_authorised_detail) { nil }
+      let(:using_buyer_detail_for_notices_detail) { nil }
+      let(:security_policy_document_required) { nil }
+      let(:local_government_pension_scheme) { nil }
+      let(:governing_law) { nil }
+
+      it 'will not be valid and have the correct error messages' do
+        expect(procurement).not_to be_valid(:contract_details)
+        expect(procurement.errors.full_messages).to match_array [
+          'Payment method You must answer the question about ‘Payment method’',
+          'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’',
+          'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’',
+          'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’',
+          'Security policy document required You must answer the question about ‘Security policy’',
+          'Local government pension scheme You must answer the question about ‘Local Government Pension Scheme’',
+          'Governing law You must answer the question about ‘Governing law’'
+        ]
+      end
+    end
+
+    context 'when some of the contact details have been answered' do
+      let(:using_buyer_detail_for_invoice_details) { nil }
+      let(:using_buyer_detail_for_authorised_detail) { nil }
+      let(:using_buyer_detail_for_notices_detail) { nil }
+
+      it 'will not be valid and have the correct error messages' do
+        expect(procurement).not_to be_valid(:contract_details)
+        expect(procurement.errors.full_messages).to match_array [
+          'Using buyer detail for invoice details You must answer the question about ‘Invoicing contact details’',
+          'Using buyer detail for authorised detail You must answer the question about ‘Authorised representative details’',
+          'Using buyer detail for notices detail You must answer the question about ‘Notices contact details’',
+        ]
+      end
+    end
+
+    context 'when all contact details hve been answered' do
+      it 'will be valid' do
+        expect(procurement).to be_valid(:contract_details)
       end
     end
   end
