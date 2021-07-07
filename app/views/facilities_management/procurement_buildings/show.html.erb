@@ -56,7 +56,7 @@
   </thead>
   <tbody class="govuk-table__body">
     <% services_with_contexts(@volume_procurement_building_services) do |service, context| %>
-      <% service_has_error = service_has_errors(context) %>
+      <% service_has_error = service_has_errors?(context) %>
       <% cell_classes = cell_class(context, service.uval, service_has_error)%>
       <tr id="<%= question_id(service, context, 'volume') %>" class="govuk-table__row <%= 'govuk-form-group--error' if service_has_error %>">
         <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_error %>"><%= service.name %></td>

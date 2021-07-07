@@ -25,23 +25,13 @@ module FacilitiesManagement::ProcurementsHelper
   def display_extension_error_anchor
     error_list = []
 
-    error_list << 'optional_call_off_extensions.years-error' if @procurement.errors[:'optional_call_off_extensions.years']
-    error_list << 'optional_call_off_extensions.months-error' if @procurement.errors[:'optional_call_off_extensions.months']
-    error_list << 'optional_call_off_extensions.base-error' if @procurement.errors[:'optional_call_off_extensions.base']
+    %i[years months base].each do |attribute|
+      error_list << "optional_call_off_extensions.#{attribute}-error" if @procurement.errors.include?(:"optional_call_off_extensions.#{attribute}")
+    end
 
     error_list.each do |error|
       concat(tag.span(id: error))
     end
-  end
-
-  def any_service_codes(procurement_buildings)
-    procurement_buildings.map(&:service_codes).flatten.reject(&:blank?).any?
-  end
-
-  def building_services_status?(status)
-    return t('common.incomplete') unless status == true
-
-    t('common.complete')
   end
 
   PROCUREMENT_STATE = { da_draft: 'DA draft',
@@ -58,41 +48,10 @@ module FacilitiesManagement::ProcurementsHelper
     PROCUREMENT_STATE[procurement_state.to_sym]
   end
 
-  def mobilisation_period_error_case
-    if @procurement.errors[:mobilisation_period].any?
-      0
-    elsif @procurement.errors[:mobilisation_start_date].any?
-      1
-    else
-      2
-    end
-  end
-
   def sort_by_pension_fund_created_at
     # problem was for pension funds with duplicated names,the validation has an error so there is no created_at
     parts = @procurement.procurement_pension_funds.partition { |o| o.created_at.nil? }
     parts.last.sort_by(&:created_at) + parts.first
-  end
-
-  def procurement_building_errors
-    @procurement.errors.details[:"procurement_buildings.service_codes"].map { |error| error[:building_id] }
-  end
-
-  def building_tab_class(building, index)
-    css_class = ''
-    css_class << 'active' if index.zero?
-    css_class << ' govuk-form-group--error' if procurement_building_errors.include? building.id
-    css_class
-  end
-
-  def display_building_services_error(procurement_building)
-    return if procurement_building.errors.empty?
-
-    error = procurement_building.errors
-
-    tag.span(id: "#{procurement_building.building.building_name}-#{error.details[:service_codes].first[:error]}-error", class: 'govuk-error-message') do
-      error[:service_codes].first.to_s
-    end
   end
 
   def buildings_with_missing_regions
@@ -113,10 +72,6 @@ module FacilitiesManagement::ProcurementsHelper
 
   def address_in_a_line(building)
     [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
-  end
-
-  def procurement_buildings_requiring_service_info(procurement)
-    procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
   end
 
   def procurement_building_row(form, building)
