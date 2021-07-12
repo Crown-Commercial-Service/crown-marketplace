@@ -77,7 +77,7 @@ gem 'roo', '~> 2.8.3'
 gem 'jsonpath', '~> 0.5.8'
 
 # robust file download from URL using open-uri
-gem 'down'
+gem 'down', '>= 5.2.0'
 
 # state machine
 gem 'aasm', '~> 5.0'
@@ -138,7 +138,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 2.7.6'
   gem 'factory_bot_rails', '>= 6.1.0'
-  gem 'launchy'
+  gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
   gem 'rspec-rails', '>= 5.0.1'
