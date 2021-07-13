@@ -644,9 +644,9 @@ en:
           user_email_question: Changing the user email will change who can view the supplier dashboard.
       supplier_framework_data:
         index:
-          click_here: Click here
-          click_here_to_html: "%{link} to bulk upload the supplier framework data."
           heading: Supplier framework data
+          manage_supplier_framework_data: "'Manage supplier framework data'"
+          manage_supplier_framework_data_html: You can navigate to %{link}, to bulk upload the supplier framework data.
           regions: Regions
           return_link: Return to admin dashboard
           service_prices: Services, prices and variances
