@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class Procurement < SitePrism::Page
     element :contract_name_field, '#facilities_management_procurement_contract_name'
     element :contract_name, '#main-content > div.govuk-body > div > span'

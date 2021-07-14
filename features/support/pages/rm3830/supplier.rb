@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class Supplier < SitePrism::Page
     section :supplier_tables, '#main-content' do
       section :'Received offers', 'div.govuk-grid-row:nth-child(4) > div:nth-child(1) > table:nth-child(1)' do

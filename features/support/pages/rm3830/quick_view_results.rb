@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class QuickViewResults < SitePrism::Page
     element :quick_search_contract_name, 'form > div > div:nth-child(1) > div > span'
 

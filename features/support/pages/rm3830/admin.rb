@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class Admin < SitePrism::Page
     section :supplier_details, '#main-content' do
       section :'Current user', 'div:nth-child(5) > div > dl > div' do

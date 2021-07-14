@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class ContractDetail < SitePrism::Page
     section :contract_details, '#contract-details-summary > table > tbody' do
       section :'Payment method', 'tr:nth-child(2)' do

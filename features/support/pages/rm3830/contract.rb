@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class Contract < SitePrism::Page
     element :supplier_name, 'form > table:nth-of-type(1) > tbody > tr:nth-child(2) > td'
 
