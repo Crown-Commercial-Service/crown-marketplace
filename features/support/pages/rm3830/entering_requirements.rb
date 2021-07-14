@@ -1,4 +1,4 @@
-module Pages
+module Pages::RM3830
   class EnteringRequirements < SitePrism::Page
     section 'Contract details', 'form > table:nth-of-type(1)' do
       section 'Contract name', 'tr:nth-of-type(1)' do
