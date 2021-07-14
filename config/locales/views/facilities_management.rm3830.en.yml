@@ -1681,6 +1681,8 @@ en:
             received_offers: Received offers
         sent:
           accepted_offer:
+            contract_name: 'Contract name: %{contract_name}'
+            contract_number: 'Contract number: %{contract_number}'
             title: You have accepted this contract offer
             what_happens_next: What happens next
           declined_offer:

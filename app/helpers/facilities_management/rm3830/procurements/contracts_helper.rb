@@ -1,4 +1,4 @@
-module FacilitiesManagement::Procurements::ContractsHelper
+module FacilitiesManagement::RM3830::Procurements::ContractsHelper
   include FacilitiesManagement::RM3830::ProcurementsHelper
 
   def warning_title
@@ -36,6 +36,6 @@ module FacilitiesManagement::Procurements::ContractsHelper
     end
   end
 
-  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_message'.freeze
-  TITLE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_title'.freeze
+  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.rm3830.procurements.contracts_helper.warning_message'.freeze
+  TITLE_TRANSLATION_SCOPE = 'facilities_management.rm3830.procurements.contracts_helper.warning_title'.freeze
 end

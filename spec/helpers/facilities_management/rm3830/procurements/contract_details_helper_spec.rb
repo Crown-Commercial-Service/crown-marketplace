@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Procurements::ContractDetailsHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper, type: :helper do
   let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
 
   before { @procurement = procurement }
