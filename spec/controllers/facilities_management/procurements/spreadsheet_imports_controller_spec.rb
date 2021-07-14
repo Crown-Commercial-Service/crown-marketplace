@@ -82,14 +82,83 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
   end
 
   describe 'GET show' do
-    before { get :show, params: { id: spreadsheet_import.id, procurement_id: procurement.id } }
+    context 'and the spreadsheet import exists' do
+      before { get :show, params: { id: spreadsheet_import.id, procurement_id: procurement.id } }
 
-    it 'renders the correct template' do
-      expect(response).to render_template(:show)
+      it 'renders the correct template' do
+        expect(response).to render_template(:show)
+      end
+
+      it 'assigns the correct spreadsheet import' do
+        expect(assigns(:spreadsheet_import)).to eq spreadsheet_import
+      end
     end
 
-    it 'assigns the correct spreadsheet import' do
-      expect(assigns(:spreadsheet_import)).to eq spreadsheet_import
+    context 'when the spreadsheet import does not exist' do
+      before { get :show, params: { id: procurement.id, procurement_id: procurement.id } }
+
+      it 'redirects to new_facilities_management_procurement_spreadsheet_import_path' do
+        redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+      end
+    end
+
+    context 'and the spreadsheet import failed' do
+      render_views
+
+      before do
+        spreadsheet_import.update(aasm_state: 'failed', import_errors: import_errors)
+        get :show, params: { id: spreadsheet_import.id, procurement_id: procurement.id }
+      end
+
+      context 'and there are generic errors' do
+        let(:import_errors) { { other_errors: { generic_error: 'generic error' } } }
+
+        it 'renders the failed_generic template' do
+          expect(response).to render_template(partial: '_failed_generic')
+        end
+
+        it 'no errors are collected' do
+          expect(assigns(:error_lists)).to be_nil
+        end
+      end
+
+      context 'and there are template errors' do
+        let(:import_errors) { { other_errors: { file_check_error: :not_started } } }
+
+        it 'renders the failed_template template' do
+          expect(response).to render_template(partial: '_failed_template')
+        end
+
+        it 'no errors are collected' do
+          expect(assigns(:error_lists)).to be_nil
+        end
+      end
+
+      context 'and there are errors on the buildings' do
+        let(:import_errors) do
+          { "Building 1": {
+            building_name: 'Building 1',
+            building_errors: { building_name: [{ error: :blank }], other_building_type: [{ error: :too_long }] },
+            procurement_building_errors: {},
+            procurement_building_services_errors: {}
+          } }
+        end
+
+        it 'renders the failed_non_generic template' do
+          expect(response).to render_template(partial: '_failed_non_generic')
+        end
+
+        it 'has collected the errors' do
+          expect(assigns(:error_lists)).to match({
+                                                   building_errors: [{ attribute: :building_name, building_name: 'Building 1', errors: [:blank] }, { attribute: :other_building_type, building_name: 'Building 1', errors: [:too_long] }],
+                                                   service_matrix_errors: [],
+                                                   service_volume_errors: [],
+                                                   lift_errors: [],
+                                                   service_hour_errors: [],
+                                                   other_errors: []
+                                                 })
+        end
+      end
     end
   end
 
@@ -149,6 +218,18 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsController,
           expect(result['import_status']).to eq state
         end
       end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    before { delete :destroy, params: { id: spreadsheet_import.id, procurement_id: procurement.id } }
+
+    it 'deletes the spreadsheet import' do
+      expect(FacilitiesManagement::SpreadsheetImport.exists?(spreadsheet_import.id)).to be false
+    end
+
+    it 'redirects to new_facilities_management_procurement_spreadsheet_import_path' do
+      redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
     end
   end
 end

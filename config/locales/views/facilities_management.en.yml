@@ -1611,17 +1611,22 @@ en:
       contracts_helper:
         warning_message:
           accepted: Awaiting your confirmation of signed contract.
-          closed: You closed this contract offer on
-          declined: The supplier declined this offer on
+          closed: The contract offer was automatically closed when you offered the procurement to the next supplier on %{contract_closed_date}.
+          declined: The supplier declined this offer on %{supplier_response_date}.
           expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
-          last_closed_1: The contract offer was automatically closed on
-          last_closed_2: when you tried to offer the procurement to the next supplier, but there were no more suppliers.
-          last_closed_3: The contract offer was automatically closed when you offered the procurement to the next supplier on
-          not_signed_1: You confirmed on the
-          not_signed_2: that the contract has not been signed
-          sent_1: This contract offer expires on
-          sent_2: The supplier has not yet responded.
-          signed: You confirmed that the contract period is between
+          last_offer: The contract offer was automatically closed on %{contract_closed_date} when you tried to offer the procurement to the next supplier, but there were no more suppliers.
+          not_signed: You confirmed on the %{contract_not_signed_date} that the contract has not been signed.
+          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The supplier has not yet responded.
+          signed: You confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
+          withdrawn: You closed this contract offer on %{contract_closed_date}.
+        warning_title:
+          accepted: Accepted, awaiting contract signature
+          closed: Closed
+          declined: Declined
+          expired: Not responded
+          not_signed: Accepted, not signed
+          sent: Sent
+          signed: Accepted and signed
       copy_procurement:
         new:
           heading: Create a new procurement using the service requirements and buildings you have previously entered.
@@ -2239,6 +2244,23 @@ en:
           what_happens_next: What happens next
         show:
           buyer: Buyer
+      contracts_helper:
+        warning_message:
+          accepted: Awaiting buyer confirmation of signed contract.
+          declined: You declined this contract offer on %{supplier_response_date}.
+          expired_html: You did not respond to this contract offer within the required timescales,<br/> therefore it was automatically declined with the reason of 'no response'.
+          not_signed_html: The buyer has recorded this contract as 'not signed' on %{contract_not_signed_date}.<br> The contract offer has therefore been closed.
+          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The buyer is waiting for a response before the offer expiry deadline shown above.
+          signed: The buyer confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
+          withdrawn_html: The buyer withdrew this contract offer and closed this procurement on <br/> %{contract_closed_date}.
+        warning_title:
+          accepted: Accepted
+          declined: Declined
+          expired: Not responded
+          not_signed: Not signed
+          sent: Received contract offer
+          signed: Accepted and signed
+          withdrawn: Withdrawn
       dashboard:
         accepted_offers:
           accepted: Accepted

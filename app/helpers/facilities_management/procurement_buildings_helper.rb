@@ -1,8 +1,4 @@
 module FacilitiesManagement::ProcurementBuildingsHelper
-  def checked?(object_value, value)
-    object_value == value
-  end
-
   def cell_class(context, answer, errors)
     css_class = ['govuk-table__cell', 'govuk-!-padding-right-2']
     css_class << 'govuk-border-bottom_none' if errors || (context == :service_hours && answer.present?)
@@ -54,11 +50,7 @@ module FacilitiesManagement::ProcurementBuildingsHelper
   end
 
   def form_object
-    if @step == 'missing_region'
-      @building
-    else
-      @procurement_building
-    end
+    @step == 'missing_region' ? @building : @procurement_building
   end
 
   def question_id(service, context, question)
@@ -73,7 +65,7 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     @external_area_incomplete ||= @procurement_building.external_area_incomplete?
   end
 
-  def service_has_errors(context)
+  def service_has_errors?(context)
     case context
     when :gia
       internal_area_incomplete?

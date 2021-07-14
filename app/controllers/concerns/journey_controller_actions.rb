@@ -1,10 +1,6 @@
 module JourneyControllerActions
   extend ActiveSupport::Concern
 
-  included do
-    helper :journey
-  end
-
   def start
     redirect_to build_journey.first_step_path
   end

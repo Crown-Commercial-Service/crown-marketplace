@@ -3,38 +3,39 @@ module FacilitiesManagement::Procurements::ContractsHelper
 
   def warning_title
     if @contract.closed?
-      'Closed'
+      t('closed', scope: TITLE_TRANSLATION_SCOPE)
     else
-      WARNINGS[@contract.aasm_state.to_sym]
+      t(@contract.aasm_state, scope: TITLE_TRANSLATION_SCOPE)
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def warning_message
-    warning_messages = { sent: "#{t('facilities_management.procurements.contracts_helper.warning_message.sent_1')} #{format_date_time(@contract.contract_expiry_date)}.<br/> #{t('facilities_management.procurements.contracts_helper.warning_message.sent_2')}",
-                         accepted: t('facilities_management.procurements.contracts_helper.warning_message.accepted'),
-                         signed: "#{t('facilities_management.procurements.contracts_helper.warning_message.signed')} #{format_date(@contract.contract_start_date)} and #{format_date(@contract.contract_end_date)}.",
-                         not_signed: "#{t('facilities_management.procurements.contracts_helper.warning_message.not_signed_1')} #{format_date_time @contract.contract_signed_date} #{t('facilities_management.procurements.contracts_helper.warning_message.not_signed_2')}.",
-                         declined: "#{t('facilities_management.procurements.contracts_helper.warning_message.declined')} #{format_date_time(@contract.supplier_response_date)}.",
-                         expired: t('facilities_management.procurements.contracts_helper.warning_message.expired') }
-    if @contract.closed?
-      if !@contract.reason_for_closing.nil?
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
-      elsif @contract.last_offer?
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_1')} #{format_date_time(@contract.contract_closed_date)} #{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_2')}"
-      else
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_3')} #{format_date_time(@contract.contract_closed_date)}."
-      end
+    return closed_warning_message if @contract.closed?
+
+    case @contract.aasm_state
+    when 'sent'
+      t('sent_html', scope: MESSAGE_TRANSLATION_SCOPE, contract_expiry_date: format_date_time(@contract.contract_expiry_date))
+    when 'signed'
+      t('signed', scope: MESSAGE_TRANSLATION_SCOPE, contract_start_date: format_date(@contract.contract_start_date), contract_end_date: format_date(@contract.contract_end_date))
+    when 'not_signed'
+      t('not_signed', scope: MESSAGE_TRANSLATION_SCOPE, contract_not_signed_date: format_date_time(@contract.contract_signed_date))
+    when 'declined'
+      t('declined', scope: MESSAGE_TRANSLATION_SCOPE, supplier_response_date: format_date_time(@contract.supplier_response_date))
     else
-      warning_messages[@contract.aasm_state.to_sym]
+      t(@contract.aasm_state, scope: MESSAGE_TRANSLATION_SCOPE)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
-  WARNINGS = { sent: 'Sent',
-               accepted: 'Accepted, awaiting contract signature',
-               signed: 'Accepted and signed',
-               not_signed: 'Accepted, not signed',
-               declined: 'Declined',
-               expired: 'Not responded' }.freeze
+  def closed_warning_message
+    if @contract.reason_for_closing.present?
+      t('withdrawn', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
+    elsif @contract.last_offer?
+      t('last_offer', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
+    else
+      t('closed', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
+    end
+  end
+
+  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_message'.freeze
+  TITLE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_title'.freeze
 end

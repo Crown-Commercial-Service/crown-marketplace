@@ -1,6 +1,7 @@
 module FacilitiesManagement::ProcurementBuildingsServicesHelper
   def volume_question(pbs)
-    [] unless pbs.this_service[:context].key? :volume
+    return unless pbs.this_service[:context].key? :volume
+
     pbs.this_service[:context][:volume]&.first
   end
 

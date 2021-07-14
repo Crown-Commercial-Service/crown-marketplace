@@ -204,4 +204,29 @@ RSpec.describe FacilitiesManagement::Procurements::ContractDatesHelper, type: :h
       end
     end
   end
+
+  describe '.date_of_first_indexation' do
+    let(:result) { helper.date_of_first_indexation }
+
+    before do
+      procurement.initial_call_off_period_years = initial_call_off_period_years
+      procurement.initial_call_off_period_months = 6
+    end
+
+    context 'when the contract length is less than a year' do
+      let(:initial_call_off_period_years) { 0 }
+
+      it "returns 'Not applicable'" do
+        expect(result).to eq 'Not applicable'
+      end
+    end
+
+    context 'when the contract length is more than a year' do
+      let(:initial_call_off_period_years) { 1 }
+
+      it 'returns one year after the icontract start date' do
+        expect(result).to eq (Time.zone.now + 18.months).strftime '%e %B %Y'
+      end
+    end
+  end
 end
