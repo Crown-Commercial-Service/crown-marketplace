@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper do
   describe '.journey_step_url_former' do
     let(:service_codes) { ['C.1', 'D.1', 'E.1', 'F.1', 'G.1'] }
-    let(:result) { helper.journey_step_url_former(journey_step: journey_step, region_codes: region_codes, service_codes: service_codes) }
+    let(:result) { helper.journey_step_url_former(journey_step: journey_step, framework: 'RM3830', region_codes: region_codes, service_codes: service_codes) }
 
     context 'when there are service codes' do
       let(:journey_step) { 'services' }
       let(:region_codes) { nil }
 
       it 'when the previous journey_step is services' do
-        expect(result).to eq '/facilities-management/choose-services?region_codes=&service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
+        expect(result).to eq '/facilities-management/RM3830/choose-services?region_codes=&service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
       end
     end
 
@@ -19,7 +19,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:region_codes) { ['UKI3', 'UKI4', 'UKI5', 'UKI6', 'UKI7'] }
 
       it 'returns the right link' do
-        expect(result).to eq '/facilities-management/choose-locations?region_codes%5B%5D=UKI3&region_codes%5B%5D=UKI4&region_codes%5B%5D=UKI5&region_codes%5B%5D=UKI6&region_codes%5B%5D=UKI7&service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
+        expect(result).to eq '/facilities-management/RM3830/choose-locations?region_codes%5B%5D=UKI3&region_codes%5B%5D=UKI4&region_codes%5B%5D=UKI5&region_codes%5B%5D=UKI6&region_codes%5B%5D=UKI7&service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
       end
     end
   end
@@ -651,7 +651,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'contract_name' }
 
       it 'returns the edit link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/edit?step=contract_name"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/edit?step=contract_name"
       end
     end
 
@@ -659,7 +659,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'estimated_annual_cost' }
 
       it 'returns the edit link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/edit?step=estimated_annual_cost"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/edit?step=estimated_annual_cost"
       end
     end
 
@@ -667,7 +667,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'tupe' }
 
       it 'returns the edit link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/edit?step=tupe"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/edit?step=tupe"
       end
     end
 
@@ -675,7 +675,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'contract_period' }
 
       it 'returns the summary link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/summary?summary=contract_period"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/summary?summary=contract_period"
       end
     end
 
@@ -683,7 +683,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'services' }
 
       it 'returns the summary link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/summary?summary=services"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/summary?summary=services"
       end
     end
 
@@ -691,7 +691,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'buildings' }
 
       it 'returns the summary link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/summary?summary=buildings"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/summary?summary=buildings"
       end
     end
 
@@ -699,7 +699,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'buildings_and_services' }
 
       it 'returns the summary link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/summary?summary=buildings_and_services"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/summary?summary=buildings_and_services"
       end
     end
 
@@ -707,7 +707,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:section) { 'service_requirements' }
 
       it 'returns the summary link' do
-        expect(result).to eq "/facilities-management/procurements/#{procurement.id}/summary?summary=service_requirements"
+        expect(result).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/summary?summary=service_requirements"
       end
     end
   end

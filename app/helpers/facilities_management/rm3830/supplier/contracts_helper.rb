@@ -26,8 +26,8 @@ module FacilitiesManagement::RM3830::Supplier::ContractsHelper
   end
   # rubocop:enable Metrics/CyclomaticComplexity
 
-  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.supplier.contracts_helper.warning_message'.freeze
-  TITLE_TRANSLATION_SCOPE = 'facilities_management.supplier.contracts_helper.warning_title'.freeze
+  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.rm3830.supplier.contracts_helper.warning_message'.freeze
+  TITLE_TRANSLATION_SCOPE = 'facilities_management.rm3830.supplier.contracts_helper.warning_title'.freeze
 
   def supplier_contract_reason_id(state)
     case state

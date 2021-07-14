@@ -624,19 +624,6 @@ en:
         text: Read the service specification document
     select_services:
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
-    supplier:
-      contracts:
-        accepted_contract_offer:
-          list01_1: The signing of the contract is a process that is undertaken outside of the portal and will require the buyer and supplier to communicate using details provided to make the necessary arrangements.
-          list01_2: Typically you will sign the contract in the order form and share with the buyer within 5 working days. The buyer will then complete the effective date, sign and share back with you (within 2 working days).
-          list01_title: 1. Contract signatures
-          list02_1: The buyer, in this online portal, will then confirm that both parties have signed the contract, which moves the offer into the contracts section on your dashboard, showing the start date and the end date.
-          list02_title: 2. Signature confirmation
-          list03_1: The contract number which can be found in the requirements section is a unique reference number that has been created for this contract and must be used when reporting Management Information.
-          list03_title: 3. Within the contract
-          list04_1: Until the contract is fully signed, the buyer will have the option to withdraw this offer if circumstances require this action, however you will be immediately informed.
-          list04_2: If you have a change of circumstance and need to decline this contract offer after accepting it, please contact the buyer to discuss. They can then close down this contract offer to you, and will then have the option to move onto another supplier.
-          list04_title: 4. Withdraw before signing
     users:
       sign_in_error: You must provide a correct username or password
   header_navigation_links_helper:

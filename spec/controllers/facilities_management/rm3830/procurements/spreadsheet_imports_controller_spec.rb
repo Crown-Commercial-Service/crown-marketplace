@@ -98,8 +98,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
     context 'when the spreadsheet import does not exist' do
       before { get :show, params: { id: procurement.id, procurement_id: procurement.id } }
 
-      it 'redirects to new_facilities_management_procurement_spreadsheet_import_path' do
-        redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+      it 'redirects to new_facilities_management_rm3830_procurement_spreadsheet_import_path' do
+        redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
       end
     end
 
@@ -229,8 +229,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
       expect(FacilitiesManagement::SpreadsheetImport.exists?(spreadsheet_import.id)).to be false
     end
 
-    it 'redirects to new_facilities_management_procurement_spreadsheet_import_path' do
-      redirect_to new_facilities_management_procurement_spreadsheet_import_path(procurement_id: procurement.id)
+    it 'redirects to new_facilities_management_rm3830_procurement_spreadsheet_import_path' do
+      redirect_to new_facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: procurement.id)
     end
   end
 end
