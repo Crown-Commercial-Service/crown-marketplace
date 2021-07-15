@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:procurement) { create(:facilities_management_procurement, user: subject.current_user, aasm_state: 'da_draft') }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, user: subject.current_user, aasm_state: 'da_draft') }
 
   login_fm_buyer_with_details
 
@@ -378,7 +378,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the payment method page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'payment_method', facilities_management_procurement: { payment_method: payment_method } }
+          put :update, params: { procurement_id: procurement.id, page: 'payment_method', facilities_management_rm3830_procurement: { payment_method: payment_method } }
         end
 
         context 'when nothing is selected' do
@@ -419,14 +419,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.invoice_contact_detail = invoice_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'invoicing_contact_details', facilities_management_procurement: { using_buyer_detail_for_invoice_details: using_buyer_detail_for_invoice_details } }
+          put :update, params: { procurement_id: procurement.id, page: 'invoicing_contact_details', facilities_management_rm3830_procurement: { using_buyer_detail_for_invoice_details: using_buyer_detail_for_invoice_details } }
         end
 
         context 'when not using existing invoicing contact details' do
           let(:using_buyer_detail_for_invoice_details) { false }
 
           context 'and invoicing contact details exist' do
-            let(:invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail, procurement: procurement) }
+            let(:invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement) }
 
             it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -466,14 +466,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.authorised_contact_detail = authorised_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'authorised_representative', facilities_management_procurement: { using_buyer_detail_for_authorised_detail: using_buyer_detail_for_authorised_detail } }
+          put :update, params: { procurement_id: procurement.id, page: 'authorised_representative', facilities_management_rm3830_procurement: { using_buyer_detail_for_authorised_detail: using_buyer_detail_for_authorised_detail } }
         end
 
         context 'when not using existing authorised contact details' do
           let(:using_buyer_detail_for_authorised_detail) { false }
 
           context 'and authorised contact details exist' do
-            let(:authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail, procurement: procurement) }
+            let(:authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement) }
 
             it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -513,14 +513,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.notices_contact_detail = notices_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'notices_contact_details', facilities_management_procurement: { using_buyer_detail_for_notices_detail: using_buyer_detail_for_notices_detail } }
+          put :update, params: { procurement_id: procurement.id, page: 'notices_contact_details', facilities_management_rm3830_procurement: { using_buyer_detail_for_notices_detail: using_buyer_detail_for_notices_detail } }
         end
 
         context 'when not using existing notices contact details' do
           let(:using_buyer_detail_for_notices_detail) { false }
 
           context 'and notices contact details exist' do
-            let(:notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail, procurement: procurement) }
+            let(:notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement) }
 
             it 'will redirect to facilities_management_rm3830_procurement_contract_details_path if the invoice_contact_detail is not blank' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -560,12 +560,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to invoicing contact details from the new invoicing contact details page' do
-        let(:empty_invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail_empty, procurement: procurement) }
-        let(:invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail) }
+        let(:empty_invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement) }
+        let(:invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail) }
 
         before do
           procurement.update(invoice_contact_detail: empty_invoice_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details', facilities_management_procurement: { invoice_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details', facilities_management_rm3830_procurement: { invoice_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -577,8 +577,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_invoicing_details = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_invoicing_details = invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_invoicing_details = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_invoicing_details = invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_invoicing_details).to eq full_invoicing_details
           end
@@ -598,12 +598,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to authorised representative details from the new authorised representative details page' do
-        let(:empty_authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail_empty, procurement: procurement) }
-        let(:authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail) }
+        let(:empty_authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement) }
+        let(:authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail) }
 
         before do
           procurement.update(authorised_contact_detail: empty_authorised_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative', facilities_management_procurement: { authorised_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative', facilities_management_rm3830_procurement: { authorised_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -615,8 +615,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_authorised_details = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_authorised_details = authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_authorised_details = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_authorised_details = authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_authorised_details).to eq full_authorised_details
           end
@@ -636,12 +636,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to notices contact details from the new notices contact details page' do
-        let(:empty_notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail_empty, procurement: procurement) }
-        let(:notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail) }
+        let(:empty_notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement) }
+        let(:notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail) }
 
         before do
           procurement.update(notices_contact_detail: empty_notices_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details', facilities_management_procurement: { notices_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details', facilities_management_rm3830_procurement: { notices_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -653,8 +653,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_notices_details = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_notices_details = notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_notices_details = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_notices_details = notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_notices_details).to eq full_notices_details
           end
@@ -678,12 +678,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to new invoicing contact details from the add address page' do
-        let(:empty_invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail_empty, procurement: procurement) }
-        let(:invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail) }
+        let(:empty_invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement) }
+        let(:invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail) }
 
         before do
           procurement.update(invoice_contact_detail: empty_invoice_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details_address', facilities_management_procurement: { invoice_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details_address', facilities_management_rm3830_procurement: { invoice_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -713,12 +713,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to new authorised representative details from the add address page' do
-        let(:empty_authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail_empty, procurement: procurement) }
-        let(:authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail) }
+        let(:empty_authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement) }
+        let(:authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail) }
 
         before do
           procurement.update(authorised_contact_detail: empty_authorised_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative_address', facilities_management_procurement: { authorised_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative_address', facilities_management_rm3830_procurement: { authorised_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -748,12 +748,12 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       end
 
       context 'when continuing to new notices details from the add address page' do
-        let(:empty_notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail_empty, procurement: procurement) }
-        let(:notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail) }
+        let(:empty_notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement) }
+        let(:notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail) }
 
         before do
           procurement.update(notices_contact_detail: empty_notices_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details_address', facilities_management_procurement: { notices_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details_address', facilities_management_rm3830_procurement: { notices_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -784,7 +784,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on Security policy document page' do
         context 'when nothing is selected' do
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: nil } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: nil } } }
 
           it 'renders the edit page' do
             expect(response).to render_template('edit')
@@ -796,7 +796,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         context 'when no is selected' do
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: false } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: false } } }
 
           it 'redirects to show page' do
             expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -811,10 +811,10 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           let(:security_policy_document_name) { 'Security policy document file' }
           let(:security_policy_document_version_number) { '26' }
 
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: true, security_policy_document_name: security_policy_document_name, security_policy_document_version_number: security_policy_document_version_number, security_policy_document_file: security_policy_document_file } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: true, security_policy_document_name: security_policy_document_name, security_policy_document_version_number: security_policy_document_version_number, security_policy_document_file: security_policy_document_file } } }
 
           context 'and the file is invalid' do
-            let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+            let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
 
             it 'renders the edit page' do
               expect(response).to render_template('edit')
@@ -826,7 +826,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           end
 
           context 'and all the details are valid' do
-            let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+            let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
 
             it 'redirects to show page' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -844,7 +844,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the Local Government Pension Scheme page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'local_government_pension_scheme', facilities_management_procurement: { local_government_pension_scheme: local_government_pension_scheme } }
+          put :update, params: { procurement_id: procurement.id, page: 'local_government_pension_scheme', facilities_management_rm3830_procurement: { local_government_pension_scheme: local_government_pension_scheme } }
         end
 
         context 'when nothing is selected' do
@@ -878,7 +878,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when adding new pensions' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_procurement: { procurement_pension_funds_attributes: procurement_pension_funds_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: procurement_pension_funds_attributes } }
         end
 
         context 'when valid pensions are entered' do
@@ -904,7 +904,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
               procurement.reload
               pension_ids = procurement.procurement_pension_funds.order(:name).map(&:id)
 
-              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": true } } } }
+              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": true } } } }
               expect(procurement.procurement_pension_funds.size).to eq 2
             end
           end
@@ -925,7 +925,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the governing law page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'governing_law', facilities_management_procurement: { governing_law: governing_law } }
+          put :update, params: { procurement_id: procurement.id, page: 'governing_law', facilities_management_rm3830_procurement: { governing_law: governing_law } }
         end
 
         context 'when nothing is selected' do
@@ -1060,7 +1060,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         context 'when continuing the journey' do
           context 'when the procurement is valid' do
-            let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: subject.current_user, aasm_state: 'da_draft') }
+            let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: subject.current_user, aasm_state: 'da_draft') }
 
             before { put :update, params: { procurement_id: procurement.id, page: 'contract_details', continue_da: 'Continue' } }
 
@@ -1201,7 +1201,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         context 'when continuing the journey' do
-          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: create(:facilities_management_supplier_detail)) }
+          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: create(:facilities_management_rm3830_supplier_detail)) }
 
           before do
             contract
@@ -1256,7 +1256,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving invoicing contact details incomplete' do
       before do
-        create :facilities_management_procurement_invoice_contact_detail_empty, procurement: procurement
+        create :facilities_management_rm3830_procurement_invoice_contact_detail_empty, procurement: procurement
         procurement.update(using_buyer_detail_for_invoice_details: false)
       end
 
@@ -1323,7 +1323,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when invoicing contact details are complete' do
       before do
-        create :facilities_management_procurement_invoice_contact_detail, procurement: procurement
+        create :facilities_management_rm3830_procurement_invoice_contact_detail, procurement: procurement
         procurement.update(using_buyer_detail_for_invoice_details: false)
       end
 
@@ -1354,7 +1354,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving authorised representative details incomplete' do
       before do
-        create :facilities_management_procurement_authorised_contact_detail_empty, procurement: procurement
+        create :facilities_management_rm3830_procurement_authorised_contact_detail_empty, procurement: procurement
         procurement.update(using_buyer_detail_for_authorised_detail: false)
       end
 
@@ -1421,7 +1421,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when authorised representative details are complete' do
       before do
-        create :facilities_management_procurement_authorised_contact_detail, procurement: procurement
+        create :facilities_management_rm3830_procurement_authorised_contact_detail, procurement: procurement
         procurement.update(using_buyer_detail_for_authorised_detail: false)
       end
 
@@ -1452,7 +1452,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when moving on and leaving notices contact details incomplete' do
       before do
-        create :facilities_management_procurement_notices_contact_detail_empty, procurement: procurement
+        create :facilities_management_rm3830_procurement_notices_contact_detail_empty, procurement: procurement
         procurement.update(using_buyer_detail_for_notices_detail: false)
       end
 
@@ -1519,7 +1519,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
     context 'when notices contact details are complete' do
       before do
-        create :facilities_management_procurement_notices_contact_detail, procurement: procurement
+        create :facilities_management_rm3830_procurement_notices_contact_detail, procurement: procurement
         procurement.update(using_buyer_detail_for_notices_detail: false)
       end
 
@@ -1600,7 +1600,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
       context 'when the pension funds are not empty' do
         before do
           procurement.update(local_government_pension_scheme: true)
-          create_list :facilities_management_procurement_pension_fund, 3, procurement: procurement
+          create_list :facilities_management_rm3830_procurement_pension_fund, 3, procurement: procurement
           get :show, params: { procurement_id: procurement.id }
         end
 
@@ -1619,7 +1619,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
     before { procurement.update(da_journey_state: 'contract_details') }
 
     context 'when adding invoicing contact details' do
-      let(:invoice_contact_detail) { create(:facilities_management_procurement_invoice_contact_detail) }
+      let(:invoice_contact_detail) { create(:facilities_management_rm3830_procurement_invoice_contact_detail) }
 
       context 'when on new_invoicing_contact_details' do
         context 'when invoicing contact details do not exist' do
@@ -1652,7 +1652,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
     end
 
     context 'when adding authorised representative contact details' do
-      let(:authorised_contact_detail) { create(:facilities_management_procurement_authorised_contact_detail) }
+      let(:authorised_contact_detail) { create(:facilities_management_rm3830_procurement_authorised_contact_detail) }
 
       context 'when on new_authorised_representative' do
         context 'when authorised contact details do not exist' do
@@ -1685,7 +1685,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
     end
 
     context 'when adding notice contact details' do
-      let(:notices_contact_detail) { create(:facilities_management_procurement_notices_contact_detail) }
+      let(:notices_contact_detail) { create(:facilities_management_rm3830_procurement_notices_contact_detail) }
 
       context 'when on new_notices_contact_details' do
         context 'when notices contact details do not exist' do

@@ -7,28 +7,28 @@
   <%= subtitle %>
 </p>
 <p class="govuk-!-margin-bottom-1">
-  <%= service_specification_document %>
+  <%= service_specification_document('rm3830') %>
 </p>
 <p class="govuk-caption-m govuk-!-margin-top-0"><%= t('.caption2') %></p>
 <%= display_error @procurement, :service_codes %>
 <div class="govuk-grid-column-full" style="padding-left:0">
   <div class="chooser-input">
     <%= govuk_accordion('edit-services') do %>
-      <% FacilitiesManagement::StaticData.services.each_with_index do |service, index| %>
+      <% FacilitiesManagement::RM3830::StaticData.services.each_with_index do |service, index| %>
         <%= govuk_accordion_add_section(index, service['name'], class: 'chooser-section', data: { section: service['code'], sectionname: service['name'] }) do %>
-          <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
+          <% FacilitiesManagement::RM3830::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
             <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
               <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
                 <div class="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
-                    <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
+                    <%= check_box_tag("facilities_management_rm3830_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
                                       title: work_package['name'],
                                       class: "govuk-checkboxes__input",
                                       sectionid: service['code'],
-                                      id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
+                                      id: "facilities_management_rm3830_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
                     <label style="padding-top:0"
                             class="govuk-label govuk-checkboxes__label"
-                            for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
+                            for="<%= "facilities_management_rm3830_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
                       <%= work_package['name'] %>
                       <br/>
                       <span style="font-weight:lighter;" class="govuk-!-font-size-16" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
@@ -43,7 +43,7 @@
               </fieldset>
             </div>
           <% end %>
-          <% if FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
+          <% if FacilitiesManagement::RM3830::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
             <p><%= t('facilities_management.basket.or_text') %></p>
             <div class="govuk-checkboxes">
               <div class="govuk-checkboxes__item">

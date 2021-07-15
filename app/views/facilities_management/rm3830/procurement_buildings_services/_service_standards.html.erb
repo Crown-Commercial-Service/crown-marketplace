@@ -1,10 +1,10 @@
 <fieldset class="govuk-fieldset">
   <%= hint_details(t('.heading'), t('.hint_text')) %>
   <div class="govuk-!-margin-bottom-5 govuk-!-margin-top-5">
-    <%= service_specification_document %>
+    <%= service_specification_document('rm3830') %>
   </div>
   <% standard_type = service_standard_type %>
-	<% FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
+	<% FacilitiesManagement::RM3830::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
 		<div class="govuk-!-margin-bottom-2">
 			<%= govuk_details(t(".detail_title.#{standard_type}.standard_#{standard}")) do %>
 				<%= t(".detail_text.#{standard_type}.standard_#{standard}") %>
@@ -15,7 +15,7 @@
     <div class="govuk-!-margin-top-3 govuk-!-margin-bottom-5">
       <%= displayed_error %>
       <div class="govuk-radios">
-        <% FacilitiesManagement::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
+        <% FacilitiesManagement::RM3830::ProcurementBuildingService::SERVICE_STANDARDS.each do |standard| %>
           <div class="govuk-radios__item govuk-radios--small">
             <%= f.radio_button :service_standard, standard, class: 'govuk-radios__input' %>
             <%= f.label :service_standard, value: standard, class: 'govuk-label govuk-radios__label' do %>

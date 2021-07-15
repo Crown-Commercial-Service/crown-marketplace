@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.initial_call_off_period_error?' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before { @procurement = procurement }
 
@@ -71,14 +71,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.extension_periods_error?' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:extensions_required) { true }
     let(:years) { 1 }
     let(:months) { 1 }
 
     before do
       procurement.assign_attributes(extensions_required: extensions_required,
-                                    optional_call_off_extensions_attributes: { '0': {
+                                    call_off_extensions_attributes: { '0': {
                                       years: years,
                                       months: months,
                                       extension: 0,
@@ -110,7 +110,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.months' do
+    context 'when there are errors on call_off_extensions.months' do
       let(:months) { nil }
 
       it 'returns true' do
@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.years' do
+    context 'when there are errors on call_off_extensions.years' do
       let(:years) { nil }
 
       it 'returns true' do
@@ -126,7 +126,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.base' do
+    context 'when there are errors on call_off_extensions.base' do
       let(:months) { 0 }
       let(:years) { 0 }
 
@@ -137,7 +137,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.total_contract_length_error?' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before { @procurement = procurement }
 
@@ -175,13 +175,13 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.display_extension_error_anchor' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:years) { 1 }
     let(:months) { 1 }
 
     before do
       procurement.assign_attributes(extensions_required: true,
-                                    optional_call_off_extensions_attributes: { '0': {
+                                    call_off_extensions_attributes: { '0': {
                                       years: years,
                                       months: months,
                                       extension: 0,
@@ -205,28 +205,28 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.months' do
+    context 'when there are errors on call_off_extensions.months' do
       let(:months) { nil }
 
       it 'returns an array with months-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.months-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.months-error']
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.years' do
+    context 'when there are errors on call_off_extensions.years' do
       let(:years) { nil }
 
       it 'returns an array with years-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.years-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.years-error']
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.base' do
+    context 'when there are errors on call_off_extensions.base' do
       let(:months) { 0 }
       let(:years) { 0 }
 
       it 'returns an array with base-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.base-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.base-error']
       end
     end
   end
@@ -308,11 +308,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.sort_by_pension_fund_created_at' do
-    let(:procurement) { create(:facilities_management_procurement) }
-    let(:pension_fund1) { create(:facilities_management_procurement_pension_fund, created_at: 1.day.ago, procurement: procurement) }
-    let(:pension_fund2) { create(:facilities_management_procurement_pension_fund, created_at: 4.days.ago, procurement: procurement) }
-    let(:pension_fund3) { create(:facilities_management_procurement_pension_fund, created_at: 3.days.ago, procurement: procurement) }
-    let(:pension_fund4) { create(:facilities_management_procurement_pension_fund, created_at: 2.days.ago, procurement: procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement) }
+    let(:pension_fund1) { create(:facilities_management_rm3830_procurement_pension_fund, created_at: 1.day.ago, procurement: procurement) }
+    let(:pension_fund2) { create(:facilities_management_rm3830_procurement_pension_fund, created_at: 4.days.ago, procurement: procurement) }
+    let(:pension_fund3) { create(:facilities_management_rm3830_procurement_pension_fund, created_at: 3.days.ago, procurement: procurement) }
+    let(:pension_fund4) { create(:facilities_management_rm3830_procurement_pension_fund, created_at: 2.days.ago, procurement: procurement) }
 
     before do
       pension_fund1
@@ -329,7 +329,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     end
 
     context 'when a pension has nil for created_at' do
-      let(:pension_fund3) { create(:facilities_management_procurement_pension_fund, created_at: nil, procurement: procurement) }
+      let(:pension_fund3) { create(:facilities_management_rm3830_procurement_pension_fund, created_at: nil, procurement: procurement) }
 
       it 'sorts all the pension with pension_fund3 at the end' do
         expect(helper.sort_by_pension_fund_created_at).to eq [pension_fund2, pension_fund4, pension_fund1, pension_fund3]
@@ -342,7 +342,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, address_region_code: nil)) }
     let(:procurement_building3) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
     let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, address_region_code: nil)) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       procurement_building1
@@ -429,7 +429,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.service_name' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, service_codes: ['C.18', 'G.15', 'L.4']) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, service_codes: ['C.18', 'G.15', 'L.4']) }
     let(:result) { helper.service_name(service_code) }
 
     before { @procurement = procurement }
@@ -548,7 +548,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.requirements_errors_list' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       incomplete_sections.each { |section| procurement.errors.add(:base, section) }
@@ -606,7 +606,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.section_has_error?' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before { @procurement = procurement }
 
@@ -642,7 +642,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.link_url' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:result) { helper.link_url(section) }
 
     before { @procurement = procurement }
@@ -712,30 +712,30 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.optional_call_off_extensions' do
-    let(:optional_call_off_extension1) { procurement.optional_call_off_extensions.create(extension: 2, years: 1, months: 1) }
-    let(:optional_call_off_extension2) { procurement.optional_call_off_extensions.create(extension: 0, years: 1, months: 1) }
-    let(:optional_call_off_extension3) { procurement.optional_call_off_extensions.create(extension: 3, years: 1, months: 1) }
-    let(:optional_call_off_extension4) { procurement.optional_call_off_extensions.create(extension: 1, years: 1, months: 1) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+  describe '.call_off_extensions' do
+    let(:call_off_extension1) { procurement.call_off_extensions.create(extension: 2, years: 1, months: 1) }
+    let(:call_off_extension2) { procurement.call_off_extensions.create(extension: 0, years: 1, months: 1) }
+    let(:call_off_extension3) { procurement.call_off_extensions.create(extension: 3, years: 1, months: 1) }
+    let(:call_off_extension4) { procurement.call_off_extensions.create(extension: 1, years: 1, months: 1) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
-      optional_call_off_extension1
-      optional_call_off_extension2
-      optional_call_off_extension3
-      optional_call_off_extension4
+      call_off_extension1
+      call_off_extension2
+      call_off_extension3
+      call_off_extension4
       @procurement = procurement
     end
 
-    it 'returns the optional_call_off_extensions in the right order' do
-      expect(helper.optional_call_off_extensions).to eq [optional_call_off_extension2, optional_call_off_extension4, optional_call_off_extension1, optional_call_off_extension3]
+    it 'returns the call_off_extensions in the right order' do
+      expect(helper.call_off_extensions).to eq [call_off_extension2, call_off_extension4, call_off_extension1, call_off_extension3]
     end
   end
 
-  describe '.optional_call_off_extension_visible' do
+  describe '.call_off_extension_visible' do
     let(:extensions_required) { true }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, extensions_required: extensions_required) }
-    let(:result) { helper.optional_call_off_extension_visible?(0) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required: extensions_required) }
+    let(:result) { helper.call_off_extension_visible?(0) }
 
     before { @procurement = procurement }
 
@@ -757,9 +757,9 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:extension_required) { nil }
       let(:years) { nil }
       let(:months) { nil }
-      let(:optional_call_off_extension) { create(:facilities_management_procurement_optional_call_off_extension, years: years, months: months, extension_required: extension_required) }
+      let(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension, years: years, months: months, extension_required: extension_required) }
 
-      before { procurement.update(optional_call_off_extensions: [optional_call_off_extension]) }
+      before { procurement.update(call_off_extensions: [call_off_extension]) }
 
       context 'when no conditions are met' do
         it 'returns false' do
@@ -792,7 +792,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
 
       context 'when the extension has errors' do
-        before { optional_call_off_extension.errors.add(:years, :blank) }
+        before { call_off_extension.errors.add(:years, :blank) }
 
         it 'returns true' do
           expect(result).to be true
@@ -802,7 +802,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.section_id' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:result) { helper.section_id(section) }
 
     before { @procurement = procurement }
@@ -891,7 +891,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'L building')) }
     let(:procurement_building3) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'K building')) }
     let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'T building')) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       procurement_building1
@@ -907,7 +907,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.number_of_suppliers' do
-    let(:procurement) { create(:facilities_management_procurement_direct_award) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_direct_award) }
 
     before { @procurement = procurement }
 
@@ -917,7 +917,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.procurement_services' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       procurement.procurement_buildings.create(active: true, service_codes: ['I.3', 'K.6'], building: create(:facilities_management_building))
@@ -937,13 +937,13 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.lowest_supplier_price' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
-      create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 2345)
-      create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 4567)
-      create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 1234)
-      create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 3456)
+      create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 2345)
+      create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 4567)
+      create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 1234)
+      create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 3456)
       @procurement = procurement
     end
 
@@ -953,11 +953,11 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.suppliers' do
-    let(:procurement_supplier1) { create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 2345) }
-    let(:procurement_supplier2) { create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 4567) }
-    let(:procurement_supplier3) { create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 1234) }
-    let(:procurement_supplier4) { create(:facilities_management_procurement_supplier, procurement: procurement, direct_award_value: 3456) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement_supplier1) { create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 2345) }
+    let(:procurement_supplier2) { create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 4567) }
+    let(:procurement_supplier3) { create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 1234) }
+    let(:procurement_supplier4) { create(:facilities_management_rm3830_procurement_supplier, procurement: procurement, direct_award_value: 3456) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       procurement_supplier1
@@ -978,7 +978,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.unpriced_services' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       procurement.procurement_buildings.create(active: true, service_codes: ['C.5', 'D.3'], building: create(:facilities_management_building))
@@ -998,7 +998,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe 'services and service_codes' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, service_codes: ['C.7', 'F.4', 'M.1']) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, service_codes: ['C.7', 'F.4', 'M.1']) }
 
     before { @procurement = procurement }
 
@@ -1016,7 +1016,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe 'regions and region_codes' do
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, region_codes: ['UKF2', 'UKJ1', 'UKM23', 'UKN03']) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes: ['UKF2', 'UKJ1', 'UKM23', 'UKN03']) }
 
     before { @procurement = procurement }
 
@@ -1034,9 +1034,9 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe 'methods relating to suppliers' do
-    let(:service_codes) { FacilitiesManagement::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.map { |wp| wp['code'] } }
+    let(:service_codes) { FacilitiesManagement::RM3830::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.map { |wp| wp['code'] } }
     let(:region_codes) { FacilitiesManagement::Region.all.reject { |region| region.code == 'OS01' }.map(&:code) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, region_codes: region_codes, service_codes: service_codes) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes: region_codes, service_codes: service_codes) }
 
     before { @procurement = procurement }
 
@@ -1078,7 +1078,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe '.further_competition_saved_date' do
-    let(:procurement) { create(:facilities_management_procurement, contract_datetime: contract_datetime) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, contract_datetime: contract_datetime) }
 
     context 'when the contract_datetime is 01/02/2019 -  2:53pm' do
       let(:contract_datetime) { '01/02/2019 -  2:53pm' }
@@ -1109,6 +1109,50 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
 
       it 'returns 17 December 2020, 10:11pm' do
         expect(helper.further_competition_saved_date(procurement)).to eq '17 December 2020, 10:11pm'
+      end
+    end
+  end
+
+  describe '.contract_state_to_stage' do
+    let(:result) { helper.contract_state_to_stage(contract_state) }
+
+    context 'when the contract state is sent' do
+      let(:contract_state) { 'sent' }
+
+      it "returns 'Awaiting supplier response'" do
+        expect(result).to eq 'Awaiting supplier response'
+      end
+    end
+
+    context 'when the contract state is accepted' do
+      let(:contract_state) { 'accepted' }
+
+      it "returns 'Awaiting contract signature'" do
+        expect(result).to eq 'Awaiting contract signature'
+      end
+    end
+
+    context 'when the contract state is not_signed' do
+      let(:contract_state) { 'not_signed' }
+
+      it "returns 'Accepted, not signed'" do
+        expect(result).to eq 'Accepted, not signed'
+      end
+    end
+
+    context 'when the contract state is declined' do
+      let(:contract_state) { 'declined' }
+
+      it "returns 'Supplier declined'" do
+        expect(result).to eq 'Supplier declined'
+      end
+    end
+
+    context 'when the contract state is expired' do
+      let(:contract_state) { 'expired' }
+
+      it "returns 'No supplier response'" do
+        expect(result).to eq 'No supplier response'
       end
     end
   end

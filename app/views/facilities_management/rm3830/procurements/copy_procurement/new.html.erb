@@ -14,7 +14,7 @@
             <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
                 <%= f.label :contract_name, t('.label'), class: 'govuk-heading-m' %>
                 <%= displayed_error %>
-                <%= f.text_field :contract_name, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 100, id: 'facilities_management_procurement_contract_name' %>
+                <%= f.text_field :contract_name, class: "govuk-input #{'govuk-input--error' if any_errors}", maxlength: 100, id: 'facilities_management_rm3830_procurement_contract_name' %>
             <% end %>
         </div>
         <%= f.submit pd.navigation_details.primary_text, { class: 'govuk-button govuk-!-margin-right-4', 'aria-label': "#{pd.navigation_details.primary_text}" } %>

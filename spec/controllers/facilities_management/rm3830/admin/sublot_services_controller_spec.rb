@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, type: :controller do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
-  let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
+  let(:supplier) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
   let(:supplier_id) { supplier.supplier_id }
 
   login_fm_admin
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, ty
       end
 
       context 'and the service discount and prices are updated' do
-        let(:latest_rate_card) { CCS::FM::RateCard.latest }
+        let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do
@@ -148,7 +148,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, ty
       end
 
       context 'and the variance is updated' do
-        let(:latest_rate_card) { CCS::FM::RateCard.latest }
+        let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do

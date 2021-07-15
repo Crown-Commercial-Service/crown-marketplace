@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:procurement_building_service) { create(:facilities_management_procurement_building_service, procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user))) }
+  let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, procurement_building: create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement, user: subject.current_user))) }
 
   describe 'GET #edit' do
     login_fm_buyer_with_details
@@ -60,7 +60,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating lift data' do
       before do
         procurement_building_service.update(code: 'C.5')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'lifts', lifts_attributes: { '0': { number_of_floors: lifts[0], "_destroy": false }, '1': { number_of_floors: lifts[1], "_destroy": false }, '2': { number_of_floors: lifts[2], "_destroy": false }, '3': { number_of_floors: lifts[3], "_destroy": false } } } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'lifts', lifts_attributes: { '0': { number_of_floors: lifts[0], "_destroy": false }, '1': { number_of_floors: lifts[1], "_destroy": false }, '2': { number_of_floors: lifts[2], "_destroy": false }, '3': { number_of_floors: lifts[3], "_destroy": false } } } }
       end
 
       context 'when the lift data is valid' do
@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating service hour data' do
       before do
         procurement_building_service.update(code: 'J.1')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_hours', service_hours: service_hours, detail_of_requirement: detail_of_requirement } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'service_hours', service_hours: service_hours, detail_of_requirement: detail_of_requirement } }
       end
 
       context 'when the service hour data is valid' do
@@ -112,7 +112,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
         let(:detail_of_requirement) { '' }
 
         it 'renders the edit page' do
-          patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_hours', service_hours: service_hours, detail_of_requirement: detail_of_requirement } }
+          patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'service_hours', service_hours: service_hours, detail_of_requirement: detail_of_requirement } }
 
           expect(response).to render_template('edit')
         end
@@ -122,7 +122,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating no_of_appliances_for_testing data' do
       before do
         procurement_building_service.update(code: 'E.4')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_appliances_for_testing: no_of_appliances_for_testing } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'volumes', no_of_appliances_for_testing: no_of_appliances_for_testing } }
       end
 
       context 'when the no_of_appliances_for_testing data is valid' do
@@ -150,7 +150,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating tones_to_be_collected_and_removed data' do
       before do
         procurement_building_service.update(code: 'K.2')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', tones_to_be_collected_and_removed: tones_to_be_collected_and_removed } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'volumes', tones_to_be_collected_and_removed: tones_to_be_collected_and_removed } }
       end
 
       context 'when the tones_to_be_collected_and_removed data is valid' do
@@ -178,7 +178,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating no_of_units_to_be_serviced data' do
       before do
         procurement_building_service.update(code: 'K.7')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_units_to_be_serviced: no_of_units_to_be_serviced } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'volumes', no_of_units_to_be_serviced: no_of_units_to_be_serviced } }
       end
 
       context 'when the no_of_units_to_be_serviced data is valid' do
@@ -206,7 +206,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating no_of_consoles_to_be_serviced data' do
       before do
         procurement_building_service.update(code: 'K.1')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'volumes', no_of_consoles_to_be_serviced: no_of_consoles_to_be_serviced } }
       end
 
       context 'when the no_of_consoles_to_be_serviced data is valid' do
@@ -234,7 +234,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating no_of_building_occupants data' do
       before do
         procurement_building_service.update(code: 'G.3')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'volumes', no_of_building_occupants: no_of_building_occupants } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'volumes', no_of_building_occupants: no_of_building_occupants } }
       end
 
       context 'when the no_of_building_occupants data is valid' do
@@ -262,7 +262,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating service standards for routine cleaning' do
       before do
         procurement_building_service.update(code: 'G.1')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
       end
 
       context 'when the routine cleaning data is valid' do
@@ -290,7 +290,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating service standards for building and fabric maintenance' do
       before do
         procurement_building_service.update(code: 'C.7')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
       end
 
       context 'when the building and fabric maintenance data is valid' do
@@ -318,7 +318,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
     context 'when updating service standards for mechanical and electrical engineering maintenance' do
       before do
         procurement_building_service.update(code: 'C.7')
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'service_standards', service_standard: service_standard } }
       end
 
       context 'when the mechanical and electrical engineering maintenance data is valid' do
@@ -353,7 +353,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
       before do
         procurement_building_service.procurement_building.update(service_codes: codes)
         procurement_building_service.update(code: code)
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: 'area' }, facilities_management_building: { gia: gia, external_area: external_area } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: 'area' }, facilities_management_building: { gia: gia, external_area: external_area } }
       end
 
       context 'when the area updated is invalid' do
@@ -421,7 +421,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesControl
 
     context 'when updating neither lift or service hour data' do
       it 'redirects to facilities_management_rm3830_procurement_building_path' do
-        patch :update, params: { id: procurement_building_service.id, facilities_management_procurement_building_service: { service_question: nil } }
+        patch :update, params: { id: procurement_building_service.id, facilities_management_rm3830_procurement_building_service: { service_question: nil } }
 
         expect(response).to redirect_to facilities_management_rm3830_procurement_building_path(procurement_building_service.procurement_building)
       end

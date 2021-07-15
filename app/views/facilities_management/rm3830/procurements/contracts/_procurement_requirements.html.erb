@@ -46,11 +46,11 @@
             </td>
         </tr>
         <% if @procurement.extensions_required %>
-          <% @procurement.optional_call_off_extensions.sorted.each do |optional_call_off_extension| %>
+          <% @procurement.call_off_extensions.sorted.each do |call_off_extension| %>
             <tr class="govuk-table__row">
-                <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extension', extension: optional_call_off_extension.extension + 1) %></th>
+                <th class="govuk-table__cell govuk-table__header"><%= t('.call_off_extension', extension: call_off_extension.extension + 1) %></th>
                 <td class="govuk-table__cell">
-                    <%= govuk_details(optional_call_off_extensions_period(optional_call_off_extension)) { extension_period_description(optional_call_off_extension.extension) } %>
+                    <%= govuk_details(call_off_extensions_period(call_off_extension)) { extension_period_description(call_off_extension.extension) } %>
                 </td>
             </tr>
           <% end %>

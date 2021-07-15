@@ -89,7 +89,7 @@ end
 Given('other user accounts exist') do
   create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access], email: 'buyer@test.com')
   supplier_user = create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[fm_access supplier], email: 'othersupplier@test.com')
-  create(:facilities_management_supplier_detail, user: supplier_user)
+  create(:facilities_management_rm3830_supplier_detail, user: supplier_user)
 end
 
 Given('I enter {string} into the Direct award discount filed for {string}') do |value, service|

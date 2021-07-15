@@ -4,14 +4,6 @@ module ApplicationHelper
   include GovUKHelper
   include HeaderNavigationLinksHelper
 
-  def miles_to_metres(miles)
-    DistanceConverter.miles_to_metres(miles)
-  end
-
-  def metres_to_miles(metres)
-    DistanceConverter.metres_to_miles(metres)
-  end
-
   def feedback_email_link
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
@@ -263,11 +255,11 @@ module ApplicationHelper
   end
 
   def da_eligible?(code)
-    CCS::FM::Rate.where.not(framework: nil).map(&:code).include? code
+    FacilitiesManagement::RM3830::Rate.where.not(framework: nil).map(&:code).include? code
   end
 
-  def service_specification_document
-    link_to_public_file_for_download(t('facilities_management.documents.service_specification_document.name'), :pdf, t('facilities_management.documents.service_specification_document.text'), true, alt: t('facilities_management.select_services.servicespec_link_alttext'))
+  def service_specification_document(framework)
+    link_to_public_file_for_download(t("facilities_management.#{framework}.documents.service_specification_document.name"), :pdf, t("facilities_management.#{framework}.documents.service_specification_document.text"), true, alt: t('facilities_management.select_services.servicespec_link_alttext'))
   end
 
   def govuk_radio_driver
