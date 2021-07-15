@@ -6,7 +6,7 @@ module FacilitiesManagement
     def initialize(procurement_id)
       @sum_uom = 0
       @sum_benchmark = 0
-      @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+      @procurement = FacilitiesManagement::RM3830::Procurement.find(procurement_id)
       initialize_from_procurement
 
       frozen_rates = CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement_id)

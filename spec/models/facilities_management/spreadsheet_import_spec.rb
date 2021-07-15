@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImport, type: :model do
-  subject(:import) { create(:facilities_management_procurement_spreadsheet_import, procurement: create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
+  subject(:import) { create(:facilities_management_procurement_spreadsheet_import, procurement: create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
 
   describe 'aasm_state' do
     it 'starts at upload state' do

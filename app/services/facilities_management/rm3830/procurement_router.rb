@@ -38,7 +38,7 @@ class FacilitiesManagement::RM3830::ProcurementRouter
       return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_rm3830_procurement_path(id: @id) : facilities_management_rm3830_procurements_path
     end
     return edit_facilities_management_rm3830_procurement_path(id: @id, step: previous_step) if @step == 'services'
-    return facilities_management_rm3830_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
+    return facilities_management_rm3830_procurement_building_path(FacilitiesManagement::RM3830::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
     summary_page? ? facilities_management_rm3830_procurement_summary_path(procurement_id: @id, summary: @step) : facilities_management_rm3830_procurement_path(id: @id)
   end

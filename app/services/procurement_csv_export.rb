@@ -185,14 +185,14 @@ class ProcurementCsvExport
   CONTRACT_BEARING_STATES = %w[direct_award closed].freeze
 
   def self.find_contracts(start_date, end_date)
-    FacilitiesManagement::ProcurementSupplier
+    FacilitiesManagement::RM3830::ProcurementSupplier
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: 'unsent')
       .select { |contract| CONTRACT_BEARING_STATES.include?(contract.procurement.aasm_state) }
   end
 
   def self.find_procurements(start_date, end_date)
-    FacilitiesManagement::Procurement
+    FacilitiesManagement::RM3830::Procurement
       .where(updated_at: (start_date..(end_date + 1)))
       .where.not(aasm_state: CONTRACT_BEARING_STATES)
   end

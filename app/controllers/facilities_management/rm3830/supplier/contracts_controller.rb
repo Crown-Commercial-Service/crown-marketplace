@@ -37,7 +37,7 @@ class FacilitiesManagement::RM3830::Supplier::ContractsController < FacilitiesMa
   end
 
   def set_contract
-    @contract = FacilitiesManagement::ProcurementSupplier.find(params[:id])
+    @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(params[:id])
   end
 
   def set_procurement

@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:spreadsheet_import) { create(:facilities_management_procurement_spreadsheet_import, procurement: procurement) }
-  let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: subject.current_user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: subject.current_user) }
 
   login_fm_buyer_with_details
 

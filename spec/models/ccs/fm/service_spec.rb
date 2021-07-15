@@ -7,7 +7,7 @@ RSpec.describe CCS::FM::Service, type: :model do
 
   it 'DA contains an example service using a frozen rate' do
     user = create(:user)
-    procurement = create(:facilities_management_procurement, user: user)
+    procurement = create(:facilities_management_rm3830_procurement, user: user)
 
     frozen_rate = CCS::FM::FrozenRate.new(facilities_management_procurement_id: procurement.id, code: 'C.1', framework: 1.2, benchmark: 2.2, standard: 'Y', direct_award: true)
     frozen_rate.save!

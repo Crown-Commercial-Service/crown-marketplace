@@ -4,7 +4,7 @@ module FacilitiesManagement
     sidekiq_options queue: 'fm', retry: true
 
     def perform(id)
-      contract = FacilitiesManagement::ProcurementSupplier.find(id)
+      contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(id)
       contract.send_reminder_email_to_buyer if contract.aasm_state == 'accepted'
     end
   end

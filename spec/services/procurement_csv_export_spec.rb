@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.describe ProcurementCsvExport do
   let!(:procurement_in_search) do
-    proc = create(:facilities_management_procurement)
+    proc = create(:facilities_management_rm3830_procurement)
     proc.user.buyer_detail = build(:buyer_detail)
     proc.reload
   end
 
-  let!(:procurement_in_results) { create(:facilities_management_procurement_direct_award, aasm_state: 'results') }
+  let!(:procurement_in_results) { create(:facilities_management_rm3830_procurement_direct_award, aasm_state: 'results') }
 
   let(:start_date) { Time.zone.today - 1 }
   let(:end_date) { Time.zone.today + 1 }
 
   # rubocop:disable Rails/SkipsModelValidations
   let!(:procurement_in_da) do
-    proc = create(:facilities_management_procurement_with_contact_details)
+    proc = create(:facilities_management_rm3830_procurement_with_contact_details)
 
     proc.procurement_suppliers.each do |contract|
       supplier = create(:facilities_management_supplier_detail)
@@ -26,7 +26,7 @@ RSpec.describe ProcurementCsvExport do
   end
 
   let!(:procurement_in_closed) do
-    proc = create(:facilities_management_procurement_with_contact_details)
+    proc = create(:facilities_management_rm3830_procurement_with_contact_details)
     proc.update_attribute(:aasm_state, 'closed')
     proc.procurement_suppliers.first.update_attribute(:aasm_state, 'sent')
     proc.reload

@@ -4,7 +4,7 @@ require 'rails_helper'
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
-  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search', user: subject.current_user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, contract_name: 'New search', user: subject.current_user) }
 
   context 'without buyer details' do
     login_fm_buyer
@@ -372,7 +372,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         context 'when Save and continue is selected with no region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
-            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id)
           end
         end
@@ -380,7 +380,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         context 'when Save and continue is selected with region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
             post :create, params: { facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
-            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
         end
@@ -1098,7 +1098,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
   end
 
   describe 'GET further_competition_spreadsheet' do
-    let(:procurement) { create(:facilities_management_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
 
     login_fm_buyer_with_details
 

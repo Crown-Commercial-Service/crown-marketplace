@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:estimated_cost_known) { nil }
     let(:service_hours) { nil }
     let(:procurement_building_service) do
-      create(:facilities_management_procurement_building_service,
+      create(:facilities_management_rm3830_procurement_building_service,
              code: code,
              service_standard: service_standard,
              no_of_appliances_for_testing: no_of_appliances_for_testing,
@@ -38,8 +38,8 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
              tones_to_be_collected_and_removed: tones_to_be_collected_and_removed,
              no_of_units_to_be_serviced: no_of_units_to_be_serviced,
              service_hours: service_hours,
-             procurement_building: create(:facilities_management_procurement_building_no_services,
-                                          procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
+             procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                          procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_annual_cost: estimated_annual_cost, estimated_cost_known: estimated_cost_known)))
     end
 
     context 'when one building and one service' do
@@ -1180,11 +1180,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when tupe is true' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, tupe: true, estimated_cost_known: false)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, tupe: true, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1199,12 +1199,12 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when London location' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                             building_id: create(:facilities_management_building_london).id,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1219,14 +1219,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when CAFM true' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:cafm_procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'M.1',
                procurement_building: procurement_building_service.procurement_building)
       end
@@ -1244,14 +1244,14 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when Helpdesk true' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:helpdesk_procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'N.1',
                procurement_building: procurement_building_service.procurement_building)
       end
@@ -1269,11 +1269,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when estimated value is known' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings,
                                                                 estimated_cost_known: true,
                                                                 estimated_annual_cost: 5500)))
       end
@@ -1290,11 +1290,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when procurement initial call of period is for 2 years' do
       let(:code) { nil }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: code,
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 2, estimated_cost_known: false)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, initial_call_off_period_years: 2, estimated_cost_known: false)))
       end
 
       context 'when service is C.1' do
@@ -1309,17 +1309,17 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     context 'when multiple buildings' do
       let(:service_hours) { 1820 }
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.11',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:procurement_building_service_1) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'J.5',
                service_hours: service_hours,
-               procurement_building: create(:facilities_management_procurement_building_no_services,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                             procurement: procurement_building_service.procurement_building.procurement))
       end
       let(:procurement) { procurement_building_service_1.procurement_building.procurement }
@@ -1331,21 +1331,21 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when multiple services with benchmark cost but no buyer input' do
       let(:procurement_building_service_c11) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.11',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                             building_id: create(:facilities_management_building_london).id,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: false)))
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: false)))
       end
       let(:procurement_building_service_c4) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.4',
                service_standard: 'A',
                procurement_building: procurement_building_service_c11.procurement_building)
       end
       let(:procurement_building_service_l2) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'L.2',
                service_standard: 'A',
                procurement_building: procurement_building_service_c4.procurement_building)
@@ -1353,7 +1353,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       context 'when the variance is over 30%' do
         let(:procurement_building_service_d1) do
-          create(:facilities_management_procurement_building_service,
+          create(:facilities_management_rm3830_procurement_building_service,
                  code: 'D.1',
                  procurement_building: procurement_building_service_l2.procurement_building)
         end
@@ -1384,11 +1384,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when region is UKH1' do
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.1',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
         FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
@@ -1413,10 +1413,10 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when service is L.2' do
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'L.2',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
         FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
@@ -1441,32 +1441,32 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when multiple services' do
       let(:procurement_building_service_c1) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.1',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                             building_id: create(:facilities_management_building_london).id,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, estimated_cost_known: true, estimated_annual_cost: 1000)))
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, estimated_cost_known: true, estimated_annual_cost: 1000)))
       end
       let(:procurement_building_service_c2) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.2',
                service_standard: 'A',
                procurement_building: procurement_building_service_c1.procurement_building)
       end
       let(:procurement_building_service_c3) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.3',
                service_standard: 'A',
                procurement_building: procurement_building_service_c2.procurement_building)
       end
       let(:procurement_building_service_c21) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.21',
                procurement_building: procurement_building_service_c3.procurement_building)
       end
       let(:procurement_building_service_c22) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.22',
                procurement_building: procurement_building_service_c21.procurement_building)
       end
@@ -1496,19 +1496,19 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when multiple regions' do
       let(:procurement_building_service_c5) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.5',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
       let(:procurement_building_service_c6) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.6',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                             building_id: create(:facilities_management_building_london).id,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings)))
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
 
       let(:procurement) { procurement_building_service_c6.procurement_building.procurement }
@@ -1537,11 +1537,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
     context 'when lot 1b' do
       let(:procurement_building_service) do
-        create(:facilities_management_procurement_building_service,
+        create(:facilities_management_rm3830_procurement_building_service,
                code: 'C.5',
                service_standard: 'A',
-               procurement_building: create(:facilities_management_procurement_building_no_services,
-                                            procurement: create(:facilities_management_procurement_no_procurement_buildings, initial_call_off_period_years: 7)))
+               procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
+                                            procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, initial_call_off_period_years: 7)))
       end
       let(:supplier_name) do
         FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.address_region_code], [procurement_building_service.code]).first.supplier_name

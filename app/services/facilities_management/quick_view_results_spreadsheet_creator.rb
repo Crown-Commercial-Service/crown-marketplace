@@ -2,7 +2,7 @@ class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
   attr_accessor :session_data
 
   def initialize(procurement_id)
-    @procurement = FacilitiesManagement::Procurement.find(procurement_id)
+    @procurement = FacilitiesManagement::RM3830::Procurement.find(procurement_id)
     @buyer_detail = @procurement.user.buyer_detail
     @region_codes = @procurement.region_codes
     @service_codes = @procurement.service_codes

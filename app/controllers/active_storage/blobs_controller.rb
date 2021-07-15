@@ -27,8 +27,8 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
   end
 
   def authorize_contract_procurement_view
-    contract = FacilitiesManagement::ProcurementSupplier.find_by(id: params[:contract_id])
-    procurement = FacilitiesManagement::Procurement.find_by(id: params[:procurement_id])
+    contract = FacilitiesManagement::RM3830::ProcurementSupplier.find_by(id: params[:contract_id])
+    procurement = FacilitiesManagement::RM3830::Procurement.find_by(id: params[:procurement_id])
 
     raise ActionController::RoutingError, 'not found' if contract.blank? && procurement.blank?
 

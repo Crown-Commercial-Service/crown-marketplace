@@ -15,7 +15,7 @@ if ENV["fm"]
   services = FacilitiesManagement::StaticData.work_packages.select!{|wc| wc if wc['code'] != "G.1" && wk_codes.include?(wc['work_package_code'])}
   service_codes = services.map{|s| s['code']}
 
-  procurement = FacilitiesManagement::Procurement.create!(
+  procurement = FacilitiesManagement::RM3830::Procurement.create!(
     user_id: user.id,
     aasm_state: "detailed_search",
     service_codes: service_codes,
@@ -54,7 +54,7 @@ if ENV["fm"]
     building.address_region_code = region[0]['code']
     building.address_region = region[0]['region']
     building.save
-    procurement_building = FacilitiesManagement::ProcurementBuilding.create!(
+    procurement_building = FacilitiesManagement::RM3830::ProcurementBuilding.create!(
       procurement: procurement,
       building_id: building.id,
       service_codes: service_codes,

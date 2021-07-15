@@ -3,7 +3,7 @@ namespace :procurements do
   task cleanup: :environment do
     p 'Removing procurements lacking suppliers (contracts)'
 
-    FacilitiesManagement::Procurement
+    FacilitiesManagement::RM3830::Procurement
       .includes(:procurement_suppliers)
       .where(aasm_state: %w[results da_draft direct_award further_competition closed]).each do |procurement|
       if procurement.procurement_suppliers.none?

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement, user: subject.current_user)) }
+  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement, user: subject.current_user)) }
 
   describe 'GET #show' do
     context 'when logged in as the fm buyer that created the procurement' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
-  let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia, assessed_value: 11541.72, lot_number: '1a') }
+  let(:procurement_with_buildings) { create(:facilities_management_rm3830_procurement_for_further_competition_with_gia, assessed_value: 11541.72, lot_number: '1a') }
   let(:spreadsheet_builder) { described_class.new(procurement_with_buildings.id) }
 
   let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }

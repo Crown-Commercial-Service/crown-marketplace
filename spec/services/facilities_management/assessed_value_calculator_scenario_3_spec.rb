@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
   let(:lot_number) { assessed_value_calulator.lot_number }
 
   let(:user) { create(:user) }
-  let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, user: user, estimated_cost_known: false, service_codes: service_codes, **additional_params) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: user, estimated_cost_known: false, service_codes: service_codes, **additional_params) }
 
   describe 'when some, but not all, services are missing framework and beanchmaek rate and there is no buyer input' do
     context 'and the price is in the lot 1a range' do
@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: false, mobilisation_period_required: false, extensions_required: false, initial_call_off_period_years: 1, initial_call_off_period_months: 6 } }
 
         before do
-          create(:facilities_management_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
         end
 
@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: true, mobilisation_period_required: true, mobilisation_period: 4, extensions_required: false, initial_call_off_period_years: 1, initial_call_off_period_months: 6 } }
 
         before do
-          create(:facilities_management_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
         end
 
@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: false, mobilisation_period_required: false, extensions_required: false, initial_call_off_period_years: 1, initial_call_off_period_months: 6 } }
 
         before do
-          create(:facilities_management_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'C.2').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'G.3').update(service_standard: 'A', no_of_building_occupants: 10000)
@@ -68,7 +68,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: true, mobilisation_period_required: true, mobilisation_period: 4, extensions_required: false, initial_call_off_period_years: 1, initial_call_off_period_months: 6 } }
 
         before do
-          create(:facilities_management_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'C.2').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'G.3').update(service_standard: 'A', no_of_building_occupants: 10000)
@@ -90,7 +90,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: false, mobilisation_period_required: false, extensions_required: false, initial_call_off_period_years: 3, initial_call_off_period_months: 1 } }
 
         before do
-          create(:facilities_management_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_normal_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'C.2').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'G.3').update(service_standard: 'A', no_of_building_occupants: 10000)
@@ -110,7 +110,7 @@ RSpec.describe FacilitiesManagement::AssessedValueCalculator do
         let(:additional_params) { { tupe: true, mobilisation_period_required: true, mobilisation_period: 4, extensions_required: false, initial_call_off_period_years: 3, initial_call_off_period_months: 1 } }
 
         before do
-          create(:facilities_management_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
+          create(:facilities_management_rm3830_procurement_building_av_london_building, procurement: procurement, service_codes: service_codes)
           procurement.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'C.2').update(service_standard: 'A')
           procurement.procurement_building_services.find_by(code: 'G.3').update(service_standard: 'A', no_of_building_occupants: 10000)

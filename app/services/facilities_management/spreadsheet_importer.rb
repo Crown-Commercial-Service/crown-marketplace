@@ -198,7 +198,7 @@ class FacilitiesManagement::SpreadsheetImporter
   # Creating procurement buildings
   def add_procurement_buildings
     complete_procurement_array.each do |building|
-      building[:procurement_building] = { object: FacilitiesManagement::ProcurementBuilding.new(procurement: @procurement, active: true), procurement_building_services: [] }
+      building[:procurement_building] = { object: FacilitiesManagement::RM3830::ProcurementBuilding.new(procurement: @procurement, active: true), procurement_building_services: [] }
     end
   end
 
@@ -243,7 +243,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def add_procurement_building_service(procurement_building_services, code, index)
-    procurement_building_service = FacilitiesManagement::ProcurementBuildingService.new(code: code)
+    procurement_building_service = FacilitiesManagement::RM3830::ProcurementBuildingService.new(code: code)
     procurement_building_service.service_standard = extract_standard(SERVICE_CODES[index]) if requires_service_standard?(SERVICE_CODES[index])
     procurement_building_services << { object: procurement_building_service }
   end

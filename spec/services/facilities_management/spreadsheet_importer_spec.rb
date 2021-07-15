@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:process_file_order) { %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services] }
 
   describe '#basic_data_validation' do
-    let(:procurement) { build(:facilities_management_procurement_detailed_search) }
+    let(:procurement) { build(:facilities_management_rm3830_procurement_detailed_search) }
 
     before { spreadsheet_importer.send(:check_file) }
 
@@ -65,7 +65,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { create(:user) }
     let(:spreadsheet_building) { create(:facilities_management_building) }
     let(:spreadsheet_building_2) { create(:facilities_management_building) }
@@ -743,7 +743,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement) }
     let(:name1) { 'Trumpy Towers' }
     let(:name2) { 'Higginbottom Hall' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
@@ -841,7 +841,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement) }
     let(:name1) { 'Wollaton Hall' }
     let(:name2) { 'Wayne Manor' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
@@ -1099,7 +1099,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement) }
     let(:name1) { 'Wollaton Hall' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
     let(:building_data) { [[building1, 'Complete']] }
@@ -1333,7 +1333,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       spreadsheet_importer.import_data
     end
 
-    let(:procurement) { create(:facilities_management_procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement) }
     let(:name1) { 'U.A. High' }
     let(:name2) { 'Funeral Parlor' }
     let(:building1) { create(:facilities_management_building, building_name: name1) }
@@ -1497,7 +1497,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       procurement.reload
     end
 
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { create(:user) }
 
     let(:name1) { 'The TARDIS' }
@@ -1792,7 +1792,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
     before { spreadsheet_import.save }
 
     let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
-    let(:procurement) { build(:facilities_management_procurement_detailed_search) }
+    let(:procurement) { build(:facilities_management_rm3830_procurement_detailed_search) }
 
     context 'when the spreadsheet_import has been deleted' do
       before { spreadsheet_import.delete }

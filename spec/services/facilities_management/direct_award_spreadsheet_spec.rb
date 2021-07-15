@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
   let(:supplier_name) { 'Bogan-Koch' }
   let(:supplier_details) { create(:facilities_management_supplier_detail_with_lots) }
   let(:supplier) { FacilitiesManagement::SupplierDetail.find_by(supplier_name: supplier_name) }
-  let(:contract) { create(:facilities_management_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
+  let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   before { supplier.update(lot_data: supplier_details.lot_data) }
 

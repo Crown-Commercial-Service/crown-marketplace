@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
-  let(:procurement_with_buildings) { create(:facilities_management_procurement_for_further_competition_with_gia) }
+  let(:procurement_with_buildings) { create(:facilities_management_rm3830_procurement_for_further_competition_with_gia) }
 
   let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
 
@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   context 'when testing FC report methods' do
     it 'create a further competition excel,very worksheets are there' do
       first_building = procurement_with_buildings.active_procurement_buildings.first
-      create(:facilities_management_procurement_building_service_with_service_hours, procurement_building: first_building)
+      create(:facilities_management_rm3830_procurement_building_service_with_service_hours, procurement_building: first_building)
 
       report = described_class.new(procurement_with_buildings.id)
 
@@ -32,22 +32,22 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
     let(:estimated_cost_known) { true }
     let(:service_standard) { 'A' }
     let(:procurement_building_service) do
-      create(:facilities_management_procurement_building_service,
+      create(:facilities_management_rm3830_procurement_building_service,
              code: code,
              service_standard: service_standard,
-             procurement_building: create(:facilities_management_procurement_building_no_services,
+             procurement_building: create(:facilities_management_rm3830_procurement_building_no_services,
                                           building_id: create(:facilities_management_building_london).id,
-                                          procurement: create(:facilities_management_procurement_no_procurement_buildings,
+                                          procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings,
                                                               estimated_annual_cost: estimated_annual_cost,
                                                               estimated_cost_known: estimated_cost_known)))
     end
     let(:procurement_building_service_1) do
-      create(:facilities_management_procurement_building_service,
+      create(:facilities_management_rm3830_procurement_building_service,
              code: code1,
              procurement_building: procurement_building_service.procurement_building)
     end
     let(:procurement_building_service_2) do
-      create(:facilities_management_procurement_building_service,
+      create(:facilities_management_rm3830_procurement_building_service,
              code: code2,
              procurement_building: procurement_building_service_1.procurement_building)
     end

@@ -19,7 +19,7 @@ module FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper
   end
 
   def sorted_supplier_list
-    @sorted_supplier_list ||= @procurement.procurement_suppliers.where(direct_award_value: FacilitiesManagement::Procurement::DIRECT_AWARD_VALUE_RANGE).map { |i| { price: i[:direct_award_value], name: i.supplier_name } }
+    @sorted_supplier_list ||= @procurement.procurement_suppliers.where(direct_award_value: FacilitiesManagement::RM3830::Procurement::DIRECT_AWARD_VALUE_RANGE).map { |i| { price: i[:direct_award_value], name: i.supplier_name } }
   end
 
   def supplier_plural

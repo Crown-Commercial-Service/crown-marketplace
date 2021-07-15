@@ -68,7 +68,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsHelper, type: :h
   end
 
   describe '.warning_message and WARNINGS' do
-    let(:contract) { create(:facilities_management_procurement_supplier, aasm_state: aasm_state, offer_sent_date: Time.new(2021, 7, 5, 20, 0, 0).in_time_zone('London'), **attributes) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier, aasm_state: aasm_state, offer_sent_date: Time.new(2021, 7, 5, 20, 0, 0).in_time_zone('London'), **attributes) }
     let(:attributes) { {} }
     let(:warning_title) { helper.warning_title }
     let(:warning_message) { helper.warning_message }

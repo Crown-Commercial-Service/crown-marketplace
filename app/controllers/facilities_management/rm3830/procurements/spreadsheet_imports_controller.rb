@@ -42,7 +42,7 @@ module FacilitiesManagement
         private
 
         def set_procurement
-          @procurement = FacilitiesManagement::Procurement.find(params[:procurement_id])
+          @procurement = Procurement.find(params[:procurement_id])
         end
 
         def set_spreadsheet_import

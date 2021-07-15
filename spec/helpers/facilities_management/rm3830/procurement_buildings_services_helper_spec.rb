@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper, type: :helper do
-  let(:procurement_building_service) { create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building) }
-  let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
-  let(:procurement) { create(:facilities_management_procurement) }
+  let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, code: code, procurement_building: procurement_building) }
+  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement) }
 
   describe 'volume_question' do
     let(:result) { helper.volume_question(procurement_building_service) }
@@ -198,10 +198,10 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper,
 
   describe '.sort_by_lifts_created_at' do
     let(:code) { 'C.5' }
-    let(:procurement_lift1) { create(:facilities_management_lift, created_at: 1.day.ago, procurement_building_service: procurement_building_service) }
-    let(:procurement_lift2) { create(:facilities_management_lift, created_at: 4.days.ago, procurement_building_service: procurement_building_service) }
-    let(:procurement_lift3) { create(:facilities_management_lift, created_at: 3.days.ago, procurement_building_service: procurement_building_service) }
-    let(:procurement_lift4) { create(:facilities_management_lift, created_at: 2.days.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift1) { create(:facilities_management_rm3830_lift, created_at: 1.day.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift2) { create(:facilities_management_rm3830_lift, created_at: 4.days.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift3) { create(:facilities_management_rm3830_lift, created_at: 3.days.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift4) { create(:facilities_management_rm3830_lift, created_at: 2.days.ago, procurement_building_service: procurement_building_service) }
 
     before do
       procurement_lift1
@@ -218,7 +218,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsServicesHelper,
     end
 
     context 'when a lift has nil for created_at' do
-      let(:procurement_lift2) { create(:facilities_management_lift, created_at: nil, procurement_building_service: procurement_building_service) }
+      let(:procurement_lift2) { create(:facilities_management_rm3830_lift, created_at: nil, procurement_building_service: procurement_building_service) }
 
       it 'sorts all the lifts with procurement_lift2 at the end' do
         expect(helper.sort_by_lifts_created_at).to eq [procurement_lift3, procurement_lift4, procurement_lift1, procurement_lift2]

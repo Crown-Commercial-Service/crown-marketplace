@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_many  :procurements,
             inverse_of: :user,
-            class_name: 'FacilitiesManagement::Procurement',
+            class_name: 'FacilitiesManagement::RM3830::Procurement',
             dependent: :destroy
 
   has_one :buyer_detail,

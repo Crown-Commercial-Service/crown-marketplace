@@ -19,7 +19,7 @@ module FacilitiesManagement
       before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
       def index
-        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
+        @searches = current_user.procurements.where(aasm_state: Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
         @sent_offers = sent_offers
         @contracts = live_contracts
@@ -367,7 +367,7 @@ module FacilitiesManagement
       RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
 
       def sent_offers
-        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
+        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::RM3830::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts

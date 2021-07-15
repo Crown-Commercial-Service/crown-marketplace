@@ -36,13 +36,13 @@ module FacilitiesManagement
           private
 
           def set_contract
-            @contract = FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+            @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(params[:contract_id])
           end
 
           protected
 
           def authorize_user
-            @contract ||= FacilitiesManagement::ProcurementSupplier.find(params[:contract_id])
+            @contract ||= FacilitiesManagement::RM3830::ProcurementSupplier.find(params[:contract_id])
             authorize! :manage, @contract.procurement
           end
         end

@@ -5,8 +5,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
 
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: subject.current_user) }
-  let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: subject.current_user) }
+  let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
   let(:user) { subject.current_user }
   let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
   let(:supplier) { create(:facilities_management_supplier_detail) }
@@ -170,7 +170,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
     context 'when contract is closed' do
       before do
         contract.accept!
-        create(:facilities_management_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
+        create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: 'Some reason' } }
       end
 
@@ -181,8 +181,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
   end
 
   describe '.authorize_user' do
-    let(:contract) { create(:facilities_management_procurement_supplier) }
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
     let(:wrong_user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
 
@@ -218,8 +218,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
   end
 
   describe 'GET show' do
-    let(:contract) { create(:facilities_management_procurement_supplier) }
-    let(:procurement) { create(:facilities_management_procurement, user: controller.current_user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: controller.current_user) }
 
     context 'when logging in as an fm buyer' do
       login_fm_buyer_with_details
@@ -253,8 +253,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
   end
 
   describe 'GET edit' do
-    let(:procurement) { create(:facilities_management_procurement, user: controller.current_user) }
-    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: controller.current_user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement) }
 
     login_fm_buyer_with_details
 
@@ -267,7 +267,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
     end
 
     context 'when offering to next supplier' do
-      let(:ineligible_contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }
+      let(:ineligible_contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 2_000_000) }
 
       context 'with an eligible contract' do
         it 'returns the edit template' do
@@ -292,7 +292,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       let(:procurement_state) { 'direct_award' }
 
       before do
-        create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 1000000)
+        create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement, direct_award_value: 1000000)
         procurement.update(aasm_state: procurement_state)
         contract.update(aasm_state: state)
         get :edit, params: { procurement_id: procurement.id, id: contract.id, name: 'next_supplier' }
@@ -489,7 +489,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
     context 'when contract is closed' do
       before do
         contract.update(aasm_state: 'sent')
-        create(:facilities_management_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
+        create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
         get :edit, params: { procurement_id: procurement.id, id: contract.id }
       end
 
