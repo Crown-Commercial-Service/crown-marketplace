@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_113607) do
+ActiveRecord::Schema.define(version: 2021_07_14_113453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -410,124 +410,6 @@ ActiveRecord::Schema.define(version: 2021_06_24_113607) do
     t.text "service_usage", array: true
   end
 
-  create_table "legal_services_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "aasm_state", limit: 15
-    t.string "suppliers", limit: 255
-    t.string "supplier_lot_1_service_offerings", limit: 255
-    t.string "supplier_lot_2_service_offerings", limit: 255
-    t.string "supplier_lot_3_service_offerings", limit: 255
-    t.string "supplier_lot_4_service_offerings", limit: 255
-    t.string "rate_cards", limit: 255
-    t.jsonb "data"
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "suppliers_data"
-  end
-
-  create_table "legal_services_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "legal_services_supplier_id", null: false
-    t.text "region_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "service_code"
-    t.index ["legal_services_supplier_id"], name: "index_ls_regional_availabilities_on_ls_supplier_id"
-  end
-
-  create_table "legal_services_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "legal_services_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "service_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["legal_services_supplier_id"], name: "index_ls_service_offerings_on_ls_supplier_id"
-  end
-
-  create_table "legal_services_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "name", null: false
-    t.text "email"
-    t.text "phone_number"
-    t.text "website"
-    t.text "address"
-    t.boolean "sme"
-    t.integer "duns"
-    t.text "lot_1_prospectus_link"
-    t.text "lot_2_prospectus_link"
-    t.text "lot_3_prospectus_link"
-    t.text "lot_4_prospectus_link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "rate_cards"
-    t.index ["rate_cards"], name: "index_legal_services_suppliers_on_rate_cards", using: :gin
-  end
-
-  create_table "legal_services_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "management_consultancy_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "aasm_state", limit: 15
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "suppliers_data"
-  end
-
-  create_table "management_consultancy_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "management_consultancy_supplier_id", null: false
-    t.string "lot"
-    t.integer "junior_rate_in_pence"
-    t.integer "standard_rate_in_pence"
-    t.integer "senior_rate_in_pence"
-    t.integer "principal_rate_in_pence"
-    t.integer "managing_rate_in_pence"
-    t.integer "director_rate_in_pence"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "contact_name"
-    t.string "telephone_number"
-    t.string "email"
-    t.index ["management_consultancy_supplier_id"], name: "index_management_consultancy_rate_cards_on_supplier_id"
-  end
-
-  create_table "management_consultancy_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "management_consultancy_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "region_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "expenses_required", null: false
-    t.index ["management_consultancy_supplier_id"], name: "index_mc_regional_availabilities_on_mc_supplier_id"
-  end
-
-  create_table "management_consultancy_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "management_consultancy_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "service_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["management_consultancy_supplier_id"], name: "index_mc_service_offerings_on_mc_supplier_id"
-  end
-
-  create_table "management_consultancy_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "contact_name"
-    t.text "contact_email"
-    t.text "telephone_number"
-    t.boolean "sme"
-    t.string "address"
-    t.string "website"
-    t.integer "duns"
-  end
-
-  create_table "management_consultancy_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "nuts_regions", id: false, force: :cascade do |t|
     t.string "code", limit: 255
     t.string "name", limit: 255
@@ -636,83 +518,6 @@ ActiveRecord::Schema.define(version: 2021_06_24_113607) do
     t.index ["postcode"], name: "index_postcodes_nuts_regions_on_postcode", unique: true
   end
 
-  create_table "supply_teachers_admin_current_data", force: :cascade do |t|
-    t.string "current_accredited_suppliers", limit: 255
-    t.string "geographical_data_all_suppliers", limit: 255
-    t.string "lot_1_and_lot_2_comparisons", limit: 255
-    t.string "master_vendor_contacts", limit: 255
-    t.string "neutral_vendor_contacts", limit: 255
-    t.string "pricing_for_tool", limit: 255
-    t.string "supplier_lookup", limit: 255
-    t.string "data", limit: 255
-    t.text "error"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "supply_teachers_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "aasm_state", limit: 15
-    t.string "current_accredited_suppliers", limit: 255
-    t.string "geographical_data_all_suppliers", limit: 255
-    t.string "lot_1_and_lot_2_comparisons", limit: 255
-    t.string "master_vendor_contacts", limit: 255
-    t.string "neutral_vendor_contacts", limit: 255
-    t.string "pricing_for_tool", limit: 255
-    t.string "supplier_lookup", limit: 255
-    t.text "fail_reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "supply_teachers_branches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "supply_teachers_supplier_id", null: false
-    t.string "postcode", limit: 8, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
-    t.text "contact_name"
-    t.text "contact_email"
-    t.text "telephone_number"
-    t.text "name"
-    t.text "town"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "county"
-    t.string "region"
-    t.string "slug"
-    t.index ["slug"], name: "index_supply_teachers_branches_on_slug", unique: true
-    t.index ["supply_teachers_supplier_id"], name: "index_supply_teachers_branches_on_supply_teachers_supplier_id"
-  end
-
-  create_table "supply_teachers_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "supply_teachers_supplier_id", null: false
-    t.text "job_type", null: false
-    t.float "mark_up"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "term"
-    t.integer "lot_number", default: 1, null: false
-    t.money "daily_fee", scale: 2
-    t.index ["supply_teachers_supplier_id"], name: "index_supply_teachers_rates_on_supply_teachers_supplier_id"
-  end
-
-  create_table "supply_teachers_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "neutral_vendor_contact_name"
-    t.text "neutral_vendor_telephone_number"
-    t.text "neutral_vendor_contact_email"
-    t.text "master_vendor_contact_name"
-    t.text "master_vendor_telephone_number"
-    t.text "master_vendor_contact_email"
-  end
-
-  create_table "supply_teachers_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", limit: 255, default: "", null: false
     t.string "first_name", limit: 255
@@ -747,11 +552,4 @@ ActiveRecord::Schema.define(version: 2021_06_24_113607) do
   add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "fm_frozen_rate_cards", "facilities_management_procurements"
   add_foreign_key "fm_frozen_rates", "facilities_management_procurements"
-  add_foreign_key "legal_services_regional_availabilities", "legal_services_suppliers"
-  add_foreign_key "legal_services_service_offerings", "legal_services_suppliers"
-  add_foreign_key "management_consultancy_rate_cards", "management_consultancy_suppliers"
-  add_foreign_key "management_consultancy_regional_availabilities", "management_consultancy_suppliers"
-  add_foreign_key "management_consultancy_service_offerings", "management_consultancy_suppliers"
-  add_foreign_key "supply_teachers_branches", "supply_teachers_suppliers"
-  add_foreign_key "supply_teachers_rates", "supply_teachers_suppliers"
 end
