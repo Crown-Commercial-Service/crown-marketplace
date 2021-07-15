@@ -85,20 +85,20 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         end
 
         it 'will have the same invoice contact detail' do
-          procurement_invoice_contact_detail = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-          procurement_copy_invoice_contact_detail = procurement_copy.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+          procurement_invoice_contact_detail = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+          procurement_copy_invoice_contact_detail = procurement_copy.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
           expect(procurement_copy_invoice_contact_detail).to eq procurement_invoice_contact_detail
         end
 
         it 'will have the same authorised contact detail' do
-          procurement_authorised_contact_detail = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-          procurement_copy_authorised_contact_detail = procurement_copy.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+          procurement_authorised_contact_detail = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+          procurement_copy_authorised_contact_detail = procurement_copy.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
           expect(procurement_copy_authorised_contact_detail).to eq procurement_authorised_contact_detail
         end
 
         it 'will have the same notices contact detail' do
-          procurement_notices_contact_detail = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-          procurement_copy_notices_contact_detail = procurement_copy.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+          procurement_notices_contact_detail = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+          procurement_copy_notices_contact_detail = procurement_copy.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
           expect(procurement_copy_notices_contact_detail).to eq procurement_notices_contact_detail
         end
       end

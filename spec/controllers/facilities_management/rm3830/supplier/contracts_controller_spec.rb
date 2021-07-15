@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
   describe 'PUT update' do
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
-    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
     let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier

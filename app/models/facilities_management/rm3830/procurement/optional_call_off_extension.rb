@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module RM3830
     class Procurement::OptionalCallOffExtension < ApplicationRecord
-      belongs_to :procurement, foreign_key: :facilities_management_procurement_id, inverse_of: :optional_call_off_extensions
+      belongs_to :procurement, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :optional_call_off_extensions
 
       scope :sorted, -> { order(:extension) }
 

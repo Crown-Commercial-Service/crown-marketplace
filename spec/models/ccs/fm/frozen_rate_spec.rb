@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CCS::FM::FrozenRate, type: :model do
-  subject(:frozen_rate) { described_class.new(facilities_management_procurement_id: procurement.id, code: 'abc', framework: 1.2, benchmark: 2.2, standard: 'Y', direct_award: false) }
+  subject(:frozen_rate) { described_class.new(facilities_management_rm3830_procurement_id: procurement.id, code: 'abc', framework: 1.2, benchmark: 2.2, standard: 'Y', direct_award: false) }
 
   before { frozen_rate.save }
 

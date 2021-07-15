@@ -577,8 +577,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_invoicing_details = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_invoicing_details = invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_invoicing_details = procurement.invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_invoicing_details = invoice_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_invoicing_details).to eq full_invoicing_details
           end
@@ -615,8 +615,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_authorised_details = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_authorised_details = authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_authorised_details = procurement.authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_authorised_details = authorised_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_authorised_details).to eq full_authorised_details
           end
@@ -653,8 +653,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
           it 'updates the procurement to have the full details' do
             procurement.reload
-            procurement_notices_details = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
-            full_notices_details = notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_procurement_id')
+            procurement_notices_details = procurement.notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
+            full_notices_details = notices_contact_detail.attributes.except('id', 'created_at', 'updated_at', 'facilities_management_rm3830_procurement_id')
 
             expect(procurement_notices_details).to eq full_notices_details
           end

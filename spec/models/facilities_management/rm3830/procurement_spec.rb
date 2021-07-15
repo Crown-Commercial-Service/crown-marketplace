@@ -527,8 +527,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       it 'create a frozen rate' do
         procurement.set_state_to_results_if_possible
-        expect(CCS::FM::FrozenRate.where(facilities_management_procurement_id: procurement.id).size).to eq 155
-        expect(CCS::FM::FrozenRateCard.where(facilities_management_procurement_id: procurement.id).size).to eq 1
+        expect(CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).size).to eq 155
+        expect(CCS::FM::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).size).to eq 1
       end
     end
 

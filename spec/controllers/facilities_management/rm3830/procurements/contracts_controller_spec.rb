@@ -6,7 +6,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: subject.current_user) }
-  let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
+  let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, reason_for_closing: 'Close this', aasm_state: 'sent', offer_sent_date: Time.zone.now,) }
   let(:user) { subject.current_user }
   let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[buyer fm_access]) }
   let(:supplier) { create(:facilities_management_supplier_detail) }

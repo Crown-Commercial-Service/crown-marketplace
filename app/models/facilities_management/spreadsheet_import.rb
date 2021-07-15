@@ -3,7 +3,7 @@ module FacilitiesManagement
     include AASM
 
     belongs_to :procurement, class_name: 'FacilitiesManagement::RM3830::Procurement',
-                             foreign_key: :facilities_management_procurement_id, inverse_of: :spreadsheet_import
+                             foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :spreadsheet_import
 
     has_one_attached :spreadsheet_file
     validate :spreadsheet_file_attached, on: :upload # the 'attached' macro ignores custom error messages hence this validator

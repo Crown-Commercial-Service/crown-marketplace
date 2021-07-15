@@ -12,28 +12,28 @@ module FacilitiesManagement
       before_save :update_procurement_building_services, if: :service_codes_changed?
       before_save :set_state_to_results, if: :buyer_selected_contract_value?
 
-      has_many :optional_call_off_extensions, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+      has_many :optional_call_off_extensions, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
       accepts_nested_attributes_for :optional_call_off_extensions, allow_destroy: true
 
-      has_many :procurement_buildings, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
-      has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
+      has_many :procurement_buildings, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
+      has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_rm3830_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
       has_many :procurement_building_services, through: :active_procurement_buildings
       accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
 
-      has_many :procurement_suppliers, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+      has_many :procurement_suppliers, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
 
-      has_one :spreadsheet_import, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy
+      has_one :spreadsheet_import, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
 
-      has_one :invoice_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
+      has_one :invoice_contact_detail, foreign_key: :facilities_management_rm3830_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementInvoiceContactDetail', inverse_of: :procurement, dependent: :destroy
       accepts_nested_attributes_for :invoice_contact_detail, allow_destroy: true
 
-      has_one :authorised_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementAuthorisedContactDetail', inverse_of: :procurement, dependent: :destroy
+      has_one :authorised_contact_detail, foreign_key: :facilities_management_rm3830_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementAuthorisedContactDetail', inverse_of: :procurement, dependent: :destroy
       accepts_nested_attributes_for :authorised_contact_detail, allow_destroy: true
 
-      has_one :notices_contact_detail, foreign_key: :facilities_management_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
+      has_one :notices_contact_detail, foreign_key: :facilities_management_rm3830_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementNoticesContactDetail', inverse_of: :procurement, dependent: :destroy
       accepts_nested_attributes_for :notices_contact_detail, allow_destroy: true
 
-      has_many :procurement_pension_funds, foreign_key: :facilities_management_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true, before_add: :before_each_procurement_pension_funds
+      has_many :procurement_pension_funds, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy, index_errors: true, before_add: :before_each_procurement_pension_funds
       accepts_nested_attributes_for :procurement_pension_funds, allow_destroy: true, reject_if: :more_than_max_pensions?
 
       acts_as_gov_uk_date :initial_call_off_start_date, :security_policy_document_date, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -179,7 +179,7 @@ module FacilitiesManagement
         ActiveRecord::Base.transaction do
           CCS::FM::Rate.all.find_each do |rate|
             new_rate = CCS::FM::FrozenRate.new
-            new_rate.facilities_management_procurement_id = id
+            new_rate.facilities_management_rm3830_procurement_id = id
             new_rate.code = rate.code
             new_rate.framework = rate.framework
             new_rate.benchmark = rate.benchmark
@@ -195,7 +195,7 @@ module FacilitiesManagement
       def copy_fm_rate_cards_to_frozen
         latest_rate_card = CCS::FM::RateCard.latest
         new_rate_card = CCS::FM::FrozenRateCard.new
-        new_rate_card.facilities_management_procurement_id = id
+        new_rate_card.facilities_management_rm3830_procurement_id = id
         new_rate_card.data = latest_rate_card.data
         new_rate_card.source_file = latest_rate_card.source_file
         new_rate_card.save!
@@ -541,7 +541,7 @@ module FacilitiesManagement
       end
 
       def rate_model
-        frozen_rates ||= CCS::FM::FrozenRate.where(facilities_management_procurement_id: id)
+        frozen_rates ||= CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: id)
         @rate_model ||= frozen_rates.size.zero? ? CCS::FM::Rate : frozen_rates
       end
 

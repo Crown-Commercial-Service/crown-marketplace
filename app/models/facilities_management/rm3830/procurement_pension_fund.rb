@@ -1,7 +1,7 @@
 module FacilitiesManagement
   module RM3830
     class ProcurementPensionFund < ApplicationRecord
-      belongs_to :procurement, class_name: 'FacilitiesManagement::RM3830::Procurement', foreign_key: :facilities_management_procurement_id, inverse_of: :procurement_pension_funds, optional: true
+      belongs_to :procurement, class_name: 'FacilitiesManagement::RM3830::Procurement', foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement_pension_funds, optional: true
 
       before_validation :remove_excess_whitespace_from_name
       validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :procurement }
