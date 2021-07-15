@@ -1,5 +1,5 @@
-<% row_visible = optional_call_off_extension_visible?(f.index) %>
-<% remove_button_visible = row_visible && !optional_call_off_extension_visible?(f.index + 1) %>
+<% row_visible = call_off_extension_visible?(f.index) %>
+<% remove_button_visible = row_visible && !call_off_extension_visible?(f.index + 1) %>
 
 <div id="extension-<%= f.index %>-container" class="govuk-form-group govuk-!-margin-left-3 extension-container <%= hidden_class(row_visible) %>" data-extension="<%= f.index%>">
   <fieldset class="govuk-fieldset">

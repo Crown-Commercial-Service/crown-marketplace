@@ -79,48 +79,48 @@ Then('I select {string} for optional extension required') do |option|
 end
 
 And('only the first optional extension is required') do
-  entering_requirements_page.optional_call_off_extensions.send(:'1').required.set(true)
+  entering_requirements_page.call_off_extensions.send(:'1').required.set(true)
 end
 
 Then('I enter {string} years and {string} months for optional extension {int}') do |years, months, extension|
   @contract_extentsions ||= {}
   @contract_extentsions[extension] = years.to_i.years + months.to_i.months
 
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").years.set(years)
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").months.set(months)
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").years.set(years)
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").months.set(months)
 end
 
 Then('I add another extension') do
-  entering_requirements_page.optional_call_off_extensions.add_extension.click
+  entering_requirements_page.call_off_extensions.add_extension.click
 end
 
 Then('I remove extension period {int}') do |extension|
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").remove.click
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").remove.click
 end
 
 Then('the add an extension button should have the text {string}') do |button_text|
-  expect(entering_requirements_page.optional_call_off_extensions.add_extension).to have_content(button_text)
+  expect(entering_requirements_page.call_off_extensions.add_extension).to have_content(button_text)
 end
 
 Then('the add an extension button should be {string}') do |status|
-  element_visivility_expectations(entering_requirements_page.optional_call_off_extensions.add_extension, status)
+  element_visivility_expectations(entering_requirements_page.call_off_extensions.add_extension, status)
 end
 
 Then('the remove button for extension {int} should be {string}') do |extension, status|
-  element_visivility_expectations(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").remove, status)
+  element_visivility_expectations(entering_requirements_page.call_off_extensions.send(:"#{extension}").remove, status)
 end
 
 Then('extension {int} should be {string}') do |extension, status|
   case status
   when 'hidden'
-    expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}")).to have_css('.govuk-visually-hidden')
+    expect(entering_requirements_page.call_off_extensions.send(:"#{extension}")).to have_css('.govuk-visually-hidden')
   when 'visible'
-    expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}")).not_to have_css('.govuk-visually-hidden')
+    expect(entering_requirements_page.call_off_extensions.send(:"#{extension}")).not_to have_css('.govuk-visually-hidden')
   end
 end
 
 Then('extension {int} should have the following error messages:') do |extension, error_messages|
-  expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").error_messages.map(&:text)).to eq error_messages.raw.flatten
+  expect(entering_requirements_page.call_off_extensions.send(:"#{extension}").error_messages.map(&:text)).to eq error_messages.raw.flatten
 end
 
 Then('my inital call off period length is {string}') do |initial_call_off_period_length|
@@ -146,7 +146,7 @@ Then('the mobilisation period is correct given the contract start date') do
 end
 
 Then('there are no optional call off extensions') do
-  expect(entering_requirements_page.contract_period_summary.optional_call_off_extension).to have_content('None')
+  expect(entering_requirements_page.contract_period_summary.call_off_extension).to have_content('None')
 end
 
 Then('the length of extension period {int} is {string}') do |extension, extension_length|
@@ -264,7 +264,7 @@ Then('I deselect the service {string} for the building') do |service|
 end
 
 Then('I select the service code {string} for the building') do |service|
-  entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
+  entering_requirements_page.check("facilities_management_rm3830_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
 end
 
 Then('I select the following services for the building:') do |services|
@@ -275,7 +275,7 @@ end
 
 Then('I select the following service codes for the building:') do |services|
   services.raw.flatten.each do |service|
-    entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
+    entering_requirements_page.check("facilities_management_rm3830_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
   end
 end
 
@@ -329,7 +329,7 @@ Given('I have a completed procurement for entering requirements named {string} w
 end
 
 Given('I have a completed procurement for entering requirements named {string} with buildings missing regions') do |contract_name|
-  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements_complete, user: @user, contract_name: contract_name)
   buildings = (1..3).map { |index| create(:facilities_management_building, building_name: "Test building #{index}", user: @user, address_postcode: 'ST161AA', address_region: nil, address_region_code: nil) }
 
   buildings.each do |building|
@@ -401,7 +401,7 @@ def building_status(building_name)
 end
 
 def create_completed_procurement(contract_name, **options)
-  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
   building = create(:facilities_management_building, building_name: 'Test building', user: @user)
 
   procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)

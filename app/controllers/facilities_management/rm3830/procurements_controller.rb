@@ -19,7 +19,7 @@ module FacilitiesManagement
       before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
       def index
-        @searches = current_user.procurements.where(aasm_state: FacilitiesManagement::Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| FacilitiesManagement::Procurement::SEARCH_ORDER.index(search.aasm_state) }
+        @searches = current_user.procurements.where(aasm_state: Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| Procurement::SEARCH_ORDER.index(search.aasm_state) }
         @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
         @sent_offers = sent_offers
         @contracts = live_contracts
@@ -70,7 +70,7 @@ module FacilitiesManagement
         return if updates_for_show_pages
         return if updates_for_edit_pages
 
-        update_procurement && return if params.key?(:facilities_management_procurement)
+        update_procurement && return if params.key?(:facilities_management_rm3830_procurement)
       end
 
       def delete
@@ -78,7 +78,7 @@ module FacilitiesManagement
       end
 
       def destroy
-        FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
+        DeleteProcurement.delete_procurement(@procurement)
         redirect_to facilities_management_rm3830_procurements_path(deleted: @procurement.contract_name)
       end
 
@@ -86,7 +86,7 @@ module FacilitiesManagement
 
       def quick_view_results_spreadsheet
         if @procurement.quick_search?
-          spreadsheet_builder = FacilitiesManagement::QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = QuickViewResultsSpreadsheetCreator.new(@procurement.id)
           spreadsheet_builder.build
           send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
         else
@@ -96,7 +96,7 @@ module FacilitiesManagement
 
       def further_competition_spreadsheet
         if @procurement.further_competition?
-          spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = FurtherCompetitionDeliverablesMatrix.new(@procurement.id)
           spreadsheet_builder.build
           send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
         else
@@ -105,11 +105,11 @@ module FacilitiesManagement
       end
 
       def deliverables_matrix
-        download_da_spreadsheet(FacilitiesManagement::DeliverableMatrixSpreadsheetCreator, 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx')
+        download_da_spreadsheet(DirectAwardDeliverablesMatrix, 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx')
       end
 
       def price_matrix
-        download_da_spreadsheet(FacilitiesManagement::DirectAwardSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
+        download_da_spreadsheet(PriceMatrixSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
       end
 
       private
@@ -132,7 +132,7 @@ module FacilitiesManagement
 
       def update_procurement
         assign_procurement_parameters
-        if @procurement.save(context: params[:facilities_management_procurement][:step].try(:to_sym))
+        if @procurement.save(context: params[:facilities_management_rm3830_procurement][:step].try(:to_sym))
           @procurement.start_detailed_search! if @procurement.quick_search? && params['start_detailed_search'].present?
           @procurement.reload
 
@@ -153,10 +153,10 @@ module FacilitiesManagement
         # To need to do this is awful - it will trigger validations so that an invalid action can be recognised
         # that action - resulting in clearing the service_code collection in the store will not happen
         # we can however validate and push the custom message to the client from here
-        # !WHY?! The browser is not sending the [:facilities_management_procurement][:service_codes] value as empty
+        # !WHY?! The browser is not sending the [:facilities_management_rm3830_procurement][:service_codes] value as empty
         #        if no checkboxes are checked
         #        Can the procurement_params specification not establish defaults?
-        @procurement.service_codes = [] if params[:facilities_management_procurement][:step].try(:to_sym) == :services && params[:facilities_management_procurement][:service_codes].nil?
+        @procurement.service_codes = [] if params[:facilities_management_rm3830_procurement][:step].try(:to_sym) == :services && params[:facilities_management_rm3830_procurement][:service_codes].nil?
       end
 
       PARAMS_METHODS_SHOW = {
@@ -182,7 +182,7 @@ module FacilitiesManagement
       end
 
       def updates_for_edit_pages
-        update_step = params.dig('facilities_management_procurement', 'step')&.to_sym
+        update_step = params.dig('facilities_management_rm3830_procurement', 'step')&.to_sym
 
         case update_step
         when :services
@@ -367,7 +367,7 @@ module FacilitiesManagement
       RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
 
       def sent_offers
-        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
+        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts
@@ -379,11 +379,11 @@ module FacilitiesManagement
       end
 
       def procurement_route_params
-        params.require(:facilities_management_procurement).permit(:route_to_market)
+        params.require(:facilities_management_rm3830_procurement).permit(:route_to_market)
       end
 
       def procurement_params
-        params.require(:facilities_management_procurement)
+        params.require(:facilities_management_rm3830_procurement)
               .permit(
                 :tupe,
                 :contract_name,
@@ -406,13 +406,13 @@ module FacilitiesManagement
                                                    :building_id,
                                                    :active,
                                                    { service_codes: [] }],
-                optional_call_off_extensions_attributes: %i[id extension years months extension_required]
+                call_off_extensions_attributes: %i[id extension years months extension_required]
               )
       end
 
       def set_current_step
         @current_step = nil
-        @current_step ||= params[:facilities_management_procurement][:step] if params['next_step'].present?
+        @current_step ||= params[:facilities_management_rm3830_procurement][:step] if params['next_step'].present?
       end
 
       def set_procurement
@@ -423,7 +423,7 @@ module FacilitiesManagement
         @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
         set_buildings if params['step'] == 'buildings'
         set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
-        @procurement.build_optional_call_off_extensions if params['step'] == 'contract_period'
+        @procurement.build_call_off_extensions if params['step'] == 'contract_period'
       end
 
       def set_buildings
@@ -465,7 +465,7 @@ module FacilitiesManagement
       end
 
       def set_step_param
-        params[:step] = params[:facilities_management_procurement][:step] unless @procurement.quick_search?
+        params[:step] = params[:facilities_management_rm3830_procurement][:step] unless @procurement.quick_search?
       end
 
       def ready_buildings

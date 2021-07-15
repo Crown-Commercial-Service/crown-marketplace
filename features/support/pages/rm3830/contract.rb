@@ -15,19 +15,19 @@ module Pages::RM3830
     element :reason_for_declining, '#reason-for-declining  > details > div'
 
     section :contract_option, '#main-content' do
-      element :contract_signed_yes, '#facilities_management_procurement_supplier_contract_signed_true'
-      element :contract_signed_no, '#facilities_management_procurement_supplier_contract_signed_false'
-      element :reason_for_not_signing, '#facilities_management_procurement_supplier_reason_for_not_signing'
+      element :contract_signed_yes, '#facilities_management_rm3830_procurement_supplier_contract_signed_true'
+      element :contract_signed_no, '#facilities_management_rm3830_procurement_supplier_contract_signed_false'
+      element :reason_for_not_signing, '#facilities_management_rm3830_procurement_supplier_reason_for_not_signing'
 
-      element :contract_start_date_day, '#facilities_management_procurement_supplier_contract_start_date_dd'
-      element :contract_start_date_month, '#facilities_management_procurement_supplier_contract_start_date_mm'
-      element :contract_start_date_year, '#facilities_management_procurement_supplier_contract_start_date_yyyy'
+      element :contract_start_date_day, '#facilities_management_rm3830_procurement_supplier_contract_start_date_dd'
+      element :contract_start_date_month, '#facilities_management_rm3830_procurement_supplier_contract_start_date_mm'
+      element :contract_start_date_year, '#facilities_management_rm3830_procurement_supplier_contract_start_date_yyyy'
 
-      element :contract_end_date_day, '#facilities_management_procurement_supplier_contract_end_date_dd'
-      element :contract_end_date_month, '#facilities_management_procurement_supplier_contract_end_date_mm'
-      element :contract_end_date_year, '#facilities_management_procurement_supplier_contract_end_date_yyyy'
+      element :contract_end_date_day, '#facilities_management_rm3830_procurement_supplier_contract_end_date_dd'
+      element :contract_end_date_month, '#facilities_management_rm3830_procurement_supplier_contract_end_date_mm'
+      element :contract_end_date_year, '#facilities_management_rm3830_procurement_supplier_contract_end_date_yyyy'
 
-      element :reason_for_closing, '#facilities_management_procurement_supplier_reason_for_closing'
+      element :reason_for_closing, '#facilities_management_rm3830_procurement_supplier_reason_for_closing'
     end
 
     section :contract_signed_page, '#main-content' do

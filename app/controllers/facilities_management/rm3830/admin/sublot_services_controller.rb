@@ -41,7 +41,7 @@ module FacilitiesManagement
         end
 
         def latest_rate_card
-          @latest_rate_card ||= CCS::FM::RateCard.latest
+          @latest_rate_card ||= RateCard.latest
         end
 
         def setup_supplier_data_ratecard
@@ -66,7 +66,7 @@ module FacilitiesManagement
         end
 
         def update_lot_1a
-          @services_validator = FacilitiesManagement::Admin::SublotServicesValidator.new(params, latest_rate_card, @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts, @variance_supplier_data)
+          @services_validator = SublotServicesValidator.new(params, latest_rate_card, @supplier_data_ratecard_prices, @supplier_data_ratecard_discounts, @variance_supplier_data)
 
           if @services_validator.save
             update_checkboxes

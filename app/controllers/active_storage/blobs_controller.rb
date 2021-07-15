@@ -18,17 +18,17 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   def authorize_user
     if params[:management_report_id].present?
-      authenticate_admin_view(FacilitiesManagement::Admin::ManagementReport, params[:management_report_id])
+      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::ManagementReport, params[:management_report_id])
     elsif params[:admin_upload_id].present?
-      authenticate_admin_view(FacilitiesManagement::Admin::Upload, params[:admin_upload_id])
+      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::Upload, params[:admin_upload_id])
     else
       authorize_contract_procurement_view
     end
   end
 
   def authorize_contract_procurement_view
-    contract = FacilitiesManagement::ProcurementSupplier.find_by(id: params[:contract_id])
-    procurement = FacilitiesManagement::Procurement.find_by(id: params[:procurement_id])
+    contract = FacilitiesManagement::RM3830::ProcurementSupplier.find_by(id: params[:contract_id])
+    procurement = FacilitiesManagement::RM3830::Procurement.find_by(id: params[:procurement_id])
 
     raise ActionController::RoutingError, 'not found' if contract.blank? && procurement.blank?
 

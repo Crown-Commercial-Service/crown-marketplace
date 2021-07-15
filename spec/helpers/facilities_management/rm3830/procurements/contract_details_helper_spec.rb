@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper, type: :helper do
-  let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
   before { @procurement = procurement }
 
@@ -145,27 +145,27 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsHelper
   describe '.object_name' do
     let(:result) { helper.object_name(name) }
 
-    context 'when given facilities_management_procurement[invoice_contact_detail_attributes]' do
-      let(:name) { 'facilities_management_procurement[invoice_contact_detail_attributes]' }
+    context 'when given facilities_management_rm3830_procurement[invoice_contact_detail_attributes]' do
+      let(:name) { 'facilities_management_rm3830_procurement[invoice_contact_detail_attributes]' }
 
-      it 'returns facilities_management_procurement_invoice_contact_detail_attributes' do
-        expect(result).to eq 'facilities_management_procurement_invoice_contact_detail_attributes'
+      it 'returns facilities_management_rm3830_procurement_invoice_contact_detail_attributes' do
+        expect(result).to eq 'facilities_management_rm3830_procurement_invoice_contact_detail_attributes'
       end
     end
 
-    context 'when given facilities_management_procurement[authorised_contact_detail_attributes]' do
-      let(:name) { 'facilities_management_procurement[authorised_contact_detail_attributes]' }
+    context 'when given facilities_management_rm3830_procurement[authorised_contact_detail_attributes]' do
+      let(:name) { 'facilities_management_rm3830_procurement[authorised_contact_detail_attributes]' }
 
-      it 'returns facilities_management_procurement_authorised_contact_detail_attributes' do
-        expect(result).to eq 'facilities_management_procurement_authorised_contact_detail_attributes'
+      it 'returns facilities_management_rm3830_procurement_authorised_contact_detail_attributes' do
+        expect(result).to eq 'facilities_management_rm3830_procurement_authorised_contact_detail_attributes'
       end
     end
 
-    context 'when given facilities_management_procurement[notices_contact_detail_attributes]' do
-      let(:name) { 'facilities_management_procurement[notices_contact_detail_attributes]' }
+    context 'when given facilities_management_rm3830_procurement[notices_contact_detail_attributes]' do
+      let(:name) { 'facilities_management_rm3830_procurement[notices_contact_detail_attributes]' }
 
-      it 'returns facilities_management_procurement_notices_contact_detail_attributes' do
-        expect(result).to eq 'facilities_management_procurement_notices_contact_detail_attributes'
+      it 'returns facilities_management_rm3830_procurement_notices_contact_detail_attributes' do
+        expect(result).to eq 'facilities_management_rm3830_procurement_notices_contact_detail_attributes'
       end
     end
   end

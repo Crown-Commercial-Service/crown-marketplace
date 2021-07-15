@@ -1,69 +1,71 @@
-class FacilitiesManagement::RM3830::ProcurementRouter
-  include Rails.application.routes.url_helpers
+module FacilitiesManagement::RM3830
+  class ProcurementRouter
+    include Rails.application.routes.url_helpers
 
-  QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
+    QUICK_SEARCH_EDIT_STEPS = %w[regions services].freeze
 
-  STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
+    STEPS = %w[contract_name estimated_annual_cost tupe contract_period procurement_buildings buildings_and_services services].freeze
 
-  SUMMARY = %w[contract_period services buildings buildings_and_services].freeze
+    SUMMARY = %w[contract_period services buildings buildings_and_services].freeze
 
-  def initialize(id, procurement_state, step: nil, what_happens_next: false, further_competition_chosen: false)
-    @id = id
-    @procurement_state = procurement_state
-    @step = step
-    @what_happens_next = what_happens_next
-    @further_competition_chosen = further_competition_chosen
-  end
-
-  STATES_TO_VIEWS = {
-    'quick_search': 'quick_search',
-    'choose_contract_value': 'choose_contract_value',
-    'results': 'results',
-    'further_competition': 'further_competition'
-  }.freeze
-
-  def view
-    if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
-      return 'further_competition' if @procurement_state == 'results' && @further_competition_chosen
-      return 'what_happens_next' if @procurement_state == 'quick_search' && @what_happens_next
-
-      return STATES_TO_VIEWS[@procurement_state.to_sym]
+    def initialize(id, procurement_state, step: nil, what_happens_next: false, further_competition_chosen: false)
+      @id = id
+      @procurement_state = procurement_state
+      @step = step
+      @what_happens_next = what_happens_next
+      @further_competition_chosen = further_competition_chosen
     end
 
-    'requirements'
-  end
+    STATES_TO_VIEWS = {
+      'quick_search': 'quick_search',
+      'choose_contract_value': 'choose_contract_value',
+      'results': 'results',
+      'further_competition': 'further_competition'
+    }.freeze
 
-  def route
-    if @procurement_state == 'quick_search'
-      return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_rm3830_procurement_path(id: @id) : facilities_management_rm3830_procurements_path
+    def view
+      if STATES_TO_VIEWS.key?(@procurement_state.to_sym)
+        return 'further_competition' if @procurement_state == 'results' && @further_competition_chosen
+        return 'what_happens_next' if @procurement_state == 'quick_search' && @what_happens_next
+
+        return STATES_TO_VIEWS[@procurement_state.to_sym]
+      end
+
+      'requirements'
     end
-    return edit_facilities_management_rm3830_procurement_path(id: @id, step: previous_step) if @step == 'services'
-    return facilities_management_rm3830_procurement_building_path(FacilitiesManagement::Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
-    summary_page? ? facilities_management_rm3830_procurement_summary_path(procurement_id: @id, summary: @step) : facilities_management_rm3830_procurement_path(id: @id)
-  end
+    def route
+      if @procurement_state == 'quick_search'
+        return QUICK_SEARCH_EDIT_STEPS.include?(@step) ? edit_facilities_management_rm3830_procurement_path(id: @id) : facilities_management_rm3830_procurements_path
+      end
+      return edit_facilities_management_rm3830_procurement_path(id: @id, step: previous_step) if @step == 'services'
+      return facilities_management_rm3830_procurement_building_path(Procurement.find_by(id: @id).active_procurement_buildings.first) if @step == 'building_services'
 
-  def back_link
-    return facilities_management_rm3830_procurement_path(id: @id) if previous_step.nil?
+      summary_page? ? facilities_management_rm3830_procurement_summary_path(procurement_id: @id, summary: @step) : facilities_management_rm3830_procurement_path(id: @id)
+    end
 
-    edit_facilities_management_rm3830_procurement_path(id: @id, step: previous_step)
-  end
+    def back_link
+      return facilities_management_rm3830_procurement_path(id: @id) if previous_step.nil?
 
-  private
+      edit_facilities_management_rm3830_procurement_path(id: @id, step: previous_step)
+    end
 
-  def summary_page?
-    return false if @step.nil?
+    private
 
-    SUMMARY.include? @step
-  end
+    def summary_page?
+      return false if @step.nil?
 
-  def previous_step
-    return nil if @step.nil?
+      SUMMARY.include? @step
+    end
 
-    return nil unless STEPS.include? @step
+    def previous_step
+      return nil if @step.nil?
 
-    return nil if @step == STEPS.first
+      return nil unless STEPS.include? @step
 
-    STEPS[STEPS.find_index(@step) - 1]
+      return nil if @step == STEPS.first
+
+      STEPS[STEPS.find_index(@step) - 1]
+    end
   end
 end

@@ -9,7 +9,7 @@
 # CSV named according to the DATA_FILE_PATH constant.
 
 class FacilitiesManagement::RM3830::ServiceSpecificationParser
-  DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'service_specifications.csv')
+  DATA_FILE_PATH = Rails.root.join('data', 'facilities_management', 'rm3830', 'service_specifications.csv')
 
   WORK_PACKAGE_REGEX = /^work package ([A-Z]) /i.freeze
   SERVICE_REGEX = /^[0-9]+\.[^.]*[Ss]ervice\s+([A-Z]:{1,2}[0-9]+)/.freeze
