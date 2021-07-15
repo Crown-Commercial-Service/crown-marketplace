@@ -1,0 +1,23 @@
+class RenameTablesToAddRM3830 < ActiveRecord::Migration[6.0]
+  def up
+    rename_table :facilities_management_procurements, :facilities_management_rm3830_procurements
+    rename_table :facilities_management_procurement_building_service_lifts, :facilities_management_rm3830_procurement_building_service_lifts
+    rename_table :facilities_management_procurement_building_services, :facilities_management_rm3830_procurement_building_services
+    rename_table :facilities_management_procurement_buildings, :facilities_management_rm3830_procurement_buildings
+    rename_table :facilities_management_procurement_contact_details, :facilities_management_rm3830_procurement_contact_details
+    rename_table :facilities_management_procurement_optional_call_off_extensions, :facilities_management_rm3830_procurement_optional_call_off_extensions
+    rename_table :facilities_management_procurement_pension_funds, :facilities_management_rm3830_procurement_pension_funds
+    rename_table :facilities_management_procurement_suppliers, :facilities_management_rm3830_procurement_suppliers
+  end
+
+  def down
+    rename_table :facilities_management_rm3830_procurements, :facilities_management_procurements
+    rename_table :facilities_management_rm3830_procurement_building_service_lifts, :facilities_management_procurement_building_service_lifts
+    rename_table :facilities_management_rm3830_procurement_building_services, :facilities_management_procurement_building_services
+    rename_table :facilities_management_rm3830_procurement_buildings, :facilities_management_procurement_buildings
+    rename_table :facilities_management_rm3830_procurement_contact_details, :facilities_management_procurement_contact_details
+    rename_table :facilities_management_rm3830_procurement_optional_call_off_extensions, :facilities_management_procurement_optional_call_off_extensions
+    rename_table :facilities_management_rm3830_procurement_pension_funds, :facilities_management_procurement_pension_funds
+    rename_table :facilities_management_rm3830_procurement_suppliers, :facilities_management_procurement_suppliers
+  end
+end
