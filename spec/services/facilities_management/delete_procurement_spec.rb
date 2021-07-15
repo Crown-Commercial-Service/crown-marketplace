@@ -44,7 +44,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will find the procurement_building_services for the procurement' do
-          expect(FacilitiesManagement::RM3830::RM3830::ProcurementBuildingService.where(facilities_management_rm3830_procurement_building_id: procurement_building_id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::ProcurementBuildingService.where(facilities_management_rm3830_procurement_building_id: procurement_building_id).empty?).to be false
         end
       end
 
@@ -62,7 +62,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will not find any procurement_building_services for the procurement' do
-          expect(FacilitiesManagement::RM3830::RM3830::ProcurementBuildingService.where(facilities_management_rm3830_procurement_building_id: procurement_building_id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::ProcurementBuildingService.where(facilities_management_rm3830_procurement_building_id: procurement_building_id).empty?).to be true
         end
       end
     end

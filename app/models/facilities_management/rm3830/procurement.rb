@@ -74,11 +74,11 @@ module FacilitiesManagement
       end
 
       def generate_contract_number_fc
-        ContractNumberGenerator.new(procurement_state: :further_competition, used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
+        ContractNumberGenerator.new(procurement_state: :further_competition, framework: 'RM3830', used_numbers: self.class.used_further_competition_contract_numbers_for_current_year).new_number
       end
 
       def self.used_further_competition_contract_numbers_for_current_year
-        where('contract_number like ?', 'RM3860-FC%')
+        where('contract_number like ?', 'RM3830-FC%')
           .where('contract_number like ?', "%-#{Date.current.year}")
           .pluck(:contract_number)
           .map { |contract_number| contract_number.split('-')[1].split('FC')[1] }

@@ -10,14 +10,14 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
   let(:contract_datetime_value) { "#{time.strftime('%d/%m/%Y')} - #{time.strftime('%l:%M%P')}" }
 
   describe 'contract number generation' do
-    let(:da_current_year_1) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: "RM3860-DA0001-#{current_year}") }
-    let(:da_current_year_2) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: "RM3860-DA0002-#{current_year}") }
-    let(:da_previous_year_1) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: 'RM3860-DA0003-2019') }
-    let(:da_previous_year_2) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: 'RM3860-DA0004-2019') }
-    let(:fc_current_year_1) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: "RM3860-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
-    let(:fc_current_year_2) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: "RM3860-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
-    let(:fc_previous_year_1) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: 'RM3860-FC0007-2019', contract_datetime: contract_datetime_value) }
-    let(:fc_previous_year_2) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: 'RM3860-FC0008-2019', contract_datetime: contract_datetime_value) }
+    let(:da_current_year_1) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: "RM3830-DA0001-#{current_year}") }
+    let(:da_current_year_2) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: "RM3830-DA0002-#{current_year}") }
+    let(:da_previous_year_1) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: 'RM3830-DA0003-2019') }
+    let(:da_previous_year_2) { create(:facilities_management_rm3830_procurement_direct_award, contract_number: 'RM3830-DA0004-2019') }
+    let(:fc_current_year_1) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: "RM3830-FC0005-#{current_year}", contract_datetime: contract_datetime_value) }
+    let(:fc_current_year_2) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: "RM3830-FC0006-#{current_year}", contract_datetime: contract_datetime_value) }
+    let(:fc_previous_year_1) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: 'RM3830-FC0007-2019', contract_datetime: contract_datetime_value) }
+    let(:fc_previous_year_2) { create(:facilities_management_rm3830_procurement_further_competition, contract_number: 'RM3830-FC0008-2019', contract_datetime: contract_datetime_value) }
 
     before do
       da_current_year_1
