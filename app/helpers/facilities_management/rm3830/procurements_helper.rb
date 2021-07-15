@@ -15,7 +15,7 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   end
 
   def extension_periods_error?
-    %i[extensions_required optional_call_off_extensions.months optional_call_off_extensions.years optional_call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
+    %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
   end
 
   def total_contract_length_error?
@@ -26,7 +26,7 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
     error_list = []
 
     %i[years months base].each do |attribute|
-      error_list << "optional_call_off_extensions.#{attribute}-error" if @procurement.errors.include?(:"optional_call_off_extensions.#{attribute}")
+      error_list << "call_off_extensions.#{attribute}-error" if @procurement.errors.include?(:"call_off_extensions.#{attribute}")
     end
 
     error_list.each do |error|
@@ -137,22 +137,22 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
     end
   end
 
-  def optional_call_off_extensions
-    @optional_call_off_extensions ||= @procurement.optional_call_off_extensions.sort_by(&:extension)
+  def call_off_extensions
+    @call_off_extensions ||= @procurement.call_off_extensions.sort_by(&:extension)
   end
 
-  def optional_call_off_extension_visible?(extension)
+  def call_off_extension_visible?(extension)
     return false unless @procurement.extensions_required
 
-    optional_call_off_extension = optional_call_off_extensions.find { |call_off_extension| call_off_extension.extension == extension }
+    call_off_extension = call_off_extensions.find { |optional_extension| optional_extension.extension == extension }
 
-    return false unless optional_call_off_extension
+    return false unless call_off_extension
 
-    optional_call_off_extension_meet_conditions?(optional_call_off_extension)
+    call_off_extension_meet_conditions?(call_off_extension)
   end
 
-  def optional_call_off_extension_meet_conditions?(optional_call_off_extension)
-    optional_call_off_extension.extension_required || optional_call_off_extension.years.present? || optional_call_off_extension.months.present? || optional_call_off_extension.errors.any?
+  def call_off_extension_meet_conditions?(call_off_extension)
+    call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
   end
 
   def section_id(section)

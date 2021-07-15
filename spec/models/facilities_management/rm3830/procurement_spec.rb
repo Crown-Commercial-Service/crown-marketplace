@@ -1037,7 +1037,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a second extension period' do
         it 'is expected to return the date one day after the end of the first extension period' do
-          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..0).sum(&:period)
 
           expect(procurement.extension_period_start_date(1)).to eq(extension_period_start_date + 1.day)
         end
@@ -1045,7 +1045,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a third extension period' do
         it 'is expected to return the date one day after the end of the second extension period' do
-          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..1).sum(&:period)
 
           expect(procurement.extension_period_start_date(2)).to eq(extension_period_start_date + 1.day)
         end
@@ -1053,7 +1053,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a forth extension period' do
         it 'is expected to return the date one day after the end of the third extension period' do
-          extension_period_start_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..2).sum(&:period)
 
           expect(procurement.extension_period_start_date(3)).to eq(extension_period_start_date + 1.day)
         end
@@ -1063,7 +1063,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     describe 'extension_period_end_date' do
       context 'when there is one extenesion period' do
         it 'is expected to return the date one year after the end of the initial call off period' do
-          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..0).sum(&:period)
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..0).sum(&:period)
 
           expect(procurement.extension_period_end_date(0)).to eq(extension_period_end_date)
         end
@@ -1071,7 +1071,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a second extension period' do
         it 'is expected to return the date one year after the end of the first extension period' do
-          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..1).sum(&:period)
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..1).sum(&:period)
 
           expect(procurement.extension_period_end_date(1)).to eq(extension_period_end_date)
         end
@@ -1079,7 +1079,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a third extension period' do
         it 'is expected to return the date one year after the end of the second extension period' do
-          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..2).sum(&:period)
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..2).sum(&:period)
 
           expect(procurement.extension_period_end_date(2)).to eq(extension_period_end_date)
         end
@@ -1087,7 +1087,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       context 'when there is a forth extension period' do
         it 'is expected to return the date one year after the end of the third extension period' do
-          extension_period_end_date = procurement.initial_call_off_end_date + procurement.optional_call_off_extensions.where(extension: 0..3).sum(&:period)
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..3).sum(&:period)
 
           expect(procurement.extension_period_end_date(3)).to eq(extension_period_end_date)
         end

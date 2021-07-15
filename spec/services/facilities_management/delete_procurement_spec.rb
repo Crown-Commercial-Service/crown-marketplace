@@ -144,7 +144,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will find optional extension periods' do
-          expect(FacilitiesManagement::RM3830::Procurement::OptionalCallOffExtension.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::Procurement::CallOffExtension.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
         end
 
         it 'will find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do
@@ -170,7 +170,7 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will not find optional extension periods' do
-          expect(FacilitiesManagement::RM3830::Procurement::OptionalCallOffExtension.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::Procurement::CallOffExtension.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
         end
 
         it 'will not find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :facilities_management_rm3830_procurement_optional_call_off_extension, class: 'FacilitiesManagement::RM3830::Procurement::OptionalCallOffExtension' do
+  factory :facilities_management_rm3830_procurement_call_off_extension, class: 'FacilitiesManagement::RM3830::Procurement::CallOffExtension' do
     extension { 0 }
     years { 1 }
     months { 1 }

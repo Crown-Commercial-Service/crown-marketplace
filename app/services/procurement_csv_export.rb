@@ -275,10 +275,10 @@ class ProcurementCsvExport
     return '' if procurement.extensions_required.nil?
     return 'None' unless procurement.extensions_required
 
-    return '' if procurement.optional_call_off_extensions.none?
+    return '' if procurement.call_off_extensions.none?
 
-    "#{helpers.pluralize(procurement.optional_call_off_extensions.count, 'extension')}, " +
-      procurement.optional_call_off_extensions.sorted.map { |ext| period_to_string(ext.years, ext.months) }.join(', ')
+    "#{helpers.pluralize(procurement.call_off_extensions.count, 'extension')}, " +
+      procurement.call_off_extensions.sorted.map { |ext| period_to_string(ext.years, ext.months) }.join(', ')
   end
 
   def self.format_lot_number(lot_number)

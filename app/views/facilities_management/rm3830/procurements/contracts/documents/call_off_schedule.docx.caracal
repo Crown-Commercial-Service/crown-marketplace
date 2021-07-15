@@ -479,7 +479,7 @@ docx.p "CALL-OFF INITIAL PERIOD: #{initial_call_off_period}", font: 'Calibri'
 docx.p "CALL-OFF OPTIONAL EXTENSIONS: #{@procurement.extensions_required ? 'Yes' : 'None'}", font: 'Calibri'
 
 (0..3).each do |call_off_period|
-  if !@procurement.extensions_required || @procurement.optional_call_off_extension(call_off_period).nil?
+  if !@procurement.extensions_required || @procurement.call_off_extension(call_off_period).nil?
     docx.p "CALL-OFF OPTIONAL EXTENSION PERIOD #{call_off_period + 1}: Not used", font: 'Calibri'
     next
   else

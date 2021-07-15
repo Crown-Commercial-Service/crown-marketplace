@@ -406,7 +406,7 @@ module FacilitiesManagement
                                                    :building_id,
                                                    :active,
                                                    { service_codes: [] }],
-                optional_call_off_extensions_attributes: %i[id extension years months extension_required]
+                call_off_extensions_attributes: %i[id extension years months extension_required]
               )
       end
 
@@ -423,7 +423,7 @@ module FacilitiesManagement
         @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
         set_buildings if params['step'] == 'buildings'
         set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
-        @procurement.build_optional_call_off_extensions if params['step'] == 'contract_period'
+        @procurement.build_call_off_extensions if params['step'] == 'contract_period'
       end
 
       def set_buildings

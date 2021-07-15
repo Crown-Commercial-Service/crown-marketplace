@@ -21,11 +21,11 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions do
-      build_list(:facilities_management_rm3830_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
-        optional_call_off_extension.extension = index
-        optional_call_off_extension.years = index
-        optional_call_off_extension.months = (index + 1) % 4
+    call_off_extensions do
+      build_list(:facilities_management_rm3830_procurement_call_off_extension, 4) do |call_off_extension, index|
+        call_off_extension.extension = index
+        call_off_extension.years = index
+        call_off_extension.months = (index + 1) % 4
       end
     end
   end
@@ -39,11 +39,11 @@ FactoryBot.define do
     mobilisation_period_required { true }
     mobilisation_period { 4 }
     extensions_required { true }
-    optional_call_off_extensions do
-      build_list(:facilities_management_rm3830_procurement_optional_call_off_extension, 4) do |optional_call_off_extension, index|
-        optional_call_off_extension.extension = index
-        optional_call_off_extension.years = index
-        optional_call_off_extension.months = (index + 1) % 4
+    call_off_extensions do
+      build_list(:facilities_management_rm3830_procurement_call_off_extension, 4) do |call_off_extension, index|
+        call_off_extension.extension = index
+        call_off_extension.years = index
+        call_off_extension.months = (index + 1) % 4
       end
     end
   end

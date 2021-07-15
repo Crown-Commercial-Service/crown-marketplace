@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
 
     before do
       procurement.assign_attributes(extensions_required: extensions_required,
-                                    optional_call_off_extensions_attributes: { '0': {
+                                    call_off_extensions_attributes: { '0': {
                                       years: years,
                                       months: months,
                                       extension: 0,
@@ -110,7 +110,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.months' do
+    context 'when there are errors on call_off_extensions.months' do
       let(:months) { nil }
 
       it 'returns true' do
@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.years' do
+    context 'when there are errors on call_off_extensions.years' do
       let(:years) { nil }
 
       it 'returns true' do
@@ -126,7 +126,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.base' do
+    context 'when there are errors on call_off_extensions.base' do
       let(:months) { 0 }
       let(:years) { 0 }
 
@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
 
     before do
       procurement.assign_attributes(extensions_required: true,
-                                    optional_call_off_extensions_attributes: { '0': {
+                                    call_off_extensions_attributes: { '0': {
                                       years: years,
                                       months: months,
                                       extension: 0,
@@ -205,28 +205,28 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.months' do
+    context 'when there are errors on call_off_extensions.months' do
       let(:months) { nil }
 
       it 'returns an array with months-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.months-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.months-error']
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.years' do
+    context 'when there are errors on call_off_extensions.years' do
       let(:years) { nil }
 
       it 'returns an array with years-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.years-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.years-error']
       end
     end
 
-    context 'when there are errors on optional_call_off_extensions.base' do
+    context 'when there are errors on call_off_extensions.base' do
       let(:months) { 0 }
       let(:years) { 0 }
 
       it 'returns an array with base-error' do
-        expect(helper.display_extension_error_anchor).to eq ['optional_call_off_extensions.base-error']
+        expect(helper.display_extension_error_anchor).to eq ['call_off_extensions.base-error']
       end
     end
   end
@@ -712,30 +712,30 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.optional_call_off_extensions' do
-    let(:optional_call_off_extension1) { procurement.optional_call_off_extensions.create(extension: 2, years: 1, months: 1) }
-    let(:optional_call_off_extension2) { procurement.optional_call_off_extensions.create(extension: 0, years: 1, months: 1) }
-    let(:optional_call_off_extension3) { procurement.optional_call_off_extensions.create(extension: 3, years: 1, months: 1) }
-    let(:optional_call_off_extension4) { procurement.optional_call_off_extensions.create(extension: 1, years: 1, months: 1) }
+  describe '.call_off_extensions' do
+    let(:call_off_extension1) { procurement.call_off_extensions.create(extension: 2, years: 1, months: 1) }
+    let(:call_off_extension2) { procurement.call_off_extensions.create(extension: 0, years: 1, months: 1) }
+    let(:call_off_extension3) { procurement.call_off_extensions.create(extension: 3, years: 1, months: 1) }
+    let(:call_off_extension4) { procurement.call_off_extensions.create(extension: 1, years: 1, months: 1) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
-      optional_call_off_extension1
-      optional_call_off_extension2
-      optional_call_off_extension3
-      optional_call_off_extension4
+      call_off_extension1
+      call_off_extension2
+      call_off_extension3
+      call_off_extension4
       @procurement = procurement
     end
 
-    it 'returns the optional_call_off_extensions in the right order' do
-      expect(helper.optional_call_off_extensions).to eq [optional_call_off_extension2, optional_call_off_extension4, optional_call_off_extension1, optional_call_off_extension3]
+    it 'returns the call_off_extensions in the right order' do
+      expect(helper.call_off_extensions).to eq [call_off_extension2, call_off_extension4, call_off_extension1, call_off_extension3]
     end
   end
 
-  describe '.optional_call_off_extension_visible' do
+  describe '.call_off_extension_visible' do
     let(:extensions_required) { true }
     let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required: extensions_required) }
-    let(:result) { helper.optional_call_off_extension_visible?(0) }
+    let(:result) { helper.call_off_extension_visible?(0) }
 
     before { @procurement = procurement }
 
@@ -757,9 +757,9 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:extension_required) { nil }
       let(:years) { nil }
       let(:months) { nil }
-      let(:optional_call_off_extension) { create(:facilities_management_rm3830_procurement_optional_call_off_extension, years: years, months: months, extension_required: extension_required) }
+      let(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension, years: years, months: months, extension_required: extension_required) }
 
-      before { procurement.update(optional_call_off_extensions: [optional_call_off_extension]) }
+      before { procurement.update(call_off_extensions: [call_off_extension]) }
 
       context 'when no conditions are met' do
         it 'returns false' do
@@ -792,7 +792,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
 
       context 'when the extension has errors' do
-        before { optional_call_off_extension.errors.add(:years, :blank) }
+        before { call_off_extension.errors.add(:years, :blank) }
 
         it 'returns true' do
           expect(result).to be true

@@ -33,8 +33,8 @@ if ENV["fm"]
     extensions_required: true,
     da_journey_state: "pricing")
 
-  procurement.optional_call_off_extensions.create!(extension: 0, years: 2, months: 0)
-  procurement.optional_call_off_extensions.create!(extension: 1, years: 2, months: 0)
+  procurement.call_off_extensions.create!(extension: 0, years: 2, months: 0)
+  procurement.call_off_extensions.create!(extension: 1, years: 2, months: 0)
 
   # creates 1000 buildings
   (0..999).each do |index|

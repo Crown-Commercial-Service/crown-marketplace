@@ -305,7 +305,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   end
 
   def extension_period(period)
-    return nil if !@procurement.extensions_required || @procurement.optional_call_off_extension(period).nil?
+    return nil if !@procurement.extensions_required || @procurement.call_off_extension(period).nil?
 
     "#{@procurement.extension_period_start_date(period).strftime('%d/%m/%Y')} - #{@procurement.extension_period_end_date(period).strftime('%d/%m/%Y')}"
   end

@@ -139,7 +139,7 @@ module ProcurementValidator
 
     end_date = initial_call_off_end_date
 
-    end_date += optional_call_off_extensions.select(&:extension_required).sum(&:period) if extensions_required
+    end_date += call_off_extensions.select(&:extension_required).sum(&:period) if extensions_required
 
     return if end_date <= start_date + 10.years
 
@@ -149,7 +149,7 @@ module ProcurementValidator
   def remove_empty_extensions
     return if errors.any?
 
-    optional_call_off_extensions.reject(&:extension_required).each(&:delete)
+    call_off_extensions.reject(&:extension_required).each(&:delete)
   end
 
   # End of validation methods for contract-dates

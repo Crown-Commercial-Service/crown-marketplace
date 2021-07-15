@@ -12,8 +12,8 @@ module FacilitiesManagement
       before_save :update_procurement_building_services, if: :service_codes_changed?
       before_save :set_state_to_results, if: :buyer_selected_contract_value?
 
-      has_many :optional_call_off_extensions, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
-      accepts_nested_attributes_for :optional_call_off_extensions, allow_destroy: true
+      has_many :call_off_extensions, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
+      accepts_nested_attributes_for :call_off_extensions, allow_destroy: true
 
       has_many :procurement_buildings, foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement, dependent: :destroy
       has_many :active_procurement_buildings, -> { where(active: true) }, foreign_key: :facilities_management_rm3830_procurement_id, class_name: 'FacilitiesManagement::RM3830::ProcurementBuilding', inverse_of: :procurement, dependent: :destroy
@@ -287,20 +287,20 @@ module FacilitiesManagement
       end
 
       def extension_period_start_date(extension)
-        initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..(extension - 1))).sum(&:period) + 1.day
+        initial_call_off_end_date + call_off_extensions.where(extension: (0..(extension - 1))).sum(&:period) + 1.day
       end
 
       def extension_period_end_date(extension)
-        initial_call_off_end_date + optional_call_off_extensions.where(extension: (0..extension)).sum(&:period)
+        initial_call_off_end_date + call_off_extensions.where(extension: (0..extension)).sum(&:period)
       end
 
-      def optional_call_off_extension(extension)
-        optional_call_off_extensions.find_by(extension: extension)
+      def call_off_extension(extension)
+        call_off_extensions.find_by(extension: extension)
       end
 
-      def build_optional_call_off_extensions
+      def build_call_off_extensions
         (0..3).each do |extension|
-          optional_call_off_extensions.find_or_initialize_by(extension: extension)
+          call_off_extensions.find_or_initialize_by(extension: extension)
         end
       end
 

@@ -521,7 +521,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       procurement.mobilisation_period = mobilisation_period if mobilisation_period_required
 
       procurement.extensions_required = true
-      procurement.assign_attributes(optional_call_off_extensions_attributes: extension_details)
+      procurement.assign_attributes(call_off_extensions_attributes: extension_details)
     end
 
     context 'with only optional call of extensions' do
@@ -731,7 +731,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       procurement.mobilisation_period_required = false
 
       procurement.extensions_required = true
-      procurement.assign_attributes(optional_call_off_extensions_attributes: extension_details)
+      procurement.assign_attributes(call_off_extensions_attributes: extension_details)
     end
 
     context 'when the extensions are not valid' do
@@ -750,7 +750,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
 
       it 'has the correct error message' do
         procurement.save(context: :contract_period)
-        expect(procurement.errors[:'optional_call_off_extensions.months'].first).to eq 'The months for the extension period must be between 0 and 11'
+        expect(procurement.errors[:'call_off_extensions.months'].first).to eq 'The months for the extension period must be between 0 and 11'
       end
     end
 
@@ -773,7 +773,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           procurement.save(context: :contract_period)
           procurement.reload
 
-          expect(procurement.optional_call_off_extensions.count).to eq 1
+          expect(procurement.call_off_extensions.count).to eq 1
         end
       end
 
@@ -795,7 +795,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           procurement.save(context: :contract_period)
           procurement.reload
 
-          expect(procurement.optional_call_off_extensions.count).to eq 2
+          expect(procurement.call_off_extensions.count).to eq 2
         end
       end
 
@@ -817,7 +817,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           procurement.save(context: :contract_period)
           procurement.reload
 
-          expect(procurement.optional_call_off_extensions.count).to eq 3
+          expect(procurement.call_off_extensions.count).to eq 3
         end
       end
 
@@ -839,7 +839,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
           procurement.save(context: :contract_period)
           procurement.reload
 
-          expect(procurement.optional_call_off_extensions.count).to eq 4
+          expect(procurement.call_off_extensions.count).to eq 4
         end
       end
     end

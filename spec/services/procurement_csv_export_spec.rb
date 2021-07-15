@@ -201,7 +201,7 @@ RSpec.describe ProcurementCsvExport do
       procurement_in_search.update(extensions_required: required)
 
       4.times do |extension|
-        procurement_in_search.optional_call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
+        procurement_in_search.call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
       end
     end
 

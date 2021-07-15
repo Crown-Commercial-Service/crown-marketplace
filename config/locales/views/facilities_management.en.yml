@@ -303,7 +303,7 @@ en:
             using_buyer_detail_for_notices_detail:
               inclusion: Select one option
               not_present_contract_details: You must answer the question about ‘Notices contact details’
-        facilities_management/procurement/optional_call_off_extension:
+        facilities_management/procurement/call_off_extension:
           attributes:
             base:
               minimum_period: The total for extension period %{extension} must be greater than 1 month

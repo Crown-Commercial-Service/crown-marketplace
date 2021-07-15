@@ -1,7 +1,7 @@
 class MoveDataToNewColumns < ActiveRecord::Migration[5.2]
   def self.up
     FacilitiesManagement::RM3830::Procurement.reset_column_information
-    FacilitiesManagement::RM3830::Procurement::OptionalCallOffExtension.reset_column_information
+    FacilitiesManagement::RM3830::Procurement::CallOffExtension.reset_column_information
 
     FacilitiesManagement::RM3830::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
       sleep(5)
@@ -22,7 +22,7 @@ class MoveDataToNewColumns < ActiveRecord::Migration[5.2]
     add_column :facilities_management_procurements, :optional_call_off_extensions_4, :integer
 
     FacilitiesManagement::RM3830::Procurement.reset_column_information
-    FacilitiesManagement::RM3830::Procurement::OptionalCallOffExtension.reset_column_information
+    FacilitiesManagement::RM3830::Procurement::CallOffExtension.reset_column_information
 
     FacilitiesManagement::RM3830::Procurement.where(extensions_required: true).where(aasm_state: %w[detailed_search detailed_search_bulk_upload choose_contract_value results da_draft direct_award further_competition closed]).find_in_batches do |group|
       sleep(5)
