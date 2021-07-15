@@ -20,8 +20,8 @@ class Ability
     return unless user.has_role?(:buyer) && user.has_role?(:fm_access)
 
     can :read, FacilitiesManagement
-    can :manage, FacilitiesManagement::Procurement, user_id: user.id
-    can :manage, FacilitiesManagement::ProcurementSupplier, procurement: { user_id: user.id }
+    can :manage, FacilitiesManagement::RM3830::Procurement, user_id: user.id
+    can :manage, FacilitiesManagement::RM3830::ProcurementSupplier, procurement: { user_id: user.id }
     can :manage, FacilitiesManagement::Building, user_id: user.id
   end
 
@@ -30,15 +30,15 @@ class Ability
 
     can :read, :all
     can :manage, FacilitiesManagement::Admin
-    can :manage, FacilitiesManagement::Admin::ManagementReport
-    can :manage, FacilitiesManagement::Admin::Upload
+    can :manage, FacilitiesManagement::RM3830::Admin::ManagementReport
+    can :manage, FacilitiesManagement::RM3830::Admin::Upload
   end
 
   def fm_supplier_specific_auth(user)
     return unless user.has_role?(:fm_access) && user.has_role?(:supplier)
 
-    can :read, FacilitiesManagement::Supplier
-    can :manage, FacilitiesManagement::ProcurementSupplier, supplier: user.supplier_detail
+    can :read, FacilitiesManagement::RM3830::SupplierDetail
+    can :manage, FacilitiesManagement::RM3830::ProcurementSupplier, supplier: user.supplier_detail
   end
 
   def allow_list_specific_auth(user)

@@ -10,7 +10,7 @@ module FacilitiesManagement
       def edit; end
 
       def update
-        case params[:facilities_management_procurement_building_service][:service_question]
+        case params[:facilities_management_rm3830_procurement_building_service][:service_question]
         when 'lifts'
           update_procurement_building_service(lift_params, :lifts)
         when 'service_hours'
@@ -34,7 +34,7 @@ module FacilitiesManagement
         if @building_service.save(context: context)
           redirect_to facilities_management_rm3830_procurement_building_path(@procurement_building)
         else
-          params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+          params[:service_question] = params[:facilities_management_rm3830_procurement_building_service][:service_question]
           set_partial
           render :edit
         end
@@ -47,7 +47,7 @@ module FacilitiesManagement
           @building.save
           redirect_to facilities_management_rm3830_procurement_building_path(@procurement_building)
         else
-          params[:service_question] = params[:facilities_management_procurement_building_service][:service_question]
+          params[:service_question] = params[:facilities_management_rm3830_procurement_building_service][:service_question]
           set_partial
           render :edit
         end
@@ -67,17 +67,17 @@ module FacilitiesManagement
       end
 
       def lift_params
-        params.require(:facilities_management_procurement_building_service)
+        params.require(:facilities_management_rm3830_procurement_building_service)
               .permit(lifts_attributes: %i[id number_of_floors _destroy])
       end
 
       def service_hours_params
-        params.require(:facilities_management_procurement_building_service)
+        params.require(:facilities_management_rm3830_procurement_building_service)
               .permit(:service_hours, :detail_of_requirement)
       end
 
       def volume_params
-        params.require(:facilities_management_procurement_building_service)
+        params.require(:facilities_management_rm3830_procurement_building_service)
               .permit(:no_of_appliances_for_testing,
                       :no_of_building_occupants,
                       :no_of_consoles_to_be_serviced,
@@ -86,7 +86,7 @@ module FacilitiesManagement
       end
 
       def service_standards_params
-        params.require(:facilities_management_procurement_building_service)
+        params.require(:facilities_management_rm3830_procurement_building_service)
               .permit(:service_standard)
       end
 
@@ -96,7 +96,7 @@ module FacilitiesManagement
       end
 
       def set_building_and_service_data
-        @building_service = FacilitiesManagement::ProcurementBuildingService.find_by id: params[:id]
+        @building_service = ProcurementBuildingService.find_by id: params[:id]
         @procurement_building = @building_service.procurement_building
         @building = @procurement_building.building
         @procurement = @procurement_building.procurement

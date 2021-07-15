@@ -36,9 +36,9 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController, type
   end
 
   describe 'PUT update' do
-    let(:rate_C1_A_id) { FacilitiesManagement::Admin::Rates.select { |rate| rate.code == 'C.1' }.first.id }
-    let(:rate_C1_C_id) { FacilitiesManagement::Admin::Rates.select { |rate| rate.code == 'C.1' }.last.id }
-    let(:rate_B1_id) { FacilitiesManagement::Admin::Rates.select { |rate| rate.code == 'B.1' }.first.id }
+    let(:rate_C1_A_id) { FacilitiesManagement::RM3830::Admin::Rates.select { |rate| rate.code == 'C.1' }.first.id }
+    let(:rate_C1_C_id) { FacilitiesManagement::RM3830::Admin::Rates.select { |rate| rate.code == 'C.1' }.last.id }
+    let(:rate_B1_id) { FacilitiesManagement::RM3830::Admin::Rates.select { |rate| rate.code == 'B.1' }.first.id }
 
     before { put :update, params: { slug: rate_type, rates: rates } }
 
@@ -55,8 +55,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController, type
         end
 
         it 'updates the rates' do
-          expect(FacilitiesManagement::Admin::Rates.find(rate_C1_A_id).framework).to eq rate_C1_A_value
-          expect(FacilitiesManagement::Admin::Rates.find(rate_B1_id).framework).to eq rate_B1_value
+          expect(FacilitiesManagement::RM3830::Admin::Rates.find(rate_C1_A_id).framework).to eq rate_C1_A_value
+          expect(FacilitiesManagement::RM3830::Admin::Rates.find(rate_B1_id).framework).to eq rate_B1_value
         end
       end
 
@@ -87,9 +87,9 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ServiceRatesController, type
         end
 
         it 'updates the rates' do
-          expect(FacilitiesManagement::Admin::Rates.find(rate_C1_A_id).benchmark).to eq rate_C1_A_value
-          expect(FacilitiesManagement::Admin::Rates.find(rate_C1_C_id).benchmark).to eq rate_C1_C_value
-          expect(FacilitiesManagement::Admin::Rates.find(rate_B1_id).benchmark).to eq rate_B1_value
+          expect(FacilitiesManagement::RM3830::Admin::Rates.find(rate_C1_A_id).benchmark).to eq rate_C1_A_value
+          expect(FacilitiesManagement::RM3830::Admin::Rates.find(rate_C1_C_id).benchmark).to eq rate_C1_C_value
+          expect(FacilitiesManagement::RM3830::Admin::Rates.find(rate_B1_id).benchmark).to eq rate_B1_value
         end
       end
 

@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:spreadsheet_import) { create(:facilities_management_procurement_spreadsheet_import, procurement: procurement) }
-  let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: subject.current_user) }
+  let(:spreadsheet_import) { create(:facilities_management_rm3830_procurement_spreadsheet_import, procurement: procurement) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: subject.current_user) }
 
   login_fm_buyer_with_details
 
@@ -33,7 +33,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
   end
 
   describe 'POST create' do
-    let(:fake_file) { File.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH) }
+    let(:fake_file) { File.open(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_PATH) }
 
     context 'when uploading the file' do
       let(:valid) { false }
@@ -41,8 +41,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
       before do
         allow(spreadsheet_import).to receive(:save).and_return(valid)
         allow(spreadsheet_import).to receive(:save).with(context: :upload).and_return(valid)
-        allow(FacilitiesManagement::SpreadsheetImport).to receive(:new).with(anything).and_return(spreadsheet_import)
-        allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(spreadsheet_import.id).and_return(true)
+        allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:new).with(anything).and_return(spreadsheet_import)
+        allow(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to receive(:perform_async).with(spreadsheet_import.id).and_return(true)
         post :create, params: { procurement_id: procurement.id, facilities_management_spreadsheet_import: { spreadsheet_file: fake_file } }
       end
 
@@ -226,7 +226,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
     before { delete :destroy, params: { id: spreadsheet_import.id, procurement_id: procurement.id } }
 
     it 'deletes the spreadsheet import' do
-      expect(FacilitiesManagement::SpreadsheetImport.exists?(spreadsheet_import.id)).to be false
+      expect(FacilitiesManagement::RM3830::SpreadsheetImport.exists?(spreadsheet_import.id)).to be false
     end
 
     it 'redirects to new_facilities_management_rm3830_procurement_spreadsheet_import_path' do

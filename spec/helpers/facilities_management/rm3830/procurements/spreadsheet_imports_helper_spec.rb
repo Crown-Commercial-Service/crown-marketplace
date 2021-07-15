@@ -369,7 +369,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsHel
 
   describe '.error_count' do
     let(:result) { helper.error_count(error_lists[attribute], attribute) }
-    let(:spreadsheet_import) { create(:facilities_management_procurement_spreadsheet_import, import_errors: import_errors, procurement: create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
+    let(:spreadsheet_import) { create(:facilities_management_rm3830_procurement_spreadsheet_import, import_errors: import_errors, procurement: create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
     let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
     let(:building_1_errors) do
       {

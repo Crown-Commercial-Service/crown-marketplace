@@ -113,7 +113,7 @@ module FacilitiesManagement
         end
 
         def contract_params
-          params.require(:facilities_management_procurement_supplier)
+          params.require(:facilities_management_rm3830_procurement_supplier)
                 .permit(
                   :reason_for_closing,
                   :contract_signed,

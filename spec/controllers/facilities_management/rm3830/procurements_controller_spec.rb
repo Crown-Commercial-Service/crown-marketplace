@@ -4,7 +4,7 @@ require 'rails_helper'
 # rubocop:disable RSpec/NestedGroups
 RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
-  let(:procurement) { create(:facilities_management_procurement, contract_name: 'New search', user: subject.current_user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, contract_name: 'New search', user: subject.current_user) }
 
   context 'without buyer details' do
     login_fm_buyer
@@ -371,23 +371,23 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       context 'with a valid record' do
         context 'when Save and continue is selected with no region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
-            post :create, params: { facilities_management_procurement: { contract_name: 'New procurement' } }
-            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            post :create, params: { facilities_management_rm3830_procurement: { contract_name: 'New procurement' } }
+            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id)
           end
         end
 
         context 'when Save and continue is selected with region codes' do
           it 'redirects to facilities_management_rm3830_procurement_path for the new record' do
-            post :create, params: { facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
-            new_procurement = FacilitiesManagement::Procurement.all.order(created_at: :asc).first
+            post :create, params: { facilities_management_rm3830_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
+            new_procurement = FacilitiesManagement::RM3830::Procurement.all.order(created_at: :asc).first
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(new_procurement.id, 'what_happens_next': true)
           end
         end
 
         context 'when Save for later is selected' do
           it 'redirects to show path' do
-            post :create, params: { save_for_later: 'Save for later', facilities_management_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
+            post :create, params: { save_for_later: 'Save for later', facilities_management_rm3830_procurement: { contract_name: 'New procurement', region_codes: %w[UKC1 UKC2] } }
             expect(response).to redirect_to facilities_management_rm3830_procurements_path
           end
         end
@@ -395,7 +395,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
       context 'with an invalid record' do
         it 'render the new template' do
-          post :create, params: { facilities_management_procurement: { invalid_param: 'invalid' } }
+          post :create, params: { facilities_management_rm3830_procurement: { invalid_param: 'invalid' } }
 
           expect(response).to render_template('new')
         end
@@ -406,7 +406,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       context 'with a valid update' do
         before do
           procurement.update(aasm_state: 'detailed_search')
-          patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { contract_name: 'Updated name' } }
+          patch :update, params: { id: procurement.id, step: 'name', facilities_management_rm3830_procurement: { contract_name: 'Updated name' } }
         end
 
         it 'redirects to the show page for the record' do
@@ -422,7 +422,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
       context 'with an invalid update' do
         before do
-          patch :update, params: { id: procurement.id, facilities_management_procurement: { contract_name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'contract_name' } }
+          patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { contract_name: (0...200).map { ('a'..'z').to_a[rand(26)] }.join, step: 'contract_name' } }
         end
 
         it 'render the edit page for the record' do
@@ -504,7 +504,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         let(:obj) { double }
 
         before do
-          allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
+          allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
           allow_any_instance_of(procurement.class).to receive(:copy_fm_rate_cards_to_frozen)
           allow(obj).to receive(:assessed_value).and_return(0.1234)
           allow(obj).to receive(:lot_number).and_return('1a')
@@ -570,12 +570,12 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           procurement.update(aasm_state: 'choose_contract_value')
           procurement.update(assessed_value: 82486)
           allow_any_instance_of(procurement.class).to receive(:procurement_building_services_not_used_in_calculation).and_return([])
-          allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
+          allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
           allow(obj).to receive(:sorted_list).and_return([])
         end
 
         context 'when the procurement is not valid' do
-          before { patch :update, params: { id: procurement.id, continue_from_change_contract_value: 'Continue', facilities_management_procurement: { lot_number: '', lot_number_selected_by_customer: true } } }
+          before { patch :update, params: { id: procurement.id, continue_from_change_contract_value: 'Continue', facilities_management_rm3830_procurement: { lot_number: '', lot_number_selected_by_customer: true } } }
 
           it 'renders the show page again' do
             expect(response).to render_template('show')
@@ -588,7 +588,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         end
 
         context 'when the procurement is valid' do
-          before { patch :update, params: { id: procurement.id, continue_from_change_contract_value: 'Continue', facilities_management_procurement: { lot_number: '1a', lot_number_selected_by_customer: true } } }
+          before { patch :update, params: { id: procurement.id, continue_from_change_contract_value: 'Continue', facilities_management_rm3830_procurement: { lot_number: '1a', lot_number_selected_by_customer: true } } }
 
           it 'renders the show page' do
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
@@ -608,7 +608,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when the selection is invalid' do
           before do
-            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: '' } }
+            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_rm3830_procurement: { route_to_market: '' } }
           end
 
           it 'will render the results page' do
@@ -627,7 +627,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when the selection is valid and direct award is chosen' do
           before do
-            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'da_draft' } }
+            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_rm3830_procurement: { route_to_market: 'da_draft' } }
           end
 
           it 'will redirect to facilities_management_rm3830_procurement_path' do
@@ -642,7 +642,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when the selection is valid and saving as further competition' do
           before do
-            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition' } }
+            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_rm3830_procurement: { route_to_market: 'further_competition' } }
           end
 
           it 'will redirect to facilities_management_rm3830_procurement_path' do
@@ -657,7 +657,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when the selection is valid and further competition is chosen' do
           before do
-            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_procurement: { route_to_market: 'further_competition_chosen' } }
+            patch :update, params: { id: procurement.id, continue_from_results: 'Continue', facilities_management_rm3830_procurement: { route_to_market: 'further_competition_chosen' } }
           end
 
           it 'will redirect to facilities_management_rm3830_procurement_path' do
@@ -675,7 +675,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         let(:region_codes) { ['UKE1', 'UKI3', 'UKL11'] }
 
         before do
-          patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'regions', region_codes: region_codes } }
+          patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions', region_codes: region_codes } }
         end
 
         it 'redirects to edit_facilities_management_rm3830_procurement_path' do
@@ -695,7 +695,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         context 'when the user is in a quick search state' do
           context 'when the user selects service codes' do
             before do
-              patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'services', service_codes: service_codes } }
+              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
             end
 
             it 'redirects to edit_facilities_management_rm3830_procurement_path' do
@@ -710,7 +710,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           context 'when the user does not select service codes' do
             before do
-              patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'services' } }
+              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services' } }
             end
 
             it 'renders the edit page' do
@@ -724,7 +724,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           context 'when the user selects region codes' do
             before do
-              patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'regions', region_codes: region_codes } }
+              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions', region_codes: region_codes } }
             end
 
             it 'redirects to edit_facilities_management_rm3830_procurement_path' do
@@ -739,7 +739,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           context 'when the user does not select region codes' do
             before do
-              patch :update, params: { id: procurement.id, facilities_management_procurement: { step: 'regions' } }
+              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions' } }
             end
 
             it 'renders the edit page' do
@@ -759,7 +759,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           context 'when next step is present in the params' do
             before do
-              patch :update, params: { id: procurement.id, next_step: 'buildings_and_services', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
+              patch :update, params: { id: procurement.id, next_step: 'buildings_and_services', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
             end
 
             it 'redirects to services summary page' do
@@ -776,7 +776,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
             context 'when next_step is in the params' do
               context 'when services are selected' do
                 before do
-                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
+                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
                 it 'redirects to services summary page' do
@@ -791,7 +791,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
               context 'when no services are slected' do
                 it 'renders the edit page' do
-                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_procurement: { step: 'services' } }
+                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_rm3830_procurement: { step: 'services' } }
 
                   expect(response).to render_template('edit')
                 end
@@ -801,7 +801,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
             context 'when save_and_return_to_detailed_summary is present' do
               context 'when services are selected' do
                 before do
-                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_procurement: { step: 'services', service_codes: service_codes } }
+                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
                 end
 
                 it 'redirects to services summary page' do
@@ -816,7 +816,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
               context 'when no services are slected' do
                 it 'renders the edit page' do
-                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_procurement: { step: 'services' } }
+                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_rm3830_procurement: { step: 'services' } }
 
                   expect(response).to render_template('edit')
                 end
@@ -875,7 +875,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when going to a different page' do
           before do
-            patch :update, params: { id: procurement.id, blank: 'blank', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
+            patch :update, params: { id: procurement.id, blank: 'blank', page: '1', 'paginate-2': '2', facilities_management_rm3830_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
           end
 
           context 'when a building as checked' do
@@ -945,7 +945,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
         context 'when clicking save and continue' do
           before do
-            patch :update, params: { id: procurement.id, buildings: 'Save and continue', page: '1', 'paginate-2': '2', facilities_management_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
+            patch :update, params: { id: procurement.id, buildings: 'Save and continue', page: '1', 'paginate-2': '2', facilities_management_rm3830_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
           end
 
           context 'when the selection is valid' do
@@ -996,7 +996,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           get :delete, params: { procurement_id: procurement.id }
         end
 
-        it 'redirects facilities_management_procurements' do
+        it 'redirects facilities_management_rm3830_procurements' do
           expect(response).to redirect_to facilities_management_rm3830_procurements_path
         end
       end
@@ -1023,7 +1023,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           post :destroy, params: { id: procurement.id }
         end
 
-        it 'redirects facilities_management_procurements' do
+        it 'redirects facilities_management_rm3830_procurements' do
           expect(response).to redirect_to facilities_management_rm3830_procurements_path
         end
       end
@@ -1043,7 +1043,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
 
       context 'when deliverables_matrix' do
-        let(:spreadsheet_creator) { FacilitiesManagement::DeliverableMatrixSpreadsheetCreator }
+        let(:spreadsheet_creator) { FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator }
         let(:spreadsheet_action) { :deliverables_matrix }
 
         it 'downloads the document with the right filename' do
@@ -1052,7 +1052,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
 
       context 'when price_matrix' do
-        let(:spreadsheet_creator) { FacilitiesManagement::DirectAwardSpreadsheet }
+        let(:spreadsheet_creator) { FacilitiesManagement::RM3830::PriceMatrixSpreadsheet }
         let(:spreadsheet_action) { :price_matrix }
 
         it 'downloads the document with the right filename' do
@@ -1067,7 +1067,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
     it 'redirects to the not permitted page' do
       procurement.update(aasm_state: 'detailed_search', user_id: create(:user).id)
-      patch :update, params: { id: procurement.id, step: 'name', facilities_management_procurement: { contract_name: 'Updated name' } }
+      patch :update, params: { id: procurement.id, step: 'name', facilities_management_rm3830_procurement: { contract_name: 'Updated name' } }
       expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
     end
   end
@@ -1098,7 +1098,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
   end
 
   describe 'GET further_competition_spreadsheet' do
-    let(:procurement) { create(:facilities_management_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_further_competition, contract_name: 'New search', user: subject.current_user, aasm_state: aasm_state) }
 
     login_fm_buyer_with_details
 

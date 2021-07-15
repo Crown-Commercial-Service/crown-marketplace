@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDatesHelper, type: :helper do
   include ApplicationHelper
 
-  let(:procurement) { create(:facilities_management_procurement, user: create(:user)) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user)) }
 
   before { @procurement = procurement }
 
@@ -85,30 +85,30 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDatesHelper, 
     end
   end
 
-  describe 'optional_call_off_extensions_period' do
+  describe 'call_off_extensions_period' do
     before do
-      procurement.optional_call_off_extensions.delete_all
+      procurement.call_off_extensions.delete_all
 
       4.times do |extension|
-        procurement.optional_call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
+        procurement.call_off_extensions.create(extension: extension, years: (extension + 1) % 4, months: extension * 2)
       end
     end
 
     context 'when considering time period' do
       it 'returns 1 year for the first extension period' do
-        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(0))).to eq '1 year'
+        expect(helper.call_off_extensions_period(procurement.call_off_extension(0))).to eq '1 year'
       end
 
       it 'returns 2 years and 2 months for the second extension period' do
-        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(1))).to eq '2 years and 2 months'
+        expect(helper.call_off_extensions_period(procurement.call_off_extension(1))).to eq '2 years and 2 months'
       end
 
       it 'returns 3 years and 4 months for the third extension period' do
-        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(2))).to eq '3 years and 4 months'
+        expect(helper.call_off_extensions_period(procurement.call_off_extension(2))).to eq '3 years and 4 months'
       end
 
       it 'returns 6 months for the forth extension period' do
-        expect(helper.optional_call_off_extensions_period(procurement.optional_call_off_extension(3))).to eq '6 months'
+        expect(helper.call_off_extensions_period(procurement.call_off_extension(3))).to eq '6 months'
       end
     end
   end
@@ -173,11 +173,11 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDatesHelper, 
       procurement.initial_call_off_period_years = 3
       procurement.initial_call_off_period_months = 5
       procurement.extensions_required = true
-      procurement.optional_call_off_extensions.delete_all
-      procurement.optional_call_off_extensions.create(extension: 0, years: 1, months: 1)
-      procurement.optional_call_off_extensions.create(extension: 1, years: 0, months: 8)
-      procurement.optional_call_off_extensions.create(extension: 2, years: 1, months: 3)
-      procurement.optional_call_off_extensions.create(extension: 3, years: 2, months: 11)
+      procurement.call_off_extensions.delete_all
+      procurement.call_off_extensions.create(extension: 0, years: 1, months: 1)
+      procurement.call_off_extensions.create(extension: 1, years: 0, months: 8)
+      procurement.call_off_extensions.create(extension: 2, years: 1, months: 3)
+      procurement.call_off_extensions.create(extension: 3, years: 2, months: 11)
     end
 
     context 'when considering the first extension period' do

@@ -50,7 +50,7 @@ module FacilitiesManagement
       end
 
       def procurement_building_params
-        params.require(:facilities_management_procurement_building)
+        params.require(:facilities_management_rm3830_procurement_building)
               .permit(service_codes: [])
       end
 

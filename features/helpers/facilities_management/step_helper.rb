@@ -28,12 +28,12 @@ def find_supplier
 end
 
 def find_other_supplier(supplier_id)
-  FacilitiesManagement::SupplierDetail.find(supplier_id)
+  FacilitiesManagement::RM3830::SupplierDetail.find(supplier_id)
 end
 
 def create_contracts(user, supplier)
   %w[sent accepted signed declined].each do |state|
-    procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: user, contract_name: "Contract #{state}")
+    procurement = create(:facilities_management_rm3830_procurement_completed_procurement_no_suppliers, user: user, contract_name: "Contract #{state}")
 
     procurement.procurement_suppliers.create(supplier: supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
   end
