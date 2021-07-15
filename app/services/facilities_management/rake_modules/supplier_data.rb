@@ -6,7 +6,7 @@ module FacilitiesManagement::RakeModules::SupplierData
       JSON fm_aws
     else
       puts 'dummy supplier data'
-      JSON File.read('data/facilities_management/dummy_supplier_data.json')
+      JSON File.read('data/facilities_management/rm3830/dummy_supplier_data.json')
     end
   end
 
@@ -19,7 +19,7 @@ module FacilitiesManagement::RakeModules::SupplierData
         full_lot_data[lot_number] = { regions: lot_data['regions'], services: lot_data['services'] } if lot_data
       end
 
-      FacilitiesManagement::SupplierDetail.create(
+      FacilitiesManagement::RM3830::SupplierDetail.create(
         supplier_id: data['supplier_id'],
         contact_name: data['contact_name'],
         contact_email: data['contact_email'],
@@ -37,7 +37,7 @@ module FacilitiesManagement::RakeModules::SupplierData
   def self.fm_supplier_contact_details
     supplier_contact_details = Roo::Spreadsheet.open(supplier_details_path, extension: :xlsx)
     supplier_contact_details.sheet(0).drop(1).each do |row|
-      supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: row[8]&.strip)
+      supplier_detail = FacilitiesManagement::RM3830::SupplierDetail.find_by(contact_email: row[8]&.strip)
       supplier_detail.update(
         contact_name: row[7]&.strip,
         contact_phone: row[9]&.strip,
@@ -66,7 +66,7 @@ module FacilitiesManagement::RakeModules::SupplierData
       object.get(response_target: response_target)
       response_target
     else
-      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+      Rails.root.join('data', 'facilities_management', 'rm3830', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
     end
   end
 
@@ -95,7 +95,7 @@ module FacilitiesManagement::RakeModules::SupplierData
   end
 
   def self.current_supplier_data_mapping
-    FacilitiesManagement::SupplierDetail.pluck(:supplier_name, :supplier_id).to_h
+    FacilitiesManagement::RM3830::SupplierDetail.pluck(:supplier_name, :supplier_id).to_h
   end
 end
 # rubocop:enable Rails/Output

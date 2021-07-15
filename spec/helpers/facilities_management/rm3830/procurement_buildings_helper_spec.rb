@@ -118,8 +118,8 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
   end
 
   describe '#procurement_building_status' do
-    let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { create(:user) }
 
     before do
@@ -145,7 +145,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
   end
 
   describe '.form_object' do
-    let(:procurement_building) { create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement)) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement)) }
     let(:building) { create(:facilities_management_building) }
 
     before do
@@ -172,7 +172,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
   end
 
   describe '.question_id' do
-    let(:procurement_building_service) { create(:facilities_management_procurement_building_service, code: 'K.5', procurement_building: create(:facilities_management_procurement_building, procurement: create(:facilities_management_procurement))) }
+    let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, code: 'K.5', procurement_building: create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement))) }
 
     it 'creates the question id' do
       expect(helper.question_id(procurement_building_service, :tones_to_be_collected_and_removed, 'volume')).to eq 'K.5-tones_to_be_collected_and_removed-volume'
@@ -183,7 +183,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
     let(:gia) { 56 }
     let(:external_area) { 45 }
     let(:building) { create(:facilities_management_building, gia: gia, external_area: external_area) }
-    let(:procurement_building) { create(:facilities_management_procurement_building, service_codes: ['C.1', 'G.5'], building: building, procurement: create(:facilities_management_procurement)) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, service_codes: ['C.1', 'G.5'], building: building, procurement: create(:facilities_management_rm3830_procurement)) }
     let(:result) { helper.service_has_errors?(context) }
 
     before { @procurement_building = procurement_building }

@@ -8,13 +8,7 @@
     <%= f.hidden_field :building_type %>
     <%= govuk_radios_conditional do %>
       <% FacilitiesManagement::Building::BUILDING_TYPES[0..1].each do |building_type| %>
-        <div class="govuk-radios__item">
-          <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input' %>
-          <%= f.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
-            <%= building_type[:title] %>
-            <%= building_type_caption(building_type) %>
-          <% end %>
-        </div>
+        <%= building_type_radio_button(f, building_type, false) %>
       <% end %>
       <%= govuk_radio_driver %>
       <details class="govuk-details govuk-!-margin-left-0" data-module="govuk-details" <%= 'open' if open_state_of_building_details %>>
@@ -25,13 +19,7 @@
         </summary>
         <div class="govuk-details__text govuk-!-padding-bottom-0">
           <% FacilitiesManagement::Building::BUILDING_TYPES.drop(2).each do |building_type| %>
-            <div class="govuk-radios__item">
-              <%= f.radio_button :building_type, building_type[:id], class: 'govuk-radios__input', disabled: !open_state_of_building_details %>
-              <%= f.label :building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s' do %>
-                <%= building_type[:title] %>
-                <%= building_type_caption(building_type) %>
-              <% end %>
-            </div>
+            <%= building_type_radio_button(f, building_type, !open_state_of_building_details) %>
           <% end %>
           <%= govuk_radio_driver %>
           <%= render partial: 'facilities_management/buildings/other', locals: { f: f, attribute: :building_type, other_attribute: :other_building_type, description: t('.describe_building'), disabled: !open_state_of_building_details, not_other: f.object.building_type != 'other'}%>

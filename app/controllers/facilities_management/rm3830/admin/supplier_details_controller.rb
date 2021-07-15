@@ -7,7 +7,7 @@ module FacilitiesManagement
         before_action :set_user_email, only: :edit, if: -> { @page == :supplier_user }
 
         def index
-          @suppliers = FacilitiesManagement::Admin::SuppliersAdmin.select(:supplier_id, :supplier_name, :contact_email).order(:supplier_name)
+          @suppliers = SuppliersAdmin.select(:supplier_id, :supplier_name, :contact_email).order(:supplier_name)
         end
 
         def show; end
@@ -27,7 +27,7 @@ module FacilitiesManagement
         private
 
         def set_supplier
-          @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id])
+          @supplier = SuppliersAdmin.find(params[:id])
         end
 
         def set_page
@@ -39,7 +39,7 @@ module FacilitiesManagement
         end
 
         def supplier_params
-          params.require(:facilities_management_admin_suppliers_admin).permit(PERMITED_PARAMS[@page])
+          params.require(:facilities_management_rm3830_admin_suppliers_admin).permit(PERMITED_PARAMS[@page])
         end
 
         PERMITED_PARAMS = {

@@ -162,8 +162,8 @@ RSpec.describe Cognito::CreateUserFromCognito do
 
       context 'when supplier detail exists with the same contact_name' do
         before do
-          FactoryBot.create(:facilities_management_supplier_detail, contact_email: email)
-          FactoryBot.create(:facilities_management_supplier_detail)
+          FactoryBot.create(:facilities_management_rm3830_supplier_detail, contact_email: email)
+          FactoryBot.create(:facilities_management_rm3830_supplier_detail)
         end
 
         it 'matches the right supplier detail to the user record' do
@@ -174,7 +174,7 @@ RSpec.describe Cognito::CreateUserFromCognito do
 
       context 'when supplier detail does not exist with the same contact_name' do
         before do
-          FactoryBot.create(:facilities_management_supplier_detail)
+          FactoryBot.create(:facilities_management_rm3830_supplier_detail)
         end
 
         it 'leaves the supplier_detail blank' do

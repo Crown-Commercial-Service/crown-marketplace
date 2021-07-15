@@ -81,10 +81,6 @@ module Base
       facilities_management_rm3830_new_user_session_path(expired: true)
     end
 
-    def authorize_user
-      authorize! :read, SupplyTeachers
-    end
-
     def result_unsuccessful_path
       sign_out
       if @result.needs_password_reset

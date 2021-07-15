@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, type: :controller do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
-  let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
+  let(:supplier) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
 
   login_fm_admin
 
@@ -15,7 +15,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, t
       end
 
       it 'sets the list of suppliers' do
-        expect(assigns(:suppliers).size).to eq FacilitiesManagement::Admin::SuppliersAdmin.count
+        expect(assigns(:suppliers).size).to eq FacilitiesManagement::RM3830::Admin::SuppliersAdmin.count
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, t
   end
 
   describe 'PUT update' do
-    before { put :update, params: { id: supplier.supplier_id, page: page, facilities_management_admin_suppliers_admin: supplier_params } }
+    before { put :update, params: { id: supplier.supplier_id, page: page, facilities_management_rm3830_admin_suppliers_admin: supplier_params } }
 
     context 'when updating on the supplier name page' do
       let(:page) { :supplier_name }

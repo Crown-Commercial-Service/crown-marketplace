@@ -42,7 +42,7 @@ module FacilitiesManagement
         end
 
         def procurement_params
-          params.require(:facilities_management_procurement).permit(:contract_name)
+          params.require(:facilities_management_rm3830_procurement).permit(:contract_name)
         end
 
         protected

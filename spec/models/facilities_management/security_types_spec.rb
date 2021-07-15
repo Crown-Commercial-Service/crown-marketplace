@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::SecurityTypes, type: :model do
-  describe '#SecurityTypes' do
+RSpec.describe FacilitiesManagement::SecurityType, type: :model do
+  describe '#SecurityType' do
     context 'when constructing, expect a result' do
       it 'is not nil' do
         s = described_class.new

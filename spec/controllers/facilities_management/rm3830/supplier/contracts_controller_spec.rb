@@ -5,19 +5,21 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
   describe 'PUT update' do
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:procurement) { create(:facilities_management_procurement_with_contact_details, user: user) }
-    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, facilities_management_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier
 
     before do
-      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::GovNotifyNotification).to receive(:perform_async).and_return(nil)
     end
 
     context 'when the supplier accepts the procurement' do
       before do
-        put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: true } }
+        allow(FacilitiesManagement::RM3830::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
+        put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: true } }
       end
 
       it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
@@ -36,7 +38,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
         let(:reason_for_declining) { 'Can not provide the service' }
 
         before do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: false, reason_for_declining: reason_for_declining } }
+          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: false, reason_for_declining: reason_for_declining } }
         end
 
         it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
@@ -58,7 +60,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
       context 'when the supplier does not add a valid reason' do
         it 'renders the edit template' do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: false, reason_for_declining: '' } }
+          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: false, reason_for_declining: '' } }
 
           expect(response).to render_template('edit')
         end
@@ -67,14 +69,14 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
   end
 
   describe '.authorize_user' do
-    let(:contract) { create(:facilities_management_procurement_supplier, supplier: supplier) }
-    let(:procurement) { create(:facilities_management_procurement, user: user) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier, supplier: supplier) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: user) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: user) }
 
     before do
-      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
     context 'when the user is not the intended supplier' do
@@ -109,9 +111,9 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
   end
 
   describe 'GET edit' do
-    let(:procurement) { create(:facilities_management_procurement, user: create(:user)) }
-    let(:contract) { create(:facilities_management_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state, supplier: supplier) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user)) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state, supplier: supplier) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier
 

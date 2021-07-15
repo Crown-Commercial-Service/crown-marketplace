@@ -55,16 +55,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
   describe 'POST create' do
     let(:file) { Tempfile.new(['valid_file', '.xlsx']) }
     let(:fake_file) { File.open(file.path) }
-    let(:upload) { create(:facilities_management_admin_upload) }
+    let(:upload) { create(:facilities_management_rm3830_admin_upload) }
 
     login_fm_admin
 
     before do
       allow(upload).to receive(:save).and_return(valid)
       allow(upload).to receive(:save).with(context: :upload).and_return(valid)
-      allow(FacilitiesManagement::Admin::Upload).to receive(:new).with(anything).and_return(upload)
-      allow(FacilitiesManagement::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
-      post :create, params: { facilities_management_admin_upload: { supplier_data_file: fake_file } }
+      allow(FacilitiesManagement::RM3830::Admin::Upload).to receive(:new).with(anything).and_return(upload)
+      allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
+      post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
     end
 
     after do
@@ -96,7 +96,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
     let(:file) { Tempfile.new(['valid_file', '.xlsx']) }
     let(:fake_file) { File.open(file.path) }
     let(:upload) do
-      create(:facilities_management_admin_upload, aasm_state: aasm_state) do |admin_upload|
+      create(:facilities_management_rm3830_admin_upload, aasm_state: aasm_state) do |admin_upload|
         admin_upload.supplier_data_file.attach(io: fake_file, filename: 'test_supplier_framework_data_file.xlsx')
       end
     end
@@ -141,7 +141,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
   end
 
   describe 'GET progress' do
-    let(:upload) { create(:facilities_management_admin_upload, aasm_state: 'publishing_data') }
+    let(:upload) { create(:facilities_management_rm3830_admin_upload, aasm_state: 'publishing_data') }
 
     login_fm_admin
 
