@@ -8,7 +8,7 @@ module FacilitiesManagement
         before_action :redirect_to_requirements
 
         def new
-          @spreadsheet_import = FacilitiesManagement::SpreadsheetImport.new(facilities_management_rm3830_procurement_id: params[:procurement_id])
+          @spreadsheet_import = FacilitiesManagement::RM3830::SpreadsheetImport.new(facilities_management_rm3830_procurement_id: params[:procurement_id])
         end
 
         def create

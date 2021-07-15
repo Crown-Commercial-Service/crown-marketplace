@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:spreadsheet_import) do
-    create(:facilities_management_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing', data_import_state: 'in_progress') do |import|
+    create(:facilities_management_rm3830_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing', data_import_state: 'in_progress') do |import|
       import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')
     end
   end
@@ -59,8 +59,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:service_codes).and_return(['C.1'])
 
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -737,8 +737,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -835,8 +835,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -1093,8 +1093,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -1327,8 +1327,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
     end
@@ -1490,8 +1490,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
-      allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).and_return(true)
+      allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 
       spreadsheet_importer.import_data
       procurement.reload

@@ -6,7 +6,7 @@ class UdpateTableForeignKeys < ActiveRecord::Migration[6.0]
     rename_column :facilities_management_rm3830_procurement_contact_details, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
     rename_column :facilities_management_rm3830_procurement_pension_funds, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
     rename_column :facilities_management_rm3830_procurement_suppliers, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
-    rename_column :facilities_management_spreadsheet_imports, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
+    rename_column :facilities_management_rm3830_spreadsheet_imports, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
     rename_column :fm_frozen_rate_cards, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
     rename_column :fm_frozen_rates, :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
 

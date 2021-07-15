@@ -44,7 +44,7 @@ class FacilitiesManagement::SpreadsheetImporter
   end
 
   def spreadsheet_not_present?
-    FacilitiesManagement::SpreadsheetImport.find_by(id: @spreadsheet_import.id).nil?
+    FacilitiesManagement::RM3830::SpreadsheetImport.find_by(id: @spreadsheet_import.id).nil?
   end
 
   ########## Import processs ##########

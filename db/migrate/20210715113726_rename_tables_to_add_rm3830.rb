@@ -8,5 +8,6 @@ class RenameTablesToAddRM3830 < ActiveRecord::Migration[6.0]
     rename_table :facilities_management_procurement_optional_call_off_extensions, :facilities_management_rm3830_procurement_call_off_extensions
     rename_table :facilities_management_procurement_pension_funds, :facilities_management_rm3830_procurement_pension_funds
     rename_table :facilities_management_procurement_suppliers, :facilities_management_rm3830_procurement_suppliers
+    rename_table :facilities_management_spreadsheet_imports, :facilities_management_rm3830_spreadsheet_imports
   end
 end

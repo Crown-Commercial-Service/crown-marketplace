@@ -265,6 +265,17 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_procurements_on_user_id"
   end
 
+  create_table "facilities_management_rm3830_spreadsheet_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm3830_procurement_id", null: false
+    t.string "aasm_state", limit: 15
+    t.string "spreadsheet_file", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "import_errors", default: {}
+    t.string "data_import_state", limit: 30
+    t.index ["facilities_management_rm3830_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
+  end
+
   create_table "facilities_management_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
@@ -274,17 +285,6 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
     t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
     t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
-  end
-
-  create_table "facilities_management_spreadsheet_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_rm3830_procurement_id", null: false
-    t.string "aasm_state", limit: 15
-    t.string "spreadsheet_file", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.json "import_errors", default: {}
-    t.string "data_import_state", limit: 30
-    t.index ["facilities_management_rm3830_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
   create_table "facilities_management_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
@@ -547,8 +547,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
   add_foreign_key "facilities_management_rm3830_procurement_pension_funds", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_suppliers", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurements", "users"
+  add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
-  add_foreign_key "facilities_management_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "fm_frozen_rate_cards", "facilities_management_rm3830_procurements"
   add_foreign_key "fm_frozen_rates", "facilities_management_rm3830_procurements"

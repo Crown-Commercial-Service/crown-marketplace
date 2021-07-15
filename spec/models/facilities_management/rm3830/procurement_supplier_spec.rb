@@ -5,33 +5,35 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
     let(:current_year) { Date.current.year.to_s }
 
     before do
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3860-DA0001-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3860-DA0002-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3860-DA0003-2019')
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3860-DA0004-2019')
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3860-FC0005-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3860-FC0006-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3860-FC0007-2019')
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3860-FC0008-2019')
+      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3830-DA0001-#{current_year}")
+      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3830-DA0002-#{current_year}")
+      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3830-DA0003-2019')
+      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3830-DA0004-2019')
+      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3830-FC0005-#{current_year}")
+      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3830-FC0006-#{current_year}")
+      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3830-FC0007-2019')
+      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3830-FC0008-2019')
     end
 
-    describe '.used_direct_award_contract_numbers_for_current_year' do
-      it 'presents all of the direct award contract numbers used for the current year' do
-        expect(described_class.used_direct_award_contract_numbers_for_current_year.sort).to match(['0001', '0002'])
+    describe '.used_contract_numbers_for_current_year' do
+      context 'and the procurement state is direct award' do
+        it 'presents all of the direct award contract numbers used for the current year' do
+          expect(described_class.used_contract_numbers_for_current_year('DA').sort).to match(['0001', '0002'])
+        end
+
+        it 'does not present any of the direct award contract numbers used for the previous years' do
+          expect(described_class.used_contract_numbers_for_current_year('DA')).not_to match(['0003', '0004'])
+        end
       end
 
-      it 'does not present any of the direct award contract numbers used for the previous years' do
-        expect(described_class.used_direct_award_contract_numbers_for_current_year).not_to match(['0003', '0004'])
-      end
-    end
+      context 'and the procurement state is further competition' do
+        it 'presents all of the further competition contract numbers used for the current year' do
+          expect(described_class.used_contract_numbers_for_current_year('FC').sort).to match(['0005', '0006'])
+        end
 
-    describe '.used_further_competition_contract_numbers_for_current_year' do
-      it 'presents all of the further competition contract numbers used for the current year' do
-        expect(described_class.used_further_competition_contract_numbers_for_current_year.sort).to match(['0005', '0006'])
-      end
-
-      it 'does not present any of the further competition contract numbers used for the previous years' do
-        expect(described_class.used_further_competition_contract_numbers_for_current_year).not_to match(['0007', '0008'])
+        it 'does not present any of the further competition contract numbers used for the previous years' do
+          expect(described_class.used_contract_numbers_for_current_year('FC')).not_to match(['0007', '0008'])
+        end
       end
     end
 
