@@ -1112,4 +1112,48 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       end
     end
   end
+
+  describe '.contract_state_to_stage' do
+    let(:result) { helper.contract_state_to_stage(contract_state) }
+
+    context 'when the contract state is sent' do
+      let(:contract_state) { 'sent' }
+
+      it "returns 'Awaiting supplier response'" do
+        expect(result).to eq 'Awaiting supplier response'
+      end
+    end
+
+    context 'when the contract state is accepted' do
+      let(:contract_state) { 'accepted' }
+
+      it "returns 'Awaiting contract signature'" do
+        expect(result).to eq 'Awaiting contract signature'
+      end
+    end
+
+    context 'when the contract state is not_signed' do
+      let(:contract_state) { 'not_signed' }
+
+      it "returns 'Accepted, not signed'" do
+        expect(result).to eq 'Accepted, not signed'
+      end
+    end
+
+    context 'when the contract state is declined' do
+      let(:contract_state) { 'declined' }
+
+      it "returns 'Supplier declined'" do
+        expect(result).to eq 'Supplier declined'
+      end
+    end
+
+    context 'when the contract state is expired' do
+      let(:contract_state) { 'expired' }
+
+      it "returns 'No supplier response'" do
+        expect(result).to eq 'No supplier response'
+      end
+    end
+  end
 end

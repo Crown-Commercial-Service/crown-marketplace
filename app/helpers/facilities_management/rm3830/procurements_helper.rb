@@ -222,5 +222,15 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   def further_competition_saved_date(procurement)
     format_date_time procurement.contract_datetime.to_datetime
   end
+
+  CONTRACT_STATE = { sent: 'Awaiting supplier response',
+                     accepted: 'Awaiting contract signature',
+                     not_signed: 'Accepted, not signed',
+                     declined: 'Supplier declined',
+                     expired: 'No supplier response' }.freeze
+
+  def contract_state_to_stage(state)
+    CONTRACT_STATE[state.to_sym]
+  end
 end
 # rubocop:enable Metrics/ModuleLength
