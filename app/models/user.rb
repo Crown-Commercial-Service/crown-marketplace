@@ -28,7 +28,7 @@ class User < ApplicationRecord
 
   has_many :management_reports,
            inverse_of: :user,
-           class_name: 'FacilitiesManagement::Admin::ManagementReport',
+           class_name: 'FacilitiesManagement::RM3830::Admin::ManagementReport',
            dependent: :nullify
 
   # Include default devise modules. Others available are:

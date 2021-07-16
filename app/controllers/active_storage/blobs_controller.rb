@@ -18,9 +18,9 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   def authorize_user
     if params[:management_report_id].present?
-      authenticate_admin_view(FacilitiesManagement::Admin::ManagementReport, params[:management_report_id])
+      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::ManagementReport, params[:management_report_id])
     elsif params[:admin_upload_id].present?
-      authenticate_admin_view(FacilitiesManagement::Admin::Upload, params[:admin_upload_id])
+      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::Upload, params[:admin_upload_id])
     else
       authorize_contract_procurement_view
     end

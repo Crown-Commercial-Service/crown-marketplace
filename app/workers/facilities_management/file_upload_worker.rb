@@ -4,7 +4,7 @@ module FacilitiesManagement
     sidekiq_options queue: 'fm', retry: false
 
     def perform(id)
-      fm_import = Admin::Upload.find(id)
+      fm_import = RM3830::Admin::Upload.find(id)
       Admin::SupplierFrameworkDataImporter.new(fm_import).import_data
     rescue ActiveRecord::RecordNotFound => e
       logger.error e.message

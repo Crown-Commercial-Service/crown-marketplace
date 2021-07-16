@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::Upload, type: :model do
-  let(:upload) { create(:facilities_management_admin_upload) }
+RSpec.describe FacilitiesManagement::RM3830::Admin::Upload, type: :model do
+  let(:upload) { create(:facilities_management_rm3830_admin_upload) }
   let(:valid_file) { Tempfile.new(['valid_file', '.xlsx']) }
   let(:text_file) { Tempfile.new(['text_file', '.txt']) }
   let(:invalid_file) { Tempfile.new(['invalid_file', '.xlsx']) }

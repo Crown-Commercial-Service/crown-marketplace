@@ -16,17 +16,6 @@ en:
   activerecord:
     errors:
       models:
-        facilities_management/admin/management_report:
-          attributes:
-            end_date:
-              date_after_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
-              date_before_or_equal_to: The ‘To’ date must be today or in the past
-              invalid: Enter a valid ‘To’ date
-              not_a_date: Enter a valid ‘To’ date
-            start_date:
-              date_before_or_equal_to: The ‘From’ date must be today or in the past
-              invalid: Enter a valid ‘From’ date
-              not_a_date: Enter a valid ‘From’ date
         facilities_management/admin/rates:
           attributes:
             benchmark:
@@ -76,14 +65,6 @@ en:
               account_must_be_unique: The user cannot belong to another supplier
               account_must_exist: The supplier must be registered with the facilities management service
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
-        facilities_management/admin/upload:
-          attributes:
-            supplier_data_file:
-              malicious: The 'Supplier framework data' file contains a virus
-              not_attached: Select the 'Supplier framework data' file
-              too_large: The 'Supplier framework data' file must be smaller than 10mb
-              wrong_content_type: The 'Supplier framework data' file does not contain the expected content type
-              wrong_extension: The 'Supplier framework data' file must be an XLSX
         facilities_management/building:
           attributes:
             address_line_1:

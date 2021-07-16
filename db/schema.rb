@@ -37,14 +37,6 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "facilities_management_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "aasm_state", limit: 30
-    t.string "supplier_data_file", limit: 255
-    t.text "import_errors"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "facilities_management_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
@@ -88,16 +80,6 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
-  create_table "facilities_management_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.date "start_date"
-    t.date "end_date"
-    t.string "aasm_state", limit: 30
-    t.uuid "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_facilities_management_management_reports_on_user_id"
-  end
-
   create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_supplier_id", null: false
     t.text "lot_number", null: false
@@ -107,6 +89,24 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
     t.index ["lot_number", "region_code", "facilities_management_supplier_id"], name: "index_regional_availabilities_on_lot_number_and_region_code", unique: true
     t.index ["lot_number"], name: "index_fm_regional_availabilities_on_lot_number"
+  end
+
+  create_table "facilities_management_rm3830_admin_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.string "aasm_state", limit: 30
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fm_rm3830_management_reports_on_user_id"
+  end
+
+  create_table "facilities_management_rm3830_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 30
+    t.string "supplier_data_file", limit: 255
+    t.text "import_errors"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "facilities_management_rm3830_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -536,8 +536,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
-  add_foreign_key "facilities_management_management_reports", "users"
   add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
+  add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"
   add_foreign_key "facilities_management_rm3830_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurement_buildings"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurements"

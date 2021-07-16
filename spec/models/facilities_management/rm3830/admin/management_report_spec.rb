@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::ManagementReport, type: :model do
-  subject(:management_report) { build(:facilities_management_admin_management_report, user: user) }
+RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReport, type: :model do
+  subject(:management_report) { build(:facilities_management_rm3830_admin_management_report, user: user) }
 
   let(:user) { create(:user) }
 
