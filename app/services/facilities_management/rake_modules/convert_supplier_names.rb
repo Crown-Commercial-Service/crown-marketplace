@@ -30,7 +30,7 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   private
 
   def update_rate_cards
-    rate_card = CCS::FM::RateCard.order(updated_at: :desc).first
+    rate_card = FacilitiesManagement::RM3830::RateCard.order(updated_at: :desc).first
     rate_card.data = map_supplier_keys(rate_card.data)
     rate_card.save
   rescue StandardError => e

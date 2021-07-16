@@ -85,7 +85,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierFrameworkDataImporter do
   end
 
   describe 'import_data' do
-    let(:latest_rate_card_data) { CCS::FM::RateCard.latest.data }
+    let(:latest_rate_card_data) { FacilitiesManagement::RM3830::RateCard.latest.data }
     let(:supplier_prices) { latest_rate_card_data[:Prices][supplier_id] }
     let(:supplier_discounts) { latest_rate_card_data[:Discounts][supplier_id] }
     let(:supplier_variances) { latest_rate_card_data[:Variances][supplier_id].slice(*FacilitiesManagement::Admin::SupplierFrameworkData::HEADERS[1].map(&:to_sym)).values }

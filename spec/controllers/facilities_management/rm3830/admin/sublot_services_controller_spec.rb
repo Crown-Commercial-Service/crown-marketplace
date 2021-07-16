@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, ty
       end
 
       context 'and the service discount and prices are updated' do
-        let(:latest_rate_card) { CCS::FM::RateCard.latest }
+        let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do
@@ -148,7 +148,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesController, ty
       end
 
       context 'and the variance is updated' do
-        let(:latest_rate_card) { CCS::FM::RateCard.latest }
+        let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
         context 'and the data is valid' do
           it 'redirects to the supplier_framework_data_path' do

@@ -1,9 +1,5 @@
-module CCS
-  module FM
-    def self.table_name_prefix
-      'fm_'
-    end
-
+module FacilitiesManagement
+  module RM3830
     class Rate < ApplicationRecord
       include CommonRate
 

@@ -263,7 +263,7 @@ module ApplicationHelper
   end
 
   def da_eligible?(code)
-    CCS::FM::Rate.where.not(framework: nil).map(&:code).include? code
+    FacilitiesManagement::RM3830::Rate.where.not(framework: nil).map(&:code).include? code
   end
 
   def service_specification_document

@@ -56,7 +56,7 @@ class FacilitiesManagement::Admin::SupplierFrameworkDataSpreadsheet
   end
 
   def da_service_codes
-    @da_service_codes ||= CCS::FM::Rate.all.where(direct_award: true).pluck(:code)
+    @da_service_codes ||= FacilitiesManagement::RM3830::Rate.all.where(direct_award: true).pluck(:code)
   end
 
   def work_packages

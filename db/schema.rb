@@ -277,6 +277,27 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_procurements_on_user_id"
   end
 
+  create_table "facilities_management_rm3830_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "data"
+    t.text "source_file", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "idx_fm_rate_cards_gin", using: :gin
+    t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
+  end
+
+  create_table "facilities_management_rm3830_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code", limit: 5
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["code", "standard"], name: "index_facilities_management_rm3830_rates_on_code_and_standard"
+    t.index ["code"], name: "index_facilities_management_rm3830_rates_on_code"
+  end
+
   create_table "facilities_management_rm3830_spreadsheet_imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm3830_procurement_id", null: false
     t.string "aasm_state", limit: 15
@@ -308,27 +329,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["contact_email"], name: "index_fm_rm3830_supplier_details_on_contact_email"
     t.index ["supplier_name"], name: "index_fm_rm3830_supplier_details_on_supplier_name", unique: true
     t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
-  end
-
-  create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.jsonb "data"
-    t.text "source_file", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["data"], name: "idx_fm_rate_cards_gin", using: :gin
-    t.index ["data"], name: "idx_fm_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
-  end
-
-  create_table "fm_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "code", limit: 5
-    t.decimal "framework"
-    t.decimal "benchmark"
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["code", "standard"], name: "index_fm_rates_on_code_and_standard"
-    t.index ["code"], name: "index_fm_rates_on_code"
   end
 
   create_table "fm_regions", id: false, force: :cascade do |t|

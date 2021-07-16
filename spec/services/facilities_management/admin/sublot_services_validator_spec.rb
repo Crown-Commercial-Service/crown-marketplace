@@ -6,11 +6,11 @@ RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
 
   describe '.save' do
     let(:params) { ActionController::Parameters.new('data': data, 'rate': rate) }
-    let(:latest_rate_card) { CCS::FM::RateCard.latest }
+    let(:latest_rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
     let(:prices) { latest_rate_card[:data][:Prices][supplier_id].deep_stringify_keys! }
     let(:discounts) { latest_rate_card[:data][:Discounts][supplier_id].deep_stringify_keys! }
     let(:variance) { latest_rate_card[:data][:Variances][supplier_id] }
-    let(:rate_card) { CCS::FM::RateCard.latest }
+    let(:rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
     context 'when the data and rates are valid' do
       let(:data) { { 'E.2': { 'Direct Award Discount (%)': '0.3', 'Restaurant and Catering Facilities (£)': '0.406' }, 'H.5': { 'Direct Award Discount (%)': '0.0', 'Pre-School (£)': '8.513' }, 'M.1': { 'Primary School (£)': '0.56' } } }

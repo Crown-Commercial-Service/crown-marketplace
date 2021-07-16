@@ -258,9 +258,9 @@ class ProcurementCsvExport
   end
 
   def self.ccs_fm_rates
-    @ccs_fm_rates ||= CCS::FM::Rate.select(:code, :standard, :framework, :benchmark)
-                                   .map { |rate| [[rate.code, rate.standard], { framework: rate.framework, benchmark: rate.benchmark }] }
-                                   .to_h
+    @ccs_fm_rates ||= FacilitiesManagement::RM3830::Rate.select(:code, :standard, :framework, :benchmark)
+                                                        .map { |rate| [[rate.code, rate.standard], { framework: rate.framework, benchmark: rate.benchmark }] }
+                                                        .to_h
   end
 
   def self.format_period_start_end(procurement)

@@ -11,11 +11,11 @@ module FacilitiesManagement
 
       frozen_rates = FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
       @rates = frozen_rates.read_benchmark_rates unless frozen_rates.size.zero?
-      @rates = CCS::FM::Rate.read_benchmark_rates if frozen_rates.size.zero?
+      @rates = FacilitiesManagement::RM3830::Rate.read_benchmark_rates if frozen_rates.size.zero?
 
       frozen_ratecard = FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement_id)
       @rate_card = frozen_ratecard.latest unless frozen_ratecard.size.zero?
-      @rate_card = CCS::FM::RateCard.latest if frozen_ratecard.size.zero?
+      @rate_card = FacilitiesManagement::RM3830::RateCard.latest if frozen_ratecard.size.zero?
       regions
     end
 

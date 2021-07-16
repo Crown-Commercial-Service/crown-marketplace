@@ -7,7 +7,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
     @supplier_name = @contract.supplier.supplier_name
     frozen_rate_card = FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
-    @rate_card_data = CCS::FM::RateCard.latest.data unless frozen_rate_card.exists?
+    @rate_card_data = FacilitiesManagement::RM3830::RateCard.latest.data unless frozen_rate_card.exists?
   end
 
   def build
@@ -135,7 +135,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       styles = [standard_column_style, standard_column_style, standard_column_style]
 
-      styles += CCS::FM::RateCard.building_types.count.times.map do
+      styles += FacilitiesManagement::RM3830::RateCard.building_types.count.times.map do
         if ['M.1', 'N.1'].include? s
           percentage_style
         else

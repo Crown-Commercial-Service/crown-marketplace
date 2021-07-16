@@ -38,11 +38,11 @@ module CCS
 
   def self.csv_to_fm_rates(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.query 'DELETE FROM fm_rates'
+      db.query 'DELETE FROM facilities_management_rm3830_rates'
       CSV.read(file_name, headers: true).each do |row|
         column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
         values = row.fields.map { |i| i.blank? ? 'null' : "'#{i}'" }.join(',')
-        query = "insert into fm_rates ( #{column_names}) values (#{values})"
+        query = "insert into facilities_management_rm3830_rates ( #{column_names}) values (#{values})"
         puts "adding #{column_names} (#{values})"
         db.query query
       end

@@ -2,7 +2,7 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class Rates < ApplicationRecord
-        self.table_name = 'fm_rates'
+        self.table_name = 'facilities_management_rm3830_rates'
 
         validates :framework, numericality: true, allow_blank: true, on: :framework
         validates :framework, numericality: { less_than_or_equal_to: 1 }, allow_blank: true, on: :framework, if: -> { range_validation_required? }

@@ -177,7 +177,7 @@ module FacilitiesManagement::Admin
 
     ########## Save the data into the database ##########
     def publish_data
-      rate_card = CCS::FM::RateCard.create(data: converted_data, source_file: file_source)
+      rate_card = FacilitiesManagement::RM3830::RateCard.create(data: converted_data, source_file: file_source)
 
       Rails.logger.info "FM rate cards spreadsheet #{file_source} (#{rate_card.data.count} sheets) imported into database"
     rescue StandardError => e

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FMCalculator::Calculator do
-  let(:rates) { CCS::FM::Rate.read_benchmark_rates }
-  let(:rate_card) { CCS::FM::RateCard.latest }
+  let(:rates) { FacilitiesManagement::RM3830::Rate.read_benchmark_rates }
+  let(:rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 
   # rubocop:disable RSpec/NestedGroups
   describe '.calculate_total' do
