@@ -102,7 +102,7 @@ Rails.application.routes.draw do
       end
       resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
       resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
-        resources :progress, only: :index, defaults: { format: :json }, controller: 'procurements/spreadsheet_imports/progress'
+        get '/progress', action: :progress
       end
       resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
         member do
@@ -131,6 +131,10 @@ Rails.application.routes.draw do
         resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
         resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
       end
+      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
+        get '/progress', action: :progress
+      end
+      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
       resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
       resources :management_reports, only: %i[new create show]
     end

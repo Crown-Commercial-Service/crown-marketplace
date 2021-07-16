@@ -1,4 +1,4 @@
-<h1 class="govuk-body-l govuk-!-width-two-thirds"> <%= t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.supplier_name %>.</b></h1>
+<h2 class="govuk-body-l govuk-!-width-two-thirds"> <%= t('.next_lowest') %> <b><%= @procurement.procurement_suppliers.unsent.first.supplier.supplier_name %>.</b></h2>
   <div class="govuk-body-l">
       <%= t('.price')%> <b><%= format_money @procurement.procurement_suppliers.unsent.first.direct_award_value %>.</b>
   </div>

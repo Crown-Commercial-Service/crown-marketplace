@@ -101,12 +101,22 @@ RSpec.describe Cognito::SignUpUser do
         end
       end
 
-      context 'when email domain contains an uppercase character' do
+      context 'when email contains an uppercase character' do
         let(:email) { 'uSer@cheemail.com' }
 
         it 'is invalid and it has the correct error message' do
           expect(response.valid?).to eq false
           expect(response.errors[:email].first).to eq 'Email address cannot contain any capital letters'
+        end
+      end
+
+      context 'when email domain contains an uppercase character' do
+        let(:email) { 'user@Cheemail.com' }
+
+        it 'is invalid and it has the correct error message' do
+          expect(response.valid?).to eq false
+          expect(response.errors[:email].first).to eq 'Email address cannot contain any capital letters'
+          expect(response.errors.of_kind?(:email, :not_on_safelist)).to be false
         end
       end
 

@@ -1,11 +1,10 @@
 class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement::Supplier::FrameworkController
-  include FacilitiesManagement::ControllerLayoutHelper
-  include FacilitiesManagement::Supplier::ContractsHelper
+  include FacilitiesManagement::PageDetail::Supplier::Contracts
 
   before_action :set_contract
   before_action :authorize_user
   before_action :set_procurement
-  before_action :set_page_detail, only: %i[show edit]
+  before_action :initialize_page_description, only: %i[show edit]
 
   def show; end
 
@@ -23,7 +22,7 @@ class FacilitiesManagement::Supplier::ContractsController < FacilitiesManagement
       end
       redirect_to facilities_management_supplier_contract_sent_index_path(@contract.id)
     else
-      set_page_detail
+      initialize_page_description
       render :edit
     end
   end

@@ -1,0 +1,35 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t('.errors_with_upload') %></h2>
+    <p>
+      <%= t('.below_is_a_list') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col" width="25%"><%= t('.issue') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('.details') %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @upload.import_errors.each do |error| %>
+          <tr>
+            <td class="govuk-table__cell"><%= t(".error_name.#{error[:error]}") %></td>
+            <td class="govuk-table__cell">
+              <% if error[:details] %>
+                <%= get_admin_upload_error_details(error[:error], error[:details]) %>
+              <% else %>
+                <%= t(".error_details.#{error[:error]}") %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

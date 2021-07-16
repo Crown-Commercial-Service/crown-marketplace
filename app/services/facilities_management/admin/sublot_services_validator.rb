@@ -1,123 +1,89 @@
-class FacilitiesManagement::Admin::SublotServicesValidator
-  attr_reader :invalid_services, :supplier_data_ratecard_prices, :supplier_data_ratecard_discounts, :variance_supplier_data
+module FacilitiesManagement::Admin
+  class SublotServicesValidator
+    attr_reader :invalid_services, :supplier_data_ratecard_prices, :supplier_data_ratecard_discounts, :variance_supplier_data
 
-  def initialize(params, latest_rate_card, prices, discounts, variance)
-    @data = params['data']
-    @rates = params['rate']
-    @invalid_services = {}
+    def initialize(params, latest_rate_card, prices, discounts, variance)
+      @data = params['data']
+      @rates = params['rate']
+      @invalid_services = {}
 
-    @rate_card = latest_rate_card
-    @supplier_data_ratecard_prices = prices
-    @supplier_data_ratecard_discounts = discounts
-    @variance_supplier_data = variance
-  end
-
-  def save
-    update_data
-    update_rates
-    return false unless valid?
-
-    @rate_card.save
-    true
-  end
-
-  private
-
-  def valid?
-    validate_data
-    validate_rates
-    @invalid_services.empty?
-  end
-
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-  def validate_data
-    @data.each do |service_key, service|
-      service.each do |service_type_key, _|
-        numeric_result_valid = numeric?(@data[service_key][service_type_key])
-        range_result_valid = if range_validation_required(service_type_key, service_key) && numeric_result_valid
-                               value_in_range?(@data[service_key][service_type_key])
-                             else
-                               true
-                             end
-
-        next if numeric_result_valid && range_result_valid
-
-        @invalid_services[service_key] = {} unless @invalid_services.keys.include? service_key
-        @invalid_services[service_key][service_type_key] = { value: @data[service_key][service_type_key], error_type: error_type(numeric_result_valid) }
-      end
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-  def validate_rates
-    ['M.140', 'M.141', 'M.142', 'M.144', 'M.148', 'B.1'].each do |code|
-      numeric_result_valid = numeric?(@rates[code])
-      next if numeric_result_valid && value_in_range?(@rates[code])
-
-      @invalid_services[code] = { value: @rates[code], error_type: error_type(numeric_result_valid) }
+      @rate_card = latest_rate_card
+      @supplier_data_ratecard_prices = prices
+      @supplier_data_ratecard_discounts = discounts
+      @variance_supplier_data = variance
     end
 
-    m_146_numeric = numeric?(@rates['M.146'])
+    def save
+      update_data
+      update_rates
+      return false unless valid?
 
-    return if m_146_numeric && !more_than_max_decimals?(@rates['M.146'])
+      @rate_card.save
+      true
+    end
 
-    error_type = m_146_numeric ? 'rate_error_more_than_max_decimals' : 'rate_error_not_a_number'
+    private
 
-    @invalid_services['M.146'] = { value: @rates['M.146'], error_type: error_type }
-  end
+    def valid?
+      validate_data
+      validate_rates
+      @invalid_services.empty?
+    end
 
-  def update_data
-    @data.each do |service_key, service|
-      service.each do |service_type_key, _|
-        key = service_type_key.remove(' (%)').remove(' (£)')
+    def validate_data
+      @data.each do |service_key, service|
+        service.each do |service_type_key, _|
+          rate_validation = RateValidator.new(@data[service_key][service_type_key])
 
-        new_value = @data[service_key][service_type_key]
-        new_value = new_value.to_f if new_value.present?
+          next if rate_validation.valid?(rate_validation_type(service_type_key, service_key))
 
-        if key == 'Direct Award Discount'
-          @supplier_data_ratecard_discounts[service_key]['Disc %'] = new_value unless @supplier_data_ratecard_discounts[service_key].nil?
-        else
-          @supplier_data_ratecard_prices[service_key][key] = new_value unless @supplier_data_ratecard_prices[service_key].nil?
+          @invalid_services[service_key] = {} unless @invalid_services.keys.include? service_key
+          @invalid_services[service_key][service_type_key] = { value: @data[service_key][service_type_key], error_type: rate_validation.error_type }
         end
       end
     end
-  end
 
-  def update_rates
-    codes_and_name = { 'M.140': :'Management Overhead %', 'M.141': :'Corporate Overhead %', 'M.142': :'Profit %', 'M.144': :'London Location Variance Rate (%)', 'M.146': :'Cleaning Consumables per Building User (£)', 'M.148': :'TUPE Risk Premium (DA %)', 'B.1': :'Mobilisation Cost (DA %)' }
+    def validate_rates
+      ['M.140', 'M.141', 'M.142', 'M.144', 'M.146', 'M.148', 'B.1'].each do |code|
+        rate_validation = RateValidator.new(@rates[code])
 
-    codes_and_name.each do |code, name|
-      @variance_supplier_data[name] = @rates[code].to_f
+        next if rate_validation.valid?(variance_validation_type(code))
+
+        @invalid_services[code] = { value: @rates[code], error_type: rate_validation.error_type }
+      end
     end
-  end
 
-  def range_validation_required(service_type_key, service_key)
-    service_type_key.include?('%') || ['M.1', 'N.1'].include?(service_key)
-  end
+    def update_data
+      @data.each do |service_key, service|
+        service.each do |service_type_key, _|
+          key = service_type_key.remove(' (%)').remove(' (£)')
 
-  def numeric?(user_entered_value)
-    return true if user_entered_value.blank?
+          new_value = @data[service_key][service_type_key]
+          new_value = new_value.to_f if new_value.present?
 
-    user_entered_value.match(/\A[+]?\d+?(_?\d+)*(\.\d+e?\d*)?\Z/) != nil
-  end
+          if key == 'Direct Award Discount'
+            @supplier_data_ratecard_discounts[service_key]['Disc %'] = new_value unless @supplier_data_ratecard_discounts[service_key].nil?
+          else
+            @supplier_data_ratecard_prices[service_key][key] = new_value unless @supplier_data_ratecard_prices[service_key].nil?
+          end
+        end
+      end
+    end
 
-  def value_in_range?(user_entered_value)
-    return true if user_entered_value.blank?
+    def update_rates
+      codes_and_name = { 'M.140': :'Management Overhead %', 'M.141': :'Corporate Overhead %', 'M.142': :'Profit %', 'M.144': :'London Location Variance Rate (%)', 'M.146': :'Cleaning Consumables per Building User (£)', 'M.148': :'TUPE Risk Premium (DA %)', 'B.1': :'Mobilisation Cost (DA %)' }
 
-    return false if more_than_max_decimals?(user_entered_value)
+      codes_and_name.each do |code, name|
+        @variance_supplier_data[name] = @rates[code].to_f
+      end
+    end
 
-    user_entered_value.to_f <= 1
-  end
+    def rate_validation_type(service_type_key, service_key)
+      :full_range if service_type_key.include?('%') || ['M.1', 'N.1'].include?(service_key)
+    end
 
-  def more_than_max_decimals?(user_entered_value)
-    return false if user_entered_value.blank?
-
-    (BigDecimal(user_entered_value) - BigDecimal(user_entered_value).floor).to_s.size - 2 > 20
-  end
-
-  def error_type(numeric_result_valid)
-    return 'rate_error_not_a_number' unless numeric_result_valid
-
-    'rate_error_less_than_or_equal_to'
+    def variance_validation_type(code)
+      :full_range unless code == 'M.146'
+    end
   end
 end

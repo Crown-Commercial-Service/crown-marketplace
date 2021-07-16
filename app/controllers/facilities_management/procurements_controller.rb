@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class ProcurementsController < FacilitiesManagement::FrameworkController
-    include FacilitiesManagement::ProcurementsControllerLayoutHelper
+    include PageDetail::Procurements
 
     before_action :set_procurement, except: %i[index new create what_happens_next]
     before_action :authorize_user
@@ -14,7 +14,7 @@ module FacilitiesManagement
     before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
     before_action :set_current_step, only: %i[show edit]
     before_action :set_view_name, only: :show
-    before_action :set_page_detail_from_view_name, only: :show, if: -> { page_definitions.key?(@view_name.to_sym) }
+    before_action :initialize_page_description_from_view_name, only: :show, if: -> { page_definitions.key?(@view_name.to_sym) }
     before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
     def index
@@ -334,7 +334,7 @@ module FacilitiesManagement
         redirect_to facilities_management_procurement_path(@procurement, fc_chosen: @procurement.route_to_market == 'further_competition_chosen')
       else
         @view_name = 'results'
-        set_page_detail_from_view_name
+        initialize_page_description_from_view_name
         render :show
       end
     end

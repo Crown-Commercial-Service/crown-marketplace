@@ -10,7 +10,7 @@
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header"><%= @procurement.user.buyer_detail.organisation_name %></th>
                     <td class="govuk-table__cell" id="contact-details-drop-down">
-                        <%= govuk_details('Contact details', true) do %>
+                        <%= govuk_details('Contact details') do %>
                             <%= "Name: #{@procurement.user.buyer_detail.full_name}"%> <br>
                             <%= "Telephone: #{@procurement.user.buyer_detail.telephone_number}"%> <br>
                             <%= mail_to @procurement.user.email, @procurement.user.email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %> <br>

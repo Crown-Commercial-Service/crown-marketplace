@@ -1,9 +1,13 @@
 <%= content_for :page_title, t('.heading') %>
-<%= admin_breadcrumbs({ link_text: t('.heading') })%>
+<%= admin_breadcrumbs({ text: t('.heading') })%>
 
 <h1 class="govuk-heading-xl">
   <%= t('.heading') %>
 </h1>
+<p class="govuk-body govuk-!-width-two-thirds">
+  <%= t('.manage_supplier_framework_data_html', link: link_to(t('.manage_supplier_framework_data'), facilities_management_admin_uploads_path, class: 'govuk-link govuk-link govuk-link--no-visited-state')) %>
+</p>
+
 <div class="govuk-!-width-two-thirds">
   <%= govuk_accordion('supplier-framework-data') do %>
     <% @fm_suppliers.each_with_index do |(supplier_name, data), index| %>

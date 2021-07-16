@@ -42,7 +42,7 @@
       </div>
       <div class='govuk-body'>
         <div class='govuk-!-font-size-24'>
-          <%= govuk_details("#{unpriced_services.size} #{t('.service').pluralize(unpriced_services.size)} not included", true) do %>
+          <%= govuk_details("#{unpriced_services.size} #{t('.service').pluralize(unpriced_services.size)} not included") do %>
             <ul class="govuk-list govuk-list--bullet">
               <% unpriced_services.each do |service| %>
                 <li><%= service %></li>

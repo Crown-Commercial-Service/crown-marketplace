@@ -1,11 +1,65 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesHelper, type: :helper do
-  describe '#service_standard_type' do
-    let(:procurement_building_service) { create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building) }
-    let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
-    let(:procurement) { create(:facilities_management_procurement) }
+  let(:procurement_building_service) { create(:facilities_management_procurement_building_service, code: code, procurement_building: procurement_building) }
+  let(:procurement_building) { create(:facilities_management_procurement_building, procurement: procurement) }
+  let(:procurement) { create(:facilities_management_procurement) }
 
+  describe 'volume_question' do
+    let(:result) { helper.volume_question(procurement_building_service) }
+
+    context 'when the service does not require volume' do
+      let(:code) { 'C.5' }
+
+      it 'returns nil' do
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when the service does require a volume' do
+      context 'and the service code is E.4' do
+        let(:code) { 'E.4' }
+
+        it 'returns no_of_appliances_for_testing' do
+          expect(result).to eq :no_of_appliances_for_testing
+        end
+      end
+
+      context 'and the service code is G.1' do
+        let(:code) { 'G.1' }
+
+        it 'returns no_of_building_occupants' do
+          expect(result).to eq :no_of_building_occupants
+        end
+      end
+
+      context 'and the service code is K.1' do
+        let(:code) { 'K.1' }
+
+        it 'returns no_of_consoles_to_be_serviced' do
+          expect(result).to eq :no_of_consoles_to_be_serviced
+        end
+      end
+
+      context 'and the service code is K.2' do
+        let(:code) { 'K.2' }
+
+        it 'returns tones_to_be_collected_and_removed' do
+          expect(result).to eq :tones_to_be_collected_and_removed
+        end
+      end
+
+      context 'and the service is K.7' do
+        let(:code) { 'K.7' }
+
+        it 'returns no_of_units_to_be_serviced' do
+          expect(result).to eq :no_of_units_to_be_serviced
+        end
+      end
+    end
+  end
+
+  describe '#service_standard_type' do
     context 'when the service is G.1 Routine Cleaning' do
       let(:code) { 'G.1' }
 
@@ -138,6 +192,146 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsServicesHelper, type: :
       it 'returns ppm_standards' do
         @building_service = procurement_building_service
         expect(helper.service_standard_type).to eq :ppm_standards
+      end
+    end
+  end
+
+  describe '.sort_by_lifts_created_at' do
+    let(:code) { 'C.5' }
+    let(:procurement_lift1) { create(:facilities_management_lift, created_at: 1.day.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift2) { create(:facilities_management_lift, created_at: 4.days.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift3) { create(:facilities_management_lift, created_at: 3.days.ago, procurement_building_service: procurement_building_service) }
+    let(:procurement_lift4) { create(:facilities_management_lift, created_at: 2.days.ago, procurement_building_service: procurement_building_service) }
+
+    before do
+      procurement_lift1
+      procurement_lift2
+      procurement_lift3
+      procurement_lift4
+      @building_service = procurement_building_service
+    end
+
+    context 'when all the lifts funds have a created_at' do
+      it 'sorts all the lifts by created at' do
+        expect(helper.sort_by_lifts_created_at).to eq [procurement_lift2, procurement_lift3, procurement_lift4, procurement_lift1]
+      end
+    end
+
+    context 'when a lift has nil for created_at' do
+      let(:procurement_lift2) { create(:facilities_management_lift, created_at: nil, procurement_building_service: procurement_building_service) }
+
+      it 'sorts all the lifts with procurement_lift2 at the end' do
+        expect(helper.sort_by_lifts_created_at).to eq [procurement_lift3, procurement_lift4, procurement_lift1, procurement_lift2]
+      end
+    end
+  end
+
+  describe '.form_model' do
+    let(:building) { procurement_building.building }
+
+    before do
+      helper.params[:service_question] = service_question
+      @building = building
+      @building_service = procurement_building_service
+    end
+
+    context 'when the service question is lifts' do
+      let(:service_question) { 'lifts' }
+      let(:code) { 'C.5' }
+
+      it 'returns the procurement_building_service object' do
+        expect(helper.form_model).to eq procurement_building_service
+      end
+    end
+
+    context 'when the service question is service_standards' do
+      let(:service_question) { 'service_standards' }
+      let(:code) { 'C.1' }
+
+      it 'returns the procurement_building_service object' do
+        expect(helper.form_model).to eq procurement_building_service
+      end
+    end
+
+    context 'when the service question is volume' do
+      let(:service_question) { 'volume' }
+      let(:code) { 'K.3' }
+
+      it 'returns the procurement_building_service object' do
+        expect(helper.form_model).to eq procurement_building_service
+      end
+    end
+
+    context 'when the service question is service_hours' do
+      let(:service_question) { 'service_hours' }
+      let(:code) { 'J.1' }
+
+      it 'returns the procurement_building_service object' do
+        expect(helper.form_model).to eq procurement_building_service
+      end
+    end
+
+    context 'when the service question is area' do
+      let(:service_question) { 'area' }
+      let(:code) { 'G.1' }
+
+      it 'returns the building object' do
+        expect(helper.form_model).to eq building
+      end
+    end
+  end
+
+  describe '.page_heading' do
+    let(:building) { procurement_building.building }
+
+    before do
+      helper.params[:service_question] = service_question
+      @building = building
+      @building_service = procurement_building_service
+    end
+
+    context 'when the service question is lifts' do
+      let(:service_question) { 'lifts' }
+      let(:code) { 'C.5' }
+
+      it 'returns the service name' do
+        expect(helper.page_heading).to eq procurement_building_service.name
+      end
+    end
+
+    context 'when the service question is service_standards' do
+      let(:service_question) { 'service_standards' }
+      let(:code) { 'C.1' }
+
+      it 'returns the service name' do
+        expect(helper.page_heading).to eq procurement_building_service.name
+      end
+    end
+
+    context 'when the service question is volume' do
+      let(:service_question) { 'volume' }
+      let(:code) { 'K.3' }
+
+      it 'returns the service name' do
+        expect(helper.page_heading).to eq procurement_building_service.name
+      end
+    end
+
+    context 'when the service question is service_hours' do
+      let(:service_question) { 'service_hours' }
+      let(:code) { 'J.1' }
+
+      it 'returns the service name' do
+        expect(helper.page_heading).to eq procurement_building_service.name
+      end
+    end
+
+    context 'when the service question is area' do
+      let(:service_question) { 'area' }
+      let(:code) { 'G.1' }
+
+      it 'returns' do
+        expect(helper.page_heading).to eq 'Internal and external areas'
       end
     end
   end

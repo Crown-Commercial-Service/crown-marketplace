@@ -46,7 +46,7 @@ module FacilitiesManagement::Admin::SublotServicesHelper
   def sublot_1a_error_message(error_type)
     tag.span class: 'govuk-error-message' do
       concat(tag.span('Error:', class: 'govuk-visually-hidden'))
-      concat(t("facilities_management.admin.sublot_services.services_prices_and_variances.#{error_type}"))
+      concat(t("facilities_management.admin.sublot_services.services_prices_and_variances.error_message.#{error_type}"))
     end
   end
 

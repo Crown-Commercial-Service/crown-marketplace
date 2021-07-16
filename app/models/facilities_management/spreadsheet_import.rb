@@ -11,8 +11,6 @@ module FacilitiesManagement
     validates :spreadsheet_file, antivirus: { message: :malicious }, on: :upload
     validates :spreadsheet_file, size: { less_than: 10.megabytes, message: :too_large }, on: :upload
     validates :spreadsheet_file, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', message: :wrong_content_type }, on: :upload
-    validate :spreadsheet_basic_data_validation, on: :basic_validation
-    after_validation :remove_spreadsheet_file, if: -> { errors.any? }, on: :basic_validation
 
     serialize :import_errors
 
@@ -22,7 +20,7 @@ module FacilitiesManagement
       event :start_import do
         transitions from: :upload, to: :importing
         after do
-          FacilitiesManagement::UploadSpreadsheetWorker.perform_async(id)
+          start_upload!
         end
       end
 
@@ -32,6 +30,38 @@ module FacilitiesManagement
 
       event :fail do
         transitions from: %i[upload importing], to: :failed
+      end
+    end
+
+    aasm(:data_import, column: 'data_import_state') do
+      state :not_started, initial: true
+      state :in_progress, :checking_file, :processing_file, :checking_processed_data, :saving_data, :data_import_succeed, :data_import_failed
+      event :start_upload, after_commit: -> { FacilitiesManagement::UploadSpreadsheetWorker.perform_async(id) } do
+        transitions from: :not_started, to: :in_progress
+      end
+      event :check_file do
+        transitions from: :in_progress, to: :checking_file
+      end
+      event :process_file do
+        transitions from: :checking_file, to: :processing_file
+      end
+      event :check_processed_data do
+        transitions from: :processing_file, to: :checking_processed_data
+      end
+      event :save_data do
+        transitions from: :checking_processed_data, to: :saving_data
+      end
+      event :data_saved do
+        transitions from: :saving_data, to: :data_import_succeed
+        after do
+          succeed!
+        end
+      end
+      event :fail_data_import do
+        transitions from: %i[not_started in_progress checking_file processing_file checking_processed_data saving_data data_import_succeed], to: :data_import_failed
+        after do
+          fail!
+        end
       end
     end
 
@@ -193,13 +223,6 @@ module FacilitiesManagement
       return unless spreadsheet_file.attached?
 
       errors.add(:spreadsheet_file, :wrong_extension) unless spreadsheet_file.blob.filename.to_s.end_with?('.xlsx')
-    end
-
-    def spreadsheet_basic_data_validation
-      return if errors.any?
-
-      error_symbol = FacilitiesManagement::SpreadsheetImporter.new(self).basic_data_validation
-      errors.add(:spreadsheet_file, error_symbol) if error_symbol
     end
   end
 end

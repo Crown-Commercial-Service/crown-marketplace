@@ -1,5 +1,5 @@
 <%= render 'facilities_management/procurement_buildings/errors_on_show' %>
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(@procurement_building.name, @procurement.contract_name, nil, nil, nil)) %>
 <%= content_for :page_title, t(".heading") %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -56,7 +56,7 @@
   </thead>
   <tbody class="govuk-table__body">
     <% services_with_contexts(@volume_procurement_building_services) do |service, context| %>
-      <% service_has_error = service_has_errors(context) %>
+      <% service_has_error = service_has_errors?(context) %>
       <% cell_classes = cell_class(context, service.uval, service_has_error)%>
       <tr id="<%= question_id(service, context, 'volume') %>" class="govuk-table__row <%= 'govuk-form-group--error' if service_has_error %>">
         <td class="<%= cell_classes %> <%= 'govuk-!-padding-left-2' if service_has_error %>"><%= service.name %></td>

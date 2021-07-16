@@ -76,6 +76,14 @@ en:
               account_must_be_unique: The user cannot belong to another supplier
               account_must_exist: The supplier must be registered with the facilities management service
               invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+        facilities_management/admin/upload:
+          attributes:
+            supplier_data_file:
+              malicious: The 'Supplier framework data' file contains a virus
+              not_attached: Select the 'Supplier framework data' file
+              too_large: The 'Supplier framework data' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier framework data' file does not contain the expected content type
+              wrong_extension: The 'Supplier framework data' file must be an XLSX
         facilities_management/building:
           attributes:
             address_line_1:
@@ -459,9 +467,6 @@ en:
             spreadsheet_file:
               malicious: The selected file contains a virus
               not_attached: Select your 'Services and buildings template'
-              not_ready: The selected file could not be uploaded. Cell B10 must be 'Ready' on the Instructions tab of your template
-              not_started: The selected file is using the 'Services and buildings template', but is empty
-              template_invalid: The selected file must use the 'Services and buildings template'
               too_large: The selected file must be smaller than 10mb
               wrong_content_type: The selected file does not contain the expected content type
               wrong_extension: The selected file must be a XLSX
@@ -559,14 +564,16 @@ en:
           return_button: Return to supplier framework data
           update_button: Save and return to supplier framework data
         services_prices_and_variances:
+          error_message:
+            greater_than_or_equal_to: The rate must be greater than or equal to 0
+            less_than_or_equal_to: The rate must be less than or equal to 1
+            more_than_max_decimals: The rate muse not have more than 20 decimal places
+            not_a_number: The rate must be a number, like 0.26 or 1
           heading: Sub-lot 1a services, prices, and variances
           item: Item
           note: The tick boxes in the first column indicate the services this supplier can provide.
           percentage_note: Note that for rates using percentage, a rate of 10% would be entered as 0.1
           rate: Rate
-          rate_error_less_than_or_equal_to: The rate must be less than or equal to 1
-          rate_error_more_than_max_decimals: The rate muse not have more than 20 decimal places
-          rate_error_not_a_number: The rate must be a number, like 0.26 or 1
           return_link: Return to supplier framework data
           services_and_prices: Services and prices
           td_cleaning: 'Cleaning consumables per building user (£)<br />(applicable to services: G.1 routine cleaning, and <br /> G.3. mobile cleaning)'
@@ -638,6 +645,8 @@ en:
       supplier_framework_data:
         index:
           heading: Supplier framework data
+          manage_supplier_framework_data: "'Manage supplier framework data'"
+          manage_supplier_framework_data_html: You can navigate to %{link}, to bulk upload the supplier framework data.
           regions: Regions
           return_link: Return to admin dashboard
           service_prices: Services, prices and variances
@@ -645,6 +654,97 @@ en:
           sub_lot_1a: Sub-lot 1a
           sub_lot_1b: Sub-lot 1b
           sub_lot_1c: Sub-lot 1c
+      uploads:
+        failed:
+          below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
+          details: Details
+          error_details:
+            discounts_less_than_or_equal_to_html: 'The following suppliers have discounts that are greater than 100%: %{list} Make sure all discounts are 100% or less'
+            discounts_more_than_max_decimals_html: 'The following suppliers have discounts with more than 20 decimal places: %{list} Make sure all discounts have no more than 20 decimal places'
+            discounts_not_a_number_html: 'The following suppliers have discounts that are not numbers: %{list} Make sure all discounts are numbers, for example 0.26 or 1'
+            file_check_failed: Something went wrong when checking the files, please try uploading the files again
+            file_process_failed: Something went wrong when processing the files, please try uploading the files again
+            file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
+            prices_blank_html: 'The following suppliers have blank prices: %{list} Make sure all prices have been filled in for each service. If a supplier does not offer a service, remove that row from the spreadsheet'
+            prices_greater_than_or_equal_to_html: 'The following suppliers have prices that are less than 0: %{list} Make sure all prices are greater than or equal to 0'
+            prices_not_a_number_html: 'The following suppliers have prices that are not numbers: %{list} Make sure all prices are numbers, for example 0.26 or 1'
+            pricing_sheet_headers_incorrect: 'Make sure the ''Prices'' sheet has the following headers: ''Supplier'', ''Service Ref'', ''Service Name'', ''Unit of Measure'', ''General office - Customer Facing'', ''General office - Non Customer Facing'', ''Call Centre Operations'', ''Warehouses'', ''Restaurant and Catering Facilities'', ''Pre-School'', ''Primary School'', ''Secondary Schools'', ''Special Schools'', ''Universities and Colleges'', ''Community - Doctors, Dentist, Health Clinic'', ''Nursing and Care Homes'', ''Direct Award Discount %'''
+            supplier_data_missing_sheets: The 'Supplier framework data' file should have 2 sheets with the names 'Prices' and 'Variances'
+            upload_failed: Something went wrong with the file upload, please try uploading the files again
+            variances_blank_html: 'The following suppliers have ''Cleaning consumables per building'' as blank: %{list} Make sure ''Cleaning consumables per building'' has been filled in for all suppliers'
+            variances_greater_than_or_equal_to_html: 'The following suppliers have variances that are less than 0: %{list} Make sure all variances are greater than or equal to 0'
+            variances_less_than_or_equal_to_html: 'The following suppliers have variances that are greater than 100%: %{list} Make sure all variances are 100% or less (excluding ''Cleaning consumables per building'')'
+            variances_more_than_max_decimals_html: 'The following suppliers have variances with more than 20 decimal places: %{list} Make sure all variances have no more than 20 decimal places (excluding ''Cleaning consumables per building'')'
+            variances_not_a_number_html: 'The following suppliers have variances that are not numbers: %{list} Make sure all variances are numbers, for example 0.26 or 1'
+            variances_sheet_headers_incorrect: 'Make sure the ''Variances'' sheet has the following headers: ''Supplier'', ''Management Overhead %'', ''Corporate Overhead %'', ''Profit %'', ''London Location Variance Rate (%)'', ''Cleaning Consumables per Building User (£)'', ''TUPE Risk Premium (DA %)'', ''Mobilisation Cost (DA %)'''
+          error_name:
+            discounts_less_than_or_equal_to: There are suppliers with discounts greater than 100%
+            discounts_more_than_max_decimals: There are suppliers with discounts that have more than 20 decimal places
+            discounts_not_a_number: There are suppliers with discounts that are not numbers
+            file_check_failed: File check failed
+            file_process_failed: File processing failed
+            file_publish_failed: File publishing failed
+            prices_blank: There are suppliers with blank prices
+            prices_greater_than_or_equal_to: There are suppliers with prices less than 0
+            prices_not_a_number: There are suppliers with prices that are not numbers
+            pricing_sheet_headers_incorrect: The 'Prices' sheet has incorrect headers
+            supplier_data_missing_sheets: The 'Supplier framework data' file is missing sheets
+            upload_failed: Upload failed
+            variances_blank: There are suppliers where 'Cleaning consumables per building' is blank
+            variances_greater_than_or_equal_to: There are suppliers with variances less than 0
+            variances_less_than_or_equal_to: There are suppliers with variances greater than 100%
+            variances_more_than_max_decimals: There are suppliers with variances that have more than 20 decimal places
+            variances_not_a_number: There are suppliers with variances that are not numbers
+            variances_sheet_headers_incorrect: The 'Variances' sheet has incorrect headers
+          errors_with_upload: Errors with the upload
+          issue: Issue
+        in_progress:
+          checking_file: Checking file
+          complete: Complete
+          file_uploaded: File uploaded
+          processing_data: Processing data
+          publishing_data: Publishing data
+          upload_progress: Upload progress
+        index:
+          caption: Facilities Management
+          create_new: Create a new data upload
+          current_data: Current published data
+          date: Date
+          download: Download
+          file_name: Supplier framework data
+          heading: Manage supplier framework data
+          name: Name
+          status: Status
+          supplier_framework_data: Supplier framework data
+          table_caption: Previous uploads
+        new:
+          caption: Facilities Management
+          download_templates: Download file templates
+          file_label: Supplier framework data
+          heading: New data upload
+          manage_supplier_framework_data: Manage supplier framework data
+          return: Return to 'Manage supplier framework data'
+          supplier_framework_data: Supplier framework data
+          template_file_name: RM3830 Supplier Framework Data (template)
+          tip: If there are services that a supplier does not offer, remove these rows from the spreadsheet before upload
+          upload_caption: Supported file format is .xlsx and maximum file size is 10mb
+          upload_data: Upload data
+          upload_title: Upload the supplier framework data
+          you_can_download: You can download an excel file containing an empty template for the supplier framework data
+        show:
+          caption: Management consultancy
+          datetime: 'Date of file upload:'
+          download: Download
+          file_name: Supplier framework data
+          files: Uploaded files
+          heading: 'Upload session #%{number}'
+          manage_supplier_framework_data: Manage supplier framework data
+          name: File name
+          return: Return to 'Manage supplier framework data'
+          status: 'Status:'
+          supplier_framework_data: Supplier framework data
+        upload:
+          upload_name: 'Upload session #%{number}'
     basket:
       or_text: or
       selectall_text: Select all
@@ -1511,17 +1611,22 @@ en:
       contracts_helper:
         warning_message:
           accepted: Awaiting your confirmation of signed contract.
-          closed: You closed this contract offer on
-          declined: The supplier declined this offer on
+          closed: The contract offer was automatically closed when you offered the procurement to the next supplier on %{contract_closed_date}.
+          declined: The supplier declined this offer on %{supplier_response_date}.
           expired: The supplier did not respond to your contract offer within the required 2 working days (48 hours).
-          last_closed_1: The contract offer was automatically closed on
-          last_closed_2: when you tried to offer the procurement to the next supplier, but there were no more suppliers.
-          last_closed_3: The contract offer was automatically closed when you offered the procurement to the next supplier on
-          not_signed_1: You confirmed on the
-          not_signed_2: that the contract has not been signed
-          sent_1: This contract offer expires on
-          sent_2: The supplier has not yet responded.
-          signed: You confirmed that the contract period is between
+          last_offer: The contract offer was automatically closed on %{contract_closed_date} when you tried to offer the procurement to the next supplier, but there were no more suppliers.
+          not_signed: You confirmed on the %{contract_not_signed_date} that the contract has not been signed.
+          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The supplier has not yet responded.
+          signed: You confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
+          withdrawn: You closed this contract offer on %{contract_closed_date}.
+        warning_title:
+          accepted: Accepted, awaiting contract signature
+          closed: Closed
+          declined: Declined
+          expired: Not responded
+          not_signed: Accepted, not signed
+          sent: Sent
+          signed: Accepted and signed
       copy_procurement:
         new:
           heading: Create a new procurement using the service requirements and buildings you have previously entered.
@@ -1932,20 +2037,18 @@ en:
           building_name: Building name
           building_number: Building number
           error_description: Error description
+          return_to_procurement_dashboard: Return to procurements dashboard
           service_name: Service name
+          start_again: Start your upload again
         failed_generic:
           description: Your service and building information failed to upload.
           generic_message: This is due to issues with your spreadsheet.
-          return_to_procurement_dashboard: Return to procurements dashboard
-          start_again: Start your upload again
           what_next: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
         failed_non_generic:
           description: Your service and building information failed to upload and we have provided a list of  issues to help you to fix these.
           here_are_steps: Here are the steps you need to take next.
           hint_text: The information below is sorted in order of the ‘Services and buildings template’ tabs. If one of the tabs is missing, it means that there are no issues on that tab.
           list_of_issues: List of issues
-          return_to_procurement_dashboard: Return to procurements dashboard
-          start_again: Start your upload again
           step_1: Review all issues listed below
           step_2: Fix and edit your services and buildings template
           step_3: Re-upload your file, by clicking on the ‘Start your upload again’ button at the bottom of this page
@@ -1957,10 +2060,25 @@ en:
             service_matrix_errors: Service matrix
             service_volume_errors: Service volumes 1
           what_next: What to do next
+        failed_template:
+          description: Your service and building information failed to upload.
+          fail_reason:
+            not_ready: The file could not be processed. Cell B10 must be 'Ready' on the Instructions tab of your template
+            not_started: The file is using the 'Services and buildings template', but is empty
+            template_invalid: The file must use the 'Services and buildings template'
+          what_next:
+            not_ready: Return to upload your spreadsheet and ensure that you have completed the provided spreadsheet template.
+            not_started: Return to upload your spreadsheet and ensure that you have completed the provided spreadsheet template.
+            template_invalid: Return to upload your spreadsheet and ensure that you are using the provided spreadsheet template.
         importing:
+          checking_files: Checking file
+          complete: Complete
           dashboard_link: Return to procurements dashboard
-          processing: Your upload is being processed
+          file_uploaded: File uploaded
+          processing_file: Processing file
           review: After a successful upload, you can continue to review your procurement.
+          saving_data: Saving the data
+          upload_progress: Upload progress
           warning_text: If it has been more than 30 minutes, and the upload status has not changed, click on the 'Return to upload your spreadsheet' link above, to go back to retry the upload. If you close this page during the upload, you can access this procurement by clicking on ‘Continue a procurement’ in your account.
         new:
           cancel_and_return: Cancel and return to services and buildings template
@@ -2126,6 +2244,23 @@ en:
           what_happens_next: What happens next
         show:
           buyer: Buyer
+      contracts_helper:
+        warning_message:
+          accepted: Awaiting buyer confirmation of signed contract.
+          declined: You declined this contract offer on %{supplier_response_date}.
+          expired_html: You did not respond to this contract offer within the required timescales,<br/> therefore it was automatically declined with the reason of 'no response'.
+          not_signed_html: The buyer has recorded this contract as 'not signed' on %{contract_not_signed_date}.<br> The contract offer has therefore been closed.
+          sent_html: This contract offer expires on %{contract_expiry_date}.<br/> The buyer is waiting for a response before the offer expiry deadline shown above.
+          signed: The buyer confirmed that the contract period is between %{contract_start_date} and %{contract_end_date}.
+          withdrawn_html: The buyer withdrew this contract offer and closed this procurement on <br/> %{contract_closed_date}.
+        warning_title:
+          accepted: Accepted
+          declined: Declined
+          expired: Not responded
+          not_signed: Not signed
+          sent: Received contract offer
+          signed: Accepted and signed
+          withdrawn: Withdrawn
       dashboard:
         accepted_offers:
           accepted: Accepted

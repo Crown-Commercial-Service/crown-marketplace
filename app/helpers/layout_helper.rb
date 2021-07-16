@@ -2,75 +2,10 @@
 module LayoutHelper
   include ErrorsHelper
 
-  # Module to render page elements
-  # field-sets and input groups
-  # errors
-
-  # Value Objects (Classes) to structure data for parameters to helper methods
-  class NavigationDetail
-    attr_accessor(:primary_text, :primary_name, :primary_url, :return_url, :return_text, :secondary_url, :secondary_text, :secondary_name)
-
-    # rubocop:disable Metrics/ParameterLists
-    def initialize(primary_text, return_url, return_text, secondary_url, secondary_text, primary_name = nil, secondary_name = nil, primary_url = nil)
-      @primary_text   = primary_text
-      @primary_name   = primary_name
-      @primary_url = primary_url
-      @return_url     = return_url
-      @return_text    = return_text
-      @secondary_url  = secondary_url
-      @secondary_text = secondary_text
-      @secondary_name = secondary_name
-    end
-    # rubocop:enable Metrics/ParameterLists
-  end
-
-  class BackButtonDetail
-    attr_accessor(:url, :text, :label)
-
-    def initialize(back_url, back_label, back_text)
-      @url   = back_url
-      @label = back_label
-      @text  = back_text
-    end
-  end
-
-  class HeadingDetail
-    attr_accessor(:text, :caption, :caption2, :subtitle, :caption3)
-
-    def initialize(header_text, caption1, caption2, sub_text, caption3)
-      @text     = header_text
-      @caption  = caption1
-      @caption2 = caption2
-      @subtitle = sub_text
-      @caption3 = caption3
-    end
-
-    def caption?
-      @caption.present? || caption2.present? || caption3.present?
-    end
-  end
-
-  class PageDescription
-    attr_accessor :heading_details, :back_button, :navigation_details, :no_back_button, :no_error_block, :no_headings
-
-    def initialize(heading_details, back_button = nil, continuation = nil)
-      raise ArgumentError, 'Use a HeadingDetails object' unless heading_details.is_a? HeadingDetail
-
-      raise ArgumentError, 'Use a BackButtonDetail object' unless back_button.nil? || back_button.is_a?(BackButtonDetail)
-
-      raise ArgumentError, 'Use a NavigationDetail object' unless continuation.nil? || continuation.is_a?(NavigationDetail)
-
-      @no_back_button     = @no_error_block = @no_headings = false
-      @heading_details    = heading_details
-      @back_button        = back_button
-      @navigation_details = continuation
-    end
-  end
-
   # Renders the top of the page including back-button, and the 3 elements of the main header
   # rubocop:disable Rails/OutputSafety, Metrics/ParameterLists
   def govuk_page_content(page_details, model_object = nil, no_headings = false, no_back_button = false, no_error_block = false)
-    raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? PageDescription
+    raise ArgumentError, 'Use PageDescription object' unless page_details.is_a? FacilitiesManagement::PageDetail::PageDescription
 
     @no_back_button = no_back_button
     @no_error_block = no_error_block
@@ -271,15 +206,6 @@ module LayoutHelper
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 
-  def govuk_details(summary_text, reduce_padding = false, &block)
-    tag.details(class: 'govuk-details', data: { module: 'govuk-details' }) do
-      capture do
-        concat(tag.summary(tag.span(summary_text, class: 'govuk-details__summary-text'), class: 'govuk-details__summary'))
-        concat(tag.div(class: "govuk-details__text #{'govuk-!-padding-bottom-0 govuk-!-padding-top-0' if reduce_padding}", &block))
-      end
-    end
-  end
-
   def generate_label_text(obj, attribute, label_text = {})
     if label_text.key?(attribute)
       label_text[attribute]
@@ -322,40 +248,6 @@ module LayoutHelper
     capture do
       concat(tag.h2(heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
       concat(tag.div(class: 'govuk-body govuk-!-padding-left-5', &block))
-    end
-  end
-
-  def admin_breadcrumbs(*breadcrumbs)
-    tag.div(class: 'govuk-breadcrumbs') do
-      tag.ol(class: 'govuk-breadcrumbs__list') do
-        capture do
-          concat(admin_breadcrumb_link('Home', facilities_management_admin_path))
-          breadcrumbs.each do |breadcrumb|
-            concat(admin_breadcrumb_link(breadcrumb[:link_text], breadcrumb[:link_url]))
-          end
-        end
-      end
-    end
-  end
-
-  def admin_breadcrumb_link(link_text, link_url)
-    tag.li(class: 'govuk-breadcrumbs__list-item') do
-      if link_url.present?
-        link_to link_text, link_url, class: 'govuk-breadcrumbs__link'
-      else
-        link_text
-      end
-    end
-  end
-
-  def account_dashboard_panel(link_text, link_url, description)
-    tag.div(class: 'govuk-grid-column-one-third') do
-      tag.div(class: 'fm-buyer-account-panel') do
-        capture do
-          concat(link_to(link_text, link_url, class: 'fm-buyer-account-panel__title'))
-          concat(tag.p(description, class: 'fm-buyer-account-panel__body'))
-        end
-      end
     end
   end
 end

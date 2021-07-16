@@ -9,5 +9,9 @@ module Pages
     element :estimated_contract_cost, '#estimated-contract-cost'
     element :sublot, '#contract-sub-lot'
     element :selected_supplier, '#selected-supplier'
+
+    element :'Sent offers', '#sent-offers-table'
+    element :Contracts, '#contracts-table'
+    element :Closed, '#closed-contracts-table'
   end
 end
