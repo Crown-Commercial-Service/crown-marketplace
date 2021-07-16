@@ -264,7 +264,7 @@ Then('I deselect the service {string} for the building') do |service|
 end
 
 Then('I select the service code {string} for the building') do |service|
-  entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
+  entering_requirements_page.check("facilities_management_rm3830_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
 end
 
 Then('I select the following services for the building:') do |services|
@@ -275,7 +275,7 @@ end
 
 Then('I select the following service codes for the building:') do |services|
   services.raw.flatten.each do |service|
-    entering_requirements_page.check("facilities_management_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
+    entering_requirements_page.check("facilities_management_rm3830_procurement_building_service_codes_#{service.downcase.gsub('.', '_')}")
   end
 end
 
@@ -329,7 +329,7 @@ Given('I have a completed procurement for entering requirements named {string} w
 end
 
 Given('I have a completed procurement for entering requirements named {string} with buildings missing regions') do |contract_name|
-  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements_complete, user: @user, contract_name: contract_name)
   buildings = (1..3).map { |index| create(:facilities_management_building, building_name: "Test building #{index}", user: @user, address_postcode: 'ST161AA', address_region: nil, address_region_code: nil) }
 
   buildings.each do |building|
@@ -401,7 +401,7 @@ def building_status(building_name)
 end
 
 def create_completed_procurement(contract_name, **options)
-  procurement = create(:facilities_management_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements_complete, user: @user, contract_name: contract_name, **options)
   building = create(:facilities_management_building, building_name: 'Test building', user: @user)
 
   procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)

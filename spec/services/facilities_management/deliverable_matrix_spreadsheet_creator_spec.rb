@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
   let(:detail_of_requirement) { 'Details of the requirement' }
   let(:no_of_appliances_for_testing) { 506 }
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-  let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user: user) }
   let(:supplier) { create(:facilities_management_supplier_detail) }
   let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 

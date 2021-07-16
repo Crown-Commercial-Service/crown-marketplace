@@ -21,14 +21,14 @@
               <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
                 <div class="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
-                    <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
+                    <%= check_box_tag("facilities_management_rm3830_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
                                       title: work_package['name'],
                                       class: "govuk-checkboxes__input",
                                       sectionid: service['code'],
-                                      id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
+                                      id: "facilities_management_rm3830_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
                     <label style="padding-top:0"
                             class="govuk-label govuk-checkboxes__label"
-                            for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
+                            for="<%= "facilities_management_rm3830_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
                       <%= work_package['name'] %>
                       <br/>
                       <span style="font-weight:lighter;" class="govuk-!-font-size-16" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>

@@ -23,7 +23,7 @@
   </div>
   <div class="procurement">
     <%= f.hidden_field :step, value: params[:step] if params[:step]%>
-    <%= f.hidden_field :step, value: params[:facilities_management_procurement][:step] if !params[:step] && params.dig(:facilities_management_procurement, :step) %>
+    <%= f.hidden_field :step, value: params[:facilities_management_rm3830_procurement][:step] if !params[:step] && params.dig(:facilities_management_rm3830_procurement, :step) %>
     <%= render partial: "facilities_management/rm3830/procurements/edit/#{params[:step]}", locals: { f: f } %>
     <% if @procurement.detailed_search? || @procurement.quick_search? %>
       <div class="govuk-!-margin-top-5">

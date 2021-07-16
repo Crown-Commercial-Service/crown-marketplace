@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
   end
 
   let(:user) { create(:user, :with_detail, email: 'test@example.com', id: 'dGFyaXEuaGFtaWRAY3Jvd25jb21tZXJjaWFsLmdvdi51aw==\n') }
-  let(:procurement) { create(:facilities_management_procurement_with_contact_details_with_buildings, user: user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings, user: user) }
   let(:supplier_name) { 'Bogan-Koch' }
   let(:supplier_details) { create(:facilities_management_supplier_detail_with_lots) }
   let(:supplier) { FacilitiesManagement::SupplierDetail.find_by(supplier_name: supplier_name) }

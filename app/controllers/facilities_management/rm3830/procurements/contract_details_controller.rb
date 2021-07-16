@@ -242,7 +242,7 @@ module FacilitiesManagement
         end
 
         def procurement_params
-          params.require(:facilities_management_procurement).permit(*PAGE_PERMITTED_PARAMS[@page_name])
+          params.require(:facilities_management_rm3830_procurement).permit(*PAGE_PERMITTED_PARAMS[@page_name])
         end
 
         PAGE_PERMITTED_PARAMS = {

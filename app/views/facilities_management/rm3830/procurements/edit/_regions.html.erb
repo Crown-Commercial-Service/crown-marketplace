@@ -20,10 +20,10 @@
                   <% FacilitiesManagement::Region.all.each do |region| %>
                     <% if region.code.start_with?(nuts1_region.code) %>
                       <div class="govuk-checkboxes__item">
-                        <%= check_box_tag("facilities_management_procurement[region_codes][]", region.code, @procurement.region_codes&.include?(region.code),
+                        <%= check_box_tag("facilities_management_rm3830_procurement[region_codes][]", region.code, @procurement.region_codes&.include?(region.code),
                                           title: region.name,
                                           class: "govuk-checkboxes__input", sectionid: nuts1_region.code,
-                                          id: "facilities_management_procurement_region_codes_#{region.code}"
+                                          id: "facilities_management_rm3830_procurement_region_codes_#{region.code}"
                             ) %>
                         <label class="govuk-label govuk-checkboxes__label" for="region_<%= region.code %>">
                           <%= region.name %>

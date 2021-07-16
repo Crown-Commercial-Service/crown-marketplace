@@ -30,7 +30,7 @@ class FacilitiesManagement::RM3830::Supplier::ContractsController < FacilitiesMa
   private
 
   def contract_params
-    params.require(:facilities_management_procurement_supplier).permit(
+    params.require(:facilities_management_rm3830_procurement_supplier).permit(
       :reason_for_declining,
       :contract_response
     )

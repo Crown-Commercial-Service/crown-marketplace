@@ -160,22 +160,6 @@ en:
             telephone_number:
               blank: Enter a UK telephone number, for example 020 7946 0000
               invalid: Enter a UK telephone number, for example 020 7946 0000
-        facilities_management/journey/choose_locations:
-          attributes:
-            region_codes:
-              too_short: Select at least one region you need to include in your procurement
-        facilities_management/journey/choose_services:
-          attributes:
-            service_codes:
-              too_short: Select at least one service you need to include in your procurement
-        facilities_management/spreadsheet_import:
-          attributes:
-            spreadsheet_file:
-              malicious: The selected file contains a virus
-              not_attached: Select your 'Services and buildings template'
-              too_large: The selected file must be smaller than 10mb
-              wrong_content_type: The selected file does not contain the expected content type
-              wrong_extension: The selected file must be a XLSX
   dashboard:
     index:
       admin_link: Managing framework and supplier data

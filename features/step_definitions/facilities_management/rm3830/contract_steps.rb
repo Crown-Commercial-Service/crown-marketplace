@@ -1,11 +1,11 @@
 Given('I have a contract that has been {string} called {string}') do |state, contract_name|
-  procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: @user, contract_name: contract_name)
+  procurement = create(:facilities_management_rm3830_procurement_completed_procurement_no_suppliers, user: @user, contract_name: contract_name)
   procurement.procurement_suppliers.create(supplier: find_supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
   procurement.procurement_suppliers.create(supplier: find_other_supplier('4dbe4d9c-37bb-4bd6-a8a7-35e36cf99f64'), aasm_state: 'unsent', direct_award_value: 50000)
 end
 
 Given('I have a contract that has been {string} called {string} and there are no more suppliers') do |state, contract_name|
-  procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: @user, contract_name: contract_name)
+  procurement = create(:facilities_management_rm3830_procurement_completed_procurement_no_suppliers, user: @user, contract_name: contract_name)
   procurement.procurement_suppliers.create(supplier: find_supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
 end
 

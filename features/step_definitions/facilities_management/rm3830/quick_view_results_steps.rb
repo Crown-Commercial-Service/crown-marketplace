@@ -37,12 +37,12 @@ Then('the following items should appear in the basket:') do |items|
 end
 
 Then('I select the service code {string}') do |service|
-  page.check("#facilities_management_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
+  page.check("#facilities_management_rm3830_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
 end
 
 Then('I select the following service codes:') do |services|
   services.raw.flatten.each do |service|
-    page.check("facilities_management_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
+    page.check("facilities_management_rm3830_procurement_service_codes_#{service.upcase.gsub('.', '-')}")
   end
 end
 

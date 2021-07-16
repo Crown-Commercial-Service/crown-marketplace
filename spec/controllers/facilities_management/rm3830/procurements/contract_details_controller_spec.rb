@@ -378,7 +378,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the payment method page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'payment_method', facilities_management_procurement: { payment_method: payment_method } }
+          put :update, params: { procurement_id: procurement.id, page: 'payment_method', facilities_management_rm3830_procurement: { payment_method: payment_method } }
         end
 
         context 'when nothing is selected' do
@@ -419,7 +419,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.invoice_contact_detail = invoice_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'invoicing_contact_details', facilities_management_procurement: { using_buyer_detail_for_invoice_details: using_buyer_detail_for_invoice_details } }
+          put :update, params: { procurement_id: procurement.id, page: 'invoicing_contact_details', facilities_management_rm3830_procurement: { using_buyer_detail_for_invoice_details: using_buyer_detail_for_invoice_details } }
         end
 
         context 'when not using existing invoicing contact details' do
@@ -466,7 +466,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.authorised_contact_detail = authorised_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'authorised_representative', facilities_management_procurement: { using_buyer_detail_for_authorised_detail: using_buyer_detail_for_authorised_detail } }
+          put :update, params: { procurement_id: procurement.id, page: 'authorised_representative', facilities_management_rm3830_procurement: { using_buyer_detail_for_authorised_detail: using_buyer_detail_for_authorised_detail } }
         end
 
         context 'when not using existing authorised contact details' do
@@ -513,7 +513,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.notices_contact_detail = notices_contact_detail
-          put :update, params: { procurement_id: procurement.id, page: 'notices_contact_details', facilities_management_procurement: { using_buyer_detail_for_notices_detail: using_buyer_detail_for_notices_detail } }
+          put :update, params: { procurement_id: procurement.id, page: 'notices_contact_details', facilities_management_rm3830_procurement: { using_buyer_detail_for_notices_detail: using_buyer_detail_for_notices_detail } }
         end
 
         context 'when not using existing notices contact details' do
@@ -565,7 +565,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(invoice_contact_detail: empty_invoice_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details', facilities_management_procurement: { invoice_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details', facilities_management_rm3830_procurement: { invoice_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -603,7 +603,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(authorised_contact_detail: empty_authorised_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative', facilities_management_procurement: { authorised_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative', facilities_management_rm3830_procurement: { authorised_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -641,7 +641,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(notices_contact_detail: empty_notices_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details', facilities_management_procurement: { notices_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details', facilities_management_rm3830_procurement: { notices_contact_detail_attributes: address_attributes } }
         end
 
         context 'when valid details are entered' do
@@ -683,7 +683,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(invoice_contact_detail: empty_invoice_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details_address', facilities_management_procurement: { invoice_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_invoicing_contact_details_address', facilities_management_rm3830_procurement: { invoice_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -718,7 +718,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(authorised_contact_detail: empty_authorised_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative_address', facilities_management_procurement: { authorised_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_authorised_representative_address', facilities_management_rm3830_procurement: { authorised_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -753,7 +753,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
         before do
           procurement.update(notices_contact_detail: empty_notices_contact_detail)
-          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details_address', facilities_management_procurement: { notices_contact_detail_attributes: address_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'new_notices_contact_details_address', facilities_management_rm3830_procurement: { notices_contact_detail_attributes: address_attributes } }
         end
 
         context 'when a valid address is entered' do
@@ -784,7 +784,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on Security policy document page' do
         context 'when nothing is selected' do
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: nil } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: nil } } }
 
           it 'renders the edit page' do
             expect(response).to render_template('edit')
@@ -796,7 +796,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         context 'when no is selected' do
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: false } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: false } } }
 
           it 'redirects to show page' do
             expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path
@@ -811,7 +811,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           let(:security_policy_document_name) { 'Security policy document file' }
           let(:security_policy_document_version_number) { '26' }
 
-          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_procurement: { security_policy_document_required: true, security_policy_document_name: security_policy_document_name, security_policy_document_version_number: security_policy_document_version_number, security_policy_document_file: security_policy_document_file } } }
+          before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: true, security_policy_document_name: security_policy_document_name, security_policy_document_version_number: security_policy_document_version_number, security_policy_document_file: security_policy_document_file } } }
 
           context 'and the file is invalid' do
             let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
@@ -844,7 +844,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the Local Government Pension Scheme page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'local_government_pension_scheme', facilities_management_procurement: { local_government_pension_scheme: local_government_pension_scheme } }
+          put :update, params: { procurement_id: procurement.id, page: 'local_government_pension_scheme', facilities_management_rm3830_procurement: { local_government_pension_scheme: local_government_pension_scheme } }
         end
 
         context 'when nothing is selected' do
@@ -878,7 +878,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when adding new pensions' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_procurement: { procurement_pension_funds_attributes: procurement_pension_funds_attributes } }
+          put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: procurement_pension_funds_attributes } }
         end
 
         context 'when valid pensions are entered' do
@@ -904,7 +904,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
               procurement.reload
               pension_ids = procurement.procurement_pension_funds.order(:name).map(&:id)
 
-              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": true } } } }
+              put :update, params: { procurement_id: procurement.id, page: 'pension_funds', facilities_management_rm3830_procurement: { procurement_pension_funds_attributes: { '0': { id: pension_ids[0], case_sensitive_error: false, name: 'Pension 1', percentage: 10, "_destroy": false }, '1': { id: pension_ids[1], case_sensitive_error: false, name: 'Pension 2', percentage: 5, "_destroy": false }, '2': { id: pension_ids[2], case_sensitive_error: false, name: 'Pension 3', percentage: 2, "_destroy": true } } } }
               expect(procurement.procurement_pension_funds.size).to eq 2
             end
           end
@@ -925,7 +925,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
 
       context 'when on the governing law page' do
         before do
-          put :update, params: { procurement_id: procurement.id, page: 'governing_law', facilities_management_procurement: { governing_law: governing_law } }
+          put :update, params: { procurement_id: procurement.id, page: 'governing_law', facilities_management_rm3830_procurement: { governing_law: governing_law } }
         end
 
         context 'when nothing is selected' do

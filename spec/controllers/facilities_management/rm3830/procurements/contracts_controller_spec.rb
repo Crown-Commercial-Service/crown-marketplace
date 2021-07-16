@@ -19,7 +19,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
 
       before do
         first_contract.update(aasm_state: 'declined')
-        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'withdraw', facilities_management_procurement_supplier: { reason_for_closing: reason_for_closing } }
+        put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'withdraw', facilities_management_rm3830_procurement_supplier: { reason_for_closing: reason_for_closing } }
       end
 
       context 'when a reason for closing is given' do
@@ -53,7 +53,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
 
       before do
         contract.accept!
-        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date_yyyy } }
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date_yyyy } }
       end
 
       context 'when the buyer gives a valid date' do
@@ -91,7 +91,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
 
       before do
         contract.accept!
-        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
       end
 
       context 'when the buyer gives a valid reason' do
@@ -171,7 +171,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       before do
         contract.accept!
         create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
-        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_procurement_supplier: { contract_signed: false, reason_for_not_signing: 'Some reason' } }
+        put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: false, reason_for_not_signing: 'Some reason' } }
       end
 
       it 'redirects to the contract summary' do

@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
   subject(:report) { described_class.new(procurement.id) }
 
   let(:procurement) do
-    create(:facilities_management_procurement_with_contact_details_with_buildings,
+    create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings,
            initial_call_off_period_years: initial_call_off_period_years,
            initial_call_off_period_months: initial_call_off_period_months)
   end

@@ -99,7 +99,7 @@ Then('sign in supplier') do
 end
 
 def create_contract_for_supplier(contract_name, supplier, state)
-  procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: (@user || create(:user, :with_detail)), contract_name: contract_name)
+  procurement = create(:facilities_management_rm3830_procurement_completed_procurement_no_suppliers, user: (@user || create(:user, :with_detail)), contract_name: contract_name)
 
   procurement.procurement_suppliers.create(supplier: supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
 end

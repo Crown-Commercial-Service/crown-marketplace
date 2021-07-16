@@ -45,46 +45,46 @@ module Pages::RM3830
     end
 
     section :security_policy_document, '.govuk-radios__conditional' do
-      element :name, '#facilities_management_procurement_security_policy_document_name'
-      element :number, '#facilities_management_procurement_security_policy_document_version_number'
-      element :date_day, '#facilities_management_procurement_security_policy_document_date_dd'
-      element :date_month, '#facilities_management_procurement_security_policy_document_date_mm'
-      element :date_year, '#facilities_management_procurement_security_policy_document_date_yyyy'
-      element :file, '#facilities_management_procurement_security_policy_document_file'
+      element :name, '#facilities_management_rm3830_procurement_security_policy_document_name'
+      element :number, '#facilities_management_rm3830_procurement_security_policy_document_version_number'
+      element :date_day, '#facilities_management_rm3830_procurement_security_policy_document_date_dd'
+      element :date_month, '#facilities_management_rm3830_procurement_security_policy_document_date_mm'
+      element :date_year, '#facilities_management_rm3830_procurement_security_policy_document_date_yyyy'
+      element :file, '#facilities_management_rm3830_procurement_security_policy_document_file'
     end
 
     section :invoicing_contact_detail, 'form' do
-      element :Name, '#facilities_management_procurement_invoice_contact_detail_attributes_name'
-      element :'Job title', '#facilities_management_procurement_invoice_contact_detail_attributes_job_title'
-      element :Email, '#facilities_management_procurement_invoice_contact_detail_attributes_email'
-      element :Postcode, '#facilities_management_procurement_invoice_contact_detail_attributes_organisation_address_postcode'
-      element :'Building and street', '#facilities_management_procurement_invoice_contact_detail_attributes_organisation_address_line_1'
-      element :'Building and street address line 2', '#facilities_management_procurement_invoice_contact_detail_attributes_organisation_address_line_2'
-      element :'Town or city', '#facilities_management_procurement_invoice_contact_detail_attributes_organisation_address_town'
-      element :County, '#facilities_management_procurement_invoice_contact_detail_attributes_organisation_address_county'
+      element :Name, '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_name'
+      element :'Job title', '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_job_title'
+      element :Email, '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_email'
+      element :Postcode, '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_organisation_address_postcode'
+      element :'Building and street', '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_organisation_address_line_1'
+      element :'Building and street address line 2', '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_organisation_address_line_2'
+      element :'Town or city', '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_organisation_address_town'
+      element :County, '#facilities_management_rm3830_procurement_invoice_contact_detail_attributes_organisation_address_county'
     end
 
     section :authorised_representative_detail, 'form' do
-      element :Name, '#facilities_management_procurement_authorised_contact_detail_attributes_name'
-      element :'Job title', '#facilities_management_procurement_authorised_contact_detail_attributes_job_title'
-      element :'Telephone number', '#facilities_management_procurement_authorised_contact_detail_attributes_telephone_number'
-      element :Email, '#facilities_management_procurement_authorised_contact_detail_attributes_email'
-      element :Postcode, '#facilities_management_procurement_authorised_contact_detail_attributes_organisation_address_postcode'
-      element :'Building and street', '#facilities_management_procurement_authorised_contact_detail_attributes_organisation_address_line_1'
-      element :'Building and street address line 2', '#facilities_management_procurement_authorised_contact_detail_attributes_organisation_address_line_2'
-      element :'Town or city', '#facilities_management_procurement_authorised_contact_detail_attributes_organisation_address_town'
-      element :County, '#facilities_management_procurement_authorised_contact_detail_attributes_organisation_address_county'
+      element :Name, '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_name'
+      element :'Job title', '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_job_title'
+      element :'Telephone number', '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_telephone_number'
+      element :Email, '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_email'
+      element :Postcode, '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_organisation_address_postcode'
+      element :'Building and street', '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_organisation_address_line_1'
+      element :'Building and street address line 2', '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_organisation_address_line_2'
+      element :'Town or city', '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_organisation_address_town'
+      element :County, '#facilities_management_rm3830_procurement_authorised_contact_detail_attributes_organisation_address_county'
     end
 
     section :notices_contact_detail, 'form' do
-      element :Name, '#facilities_management_procurement_notices_contact_detail_attributes_name'
-      element :'Job title', '#facilities_management_procurement_notices_contact_detail_attributes_job_title'
-      element :Email, '#facilities_management_procurement_notices_contact_detail_attributes_email'
-      element :Postcode, '#facilities_management_procurement_notices_contact_detail_attributes_organisation_address_postcode'
-      element :'Building and street', '#facilities_management_procurement_notices_contact_detail_attributes_organisation_address_line_1'
-      element :'Building and street address line 2', '#facilities_management_procurement_notices_contact_detail_attributes_organisation_address_line_2'
-      element :'Town or city', '#facilities_management_procurement_notices_contact_detail_attributes_organisation_address_town'
-      element :County, '#facilities_management_procurement_notices_contact_detail_attributes_organisation_address_county'
+      element :Name, '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_name'
+      element :'Job title', '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_job_title'
+      element :Email, '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_email'
+      element :Postcode, '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_organisation_address_postcode'
+      element :'Building and street', '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_organisation_address_line_1'
+      element :'Building and street address line 2', '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_organisation_address_line_2'
+      element :'Town or city', '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_organisation_address_town'
+      element :County, '#facilities_management_rm3830_procurement_notices_contact_detail_attributes_organisation_address_county'
     end
 
     section :contact_detail, 'form' do

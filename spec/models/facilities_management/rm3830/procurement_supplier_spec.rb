@@ -43,10 +43,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
       let(:expected_number) { number_array.sample }
 
-      before do
-        allow(described_class).to receive(:used_direct_award_contract_numbers_for_current_year) { number_array - [expected_number] }
-        allow(described_class).to receive(:used_further_competition_contract_numbers_for_current_year) { number_array - [expected_number] }
-      end
+      before { allow(described_class).to receive(:used_contract_numbers_for_current_year) { number_array - [expected_number] } }
 
       context 'with a procurement in direct award' do
         it 'returns an available number for a direct award contract' do

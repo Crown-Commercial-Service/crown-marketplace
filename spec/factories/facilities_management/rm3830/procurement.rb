@@ -82,7 +82,7 @@ FactoryBot.define do
     governing_law { 'english' }
   end
 
-  factory :facilities_management_procurement_with_contact_details_with_buildings, parent: :facilities_management_rm3830_procurement_with_contact_details do
+  factory :facilities_management_rm3830_procurement_with_contact_details_with_buildings, parent: :facilities_management_rm3830_procurement_with_contact_details do
     tupe { true }
     procurement_buildings { build_list :facilities_management_rm3830_procurement_building, 2 }
     association :user, :with_detail

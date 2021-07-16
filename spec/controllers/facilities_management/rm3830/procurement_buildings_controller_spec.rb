@@ -92,7 +92,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController, typ
 
     context 'when updating service selections' do
       before do
-        patch :update, params: { id: procurement_building.id, step: 'buildings_and_services', facilities_management_procurement_building: { service_codes: service_codes } }
+        patch :update, params: { id: procurement_building.id, step: 'buildings_and_services', facilities_management_rm3830_procurement_building: { service_codes: service_codes } }
       end
 
       context 'when no services are selected' do

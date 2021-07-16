@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
     context 'when the supplier accepts the procurement' do
       before do
-        put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: true } }
+        put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: true } }
       end
 
       it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
@@ -36,7 +36,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
         let(:reason_for_declining) { 'Can not provide the service' }
 
         before do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: false, reason_for_declining: reason_for_declining } }
+          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: false, reason_for_declining: reason_for_declining } }
         end
 
         it 'redirects to facilities_management_rm3830_supplier_contract_sent_index_path' do
@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
       context 'when the supplier does not add a valid reason' do
         it 'renders the edit template' do
-          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_procurement_supplier: { contract_response: false, reason_for_declining: '' } }
+          put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: false, reason_for_declining: '' } }
 
           expect(response).to render_template('edit')
         end
