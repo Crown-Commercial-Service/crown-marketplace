@@ -132,7 +132,7 @@ module FacilitiesManagement
       end
 
       def special_da_service?
-        FacilitiesManagement::Service.special_da_service?(code)
+        Service.special_da_service?(code)
       end
 
       def sum_number_of_floors

@@ -196,7 +196,7 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   end
 
   def services
-    @services ||= FacilitiesManagement::Service.where(code: service_codes)&.sort_by { |service| service_codes.index(service.code) }
+    @services ||= FacilitiesManagement::RM3830::Service.where(code: service_codes)&.sort_by { |service| service_codes.index(service.code) }
   end
 
   def regions

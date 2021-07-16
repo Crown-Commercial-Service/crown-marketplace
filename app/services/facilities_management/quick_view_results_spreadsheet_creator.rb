@@ -21,7 +21,7 @@ class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
 
   def set_data
     @regions = FacilitiesManagement::Region.where(code: @region_codes).map(&:name)
-    @services = @service_codes.index_with { |code| FacilitiesManagement::Service.find_by(code: code).name }
+    @services = @service_codes.index_with { |code| FacilitiesManagement::RM3830::Service.find_by(code: code).name }
 
     @lot_1a_suppliers = suppliers_for_lot('1a')
     @lot_1b_suppliers = suppliers_for_lot('1b')

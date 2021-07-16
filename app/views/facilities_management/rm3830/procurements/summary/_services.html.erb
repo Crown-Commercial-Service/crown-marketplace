@@ -19,7 +19,7 @@
     <tbody class="govuk-table__body">
       <% @procurement.service_codes.each do |service_code| %>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= FacilitiesManagement::Service.find_by(code: service_code).name %></td>
+          <td class="govuk-table__cell"><%= FacilitiesManagement::RM3830::Service.find_by(code: service_code).name %></td>
         </tr>
       <% end %>
     </tbody>

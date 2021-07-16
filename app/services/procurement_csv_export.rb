@@ -223,7 +223,7 @@ class ProcurementCsvExport
   end
 
   def self.service_codes_with_name
-    @service_codes_with_name ||= FacilitiesManagement::Service.all.map { |service| [service.code, service.name] }.to_h
+    @service_codes_with_name ||= FacilitiesManagement::RM3830::Service.all.map { |service| [service.code, service.name] }.to_h
   end
 
   def self.expand_services_and_standards(list)
