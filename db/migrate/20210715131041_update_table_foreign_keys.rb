@@ -1,4 +1,4 @@
-class UdpateTableForeignKeys < ActiveRecord::Migration[6.0]
+class UpdateTableForeignKeys < ActiveRecord::Migration[6.0]
   def change
     rename_column :facilities_management_rm3830_procurement_building_services,    :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id
     rename_column :facilities_management_rm3830_procurement_buildings,            :facilities_management_procurement_id, :facilities_management_rm3830_procurement_id

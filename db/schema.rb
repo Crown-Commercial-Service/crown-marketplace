@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_093300) do
+ActiveRecord::Schema.define(version: 2021_07_16_112653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -345,8 +345,8 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
   end
 
-  create_table "facilities_management_rm3830_units_of_measurement", id: false, force: :cascade do |t|
-    t.integer "id", default: -> { "nextval('fm_units_of_measurement_id_seq'::regclass)" }, null: false
+  create_table "facilities_management_rm3830_units_of_measurements", id: false, force: :cascade do |t|
+    t.serial "id", null: false
     t.string "title_text", null: false
     t.string "example_text"
     t.string "unit_text"
