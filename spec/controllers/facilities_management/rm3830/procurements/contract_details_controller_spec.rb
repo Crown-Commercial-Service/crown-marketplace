@@ -1201,7 +1201,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
         end
 
         context 'when continuing the journey' do
-          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: create(:facilities_management_supplier_detail)) }
+          let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: create(:facilities_management_rm3830_supplier_detail)) }
 
           before do
             contract

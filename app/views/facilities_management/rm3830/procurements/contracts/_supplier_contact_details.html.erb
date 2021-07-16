@@ -14,7 +14,7 @@
                             <%= "Name: #{@contract.supplier.contact_name}"%> <br>
                             <%= "Telephone: #{@contract.supplier.contact_phone}"%> <br>
                             <%= mail_to @contract.supplier.contact_email, @contract.supplier.contact_email, class: 'govuk-link govuk-link--no-visited-state', tabindex: -1 %>  <br>
-                            <%= "Address: #{FacilitiesManagement::SupplierDetail.find_by(contact_email: @contract.supplier.contact_email)&.full_organisation_address}"%> 
+                            <%= "Address: #{FacilitiesManagement::RM3830::SupplierDetail.find_by(contact_email: @contract.supplier.contact_email)&.full_organisation_address}"%> 
                         <% end %>
                     </td>
                 </tr>

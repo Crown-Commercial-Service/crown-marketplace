@@ -13,12 +13,12 @@ class User < ApplicationRecord
 
   has_one :supplier_detail,
           inverse_of: :user,
-          class_name: 'FacilitiesManagement::SupplierDetail',
+          class_name: 'FacilitiesManagement::RM3830::SupplierDetail',
           dependent: :destroy
 
   has_one :supplier_admin,
           inverse_of: :user,
-          class_name: 'FacilitiesManagement::Admin::SuppliersAdmin',
+          class_name: 'FacilitiesManagement::RM3830::Admin::SuppliersAdmin',
           dependent: :destroy
 
   has_many :buildings,

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper, type: :helper do
-  let(:supplier) { create(:facilities_management_admin_supplier_detail, **attributes) }
+  let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail, **attributes) }
   let(:attributes) { {} }
 
   describe '.contact_detail' do

@@ -107,7 +107,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:lot) { '1a' }
 
       it 'returns expected number of suppliers' do
-        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::SupplierDetail)
+        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::RM3830::SupplierDetail)
         expect(selected_suppliers.size).to eq(15)
       end
     end
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:lot) { '1b' }
 
       it 'returns expected number of suppliers' do
-        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::SupplierDetail)
+        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::RM3830::SupplierDetail)
         expect(selected_suppliers.size).to eq(27)
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
       let(:lot) { '1c' }
 
       it 'returns expected number of suppliers' do
-        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::SupplierDetail)
+        expect(selected_suppliers.first.class).to eq(FacilitiesManagement::RM3830::SupplierDetail)
         expect(selected_suppliers.size).to eq(20)
       end
     end

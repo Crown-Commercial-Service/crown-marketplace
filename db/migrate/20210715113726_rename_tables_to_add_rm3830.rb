@@ -1,6 +1,8 @@
 class RenameTablesToAddRM3830 < ActiveRecord::Migration[6.0]
   def change
-    rename_index :facilities_management_management_reports, :index_facilities_management_management_reports_on_user_id, :index_fm_rm3830_management_reports_on_user_id
+    rename_index :facilities_management_management_reports, :index_facilities_management_management_reports_on_user_id,     :index_fm_rm3830_management_reports_on_user_id
+    rename_index :facilities_management_supplier_details,   :index_facilities_management_supplier_details_on_contact_email, :index_fm_rm3830_supplier_details_on_contact_email
+    rename_index :facilities_management_supplier_details,   :index_facilities_management_supplier_details_on_supplier_name, :index_fm_rm3830_supplier_details_on_supplier_name
 
     rename_table :facilities_management_procurements,                             :facilities_management_rm3830_procurements
     rename_table :facilities_management_procurement_building_service_lifts,       :facilities_management_rm3830_procurement_building_service_lifts
@@ -13,7 +15,7 @@ class RenameTablesToAddRM3830 < ActiveRecord::Migration[6.0]
     rename_table :facilities_management_spreadsheet_imports,                      :facilities_management_rm3830_spreadsheet_imports
     rename_table :facilities_management_admin_uploads,                            :facilities_management_rm3830_admin_uploads
     rename_table :facilities_management_management_reports,                       :facilities_management_rm3830_admin_management_reports
-    # rename_table :facilities_management_supplier_details,                         :facilities_management_rm3830_supplier_details
+    rename_table :facilities_management_supplier_details,                         :facilities_management_rm3830_supplier_details
     # rename_table :facilities_management_suppliers,                                :facilities_management_rm3830_suppliers
     # rename_table :fm_frozen_rate_cards,                                           :facilities_management_rm3830_frozen_rate_cards
     # rename_table :fm_frozen_rates,                                                :facilities_management_rm3830_frozen_rates

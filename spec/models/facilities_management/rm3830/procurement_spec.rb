@@ -480,7 +480,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
   end
 
   describe '#set_state_to_results_if_possible' do
-    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(2).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.first(2).pluck(:supplier_id) }
     let(:da_value_test) { 865.2478374540002 }
     let(:da_value_test1) { 1517.20280381278 }
     let(:obj) { double }
@@ -735,7 +735,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     let(:da_value_test1) { 1500 }
     let(:da_value_test2) { 1000 }
     let(:da_value_test3) { 2000 }
-    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.first(4).pluck(:supplier_id) }
 
     before do
       [da_value_test, da_value_test1, da_value_test2, da_value_test3].each_with_index do |da_value, index|
@@ -1839,7 +1839,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     let(:state4) { 'unsent' }
 
     let(:da_values) { [10000, 100000, 1499999, 1500000] }
-    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.first(4).pluck(:supplier_id) }
     let(:states) { [state1, state2, state3, state4] }
 
     before do

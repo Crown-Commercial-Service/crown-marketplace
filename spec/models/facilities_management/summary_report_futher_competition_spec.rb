@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement_with_buildings) { create(:facilities_management_rm3830_procurement_for_further_competition_with_gia) }
 
-  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
+  let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
 
   include_context 'with list of suppliers'
 

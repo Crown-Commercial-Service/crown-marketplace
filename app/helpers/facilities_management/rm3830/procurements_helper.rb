@@ -204,19 +204,19 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   end
 
   def suppliers_lot1a
-    @suppliers_lot1a ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1a')
+    @suppliers_lot1a ||= FacilitiesManagement::RM3830::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1a')
   end
 
   def suppliers_lot1b
-    @suppliers_lot1b ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1b')
+    @suppliers_lot1b ||= FacilitiesManagement::RM3830::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1b')
   end
 
   def suppliers_lot1c
-    @suppliers_lot1c ||= FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1c')
+    @suppliers_lot1c ||= FacilitiesManagement::RM3830::SupplierDetail.long_list_suppliers_lot(region_codes, service_codes, '1c')
   end
 
   def supplier_count
-    @supplier_count ||= FacilitiesManagement::SupplierDetail.supplier_count(region_codes, service_codes)
+    @supplier_count ||= FacilitiesManagement::RM3830::SupplierDetail.supplier_count(region_codes, service_codes)
   end
 
   def further_competition_saved_date(procurement)

@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   let(:procurement_with_buildings_no_tupe_london) { create(:facilities_management_rm3830_procurement_with_contact_details_with_buildings_no_tupe_london) }
 
-  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_name, :supplier_id).to_h.symbolize_keys }
+  let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_name, :supplier_id).to_h.symbolize_keys }
 
   include_context 'with list of suppliers'
 

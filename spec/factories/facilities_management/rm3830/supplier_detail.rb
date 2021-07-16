@@ -1,17 +1,12 @@
 FactoryBot.define do
-  factory :facilities_management_admin_supplier_detail, class: 'FacilitiesManagement::Admin::SuppliersAdmin' do
+  factory :facilities_management_rm3830_supplier_detail, class: 'FacilitiesManagement::RM3830::SupplierDetail' do
     supplier_id { SecureRandom.uuid }
     supplier_name { Faker::Name.unique.name }
     contact_name { Faker::Name.unique.name }
     contact_email { Faker::Internet.unique.email }
-    contact_phone { '01234 567 890' }
-    duns { '123456789' }
-    registration_number { '123456' }
-    address_line_1 { '17 Sailors road' }
-    address_line_2 { 'Floor 2' }
-    address_town { 'Southend-On-Sea' }
-    address_county { 'Essex' }
-    address_postcode { 'SS84 6VF' }
+  end
+
+  factory :facilities_management_rm3830_supplier_detail_with_lots, parent: :facilities_management_rm3830_supplier_detail do
     lot_data do
       {
         '1a':
@@ -45,6 +40,15 @@ FactoryBot.define do
                          K.6 K.3 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.9 L.10 L.11 M.1 N.1 O.1]
           }
       }
+    end
+
+    trait :with_supplier_name do
+      transient do
+        name { 'My supplier' }
+      end
+      after(:build) do |supplier, evaluator|
+        supplier.supplier_name = evaluator.name
+      end
     end
   end
 end

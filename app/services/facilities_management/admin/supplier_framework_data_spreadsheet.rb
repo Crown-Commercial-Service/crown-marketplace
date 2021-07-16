@@ -52,7 +52,7 @@ class FacilitiesManagement::Admin::SupplierFrameworkDataSpreadsheet
   end
 
   def suppliers
-    @suppliers ||= FacilitiesManagement::SupplierDetail.suppliers_offering_lot('1a')
+    @suppliers ||= FacilitiesManagement::RM3830::SupplierDetail.suppliers_offering_lot('1a')
   end
 
   def da_service_codes

@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::Contracts::ClosedCont
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: subject.current_user) }
-  let(:supplier) { create(:facilities_management_supplier_detail) }
+  let(:supplier) { create(:facilities_management_rm3830_supplier_detail) }
   let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da, procurement: procurement, supplier_id: supplier.id) }
 
   login_fm_buyer_with_details

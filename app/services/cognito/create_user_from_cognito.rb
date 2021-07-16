@@ -54,7 +54,7 @@ module Cognito
     end
 
     def update_supplier_details
-      @user.supplier_detail = FacilitiesManagement::SupplierDetail.find_by(contact_email: @user.email)
+      @user.supplier_detail = FacilitiesManagement::RM3830::SupplierDetail.find_by(contact_email: @user.email)
       @user.save
     end
   end

@@ -3,7 +3,7 @@ namespace :db do
   task aws: :environment do
     p 'Loading FM Suppliers static'
     DistributedLocks.distributed_lock(152) do
-      FacilitiesManagement::SupplierDetail.destroy_all
+      FacilitiesManagement::RM3830::SupplierDetail.destroy_all
       FacilitiesManagement::RakeModules::SupplierData.fm_suppliers
       FacilitiesManagement::RakeModules::SupplierData.fm_supplier_contact_details
     end

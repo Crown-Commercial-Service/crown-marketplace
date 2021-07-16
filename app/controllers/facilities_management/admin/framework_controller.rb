@@ -27,7 +27,7 @@ module FacilitiesManagement
       end
 
       def set_supplier
-        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:supplier_framework_datum_id])
+        @supplier = FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find(params[:supplier_framework_datum_id])
         @supplier_id = @supplier.supplier_id.to_sym
       end
 

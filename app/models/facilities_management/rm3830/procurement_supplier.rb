@@ -6,7 +6,7 @@ module FacilitiesManagement
 
       default_scope { order(direct_award_value: :asc) }
       belongs_to :procurement, class_name: 'FacilitiesManagement::RM3830::Procurement', foreign_key: :facilities_management_rm3830_procurement_id, inverse_of: :procurement_suppliers
-      belongs_to :supplier, inverse_of: :contracts, class_name: 'FacilitiesManagement::SupplierDetail'
+      belongs_to :supplier, inverse_of: :contracts, class_name: 'FacilitiesManagement::RM3830::SupplierDetail'
 
       has_one_attached :contract_documents_zip
 

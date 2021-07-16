@@ -128,7 +128,7 @@ class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
   end
 
   def suppliers_for_lot(lot)
-    FacilitiesManagement::SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).map { |supplier| supplier['name'] }
+    FacilitiesManagement::RM3830::SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).map { |supplier| supplier['name'] }
   end
 
   def sanitize_string_for_excel(string)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model do
   subject(:suppliers_admin) { described_class.find(supplier_id) }
 
   let(:supplier_id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
   end
 
   describe 'validations' do
-    let(:supplier) { create(:facilities_management_admin_supplier_detail) }
+    let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
 
     context 'when considering supplier name' do
       before { supplier.supplier_name = supplier_name }
@@ -89,7 +89,7 @@ RSpec.describe FacilitiesManagement::Admin::SuppliersAdmin, type: :model do
       end
 
       context 'and it belongs to another supplier' do
-        let(:existing_supplier) { create(:facilities_management_admin_supplier_detail) }
+        let(:existing_supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
         let(:supplier_name) { existing_supplier.supplier_name }
 
         it 'is not valid' do

@@ -7,12 +7,12 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
     let(:user) { FactoryBot.create(:user, :with_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_with_contact_details, user: user) }
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, facilities_management_rm3830_procurement_id: procurement.id, aasm_state: 'sent', offer_sent_date: Time.zone.now, supplier: supplier) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier
 
     before do
-      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
     context 'when the supplier accepts the procurement' do
@@ -71,10 +71,10 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
     let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
     let(:wrong_user) { FactoryBot.create(:user, :without_detail, confirmed_at: Time.zone.now, roles: %i[supplier fm_access]) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: user) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: user) }
 
     before do
-      allow(FacilitiesManagement::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)
     end
 
     context 'when the user is not the intended supplier' do
@@ -111,7 +111,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
   describe 'GET edit' do
     let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user)) }
     let(:contract) { create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, procurement: procurement, aasm_state: state, supplier: supplier) }
-    let(:supplier) { create(:facilities_management_supplier_detail, user: controller.current_user) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail, user: controller.current_user) }
 
     login_fm_supplier
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController, type: :controller do
   let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
-  let(:supplier) { FacilitiesManagement::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
+  let(:supplier) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons') }
   let(:supplier_id) { supplier.supplier_id }
 
   login_fm_admin

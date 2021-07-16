@@ -1377,7 +1377,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
   describe '#selected_suppliers' do
     def selected_suppliers_for_no_region(for_lot, for_regions, for_services)
-      FacilitiesManagement::SupplierDetail.all.select do |s|
+      FacilitiesManagement::RM3830::SupplierDetail.all.select do |s|
         s.lot_data[for_lot] && (for_regions - s.lot_data[for_lot]['regions']).any? && (for_services - s.lot_data[for_lot]['services']).empty?
       end
     end
@@ -1391,7 +1391,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
-        FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
+        FacilitiesManagement::RM3830::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_no_region) do
@@ -1419,7 +1419,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings)))
       end
       let(:supplier_name) do
-        FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
+        FacilitiesManagement::RM3830::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
@@ -1473,7 +1473,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       let(:procurement) { procurement_building_service_c22.procurement_building.procurement }
       let(:supplier_name) do
-        FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service_c1.procurement_building.building.address_region_code], procurement.procurement_building_services.map(&:code)).first.supplier_name
+        FacilitiesManagement::RM3830::SupplierDetail.selected_suppliers('1a', [procurement_building_service_c1.procurement_building.building.address_region_code], procurement.procurement_building_services.map(&:code)).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
@@ -1513,7 +1513,7 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
 
       let(:procurement) { procurement_building_service_c6.procurement_building.procurement }
       let(:supplier_name) do
-        FacilitiesManagement::SupplierDetail.selected_suppliers('1a', procurement.procurement_buildings.map { |pb| pb.building.address_region_code }, procurement.procurement_building_services.map(&:code)).first.supplier_name
+        FacilitiesManagement::RM3830::SupplierDetail.selected_suppliers('1a', procurement.procurement_buildings.map { |pb| pb.building.address_region_code }, procurement.procurement_building_services.map(&:code)).first.supplier_name
       end
 
       let(:supplier_name_no_service) do
@@ -1544,11 +1544,11 @@ RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
                                             procurement: create(:facilities_management_rm3830_procurement_no_procurement_buildings, initial_call_off_period_years: 7)))
       end
       let(:supplier_name) do
-        FacilitiesManagement::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.address_region_code], [procurement_building_service.code]).first.supplier_name
+        FacilitiesManagement::RM3830::SupplierDetail.selected_suppliers('1a', [procurement_building_service.procurement_building.address_region_code], [procurement_building_service.code]).first.supplier_name
       end
 
       let(:supplier_name_lot1a) do
-        FacilitiesManagement::SupplierDetail.all.select do |s|
+        FacilitiesManagement::RM3830::SupplierDetail.all.select do |s|
           s.lot_data['1a'] && s.lot_data['1b'].nil? && ([procurement_building_service.procurement_building.address_region_code] - s.lot_data['1a']['regions']).any? && ([procurement_building_service.code] - s.lot_data['1a']['services']).empty?
         end.first.supplier_name
       end

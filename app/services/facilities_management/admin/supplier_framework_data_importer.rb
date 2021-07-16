@@ -65,7 +65,7 @@ module FacilitiesManagement::Admin
     end
 
     def lot_1a_suppliers
-      FacilitiesManagement::SupplierDetail.suppliers_offering_lot('1a').index_with { {} }
+      FacilitiesManagement::RM3830::SupplierDetail.suppliers_offering_lot('1a').index_with { {} }
     end
 
     def add_prices(sheet)

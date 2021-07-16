@@ -276,18 +276,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.index ["facilities_management_rm3830_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
-  create_table "facilities_management_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "service_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
-    t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
-    t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
-  end
-
-  create_table "facilities_management_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "facilities_management_rm3830_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "contact_name"
@@ -304,9 +293,20 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
     t.string "address_town", limit: 255
     t.string "address_county", limit: 255
     t.string "address_postcode", limit: 255
-    t.index ["contact_email"], name: "index_facilities_management_supplier_details_on_contact_email"
-    t.index ["supplier_name"], name: "index_facilities_management_supplier_details_on_supplier_name", unique: true
-    t.index ["user_id"], name: "index_facilities_management_supplier_details_on_user_id"
+    t.index ["contact_email"], name: "index_fm_rm3830_supplier_details_on_contact_email"
+    t.index ["supplier_name"], name: "index_fm_rm3830_supplier_details_on_supplier_name", unique: true
+    t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
+  end
+
+  create_table "facilities_management_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_supplier_id", null: false
+    t.text "lot_number", null: false
+    t.text "service_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
+    t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
+    t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
   end
 
   create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -548,8 +548,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_131041) do
   add_foreign_key "facilities_management_rm3830_procurement_suppliers", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
+  add_foreign_key "facilities_management_rm3830_supplier_details", "users"
   add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
-  add_foreign_key "facilities_management_supplier_details", "users"
   add_foreign_key "fm_frozen_rate_cards", "facilities_management_rm3830_procurements"
   add_foreign_key "fm_frozen_rates", "facilities_management_rm3830_procurements"
 end

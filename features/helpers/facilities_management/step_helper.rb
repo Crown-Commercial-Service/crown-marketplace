@@ -28,7 +28,7 @@ def find_supplier
 end
 
 def find_other_supplier(supplier_id)
-  FacilitiesManagement::SupplierDetail.find(supplier_id)
+  FacilitiesManagement::RM3830::SupplierDetail.find(supplier_id)
 end
 
 def create_contracts(user, supplier)

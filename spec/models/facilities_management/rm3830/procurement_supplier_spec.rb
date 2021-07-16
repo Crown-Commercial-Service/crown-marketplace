@@ -62,7 +62,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
     let(:da_value_test2) {  865.24783745402 }
     let(:da_value_test3) { 1292.48276446867 }
     let(:da_value_test4) { 1517.20280381278 }
-    let(:supplier_ids) { FacilitiesManagement::SupplierDetail.first(4).pluck(:supplier_id) }
+    let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.first(4).pluck(:supplier_id) }
     let(:obj) { double }
     let(:contract) { procurement.procurement_suppliers[0] }
 
@@ -210,7 +210,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
   describe 'contract methods' do
     let(:procurement) { create(:facilities_management_rm3830_procurement_detailed_search, user: user) }
     let(:user) { create(:user) }
-    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::SupplierDetail.first) }
+    let(:contract) { procurement.procurement_suppliers.create(direct_award_value: 123456, supplier: FacilitiesManagement::RM3830::SupplierDetail.first) }
 
     stub_bank_holiday_json
 

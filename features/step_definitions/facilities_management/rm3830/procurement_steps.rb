@@ -53,7 +53,7 @@ Given('I have a procurement in detailed search named {string} with the following
 end
 
 Given('I have direct award procurements') do
-  create_contracts(@user, FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
+  create_contracts(@user, FacilitiesManagement::RM3830::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
 end
 
 Given('the GIA for {string} is {int}') do |building_name, gia|

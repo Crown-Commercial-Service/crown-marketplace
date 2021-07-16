@@ -17,7 +17,7 @@ RSpec.describe ProcurementCsvExport do
     proc = create(:facilities_management_rm3830_procurement_with_contact_details)
 
     proc.procurement_suppliers.each do |contract|
-      supplier = create(:facilities_management_supplier_detail)
+      supplier = create(:facilities_management_rm3830_supplier_detail)
       contract.update(aasm_state: 'sent', supplier_id: supplier.id)
     end
 

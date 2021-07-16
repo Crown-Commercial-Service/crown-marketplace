@@ -12,6 +12,6 @@ module FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper
   end
 
   def current_supplier_name
-    FacilitiesManagement::Admin::SuppliersAdmin.find(params[:id]).supplier_name
+    FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find(params[:id]).supplier_name
   end
 end

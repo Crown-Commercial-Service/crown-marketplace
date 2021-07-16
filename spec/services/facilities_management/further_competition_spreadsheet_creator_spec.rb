@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
   let(:procurement_with_buildings) { create(:facilities_management_rm3830_procurement_for_further_competition_with_gia, assessed_value: 11541.72, lot_number: '1a') }
   let(:spreadsheet_builder) { described_class.new(procurement_with_buildings.id) }
 
-  let(:supplier_ids) { FacilitiesManagement::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
+  let(:supplier_ids) { FacilitiesManagement::RM3830::SupplierDetail.where(supplier_name: supplier_names).pluck(:supplier_id) }
 
   include_context 'with list of suppliers'
 
@@ -12,7 +12,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
     procurement_with_buildings.active_procurement_buildings.first.update(service_codes: ['C.1', 'H.4'])
     procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'C.1').update(service_standard: 'B')
     procurement_with_buildings.active_procurement_buildings.first.procurement_building_services.find_by(code: 'H.4').update(service_hours: 208, detail_of_requirement: 'Details of the requirement')
-    procurement_with_buildings.procurement_suppliers.create(supplier_id: FacilitiesManagement::SupplierDetail.find_by(supplier_name: 'Abernathy and Sons').id, direct_award_value: 123456)
+    procurement_with_buildings.procurement_suppliers.create(supplier_id: FacilitiesManagement::RM3830::SupplierDetail.find_by(supplier_name: 'Abernathy and Sons').id, direct_award_value: 123456)
   end
 
   context 'and verify FC excel' do
