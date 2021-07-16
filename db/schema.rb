@@ -98,6 +98,29 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "facilities_management_rm3830_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm3830_procurement_id", null: false
+    t.jsonb "data"
+    t.text "source_file", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_gin", using: :gin
+    t.index ["data"], name: "idx_fm_frozen_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
+    t.index ["facilities_management_rm3830_procurement_id"], name: "index_frozen_fm_rate_cards_procurement"
+  end
+
+  create_table "facilities_management_rm3830_frozen_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm3830_procurement_id", null: false
+    t.string "code", limit: 5
+    t.decimal "framework"
+    t.decimal "benchmark"
+    t.string "standard", limit: 1
+    t.boolean "direct_award"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index ["facilities_management_rm3830_procurement_id"], name: "index_frozen_fm_rates_procurement"
+  end
+
   create_table "facilities_management_rm3830_procurement_building_service_lifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm3830_procurement_building_service_id", null: false
     t.integer "number_of_floors"
@@ -287,29 +310,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
   end
 
-  create_table "fm_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_rm3830_procurement_id", null: false
-    t.jsonb "data"
-    t.text "source_file", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["data"], name: "idx_fm_frozen_rate_cards_gin", using: :gin
-    t.index ["data"], name: "idx_fm_frozen_rate_cards_ginp", opclass: :jsonb_path_ops, using: :gin
-    t.index ["facilities_management_rm3830_procurement_id"], name: "index_frozen_fm_rate_cards_procurement"
-  end
-
-  create_table "fm_frozen_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_rm3830_procurement_id", null: false
-    t.string "code", limit: 5
-    t.decimal "framework"
-    t.decimal "benchmark"
-    t.string "standard", limit: 1
-    t.boolean "direct_award"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }
-    t.index ["facilities_management_rm3830_procurement_id"], name: "index_frozen_fm_rates_procurement"
-  end
-
   create_table "fm_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "data"
     t.text "source_file", null: false
@@ -492,6 +492,8 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"
+  add_foreign_key "facilities_management_rm3830_frozen_rate_cards", "facilities_management_rm3830_procurements"
+  add_foreign_key "facilities_management_rm3830_frozen_rates", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurement_buildings"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurements"
@@ -503,6 +505,4 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
-  add_foreign_key "fm_frozen_rate_cards", "facilities_management_rm3830_procurements"
-  add_foreign_key "fm_frozen_rates", "facilities_management_rm3830_procurements"
 end

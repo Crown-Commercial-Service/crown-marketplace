@@ -20,7 +20,7 @@ module CCS
       # CCS::FM::Service.direct_award_services
       # TBC: move this into the Database table work_packages !
       def self.direct_award_services(procurement_id)
-        frozen_rate = CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
+        frozen_rate = FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
 
         return frozen_rate.where(direct_award: true).map(&:code) if frozen_rate.exists?
         return CCS::FM::Rate.all.where(direct_award: true).map(&:code) unless frozen_rate.exists?

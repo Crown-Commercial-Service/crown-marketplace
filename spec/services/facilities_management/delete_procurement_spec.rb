@@ -90,11 +90,11 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will find FrozenRateCards for the procurement' do
-          expect(CCS::FM::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
         end
 
         it 'will find FrozenRates for the procurement' do
-          expect(CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
         end
       end
 
@@ -114,11 +114,11 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
         end
 
         it 'will not find any FrozenRateCards for the procurement' do
-          expect(CCS::FM::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
         end
 
         it 'will not find any FrozenRates for the procurement' do
-          expect(CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
         end
       end
     end
@@ -149,8 +149,8 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
 
         it 'will find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do
           expect(FacilitiesManagement::RM3830::ProcurementSupplier.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
-          expect(CCS::FM::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
-          expect(CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
+          expect(FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be false
         end
 
         it 'will not find any contact details for the procurement' do
@@ -175,8 +175,8 @@ RSpec.describe FacilitiesManagement::DeleteProcurement do
 
         it 'will not find procurement_suppliers, FrozenRateCards and FrozenRates for the procurement' do
           expect(FacilitiesManagement::RM3830::ProcurementSupplier.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
-          expect(CCS::FM::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
-          expect(CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
+          expect(FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement.id).empty?).to be true
         end
 
         it 'will not find any contact details for the procurement' do

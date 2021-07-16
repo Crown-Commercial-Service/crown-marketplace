@@ -178,7 +178,7 @@ module FacilitiesManagement
       def copy_fm_rates_to_frozen
         ActiveRecord::Base.transaction do
           CCS::FM::Rate.all.find_each do |rate|
-            new_rate = CCS::FM::FrozenRate.new
+            new_rate = FacilitiesManagement::RM3830::FrozenRate.new
             new_rate.facilities_management_rm3830_procurement_id = id
             new_rate.code = rate.code
             new_rate.framework = rate.framework
@@ -194,7 +194,7 @@ module FacilitiesManagement
 
       def copy_fm_rate_cards_to_frozen
         latest_rate_card = CCS::FM::RateCard.latest
-        new_rate_card = CCS::FM::FrozenRateCard.new
+        new_rate_card = FacilitiesManagement::RM3830::FrozenRateCard.new
         new_rate_card.facilities_management_rm3830_procurement_id = id
         new_rate_card.data = latest_rate_card.data
         new_rate_card.source_file = latest_rate_card.source_file
@@ -541,7 +541,7 @@ module FacilitiesManagement
       end
 
       def rate_model
-        frozen_rates ||= CCS::FM::FrozenRate.where(facilities_management_rm3830_procurement_id: id)
+        frozen_rates ||= FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: id)
         @rate_model ||= frozen_rates.size.zero? ? CCS::FM::Rate : frozen_rates
       end
 

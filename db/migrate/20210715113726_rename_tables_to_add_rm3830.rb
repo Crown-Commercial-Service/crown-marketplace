@@ -16,8 +16,8 @@ class RenameTablesToAddRM3830 < ActiveRecord::Migration[6.0]
     rename_table :facilities_management_admin_uploads,                            :facilities_management_rm3830_admin_uploads
     rename_table :facilities_management_management_reports,                       :facilities_management_rm3830_admin_management_reports
     rename_table :facilities_management_supplier_details,                         :facilities_management_rm3830_supplier_details
-    # rename_table :fm_frozen_rate_cards,                                           :facilities_management_rm3830_frozen_rate_cards
-    # rename_table :fm_frozen_rates,                                                :facilities_management_rm3830_frozen_rates
+    rename_table :fm_frozen_rate_cards,                                           :facilities_management_rm3830_frozen_rate_cards
+    rename_table :fm_frozen_rates,                                                :facilities_management_rm3830_frozen_rates
     # rename_table :fm_rate_cards,                                                  :facilities_management_rm3830_rate_cards
     # rename_table :fm_rates,                                                       :facilities_management_rm3830_rates
     # rename_table :fm_static_data,                                                 :facilities_management_rm3830_static_data
