@@ -120,7 +120,7 @@ ignore_unused:
   - facilities_management.rm3830.procurements.results.sub-lot-1*
   - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_text.*
   - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_title.*
-  - facilities_managementrm3830..procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
+  - facilities_managementrm3830..procurements.contract_details.da_journey.summary_pages.procurement_requirements.call_off_extensions_*
   - facilities_management.rm3830.procurements.contracts.procurement_requirements.call_off_extensions_*
   - facilities_management.rm3830.procurements.contracts_helper.*
   - facilities_management.rm3830.supplier.contracts_helper.*

@@ -79,48 +79,48 @@ Then('I select {string} for optional extension required') do |option|
 end
 
 And('only the first optional extension is required') do
-  entering_requirements_page.optional_call_off_extensions.send(:'1').required.set(true)
+  entering_requirements_page.call_off_extensions.send(:'1').required.set(true)
 end
 
 Then('I enter {string} years and {string} months for optional extension {int}') do |years, months, extension|
   @contract_extentsions ||= {}
   @contract_extentsions[extension] = years.to_i.years + months.to_i.months
 
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").years.set(years)
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").months.set(months)
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").years.set(years)
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").months.set(months)
 end
 
 Then('I add another extension') do
-  entering_requirements_page.optional_call_off_extensions.add_extension.click
+  entering_requirements_page.call_off_extensions.add_extension.click
 end
 
 Then('I remove extension period {int}') do |extension|
-  entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").remove.click
+  entering_requirements_page.call_off_extensions.send(:"#{extension}").remove.click
 end
 
 Then('the add an extension button should have the text {string}') do |button_text|
-  expect(entering_requirements_page.optional_call_off_extensions.add_extension).to have_content(button_text)
+  expect(entering_requirements_page.call_off_extensions.add_extension).to have_content(button_text)
 end
 
 Then('the add an extension button should be {string}') do |status|
-  element_visivility_expectations(entering_requirements_page.optional_call_off_extensions.add_extension, status)
+  element_visivility_expectations(entering_requirements_page.call_off_extensions.add_extension, status)
 end
 
 Then('the remove button for extension {int} should be {string}') do |extension, status|
-  element_visivility_expectations(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").remove, status)
+  element_visivility_expectations(entering_requirements_page.call_off_extensions.send(:"#{extension}").remove, status)
 end
 
 Then('extension {int} should be {string}') do |extension, status|
   case status
   when 'hidden'
-    expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}")).to have_css('.govuk-visually-hidden')
+    expect(entering_requirements_page.call_off_extensions.send(:"#{extension}")).to have_css('.govuk-visually-hidden')
   when 'visible'
-    expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}")).not_to have_css('.govuk-visually-hidden')
+    expect(entering_requirements_page.call_off_extensions.send(:"#{extension}")).not_to have_css('.govuk-visually-hidden')
   end
 end
 
 Then('extension {int} should have the following error messages:') do |extension, error_messages|
-  expect(entering_requirements_page.optional_call_off_extensions.send(:"#{extension}").error_messages.map(&:text)).to eq error_messages.raw.flatten
+  expect(entering_requirements_page.call_off_extensions.send(:"#{extension}").error_messages.map(&:text)).to eq error_messages.raw.flatten
 end
 
 Then('my inital call off period length is {string}') do |initial_call_off_period_length|
@@ -146,7 +146,7 @@ Then('the mobilisation period is correct given the contract start date') do
 end
 
 Then('there are no optional call off extensions') do
-  expect(entering_requirements_page.contract_period_summary.optional_call_off_extension).to have_content('None')
+  expect(entering_requirements_page.contract_period_summary.call_off_extension).to have_content('None')
 end
 
 Then('the length of extension period {int} is {string}') do |extension, extension_length|

@@ -1076,6 +1076,7 @@ en:
                 security_policy_document: Security policy
               procurement_requirements:
                 buildings_services: Buildings and services
+                call_off_extension: Optional call-off extension period %{extension}
                 contract_name: Contract name
                 contract_value: Contract value
                 date_of_first_indexation: Date of first indexation
@@ -1084,7 +1085,6 @@ en:
                 framework_sublot_value: RM3830, sub-lot 1a
                 initial_call_off_period: Initial call-off period
                 mobilisation_period: Mobilisation period
-                optional_call_off_extension: Optional call-off extension period %{extension}
                 route_to_market: Route to market
                 supplier: Supplier
             what_next:
@@ -1330,6 +1330,7 @@ en:
             title: Your procurement has been closed
           procurement_requirements:
             buildings_services: Buildings and services
+            call_off_extension: Optional call-off extension period %{extension}
             contract_name: Contract name
             contract_number: Contract number
             contract_value: Contract value
@@ -1339,7 +1340,6 @@ en:
             framework_details: RM3830, sub-lot 1a
             initial_call_off_period: Initial call-off period
             mobilisation_period: Mobilisation period
-            optional_call_off_extension: Optional call-off extension period %{extension}
             requirements: Requirements
             route_to_market: Route to market
           sent:
@@ -1465,6 +1465,10 @@ en:
             contract_name_question: What do you want to call your contract?
             heading: Contract name
           contract_period:
+            call_off_extensions:
+              add_extension_period: Add another extension period
+              description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+              heading: Do you want the option to extend your call-off contract?
             extension:
               aria_label_months: Optional extension %{extension} months
               aria_label_years: Optional extension %{extension} years
@@ -1486,10 +1490,6 @@ en:
               heading: Do you need a mobilisation period?
               unit: weeks
               warning: A minimum of 4 weeks required if TUPE is involved.
-            optional_call_off_extensions:
-              add_extension_period: Add another extension period
-              description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
-              heading: Do you want the option to extend your call-off contract?
             title: Contract period
           detailed_search: Detailed search
           estimated_annual_cost:
@@ -1889,12 +1889,12 @@ en:
             status: Status
             summary_html: Please click on each of your buildings listed below and select the services you require within each building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on '%{buildings_link}' in section 2.
           contract_period:
+            call_off_extension_period: Optional call-off extension period
+            call_off_extensions: Optional call-off extensions
             heading: Contract period
             initial_call_off_period: Initial call-off period
             mobilisation_period: Mobilisation period
             none: None
-            optional_call_off_extension_period: Optional call-off extension period
-            optional_call_off_extensions: Optional call-off extensions
           heading:
             buildings: Buildings summary
             buildings_and_services: Assigning services to buildings summary

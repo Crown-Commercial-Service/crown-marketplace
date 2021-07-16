@@ -37,7 +37,7 @@
     <% if @procurement.extensions_required %>
       <% @procurement.call_off_extensions.sorted.each do |call_off_extension| %>
         <tr class="govuk-table__row" id="<%= "call-off-extension-#{call_off_extension.extension}" %>">
-          <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.optional_call_off_extension_period') %> <%= call_off_extension.extension + 1 %> </th>
+          <th class="govuk-table__header govuk-border-bottom_none govuk-table__cell govuk-!-padding-right-2"> <%= t('.call_off_extension_period') %> <%= call_off_extension.extension + 1 %> </th>
           <td class="govuk-table__cell govuk-border-bottom_none govuk-!-padding-right-2"> <%= call_off_extensions_period(call_off_extension) %> </td>
         </tr>
         <tr class="govuk-table__row" id="<%= "call-off-extension-#{call_off_extension.extension}-description" %>">
@@ -47,7 +47,7 @@
       <% end %>
     <% else %>
       <tr class="govuk-table__row" id="call-off-extension">
-        <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= t('.optional_call_off_extensions') %> </th>
+        <th class="govuk-table__header govuk-table__cell govuk-!-padding-right-2"> <%= t('.call_off_extensions') %> </th>
         <td class="govuk-table__cell govuk-!-padding-right-2"> <%= t('.none') %> </td>
       </tr>
     <% end %>
