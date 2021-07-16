@@ -742,9 +742,9 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
         procurement.procurement_suppliers.create(direct_award_value: da_value, supplier_id: supplier_ids[index])
       end
       procurement.update(aasm_state: 'direct_award')
-      allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
-      allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
-      allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::GenerateContractZip).to receive(:perform_in).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ContractSentReminder).to receive(:perform_at).and_return(nil)
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(FacilitiesManagement::RM3830::ProcurementSupplier).to receive(:send_email_to_supplier).and_return(nil)
       allow_any_instance_of(FacilitiesManagement::RM3830::ProcurementSupplier).to receive(:send_email_to_buyer).and_return(nil)

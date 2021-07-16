@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
       allow(upload).to receive(:save).and_return(valid)
       allow(upload).to receive(:save).with(context: :upload).and_return(valid)
       allow(FacilitiesManagement::RM3830::Admin::Upload).to receive(:new).with(anything).and_return(upload)
-      allow(FacilitiesManagement::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
+      allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
       post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
     end
 

@@ -62,13 +62,9 @@ module FacilitiesManagement
             unset_contract_documents_zip_generated
             set_sent_date
             send_email_to_supplier('DA_offer_sent')
-            begin
-              FacilitiesManagement::GenerateContractZip.perform_in(1.minute, id)
-              FacilitiesManagement::ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
-              FacilitiesManagement::ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
-            rescue StandardError
-              false
-            end
+            GenerateContractZip.perform_in(1.minute, id)
+            ChangeStateWorker.perform_at(time_delta_in_days(offer_sent_date, contract_expiry_date).from_now, id)
+            ContractSentReminder.perform_at(time_delta_in_days(offer_sent_date, contract_reminder_date).from_now, id)
           end
           transitions from: :unsent, to: :sent
         end
@@ -78,11 +74,7 @@ module FacilitiesManagement
             set_supplier_response_date
             self.reason_for_declining = nil
             send_email_to_buyer('DA_offer_accepted')
-            begin
-              FacilitiesManagement::AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
-            rescue StandardError
-              false
-            end
+            AwaitingSignatureReminder.perform_at(AWAITING_SIGNATURE_REMINDER_DAYS.days.from_now, id)
           end
           transitions from: :sent, to: :accepted
         end
@@ -215,10 +207,7 @@ module FacilitiesManagement
 
       # Custom Validation
       def real_date?(date)
-        DateTime.new(send("#{date}_yyyy".to_sym).to_i, send("#{date}_mm".to_sym).to_i, send("#{date}_dd".to_sym).to_i).in_time_zone('London')
-        true
-      rescue StandardError
-        false
+        DateTime.valid_date? send("#{date}_yyyy".to_sym).to_i, send("#{date}_mm".to_sym).to_i, send("#{date}_dd".to_sym).to_i
       end
 
       def valid_date?(date)
@@ -280,12 +269,7 @@ module FacilitiesManagement
           'da-offer-1-link': "#{ENV['RAILS_ENV_URL']}/facilities-management/RM3830/procurements/#{procurement.id}/contracts/#{id}"
         }.to_json
 
-        # TODO: This prevents crashing on local when sidekiq isn't running
-        begin
-          FacilitiesManagement::GovNotifyNotification.perform_async(template_name, procurement.user.email, gov_notify_template_arg)
-        rescue StandardError
-          false
-        end
+        GovNotifyNotification.perform_async(template_name, procurement.user.email, gov_notify_template_arg)
       end
 
       def send_email_to_supplier(template_name)
@@ -302,12 +286,7 @@ module FacilitiesManagement
           'da-offer-1-withdrawal-reason': reason_for_closing
         }.to_json
 
-        # TODO: This prevents crashing on local when sidekiq isn't running
-        begin
-          FacilitiesManagement::GovNotifyNotification.perform_async(template_name, supplier_email, gov_notify_template_arg)
-        rescue StandardError
-          false
-        end
+        GovNotifyNotification.perform_async(template_name, supplier_email, gov_notify_template_arg)
       end
     end
   end

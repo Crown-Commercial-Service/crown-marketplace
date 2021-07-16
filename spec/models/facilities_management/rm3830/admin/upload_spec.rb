@@ -63,7 +63,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::Upload, type: :model do
 
     context 'when start_upload is called' do
       before do
-        allow(FacilitiesManagement::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
+        allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
         upload.start_upload!
       end
 
@@ -72,7 +72,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::Upload, type: :model do
       end
 
       it 'starts the worker' do
-        expect(FacilitiesManagement::FileUploadWorker).to have_received(:perform_async).with(upload.id)
+        expect(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to have_received(:perform_async).with(upload.id)
       end
     end
 

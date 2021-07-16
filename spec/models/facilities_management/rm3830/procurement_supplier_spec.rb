@@ -76,10 +76,10 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       allow_any_instance_of(described_class).to receive(:send_email_to_buyer).and_return(nil)
       allow_any_instance_of(described_class).to receive(:send_email_to_supplier).and_return(nil)
       # rubocop:enable RSpec/AnyInstance
-      allow(FacilitiesManagement::GenerateContractZip).to receive(:perform_in).and_return(nil)
-      allow(FacilitiesManagement::ChangeStateWorker).to receive(:perform_at).and_return(nil)
-      allow(FacilitiesManagement::ContractSentReminder).to receive(:perform_at).and_return(nil)
-      allow(FacilitiesManagement::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::GenerateContractZip).to receive(:perform_in).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ContractSentReminder).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
     end
 
     describe 'state changes' do
@@ -88,15 +88,15 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
       describe '.sent' do
         context 'when the offer gets sent' do
           it 'will call the GenerateContractZip' do
-            expect(FacilitiesManagement::GenerateContractZip).to have_received(:perform_in)
+            expect(FacilitiesManagement::RM3830::GenerateContractZip).to have_received(:perform_in)
           end
 
           it 'will call the ChangeStateWorker' do
-            expect(FacilitiesManagement::ChangeStateWorker).to have_received(:perform_at)
+            expect(FacilitiesManagement::RM3830::ChangeStateWorker).to have_received(:perform_at)
           end
 
           it 'will call the ContractSentReminder' do
-            expect(FacilitiesManagement::ContractSentReminder).to have_received(:perform_at)
+            expect(FacilitiesManagement::RM3830::ContractSentReminder).to have_received(:perform_at)
           end
         end
       end
@@ -113,7 +113,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
           it 'will call the AwaitingSignatureReminder' do
             contract.accept!
             procurement.reload
-            expect(FacilitiesManagement::AwaitingSignatureReminder).to have_received(:perform_at)
+            expect(FacilitiesManagement::RM3830::AwaitingSignatureReminder).to have_received(:perform_at)
           end
         end
       end

@@ -37,7 +37,7 @@ module FacilitiesManagement
       aasm(:data_import, column: 'data_import_state') do
         state :not_started, initial: true
         state :in_progress, :checking_file, :processing_file, :checking_processed_data, :saving_data, :data_import_succeed, :data_import_failed
-        event :start_upload, after_commit: -> { FacilitiesManagement::UploadSpreadsheetWorker.perform_async(id) } do
+        event :start_upload, after_commit: -> { UploadSpreadsheetWorker.perform_async(id) } do
           transitions from: :not_started, to: :in_progress
         end
         event :check_file do

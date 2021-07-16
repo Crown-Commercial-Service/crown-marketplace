@@ -10,12 +10,12 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
 
     context 'when start_import is called' do
       before do
-        allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
+        allow(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
         import.start_import!
       end
 
       it 'starts the worker' do
-        expect(FacilitiesManagement::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
+        expect(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
       end
 
       it 'set the state to importing' do
@@ -79,12 +79,12 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImport, type: :model do
 
     context 'when start_upload is called' do
       before do
-        allow(FacilitiesManagement::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
+        allow(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to receive(:perform_async).with(import.id).and_return(true)
         import.start_upload!
       end
 
       it 'starts the worker' do
-        expect(FacilitiesManagement::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
+        expect(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to have_received(:perform_async).with(import.id)
       end
 
       it 'set the state to in_progress' do

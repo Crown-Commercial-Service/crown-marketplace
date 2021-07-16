@@ -88,6 +88,10 @@ RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
     stub_bank_holiday_json
 
     before do
+      allow(FacilitiesManagement::GovNotifyNotification).to receive(:perform_async).and_return(nil)
+      allow(FacilitiesManagement::RM3830::GenerateContractZip).to receive(:perform_in).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+      allow(FacilitiesManagement::RM3830::ContractSentReminder).to receive(:perform_at).and_return(nil)
       contract.offer_to_supplier!
     end
 

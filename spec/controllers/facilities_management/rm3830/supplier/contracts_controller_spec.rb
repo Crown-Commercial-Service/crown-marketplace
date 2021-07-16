@@ -13,10 +13,12 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
 
     before do
       allow(FacilitiesManagement::RM3830::SupplierDetail).to receive(:find).and_return(supplier)
+      allow(FacilitiesManagement::GovNotifyNotification).to receive(:perform_async).and_return(nil)
     end
 
     context 'when the supplier accepts the procurement' do
       before do
+        allow(FacilitiesManagement::RM3830::AwaitingSignatureReminder).to receive(:perform_at).and_return(nil)
         put :update, params: { procurement_id: procurement.id, id: contract.id, facilities_management_rm3830_procurement_supplier: { contract_response: true } }
       end
 

@@ -20,11 +20,8 @@ module FacilitiesManagement
           state :publishing_data
           state :published
           state :failed
-          event :start_upload do
+          event :start_upload, after_commit: -> { FileUploadWorker.perform_async(id) } do
             transitions from: :not_started, to: :in_progress
-            after do
-              FacilitiesManagement::FileUploadWorker.perform_async(id)
-            end
           end
           event :check_file do
             transitions from: :in_progress, to: :checking_file

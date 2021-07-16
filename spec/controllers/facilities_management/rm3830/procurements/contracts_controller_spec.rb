@@ -14,6 +14,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
   describe 'PUT update' do
     login_fm_buyer_with_details
 
+    before { allow(FacilitiesManagement::GovNotifyNotification).to receive(:perform_async).and_return(nil) }
+
     context 'when the buyer closes the procurement' do
       let(:first_contract) { procurement.procurement_suppliers.min_by(&:direct_award_value) }
 
@@ -52,7 +54,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       stub_bank_holiday_json
 
       before do
-        contract.accept!
+        contract.update(aasm_state: 'accepted', supplier_response_date: Time.now.in_time_zone('London'))
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: true, contract_start_date_dd: start_date.day.to_s, contract_start_date_mm: start_date.month.to_s, contract_start_date_yyyy: start_date.year.to_s, contract_end_date_dd: end_date.day.to_s, contract_end_date_mm: end_date.month.to_s, contract_end_date_yyyy: end_date_yyyy } }
       end
 
@@ -90,7 +92,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       stub_bank_holiday_json
 
       before do
-        contract.accept!
+        contract.update(aasm_state: 'accepted', supplier_response_date: Time.now.in_time_zone('London'))
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: false, reason_for_not_signing: reason_for_not_signing } }
       end
 
@@ -153,6 +155,9 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
       before do
         first_contract.update(aasm_state: 'declined')
         next_contract.update(supplier_id: supplier.id)
+        allow(FacilitiesManagement::RM3830::GenerateContractZip).to receive(:perform_in).and_return(nil)
+        allow(FacilitiesManagement::RM3830::ChangeStateWorker).to receive(:perform_at).and_return(nil)
+        allow(FacilitiesManagement::RM3830::ContractSentReminder).to receive(:perform_at).and_return(nil)
         put :update, params: { procurement_id: procurement.id, id: first_contract.id, name: 'next_supplier' }
       end
 
@@ -169,7 +174,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsController, 
 
     context 'when contract is closed' do
       before do
-        contract.accept!
+        contract.update(aasm_state: 'accepted', supplier_response_date: Time.now.in_time_zone('London'))
         create(:facilities_management_rm3830_procurement_supplier_da_with_supplier, direct_award_value: 1234567, aasm_state: 'sent', procurement: procurement)
         put :update, params: { procurement_id: procurement.id, id: contract.id, name: 'signed', facilities_management_rm3830_procurement_supplier: { contract_signed: false, reason_for_not_signing: 'Some reason' } }
       end
