@@ -80,6 +80,14 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
   end
 
+  create_table "facilities_management_regions", id: false, force: :cascade do |t|
+    t.text "code"
+    t.text "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["code"], name: "fm_regions_code_key", unique: true
+  end
+
   create_table "facilities_management_rm3830_admin_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
@@ -348,21 +356,13 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.text "service_usage", array: true
   end
 
-  create_table "fm_regions", id: false, force: :cascade do |t|
-    t.text "code"
-    t.text "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["code"], name: "fm_regions_code_key", unique: true
-  end
-
-  create_table "fm_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "facilities_management_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
     t.integer "sort_order"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["id"], name: "index_fm_security_types_on_id"
+    t.index ["id"], name: "index_facilities_management_security_types_on_id"
   end
 
   create_table "nuts_regions", id: false, force: :cascade do |t|

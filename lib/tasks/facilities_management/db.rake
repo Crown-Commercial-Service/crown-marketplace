@@ -23,12 +23,12 @@ module CCS
 
   def self.csv_to_fm_regions(file_name)
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.exec_query('create table IF NOT EXISTS fm_regions (code varchar(255) UNIQUE, name varchar(255) );')
+      db.exec_query('create table IF NOT EXISTS facilities_management_regions (code varchar(255) UNIQUE, name varchar(255) );')
       CSV.read(file_name, headers: true).each do |row|
         column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
         values = row.fields.map { |i| "'#{i}'" }.join(',')
-        db.exec_query("DELETE FROM fm_regions where code = '#{row['code']}' ; ")
-        db.exec_query("insert into fm_regions ( #{column_names}) values (#{values})")
+        db.exec_query("DELETE FROM facilities_management_regions where code = '#{row['code']}' ; ")
+        db.exec_query("insert into facilities_management_regions ( #{column_names}) values (#{values})")
         p "FM Regions: Inserting #{values}"
       end
     end

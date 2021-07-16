@@ -84,12 +84,12 @@ INSERT INTO public.facilities_management_rm3830_units_of_measurement (id, title_
     file_name = 'data/facilities_management/security_types.csv'
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
-      truncate_query = 'truncate table fm_security_types;'
+      truncate_query = 'truncate table facilities_management_security_types;'
       db.query truncate_query
       CSV.read(file_name, headers: true).each do |row|
         column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
         values = row.fields.map { |i| "'#{i}'" }.join(',')
-        query = "INSERT INTO fm_security_types (#{column_names}) values (#{values})"
+        query = "INSERT INTO facilities_management_security_types (#{column_names}) values (#{values})"
         db.query query
       end
     end

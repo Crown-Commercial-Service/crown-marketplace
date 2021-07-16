@@ -168,7 +168,7 @@ module FacilitiesManagement
     end
 
     def security_type_selection
-      fm_security_types = FacilitiesManagement::SecurityTypes&.all&.map(&:title)
+      fm_security_types = FacilitiesManagement::SecurityType&.all&.map(&:title)
       fm_security_types = [] if fm_security_types.nil?
       errors.add(:security_type, :inclusion) unless (fm_security_types + ['other']).include? security_type
     end
