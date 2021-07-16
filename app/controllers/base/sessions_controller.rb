@@ -59,9 +59,22 @@ module Base
 
     def session_expired_sign_in_path
       split_url = params[:url].split('/')
-      service_type ||= split_url[2] if split_url[2] == 'supplier' || split_url[2] == 'admin'
 
-      "/#{[split_url[1], params[:framework], service_type, 'sign-in'].compact.join('/')}?expired=true"
+      case split_url[1]
+      when 'crown-marketplace'
+        crown_marketplace_new_user_session_path(expired: true)
+      when 'facilities-management'
+        framework = if FacilitiesManagement::RECOGNISED_FRAMEWORKS.include?(split_url[2])
+                      split_url[2]
+                    else
+                      FacilitiesManagement::DEFAULT_FRAMEWORK
+                    end
+        service_type ||= split_url[3] if split_url[3] == 'supplier' || split_url[3] == 'admin'
+
+        "/#{[split_url[1], framework, service_type, 'sign-in'].compact.join('/')}?expired=true"
+      else
+        default_sign_in_path
+      end
     end
 
     def default_sign_in_path
