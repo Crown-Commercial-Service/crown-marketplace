@@ -6,7 +6,7 @@ class FacilitiesManagement::Supplier::FrameworkController < ::ApplicationControl
   protected
 
   def authorize_user
-    authorize! :read, FacilitiesManagement::Supplier
+    authorize! :read, FacilitiesManagement::RM3830::SupplierDetail
   end
 
   def redirect_if_unrecognised_framework

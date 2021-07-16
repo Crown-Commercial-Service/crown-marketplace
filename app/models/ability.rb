@@ -37,7 +37,7 @@ class Ability
   def fm_supplier_specific_auth(user)
     return unless user.has_role?(:fm_access) && user.has_role?(:supplier)
 
-    can :read, FacilitiesManagement::Supplier
+    can :read, FacilitiesManagement::RM3830::SupplierDetail
     can :manage, FacilitiesManagement::RM3830::ProcurementSupplier, supplier: user.supplier_detail
   end
 

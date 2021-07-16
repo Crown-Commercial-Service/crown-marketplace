@@ -14,14 +14,6 @@ en:
   activerecord:
     errors:
       models:
-        facilities_management/admin/rates:
-          attributes:
-            benchmark:
-              less_than_or_equal_to: The rate must be less than or equal to 1
-              not_a_number: The rate must be a number, like 0.26 or 1
-            framework:
-              less_than_or_equal_to: The rate must be less than or equal to 1
-              not_a_number: The rate must be a number, like 0.26 or 1
         facilities_management/rm3830/admin/management_report:
           attributes:
             end_date:
@@ -33,6 +25,14 @@ en:
               date_before_or_equal_to: The ‘From’ date must be today or in the past
               invalid: Enter a valid ‘From’ date
               not_a_date: Enter a valid ‘From’ date
+        facilities_management/rm3830/admin/rates:
+          attributes:
+            benchmark:
+              less_than_or_equal_to: The rate must be less than or equal to 1
+              not_a_number: The rate must be a number, like 0.26 or 1
+            framework:
+              less_than_or_equal_to: The rate must be less than or equal to 1
+              not_a_number: The rate must be a number, like 0.26 or 1
         facilities_management/rm3830/admin/suppliers_admin:
           attributes:
             address_county:

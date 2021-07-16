@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_084539) do
+ActiveRecord::Schema.define(version: 2021_07_16_093300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -78,17 +78,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_084539) do
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
     t.index ["user_id"], name: "index_facilities_management_buyer_details_on_user_id"
-  end
-
-  create_table "facilities_management_regional_availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "region_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["facilities_management_supplier_id"], name: "index_fm_regional_availabilities_on_fm_supplier_id"
-    t.index ["lot_number", "region_code", "facilities_management_supplier_id"], name: "index_regional_availabilities_on_lot_number_and_region_code", unique: true
-    t.index ["lot_number"], name: "index_fm_regional_availabilities_on_lot_number"
   end
 
   create_table "facilities_management_rm3830_admin_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -298,40 +287,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_084539) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
   end
 
-  create_table "facilities_management_service_offerings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "facilities_management_supplier_id", null: false
-    t.text "lot_number", null: false
-    t.text "service_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["facilities_management_supplier_id"], name: "index_fm_service_offerings_on_fm_supplier_id"
-    t.index ["lot_number", "service_code", "facilities_management_supplier_id"], name: "index_service_offerings_on_lot_number_and_service_code", unique: true
-    t.index ["lot_number"], name: "index_fm_service_offerings_on_lot_number"
-  end
-
-  create_table "facilities_management_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "contact_name"
-    t.text "contact_email"
-    t.text "telephone_number"
-  end
-
-  create_table "facilities_management_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "fm_cache", id: false, force: :cascade do |t|
-    t.text "user_id", null: false
-    t.text "key", null: false
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "key"], name: "fm_cache_user_id_idx"
-  end
-
   create_table "fm_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm3830_procurement_id", null: false
     t.jsonb "data"
@@ -536,7 +491,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_084539) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
-  add_foreign_key "facilities_management_regional_availabilities", "facilities_management_suppliers"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"
   add_foreign_key "facilities_management_rm3830_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
   add_foreign_key "facilities_management_rm3830_procurement_building_services", "facilities_management_rm3830_procurement_buildings"
@@ -549,7 +503,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_084539) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
-  add_foreign_key "facilities_management_service_offerings", "facilities_management_suppliers"
   add_foreign_key "fm_frozen_rate_cards", "facilities_management_rm3830_procurements"
   add_foreign_key "fm_frozen_rates", "facilities_management_rm3830_procurements"
 end

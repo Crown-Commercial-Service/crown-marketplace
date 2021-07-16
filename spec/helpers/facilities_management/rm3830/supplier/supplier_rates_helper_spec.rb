@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Supplier::SupplierRatesHelper, type: :helper do
+RSpec.describe FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper, type: :helper do
   describe 'Supplier rates helper tests' do
     context 'with rates in work_packages as sub array' do
       it 'Will return a rates array' do

@@ -1,4 +1,4 @@
-module FacilitiesManagement::Supplier::SupplierRatesHelper
+module FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper
   def self.add_rates_to_work_packages(work_packages, rates)
     work_packages.map do |work_package|
       work_package['rates'] = rates.select { |key| key['code'] == work_package['code'] }
