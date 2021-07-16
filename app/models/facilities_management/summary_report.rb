@@ -51,7 +51,7 @@ module FacilitiesManagement
     end
 
     def selected_suppliers(for_lot)
-      SupplierDetail.selected_suppliers(for_lot, @posted_locations, @posted_services)
+      RM3830::SupplierDetail.selected_suppliers(for_lot, @posted_locations, @posted_services)
     end
 
     def assessed_value

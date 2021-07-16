@@ -157,7 +157,7 @@ module FacilitiesManagement::Admin
     end
 
     def work_packages
-      @work_packages ||= FacilitiesManagement::Admin::StaticDataAdmin.work_packages.select { |work_package| da_service_codes.include? work_package['code'] }
+      @work_packages ||= FacilitiesManagement::RM3830::Admin::StaticDataAdmin.work_packages.select { |work_package| da_service_codes.include? work_package['code'] }
     end
 
     def service_rows
