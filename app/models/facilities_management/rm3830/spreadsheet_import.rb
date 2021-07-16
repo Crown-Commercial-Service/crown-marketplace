@@ -199,7 +199,7 @@ module FacilitiesManagement
       end
 
       def service_name(code)
-        work_packages ||= FacilitiesManagement::StaticData.work_packages
+        work_packages ||= FacilitiesManagement::RM3830::StaticData.work_packages
 
         work_packages.find { |wp| wp['code'] == code }['name']
       end

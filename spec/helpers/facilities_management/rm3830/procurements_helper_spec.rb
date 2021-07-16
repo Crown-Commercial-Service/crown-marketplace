@@ -1034,7 +1034,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
   end
 
   describe 'methods relating to suppliers' do
-    let(:service_codes) { FacilitiesManagement::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.map { |wp| wp['code'] } }
+    let(:service_codes) { FacilitiesManagement::RM3830::StaticData.work_packages.reject { |wp| ['A', 'B'].include? wp['work_package_code'] }.map { |wp| wp['code'] } }
     let(:region_codes) { FacilitiesManagement::Region.all.reject { |region| region.code == 'OS01' }.map(&:code) }
     let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, region_codes: region_codes, service_codes: service_codes) }
 

@@ -14,9 +14,9 @@
 <div class="govuk-grid-column-full" style="padding-left:0">
   <div class="chooser-input">
     <%= govuk_accordion('edit-services') do %>
-      <% FacilitiesManagement::StaticData.services.each_with_index do |service, index| %>
+      <% FacilitiesManagement::RM3830::StaticData.services.each_with_index do |service, index| %>
         <%= govuk_accordion_add_section(index, service['name'], class: 'chooser-section', data: { section: service['code'], sectionname: service['name'] }) do %>
-          <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
+          <% FacilitiesManagement::RM3830::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
             <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
               <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
                 <div class="govuk-checkboxes">
@@ -43,7 +43,7 @@
               </fieldset>
             </div>
           <% end %>
-          <% if FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
+          <% if FacilitiesManagement::RM3830::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
             <p><%= t('facilities_management.basket.or_text') %></p>
             <div class="govuk-checkboxes">
               <div class="govuk-checkboxes__item">

@@ -108,7 +108,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def add_supplier_rates_to_rate_card(sheet)
-    all_units_of_measurement = CCS::FM::UnitsOfMeasurement.all
+    all_units_of_measurement = FacilitiesManagement::RM3830::UnitsOfMeasurement.all
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }

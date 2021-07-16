@@ -18,7 +18,7 @@ module ServiceQuestionsConcern
   end
 
   def services_requiring_gia
-    @services_requiring_gia ||= CCS::FM::Service.full_gia_services
+    @services_requiring_gia ||= FacilitiesManagement::RM3830::Service.full_gia_services
   end
 
   def services_requiring_external_area

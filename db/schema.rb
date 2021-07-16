@@ -309,6 +309,12 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["facilities_management_rm3830_procurement_id"], name: "index_fm_procurements_on_fm_spreadsheet_imports_id"
   end
 
+  create_table "facilities_management_rm3830_static_data", id: false, force: :cascade do |t|
+    t.string "key", null: false
+    t.jsonb "value"
+    t.index ["key"], name: "fm_static_data_key_idx"
+  end
+
   create_table "facilities_management_rm3830_supplier_details", primary_key: "supplier_id", id: :uuid, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -331,6 +337,17 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.index ["user_id"], name: "index_facilities_management_rm3830_supplier_details_on_user_id"
   end
 
+  create_table "facilities_management_rm3830_units_of_measurement", id: false, force: :cascade do |t|
+    t.integer "id", default: -> { "nextval('fm_units_of_measurement_id_seq'::regclass)" }, null: false
+    t.string "title_text", null: false
+    t.string "example_text"
+    t.string "unit_text"
+    t.string "data_type"
+    t.string "spreadsheet_label"
+    t.string "unit_measure_label"
+    t.text "service_usage", array: true
+  end
+
   create_table "fm_regions", id: false, force: :cascade do |t|
     t.text "code"
     t.text "name"
@@ -346,23 +363,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_093300) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["id"], name: "index_fm_security_types_on_id"
-  end
-
-  create_table "fm_static_data", id: false, force: :cascade do |t|
-    t.string "key", null: false
-    t.jsonb "value"
-    t.index ["key"], name: "fm_static_data_key_idx"
-  end
-
-  create_table "fm_units_of_measurement", id: false, force: :cascade do |t|
-    t.serial "id", null: false
-    t.string "title_text", null: false
-    t.string "example_text"
-    t.string "unit_text"
-    t.string "data_type"
-    t.string "spreadsheet_label"
-    t.string "unit_measure_label"
-    t.text "service_usage", array: true
   end
 
   create_table "nuts_regions", id: false, force: :cascade do |t|

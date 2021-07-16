@@ -78,11 +78,11 @@ module FacilitiesManagement
       end
 
       def requires_internal_area?
-        CCS::FM::Service.full_gia_services.include? code
+        FacilitiesManagement::RM3830::Service.full_gia_services.include? code
       end
 
       def uses_only_internal_area?
-        CCS::FM::Service.gia_services.include? code
+        FacilitiesManagement::RM3830::Service.gia_services.include? code
       end
 
       def required_contexts

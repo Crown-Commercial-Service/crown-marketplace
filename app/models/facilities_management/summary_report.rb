@@ -110,7 +110,7 @@ module FacilitiesManagement
     end
 
     def procurement_da_services
-      @procurement_da_services ||= CCS::FM::Service.direct_award_services(@procurement.id)
+      @procurement_da_services ||= FacilitiesManagement::RM3830::Service.direct_award_services(@procurement.id)
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -119,13 +119,13 @@ module FacilitiesManagement
 
       # add labels for spreadsheet
       uvals.each do |u|
-        uoms = CCS::FM::UnitsOfMeasurement.service_usage(u['service_code'])
+        uoms = FacilitiesManagement::RM3830::UnitsOfMeasurement.service_usage(u['service_code'])
         u['title_text'] = uoms.last['title_text']
         u['example_text'] = uoms.last['example_text']
       end
 
       @procurement_building_services.each do |s|
-        next unless CCS::FM::Service.gia_services.include? s.code
+        next unless FacilitiesManagement::RM3830::Service.gia_services.include? s.code
 
         pc = s.procurement_building
         uvals << { user_id: @procurement.user.id,

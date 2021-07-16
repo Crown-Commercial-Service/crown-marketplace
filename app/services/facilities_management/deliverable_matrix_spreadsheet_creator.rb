@@ -20,7 +20,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   # rubocop:disable Metrics/AbcSize
   def services_data
     uniq_buildings_service_codes ||= buildings_data.map { |pb| pb[:service_codes] }.flatten.uniq
-    services ||= FacilitiesManagement::StaticData.work_packages.select { |wp| uniq_buildings_service_codes.include? wp['code'] }
+    services ||= FacilitiesManagement::RM3830::StaticData.work_packages.select { |wp| uniq_buildings_service_codes.include? wp['code'] }
     @services_data ||= services.sort { |a, b| [a['code'].split('.')[0], a['code'].split('.')[1].to_i] <=> [b['code'].split('.')[0], b['code'].split('.')[1].to_i] }
   end
   # rubocop:enable Metrics/AbcSize
@@ -142,7 +142,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
     allowed_volume_services = services_data.keep_if { |service| ALLOWED_VOLUME_SERVICES.include? service['code'] }
 
     allowed_volume_services.each do |service|
-      next if CCS::FM::Service.gia_services.include? service['code']
+      next if FacilitiesManagement::RM3830::Service.gia_services.include? service['code']
 
       data_for_service = data_for_service_code(units_of_measure_values, service['code'])
       new_row = [service['code'], service['name'], service['metric']]
@@ -195,7 +195,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
 
   def hours_required_services
     allowed_services = []
-    FacilitiesManagement::StaticData.work_packages.select { |work_package| allowed_services << work_package['code'] if work_package['metric'] == 'Number of hours required' }
+    FacilitiesManagement::RM3830::StaticData.work_packages.select { |work_package| allowed_services << work_package['code'] if work_package['metric'] == 'Number of hours required' }
     services_data.select { |service| allowed_services.include? service['code'] }
   end
 
@@ -504,7 +504,7 @@ class FacilitiesManagement::DeliverableMatrixSpreadsheetCreator
   SERVICE_HOUR_SERVICES = %w[H.4 H.5 I.1 I.2 I.3 I.4 J.1 J.2 J.3 J.4 J.5 J.6].freeze
 
   def da_procurement_building_services(building)
-    procurement_building_service_codes = CCS::FM::Service.direct_award_services(@procurement.id)
+    procurement_building_service_codes = FacilitiesManagement::RM3830::Service.direct_award_services(@procurement.id)
 
     building.procurement_building_services.select { |u| u.code.in? procurement_building_service_codes }
   end

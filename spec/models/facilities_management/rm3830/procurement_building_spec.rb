@@ -484,7 +484,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
   describe '#requires_internal_area?' do
     context 'when a service requires an internal area' do
       it 'will be true' do
-        procurement_building.service_codes = CCS::FM::Service.full_gia_services.sample(4)
+        procurement_building.service_codes = FacilitiesManagement::RM3830::Service.full_gia_services.sample(4)
         expect(procurement_building.send(:requires_internal_area?)).to eq true
       end
     end

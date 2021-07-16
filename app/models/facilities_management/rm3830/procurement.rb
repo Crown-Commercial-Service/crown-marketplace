@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module RM3830
-    class RM3830::Procurement < ApplicationRecord
+    class Procurement < ApplicationRecord
       include AASM
       include ProcurementValidator
       include ServiceQuestionsConcern

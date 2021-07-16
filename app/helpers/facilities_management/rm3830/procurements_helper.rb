@@ -160,7 +160,7 @@ module FacilitiesManagement::RM3830::ProcurementsHelper
   end
 
   def work_packages_names
-    @work_packages_names ||= FacilitiesManagement::StaticData.work_packages.map { |wp| [wp['code'], wp['name']] }.to_h
+    @work_packages_names ||= FacilitiesManagement::RM3830::StaticData.work_packages.map { |wp| [wp['code'], wp['name']] }.to_h
   end
 
   def active_procurement_buildings
