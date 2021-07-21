@@ -29,7 +29,7 @@ module FacilitiesManagement
         private
 
         def generate_report_csv
-          GenerateFMAdminReportJob.perform_later(id) unless management_report_csv.attached?
+          ManagementReportWorker.perform_async(id) unless management_report_csv.attached?
         end
 
         def end_date_valid_date
