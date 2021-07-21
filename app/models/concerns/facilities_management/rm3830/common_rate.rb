@@ -32,11 +32,10 @@ module FacilitiesManagement::RM3830
       #
       # usage:
       #        FacilitiesManagement::RM3830::Rate.read_benchmark_rates
-      # rubocop:disable Rails/FindEach
       def read_benchmark_rates
         benchmark_rates = {}
         framework_rates = {}
-        all.each do |row|
+        all.find_each do |row|
           code_and_standard = "#{row['code'].remove('.')}#{"-#{row['standard']}" if row['standard']}"
           benchmark_rates[code_and_standard] = row['benchmark'].to_f
           framework_rates[code_and_standard] = row['framework'].to_f
@@ -46,7 +45,6 @@ module FacilitiesManagement::RM3830
           framework_rates: framework_rates
         }
       end
-      # rubocop:enable Rails/FindEach
 
       def service_for(service_code, standard)
         find_by(code: service_code, standard: standard) || find_by(code: service_code)

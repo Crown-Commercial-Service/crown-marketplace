@@ -4,46 +4,14 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementSupplier, type: :model d
   describe 'contract number generation' do
     let(:current_year) { Date.current.year.to_s }
 
-    before do
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3830-DA0001-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: "RM3830-DA0002-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3830-DA0003-2019')
-      create(:facilities_management_rm3830_procurement_supplier_da, contract_number: 'RM3830-DA0004-2019')
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3830-FC0005-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: "RM3830-FC0006-#{current_year}")
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3830-FC0007-2019')
-      create(:facilities_management_rm3830_procurement_supplier_fc, contract_number: 'RM3830-FC0008-2019')
-    end
-
-    describe '.used_contract_numbers_for_current_year' do
-      context 'and the procurement state is direct award' do
-        it 'presents all of the direct award contract numbers used for the current year' do
-          expect(described_class.used_contract_numbers_for_current_year('DA').sort).to match(['0001', '0002'])
-        end
-
-        it 'does not present any of the direct award contract numbers used for the previous years' do
-          expect(described_class.used_contract_numbers_for_current_year('DA')).not_to match(['0003', '0004'])
-        end
-      end
-
-      context 'and the procurement state is further competition' do
-        it 'presents all of the further competition contract numbers used for the current year' do
-          expect(described_class.used_contract_numbers_for_current_year('FC').sort).to match(['0005', '0006'])
-        end
-
-        it 'does not present any of the further competition contract numbers used for the previous years' do
-          expect(described_class.used_contract_numbers_for_current_year('FC')).not_to match(['0007', '0008'])
-        end
-      end
-    end
-
     describe '.generate_contract_number' do
       let(:direct_award) { create(:facilities_management_rm3830_procurement_supplier_da) }
-      let(:further_competition) { create(:facilities_management_rm3830_procurement_supplier_fc) }
       let(:number_array) { (1..9999).map { |integer| format('%04d', integer % 10000) } }
       let(:expected_number) { number_array.sample }
 
-      before { allow(described_class).to receive(:used_contract_numbers_for_current_year) { number_array - [expected_number] } }
+      # rubocop:disable RSpec/AnyInstance
+      before { allow_any_instance_of(FacilitiesManagement::ContractNumberGenerator).to receive(:used_contract_numbers_for_current_year).and_return(number_array - [expected_number]) }
+      # rubocop:enable RSpec/AnyInstance
 
       context 'with a procurement in direct award' do
         it 'returns an available number for a direct award contract' do

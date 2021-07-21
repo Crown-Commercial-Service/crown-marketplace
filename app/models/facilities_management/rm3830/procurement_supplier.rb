@@ -124,13 +124,6 @@ module FacilitiesManagement
       end
 
       # rubocop:enable Metrics/BlockLength
-      def self.used_contract_numbers_for_current_year(procurement_state)
-        where('contract_number like ?', "RM3830-#{procurement_state}%")
-          .where('contract_number like ?', "%-#{Date.current.year}")
-          .pluck(:contract_number)
-          .map { |contract_number| contract_number.split('-')[1].split(procurement_state)[1] }
-      end
-
       def assign_contract_number
         self.contract_number = generate_contract_number
       end
@@ -233,9 +226,9 @@ module FacilitiesManagement
       def generate_contract_number
         return unless procurement.further_competition? || procurement.direct_award? || procurement.da_draft?
 
-        return ContractNumberGenerator.new(procurement_state: :direct_award, framework: 'RM3830', used_numbers: self.class.used_contract_numbers_for_current_year('DA')).new_number if procurement.direct_award? || procurement.da_draft?
+        procurement_state = procurement.direct_award? || procurement.da_draft? ? :direct_award : :further_competition
 
-        ContractNumberGenerator.new(procurement_state: :further_competition, framework: 'RM3830', used_numbers: self.class.used_contract_numbers_for_current_year('FC')).new_number
+        ContractNumberGenerator.new(procurement_state: procurement_state, framework: 'RM3830', model: self.class).new_number
       end
 
       def set_sent_date
