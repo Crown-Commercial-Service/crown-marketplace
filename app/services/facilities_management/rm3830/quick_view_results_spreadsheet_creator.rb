@@ -1,8 +1,8 @@
-class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
+class FacilitiesManagement::RM3830::QuickViewResultsSpreadsheetCreator
   attr_accessor :session_data
 
   def initialize(procurement_id)
-    @procurement = FacilitiesManagement::RM3830::Procurement.find(procurement_id)
+    @procurement = Procurement.find(procurement_id)
     @buyer_detail = @procurement.user.buyer_detail
     @region_codes = @procurement.region_codes
     @service_codes = @procurement.service_codes
@@ -21,7 +21,7 @@ class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
 
   def set_data
     @regions = FacilitiesManagement::Region.where(code: @region_codes).map(&:name)
-    @services = @service_codes.index_with { |code| FacilitiesManagement::RM3830::Service.find_by(code: code).name }
+    @services = @service_codes.index_with { |code| Service.find_by(code: code).name }
 
     @lot_1a_suppliers = suppliers_for_lot('1a')
     @lot_1b_suppliers = suppliers_for_lot('1b')
@@ -128,7 +128,7 @@ class FacilitiesManagement::QuickViewResultsSpreadsheetCreator
   end
 
   def suppliers_for_lot(lot)
-    FacilitiesManagement::RM3830::SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).map { |supplier| supplier['name'] }
+    SupplierDetail.long_list_suppliers_lot(@region_codes, @service_codes, lot).map { |supplier| supplier['name'] }
   end
 
   def sanitize_string_for_excel(string)

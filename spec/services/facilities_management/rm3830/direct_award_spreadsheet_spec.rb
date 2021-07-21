@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::DirectAwardSpreadsheet do
+RSpec.describe FacilitiesManagement::RM3830::DirectAwardSpreadsheet do
   include ActionView::Helpers::NumberHelper
 
   subject(:wb) do

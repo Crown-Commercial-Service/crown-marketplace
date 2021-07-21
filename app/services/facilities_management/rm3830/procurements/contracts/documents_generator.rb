@@ -29,7 +29,7 @@ module FacilitiesManagement
             @procurement = @contract.procurement
             file_policy = @procurement.security_policy_document_file
             files_path = 'public'
-            direct_award_spreadsheet = FacilitiesManagement::DirectAwardSpreadsheet.new(@contract.id)
+            direct_award_spreadsheet = DirectAwardSpreadsheet.new(@contract.id)
             direct_award_spreadsheet.build
             deliverable_matrix_spreadsheet = FacilitiesManagement::DeliverableMatrixSpreadsheetCreator.new(@contract.id)
             deliverable_matrix_spreadsheet.build

@@ -1,13 +1,13 @@
-class FacilitiesManagement::DirectAwardSpreadsheet
+class FacilitiesManagement::RM3830::DirectAwardSpreadsheet
   def initialize(contract_id)
-    @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+    @contract = ProcurementSupplier.find(contract_id)
     @procurement = @contract.procurement
     @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
     @supplier_id = @contract.supplier_id.to_sym
     @supplier_name = @contract.supplier.supplier_name
-    frozen_rate_card = FacilitiesManagement::RM3830::FrozenRateCard.where(facilities_management_rm3830_procurement_id: @procurement.id)
+    frozen_rate_card = FrozenRateCard.where(facilities_management_rm3830_procurement_id: @procurement.id)
     @rate_card_data = frozen_rate_card.latest.data if frozen_rate_card.exists?
-    @rate_card_data = FacilitiesManagement::RM3830::RateCard.latest.data unless frozen_rate_card.exists?
+    @rate_card_data = RateCard.latest.data unless frozen_rate_card.exists?
   end
 
   def build
@@ -108,7 +108,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def add_supplier_rates_to_rate_card(sheet)
-    all_units_of_measurement = FacilitiesManagement::RM3830::UnitsOfMeasurement.all
+    all_units_of_measurement = UnitsOfMeasurement.all
     standard_column_style = sheet.styles.add_style sz: 12, alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '00000000' }
     price_style = sheet.styles.add_style sz: 12, format_code: '£#,##0.00', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
     percentage_style = sheet.styles.add_style sz: 12, format_code: '#,##0.00 %', border: { style: :thin, color: '00000000' }, alignment: { wrap_text: true, vertical: :center }
@@ -135,7 +135,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
       styles = [standard_column_style, standard_column_style, standard_column_style]
 
-      styles += FacilitiesManagement::RM3830::RateCard.building_types.count.times.map do
+      styles += RateCard.building_types.count.times.map do
         if ['M.1', 'N.1'].include? s
           percentage_style
         else

@@ -86,7 +86,7 @@ module FacilitiesManagement
 
       def quick_view_results_spreadsheet
         if @procurement.quick_search?
-          spreadsheet_builder = FacilitiesManagement::QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = QuickViewResultsSpreadsheetCreator.new(@procurement.id)
           spreadsheet_builder.build
           send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
         else
@@ -109,7 +109,7 @@ module FacilitiesManagement
       end
 
       def price_matrix
-        download_da_spreadsheet(FacilitiesManagement::DirectAwardSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
+        download_da_spreadsheet(DirectAwardSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
       end
 
       private
