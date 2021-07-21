@@ -14,7 +14,6 @@ module CCS
         values = row.fields.map { |i| "'#{i}'" }.join(',')
         db.exec_query("DELETE FROM nuts_regions where code = '#{row['code']}' ; ")
         db.exec_query("insert into nuts_regions ( #{column_names}) values (#{values})")
-        p "NUTS Regions: Inserting #{values}"
       end
     end
   rescue PG::Error => e
@@ -29,22 +28,6 @@ module CCS
         values = row.fields.map { |i| "'#{i}'" }.join(',')
         db.exec_query("DELETE FROM facilities_management_regions where code = '#{row['code']}' ; ")
         db.exec_query("insert into facilities_management_regions ( #{column_names}) values (#{values})")
-        p "FM Regions: Inserting #{values}"
-      end
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
-
-  def self.csv_to_fm_rates(file_name)
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      db.query 'DELETE FROM facilities_management_rm3830_rates'
-      CSV.read(file_name, headers: true).each do |row|
-        column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
-        values = row.fields.map { |i| i.blank? ? 'null' : "'#{i}'" }.join(',')
-        query = "insert into facilities_management_rm3830_rates ( #{column_names}) values (#{values})"
-        puts "adding #{column_names} (#{values})"
-        db.query query
       end
     end
   rescue PG::Error => e
@@ -65,8 +48,6 @@ module CCS
     DistributedLocks.distributed_lock(150) do
       p 'Loading FM regions static data'
       CCS.csv_to_fm_regions "#{directory}facilities_management/regions.csv"
-      p 'Loading FM rates static data'
-      CCS.csv_to_fm_rates "#{directory}facilities_management/rates.csv"
       p 'Finished loading static data'
     end
   end

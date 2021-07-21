@@ -11,12 +11,19 @@ module FacilitiesManagement
         initialize_from_procurement
 
         frozen_rates = FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
-        @rates = frozen_rates.read_benchmark_rates unless frozen_rates.size.zero?
-        @rates = Rate.read_benchmark_rates if frozen_rates.size.zero?
+        @rates = if frozen_rates.any?
+                   frozen_rates.read_benchmark_rates
+                 else
+                   Rate.read_benchmark_rates
+                 end
 
         frozen_ratecard = FrozenRateCard.where(facilities_management_rm3830_procurement_id: procurement_id)
-        @rate_card = frozen_ratecard.latest unless frozen_ratecard.size.zero?
-        @rate_card = RateCard.latest if frozen_ratecard.size.zero?
+        @rate_card = if frozen_ratecard.any?
+                       frozen_ratecard.latest
+                     else
+                       RateCard.latest
+                     end
+
         regions
       end
 

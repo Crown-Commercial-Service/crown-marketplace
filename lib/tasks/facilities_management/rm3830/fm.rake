@@ -79,44 +79,28 @@ INSERT INTO public.facilities_management_rm3830_units_of_measurements (id, title
   rescue PG::Error => e
     puts e.message
   end
-
-  def self.populate_security_types
-    file_name = 'data/facilities_management/security_types.csv'
-
-    ActiveRecord::Base.connection_pool.with_connection do |db|
-      truncate_query = 'truncate table facilities_management_security_types;'
-      db.query truncate_query
-      CSV.read(file_name, headers: true).each do |row|
-        column_names = row.headers.map { |i| "\"#{i}\"" }.join(',')
-        values = row.fields.map { |i| "'#{i}'" }.join(',')
-        query = "INSERT INTO facilities_management_security_types (#{column_names}) values (#{values})"
-        db.query query
-      end
-    end
-  rescue PG::Error => e
-    puts e.message
-  end
 end
 
 namespace :db do
-  desc 'add FM static data to the database'
-  task fmdata: :environment do
-    DistributedLocks.distributed_lock(153) do
-      p 'Creating FM UOM table'
-      FM.create_uom_table
-      p 'Creating FM static data table'
-      FM.static_data_table
-      p 'add services data to fm_static_table'
-      FM.facilities_management_services
-      p 'add work_packages data to fm_static_table'
-      FM.facilities_management_work_packages
-      p 'add bank_holidays data to fm_static_table'
-      FM.facilities_management_bank_holidays
-      p 'Loading security types static data'
-      FM.populate_security_types
+  namespace :rm3830 do
+    desc 'add FM static data to the database'
+    task fmdata: :environment do
+      DistributedLocks.distributed_lock(153) do
+        p 'Creating FM UOM table'
+        FM.create_uom_table
+        p 'Creating FM static data table'
+        FM.static_data_table
+        p 'add services data to fm_static_table'
+        FM.facilities_management_services
+        p 'add work_packages data to fm_static_table'
+        FM.facilities_management_work_packages
+        p 'add bank_holidays data to fm_static_table'
+        FM.facilities_management_bank_holidays
+      end
     end
   end
+
   desc 'add FM static data to the database'
-  task static: :fmdata do
+  task static: :'rm3830:fmdata' do
   end
 end
