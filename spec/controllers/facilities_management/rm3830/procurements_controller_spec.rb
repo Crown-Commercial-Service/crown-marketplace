@@ -1043,7 +1043,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
 
       context 'when deliverables_matrix' do
-        let(:spreadsheet_creator) { FacilitiesManagement::DeliverableMatrixSpreadsheetCreator }
+        let(:spreadsheet_creator) { FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator }
         let(:spreadsheet_action) { :deliverables_matrix }
 
         it 'downloads the document with the right filename' do

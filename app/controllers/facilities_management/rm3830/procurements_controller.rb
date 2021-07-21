@@ -367,7 +367,7 @@ module FacilitiesManagement
       RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
 
       def sent_offers
-        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [FacilitiesManagement::RM3830::ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
+        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts

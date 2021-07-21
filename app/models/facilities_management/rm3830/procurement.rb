@@ -177,8 +177,8 @@ module FacilitiesManagement
 
       def copy_fm_rates_to_frozen
         ActiveRecord::Base.transaction do
-          FacilitiesManagement::RM3830::Rate.all.find_each do |rate|
-            new_rate = FacilitiesManagement::RM3830::FrozenRate.new
+          Rate.all.find_each do |rate|
+            new_rate = FrozenRate.new
             new_rate.facilities_management_rm3830_procurement_id = id
             new_rate.code = rate.code
             new_rate.framework = rate.framework
@@ -193,8 +193,8 @@ module FacilitiesManagement
       end
 
       def copy_fm_rate_cards_to_frozen
-        latest_rate_card = FacilitiesManagement::RM3830::RateCard.latest
-        new_rate_card = FacilitiesManagement::RM3830::FrozenRateCard.new
+        latest_rate_card = RateCard.latest
+        new_rate_card = FrozenRateCard.new
         new_rate_card.facilities_management_rm3830_procurement_id = id
         new_rate_card.data = latest_rate_card.data
         new_rate_card.source_file = latest_rate_card.source_file
@@ -373,7 +373,7 @@ module FacilitiesManagement
         services = procurement_building_services.select(:code, :service_standard, :name).uniq.reject(&:special_da_service?).pluck(:code, :service_standard, :name).uniq
 
         services.each do |service|
-          pbs = FacilitiesManagement::RM3830::ProcurementBuildingService.new(code: service[0], service_standard: service[1], name: service[2])
+          pbs = ProcurementBuildingService.new(code: service[0], service_standard: service[1], name: service[2])
           names << pbs.name if pbs.service_missing_framework_price?(rate_model) && pbs.service_missing_benchmark_price?(rate_model)
         end
 
@@ -541,8 +541,8 @@ module FacilitiesManagement
       end
 
       def rate_model
-        frozen_rates ||= FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: id)
-        @rate_model ||= frozen_rates.size.zero? ? FacilitiesManagement::RM3830::Rate : frozen_rates
+        frozen_rates ||= FrozenRate.where(facilities_management_rm3830_procurement_id: id)
+        @rate_model ||= frozen_rates.size.zero? ? Rate : frozen_rates
       end
 
       def remove_buyer_choice

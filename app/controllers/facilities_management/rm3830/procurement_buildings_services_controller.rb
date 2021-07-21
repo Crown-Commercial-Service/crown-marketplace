@@ -96,7 +96,7 @@ module FacilitiesManagement
       end
 
       def set_building_and_service_data
-        @building_service = FacilitiesManagement::RM3830::ProcurementBuildingService.find_by id: params[:id]
+        @building_service = ProcurementBuildingService.find_by id: params[:id]
         @procurement_building = @building_service.procurement_building
         @building = @procurement_building.building
         @procurement = @procurement_building.procurement

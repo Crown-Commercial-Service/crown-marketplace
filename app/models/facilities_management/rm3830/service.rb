@@ -37,10 +37,10 @@ module FacilitiesManagement
 
       # FacilitiesManagement::RM3830::Service.direct_award_services
       def self.direct_award_services(procurement_id)
-        frozen_rate = FacilitiesManagement::RM3830::FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
+        frozen_rate = FrozenRate.where(facilities_management_rm3830_procurement_id: procurement_id)
 
         return frozen_rate.where(direct_award: true).map(&:code) if frozen_rate.exists?
-        return FacilitiesManagement::RM3830::Rate.all.where(direct_award: true).map(&:code) unless frozen_rate.exists?
+        return Rate.all.where(direct_award: true).map(&:code) unless frozen_rate.exists?
       end
     end
 

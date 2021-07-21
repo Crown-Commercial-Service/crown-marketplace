@@ -5,18 +5,18 @@ module FacilitiesManagement
         before_action :set_upload, only: %i[show progress]
 
         def index
-          @latest_upload = FacilitiesManagement::RM3830::Admin::Upload.latest_upload
-          @uploads = FacilitiesManagement::RM3830::Admin::Upload.all.order(created_at: :desc).page params[:page]
+          @latest_upload = Upload.latest_upload
+          @uploads = Upload.all.order(created_at: :desc).page params[:page]
         end
 
         def show; end
 
         def new
-          @upload = FacilitiesManagement::RM3830::Admin::Upload.new
+          @upload = Upload.new
         end
 
         def create
-          @upload = FacilitiesManagement::RM3830::Admin::Upload.new(upload_params)
+          @upload = Upload.new(upload_params)
 
           if @upload.save(context: :upload)
             @upload.start_upload!
@@ -39,7 +39,7 @@ module FacilitiesManagement
         private
 
         def set_upload
-          @upload = FacilitiesManagement::RM3830::Admin::Upload.find(params[:id] || params[:upload_id])
+          @upload = Upload.find(params[:id] || params[:upload_id])
         end
 
         def upload_params

@@ -25,7 +25,7 @@ module FacilitiesManagement
           # Disabled this rubucop if we were to implement this rubucop validation
           # it would make the code more complicated in this instance
           def self.build_download_zip_file(contract_id)
-            @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+            @contract = ProcurementSupplier.find(contract_id)
             @procurement = @contract.procurement
             file_policy = @procurement.security_policy_document_file
             files_path = 'public'
@@ -68,7 +68,7 @@ module FacilitiesManagement
           # if that changes this should also change
           # due to the way caracal generates docs we need to use ActionView::Base
           def self.generate_doc_call_off_schedule(contract_id)
-            @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+            @contract = ProcurementSupplier.find(contract_id)
             @supplier = @contract.supplier
             @procurement = @contract.procurement
             @buyer_detail = @procurement.user.buyer_detail
@@ -88,7 +88,7 @@ module FacilitiesManagement
 
             view = ActionView::Base.new(ActionController::Base.view_paths, {})
             view.assign(view_assignement)
-            view.class_eval { include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper }
+            view.class_eval { include Procurements::ContractDatesHelper }
             view.render(file: 'facilities_management/rm3830/procurements/contracts/documents/call_off_schedule.docx.caracal')
           end
 
@@ -97,7 +97,7 @@ module FacilitiesManagement
           # if that changes this should also change
           # due to the way caracal generates docs we need to use ActionView::Base
           def self.generate_doc_call_off_schedule_2(contract_id)
-            @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+            @contract = ProcurementSupplier.find(contract_id)
             @procurement = @contract.procurement
             @pension_funds = @procurement.procurement_pension_funds
 
@@ -113,7 +113,7 @@ module FacilitiesManagement
           end
 
           def self.generate_final_zip(contract_id)
-            @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+            @contract = ProcurementSupplier.find(contract_id)
             @procurement = @contract.procurement
             file_stream = build_download_zip_file(contract_id)
             @contract.contract_documents_zip.attach(

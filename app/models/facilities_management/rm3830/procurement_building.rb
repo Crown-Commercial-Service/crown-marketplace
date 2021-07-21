@@ -64,7 +64,7 @@ module FacilitiesManagement
       end
 
       def sorted_procurement_building_services
-        service_order = FacilitiesManagement::RM3830::StaticData.work_packages.map { |work_package| work_package['code'] }.freeze
+        service_order = StaticData.work_packages.map { |work_package| work_package['code'] }.freeze
         procurement_building_services.sort_by { |procurement_building_service| service_order.index(procurement_building_service.code) }
       end
 

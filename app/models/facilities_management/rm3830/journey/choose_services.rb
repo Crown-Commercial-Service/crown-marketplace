@@ -8,11 +8,11 @@ module FacilitiesManagement
       validates :service_codes, length: { minimum: 1 }
 
       def services
-        FacilitiesManagement::RM3830::StaticData.services
+        StaticData.services
       end
 
       def work_packages
-        FacilitiesManagement::RM3830::StaticData.work_packages
+        StaticData.work_packages
       end
 
       def next_step_class

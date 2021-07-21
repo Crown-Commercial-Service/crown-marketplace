@@ -41,7 +41,7 @@ module FacilitiesManagement
         end
 
         def latest_rate_card
-          @latest_rate_card ||= FacilitiesManagement::RM3830::RateCard.latest
+          @latest_rate_card ||= RateCard.latest
         end
 
         def setup_supplier_data_ratecard

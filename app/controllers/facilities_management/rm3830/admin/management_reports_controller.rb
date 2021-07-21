@@ -3,11 +3,11 @@ module FacilitiesManagement
     module Admin
       class ManagementReportsController < FacilitiesManagement::Admin::FrameworkController
         def new
-          @management_report = FacilitiesManagement::RM3830::Admin::ManagementReport.new
+          @management_report = ManagementReport.new
         end
 
         def show
-          @management_report = FacilitiesManagement::RM3830::Admin::ManagementReport.find(params[:id])
+          @management_report = ManagementReport.find(params[:id])
         end
 
         def create

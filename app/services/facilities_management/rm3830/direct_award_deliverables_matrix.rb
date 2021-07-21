@@ -2,10 +2,10 @@ module FacilitiesManagement::RM3830
   class DirectAwardDeliverablesMatrix < DeliverableMatrixSpreadsheetCreator
     include ActionView::Helpers::SanitizeHelper
     include ActionView::Helpers::TextHelper
-    include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper
+    include Procurements::ContractDatesHelper
 
     def initialize(contract_id)
-      @contract = FacilitiesManagement::RM3830::ProcurementSupplier.find(contract_id)
+      @contract = ProcurementSupplier.find(contract_id)
       @procurement = @contract.procurement
       @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
     end
@@ -85,7 +85,7 @@ module FacilitiesManagement::RM3830
       allowed_volume_services = services_data.keep_if { |service| ALLOWED_VOLUME_SERVICES.include? service['code'] }
 
       allowed_volume_services.each do |service|
-        next if FacilitiesManagement::RM3830::Service.gia_services.include? service['code']
+        next if Service.gia_services.include? service['code']
 
         data_for_service = data_for_service_code(units_of_measure_values, service['code'])
         new_row = [service['code'], service['name'], service['metric']]
@@ -282,7 +282,7 @@ module FacilitiesManagement::RM3830
 
     ##### Methods which help throughout the class #####
     def da_procurement_building_services(building)
-      procurement_building_service_codes = FacilitiesManagement::RM3830::Service.direct_award_services(@procurement.id)
+      procurement_building_service_codes = Service.direct_award_services(@procurement.id)
 
       building.procurement_building_services.select { |u| u.code.in? procurement_building_service_codes }
     end

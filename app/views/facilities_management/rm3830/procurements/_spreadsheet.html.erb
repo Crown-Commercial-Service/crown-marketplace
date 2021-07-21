@@ -8,7 +8,7 @@
   <%= numbered_list_helper(t('.download_the_template')) do %>
     <%= t('.link') %>
     <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-3">
-      <%= link_to_public_file_for_download(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_NAME, :xlsx, t('.services_and_buildings_template'), true) %>
+      <%= link_to_public_file_for_download(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_NAME, :xlsx, t('.services_and_buildings_template'), true) %>
     </div>
     <%= t('.list_description', class: 'govuk-!-margin-top-4') %>
     <ul class="govuk-list govuk-list--bullet govuk-!-margin-top-4">
