@@ -1,4 +1,4 @@
-module AddressValidator
+module FacilitiesManagement::AddressValidator
   extend ActiveSupport::Concern
 
   included do
