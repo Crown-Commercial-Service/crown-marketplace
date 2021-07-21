@@ -96,7 +96,7 @@ module FacilitiesManagement
 
       def further_competition_spreadsheet
         if @procurement.further_competition?
-          spreadsheet_builder = FacilitiesManagement::FurtherCompetitionSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = FurtherCompetitionDeliverablesMatrix.new(@procurement.id)
           spreadsheet_builder.build
           send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
         else
@@ -105,11 +105,11 @@ module FacilitiesManagement
       end
 
       def deliverables_matrix
-        download_da_spreadsheet(FacilitiesManagement::DeliverableMatrixSpreadsheetCreator, 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx')
+        download_da_spreadsheet(DirectAwardDeliverablesMatrix, 'Attachment 2 - Statement of Requirements - Deliverables Matrix (DA).xlsx')
       end
 
       def price_matrix
-        download_da_spreadsheet(DirectAwardSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
+        download_da_spreadsheet(PriceMatrixSpreadsheet, 'Attachment 3 - Price Matrix (DA).xlsx')
       end
 
       private

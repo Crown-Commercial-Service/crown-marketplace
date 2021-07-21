@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::DeliverableMatrixSpreadsheetCreator do
+RSpec.describe FacilitiesManagement::RM3830::DirectAwardDeliverablesMatrix do
   include ActionView::Helpers::NumberHelper
   extend APIRequestStubs
 

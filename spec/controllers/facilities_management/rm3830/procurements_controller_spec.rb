@@ -1052,7 +1052,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
 
       context 'when price_matrix' do
-        let(:spreadsheet_creator) { FacilitiesManagement::RM3830::DirectAwardSpreadsheet }
+        let(:spreadsheet_creator) { FacilitiesManagement::RM3830::PriceMatrixSpreadsheet }
         let(:spreadsheet_action) { :price_matrix }
 
         it 'downloads the document with the right filename' do
