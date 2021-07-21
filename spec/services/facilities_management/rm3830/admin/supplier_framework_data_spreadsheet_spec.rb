@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SupplierFrameworkDataSpreadsheet do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataSpreadsheet do
   subject(:workbook) { Roo::Spreadsheet.open(spreadsheet_file) }
 
   let(:spreadsheet_file) { Tempfile.new(['supplier_framework_data_spreadsheet', '.xlsx']) }

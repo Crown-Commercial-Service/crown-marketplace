@@ -5,7 +5,7 @@ module FacilitiesManagement
 
       attr_accessor :code, :name
     end
-  end
 
-  WorkPackage.load_csv('facilities_management/work_packages.csv')
+    WorkPackage.load_csv('facilities_management/work_packages.csv')
+  end
 end

@@ -20,18 +20,6 @@ module FacilitiesManagement
           end
         end
 
-        def update
-          @management_report = FacilitiesManagement::RM3830::Admin::ManagementReport.new(nil, nil)
-          @management_report.assign_attributes(management_report_params)
-
-          if @management_report.valid?
-            csv_string = ProcurementCsvExport.call(@management_report.start_date, @management_report.end_date)
-            send_data(csv_string, filename: 'procurements_data.csv', type: 'text/csv')
-          else
-            render :index
-          end
-        end
-
         private
 
         def management_report_params

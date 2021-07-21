@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin
+module FacilitiesManagement::RM3830::Admin
   class SupplierFrameworkDataImporter
     IMPORT_PROCESS_ORDER = %i[check_file process_file check_processed_data publish_data].freeze
 

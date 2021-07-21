@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProcurementCsvExport do
+RSpec.describe FacilitiesManagement::RM3830::Admin::ProcurementCsvExport do
   let!(:procurement_in_search) do
     proc = create(:facilities_management_rm3830_procurement)
     proc.user.buyer_detail = build(:buyer_detail)

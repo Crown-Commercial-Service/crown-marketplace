@@ -1,4 +1,3 @@
-require 'facilities_management/services_and_questions'
 FactoryBot.define do
   factory :facilities_management_rm3830_procurement_building_service, class: 'FacilitiesManagement::RM3830::ProcurementBuildingService' do
     name { Faker::Name.unique.name }

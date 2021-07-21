@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::SublotServicesValidator do
+RSpec.describe FacilitiesManagement::RM3830::Admin::SublotServicesValidator do
   let(:validator) { described_class.new(params, latest_rate_card, prices, discounts, variance) }
   let(:supplier_id) { FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find_by(supplier_name: 'Abernathy and Sons').supplier_id.to_sym }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::Admin::RateValidator do
+RSpec.describe FacilitiesManagement::RM3830::Admin::RateValidator do
   subject(:result) { validator.valid?(required_validation) }
 
   let(:validator) { described_class.new(rate, allow_blank) }

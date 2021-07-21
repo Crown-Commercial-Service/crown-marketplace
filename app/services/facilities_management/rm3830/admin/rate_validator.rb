@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin
+module FacilitiesManagement::RM3830::Admin
   class RateValidator
     include ActiveModel::Validations
 

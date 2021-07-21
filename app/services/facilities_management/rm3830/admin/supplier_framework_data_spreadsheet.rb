@@ -1,4 +1,4 @@
-class FacilitiesManagement::Admin::SupplierFrameworkDataSpreadsheet
+class FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataSpreadsheet
   def build
     create_spreadsheet
   end

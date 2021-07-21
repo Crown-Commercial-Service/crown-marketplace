@@ -1,4 +1,4 @@
-module FacilitiesManagement::Admin
+module FacilitiesManagement::RM3830::Admin
   class SublotServicesValidator
     attr_reader :invalid_services, :supplier_data_ratecard_prices, :supplier_data_ratecard_discounts, :variance_supplier_data
 

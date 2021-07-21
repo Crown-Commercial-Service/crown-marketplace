@@ -6,7 +6,7 @@ module FacilitiesManagement
         sidekiq_options queue: 'fm', retry: false
 
         def perform(id)
-          FacilitiesManagement::Admin::ManagementReportCsvGenerator.new(id).generate
+          ManagementReportCsvGenerator.new(id).generate
         end
       end
     end

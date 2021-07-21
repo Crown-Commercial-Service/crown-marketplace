@@ -27,7 +27,7 @@ module FacilitiesManagement
         end
 
         def spreadsheet_template
-          spreadsheet_builder = FacilitiesManagement::Admin::SupplierFrameworkDataSpreadsheet.new
+          spreadsheet_builder = SupplierFrameworkDataSpreadsheet.new
           spreadsheet_builder.build
           send_data spreadsheet_builder.to_xlsx, filename: 'RM30 Supplier Framework Data (template).xlsx', type: 'application/vnd.ms-excel'
         end

@@ -1,6 +1,6 @@
-class FacilitiesManagement::Admin::ManagementReportCsvGenerator
+class FacilitiesManagement::RM3830::Admin::ManagementReportCsvGenerator
   def initialize(id)
-    @management_report = FacilitiesManagement::RM3830::Admin::ManagementReport.find(id)
+    @management_report = ManagementReport.find(id)
     @start_date = @management_report.start_date
     @end_date = @management_report.end_date
   end

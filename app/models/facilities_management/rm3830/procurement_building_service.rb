@@ -1,8 +1,3 @@
-require 'facilities_management/services_and_questions'
-# This module pertains to the control and validation of the facilities_management_rm3830_procurement_building_services table
-# The main requirement is to drive the UI - there are lookups in the class that enable decisions as to which
-# view to the present to the user and also, how to validate that data for both input from the UI and also from
-# the perspective of the facilities_management_rm3830_procurement that needs to know if it's buildings and services are completed
 module FacilitiesManagement
   module RM3830
     class ProcurementBuildingService < ApplicationRecord

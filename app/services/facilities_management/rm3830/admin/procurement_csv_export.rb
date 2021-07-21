@@ -1,4 +1,4 @@
-class ProcurementCsvExport
+class FacilitiesManagement::RM3830::Admin::ProcurementCsvExport
   TIME_FORMAT = '%e %B %Y, %l:%M%P'.freeze
   DATE_FORMAT = '%e %B %Y'.freeze
   TIME_ZONE = 'London'.freeze
