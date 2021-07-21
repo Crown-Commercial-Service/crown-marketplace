@@ -13,9 +13,9 @@
 //= require rails-ujs
 //= require govuk-frontend/govuk/all
 //= require js-cookie/src/js.cookie
-//= require google_analytics
-//= require cookie_banner
+//= require google-analytics
+//= require cookie-banner
 //= require_tree ./common
-//= require_tree ./facilities_management
+//= require_tree ./facilities-management
 //= require cp/cp-sign-in.js
 //= require global/global.js

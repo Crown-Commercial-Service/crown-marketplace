@@ -6,13 +6,6 @@ $(() => {
     }
     return null;
   }
-  function initialiseChooseBuildings() {
-    const obj = new ChooserComponent('procurement', 'buildings', null);
-    if (obj.validate()) {
-      return obj;
-    }
-    return null;
-  }
 
   if ($('.chooser-component').length > 0) {
     try {
@@ -20,9 +13,6 @@ $(() => {
       if (activeChooser === null) {
         if ($('.services').length > 0) {
           activeChooser = initialiseChooseServices();
-        }
-        if ($('.buildings').length > 0) {
-          activeChooser = initialiseChooseBuildings();
         }
       }
 
