@@ -520,7 +520,7 @@ module FacilitiesManagement
       def save_data_for_procurement
         self.lot_number = assessed_value_calculator.lot_number unless all_services_unpriced_and_no_buyer_input?
         self.lot_number_selected_by_customer = false
-        self.eligible_for_da = FMCalculator::DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
+        self.eligible_for_da = DirectAward.new(buildings_standard, services_standard, priced_at_framework, assessed_value).calculate
         set_suppliers_for_procurement
       end
 

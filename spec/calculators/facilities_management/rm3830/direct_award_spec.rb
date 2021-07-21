@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FMCalculator::DirectAward do
+RSpec.describe FacilitiesManagement::RM3830::DirectAward do
   describe '.calculate' do
     it 'will return eligible for parameters when service standard is A' do
       da = described_class.new('STANDARD', 'A', 'true', 100000)

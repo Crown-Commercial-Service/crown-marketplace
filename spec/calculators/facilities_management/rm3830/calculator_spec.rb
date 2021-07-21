@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FMCalculator::Calculator do
+RSpec.describe FacilitiesManagement::RM3830::Calculator do
   let(:rates) { FacilitiesManagement::RM3830::Rate.read_benchmark_rates }
   let(:rate_card) { FacilitiesManagement::RM3830::RateCard.latest }
 

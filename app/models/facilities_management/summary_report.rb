@@ -178,15 +178,15 @@ module FacilitiesManagement
 
       uvals_remove_cafm_help = remove_cafm_help == true ? uvals.reject { |x| x[:service_code] == 'M.1' || x[:service_code] == 'N.1' } : uvals
 
-      calc_fm = FMCalculator::Calculator.new(@contract_length_years,
-                                             @tupe_required,
-                                             @london_building,
-                                             @cafm_required,
-                                             @helpdesk_required,
-                                             @rates,
-                                             @rate_card,
-                                             supplier_id,
-                                             building)
+      calc_fm = Calculator.new(@contract_length_years,
+                               @tupe_required,
+                               @london_building,
+                               @cafm_required,
+                               @helpdesk_required,
+                               @rates,
+                               @rate_card,
+                               supplier_id,
+                               building)
 
       uvals_remove_cafm_help.each do |v|
         case v[:service_code]
