@@ -17,3 +17,7 @@ end
 Before('not @javascript') do
   page.driver.browser.set_cookie('crown_marketplace_cookie_settings_viewed=true')
 end
+
+Before('@contract_emails') do
+  stub_contract_emails
+end

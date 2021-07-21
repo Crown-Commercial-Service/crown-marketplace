@@ -26,7 +26,7 @@ Feature: Declined contract
     Then I click on the 'Return to procurements dashboard' back link
     And I am on the 'Procurements dashboard' page
 
-  @pipeline
+  @pipeline @contract_emails
   Scenario: Contract declined - send to next supplier
     Then I click on "View next supplier's price"
     And I am on the 'Offer to next supplier' page
