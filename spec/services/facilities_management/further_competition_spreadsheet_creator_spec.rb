@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::FurtherCompetitionSpreadsheetCreator do
 
   context 'and verify FC excel' do
     let(:wb) do
-      report = FacilitiesManagement::SummaryReport.new(procurement_with_buildings.id)
+      report = FacilitiesManagement::RM3830::SummaryReport.new(procurement_with_buildings.id)
 
       supplier_ids.each do |supplier_id|
         report.calculate_services_for_buildings(supplier_id, :fc)

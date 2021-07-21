@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::ContractNumberGenerator do
+RSpec.describe FacilitiesManagement::RM3830::ContractNumberGenerator do
   let(:contract_number_generator) { described_class.new(procurement_state: procurement_state, framework: 'RM1234', used_numbers: []) }
 
   describe '.new_number' do

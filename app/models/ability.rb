@@ -29,7 +29,7 @@ class Ability
     return unless user.has_role?(:fm_access) && user.has_role?(:ccs_employee)
 
     can :read, :all
-    can :manage, FacilitiesManagement::Admin
+    can :manage, FacilitiesManagement::RM3830::Admin
     can :manage, FacilitiesManagement::RM3830::Admin::ManagementReport
     can :manage, FacilitiesManagement::RM3830::Admin::Upload
   end

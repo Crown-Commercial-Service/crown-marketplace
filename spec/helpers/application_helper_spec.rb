@@ -89,14 +89,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '#miles_to_meters' do
-    it 'returns the distance in miles in meters' do
-      miles = 10
-      expected = DistanceConverter.miles_to_metres(miles)
-      expect(helper.miles_to_metres(miles)).to eq(expected)
-    end
-  end
-
   describe '#validation_message' do
     context 'when a classname only is used' do
       it 'an empty hash is returned' do

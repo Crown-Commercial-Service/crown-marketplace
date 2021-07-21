@@ -3,7 +3,7 @@ class FacilitiesManagement::FurtherCompetitionSpreadsheetCreator < FacilitiesMan
 
   def initialize(procurement_id)
     @procurement = FacilitiesManagement::RM3830::Procurement.find(procurement_id)
-    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+    @report = SummaryReport.new(@procurement.id)
     @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name
   end
 

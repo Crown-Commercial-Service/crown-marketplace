@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
   include ActionView::Helpers::NumberHelper
 
   let(:procurement_with_buildings) { create(:facilities_management_rm3830_procurement_for_further_competition_with_gia) }

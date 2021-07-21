@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::DeleteProcurement do
+RSpec.describe FacilitiesManagement::RM3830::DeleteProcurement do
   describe 'deleting a procurement in search stages' do
     context 'when deleting a quick search' do
       let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, contract_name: 'New search') }

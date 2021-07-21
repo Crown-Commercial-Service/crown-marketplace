@@ -1,4 +1,4 @@
-class FacilitiesManagement::SpreadsheetImporter
+class FacilitiesManagement::RM3830::SpreadsheetImporter
   POSTCODE_ROW = 6
   BUILDINGS_COMPLETE_ROW = 14
   # This can be added as more parts of the bulk upload are completed

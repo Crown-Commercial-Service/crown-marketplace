@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::AssessedValueCalculator do
+RSpec.describe FacilitiesManagement::RM3830::AssessedValueCalculator do
   subject(:assessed_value_calulator) { described_class.new(procurement.id) }
 
   let(:assessed_value) { assessed_value_calulator.assessed_value.round(2) }

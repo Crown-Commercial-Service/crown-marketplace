@@ -4,14 +4,6 @@ module ApplicationHelper
   include GovUKHelper
   include HeaderNavigationLinksHelper
 
-  def miles_to_metres(miles)
-    DistanceConverter.miles_to_metres(miles)
-  end
-
-  def metres_to_miles(metres)
-    DistanceConverter.metres_to_miles(metres)
-  end
-
   def feedback_email_link
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end

@@ -537,7 +537,7 @@ module FacilitiesManagement
       end
 
       def assessed_value_calculator
-        @assessed_value_calculator ||= FacilitiesManagement::AssessedValueCalculator.new(id)
+        @assessed_value_calculator ||= AssessedValueCalculator.new(id)
       end
 
       def rate_model

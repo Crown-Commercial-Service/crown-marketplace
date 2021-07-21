@@ -27,7 +27,7 @@ class FacilitiesManagement::DirectAwardSpreadsheet
 
     # get the services including help & cafm for the,contract rate card,worksheet
     @report_results_no_cafmhelp_removed = {}
-    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+    @report = SummaryReport.new(@procurement.id)
 
     @report.calculate_services_for_buildings @supplier_id, :da, true
     ids = @active_procurement_buildings.joins(:building).pluck('facilities_management_buildings.id')

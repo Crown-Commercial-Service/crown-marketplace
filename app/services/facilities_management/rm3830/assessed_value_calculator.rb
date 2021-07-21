@@ -1,10 +1,10 @@
-class FacilitiesManagement::AssessedValueCalculator
+class FacilitiesManagement::RM3830::AssessedValueCalculator
   attr_reader :assessed_value, :lot_number, :results
 
   def initialize(procurement_id)
-    @procurement = FacilitiesManagement::RM3830::Procurement.find(procurement_id)
+    @procurement = Procurement.find(procurement_id)
 
-    @report = FacilitiesManagement::SummaryReport.new(@procurement.id)
+    @report = SummaryReport.new(@procurement.id)
     @selected_buildings = @procurement.active_procurement_buildings
     @report.calculate_services_for_buildings
     @lot_number = @report.current_lot

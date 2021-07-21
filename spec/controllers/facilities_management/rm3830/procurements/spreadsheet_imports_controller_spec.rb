@@ -33,7 +33,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
   end
 
   describe 'POST create' do
-    let(:fake_file) { File.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH) }
+    let(:fake_file) { File.open(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_PATH) }
 
     context 'when uploading the file' do
       let(:valid) { false }

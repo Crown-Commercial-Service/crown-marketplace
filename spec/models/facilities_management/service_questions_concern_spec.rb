@@ -5,8 +5,8 @@ RSpec.describe ServiceQuestionsConcern, type: :model do
 
   describe '#service_quesions' do
     context 'when service_questions is called' do
-      it 'returns FacilitiesManagement::ServicesAndQuestions' do
-        expect(service_quesions).to be FacilitiesManagement::ServicesAndQuestions
+      it 'returns FacilitiesManagement::RM3830::ServicesAndQuestions' do
+        expect(service_quesions).to be FacilitiesManagement::RM3830::ServicesAndQuestions
       end
     end
   end

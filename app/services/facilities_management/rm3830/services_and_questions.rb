@@ -1,4 +1,4 @@
-class FacilitiesManagement::ServicesAndQuestions
+class FacilitiesManagement::RM3830::ServicesAndQuestions
   def self.context_questions
     @context_questions ||= define_context_questions
   end

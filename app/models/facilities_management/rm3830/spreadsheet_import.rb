@@ -205,13 +205,13 @@ module FacilitiesManagement
       end
 
       def service_volume_codes_with_attributes
-        FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:volume).index_with do |code|
-          FacilitiesManagement::ServicesAndQuestions.service_detail(code)[:context][:volume].first
+        ServicesAndQuestions.get_codes_by_context(:volume).index_with do |code|
+          ServicesAndQuestions.service_detail(code)[:context][:volume].first
         end
       end
 
       def service_hour_codes_with_attributes
-        FacilitiesManagement::ServicesAndQuestions.get_codes_by_context(:service_hours).index_with do |_code|
+        ServicesAndQuestions.get_codes_by_context(:service_hours).index_with do |_code|
           %i[service_hours detail_of_requirement]
         end
       end

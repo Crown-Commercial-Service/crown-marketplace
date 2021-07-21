@@ -814,7 +814,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           before { put :update, params: { procurement_id: procurement.id, page: 'security_policy_document', facilities_management_rm3830_procurement: { security_policy_document_required: true, security_policy_document_name: security_policy_document_name, security_policy_document_version_number: security_policy_document_version_number, security_policy_document_file: security_policy_document_file } } }
 
           context 'and the file is invalid' do
-            let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+            let(:security_policy_document_file) { fixture_file_upload(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_PATH, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
 
             it 'renders the edit page' do
               expect(response).to render_template('edit')

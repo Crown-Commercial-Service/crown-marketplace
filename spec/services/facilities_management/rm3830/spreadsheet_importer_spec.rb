@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
+RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service do
   let(:spreadsheet_import) do
     create(:facilities_management_rm3830_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing', data_import_state: 'in_progress') do |import|
       import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')

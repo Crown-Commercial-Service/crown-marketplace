@@ -99,7 +99,7 @@ module SpreadsheetImportHelper
         sheet.add_row(['', '', '', '', 'Number of lifts in each building'] + service_details.map { |pb| pb[1].length })
         sheet.add_row([])
         sheet.add_row(['Service Reference', 'Service Name', 'Service required within this estate?', 'Lift Number', 'Metric'] + service_details.map { |pb| pb[0] })
-        FacilitiesManagement::SpreadsheetImporter::NUMBER_OF_LIFTS.times do |i|
+        FacilitiesManagement::RM3830::SpreadsheetImporter::NUMBER_OF_LIFTS.times do |i|
           sheet.add_row(['C.5', 'Lifts, Hoists & Conveyance Systems Maintenance', service_details.map { |pb| pb[1].any? }.any? ? 'Yes' : 'No', i + 1, 'Number of floors'] + service_details.map { |pb| pb[1][i] })
         end
         sheet.merge_cells 'A7:A46'
@@ -145,7 +145,7 @@ module SpreadsheetImportHelper
     end
 
     def template_spreadsheet
-      Roo::Spreadsheet.open(FacilitiesManagement::SpreadsheetImporter::TEMPLATE_FILE_PATH, extension: :xlsx)
+      Roo::Spreadsheet.open(FacilitiesManagement::RM3830::SpreadsheetImporter::TEMPLATE_FILE_PATH, extension: :xlsx)
     end
 
     def add_missing_sheets_from_template

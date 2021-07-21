@@ -486,7 +486,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     let(:obj) { double }
 
     before do
-      allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
+      allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
       allow(obj).to receive(:assessed_value).and_return(0.1234)
       allow(obj).to receive(:lot_number).and_return('1a')
       allow(obj).to receive(:sorted_list).and_return([{ supplier_name: 'test', supplier_id: supplier_ids[0], da_value: da_value_test }, { supplier_name: 'test1', supplier_id: supplier_ids[1], da_value: da_value_test1 }])

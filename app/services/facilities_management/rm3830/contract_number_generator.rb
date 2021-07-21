@@ -1,4 +1,4 @@
-class FacilitiesManagement::ContractNumberGenerator
+class FacilitiesManagement::RM3830::ContractNumberGenerator
   ACRONYMS = { direct_award: 'DA', further_competition: 'FC' }.freeze
 
   def initialize(procurement_state:, framework:, used_numbers: [])

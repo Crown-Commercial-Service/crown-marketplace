@@ -504,7 +504,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         let(:obj) { double }
 
         before do
-          allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
+          allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
           allow_any_instance_of(procurement.class).to receive(:copy_fm_rate_cards_to_frozen)
           allow(obj).to receive(:assessed_value).and_return(0.1234)
           allow(obj).to receive(:lot_number).and_return('1a')
@@ -570,7 +570,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
           procurement.update(aasm_state: 'choose_contract_value')
           procurement.update(assessed_value: 82486)
           allow_any_instance_of(procurement.class).to receive(:procurement_building_services_not_used_in_calculation).and_return([])
-          allow(FacilitiesManagement::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
+          allow(FacilitiesManagement::RM3830::AssessedValueCalculator).to receive(:new).with(procurement.id).and_return(obj)
           allow(obj).to receive(:sorted_list).and_return([])
         end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::SummaryReport, type: :model do
+RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
   subject(:report) { described_class.new(procurement.id) }
 
   let(:procurement) do

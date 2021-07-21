@@ -78,7 +78,7 @@ module FacilitiesManagement
       end
 
       def destroy
-        FacilitiesManagement::DeleteProcurement.delete_procurement(@procurement)
+        DeleteProcurement.delete_procurement(@procurement)
         redirect_to facilities_management_rm3830_procurements_path(deleted: @procurement.contract_name)
       end
 

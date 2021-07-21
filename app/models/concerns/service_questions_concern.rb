@@ -2,7 +2,7 @@ module ServiceQuestionsConcern
   extend ActiveSupport::Concern
 
   def service_quesions
-    @service_quesions ||= FacilitiesManagement::ServicesAndQuestions
+    @service_quesions ||= FacilitiesManagement::RM3830::ServicesAndQuestions
   end
 
   def services_requiring_volumes
