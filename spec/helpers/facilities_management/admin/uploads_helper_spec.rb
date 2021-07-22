@@ -49,6 +49,15 @@ RSpec.describe FacilitiesManagement::Admin::UploadsHelper, type: :helper do
       end
     end
 
+    context 'when the error is prices_less_than_or_equal_to' do
+      let(:error) { :prices_less_than_or_equal_to }
+      let(:details) { ['Shields, Ratke and Parisian', 'Ullrich, Ratke and Botsford'] }
+
+      it 'returns the correct error message' do
+        expect(error_details).to eq 'The following suppliers have prices for CAFM system and/or Helpdesk services that are greater than 100%: <ul class="govuk-list govuk-list--bullet"><li>Shields, Ratke and Parisian</li><li>Ullrich, Ratke and Botsford</li></ul> Make sure these prices are 100% or less'
+      end
+    end
+
     context 'when the error is prices_not_a_number' do
       let(:error) { :prices_not_a_number }
       let(:details) { ['Cartwright and Sons', 'Shields, Ratke and Parisian'] }
