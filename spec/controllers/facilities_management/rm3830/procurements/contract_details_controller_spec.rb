@@ -826,7 +826,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractDetailsContro
           end
 
           context 'and all the details are valid' do
-            let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
+            let(:security_policy_document_file) { fixture_file_upload(Rails.root.join('public', 'facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf'), 'application/pdf') }
 
             it 'redirects to show page' do
               expect(response).to redirect_to facilities_management_rm3830_procurement_contract_details_path

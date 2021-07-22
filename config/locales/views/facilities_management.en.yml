@@ -240,10 +240,6 @@ en:
         submit: Save and continue
         town_or_city: Town or city
         your_details: Organisation address
-    documents:
-      service_specification_document:
-        name: RM3830 Service requirements and standards.pdf
-        text: Read the service specification document
     select_services:
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
     users:

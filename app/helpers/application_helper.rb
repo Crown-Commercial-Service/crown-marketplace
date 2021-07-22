@@ -258,8 +258,8 @@ module ApplicationHelper
     FacilitiesManagement::RM3830::Rate.where.not(framework: nil).map(&:code).include? code
   end
 
-  def service_specification_document
-    link_to_public_file_for_download(t('facilities_management.documents.service_specification_document.name'), :pdf, t('facilities_management.documents.service_specification_document.text'), true, alt: t('facilities_management.select_services.servicespec_link_alttext'))
+  def service_specification_document(framework)
+    link_to_public_file_for_download(t("facilities_management.#{framework}.documents.service_specification_document.name"), :pdf, t("facilities_management.#{framework}.documents.service_specification_document.text"), true, alt: t('facilities_management.select_services.servicespec_link_alttext'))
   end
 
   def govuk_radio_driver
