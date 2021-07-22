@@ -30,7 +30,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
 
       context 'when uploaded file differs from template' do
         let(:spreadsheet_path) do
-          Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+          Rails.root.join('data', 'facilities_management', 'rm3830', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
         end
 
         it 'includes template invalid error' do

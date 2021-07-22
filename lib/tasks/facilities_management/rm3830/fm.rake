@@ -55,7 +55,7 @@ INSERT INTO public.facilities_management_rm3830_units_of_measurements (id, title
   end
 
   def self.facilities_management_work_packages
-    data = File.read('data/facilities_management/work_packages.json').delete!("\n")
+    data = File.read('data/facilities_management/rm3830/work_packages.json').delete!("\n")
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM facilities_management_rm3830_static_data WHERE key = 'work_packages';"
@@ -68,7 +68,7 @@ INSERT INTO public.facilities_management_rm3830_units_of_measurements (id, title
   end
 
   def self.facilities_management_bank_holidays
-    data = File.read('data/facilities_management/bank_holidays.json').delete!("\n")
+    data = File.read('data/facilities_management/rm3830/bank_holidays.json').delete!("\n")
 
     ActiveRecord::Base.connection_pool.with_connection do |db|
       query = "DELETE FROM facilities_management_rm3830_static_data WHERE key = 'bank_holidays';"

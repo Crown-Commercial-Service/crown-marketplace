@@ -6,7 +6,7 @@ module FacilitiesManagement::RakeModules::SupplierData
       JSON fm_aws
     else
       puts 'dummy supplier data'
-      JSON File.read('data/facilities_management/dummy_supplier_data.json')
+      JSON File.read('data/facilities_management/rm3830/dummy_supplier_data.json')
     end
   end
 
@@ -66,7 +66,7 @@ module FacilitiesManagement::RakeModules::SupplierData
       object.get(response_target: response_target)
       response_target
     else
-      Rails.root.join('data', 'facilities_management', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
+      Rails.root.join('data', 'facilities_management', 'rm3830', 'RM3830 Suppliers Details (for Dev & Test).xlsx')
     end
   end
 

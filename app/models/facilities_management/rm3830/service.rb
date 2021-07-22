@@ -44,6 +44,6 @@ module FacilitiesManagement
       end
     end
 
-    Service.load_csv('facilities_management/services.csv')
+    Service.load_csv('facilities_management/rm3830/services.csv')
   end
 end

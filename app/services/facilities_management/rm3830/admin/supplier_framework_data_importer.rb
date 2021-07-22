@@ -29,7 +29,7 @@ module FacilitiesManagement::RM3830
       end
 
       def import_test_data
-        @test_supplier_data_spreadsheet = Rails.root.join('data', 'facilities_management', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
+        @test_supplier_data_spreadsheet = Rails.root.join('data', 'facilities_management', 'rm3830', 'RM3830 Direct Award Data (for Dev & Test).xlsx')
 
         process_file
         publish_data
