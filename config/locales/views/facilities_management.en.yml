@@ -667,6 +667,7 @@ en:
             file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
             prices_blank_html: 'The following suppliers have blank prices: %{list} Make sure all prices have been filled in for each service. If a supplier does not offer a service, remove that row from the spreadsheet'
             prices_greater_than_or_equal_to_html: 'The following suppliers have prices that are less than 0: %{list} Make sure all prices are greater than or equal to 0'
+            prices_less_than_or_equal_to_html: 'The following suppliers have prices for CAFM system and/or Helpdesk services that are greater than 100%: %{list} Make sure these prices are 100% or less'
             prices_not_a_number_html: 'The following suppliers have prices that are not numbers: %{list} Make sure all prices are numbers, for example 0.26 or 1'
             pricing_sheet_headers_incorrect: 'Make sure the ''Prices'' sheet has the following headers: ''Supplier'', ''Service Ref'', ''Service Name'', ''Unit of Measure'', ''General office - Customer Facing'', ''General office - Non Customer Facing'', ''Call Centre Operations'', ''Warehouses'', ''Restaurant and Catering Facilities'', ''Pre-School'', ''Primary School'', ''Secondary Schools'', ''Special Schools'', ''Universities and Colleges'', ''Community - Doctors, Dentist, Health Clinic'', ''Nursing and Care Homes'', ''Direct Award Discount %'''
             supplier_data_missing_sheets: The 'Supplier framework data' file should have 2 sheets with the names 'Prices' and 'Variances'
@@ -686,6 +687,7 @@ en:
             file_publish_failed: File publishing failed
             prices_blank: There are suppliers with blank prices
             prices_greater_than_or_equal_to: There are suppliers with prices less than 0
+            prices_less_than_or_equal_to: There are suppliers with prices greater than 100%
             prices_not_a_number: There are suppliers with prices that are not numbers
             pricing_sheet_headers_incorrect: The 'Prices' sheet has incorrect headers
             supplier_data_missing_sheets: The 'Supplier framework data' file is missing sheets
