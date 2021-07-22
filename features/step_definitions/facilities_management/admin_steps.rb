@@ -17,6 +17,11 @@ Given('I go to the buyer dashboard') do
   visit '/facilities-management'
 end
 
+Given('I go to the facilities management admin start page') do
+  visit facilities_management_admin_new_user_session_path
+  update_banner_cookie(true) if @javascript
+end
+
 Given('I sign out and sign in the admin user') do
   step "I click on 'Sign out'"
   visit facilities_management_admin_new_user_session_path
@@ -119,22 +124,7 @@ Given('I enter the servie rate of {string} for {string} standard {string}') do |
 end
 
 Then('I enter {string} as the {string} date') do |date, date_type|
-  add_management_report_dates(date_type, *case date.downcase
-                                          when 'today'
-                                            Time.zone.today.strftime('%d/%m/%Y')
-                                          when 'yesterday'
-                                            Time.zone.yesterday.strftime('%d/%m/%Y')
-                                          when 'tomorrow'
-                                            Time.zone.tomorrow.strftime('%d/%m/%Y')
-                                          else
-                                            date
-                                          end.split('/'))
-end
-
-def add_management_report_dates(date_type, day, month, year)
-  admin_page.management_report.send("#{date_type} day").set(day)
-  admin_page.management_report.send("#{date_type} month").set(month)
-  admin_page.management_report.send("#{date_type} year").set(year)
+  add_management_report_dates(date_type, *date_options(date))
 end
 
 Then('the following services should have the following rates:') do |services_and_rates|
@@ -185,4 +175,10 @@ Then('I enter the service requirements for {string} in the assessed value procur
   step "I click on 'Save and return'"
   step "I click on 'Return to service requirements summary'"
   step "I click on 'Return to requirements'"
+end
+
+def add_management_report_dates(date_type, day, month, year)
+  admin_page.management_report.send("#{date_type} day").set(day)
+  admin_page.management_report.send("#{date_type} month").set(month)
+  admin_page.management_report.send("#{date_type} year").set(year)
 end

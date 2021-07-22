@@ -2,7 +2,7 @@ class FacilitiesManagement::SpreadsheetImporter
   POSTCODE_ROW = 6
   BUILDINGS_COMPLETE_ROW = 14
   # This can be added as more parts of the bulk upload are completed
-  IMPORT_PROCESS_ORDER = %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services].freeze
+  IMPORT_PROCESS_ORDER = %i[check_file process_file check_processed_data].freeze
   TEMPLATE_FILE_NAME = 'Services and buildings template v1.0.xlsx'.freeze
   TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
 
@@ -15,59 +15,103 @@ class FacilitiesManagement::SpreadsheetImporter
     @procurement_array = []
   end
 
-  def basic_data_validation
-    if !template_valid?
-      :template_invalid
-    elsif spreadsheet_not_started?
-      :not_started
-    elsif spreadsheet_not_ready?
-      :not_ready
-    end
-  end
-
-  # rubocop:disable Style/RedundantBegin
-
   def import_data
-    begin
-      IMPORT_PROCESS_ORDER.each do |import_process|
-        send(import_process)
-        break if @errors.any?
-      end
-
-      return if spreadsheet_import_stopped? || spreadsheet_not_present?
-
-      imported_spreadsheet_data_valid? ? process_valid_import : process_invalid_import
-    rescue StandardError => e
-      @spreadsheet_import.update(import_errors: { other_errors: { generic_error: 'generic error' } })
-      @spreadsheet_import.fail!
-
-      Rollbar.log('error', e)
+    IMPORT_PROCESS_ORDER.each do |import_process|
+      @spreadsheet_import.send("#{import_process}!")
+      send(import_process)
+      break if @errors.any?
     end
-  end
 
-  # rubocop:enable Style/RedundantBegin
+    @errors.any? ? process_invalid_import : process_valid_import
+  rescue StandardError => e
+    @spreadsheet_import.update(import_errors: { other_errors: { generic_error: 'generic error' } })
+    @spreadsheet_import.fail_data_import!
+
+    Rollbar.log('error', e)
+  end
 
   private
 
-  def spreadsheet_import_stopped?
-    return false unless @errors.any?
-
-    @spreadsheet_import.fail! unless spreadsheet_not_present?
-    true
-  end
-
   def process_valid_import
+    @spreadsheet_import.save_data! unless spreadsheet_not_present?
     save_spreadsheet_data
-    @spreadsheet_import.succeed! unless spreadsheet_not_present?
+    @spreadsheet_import.data_saved! unless spreadsheet_not_present?
   end
 
   def process_invalid_import
-    @spreadsheet_import.update(import_errors: collect_errors) unless spreadsheet_not_present?
-    @spreadsheet_import.fail! unless spreadsheet_not_present?
+    @spreadsheet_import.update(import_errors: @errors) unless spreadsheet_not_present?
+    @spreadsheet_import.fail_data_import! unless spreadsheet_not_present?
   end
 
   def spreadsheet_not_present?
     FacilitiesManagement::SpreadsheetImport.find_by(id: @spreadsheet_import.id).nil?
+  end
+
+  ########## Import processs ##########
+  def check_file
+    if !template_valid?
+      @errors = { other_errors: { file_check_error: :template_invalid } }
+    elsif spreadsheet_not_started?
+      @errors = { other_errors: { file_check_error: :not_started } }
+    elsif spreadsheet_not_ready?
+      @errors = { other_errors: { file_check_error: :not_ready } }
+    end
+  end
+
+  def process_file
+    import_buildings
+    add_procurement_buildings
+    import_service_matrix
+    import_service_volumes
+    import_lift_data
+    import_service_hours
+    validate_procurement_building_services
+  end
+
+  def check_processed_data
+    @errors = collect_errors unless imported_spreadsheet_data_valid?
+  end
+
+  ########## Checking the uploaded file ##########
+  def spreadsheet_not_ready?
+    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
+    return true if instructions_sheet.row(10)[1] != 'Ready to upload'
+
+    false
+  end
+
+  def spreadsheet_not_started?
+    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
+    instructions_sheet.row(10)[1] == 'Awaiting Data Input'
+  end
+
+  def template_valid?
+    template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
+
+    return false if template_spreadsheet.sheets != @user_uploaded_spreadsheet.sheets
+
+    # The arrays are [sheet, column] - I've called sheets tabs in the iterator
+    # Be aware sheets start from 0 (like an array), but columns start from 1
+    columns = [
+      [1, 1], # Building info
+      [2, 1], [2, 2], [2, 3], # Service matrix
+      [3, 1], [3, 2], [3, 4], # Service volumes 1
+      [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
+      [5, 1], [5, 2], [5, 4], # Service volumes 3
+      [7, 2], # Compliance (hidden)
+      [8, 1], [8, 2], [8, 4] # Lists (hidden)
+    ]
+
+    columns.each do |tab, col|
+      next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
+
+      return false
+    end
+
+    # Special case for list as has number of buildings at the end
+    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
+
+    true
   end
 
   ########## Importing buildings ##########
@@ -349,51 +393,6 @@ class FacilitiesManagement::SpreadsheetImporter
     tmpfile.write @spreadsheet_import.spreadsheet_file.download
     tmpfile.close
     tmpfile
-  end
-
-  def spreadsheet_not_ready?
-    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
-    if instructions_sheet.row(10)[1] != 'Ready to upload'
-      Rails.logger.info 'Bulk upload: spreadsheet not ready'
-      return true
-    end
-
-    false
-  end
-
-  def spreadsheet_not_started?
-    instructions_sheet = @user_uploaded_spreadsheet.sheet(0)
-    instructions_sheet.row(10)[1] == 'Awaiting Data Input'
-  end
-
-  def template_valid?
-    template_spreadsheet = Roo::Spreadsheet.open(TEMPLATE_FILE_PATH, extension: :xlsx)
-
-    return false if template_spreadsheet.sheets != @user_uploaded_spreadsheet.sheets
-
-    # The arrays are [sheet, column] - I've called sheets tabs in the iterator
-    # Be aware sheets start from 0 (like an array), but columns start from 1
-    columns = [
-      [1, 1], # Building info
-      # [2, 1], [2, 2], [2, 3], # Service matrix
-      # [3, 1], [3, 2], [3, 4], # Service volumes 1
-      # [4, 1], [4, 2], [4, 4], [4, 5], # Service volumes 2
-      # [5, 1], [5, 2], [5, 4], # Service volumes 3
-      # [7, 2], # Compliance (hidden)
-      # [8, 1], [8, 2], [8, 4] # Lists (hidden)
-    ]
-
-    columns.each do |tab, col|
-      next if template_spreadsheet.sheet(tab).column(col).compact == @user_uploaded_spreadsheet.sheet(tab).column(col).compact
-
-      Rails.logger.info "Bulk upload: column does not match template, sheet (start from 0): #{tab}, col (start from 1): #{col}, procurement id: #{@procurement.id}"
-      return false
-    end
-
-    # Special case for list as has number of buildings at the end
-    # return false if template_spreadsheet.sheet(8).column(3)[0..-2] != @user_uploaded_spreadsheet.sheet(8).column(3)[0..-2]
-
-    true
   end
 
   ########## Shared methods ##########

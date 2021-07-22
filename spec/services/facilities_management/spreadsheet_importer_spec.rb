@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:spreadsheet_import) do
-    create(:facilities_management_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing') do |import|
+    create(:facilities_management_procurement_spreadsheet_import, procurement: procurement, aasm_state: 'importing', data_import_state: 'in_progress') do |import|
       import.spreadsheet_file.attach(io: File.open(spreadsheet_path), filename: 'test.xlsx')
     end
   end
@@ -10,20 +10,21 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
   let(:fake_spreadsheet) { SpreadsheetImportHelper::FakeBulkUploadSpreadsheet.new }
   let(:spreadsheet_path) { SpreadsheetImportHelper::FakeBulkUploadSpreadsheet::OUTPUT_PATH }
   let(:spreadsheet_importer) { described_class.new(spreadsheet_import) }
+  let(:import_process_order) { described_class::IMPORT_PROCESS_ORDER }
+  let(:spreadsheet_importer_errors) { spreadsheet_importer.instance_variable_get(:@errors) }
+  let(:process_file_order) { %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes import_lift_data import_service_hours validate_procurement_building_services] }
 
   describe '#basic_data_validation' do
-    subject(:basic_data_validation_error) { spreadsheet_importer.basic_data_validation }
-
     let(:procurement) { build(:facilities_management_procurement_detailed_search) }
 
-    describe 'template validation' do
-      before { allow(spreadsheet_importer).to receive(:spreadsheet_ready?).and_return(true) }
+    before { spreadsheet_importer.send(:check_file) }
 
+    describe 'template validation' do
       context 'when uploaded file is true to template' do
         let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
 
         it 'the error is not_started' do
-          expect(basic_data_validation_error).to eq :not_started
+          expect(spreadsheet_importer_errors).to eq({ other_errors: { file_check_error: :not_started } })
         end
       end
 
@@ -33,20 +34,8 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         it 'includes template invalid error' do
-          expect(basic_data_validation_error).to eq :template_invalid
+          expect(spreadsheet_importer_errors).to eq({ other_errors: { file_check_error: :template_invalid } })
         end
-      end
-    end
-
-    describe 'spreadsheet readiness' do
-      before do
-        allow(spreadsheet_importer).to receive(:template_valid?).and_return(true)
-      end
-
-      let(:spreadsheet_path) { described_class::TEMPLATE_FILE_PATH }
-
-      it 'includes not started error' do
-        expect(basic_data_validation_error).to eq :not_started
       end
     end
   end
@@ -58,8 +47,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - [:import_buildings]).each do |other_import_method|
-        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+
+      (process_file_order - %i[import_buildings]).each do |other_process_method|
+        allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
       allow(spreadsheet_importer).to receive(:procurement_buildings_valid?).and_return(true)
@@ -67,7 +58,6 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       allow(spreadsheet_importer).to receive(:save_procurement_building).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:save_procurement_building_services).with(anything).and_return(nil)
       allow(spreadsheet_importer).to receive(:service_codes).and_return(['C.1'])
-      allow(spreadsheet_importer).to receive(:collect_errors).and_return({})
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
@@ -103,7 +93,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'has the correct error' do
-        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:building_incomplete)
+        expect(spreadsheet_importer_errors).to include(:building_incomplete)
       end
     end
 
@@ -116,7 +106,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'has the correct error' do
-        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:building_incomplete)
+        expect(spreadsheet_importer_errors).to include(:building_incomplete)
       end
     end
 
@@ -241,7 +231,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         context 'when the address_line_2 is blank' do
           let(:address_line_2) { '' }
 
-          it 'changes the state of the spreadsheet_import to failed' do
+          it 'changes the state of the spreadsheet_import to succeeded' do
             spreadsheet_import.reload
             expect(spreadsheet_import.succeeded?).to be true
           end
@@ -741,8 +731,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix]).each do |other_import_method|
-        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+
+      (process_file_order - %i[import_buildings add_procurement_buildings import_service_matrix]).each do |other_process_method|
+        allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
@@ -804,7 +796,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'has the correct error' do
-        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_matrix_incomplete)
+        expect(spreadsheet_importer_errors).to include(:service_matrix_incomplete)
       end
     end
 
@@ -837,8 +829,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes validate_procurement_building_services]).each do |other_import_method|
-        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+
+      (process_file_order - %i[import_buildings add_procurement_buildings import_service_matrix import_service_volumes validate_procurement_building_services]).each do |other_process_method|
+        allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
@@ -944,7 +938,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:volumes_incomplete)
+          expect(spreadsheet_importer_errors).to include(:volumes_incomplete)
         end
       end
 
@@ -1093,8 +1087,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_lift_data validate_procurement_building_services]).each do |other_import_method|
-        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+
+      (process_file_order - %i[import_buildings add_procurement_buildings import_service_matrix import_lift_data validate_procurement_building_services]).each do |other_process_method|
+        allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
@@ -1211,7 +1207,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
         end
 
         it 'has the correct error' do
-          expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:lifts_incomplete)
+          expect(spreadsheet_importer_errors).to include(:lifts_incomplete)
         end
       end
 
@@ -1325,8 +1321,10 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.write
 
       # Stub out import methods not under test
-      (described_class::IMPORT_PROCESS_ORDER - %i[import_buildings add_procurement_buildings import_service_matrix import_service_hours validate_procurement_building_services]).each do |other_import_method|
-        allow(spreadsheet_importer).to receive(other_import_method).and_return(nil)
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
+
+      (process_file_order - %i[import_buildings add_procurement_buildings import_service_matrix import_service_hours validate_procurement_building_services]).each do |other_process_method|
+        allow(spreadsheet_importer).to receive(other_process_method).and_return(nil)
       end
 
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
@@ -1377,7 +1375,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       end
 
       it 'has the correct error' do
-        expect(spreadsheet_importer.instance_variable_get(:@errors)).to include(:service_hours_incomplete)
+        expect(spreadsheet_importer_errors).to include(:service_hours_incomplete)
       end
     end
 
@@ -1491,6 +1489,7 @@ RSpec.describe FacilitiesManagement::SpreadsheetImporter, type: :service do
       fake_spreadsheet.add_service_hours_sheet(service_hour_data)
       fake_spreadsheet.write
 
+      allow(spreadsheet_importer).to receive(:check_file).and_return(nil)
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).and_return(true)
       allow(FacilitiesManagement::SpreadsheetImport).to receive(:find_by).with(anything).and_return(true)
 

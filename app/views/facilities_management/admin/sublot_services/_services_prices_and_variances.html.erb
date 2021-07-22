@@ -1,7 +1,7 @@
 <%= content_for :page_title, t('.heading') %>
 <%= admin_breadcrumbs(
-  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
-  { link_text: t('.heading') }
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: t('.heading') }
 )%>
 
 <% if @invalid_services.any? %>
@@ -12,7 +12,7 @@
     <div class="govuk-error-summary__body">
       <ul class="govuk-list govuk-error-summary__list">
           <li>
-            <%= link_to t(".#{first_error_type}"), "##{ @invalid_services.keys.first}_label", data: {errortype: 'invalid-input'} %>
+            <%= link_to t(".error_message.#{first_error_type}"), "##{ @invalid_services.keys.first}_label", data: {errortype: 'invalid-input'} %>
           </li>
       </ul>
     </div>

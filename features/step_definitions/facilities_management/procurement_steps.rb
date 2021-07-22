@@ -53,21 +53,8 @@ Given('I have a procurement in detailed search named {string} with the following
 end
 
 Given('I have direct award procurements') do
-  supplier = FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770')
-
-  %w[sent accepted signed declined].each do |state|
-    procurement = create(:facilities_management_procurement_completed_procurement_no_suppliers, user: @user, contract_name: "Contract #{state}")
-
-    procurement.procurement_suppliers.create(supplier: supplier, aasm_state: state, direct_award_value: 5000, offer_sent_date: Time.zone.today - 4.days, **PROCUREMENT_SUPPLIER_ATTRIBUTES[state.to_sym])
-  end
+  create_contracts(@user, FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
 end
-
-PROCUREMENT_SUPPLIER_ATTRIBUTES = {
-  sent: {},
-  accepted: { supplier_response_date: Time.zone.today - 3.days },
-  signed: { supplier_response_date: Time.zone.today - 3.days, contract_start_date: Time.zone.tomorrow, contract_end_date: Time.zone.tomorrow + 3.years, contract_signed_date: Time.zone.today },
-  declined: { supplier_response_date: Time.zone.today - 3.days, reason_for_declining: 'Some reason' }
-}.freeze
 
 Given('the GIA for {string} is {int}') do |building_name, gia|
   find_building(building_name).update(gia: gia)
@@ -75,10 +62,6 @@ end
 
 Given('the external area for {string} is {int}') do |building_name, external_area|
   find_building(building_name).update(external_area: external_area)
-end
-
-def find_building(building_name)
-  @user.buildings.find_by(building_name: building_name)
 end
 
 Given('I navigate to the service requirements page') do

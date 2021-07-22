@@ -24,7 +24,7 @@
         </td>
         <% if procurement_building.service_codes.any? %>
           <td class="govuk-table__cell govuk-!-padding-right-2" valign="top">
-            <%= govuk_details("#{pluralize(procurement_building.service_codes.count, 'service')} selected", true) do %>
+            <%= govuk_details("#{pluralize(procurement_building.service_codes.count, 'service')} selected") do %>
               <ul class="govuk-!-padding-left-3 govuk-!-margin-top-2">
                 <% procurement_building.service_codes.each_with_index do |service_code, index| %>
                   <li class="<%= 'govuk-!-padding-top-2' unless index == 0%>">

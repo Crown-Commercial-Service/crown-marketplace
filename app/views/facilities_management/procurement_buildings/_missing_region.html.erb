@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= link_to t('.return_link'), facilities_management_procurement_path(@procurement),  'aria-label': t('.return_link'), class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' %>
     <%= render partial: 'shared/error_summary', locals: { errors: @building.errors } %>
-    <%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
+    <%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
   </div>
 </div>
 <div class="govuk-grid-row">

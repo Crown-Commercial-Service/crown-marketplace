@@ -2,7 +2,7 @@
 <%= link_to t('.return_to_what_happens_next'), facilities_management_what_happens_next_path, class: 'govuk-back-link ccs-no-print', 'aria-label': t('.return_to_what_happens_next') %>
 <%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
 <%= form_for @procurement, url: facilities_management_procurements_path, method: :post, html: { specialvalidation:true, novalidate:true, multipart: true } do |f| %>
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.heading'), nil, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), nil, nil, nil, nil)) %>
   <div class="govuk-form-group <%='govuk-form-group--error' if @procurement.errors[:contract_name].any? %>" data-propertyname="Contract name"
        style="<%= 'padding-left:1em' if @procurement.errors[:contract_name].any?%>">
     <%= label_details(f, :contract_name, t('.contract_name_question'), t('.contract_name_info')) %>

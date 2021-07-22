@@ -243,7 +243,6 @@ en:
       please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
   common:
     change_password_and_sign_in: Change password and sign in
-    complete: Complete
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
@@ -251,7 +250,6 @@ en:
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     feedback: feedback
-    incomplete: Incomplete
     passcap: at least one capital letter
     passeight: at least 8 characters
     passnum: at least one number

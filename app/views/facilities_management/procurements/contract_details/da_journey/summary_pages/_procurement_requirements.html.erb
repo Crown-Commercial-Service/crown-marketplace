@@ -28,14 +28,14 @@
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.initial_call_off_period') %></th>
                 <td class="govuk-table__cell">
-                    <%= govuk_details(initial_call_off_period, true) {initial_call_off_period_description} %>
+                    <%= govuk_details(initial_call_off_period) {initial_call_off_period_description} %>
                 </td>
             </tr>
             <tr class="govuk-table__row">
                 <th class="govuk-table__cell govuk-table__header"><%= t('.mobilisation_period') %></th>
                 <td class="govuk-table__cell">
                 <% if @procurement.mobilisation_period_required %>
-                    <%= govuk_details(mobilisation_period, true) { mobilisation_period_description } %>
+                    <%= govuk_details(mobilisation_period) { mobilisation_period_description } %>
                 <% else %>
                     None
                 <% end %>
@@ -46,7 +46,7 @@
                 <tr class="govuk-table__row">
                     <th class="govuk-table__cell govuk-table__header"><%= t('.optional_call_off_extension', extension: optional_call_off_extension.extension + 1) %></th>
                     <td class="govuk-table__cell">
-                        <%= govuk_details(optional_call_off_extensions_period(optional_call_off_extension), true) { extension_period_description(optional_call_off_extension.extension) } %>
+                        <%= govuk_details(optional_call_off_extensions_period(optional_call_off_extension)) { extension_period_description(optional_call_off_extension.extension) } %>
                     </td>
                 </tr>
               <% end %>
@@ -60,7 +60,7 @@
               <td class="govuk-table__cell">
                 <% active_procurement_buildings.each.with_index do |procurement_building, index| %>
                   <div class="<%= 'govuk-!-margin-bottom-2' unless index == active_procurement_buildings.size - 1 %>">
-                    <%= govuk_details(procurement_building.building_name, true) do %>
+                    <%= govuk_details(procurement_building.building_name) do %>
                         <ul class="govuk-list govuk-list--bullet">
                           <% procurement_building.service_codes.each do |code| %>
                             <li><%= work_packages_names[code] %></li>

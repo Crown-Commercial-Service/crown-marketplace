@@ -1,15 +1,14 @@
 module FacilitiesManagement
   module Procurements
     class ContractsController < FacilitiesManagement::FrameworkController
-      include FacilitiesManagement::ControllerLayoutHelper
-      include FacilitiesManagement::Procurements::ContractsHelper
+      include FacilitiesManagement::PageDetail::Contracts
 
       before_action :set_procurement
       before_action :set_contract
       before_action :authorize_user
       before_action :redirect_if_contract_cannot_be_updated, only: %i[edit update]
       before_action :redirect_if_unrecognised_name, only: :edit
-      before_action :set_page_detail, only: %i[show edit]
+      before_action :initialize_page_description, only: %i[show edit]
       before_action :assign_contract_attributes, only: :update
 
       def show; end
@@ -75,7 +74,7 @@ module FacilitiesManagement
           @procurement.set_state_to_closed!
           redirect_to facilities_management_procurement_contract_closed_index_path(@procurement.id, contract_id: @contract.id)
         else
-          set_page_detail
+          initialize_page_description
           render :edit
         end
       end
@@ -90,7 +89,7 @@ module FacilitiesManagement
             redirect_to facilities_management_procurement_contract_path(procurement_id: @procurement.id, id: @contract.id)
           end
         else
-          set_page_detail
+          initialize_page_description
           render :edit
         end
       end

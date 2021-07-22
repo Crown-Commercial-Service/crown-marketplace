@@ -51,9 +51,9 @@ module HeaderNavigationLinksHelper
   end
 
   def back_to_start_link
-    if page_with_back_to_start?
+    if !current_user || page_with_back_to_start?
       { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_start_path }
-    elsif current_user && !current_user.fm_buyer_details_incomplete?
+    elsif !current_user.fm_buyer_details_incomplete?
       { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_path }
     end
   end
@@ -71,7 +71,7 @@ module HeaderNavigationLinksHelper
   end
 
   def page_with_back_to_start?
-    fm_back_to_start_page || cookies_page || fm_activate_account_landing_page || accessibility_statement_page
+    fm_back_to_start_page || fm_activate_account_landing_page
   end
 
   def supplier_back_to_start_text

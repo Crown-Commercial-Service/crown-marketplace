@@ -3,102 +3,39 @@ module FacilitiesManagement::Procurements::ContractsHelper
 
   def warning_title
     if @contract.closed?
-      'Closed'
+      t('closed', scope: TITLE_TRANSLATION_SCOPE)
     else
-      WARNINGS[@contract.aasm_state.to_sym]
+      t(@contract.aasm_state, scope: TITLE_TRANSLATION_SCOPE)
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def warning_message
-    warning_messages = { sent: "#{t('facilities_management.procurements.contracts_helper.warning_message.sent_1')} #{format_date_time(@contract.contract_expiry_date)}.<br/> #{t('facilities_management.procurements.contracts_helper.warning_message.sent_2')}",
-                         accepted: t('facilities_management.procurements.contracts_helper.warning_message.accepted'),
-                         signed: "#{t('facilities_management.procurements.contracts_helper.warning_message.signed')} #{format_date(@contract.contract_start_date)} and #{format_date(@contract.contract_end_date)}.",
-                         not_signed: "#{t('facilities_management.procurements.contracts_helper.warning_message.not_signed_1')} #{format_date_time @contract.contract_signed_date} #{t('facilities_management.procurements.contracts_helper.warning_message.not_signed_2')}.",
-                         declined: "#{t('facilities_management.procurements.contracts_helper.warning_message.declined')} #{format_date_time(@contract.supplier_response_date)}.",
-                         expired: t('facilities_management.procurements.contracts_helper.warning_message.expired') }
-    if @contract.closed?
-      if !@contract.reason_for_closing.nil?
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.closed')} #{format_date_time(@contract.contract_closed_date)}."
-      elsif @contract.last_offer?
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_1')} #{format_date_time(@contract.contract_closed_date)} #{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_2')}"
-      else
-        "#{t('facilities_management.procurements.contracts_helper.warning_message.last_closed_3')} #{format_date_time(@contract.contract_closed_date)}."
-      end
-    else
-      warning_messages[@contract.aasm_state.to_sym]
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
+    return closed_warning_message if @contract.closed?
 
-  WARNINGS = { sent: 'Sent',
-               accepted: 'Accepted, awaiting contract signature',
-               signed: 'Accepted and signed',
-               not_signed: 'Accepted, not signed',
-               declined: 'Declined',
-               expired: 'Not responded' }.freeze
-
-  def page_details(action)
-    action = 'edit' if action == 'update'
-    @page_details ||= page_definitions[:default].merge(page_definitions[action.to_sym])
-  end
-
-  def show_continuation_text
     case @contract.aasm_state
-    when 'accepted'
-      'Confirm if contract signed or not'
-    when 'not_signed', 'declined', 'expired'
-      "View next supplier's price"
-    end
-  end
-
-  def show_secondary_text
-    if @contract.closed? || @contract.aasm_state == 'signed'
-      'Make a copy of your requirements'
+    when 'sent'
+      t('sent_html', scope: MESSAGE_TRANSLATION_SCOPE, contract_expiry_date: format_date_time(@contract.contract_expiry_date))
+    when 'signed'
+      t('signed', scope: MESSAGE_TRANSLATION_SCOPE, contract_start_date: format_date(@contract.contract_start_date), contract_end_date: format_date(@contract.contract_end_date))
+    when 'not_signed'
+      t('not_signed', scope: MESSAGE_TRANSLATION_SCOPE, contract_not_signed_date: format_date_time(@contract.contract_signed_date))
+    when 'declined'
+      t('declined', scope: MESSAGE_TRANSLATION_SCOPE, supplier_response_date: format_date_time(@contract.supplier_response_date))
     else
-      'Close this procurement'
+      t(@contract.aasm_state, scope: MESSAGE_TRANSLATION_SCOPE)
     end
   end
 
-  def edit_secondary_text
-    if params['name'] == 'next_supplier'
-      'Cancel and return to contract summary'
+  def closed_warning_message
+    if @contract.reason_for_closing.present?
+      t('withdrawn', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
+    elsif @contract.last_offer?
+      t('last_offer', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
     else
-      'Cancel'
+      t('closed', scope: MESSAGE_TRANSLATION_SCOPE, contract_closed_date: format_date_time(@contract.contract_closed_date))
     end
   end
 
-  def edit_page_title
-    if params['name'] == 'next_supplier'
-      'Offer to next supplier'
-    else
-      'Confirmation of signed contract'
-    end
-  end
-
-  def page_definitions
-    @page_definitions ||= {
-      default: {
-        back_label: 'Back',
-        back_text: 'Back',
-        back_url: facilities_management_procurements_path,
-        caption1: @procurement.contract_name,
-        return_text: 'Return to procurements dashboard',
-        return_url: facilities_management_procurements_path,
-      },
-      show: {
-        page_title: 'Contract summary',
-        continuation_text: show_continuation_text,
-        return_text: 'Return to procurements dashboard',
-        secondary_text: show_secondary_text,
-        back_text: 'Return to procurements dashboard',
-      },
-      edit: {
-        back_url: facilities_management_procurement_contract_path(@procurement),
-        page_title: edit_page_title,
-        continuation_text: 'Close this procurement',
-        secondary_text: edit_secondary_text,
-      },
-    }.freeze
-  end
+  MESSAGE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_message'.freeze
+  TITLE_TRANSLATION_SCOPE = 'facilities_management.procurements.contracts_helper.warning_title'.freeze
 end

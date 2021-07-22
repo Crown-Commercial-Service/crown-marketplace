@@ -132,6 +132,8 @@ ignore_unused:
   - facilities_management.procurement_buildings_services.service_standards.detail_title.*
   - facilities_management.procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
   - facilities_management.procurements.contracts.procurement_requirements.call_off_extensions_*
+  - facilities_management.procurements.contracts_helper.*
+  - facilities_management.supplier.contracts_helper.*
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'

@@ -1,5 +1,5 @@
 <%= content_for :page_title, t("facilities_management.admin.service_rates.#{@slug}.heading") %>
-<%= admin_breadcrumbs({ link_text: t("facilities_management.admin.service_rates.#{@slug}.heading") })%>
+<%= admin_breadcrumbs({ text: t("facilities_management.admin.service_rates.#{@slug}.heading") })%>
 
 <%= render partial: 'shared/error_summary', locals: { errors: @errors } %>
 

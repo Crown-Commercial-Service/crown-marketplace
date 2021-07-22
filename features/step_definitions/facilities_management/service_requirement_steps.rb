@@ -22,37 +22,25 @@ Then('the standard for {string} is {string}') do |service, standard|
   expect(service_standard_row(service).find('td:nth-of-type(3)')).to have_content(standard)
 end
 
-def service_volume_row(service)
-  service_requirement_page.service_volume_questions.first('td', text: service).find(:xpath, './parent::tr')
-end
-
-def service_standard_row(service)
-  service_requirement_page.service_standard_questions.first('td', text: service).find(:xpath, './parent::tr')
-end
-
-def additional_service_volume_row(service)
-  service_volume_row(service).find('+tr')
-end
-
 Then('the detail of requirement for {string} is as follows:') do |service, detail_of_requirement|
   expect(additional_service_volume_row(service)).to have_css('details > summary > span', text: 'Detail of requirement')
   expect(additional_service_volume_row(service).find('details > div > p').native.text).to eq detail_of_requirement.raw.flatten.join("\n")
 end
 
 Then('I enter {string} for the service volume') do |volume|
-  service_requirement_page.find('input[type="text"]').set(volume)
+  service_requirement_page.volume_input.set(volume)
 end
 
 Then('I enter {string} for the number of hours per year') do |volume|
-  service_requirement_page.find('#facilities_management_procurement_building_service_service_hours').set(volume)
+  service_requirement_page.hours_per_year.set(volume)
 end
 
 Then('I enter the following for the detail of requirement:') do |detail_of_requirement|
-  service_requirement_page.find('#facilities_management_procurement_building_service_detail_of_requirement').set(detail_of_requirement.raw.flatten.join("\n"))
+  service_requirement_page.detail_of_requirement.set(detail_of_requirement.raw.flatten.join("\n"))
 end
 
 Then('I select Standard {string}') do |standard|
-  service_requirement_page.find("#facilities_management_procurement_building_service_service_standard_#{standard.downcase}").choose
+  service_requirement_page.send("service_standard_#{standard.downcase}".to_sym).choose
 end
 
 Then('I enter {string} for lift number {int}') do |number_of_floors, lift_number|
@@ -105,4 +93,16 @@ end
 
 Then('the building should have the status {string}') do |status|
   expect(entering_requirements_page.building_status.text).to eq status
+end
+
+def service_volume_row(service)
+  service_requirement_page.service_volume_questions.first('td', text: service).find(:xpath, './parent::tr')
+end
+
+def service_standard_row(service)
+  service_requirement_page.service_standard_questions.first('td', text: service).find(:xpath, './parent::tr')
+end
+
+def additional_service_volume_row(service)
+  service_volume_row(service).find('+tr')
 end

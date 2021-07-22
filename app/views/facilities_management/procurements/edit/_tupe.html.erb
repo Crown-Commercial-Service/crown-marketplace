@@ -1,11 +1,11 @@
 <% content_for :page_title, t('.tupe_title') %>
-<%= govuk_page_header(LayoutHelper::HeadingDetail.new(t('.tupe_title'), @procurement.contract_name, nil, nil, nil)) %>
+<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.tupe_title'), @procurement.contract_name, nil, nil, nil)) %>
 <fieldset class="govuk-fieldset">
   <%= form_group_with_error(f.object, :tupe) do |displayed_error| %>
     <%= hint_details(t('.first_question'), t('.body_text_html')) %>
 
     <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
-      <%= govuk_details(t('.what_you_need_to_know_title'), true) do %>
+      <%= govuk_details(t('.what_you_need_to_know_title')) do %>
         <%= t('.what_you_need_to_know_html') %>
         <%= link_to t('.tupe_link_text'), t('.tupe_link'), class: 'govuk-link', tabIndex: -1, target: :blank %>
       <% end %>

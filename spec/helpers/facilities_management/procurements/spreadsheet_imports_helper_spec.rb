@@ -366,4 +366,111 @@ RSpec.describe FacilitiesManagement::Procurements::SpreadsheetImportsHelper, typ
       end
     end
   end
+
+  describe '.error_count' do
+    let(:result) { helper.error_count(error_lists[attribute], attribute) }
+    let(:spreadsheet_import) { create(:facilities_management_procurement_spreadsheet_import, import_errors: import_errors, procurement: create(:facilities_management_procurement, aasm_state: 'detailed_search_bulk_upload', user: create(:user))) }
+    let(:import_errors) { { "Building 1": building_1_errors, "Building 2": building_2_errors, "Building 3": building_3_errors } }
+    let(:building_1_errors) do
+      {
+        building_name: 'Building 1',
+        building_errors: { building_name: [{ error: :blank }], address_line_1: [{ error: :blank }] },
+        procurement_building_errors: { service_codes: [{ error: :invalid_cafm_helpdesk_billable }] },
+        procurement_building_services_errors: {
+          'H.4': { service_hours: [{ error: :not_a_number }] },
+          'E.4': { no_of_appliances_for_testing: [{ error: :blank }] },
+          'G.1': { no_of_building_occupants: [{ error: :greater_than }] },
+          'K.7': { no_of_units_to_be_serviced: [{ error: :blank }] },
+          'K.2': { tones_to_be_collected_and_removed: [{ error: :less_than_or_equal_to }] },
+          'K.4': { tones_to_be_collected_and_removed: [{ error: :less_than_or_equal_to }] }
+        }
+      }
+    end
+    let(:building_2_errors) do
+      {
+        building_name: 'Building 2',
+        building_errors: {},
+        procurement_building_errors: { service_codes: [{ error: :invalid }], building: [{ error: :gia_too_small }] },
+        procurement_building_services_errors: {
+          'C.5': { "lifts[1].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }], "lifts[3].number_of_floors": [{ error: :greater_than, value: 0, count: 0 }] },
+          'I.3': { service_hours: [{ error: :less_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] },
+          'J.2': { service_hours: [{ error: :greater_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] },
+          'G.3': { no_of_building_occupants: [{ error: :blank }] },
+          'K.1': { no_of_consoles_to_be_serviced: [{ error: :less_than_or_equal_to }] }
+        }
+      }
+    end
+    let(:building_3_errors) do
+      {
+        building_name: 'Building 3',
+        building_errors: { building_type: [{ error: :inclusion }] },
+        procurement_building_errors: { service_codes: [{ error: :invalid_cafm_billable }] },
+        procurement_building_services_errors: {
+          'J.4': { service_hours: [{ error: :greater_than_or_equal_to }], detail_of_requirement: [{ error: :blank }] },
+          'K.3': { tones_to_be_collected_and_removed: [{ error: :blank }] },
+          'K.5': { tones_to_be_collected_and_removed: [{ error: :less_than_or_equal_to }] },
+          'K.6': { tones_to_be_collected_and_removed: [{ error: :blank }] },
+          'E.4': { no_of_appliances_for_testing: [{ error: :less_than_or_equal_to }] }
+        }
+      }
+    end
+    let(:error_lists) do
+      {
+        building_errors: spreadsheet_import.building_errors,
+        service_matrix_errors: spreadsheet_import.service_matrix_errors,
+        service_volume_errors: spreadsheet_import.service_volume_errors,
+        lift_errors: spreadsheet_import.lift_errors,
+        service_hour_errors: spreadsheet_import.service_hour_errors,
+        other_errors: [:other_errors]
+      }
+    end
+
+    context 'when the attribute is building_errors' do
+      let(:attribute) { :building_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 3
+      end
+    end
+
+    context 'when the attribute is service_matrix_errors' do
+      let(:attribute) { :service_matrix_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 4
+      end
+    end
+
+    context 'when the attribute is lift_errors' do
+      let(:attribute) { :lift_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 1
+      end
+    end
+
+    context 'when the attribute is service_hour_errors' do
+      let(:attribute) { :service_hour_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 7
+      end
+    end
+
+    context 'when the attribute is service_volume_errors' do
+      let(:attribute) { :service_volume_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 11
+      end
+    end
+
+    context 'when the attribute is other_errors' do
+      let(:attribute) { :other_errors }
+
+      it 'returns the correct count' do
+        expect(result).to eq 1
+      end
+    end
+  end
 end

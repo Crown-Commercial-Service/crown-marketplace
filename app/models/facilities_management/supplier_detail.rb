@@ -29,6 +29,10 @@ module FacilitiesManagement
       (vals_1a + vals_1b + vals_1c).uniq.count
     end
 
+    def self.suppliers_offering_lot(for_lot)
+      where("(lot_data->'#{for_lot}') is not null").order(:supplier_name).pluck(:supplier_name)
+    end
+
     def full_organisation_address
       [address_line_1, address_line_2, address_town, address_county].reject(&:nil?).reject(&:empty?).join(', ') + " #{address_postcode}"
     end

@@ -18,7 +18,9 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   def authorize_user
     if params[:management_report_id].present?
-      authorize_management_report_view
+      authenticate_admin_view(FacilitiesManagement::Admin::ManagementReport, params[:management_report_id])
+    elsif params[:admin_upload_id].present?
+      authenticate_admin_view(FacilitiesManagement::Admin::Upload, params[:admin_upload_id])
     else
       authorize_contract_procurement_view
     end
@@ -34,11 +36,11 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
     authorize! :view, procurement if procurement.present?
   end
 
-  def authorize_management_report_view
-    management_report = FacilitiesManagement::Admin::ManagementReport.find_by(id: params[:management_report_id])
+  def authenticate_admin_view(model, id)
+    object = model.find_by(id: id)
 
-    raise ActionController::RoutingError, 'not found' if management_report.blank?
+    raise ActionController::RoutingError, 'not found' if object.blank?
 
-    authorize! :view, management_report if management_report.present?
+    authorize! :view, object if object.present?
   end
 end

@@ -2,36 +2,15 @@ require 'rubygems'
 
 module FacilitiesManagement
   class BuildingsController < FacilitiesManagement::FrameworkController
-    include Buildings::BuildingsControllerDefinitions
     include Buildings::BuildingsControllerNavigation
-    include FacilitiesManagement::FindAddressConcern
-    include SharedBuildingsControllerMethods
+    include PageDetail::Buildings
+    include FindAddressConcern
+    include BuildingsConcern
 
-    before_action :initialise_page_data
-    before_action :create_new_building, only: :new
-    before_action :define_all_buildings, only: :index
-    before_action :build_page_data, only: %i[show edit update add_address]
-    before_action :redirect_if_unrecognised_step, only: :edit
-    before_action :authorize_user
-    before_action :build_page_description, only: %i[index show new edit add_address]
-    before_action :initialize_building_details, only: :show
-
-    def index; end
-
-    def new; end
-
-    def add_address; end
-
-    def show; end
-
-    def edit; end
-
-    def create
-      create_building_action
-    end
-
-    def update
-      update_building_action
+    with_options only: :index do
+      before_action :define_all_buildings
+      before_action :authorize_user_index
+      before_action :build_page_description_index
     end
 
     private
@@ -55,6 +34,9 @@ module FacilitiesManagement
     end
 
     protected
+
+    alias authorize_user_index authorize_user
+    alias build_page_description_index build_page_description
 
     def authorize_user
       @page_data[:model_object].present? && (@page_data[:model_object].is_a? Building) ? (authorize! :manage, @page_data[:model_object]) : (authorize! :read, FacilitiesManagement)

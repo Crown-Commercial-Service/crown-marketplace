@@ -1,7 +1,7 @@
 <%= content_for :page_title, @sublot_region_name %>
 <%= admin_breadcrumbs(
-  { link_text: t('facilities_management.admin.supplier_framework_data.index.heading'), link_url: facilities_management_admin_supplier_framework_data_path },
-  { link_text: @sublot_region_name }
+  { text: t('facilities_management.admin.supplier_framework_data.index.heading'), link: facilities_management_admin_supplier_framework_data_path },
+  { text: @sublot_region_name }
 )%>
 
 <h2 class="govuk-caption-l govuk-!-margin-bottom-2 govuk-!-font-weight-regular"><%= @supplier.supplier_name %></h1>
