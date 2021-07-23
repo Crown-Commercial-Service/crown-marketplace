@@ -1,32 +1,33 @@
-id,title,description,standard_building_type,sort_order
-General office - Customer Facing,General office - customer facing,General office areas and customer facing areas.,t,0
-General office - Non Customer Facing,General office - non customer facing,General office areas and non-customer facing areas.,t,1
-Call Centre Operations,Call centre operations,,t,2
-Warehouses,Warehouses,Large storage facility with limited office space and low density occupation by supplier personnel.,t,3
-Restaurant and Catering Facilities,Restaurant and catering facilities,"Areas including restaurants, deli-bars, coffee lounges and areas used exclusively for consuming food and beverages.",t,4
-Pre-School,Pre-school,"Pre-school, including crèche, nursery and after-school facilities.",t,5
-Primary School,Primary school,Primary school facilities.,t,6
-Secondary Schools,Secondary school,Secondary school facilities.,t,7
-Special Schools,Special schools,Special school facilities.,t,8
-Universities and Colleges,Universities and colleges,"University and college, including on and off site campus facilities but excluding student residential accommodation facilities.",t,9
-"Community - Doctors, Dentist, Health Clinic","Doctors, dentists and health clinics","Community led facilities including doctors, dentists and health clinics.",t,10
-Nursing and Care Homes,Nursery and care homes,Nursery and care home facilities.,t,11
-Data-Centre-Operations,Data centre operations,,f,12
-"External-parks,-grounds-and-car-parks","External parks, grounds and car parks","External car parks and grounds including externally fixed assets. For example: fences, gates, fountains.",f,13
-Laboratory,Laboratory,"Includes all Government facilities where the standard of cleanliness is high, access is restricted and is not public facing.",f,14
-Heritage-Buildings,Heritage buildings,Buildings of historical or cultural significance.,f,15
-Nuclear-Facilities,Nuclear facilities,Areas associated with nuclear activities.,f,16
-Animal-Facilities,Animal facilities,Areas associated with the housing of animals such as dog kennels and stables.,f,17
-Custodial-Facilities,Custodial facilities,Facilities relating to the detention of personnel such as prisons and detention centres.,f,18
-Fire-and-Police-Stations,Fire and police stations,Areas associated with emergency services.,f,19
-Production-Facilities,Production facilities,"An environment centered around a fabrication or production facility, typically with restricted access.",f,20
-Workshops,Workshops,Areas where works are undertaken such as joinery or metal working facilities.,f,21
-Garages,Garages,"Areas where motor vehicles are cleaned, serviced, repaired and maintained.",f,22
-Shopping-Centres,Shopping centres,Areas where retail services are delivered to the public.,f,23
-Museums-or-Galleries,Museums or galleries,Areas that are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.,f,24
-Fitness-or-Training-Establishments,Fitness or training establishments,"Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal or external sports facilities.",f,25
-Residential-Buildings,Residential buildings,Residential accommodation or areas.,f,26
-Port-and-Airport-buildings,Port and airport buildings,"Areas associated with air and sea transportation and supporting facilities. For example: airports, aerodromes and dock areas.",f,27
-List-X-Property,List x property,A commercial site (that is non-government) on UK soil that is approved to hold UK government protectively marked information marked as ''confidential'' and above. It is applied to a company''s specific site and not a company as a whole.,f,28
-Hospitals,Hospitals,"Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.",f,29
-Mothballed-/-Vacant-/-Disposal,Mothballed or vacant or disposal,Areas which are vacant or awaiting disposal where no services are being undertaken.,f,30
+id,title,description,standard_building_type,sort_order,spreadsheet_title
+General office - Customer Facing,General office - customer facing,General office areas and customer facing areas.,t,0,General office - Customer Facing
+General office - Non Customer Facing,General office - non customer facing,General office areas and non-customer facing areas.,t,1,General office - Non Customer Facing
+Call Centre Operations,Call centre operations,,t,2,Call Centre Operations
+Warehouses,Warehouses,Large storage facility with limited office space and low density occupation by supplier personnel.,t,3,Warehouses
+Restaurant and Catering Facilities,Restaurant and catering facilities,"Areas including restaurants, deli-bars, coffee lounges and areas used exclusively for consuming food and beverages.",t,4,Restaurant and Catering Facilities
+Pre-School,Pre-school,"Pre-school, including crèche, nursery and after-school facilities.",t,5,Pre-School
+Primary School,Primary school,Primary school facilities.,t,6,Primary School
+Secondary Schools,Secondary school,Secondary school facilities.,t,7,Secondary School
+Special Schools,Special schools,Special school facilities.,t,8,Special Schools
+Universities and Colleges,Universities and colleges,"University and college, including on and off site campus facilities but excluding student residential accommodation facilities.",t,9,Universities and Colleges
+"Community - Doctors, Dentist, Health Clinic","Doctors, dentists and health clinics","Community led facilities including doctors, dentists and health clinics.",t,10,"Doctors, Dentists and Health Clinics"
+Nursing and Care Homes,Nursery and care homes,Nursery and care home facilities.,t,11,Nursery and Care Homes
+Data-Centre-Operations,Data centre operations,,f,12,Data Centre Operations
+"External-parks,-grounds-and-car-parks","External parks, grounds and car parks","External car parks and grounds including externally fixed assets. For example: fences, gates, fountains.",f,13,"External parks, grounds and car parks"
+Laboratory,Laboratory,"Includes all Government facilities where the standard of cleanliness is high, access is restricted and is not public facing.",f,14,Laboratory
+Heritage-Buildings,Heritage buildings,Buildings of historical or cultural significance.,f,15,Heritage Buildings
+Nuclear-Facilities,Nuclear facilities,Areas associated with nuclear activities.,f,16,Nuclear Facilities
+Animal-Facilities,Animal facilities,Areas associated with the housing of animals such as dog kennels and stables.,f,17,Animal Facilities
+Custodial-Facilities,Custodial facilities,Facilities relating to the detention of personnel such as prisons and detention centres.,f,18,Custodial Facilities
+Fire-and-Police-Stations,Fire and police stations,Areas associated with emergency services.,f,19,Fire and Police Stations
+Production-Facilities,Production facilities,"An environment centered around a fabrication or production facility, typically with restricted access.",f,20,Production Facilities
+Workshops,Workshops,Areas where works are undertaken such as joinery or metal working facilities.,f,21,Workshops
+Garages,Garages,"Areas where motor vehicles are cleaned, serviced, repaired and maintained.",f,22,Garages
+Shopping-Centres,Shopping centres,Areas where retail services are delivered to the public.,f,23,Shopping Centres
+Museums-or-Galleries,Museums or galleries,Areas that are generally open to the public with some restrictions in place from time to time. Some facilities have no public access.,f,24,Museums /Galleries
+Fitness-or-Training-Establishments,Fitness or training establishments,"Areas associated with fitness and leisure such as swimming pools, gymnasia, fitness centres and internal or external sports facilities.",f,25,Fitness / Training Establishments
+Residential-Buildings,Residential buildings,Residential accommodation or areas.,f,26,Residential Buildings
+Port-and-Airport-buildings,Port and airport buildings,"Areas associated with air and sea transportation and supporting facilities. For example: airports, aerodromes and dock areas.",f,27,Port and Airport buildings
+List-X-Property,List x property,A commercial site (that is non-government) on UK soil that is approved to hold UK government protectively marked information marked as ''confidential'' and above. It is applied to a company''s specific site and not a company as a whole.,f,28,List X Property
+Hospitals,Hospitals,"Areas including mainstream medical, healthcare facilities such as hospitals and medical centres.",f,29,Hospitals
+Mothballed-/-Vacant-/-Disposal,Mothballed or vacant or disposal,Areas which are vacant or awaiting disposal where no services are being undertaken.,f,30,Mothballed / Vacant / Disposal
+other,Other,,f,31,Other

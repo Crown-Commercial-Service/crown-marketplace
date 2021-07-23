@@ -18,7 +18,7 @@
           </span>
         </summary>
         <div class="govuk-details__text govuk-!-padding-bottom-0">
-          <% FacilitiesManagement::BuildingType.where.not(sort_order: [0, 1]).order(:sort_order).each do |building_type| %>
+          <% FacilitiesManagement::BuildingType.where.not(sort_order: [0, 1, 31]).order(:sort_order).each do |building_type| %>
             <%= building_type_radio_button(f, building_type, !open_state_of_building_details) %>
           <% end %>
           <%= govuk_radio_driver %>

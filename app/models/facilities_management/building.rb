@@ -65,7 +65,7 @@ module FacilitiesManagement
     end
 
     def building_standard
-      BuildingType.find(building_type).standard_building_type ? 'STANDARD' : 'NON-STANDARD'
+      BuildingType.find(building_type).building_type_standard
     end
 
     def full_address
@@ -170,12 +170,8 @@ module FacilitiesManagement
       errors.add(:security_type, :inclusion) unless (fm_security_types + ['other']).include? security_type
     end
 
-    SPREADSHEET_BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations', 'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary School', 'Special Schools', 'Universities and Colleges', 'Doctors, Dentists and Health Clinics', 'Nursery and Care Homes', 'Data Centre Operations', 'External parks, grounds and car parks', 'Laboratory', 'Heritage Buildings', 'Nuclear Facilities', 'Animal Facilities', 'Custodial Facilities', 'Fire and Police Stations', 'Production Facilities', 'Workshops', 'Garages', 'Shopping Centres', 'Museums /Galleries', 'Fitness / Training Establishments', 'Residential Buildings', 'Port and Airport buildings', 'List X Property', 'Hospitals', 'Mothballed / Vacant / Disposal'].freeze
-
-    BUILDING_TYPES_CONVERSION = SPREADSHEET_BUILDING_TYPES.zip(BuildingType.order(:sort_order).pluck(:title)).to_h.freeze
-
     def convert_building_type
-      self.building_type = BUILDING_TYPES_CONVERSION[building_type] || building_type
+      self.building_type = BuildingType.find_by(spreadsheet_title: building_type)&.id || building_type
     end
   end
 end

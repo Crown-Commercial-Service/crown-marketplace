@@ -72,8 +72,7 @@ module FacilitiesManagement::BuildingsHelper
   def should_building_details_be_open?
     return false if @page_data[:model_object][:building_type].blank?
 
-    if @page_data[:model_object].building_type == 'other' || @page_data[:model_object].errors.key?(:other_building_type) ||
-       FacilitiesManagement::BuildingType.find(@page_data[:model_object][:building_type]).sort_order > 1
+    if @page_data[:model_object].errors.key?(:other_building_type) || FacilitiesManagement::BuildingType.find(@page_data[:model_object][:building_type]).sort_order > 1
       true
     else
       false

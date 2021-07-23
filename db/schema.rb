@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_07_22_112714) do
     t.text "description"
     t.boolean "standard_building_type"
     t.integer "sort_order"
+    t.text "spreadsheet_title", null: false
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["id"], name: "index_facilities_management_building_types_on_id"

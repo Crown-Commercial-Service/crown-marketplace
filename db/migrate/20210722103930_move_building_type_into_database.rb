@@ -5,6 +5,7 @@ class MoveBuildingTypeIntoDatabase < ActiveRecord::Migration[6.0]
       t.text :description
       t.boolean :standard_building_type
       t.integer :sort_order
+      t.text :spreadsheet_title, null: false
       t.timestamps null: true
     end
   end
