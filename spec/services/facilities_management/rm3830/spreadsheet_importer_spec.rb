@@ -563,7 +563,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when validating all the building types' do
-          FacilitiesManagement::Building::SPREADSHEET_BUILDING_TYPES.each do |building_type|
+          FacilitiesManagement::Building::BUILDING_TYPES.map { |type| type[:spreadsheet_title] }.each do |building_type|
             context "when the building type is #{building_type}" do
               let(:spreadsheet_building) { create(:facilities_management_building, building_type: building_type) }
               let(:building_data) { [[spreadsheet_building, 'Complete']] }

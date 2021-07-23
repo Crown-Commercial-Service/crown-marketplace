@@ -59,8 +59,10 @@ en:
               required: Gross Internal Area (GIA) must be greater than 0
             other_building_type:
               blank: You must enter your description of a building type
+              too_long: The description for the building type cannot be more than 150 characters
             other_security_type:
               blank: You must describe the security clearance level
+              too_long: The description for the security clearance cannot be more than 150 characters
             security_type:
               blank: You must select a security clearance level
         facilities_management/buyer_detail:

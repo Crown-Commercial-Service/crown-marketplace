@@ -33,96 +33,9 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when the building name is a duplicate' do
-      let(:duplicate_building) { create(:facilities_management_building, user: building.user, building_name: 'sas') }
-
-      before { duplicate_building.building_name = building.building_name }
-
-      it 'is not valid' do
-        expect(duplicate_building.valid?(:all)).to eq false
-      end
-
-      it 'is taken' do
-        duplicate_building.valid?(:all)
-        expect(duplicate_building.errors.details[:building_name].first[:error]).to eq :taken
-      end
-    end
-
-    context 'when the building name is duplicated but with added spaces' do
-      let(:duplicate_building) { create(:facilities_management_building, user: building.user) }
-
-      before do
-        building.update(building_name: 'building name 111')
-        duplicate_building.building_name = "  building    name \t  \n 111 \r"
-      end
-
-      it 'is not valid' do
-        expect(duplicate_building.valid?(:all)).to eq false
-      end
-
-      it 'is taken' do
-        duplicate_building.valid?(:all)
-        expect(duplicate_building.errors.details[:building_name].first[:error]).to eq :taken
-      end
-    end
-
-    context 'when the building name is too long' do
-      before do
-        building.building_name = 'a' * 51
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-      end
-
-      it 'will have the correct error message' do
-        building.valid?(:all)
-        expect(building.errors[:building_name].first).to eq 'Building name must be 50 characters or less'
-      end
-    end
-
-    context 'when the building name is within range' do
-      before do
-        building.building_name = 'a' * 50
-      end
-
-      it 'is valid' do
-        expect(building.valid?(:all)).to eq true
-      end
-    end
-
-    context 'when the building description is too long' do
-      before do
-        building.description = 'a' * 51
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
-      end
-
-      it 'will have the correct error message' do
-        building.valid?(:all)
-        expect(building.errors[:description].first).to eq 'Building description must be 50 characters or less'
-      end
-    end
-
-    context 'when the building description is within range' do
-      before do
-        building.description = 'a' * 50
-      end
-
-      it 'is valid' do
-        expect(building.valid?(:all)).to eq true
-      end
-    end
-
     context 'when required element not present' do
       before do
         building.building_name = nil
-      end
-
-      it 'is invalid' do
-        expect(building.valid?(:all)).to eq false
       end
 
       it '#status will be "Incomplete"' do
@@ -131,15 +44,97 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when saving GIA' do
-      before do
-        building.gia = gia
+    context 'when validating the building name' do
+      before { building.building_name = building_name }
+
+      context 'and it is duplicated' do
+        let(:duplicate_building) { create(:facilities_management_building, user: building.user, building_name: 'sas') }
+        let(:building_name) { duplicate_building.building_name }
+
+        it 'is not valid and has the correct error message' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.errors[:building_name].first).to eq 'This building name is already in use'
+        end
+
+        it 'is taken' do
+          building.valid?(:all)
+          expect(building.errors.of_kind?(:building_name, :taken)).to be true
+        end
       end
 
-      context 'when gia is not present' do
-        let(:gia) { nil }
+      context 'and it is duplicated but with added spaces' do
+        let(:duplicate_building) { create(:facilities_management_building, user: building.user, building_name: 'sas') }
+        let(:building_name) { "  building    name \t  \n 111 \r" }
 
-        before { building.valid? :gia }
+        before { duplicate_building.update(building_name: 'building name 111') }
+
+        it 'is not valid and has the correct error message' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.errors[:building_name].first).to eq 'This building name is already in use'
+        end
+
+        it 'is taken' do
+          building.valid?(:all)
+          expect(building.errors.of_kind?(:building_name, :taken)).to be true
+        end
+      end
+
+      context 'and it is blank' do
+        let(:building_name) { nil }
+
+        it 'is not valid and has the correct error message' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.errors[:building_name].first).to eq 'Enter a name for your building'
+        end
+      end
+
+      context 'and it is too long' do
+        let(:building_name) { 'a' * 51 }
+
+        it 'is not valid and has the correct error message' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.errors[:building_name].first).to eq 'Building name must be 50 characters or less'
+        end
+      end
+
+      context 'and it is within range' do
+        let(:building_name) { 'a' * 50 }
+
+        it 'is valid' do
+          expect(building.valid?(:all)).to eq true
+        end
+      end
+    end
+
+    context 'when validating the building description' do
+      before { building.description = description }
+
+      context 'and it is too long' do
+        let(:description) { 'a' * 51 }
+
+        it 'is not valid and has the correct error message' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.errors[:description].first).to eq 'Building description must be 50 characters or less'
+        end
+      end
+
+      context 'and it is within range' do
+        let(:description) { 'a' * 50 }
+
+        it 'is valid' do
+          expect(building.valid?(:all)).to eq true
+        end
+      end
+    end
+
+    context 'when validating GIA' do
+      before do
+        building.gia = gia
+        building.valid? :gia
+      end
+
+      context 'and it is not present' do
+        let(:gia) { nil }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -155,10 +150,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when gia is a float' do
+      context 'and it is a float' do
         let(:gia) { 434.2 }
-
-        before { building.valid? :gia }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -174,10 +167,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when gia is not an integer' do
+      context 'and it is not an integer' do
         let(:gia) { 'some words' }
-
-        before { building.valid? :gia }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -193,10 +184,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when gia is too large' do
+      context 'and it is too large' do
         let(:gia) { 1000000000 }
-
-        before { building.valid? :gia }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -213,15 +202,14 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when saving external area' do
+    context 'when validating external aria' do
       before do
         building.external_area = external_area
+        building.valid? :gia
       end
 
       context 'when external_area is not present' do
         let(:external_area) { nil }
-
-        before { building.valid? :gia }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -240,8 +228,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       context 'when external_area is a float' do
         let(:external_area) { 434.2 }
 
-        before { building.valid? :gia }
-
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
           expect(building.valid?(:gia)).to eq false
@@ -259,8 +245,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       context 'when external_area is not an integer' do
         let(:external_area) { 'some words' }
 
-        before { building.valid? :gia }
-
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
           expect(building.valid?(:gia)).to eq false
@@ -277,8 +261,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
       context 'when external_area is too large' do
         let(:external_area) { 1000000000 }
-
-        before { building.valid? :gia }
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
@@ -330,113 +312,25 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:gia) { 0 }
         let(:external_area) { nil }
 
-        it 'external area will have no error messages' do
+        it 'gia will have no error messages' do
           expect(building.errors[:gia].empty?).to be true
         end
       end
     end
 
-    context 'when saving security_type' do
-      context 'when security_type is blank' do
-        before do
-          building.security_type = nil
-        end
+    context 'when validating the building type' do
+      before { building.building_type = building_type }
 
-        it 'will be invalid' do
-          building.valid? :security
-          expect(building.errors.details[:security_type].first[:error]).to eq :blank
-        end
-      end
-
-      context 'when security_type set to something' do
-        it 'will not be valid' do
-          building.security_type = 'something'
-          expect(building.valid?(:security)).to eq false
-        end
-      end
-
-      context 'when security_type set to Baseline personnel security standard (BPSS)' do
-        it 'will be valid' do
-          building.security_type = 'Baseline personnel security standard (BPSS)'
-          expect(building.valid?(:security)).to eq true
-        end
-      end
-
-      context 'when security_type set to Baseline personnel security standard (BPSS) and there is somthing in other' do
-        before do
-          building.security_type = 'Baseline personnel security standard (BPSS)'
-          building.other_security_type = 'other security type'
-        end
-
-        it 'will be valid' do
-          expect(building.valid?(:security)).to eq true
-        end
-
-        it 'will be not save other_security_type' do
-          building.save(context: :security)
-          expect(building.other_security_type).to eq nil
-        end
-      end
-
-      context 'when other_security_type is blank' do
-        before do
-          building.security_type = :other
-          building.valid? :security
-        end
-
-        it 'will be invalid' do
-          expect(building.errors.details[:other_security_type].first[:error]).to eq :blank
-        end
-      end
-
-      context 'when other_security_type contains carriage return characters' do
-        it 'will be valid' do
-          building.security_type       = :other
-          building.other_security_type = ('a' * 140) + ("\r\n" * 10)
-          expect(building.valid?(:security)).to eq true
-        end
-      end
-
-      context 'when other_security_type is more than 150 characters' do
-        it 'will be valid' do
-          building.security_type       = :other
-          building.other_security_type = ('a' * 141) + ("\r\n" * 10)
-          expect(building.valid?(:security)).to eq false
-        end
-      end
-
-      context 'when other_security_type is not blank' do
-        before do
-          building.security_type       = :other
-          building.other_security_type = 'other security type'
-        end
-
-        it 'will be valid' do
-          expect(building.valid?(:security)).to eq true
-        end
-      end
-    end
-
-    context 'when saving building_type' do
-      before do
-        building.building_type = building_type
-      end
-
-      context 'and building_type is blank' do
+      context 'and it is blank' do
         let(:building_type) { nil }
 
-        it 'will be invalid' do
-          building.valid? :type
+        it 'is not valid and has the correct error message' do
           expect(building.valid?(:type)).to eq false
-        end
-
-        it 'will have the some error message' do
-          building.valid? :type
           expect(building.errors[:building_type].first).to eq 'You must select a building type or describe your own'
         end
       end
 
-      context 'when building_type set to something' do
+      context 'and it is not a valid building type' do
         let(:building_type) { 'something' }
 
         it 'will not be valid' do
@@ -444,7 +338,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when building_type is set to General office - Customer Facing' do
+      context 'and it is General office - Customer Facing' do
         let(:building_type) { 'General office - Customer Facing' }
 
         it 'will be valid' do
@@ -452,37 +346,29 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when building_type is other' do
+      context 'and it is other' do
         let(:building_type) { 'other' }
 
-        before do
-          building.other_building_type = other_building_type
-        end
+        before { building.other_building_type = other_building_type }
 
-        context 'when other_building_type is blank' do
+        context 'when the other_building_type is blank' do
           let(:other_building_type) { nil }
 
-          before do
-            building.valid? :type
-          end
-
-          it 'will be invalid' do
-            expect(building.errors.details[:other_building_type].first[:error]).to eq :blank
+          it 'will be invalid and have the correct error message' do
+            expect(building.valid?(:type)).to be false
+            expect(building.errors[:other_building_type].first).to eq 'You must enter your description of a building type'
           end
         end
 
-        context 'when other_building_type set to General office - Customer Facing and there is somthing in other' do
+        context 'when building_type set to General office - Customer Facing and there is somthing in other_building_type' do
+          let(:building_type) { 'General office - Customer Facing' }
           let(:other_building_type) { 'other building type' }
-
-          before do
-            building.building_type = 'General office - Customer Facing'
-          end
 
           it 'will be valid' do
             expect(building.valid?(:type)).to eq true
           end
 
-          it 'will be not save other_building_type' do
+          it 'will not save other_building_type' do
             building.save(context: :type)
             expect(building.other_building_type).to eq nil
           end
@@ -499,8 +385,9 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         context 'when other_building_type is more than 150 characters' do
           let(:other_building_type) { ('a' * 141) + ("\r\n" * 10) }
 
-          it 'will not be valid' do
+          it 'will not be valid and it will have the correct error message' do
             expect(building.valid?(:type)).to eq false
+            expect(building.errors[:other_building_type].first).to eq 'The description for the building type cannot be more than 150 characters'
           end
         end
 
@@ -514,11 +401,94 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    describe 'when saving address_line_1' do
-      context 'when blank' do
-        before do
-          building.address_line_1 = nil
+    context 'when validating the security type' do
+      before { building.security_type = security_type }
+
+      context 'and it is blank' do
+        let(:security_type) { nil }
+
+        it 'will be invalid and have the correct error message' do
+          expect(building.valid?(:security)).to eq false
+          expect(building.errors[:security_type].first).to eq 'You must select a security clearance level'
         end
+      end
+
+      context 'and it is not a valid security type' do
+        let(:security_type) { 'something' }
+
+        it 'will not be valid' do
+          expect(building.valid?(:security)).to eq false
+        end
+      end
+
+      context 'when security_type set to Baseline personnel security standard (BPSS)' do
+        let(:security_type) { 'Baseline personnel security standard (BPSS)' }
+
+        it 'will be valid' do
+          expect(building.valid?(:security)).to eq true
+        end
+      end
+
+      context 'and it is other' do
+        let(:security_type) { 'other' }
+
+        before { building.other_security_type = other_security_type }
+
+        context 'when the other_security_type is blank' do
+          let(:other_security_type) { nil }
+
+          it 'will be invalid and have the correct error message' do
+            expect(building.valid?(:security)).to be false
+            expect(building.errors[:other_security_type].first).to eq 'You must describe the security clearance level'
+          end
+        end
+
+        context 'when security_type set to Baseline personnel security standard (BPSS) and there is somthing in other_security_type' do
+          let(:security_type) { 'Baseline personnel security standard (BPSS)' }
+          let(:other_security_type) { 'other security type' }
+
+          it 'will be valid' do
+            expect(building.valid?(:security)).to eq true
+          end
+
+          it 'will be not save other_security_type' do
+            building.save(context: :security)
+            expect(building.other_security_type).to eq nil
+          end
+        end
+
+        context 'when other_security_type contains carriage return characters' do
+          let(:other_security_type) { ('a' * 140) + ("\r\n" * 10) }
+
+          it 'will be valid' do
+            expect(building.valid?(:security)).to eq true
+          end
+        end
+
+        context 'when other_security_type is more than 150 characters' do
+          let(:other_security_type) { ('a' * 141) + ("\r\n" * 10) }
+
+          it 'will not be valid and it will have the correct error message' do
+            expect(building.valid?(:security)).to eq false
+            expect(building.errors[:other_security_type].first).to eq 'The description for the security clearance cannot be more than 150 characters'
+          end
+        end
+
+        context 'when other_security_type is not blank' do
+          let(:other_security_type) { 'other security type' }
+
+          it 'will be valid' do
+            expect(building.valid?(:security)).to eq true
+          end
+        end
+      end
+    end
+
+    describe 'when validating address_line_1' do
+      before { building.address_line_1 = address_line_1 }
+
+      context 'and it is blank' do
+        let(:address_line_1) { nil }
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
@@ -542,10 +512,8 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when it is more than the max number of characters' do
-        before do
-          building.address_line_1 = 'a' * 101
-        end
+      context 'and it is more than the max number of characters' do
+        let(:address_line_1) { 'a' * 101 }
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
@@ -570,11 +538,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    describe 'when saving address_line_2' do
-      context 'when it is more than the max number of characters' do
-        before do
-          building.address_line_2 = 'a' * 101
-        end
+    describe 'when validating address_line_2' do
+      before { building.address_line_2 = address_line_2 }
+
+      context 'and it is more than the max number of characters' do
+        let(:address_line_2) { 'a' * 101 }
 
         it 'will be invalid when manually adding an address' do
           building.valid? :add_address
@@ -599,13 +567,13 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when saving address_town' do
+    context 'when validating address_town' do
       before do
         building.address_town = addresss_town
         building.valid? :all
       end
 
-      context 'when blank' do
+      context 'and it is blank' do
         let(:addresss_town) { nil }
 
         it 'will be invalid' do
@@ -617,7 +585,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when too long' do
+      context 'and it is too long' do
         let(:addresss_town) { 'a' * 31 }
 
         it 'will be invalid' do
@@ -630,7 +598,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
 
-    context 'when saving address region selection' do
+    context 'when validating address region selection' do
       before do
         building.address_region = address_region
         building.address_region_code = address_region_code
@@ -640,7 +608,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       let(:address_region) { 'Shropshire and Staffordshire' }
       let(:address_region_code) { 'UKG2' }
 
-      context 'when address_region is blank' do
+      context 'and address_region is blank' do
         let(:address_region) { nil }
 
         it 'will be invalid if postcode and line 1 present' do
@@ -652,7 +620,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when address_region_code is blank' do
+      context 'and address_region_code is blank' do
         let(:address_region_code) { nil }
 
         it 'will be invalid if postcode and line 1 present' do
@@ -664,7 +632,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when both are blank' do
+      context 'and both are blank' do
         let(:address_region) { nil }
         let(:address_region_code) { nil }
 
@@ -677,18 +645,18 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         end
       end
 
-      context 'when neither are blank' do
+      context 'and neither are blank' do
         it 'will be valid if postcode and line 1 present' do
           expect(building.errors[:address_region].present?).to eq false
         end
       end
     end
 
-    describe 'when saving address_postcode' do
-      context 'when postcode is blank' do
-        before do
-          building.address_postcode = nil
-        end
+    describe 'when validating address_postcode' do
+      before { building.address_postcode = address_postcode }
+
+      context 'and it is blank' do
+        let(:address_postcode) { nil }
 
         context 'when manually adding an address' do
           it 'will be invalid' do
@@ -710,22 +678,31 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
             expect(building.errors.details[:address_postcode].first[:error]).to eq :blank
           end
         end
+
+        it 'will have the correct error message' do
+          building.valid? :add_address
+          expect(building.errors[:address_postcode].first).to eq 'Enter a valid postcode, like AA1 1AA'
+        end
       end
 
-      context 'when saving postcode_format' do
-        context 'when totally bad format' do
-          it 'will be invalid' do
-            building.address_postcode = 'something'
-            building.valid? :building_details
+      context 'when validating postcode_format' do
+        before { building.valid?(:building_details) }
+
+        context 'and the format is wrong' do
+          let(:address_postcode) { 'something' }
+
+          it 'will be invalid and have the correct error message' do
             expect(building.errors.details[:address_postcode].first[:error]).to eq :invalid
+            expect(building.errors[:address_postcode].first).to eq 'Enter a valid postcode, like AA1 1AA'
           end
         end
 
-        context 'when saved with incorrect format' do
-          it 'will be invalid' do
-            building.address_postcode = '1XX X11'
-            building.valid? :building_details
+        context 'and the format is invalid' do
+          let(:address_postcode) { '1XX X11' }
+
+          it 'will be invalid and have the correct error message' do
             expect(building.errors.details[:address_postcode].first[:error]).to eq :invalid
+            expect(building.errors[:address_postcode].first).to eq 'Enter a valid postcode, like AA1 1AA'
           end
         end
       end
@@ -734,7 +711,6 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     context 'when processing the address selection' do
       before do
         building.address_line_1 = nil
-        building.address_postcode
         building.valid? :all
       end
 
@@ -747,61 +723,97 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
   describe '#building_standard' do
     subject(:building) { create(:facilities_management_building) }
 
+    before { building.building_type = building_type }
+
     context 'when the building is a standard type' do
-      it 'returns STANDARD when General office - Customer Facing' do
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is General office - Customer Facing' do
+        let(:building_type) { 'General office - Customer Facing' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Call Centre Operations' do
-        building.building_type = 'Call Centre Operations'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Call Centre Operations' do
+        let(:building_type) { 'Call Centre Operations' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Primary school' do
-        building.building_type = 'Primary School'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Primary School' do
+        let(:building_type) { 'Primary School' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Restaurant and Catering-Facilities' do
-        building.building_type = 'Restaurant and Catering Facilities'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Restaurant and Catering Facilities' do
+        let(:building_type) { 'Restaurant and Catering Facilities' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Special Schools' do
-        building.building_type = 'Special Schools'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Special Schools' do
+        let(:building_type) { 'Special Schools' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Universities and Colleges' do
-        building.building_type = 'Universities and Colleges'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Universities and Colleges' do
+        let(:building_type) { 'Universities and Colleges' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Doctors, Dentists and Health Clinics' do
-        building.building_type = 'Community - Doctors, Dentist, Health Clinic'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Community - Doctors, Dentist, Health Clinic' do
+        let(:building_type) { 'Community - Doctors, Dentist, Health Clinic' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
 
-      it 'returns STANDARD when Nursery and Care-Homes' do
-        building.building_type = 'Nursing and Care Homes'
-        expect(building.building_standard).to eq 'STANDARD'
+      context 'and it is Nursing and Care Homes' do
+        let(:building_type) { 'Nursing and Care Homes' }
+
+        it 'returns STANDARD' do
+          expect(building.building_standard).to eq 'STANDARD'
+        end
       end
     end
 
     context 'when the building is not a standard type' do
-      it 'returns NON-STANDARD when Nuclear Facilities' do
-        building.building_type = 'Nuclear Facilities'
-        expect(building.building_standard).to eq 'NON-STANDARD'
+      context 'and it is Nuclear Facilities' do
+        let(:building_type) { 'Nuclear-Facilities' }
+
+        it 'returns  NON-STANDARD' do
+          expect(building.building_standard).to eq 'NON-STANDARD'
+        end
       end
 
-      it 'returns NON-STANDARD when Fitness or Training Establishments' do
-        building.building_type = 'Fitness or Training Establishments'
-        expect(building.building_standard).to eq 'NON-STANDARD'
+      context 'and it is Fitness-or-Training-Establishments' do
+        let(:building_type) { 'Fitness-or-Training-Establishments' }
+
+        it 'returns  NON-STANDARD' do
+          expect(building.building_standard).to eq 'NON-STANDARD'
+        end
       end
 
-      it 'returns NON-STANDARD when List X Property' do
-        building.building_type = 'List X Property'
-        expect(building.building_standard).to eq 'NON-STANDARD'
+      context 'and it is List-X-Property' do
+        let(:building_type) { 'List-X-Property' }
+
+        it 'returns  NON-STANDARD' do
+          expect(building.building_standard).to eq 'NON-STANDARD'
+        end
       end
     end
   end
@@ -863,6 +875,46 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         it 'returns the correct address' do
           expect(building.address_no_region).to eq '17 Sailors road, Southend-On-Sea, SS84 6VF'
         end
+      end
+    end
+  end
+
+  describe '.standard_building_type?' do
+    let(:building) { create(:facilities_management_building, building_type: building_type) }
+
+    described_class::BUILDING_TYPES[0..11].map { |type| type[:id] }.each do |type|
+      context "when the building type is #{type}" do
+        let(:building_type) { type }
+
+        it 'returns true' do
+          expect(building.standard_building_type?).to be true
+        end
+      end
+    end
+
+    described_class::BUILDING_TYPES[12..].map { |type| type[:id] }.each do |type|
+      context "when the building type is #{type}" do
+        let(:building_type) { type }
+
+        it 'returns false' do
+          expect(building.standard_building_type?).to be false
+        end
+      end
+    end
+
+    context 'when the building type is other' do
+      let(:building_type) { 'other' }
+
+      it 'returns false' do
+        expect(building.standard_building_type?).to be false
+      end
+    end
+
+    context 'when the building type is unexpected' do
+      let(:building_type) { 'Mechonis field' }
+
+      it 'returns false' do
+        expect(building.standard_building_type?).to be false
       end
     end
   end
