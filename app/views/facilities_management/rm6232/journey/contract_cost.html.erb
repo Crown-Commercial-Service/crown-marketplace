@@ -1,0 +1,33 @@
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+
+<% content_for :page_title, t('.question') %>
+
+<div class="procurement">
+  <div class="govuk-grid-row">
+    <%= form_tag @form_path, method: :get do %>
+        <div class="govuk-grid-column-two-thirds">
+          <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+          <%= govuk_form_group_with_optional_error(@journey, :contract_cost) do %>
+            <h1 class="govuk-heading-xl govuk-!-margin-top-0">
+              <%= t('.heading') %>
+            </h1>
+            <%= label_tag :contract_cost,  t('.question'), class: 'govuk-label' %>
+            <span class="govuk-caption-m">
+              <%= t('.subtitle') %>
+            </span>
+            <hr class="govuk-section-break govuk-section-break--s">
+            <%= display_error(@journey.steps[3], :contract_cost) %>
+            <div class="govuk-input__wrapper">
+            <div class="govuk-input__prefix" aria-hidden="true">£</div>
+              <%= text_field_tag :contract_cost, @journey.steps[3].contract_cost, class: "govuk-input ccs-number-field ccs-integer-field govuk-input--width-20 #{'govuk-input--error' if @journey.steps[3].errors[:contract_cost].any? }", maxlength: 11 %>
+            </div>
+          <% end %>
+          <hr class="govuk-section-break govuk-section-break--s">
+          <%= submit_tag t('common.submit'), class: "govuk-button", aria: { label: t('common.submit') } %>
+          <p>
+            <%= link_to t('.return_text'), facilities_management_rm3830_path, class: 'govuk-link' %>
+          </p>
+        </div>
+    <% end %>
+  </div>
+</div>

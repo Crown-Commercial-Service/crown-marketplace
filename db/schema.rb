@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_112653) do
+ActiveRecord::Schema.define(version: 2021_08_09_101712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -356,6 +356,82 @@ ActiveRecord::Schema.define(version: 2021_07_16_112653) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "aasm_state", limit: 30
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
+    t.integer "sector_code"
+    t.integer "estimated_contract_cost"
+    t.string "contract_name", limit: 100
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
+  end
+
+  create_table "facilities_management_rm6232_sectors", force: :cascade do |t|
+    t.string "name", limit: 30
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "facilities_management_rm6232_services", primary_key: "code", id: :string, limit: 5, force: :cascade do |t|
+    t.string "work_package_code", limit: 1, null: false
+    t.string "name", limit: 100
+    t.text "description"
+    t.boolean "total"
+    t.boolean "hard"
+    t.boolean "soft"
+    t.integer "sort_order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_facilities_management_rm6232_services_on_code"
+    t.index ["hard"], name: "index_facilities_management_rm6232_services_on_hard"
+    t.index ["soft"], name: "index_facilities_management_rm6232_services_on_soft"
+    t.index ["sort_order"], name: "index_facilities_management_rm6232_services_on_sort_order"
+    t.index ["total"], name: "index_facilities_management_rm6232_services_on_total"
+    t.index ["work_package_code"], name: "index_rm6232_fm_services_on_fm_work_packages_code"
+  end
+
+  create_table "facilities_management_rm6232_supplier_lot_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_supplier_id"
+    t.string "lot_number", limit: 5
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
+    t.text "sector_codes", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facilities_management_rm6232_supplier_id"], name: "index_fm_rm6232_supplier_lot_data_on_fm_rm6232_supplier_id"
+    t.index ["lot_number"], name: "index_fm_rm6232_supplier_lot_data_on_lot_number"
+  end
+
+  create_table "facilities_management_rm6232_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "supplier_name", limit: 255
+    t.string "contact_name", limit: 255
+    t.string "contact_email", limit: 255
+    t.string "contact_phone", limit: 255
+    t.boolean "sme"
+    t.string "duns", limit: 255
+    t.string "registration_number", limit: 255
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "address_town", limit: 255
+    t.string "address_county", limit: 255
+    t.string "address_postcode", limit: 255
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["supplier_name"], name: "index_facilities_management_rm6232_suppliers_on_supplier_name", unique: true
+  end
+
+  create_table "facilities_management_rm6232_work_packages", primary_key: "code", id: :string, limit: 1, force: :cascade do |t|
+    t.string "name", limit: 100
+    t.boolean "selectable"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_facilities_management_rm6232_work_packages_on_code"
+    t.index ["selectable"], name: "index_facilities_management_rm6232_work_packages_on_selectable"
+  end
+
   create_table "facilities_management_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
@@ -505,4 +581,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_112653) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_procurements", "users"
+  add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
+  add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
 end

@@ -1,0 +1,44 @@
+<%= render partial: 'shared/error_summary', locals: { errors: @journey.errors } %>
+
+<% content_for :page_title, t('.question') %>
+
+<div class="procurement">
+  <div class="govuk-grid-row">
+    <%= form_tag @form_path, method: :get do %>
+      <div class="govuk-grid-column-two-thirds">
+        <%= hidden_fields_for_previous_steps_and_responses(@journey) %>
+        <%= govuk_form_group_with_optional_error(@journey, :sector_code) do %>
+          <%= govuk_fieldset_with_optional_error(@journey, :sector_code) do %>
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h1 class="govuk-heading-xl govuk-!-margin-top-0">
+                <%= t('.heading') %>
+              </h1>
+              <h2 class="govuk-fieldset__heading">
+                <%= t('.question') %>
+              </h2>
+              <span class="govuk-caption-m">
+                <%= t('.subtitle') %>
+              </span>
+            </legend>
+            <hr class="govuk-section-break govuk-section-break--m">
+            <%= display_error(@journey.steps[2], :sector_code) %>
+            <div class="govuk-radios">
+              <% @journey.current_step.sectors.each do |sector| %>
+                <div class="govuk-radios__item">
+                  <%= radio_button_tag :sector_code, sector.id, sector.id == @journey.steps[2].sector_code.to_i, class: 'govuk-radios__input' %>
+                  <%= label_tag "sector_code_#{sector.id}", sector.name, class: 'govuk-label govuk-radios__label' %>
+                </div>
+              <% end %>
+            </div>
+          <%= hidden_field_tag :contract_cost, params[:contract_cost] if params[:contract_cost] %>
+            <hr class="govuk-section-break govuk-section-break--s">
+            <%= submit_tag t('common.submit'), class: "govuk-button", aria: { label: t('common.submit') } %>
+            <p>
+              <%= link_to t('.return_text'), facilities_management_rm3830_path, class: 'govuk-link' %>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

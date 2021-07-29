@@ -9,9 +9,8 @@
   <div class="govuk-grid-row govuk-!-margin-bottom-6">
     <div class="govuk-grid-column-one-third">
       <div class="fm-buyer-account-panel">
-        <p class='govuk-link--no-visited-state'>
-          <%= t('.quick_view')%>
-          <%#= link_to t('.quick_view'), '/facilities-management/RM6232/choose-services', class: 'ccs-font-weight-semi-bold fm-buyer-account-panel__title_no_link govuk-link--no-visited-state' %>
+        <p>
+          <%= link_to t('.quick_view'), '/facilities-management/RM6232/choose-services', class: 'ccs-font-weight-semi-bold fm-buyer-account-panel__title_no_link govuk-link--no-visited-state' %>
         </p>
         <p class="fm-buyer-account-panel__body govuk-!-top-margin-4">
         <%= t('.new_procurement_desc') %>

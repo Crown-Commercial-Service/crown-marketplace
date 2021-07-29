@@ -1,0 +1,19 @@
+code,name,selectable
+A,Contract Management,FALSE
+B,Contract Mobilisation,FALSE
+C,Social Value,FALSE
+D,Net Zero Carbon,FALSE
+E,Maintenance Services,TRUE
+F,Statutory Obligations,TRUE
+G,Landscaping Services,TRUE
+H,Catering Services,TRUE
+I,Cleaning Services,TRUE
+J,Workplace FM Services,TRUE
+K,Administrative support Services,TRUE
+L,Security Services,TRUE
+M,Waste Services,TRUE
+N,Miscellaneous FM Services,TRUE
+O,Specialist (Defence) FM Services,TRUE
+P,Computer-aided facilities management (CAFM),TRUE
+Q,Helpdesk Services,TRUE
+R,Management of Billable Works,TRUE

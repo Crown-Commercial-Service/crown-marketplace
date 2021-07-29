@@ -1,9 +1,14 @@
 class User < ApplicationRecord
   include RoleModel
 
-  has_many  :procurements,
+  has_many  :rm3830_procurements,
             inverse_of: :user,
             class_name: 'FacilitiesManagement::RM3830::Procurement',
+            dependent: :destroy
+
+  has_many  :rm6232_procurements,
+            inverse_of: :user,
+            class_name: 'FacilitiesManagement::RM6232::Procurement',
             dependent: :destroy
 
   has_one :buyer_detail,

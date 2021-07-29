@@ -1,5 +1,31 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/rm6232/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/rm6232/journey/choose_sector:
+          attributes:
+            sector_code:
+              blank: Select the sector your organisation belongs to
+        facilities_management/rm6232/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid_cafm: "'Generic CAFM Services' can only be selected when all other services are of type Soft FM"
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
+              invalid_multiple_cafm: Select only one CAFM service
+              too_short: Select at least one service you need to include in your procurement
+        facilities_management/rm6232/journey/contract_cost:
+          attributes:
+            contract_cost:
+              greater_than_or_equal_to: The estimated contract cost must be a number between 1 and 999,999,999
+              less_than_or_equal_to: The estimated contract cost must be a number between 1 and 999,999,999
+              not_a_number: The estimated contract cost must be a number between 1 and 999,999,999
+              not_an_integer: The estimated contract cost must be a number between 1 and 999,999,999
   facilities_management:
     rm6232:
       buyer_account:
@@ -16,6 +42,10 @@ en:
           new_procurement_desc: Quickly view suppliers who can provide services to your locations
           quick_view: Quick view suppliers
           return_to_page: To return to this page at any time, just click on 'My account'.
+      documents:
+        service_specification_document:
+          name: facilities-management/rm6232/RM6232 Service requirements and standards.pdf
+          text: Read the service specification document
       home:
         index:
           beforeyoustart: Before you start
@@ -32,6 +62,64 @@ en:
             <li>compliantly create your procurement bid back</li>
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
+      journey:
+        choose_locations:
+          heading: Regions
+          location_selected: region selected
+          locations_selected: regions selected
+          no_locations_selected: No regions selected
+          question: Where are your buildings located?
+          remove_all: Remove all
+          return_text: Return to your account
+          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
+        choose_sector:
+          heading: Sector
+          question: What sector does your organisation belong to?
+          return_text: Return to your account
+          subtitle: Choose one sector based on your organisation that requires facilities management services.
+        choose_services:
+          availiable_lots: 'Availiable lots:'
+          caption: Choose all facilities management services required within your estate, even if you want services in just one building. To see further information about services click on the 'Further details' link under each service. Alternatively, open the service specification document below and go to the relevant section.
+          caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
+          heading: Services
+          no_services_selected: No services selected
+          question: Select the facilities management services that you need
+          remove_all: Remove all
+          return_text: Return to your account
+          service_selected: service selected
+          service_type:
+            hard: Hard FM
+            soft: Soft FM
+            total: Total FM
+          services_selected: services selected
+        contract_cost:
+          heading: Contract cost
+          question: What is your estimate for the total contract cost?
+          return_text: Return to your account
+          subtitle: Enter your estimate for the contract cost. Include everything in your calculation
+      procurements:
+        new:
+          based_on_information_provided: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          cancel_text: Return to your account
+          change_lower: change
+          change_upper: Change
+          contract_cost: 'Contract cost:'
+          estimated_cost: Your estimated contract cost
+          new_name_label: Enter a name or reference to save this search.
+          quick_view_results: Quick view results
+          region: Region
+          regions: "%{region} (%{count})"
+          return_to_contract_cost: Return to contract cost
+          save_and_continue: Save and continue to procurement
+          save_for_later: Save and return to procurements dashboard
+          save_headline: Save your search
+          sector: 'Sector:'
+          selection_summary: Selection summary
+          service: Service
+          services: "%{service} (%{count})"
+          sub_lot: Sub-lot %{lot_number}
+          suppliers_shortlisted_html: <span style="font-size:larger">%{count}</span> supplier(s) shortlisted
+          who_are: who can provide the services you require in your location(s)
       sessions:
         new:
           email_hint_html: Enter the email address you used to set up your account.

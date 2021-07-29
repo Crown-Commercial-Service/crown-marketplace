@@ -158,6 +158,9 @@ Rails.application.routes.draw do
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
+
+      resources :procurements do
+      end
     end
 
     get '/:framework/start', to: 'journey#start', as: 'journey_start'

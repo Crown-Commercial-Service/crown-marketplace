@@ -1,0 +1,157 @@
+code,name,description,work_package_code,total,hard,soft,sort_order
+A.1,Integration,"Duis suscipit aliquet hendrerit. Praesent eu mollis velit. Sed cursus congue ante, vel eleifend libero laoreet et. Curabitur ultrices mi sed dolor",A,TRUE,TRUE,TRUE,0
+A.2,Health and Safety,"Sed eu rutrum risus, ac maximus libero. Suspendisse tellus lectus, elementum vel ultricies eu, interdum ut elit. Integer accumsan mi in",A,TRUE,TRUE,TRUE,1
+A.3,Management Services,"Proin vehicula lacus vitae enim consequat molestie. Aliquam venenatis justo et elementum interdum. Fusce tempus,",A,TRUE,TRUE,TRUE,2
+A.4,Service Delivery Plans,"Etiam tincidunt efficitur velit vel maximus. Sed lorem nulla, suscipit vitae mollis",A,TRUE,TRUE,TRUE,3
+A.5,Fire Safety,"Nam id auctor arcu, ut elementum ipsum. Phasellus mollis libero nec magna finibus,",A,TRUE,TRUE,TRUE,4
+A.6,Accessibility Services,"In aliquet quam sit amet erat laoreet, vitae malesuada sapien ornare. Vivamus quis tellus ut nisi luctus vehicula luctus non quam. Etiam nec",A,TRUE,TRUE,TRUE,5
+A.7,Risk management,Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum ante ipsum primis,A,TRUE,TRUE,TRUE,6
+A.8,Customer satisfaction,"Nam placerat enim eget eleifend sagittis. Vivamus rhoncus enim sem, vitae hendrerit felis eleifend vel. Integer consequat arcu",A,TRUE,TRUE,TRUE,7
+A.9,Reporting,"Vestibulum at varius dui. Nulla iaculis mi risus, eget posuere velit ultricies sit amet. Vivamus leo eros, maximus in sodales sit amet, pharetra",A,TRUE,TRUE,TRUE,8
+A.10,Performance self-monitoring,"Vivamus volutpat aliquam nisi, id imperdiet purus consectetur eget. In nunc",A,TRUE,TRUE,TRUE,9
+A.11,Business Continuity and Disaster Recovery (BCDR) Plan,"Maecenas feugiat interdum diam, id elementum nunc auctor ac. Proin at hendrerit leo, et dapibus mi. Vestibulum arcu orci, mattis in ipsum",A,TRUE,TRUE,TRUE,10
+A.12,Quality Management Systems,"Curabitur malesuada nulla elit, in bibendum nunc malesuada eget. Phasellus facilisis tellus sem, eu maximus risus feugiat",A,TRUE,TRUE,TRUE,11
+A.13,"Staff Management, Recruitment and Training","Vestibulum quis elit ac dolor volutpat tempus ut ac tellus. Mauris eu pellentesque ipsum. Pellentesque aliquam, velit non",A,TRUE,TRUE,TRUE,12
+A.14,Selection and Management of Subcontractors,"Nullam tellus justo, scelerisque a leo volutpat, fermentum condimentum nisi. Donec orci sem, feugiat semper posuere",A,TRUE,TRUE,TRUE,13
+A.15,Compliance ,Donec egestas lectus nec turpis sodales finibus. Quisque sed mi ac velit sollicitudin tempor eleifend tempor erat. Nunc blandit aliquam enim vitae ullamcorper.,A,TRUE,TRUE,TRUE,14
+A.16,Sustainability,Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas pellentesque ante et tempor,A,TRUE,TRUE,TRUE,15
+B.1,Contract Mobilisation ,Nullam at lacus sed erat placerat mollis sed at mi.,B,TRUE,TRUE,TRUE,0
+C.1,Social Value ,"Pellentesque sit amet finibus massa, sit amet ultricies enim. Nulla vitae ex sed urna consectetur egestas. Curabitur venenatis imperdiet sagittis. Nam vehicula nunc",C,TRUE,TRUE,TRUE,0
+D.1,Net Zero Carbon,Vestibulum vehicula elementum eleifend. Donec convallis egestas sapien in porttitor. Nunc nibh,D,TRUE,TRUE,TRUE,0
+E.1,Mechanical and Electrical Engineering Maintenance,Vestibulum fermentum faucibus erat. Nulla luctus ut lacus a elementum.,E,TRUE,TRUE,FALSE,0
+E.2,Ventilation and air conditioning systems maintenance ,"Ut iaculis volutpat nisi vel laoreet. Donec feugiat, mauris vitae venenatis auctor, mi massa pharetra ante, eu",E,TRUE,TRUE,FALSE,1
+E.3,Environmental cleaning service,Nam congue augue vitae ligula consectetur feugiat. Pellentesque a faucibus tellus. Cras vitae elit ex.,E,TRUE,TRUE,FALSE,2
+E.4,Fire detection and firefighting systems maintenance,"Sed eu euismod libero. Suspendisse nec nibh lacinia, elementum dui id, auctor mauris. Nullam finibus posuere mauris sed scelerisque. Proin id tempus turpis, at",E,TRUE,TRUE,FALSE,3
+E.5,"Lifts, hoists and conveyance systems maintenance","Integer commodo nisl quis dui sagittis, eu fringilla tellus pharetra. Aliquam a fringilla nunc. Pellentesque",E,TRUE,TRUE,FALSE,4
+E.6,"Security, access and intruder systems maintenance",Vivamus vulputate nunc id faucibus iaculis. Phasellus sed metus nec nisi posuere pharetra efficitur eget,E,TRUE,TRUE,FALSE,5
+E.7,Internal and external building fabric maintenance,"In ligula enim, vestibulum at odio in, laoreet semper libero. Pellentesque pharetra sem sapien, quis egestas",E,TRUE,TRUE,FALSE,6
+E.8,Reactive maintenance services,"Vivamus porta, orci ac fermentum mattis, nunc ipsum pulvinar nibh, iaculis lobortis ex ipsum quis orci. Ut eros ex, vulputate cursus molestie",E,TRUE,TRUE,FALSE,7
+E.9,Planned / Group re-lamping service ,"Maecenas vulputate mauris non mauris pellentesque luctus. Donec euismod purus ligula, ac vulputate quam ultricies vel. Ut justo nibh, consectetur et neque nec, euismod facilisis",E,TRUE,TRUE,FALSE,8
+E.10,Automated barrier control system maintenance ,Phasellus sit amet pharetra massa. Class aptent taciti sociosqu ad litora,E,TRUE,TRUE,FALSE,9
+E.11,Building Management System (BMS) maintenance,Nullam imperdiet elit id arcu pulvinar pretium. Fusce accumsan nisi quis,E,TRUE,TRUE,FALSE,10
+E.12,Standby power system maintenance,"Nulla at nunc tristique, ornare erat ullamcorper, cursus diam. Duis elementum turpis",E,TRUE,TRUE,FALSE,11
+E.13,High Voltage (HV) and switchgear maintenance,"Phasellus lectus velit, viverra sit amet eleifend vel, auctor vel nibh. Nulla posuere posuere purus vitae pellentesque. Donec hendrerit congue blandit. Vivamus volutpat vulputate justo",E,TRUE,TRUE,FALSE,12
+E.14,Catering equipment maintenance,"Praesent tincidunt metus sed nulla molestie suscipit. Integer feugiat posuere ipsum nec fermentum. Aenean vel tellus tincidunt, vehicula elit eu, ullamcorper nisi. Nunc",E,TRUE,TRUE,FALSE,13
+E.15,Audio Visual (AV) equipment maintenance,"Fusce eros sapien, suscipit non diam ac, interdum rhoncus nunc. Nunc sed luctus orci. Mauris lorem velit, elementum vel leo",E,TRUE,TRUE,FALSE,14
+E.16,Television cabling maintenance,"Aenean lacinia elit sapien, ut volutpat arcu viverra eleifend. Sed ut dapibus nisl. Suspendisse a nunc",E,TRUE,TRUE,FALSE,15
+E.17,Mail room equipment maintenance,"Nulla convallis convallis vestibulum. Aenean in turpis nec arcu tempus gravida. Vivamus eros velit, auctor id felis in, consequat convallis lectus.",E,TRUE,TRUE,FALSE,16
+E.18,Office Machinery Servicing and Maintenance,"Donec ullamcorper imperdiet arcu, a rutrum metus aliquet id. Suspendisse non aliquam lectus. Sed ut",E,TRUE,TRUE,FALSE,17
+E.19,Voice announcement system maintenance,"Mauris nisi nisl, hendrerit nec sollicitudin ut, vestibulum ut mauris. Duis ornare eget massa quis hendrerit.",E,TRUE,TRUE,FALSE,18
+E.20,Locksmith Services,"Pellentesque vel sagittis enim. Aliquam eleifend lectus nec nunc pellentesque sagittis. Cras a risus accumsan, interdum purus eget, bibendum diam.",E,TRUE,TRUE,FALSE,19
+E.21,Specialist maintenance Services,"Fusce sed luctus nunc, quis blandit mi. Nullam ullamcorper lectus at lectus imperdiet ultricies. Suspendisse in semper orci. Aliquam erat volutpat. In malesuada congue",E,TRUE,TRUE,FALSE,20
+F.1,Asbestos Management,"Donec libero ligula, rutrum quis rutrum eget, volutpat id nisl. Aenean vehicula efficitur orci, in consequat dui suscipit vitae. Nunc elit lacus, porta et",F,TRUE,TRUE,FALSE,0
+F.2,Water Hygiene Maintenance,"Etiam placerat nunc vel mi vehicula vehicula. Nullam ac lacus a mauris egestas cursus. Quisque eget auctor dolor, vitae pharetra ex. Nunc sit amet",F,TRUE,TRUE,FALSE,1
+F.3,Statutory Inspections,"Fusce lobortis rhoncus lectus vel mollis. Nullam sodales pharetra venenatis. Sed ligula velit, bibendum non condimentum id, rhoncus quis magna. Morbi arcu eros,",F,TRUE,TRUE,FALSE,2
+F.4,Portable Appliance Testing,"Suspendisse maximus nibh eros, ultrices auctor turpis pellentesque eget. Phasellus vel euismod leo. Suspendisse consequat, nulla at porttitor finibus, lorem",F,TRUE,TRUE,FALSE,3
+F.5,"Miscellaneous Surveys, Audits and Testing Services ","Integer tempus tempus eleifend. Sed at velit eu tortor faucibus ornare in eget nisi. Mauris ornare erat sed risus fringilla,",F,TRUE,TRUE,FALSE,4
+F.6,Condition surveys,"Pellentesque malesuada non justo et gravida. Nulla ac lacus sit amet sem tristique ultrices vitae at tortor. Mauris dignissim, orci id tempus interdum,",F,TRUE,TRUE,FALSE,5
+F.7, Electrical Testing ,"Praesent sed dolor turpis. Ut turpis arcu, iaculis non metus eu, posuere imperdiet erat. Sed tincidunt ex a ipsum feugiat dapibus. Nam quis leo non",F,TRUE,TRUE,FALSE,6
+F.8, Fire Risk Assessments ,"Donec sit amet semper lorem, at egestas lectus. Maecenas et mauris risus. Mauris sollicitudin bibendum neque. Duis a",F,TRUE,TRUE,FALSE,7
+F.9,Building Information Modelling (BIM) and Government Soft Landings (GSL),Nunc a tortor et leo feugiat ullamcorper et quis turpis. Nullam lorem,F,TRUE,TRUE,FALSE,8
+F.10,Display Energy Certificates (DECs),"Quisque vitae justo condimentum, egestas orci quis, vulputate dui. Suspendisse fermentum nibh non ante",F,TRUE,TRUE,FALSE,9
+F.11,Energy Performance Certificates (EPCs) ,"Aenean sed purus est. Proin est leo, laoreet sollicitudin tellus blandit, ultrices cursus leo. Pellentesque interdum lectus lacus. Duis et ornare",F,TRUE,TRUE,FALSE,10
+F.12,Radon Testing Services ,"Curabitur vel enim mi. In eget erat ut sapien consequat vehicula. Donec massa nibh, congue nec congue ut, ultricies",F,TRUE,TRUE,FALSE,11
+F.13,Permit to Work ,"Sed sed nisl pharetra, faucibus diam tempor, interdum lorem. Mauris auctor venenatis elit. Praesent vitae quam elit.",F,TRUE,TRUE,FALSE,12
+G.1,Hard Landscaping Services,"Integer eleifend ipsum at dapibus sollicitudin. Donec sodales sapien nunc, in consequat orci pellentesque eu. In ac hendrerit",G,TRUE,TRUE,TRUE,0
+G.2,Soft Landscaping Services,"Integer vestibulum lorem eros, sed consequat dui interdum eget. Aenean bibendum",G,TRUE,TRUE,TRUE,1
+G.3,Tree Surgery (Arboriculture),"Quisque mattis, mi ac ullamcorper posuere, tellus sapien blandit lacus, in convallis",G,TRUE,TRUE,TRUE,2
+G.4,Planned snow and ice clearance,"Aenean ac tempus massa. Aliquam vehicula porttitor quam, non hendrerit justo egestas at. Suspendisse vehicula vitae urna ac fermentum. Duis",G,TRUE,TRUE,TRUE,3
+G.5,Reactive snow and ice clearance,Vestibulum rutrum pellentesque enim ut iaculis. Aliquam egestas pellentesque lectus eget convallis. Etiam,G,TRUE,TRUE,TRUE,4
+G.6,"Reservoirs, ponds, river walls and water features maintenance","Mauris scelerisque nunc sit amet erat rutrum finibus. Nullam vitae risus ornare, bibendum libero et, eleifend sem. Sed sodales sodales interdum.",G,TRUE,TRUE,TRUE,5
+G.7,Internal planting,"Nunc eu metus gravida, porta elit consectetur, semper risus. Nulla mattis erat velit, in porta ipsum semper ac. Phasellus nec lacus eu tellus eleifend facilisis",G,TRUE,TRUE,TRUE,6
+G.8,Cut flowers and Christmas trees,Curabitur volutpat sit amet tortor at malesuada. Integer interdum elementum,G,TRUE,TRUE,TRUE,7
+H.1,Chilled potable water,"Vestibulum blandit id ex quis congue. Proin ipsum magna, tristique eu venenatis vitae, placerat id dui.",H,TRUE,FALSE,TRUE,0
+H.2,Retail Services / Convenience Store,In tincidunt et ex eu laoreet. Nunc pharetra consequat ante sed tristique.,H,TRUE,FALSE,TRUE,1
+H.3,Deli / coffee bar,"Phasellus ultricies egestas turpis, id molestie justo eleifend a. Fusce ut ante vitae risus accumsan luctus. Ut",H,TRUE,FALSE,TRUE,2
+H.4,Events and functions  ,"Mauris aliquet bibendum volutpat. Donec ornare libero nec mauris rutrum hendrerit. Ut nec elit semper, mollis neque ac, ultrices diam. Maecenas egestas,",H,TRUE,FALSE,TRUE,3
+H.5,Full service restaurant,Mauris sodales libero in eleifend rutrum. Proin semper sapien vel nulla hendrerit accumsan. Maecenas,H,TRUE,FALSE,TRUE,4
+H.6,Hospitality and meetings,"Etiam hendrerit nisi vel sapien luctus dictum. Integer egestas viverra odio aliquet vehicula. Vivamus ligula elit, fermentum",H,TRUE,FALSE,TRUE,5
+H.7,Outside catering,"Fusce sit amet diam laoreet, sodales metus feugiat, commodo nisl. Sed et tristique neque. Etiam vitae eleifend elit, ornare",H,TRUE,FALSE,TRUE,6
+H.8,Trolley service,Suspendisse elementum dignissim velit id vehicula. Nunc vestibulum sodales rutrum.,H,TRUE,FALSE,TRUE,7
+H.9,Vending Services (food and beverages),"Fusce mattis ante a tortor gravida, eu vulputate nulla sollicitudin. Donec",H,TRUE,FALSE,TRUE,8
+H.10,Residential catering Services,"Duis pharetra euismod lacinia. Duis ultrices ligula quis cursus hendrerit. Fusce faucibus,",H,TRUE,FALSE,TRUE,9
+I.1,Routine cleaning,"Mauris arcu augue, blandit a gravida id, condimentum et massa. Donec at enim maximus nisi molestie tempus. Morbi iaculis id sem a rhoncus.",I,TRUE,FALSE,TRUE,0
+I.2,Infection Control / Touchpoint cleaning ,"Donec lobortis ultrices nisl. Aliquam erat nisi, tristique sed egestas at, auctor vel eros. Donec lobortis id lorem id hendrerit. Donec",I,TRUE,FALSE,TRUE,1
+I.3,Cleaning of integral barrier mats,"Nullam purus est, consequat interdum tellus ultricies, imperdiet vulputate ex. Phasellus molestie consectetur eleifend. Donec venenatis tempor eros. Nunc vestibulum",I,TRUE,FALSE,TRUE,2
+I.4,Mobile cleaning Services,Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec iaculis eros vel hendrerit rhoncus. Nulla sollicitudin nulla,I,TRUE,FALSE,TRUE,3
+I.5,Deep (periodic) cleaning,"Vestibulum laoreet, turpis quis consequat accumsan, arcu lacus iaculis lorem, id",I,TRUE,FALSE,TRUE,4
+I.6,Cleaning of external areas,Nulla rutrum vehicula ligula auctor laoreet. Ut vitae diam libero. Praesent congue velit sed,I,TRUE,FALSE,TRUE,5
+I.7,Window cleaning (internal),"Etiam rutrum arcu id congue bibendum. Suspendisse egestas, orci vel varius posuere, lectus purus",I,TRUE,FALSE,TRUE,6
+I.8,Window cleaning (external),Cras luctus facilisis nibh eget mollis. Sed vitae leo ex.,I,TRUE,FALSE,TRUE,7
+I.9,Cleaning of communications and equipment rooms,"Sed iaculis scelerisque elementum. Suspendisse et ultricies dolor, quis mattis ipsum. Maecenas aliquet interdum accumsan. Sed",I,TRUE,FALSE,TRUE,8
+I.10,Reactive cleaning (outside cleaning operational hours),"Phasellus gravida dui sit amet lacinia accumsan. Proin porttitor velit id lectus tempus pulvinar. Duis ornare nunc dignissim nibh dapibus, eu posuere lectus laoreet. Donec",I,TRUE,FALSE,TRUE,9
+I.11,Housekeeping,Sed ornare pretium vestibulum. Sed sit amet odio urna. In semper elit sit,I,TRUE,FALSE,TRUE,10
+I.12,IT equipment cleaning,"Morbi ornare lacus a libero vestibulum, eget pellentesque purus imperdiet. Donec molestie lorem sed nisi varius tristique. Sed facilisis",I,TRUE,FALSE,TRUE,11
+I.13,Specialist cleaning ,Sed sodales orci et laoreet congue. Interdum et malesuada fames ac ante ipsum primis,I,TRUE,FALSE,TRUE,12
+I.14,Cleaning of curtains and window blinds ,"Fusce porttitor eros id nibh dictum, et egestas quam malesuada. Integer a mi ut",I,TRUE,FALSE,TRUE,13
+I.15,Medical and clinical cleaning,Quisque a ligula vel tellus imperdiet commodo. Vestibulum interdum pretium nisl vitae pharetra. Suspendisse vel elit metus. Aliquam eu eros sem.,I,TRUE,FALSE,TRUE,14
+I.16,Pest control Services,"Quisque ac aliquam nisl. Etiam non libero consequat, blandit risus at, sodales est. In",I,TRUE,FALSE,TRUE,15
+I.17,Linen and laundry Services,"Morbi sodales bibendum velit venenatis gravida. Curabitur auctor volutpat nulla vitae euismod. In finibus, massa id consectetur porttitor, lacus neque sodales risus, at interdum mi",I,TRUE,FALSE,TRUE,16
+I.18,Hotel Services ,"Ut rhoncus libero ut lectus ultrices, eget mollis velit fermentum.",I,TRUE,FALSE,TRUE,17
+J.1,Mail Services,"Donec maximus urna ut tellus venenatis, vitae venenatis risus ultricies. Vestibulum ultrices risus eget rhoncus blandit. Vestibulum id purus eleifend metus consequat pharetra.",J,TRUE,FALSE,TRUE,0
+J.2,Internal messenger Service,"Nullam lacus odio, pulvinar vel erat a, porta blandit mauris. Integer sed dapibus erat,",J,TRUE,FALSE,TRUE,1
+J.3,Courier booking and distribution services,"Maecenas at varius lacus. Integer auctor mi tristique dui gravida egestas. Curabitur vel urna vel nulla aliquet posuere. Etiam elit ligula, porttitor eu",J,TRUE,FALSE,TRUE,2
+J.4,Handyman Services,"Suspendisse potenti. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque nec arcu",J,TRUE,FALSE,TRUE,3
+J.5,Move and space management (internal moves),"Nullam ligula diam, congue vitae orci porttitor, commodo laoreet lorem. Phasellus purus ex, bibendum et lectus mattis, varius pulvinar ante. Vivamus",J,TRUE,FALSE,TRUE,4
+J.6,Porterage,"Proin magna metus, malesuada eget malesuada quis, efficitur vel turpis. Phasellus sed viverra tortor, quis luctus felis. Integer luctus libero magna, quis venenatis justo fermentum",J,TRUE,FALSE,TRUE,5
+J.7,Clocks,"Praesent nibh ipsum, congue condimentum semper id, vulputate porta tortor. Vivamus lobortis leo orci, a ornare felis lacinia eget. Etiam tincidunt pellentesque dapibus. Nullam",J,TRUE,FALSE,TRUE,6
+J.8,Signage,"Nunc augue nisl, finibus vel eros iaculis, consectetur hendrerit ligula. Nulla non dignissim ipsum. Morbi ornare eget",J,TRUE,FALSE,TRUE,7
+J.9,Archiving (on-site),"Ut elementum lorem ullamcorper dui scelerisque, ut sodales risus sagittis. Suspendisse ac diam at lacus tristique aliquet. Ut semper sagittis nulla, aliquam ullamcorper",J,TRUE,FALSE,TRUE,8
+J.10,Furniture Management,"Sed efficitur cursus massa, vitae egestas enim. Sed nec vehicula dui, vel consectetur dui. Donec pretium ullamcorper ante, eu",J,TRUE,FALSE,TRUE,9
+J.11,Space management,"Nullam ac mi vel nibh commodo laoreet. Aliquam nulla sapien, eleifend ut faucibus id, condimentum ut ligula.",J,TRUE,FALSE,TRUE,10
+J.12,Cable management,"In quis tristique velit. Curabitur sodales tincidunt massa, vel rhoncus tortor. Maecenas commodo elit congue",J,TRUE,FALSE,TRUE,11
+J.13,Reprographics Service,Sed nec porttitor ipsum. Duis semper consequat viverra. Sed non tincidunt,J,TRUE,FALSE,TRUE,12
+J.14,Stores and Goods Management Services,"Nunc vestibulum dui at nulla auctor, ac tristique diam vestibulum. Vestibulum interdum eu mauris vitae suscipit. Vivamus ornare",J,TRUE,FALSE,TRUE,13
+J.15,Portable washroom solutions,"In et elit suscipit, posuere massa et, venenatis odio. Sed in molestie arcu. Proin id tristique libero. Sed venenatis pulvinar magna.",J,TRUE,FALSE,TRUE,14
+J.16,Administrative support Services,"Nam ut sem arcu. Proin feugiat a nunc quis elementum. Donec lobortis nunc diam, nec sollicitudin nulla ullamcorper sed.",J,TRUE,FALSE,TRUE,15
+K.1,Reception Service,"Integer sit amet mattis nisi. Nullam efficitur congue ligula eget congue. Sed tincidunt sollicitudin consequat. Phasellus in lorem elementum, condimentum",K,TRUE,FALSE,TRUE,0
+K.2,Taxi booking Service,"Phasellus porttitor turpis sit amet rhoncus suscipit. Nullam est purus, iaculis eget ornare ut, rhoncus et ligula. Donec sit amet lobortis magna,",K,TRUE,FALSE,TRUE,1
+K.3,Car park management and booking,Nulla ullamcorper turpis in massa tristique malesuada. Nullam rutrum hendrerit tortor eget,K,TRUE,FALSE,TRUE,2
+K.4,Voice announcement system operation,Sed varius aliquet augue in semper. Maecenas porta consectetur mauris ac posuere. Donec suscipit ipsum non posuere,K,TRUE,FALSE,TRUE,3
+K.5,Concierge Services ,"Sed at felis ante. Duis feugiat aliquet nisi, vitae faucibus arcu dictum non. Vivamus vitae",K,TRUE,FALSE,TRUE,4
+L.1,Static Manned Guarding Service,"Morbi consequat, nibh vel varius lacinia, nisi nulla vestibulum massa, vel facilisis diam ipsum a ligula. Praesent quis est quis sem consectetur condimentum. Aliquam",L,TRUE,FALSE,TRUE,0
+L.2,CCTV / alarm monitoring,"Curabitur quam sapien, sodales vel auctor vel, scelerisque hendrerit est. Aliquam augue mi, accumsan a magna pretium,",L,TRUE,FALSE,TRUE,1
+L.3,Control of access - Staff and Visitors ,"Aenean sodales dictum ex. Cras congue pharetra ante, non ultrices metus",L,TRUE,FALSE,TRUE,2
+L.4,Control of access - Vehicles ,"Nunc nisl nulla, viverra a egestas nec, luctus et ante. Sed nisi",L,TRUE,FALSE,TRUE,3
+L.5,Emergency response,"Sed vitae mi sit amet sem blandit faucibus. Suspendisse potenti. Mauris sit amet gravida ipsum. Aenean congue vitae sapien sodales dapibus. Pellentesque eros diam,",L,TRUE,FALSE,TRUE,4
+L.6,Patrols (fixed or static guarding),Nunc viverra commodo est quis sagittis. Pellentesque nec sem vitae,L,TRUE,FALSE,TRUE,5
+L.7,Management of visitors and passes,"Ut ligula ante, tincidunt at pretium vitae, dictum faucibus dolor. Ut eget scelerisque ipsum, mattis",L,TRUE,FALSE,TRUE,6
+L.8,Reactive guarding,Sed feugiat molestie eleifend. Praesent nec justo lacus. Integer sodales vestibulum lacinia.,L,TRUE,FALSE,TRUE,7
+L.9,Additional security Services,"Duis ultrices, ligula sed porta rutrum, urna turpis mattis libero, nec porttitor ligula mi non velit. Aenean dui est, finibus sed egestas eget, pulvinar id",L,TRUE,FALSE,TRUE,8
+L.10,Enhanced security requirements,"In hendrerit id libero ut suscipit. In hac habitasse platea dictumst. Ut a vulputate leo, rutrum pharetra ligula. Maecenas eu justo eget sapien suscipit",L,TRUE,FALSE,TRUE,9
+L.11,Key holding,Aliquam in mollis nunc. Nunc viverra ligula et purus pretium blandit. In id tortor lorem. Donec,L,TRUE,FALSE,TRUE,10
+L.12,Lock Up / open up of Buyer Premises,Curabitur cursus lacus in laoreet porta. Etiam ut sapien mauris. Curabitur,L,TRUE,FALSE,TRUE,11
+L.13,Patrols (mobile via a specific visiting vehicle),"In fermentum mattis nisl a finibus. Nunc ullamcorper mollis libero, nec blandit massa ultricies vitae. Duis viverra gravida risus. Praesent bibendum, velit vel semper",L,TRUE,FALSE,TRUE,12
+L.14,Remote CCTV / alarm monitoring,"Sed ut scelerisque elit. Proin sodales, diam et egestas vulputate, enim diam rutrum urna, et hendrerit nunc ante non justo. Proin",L,TRUE,FALSE,TRUE,13
+L.15,Blended Static Manned Guarding Service,Quisque sollicitudin viverra faucibus. Mauris pharetra dapibus ultrices. Etiam a justo lectus. Morbi sed lorem nec,L,TRUE,FALSE,TRUE,14
+M.1,On Site / Mobile Classified Waste Shredding Service,Suspendisse potenti. Mauris non eros et odio egestas convallis sed id ligula. Nam et ornare massa. Vestibulum finibus,M,TRUE,FALSE,TRUE,0
+M.2,Off Site / Mobile Classified Waste Shredding Service,Aliquam fermentum purus at neque finibus pulvinar. Integer non tempor libero.,M,TRUE,FALSE,TRUE,1
+M.3,General waste,"Nulla pretium eros vel sodales pellentesque. Ut rhoncus, lectus et feugiat semper, diam lectus lobortis",M,TRUE,FALSE,TRUE,2
+M.4,Recycled waste and waste for re-use,"Nullam bibendum arcu at tellus sodales sagittis. Duis ullamcorper ipsum ligula, eget gravida libero viverra vel.",M,TRUE,FALSE,TRUE,3
+M.5,Hazardous waste,Aliquam erat volutpat. Praesent molestie a quam quis facilisis. Donec quis nunc urna. Interdum et malesuada fames ac ante ipsum,M,TRUE,FALSE,TRUE,4
+M.6,Specialist Waste Destruction Services ,Sed volutpat lorem vel neque congue vehicula. Class aptent taciti sociosqu,M,TRUE,FALSE,TRUE,5
+M.7,Clinical Waste,Ut accumsan metus finibus odio lobortis tempus. In hac habitasse platea dictumst. Fusce sed arcu ut mauris cursus semper. Etiam tincidunt arcu sit amet nulla,M,TRUE,FALSE,TRUE,6
+M.8,Feminine hygiene waste,"Etiam sed bibendum lorem. Integer sit amet aliquet diam, in finibus sem. Phasellus porta suscipit velit eu condimentum. Nulla facilisi. Donec felis nibh, suscipit at",M,TRUE,FALSE,TRUE,7
+N.1,Childcare facility,"Donec efficitur convallis magna, sed placerat tortor pellentesque eget. Donec",N,TRUE,FALSE,TRUE,0
+N.2,Sports and leisure,Suspendisse elementum risus id posuere porta. Mauris dapibus eleifend diam quis rhoncus.,N,TRUE,FALSE,TRUE,1
+N.3,"Transport, Driver and Vehicle Service","Fusce iaculis velit et gravida ultricies. Cras posuere interdum eleifend. Pellentesque finibus, arcu vitae viverra tincidunt,",N,TRUE,FALSE,TRUE,2
+N.4,First aid and medical service,"Pellentesque ut sagittis ante. Vestibulum elementum tristique dolor sit amet molestie. Vivamus leo neque, pellentesque vitae cursus vel,",N,TRUE,FALSE,TRUE,3
+N.5,Flag flying service,"Fusce fringilla, enim sed eleifend tempor, urna neque imperdiet odio, ac consectetur nisl ex non eros. Integer ut lorem nec sem",N,TRUE,FALSE,TRUE,4
+N.6,"Journal, magazine and newspaper supply","Etiam at pellentesque lorem, nec pulvinar tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus",N,TRUE,FALSE,TRUE,5
+N.7,Hairdressing Services,Vivamus ultricies ultrices turpis. Sed eu ultrices turpis. Aliquam hendrerit ex id volutpat tristique. Donec consequat lacus vel arcu,N,TRUE,FALSE,TRUE,6
+N.8,Footwear cobbling Services,"Mauris tortor felis, venenatis in commodo consequat, iaculis sit amet tellus. Donec",N,TRUE,FALSE,TRUE,7
+N.9,Provision of chaplaincy support Services,"Pellentesque tincidunt diam sit amet pellentesque suscipit. Fusce aliquam maximus mi in blandit. Aliquam eget maximus lacus, in maximus",N,TRUE,FALSE,TRUE,8
+N.10,Housing and residential accommodation management,"Etiam sit amet venenatis sem, ut pulvinar ex. Mauris ultrices tellus eu magna dignissim, eget",N,TRUE,TRUE,TRUE,9
+N.11,Training establishment management and booking Service,"Quisque vitae metus fringilla, dictum diam ac, interdum tortor. Quisque dapibus dolor ut ipsum venenatis, eu condimentum dui posuere. Morbi sed volutpat",N,TRUE,FALSE,TRUE,10
+N.12,Energy and utilities management bureau Services,"Maecenas leo orci, tincidunt eu lacinia in, feugiat eu est. Morbi ac ligula quam. Suspendisse mauris mauris,",N,TRUE,TRUE,FALSE,11
+N.13,Janitor Services (Education),Aliquam erat volutpat. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac,N,TRUE,FALSE,TRUE,12
+N.14,Specialist Health FM Services,Nulla at massa et enim vestibulum ornare. Vivamus et metus fermentum,N,TRUE,FALSE,TRUE,13
+O.1,End-User Accommodation Services,"Quisque nibh augue, tristique sed orci et, vehicula vehicula mauris. Praesent vitae finibus arcu. Duis dictum sollicitudin justo. Duis accumsan blandit congue.",O,TRUE,FALSE,FALSE,0
+O.2,Management and Control of Ranges and Training Areas (MCRT),"Pellentesque mollis massa lectus, at imperdiet libero fringilla malesuada. Curabitur lacinia, ipsum sit amet maximus dapibus, lacus",O,TRUE,FALSE,FALSE,1
+O.3,Training Areas and Ranges Operation and Management (TAROM),"Nullam interdum, risus in consequat ullamcorper, dolor velit sagittis dolor, vel placerat nulla orci in eros. Nam",O,TRUE,FALSE,FALSE,2
+O.4,Rural Estate Maintenance (REM) Services,"Nam tincidunt, dolor id mattis elementum, lacus ipsum auctor leo, ut interdum nibh urna sit amet",O,TRUE,FALSE,FALSE,3
+O.5,Land Management Service (LMS),"In sit amet lacus vel nisi luctus luctus vitae at ante. Sed libero neque, rutrum",O,TRUE,FALSE,FALSE,4
+P.1,Generic CAFM Services ,"Quisque dignissim vulputate metus in tempor. Quisque mattis dui vel lectus congue, at pulvinar sapien dapibus. Fusce",P,FALSE,FALSE,TRUE,0
+P.2,TFM / Hard FM CAFM Requirements ,"Ut maximus mauris tempus augue bibendum, ut facilisis dolor sollicitudin. Etiam condimentum diam et mi consequat, vitae",P,TRUE,TRUE,TRUE,1
+Q.1,Helpdesk Services,"Praesent sed neque quis justo luctus volutpat eget varius sem. Cras massa metus,",Q,TRUE,TRUE,TRUE,0
+R.1,Management of Billable Works,"Praesent eget massa maximus, maximus orci quis, fermentum augue. Fusce hendrerit",R,TRUE,TRUE,TRUE,0

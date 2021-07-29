@@ -3,8 +3,8 @@ module FacilitiesManagement::RM3830
   module ProcurementsHelper
     include Procurements::ContractDatesHelper
 
-    def journey_step_url_former(journey_step:, framework:, region_codes: nil, service_codes: nil)
-      "/facilities-management/#{framework}/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
+    def journey_step_url_former(journey_step:, region_codes: nil, service_codes: nil)
+      "/facilities-management/RM3830/choose-#{journey_step}?#{{ region_codes: region_codes }.to_query}&#{{ service_codes: service_codes }.to_query}"
     end
 
     def initial_call_off_period_error?

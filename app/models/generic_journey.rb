@@ -53,11 +53,10 @@ class GenericJourney
   end
 
   def previous_step_text
-    return 'Return to your account' if @slug == 'choose-services'
-    return 'Return to services' if @slug == 'choose-locations'
-
-    nil
+    PREVIOUS_STEP_TEXT[@slug]
   end
+
+  PREVIOUS_STEP_TEXT = { 'choose-services' => 'Return to your account', 'choose-locations' => 'Return to services', 'choose-sector' => 'Return to regions', 'contract-cost' => 'Return to sector' }.freeze
 
   def next_step_path
     @paths.question @framework, next_slug, params

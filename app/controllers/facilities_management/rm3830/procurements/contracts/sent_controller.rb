@@ -4,7 +4,7 @@ module FacilitiesManagement
       module Contracts
         class SentController < FacilitiesManagement::FrameworkController
           def index
-            @procurement = @current_user.procurements.find_by(id: params[:procurement_id])
+            @procurement = @current_user.rm3830_procurements.find_by(id: params[:procurement_id])
             authorize! :manage, @procurement
             @contract = @procurement&.procurement_suppliers&.find_by(id: params[:contract_id])
             @supplier = @contract&.supplier
