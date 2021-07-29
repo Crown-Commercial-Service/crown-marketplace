@@ -3,6 +3,6 @@ module FacilitiesManagement
     'facilities_management_'
   end
 
-  RECOGNISED_FRAMEWORKS = ['RM3830'].freeze
+  RECOGNISED_FRAMEWORKS = ['RM3830', 'RM6232'].freeze
   DEFAULT_FRAMEWORK = 'RM3830'.freeze
 end

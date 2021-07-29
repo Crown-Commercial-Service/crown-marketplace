@@ -45,6 +45,9 @@ Rails.application.routes.draw do
           concerns :authenticatable
         end
       end
+      namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
+        concerns %i[authenticatable registrable]
+      end
     end
 
     namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
@@ -150,6 +153,11 @@ Rails.application.routes.draw do
         resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
         resources :management_reports, only: %i[new create show]
       end
+    end
+
+    namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
+      get '/start', to: 'home#index'
+      get '/', to: 'buyer_account#index'
     end
 
     get '/:framework/start', to: 'journey#start', as: 'journey_start'

@@ -1,7 +1,7 @@
 Feature: Navigation links when signed in - without buyer details
 
   Background: I navigate to manage my details
-    Given I sign in without details for 'RM3830'
+    Given I sign in without details for 'RM6232'
 
   Scenario: Buyer details - Sign out
     And I should see the following navigation links:

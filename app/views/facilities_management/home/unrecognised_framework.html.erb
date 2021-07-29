@@ -1,4 +1,13 @@
-The framework is unrecognised
-
-There are:
-<%= link_to 'RM3830', facilities_management_rm3830_path %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Your URL contained an unrecognised framework</h1>
+    <p class="govuk-body">The Facilities Management frameworks are:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <% FacilitiesManagement::RECOGNISED_FRAMEWORKS.each do |framework| %>
+        <li>
+          <%= link_to framework, "/facilities-management/#{framework}", class: 'govuk-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -21,3 +21,7 @@ end
 Before('@contract_emails') do
   stub_contract_emails
 end
+
+Before('@management_report') do
+  stub_management_report
+end

@@ -3,7 +3,7 @@ require 'rails_helper'
 module FacilitiesManagement
   RSpec.describe BuyerDetailsController, type: :controller do
     let(:default_params) { { service: 'facilities_management', framework: framework } }
-    let(:framework) { 'RM3830' }
+    let(:framework) { 'RM6232' }
 
     render_views
 
