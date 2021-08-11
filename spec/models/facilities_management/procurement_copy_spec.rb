@@ -4,8 +4,12 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
   subject(:procurement) { create(:facilities_management_procurement_with_contact_details, user: user) }
 
   let(:user) { create(:user) }
+  let(:security_policy_document_file) { Tempfile.new(['security_policy_document_file', '.txt']) }
+  let(:security_policy_document_file_path) { fixture_file_upload(security_policy_document_file.path, 'text/plain') }
 
-  before { allow(procurement.security_policy_document_file).to receive(:blob).and_return(filename: Faker::Name.name[1..20]) }
+  before { procurement.update(security_policy_document_file: security_policy_document_file_path) }
+
+  after { security_policy_document_file.unlink }
 
   describe '#create_procurement_copy' do
     let(:procurement_copy) { procurement.create_procurement_copy }
@@ -109,7 +113,7 @@ RSpec.describe FacilitiesManagement::Procurement, type: :model do
 
       context 'when considering security policy document file' do
         it 'will have a file' do
-          expect(procurement_copy.security_policy_document_file).not_to be_nil
+          expect(procurement_copy.security_policy_document_file).to be_attached
         end
 
         it 'will have the same file' do
