@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.7'
+gem 'rails', '~> 6.0.4', '>= 6.0.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -115,7 +115,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.2'
+gem 'active_storage_validations', '>= 0.9.3'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -137,7 +137,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 2.7.6'
-  gem 'factory_bot_rails', '>= 6.1.0'
+  gem 'factory_bot_rails', '>= 6.2.0'
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
