@@ -37,9 +37,9 @@ make
 ### MacOS
 
 #### Check the Ruby version
-##### N.B. The project currently runs on 2.7.3. (May 2021) 
+##### N.B. The project currently runs on 2.7.4. (August 2021) 
 
-Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 2.7.3 as the Ruby version before trying anything else. 
+Ensure that a ruby version manager (e.g. rvm or rbenv) is installed and set up properly, using 2.7.4 as the Ruby version before trying anything else. 
 
 #### Install Postgres and PostGIS
 `brew install postgres` (this will install the latest (HEAD) version, currently 12.  The server runs 11!)  
