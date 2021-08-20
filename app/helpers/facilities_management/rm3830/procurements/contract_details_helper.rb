@@ -33,7 +33,7 @@ module FacilitiesManagement::RM3830
       fields = form.fields_for(association, new_object, child_index: id) do |builder|
         render("#{partial_prefix}/#{association.to_s.singularize}", ff: builder)
       end
-      link_to(name, '#', class: "add-pension-fields #{args[:class]}", data: { id: id, fields: fields.gsub('\n', '') })
+      link_to(name, '#', class: args[:class], data: { id: id, fields: fields.gsub('\n', '') })
     end
 
     def object_name(name)
