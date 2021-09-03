@@ -44,5 +44,23 @@ RSpec.describe FacilitiesManagement::RM3830::BuyerAccountController, type: :cont
         expect(assigns(:current_login_email)).to be_nil
       end
     end
+
+    context 'when the framework is not recognised' do
+      let(:framework) { 'RM31415' }
+
+      login_fm_buyer_with_details
+
+      before { get :index }
+
+      it 'renders the unrecognised framework page with the right http status' do
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'sets the framework variables' do
+        expect(assigns(:unrecognised_framework)).to eq 'RM31415'
+        expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
+      end
+    end
   end
 end

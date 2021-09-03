@@ -37,8 +37,14 @@ module FacilitiesManagement
 
         before { get :edit, params: { id: subject.current_user.id } }
 
-        it 'redirects to the unrecognised page' do
-          expect(response).to redirect_to facilities_management_unrecognised_framework_path
+        it 'renders the unrecognised framework page with the right http status' do
+          expect(response).to render_template('home/unrecognised_framework')
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'sets the framework variables' do
+          expect(assigns(:unrecognised_framework)).to eq 'RM3840'
+          expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
         end
       end
     end
