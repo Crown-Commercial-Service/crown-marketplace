@@ -41,5 +41,23 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
+
+    context 'when the framework is not recognised' do
+      let(:default_params) { { service: 'facilities_management/supplier', framework: '↑↑↓↓←→←→BA' } }
+
+      login_fm_supplier
+
+      before { get :index }
+
+      it 'renders the unrecognised framework page with the right http status' do
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'sets the framework variables' do
+        expect(assigns(:unrecognised_framework)).to eq '↑↑↓↓←→←→BA'
+        expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
+      end
+    end
   end
 end

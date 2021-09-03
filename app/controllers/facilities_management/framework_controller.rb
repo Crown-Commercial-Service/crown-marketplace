@@ -3,7 +3,7 @@ module FacilitiesManagement
     before_action :authenticate_user!
     before_action :authorize_user
     before_action :redirect_to_buyer_detail
-    before_action :redirect_if_unrecognised_framework
+    before_action :raise_if_unrecognised_framework
 
     protected
 
@@ -17,10 +17,6 @@ module FacilitiesManagement
 
     def redirect_to_buyer_detail
       redirect_to(buyer_path) if !path_an_exception? && current_user&.fm_buyer_details_incomplete?
-    end
-
-    def redirect_if_unrecognised_framework
-      redirect_to facilities_management_unrecognised_framework_path unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
     end
 
     private

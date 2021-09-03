@@ -37,13 +37,4 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
       expect(response).to redirect_to facilities_management_rm3830_path
     end
   end
-
-  describe 'GET unrecognised_framework' do
-    login_fm_supplier
-
-    it 'renders the unrecognised_framework page' do
-      get :unrecognised_framework
-      expect(response).to render_template(:unrecognised_framework)
-    end
-  end
 end

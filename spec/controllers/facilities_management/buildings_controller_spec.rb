@@ -22,9 +22,16 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       let(:framework) { 'RM3840' }
 
-      it 'redirects to the unrecognised page' do
-        get :index
-        expect(response).to redirect_to facilities_management_unrecognised_framework_path
+      before { get :index }
+
+      it 'renders the unrecognised framework page with the right http status' do
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'sets the framework variables' do
+        expect(assigns(:unrecognised_framework)).to eq 'RM3840'
+        expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
       end
     end
 
