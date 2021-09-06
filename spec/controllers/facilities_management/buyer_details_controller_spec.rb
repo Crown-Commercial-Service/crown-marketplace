@@ -2,7 +2,8 @@ require 'rails_helper'
 # rubocop:disable RSpec/NamedSubject
 module FacilitiesManagement
   RSpec.describe BuyerDetailsController, type: :controller do
-    let(:default_params) { { service: 'facilities_management' } }
+    let(:default_params) { { service: 'facilities_management', framework: framework } }
+    let(:framework) { 'RM3830' }
 
     render_views
 
@@ -26,6 +27,18 @@ module FacilitiesManagement
         it 'renders edit template' do
           expect(response).to have_http_status(:ok)
           expect(response).to render_template(:edit)
+        end
+      end
+
+      context 'when the framework is not recognised' do
+        login_fm_buyer_with_details
+
+        let(:framework) { 'RM3840' }
+
+        before { get :edit, params: { id: subject.current_user.id } }
+
+        it 'redirects to the unrecognised page' do
+          expect(response).to redirect_to facilities_management_unrecognised_framework_path
         end
       end
     end
@@ -72,7 +85,7 @@ module FacilitiesManagement
           let(:full_name) { 'Fred Flintstone' }
 
           it 'redirects to facilities_management_path' do
-            expect(response).to redirect_to facilities_management_path
+            expect(response).to redirect_to facilities_management_path(framework: framework)
           end
 
           it 'updates the buyer name' do
@@ -98,7 +111,7 @@ module FacilitiesManagement
           let(:organisation_address_line_1) { '9 Downing Street' }
 
           it 'redirects to facilities_management_path' do
-            expect(response).to redirect_to edit_facilities_management_buyer_detail_path(subject.current_user)
+            expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, subject.current_user)
           end
 
           it 'updates the buyer name' do

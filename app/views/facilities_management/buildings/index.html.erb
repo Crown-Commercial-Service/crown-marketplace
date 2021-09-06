@@ -1,10 +1,10 @@
 <%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
 <%= content_for :page_title, pd.heading_details.text %>
   <div id="buildings-container">
-    <%= link_to t('.create_new_button'), new_facilities_management_building_path, class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
+    <%= link_to t('.create_new_button'), new_facilities_management_building_path(params[:framework]), class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
     <div class="govuk-!-width-two-thirds">
       <p class="govuk-!-margin-bottom-2">
-        <%= t('.start_paragraph_html', start_a_procurement_link: link_to(t('.start_a_procurement_link_text'), facilities_management_what_happens_next_path, class: 'govuk-link govuk-link--no-visited-state')) %>
+        <%= t('.start_paragraph_html', start_a_procurement_link: link_to(t('.start_a_procurement_link_text'), facilities_management_rm3830_what_happens_next_path, class: 'govuk-link govuk-link--no-visited-state')) %>
       </p>
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
@@ -46,7 +46,7 @@
           <tbody class="govuk-table__body">
           <% @page_data[:model_object].each do |building| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_building_path(building.id), class: 'govuk-link', 'aria-label': "#{t('.link_to_building_summary')} #{building.building_name}" %>
+              <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_building_path(params[:framework], building.id), class: 'govuk-link', 'aria-label': "#{t('.link_to_building_summary')} #{building.building_name}" %>
               </td>
               <td class="govuk-table__cell"><%= building.description.to_s.length > 0 ? building['description'].to_s : '-' %></td>
               <td class="govuk-table__cell" style="word-wrap: break-spaces;"><span style="display: inline-block; word-break: keep-all">&#32;
@@ -60,6 +60,6 @@
         <%= paginate @page_data[:model_object], views_prefix: 'shared' %>
       </div>
     <% end %>
-    <%= link_to t('.return_to_your_account'), facilities_management_path, class: "govuk-link", 'aria-label': t('.return_to_your_account') %>
+    <%= link_to t('.return_to_your_account'), facilities_management_path(framework: params[:framework]), class: "govuk-link", 'aria-label': t('.return_to_your_account') %>
   </div>
 <% end %>

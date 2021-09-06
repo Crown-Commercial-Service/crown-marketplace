@@ -1,0 +1,69 @@
+<fieldset class="govuk-fieldset">
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+    <%= heading %>
+  </h2>
+</fieldset>
+<p class="govuk-caption-m govuk-!-margin-top-0" id="service-caption">
+  <%= subtitle %>
+</p>
+<p class="govuk-!-margin-bottom-1">
+  <%= service_specification_document %>
+</p>
+<p class="govuk-caption-m govuk-!-margin-top-0"><%= t('.caption2') %></p>
+<%= display_error @procurement, :service_codes %>
+<div class="govuk-grid-column-full" style="padding-left:0">
+  <div class="chooser-input">
+    <%= govuk_accordion('edit-services') do %>
+      <% FacilitiesManagement::StaticData.services.each_with_index do |service, index| %>
+        <%= govuk_accordion_add_section(index, service['name'], class: 'chooser-section', data: { section: service['code'], sectionname: service['name'] }) do %>
+          <% FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.each do |work_package| %>
+            <div class="govuk-form-group chooser-input" sectionname="<%= service['name'] %>" section="<%= service['code'] %>">
+              <fieldset class="govuk-fieldset" aria-describedby="<%= "#{work_package['code']}_description"%>">
+                <div class="govuk-checkboxes">
+                  <div class="govuk-checkboxes__item">
+                    <%= check_box_tag("facilities_management_procurement[service_codes][]", work_package['code'], @procurement.service_codes&.include?(work_package['code']),
+                                      title: work_package['name'],
+                                      class: "govuk-checkboxes__input",
+                                      sectionid: service['code'],
+                                      id: "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}",) %>
+                    <label style="padding-top:0"
+                            class="govuk-label govuk-checkboxes__label"
+                            for="<%= "facilities_management_procurement_service_codes_#{work_package['code'].gsub('.', '-')}" %>">
+                      <%= work_package['name'] %>
+                      <br/>
+                      <span style="font-weight:lighter;" class="govuk-!-font-size-16" id='<%= "#{work_package['code']}_description"%>'><%= work_package['description'] %></span>
+                      <div>
+                        <%# TODO: work_package and service vars are named the wrong way around %>
+                        <%= link_to t('.learn_more'), facilities_management_rm3830_service_specification_path(work_package['code'].tr('.', '-'), service['code']), target: '_blank', class: 'govuk-!-font-size-16' %>
+                        <%= govuk_tag_with_text(:grey, t('common.da_eligible')) if da_eligible?(work_package['code']) %>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          <% end %>
+          <% if FacilitiesManagement::StaticData.work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.count > 1 %>
+            <p><%= t('facilities_management.basket.or_text') %></p>
+            <div class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input title="Select all code-<%= service['code'] %> services"
+                        style="margin-top:4px"
+                        class="govuk-checkboxes__input"
+                        id="<%= service['code'].sub('.', '-') %>_all"
+                        name="section-checkbox_select_all"
+                        forserviceid="<%= service['code'] %>"
+                        type="checkbox"
+                        value="<%= service['code'] %>">
+                <label class="govuk-label govuk-checkboxes__label"
+                        for="<%= service['code'].sub('.', '-') %>_all">
+                  <%= t('facilities_management.basket.selectall_text') %>
+                </label>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

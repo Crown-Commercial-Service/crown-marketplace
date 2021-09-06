@@ -18,13 +18,13 @@ module FacilitiesManagement::PageDetail::Buildings
         primary_url: new_facilities_management_building_url,
         secondary_name: 'return_to_buildings',
         secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-        secondary_url: facilities_management_buildings_path,
+        secondary_url: facilities_management_buildings_path(params[:framework]),
         back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
-        back_url: facilities_management_buildings_path
+        back_url: facilities_management_buildings_path(params[:framework])
       },
       index: {
         page_title: I18n.t('facilities_management.buildings.page_definitions.manage_building_title'),
-        back_url: facilities_management_path
+        back_url: facilities_management_path(framework: params[:framework])
       },
       new: {
         back_text: I18n.t('facilities_management.buildings.page_definitions.return_to_buildings'),
@@ -76,7 +76,7 @@ module FacilitiesManagement::PageDetail::Buildings
     if action_name == 'index' || @page_data[:model_object].id.nil?
       'javascript:history.back()'
     else
-      edit_facilities_management_building_path(@page_data[:model_object].id, step: 'building_details')
+      edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: 'building_details')
     end
   end
 
@@ -92,7 +92,7 @@ module FacilitiesManagement::PageDetail::Buildings
       continuation_text: I18n.t('facilities_management.buildings.page_definitions.save_and_continue'),
       secondary_name: 'save_and_return',
       secondary_text: I18n.t('facilities_management.buildings.page_definitions.save_and_return_to_detailed_summary'),
-      back_url: facilities_management_building_path(@page_data[:model_object], step: 'building_details'),
+      back_url: facilities_management_building_path(params[:framework], @page_data[:model_object], step: 'building_details'),
       back_text: edit_back_text
     }
 
@@ -101,7 +101,7 @@ module FacilitiesManagement::PageDetail::Buildings
     if %w[gia type security].include? params[:step]
       details[:return_url] = next_link(false, params[:step])
       details[:return_text] = I18n.t('facilities_management.buildings.page_definitions.skip_this_step')
-      details[:back_url] = edit_facilities_management_building_path(@page_data[:model_object].id, step: previous_step(params[:step].to_sym))
+      details[:back_url] = edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: previous_step(params[:step].to_sym))
     end
 
     details

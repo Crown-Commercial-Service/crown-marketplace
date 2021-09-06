@@ -110,30 +110,20 @@ ignore_unused:
   - results.*
   - suppliers.*
   - companies.*
-  - management_consultancy.journey.choose_help_needed.*
-  - management_consultancy.job_titles.*
-  - legal_services.journey.select_lot.lot1_extended_description
-  - legal_services.journey.select_lot.lot2_extended_description
-  - legal_services.journey.select_lot.lot3_extended_description
-  - legal_services.journey.select_lot.lot4_extended_description
-  - legal_services.job_titles.*
-  - supply_teachers.home.fta_to_perm_fee.no_fee.hire_not_within_6_months
-  - supply_teachers.home.fta_to_perm_fee.no_fee.length_not_within_12_months
-  - supply_teachers.home.fta_to_perm_fee.no_fee.end_not_within_6_months
-  - facilities_management.procurement_buildings.volume.question.*
-  - facilities_management.procurements.contract_details.da_journey.review.contract_documents.*
+  - facilities_management.rm3830.procurement_buildings.volume.question.*
+  - facilities_management.rm3830.procurements.contract_details.da_journey.review.contract_documents.*
   - home.index.supply_teachers_link
   - home.index.management_consultancy_link
   - home.index.legal_services_link
   - home.index.facilities_management_link
-  - facilities_management.procurements.results.hint-text-unpriced*
-  - facilities_management.procurements.results.sub-lot-1*
-  - facilities_management.procurement_buildings_services.service_standards.detail_text.*
-  - facilities_management.procurement_buildings_services.service_standards.detail_title.*
-  - facilities_management.procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
-  - facilities_management.procurements.contracts.procurement_requirements.call_off_extensions_*
-  - facilities_management.procurements.contracts_helper.*
-  - facilities_management.supplier.contracts_helper.*
+  - facilities_management.rm3830.procurements.results.hint-text-unpriced*
+  - facilities_management.rm3830.procurements.results.sub-lot-1*
+  - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_text.*
+  - facilities_management.rm3830.procurement_buildings_services.service_standards.detail_title.*
+  - facilities_managementrm3830..procurements.contract_details.da_journey.summary_pages.procurement_requirements.optional_call_off_extensions_*
+  - facilities_management.rm3830.procurements.contracts.procurement_requirements.call_off_extensions_*
+  - facilities_management.rm3830.procurements.contracts_helper.*
+  - facilities_management.rm3830.supplier.contracts_helper.*
   - common.type_*
   - common.*_html
 # - 'activerecord.attributes.*'
