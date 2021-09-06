@@ -4,7 +4,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::EditBuildingsControll
   render_views
   let(:default_params) { { service: 'facilities_management', framework: framework } }
   let(:framework) { 'RM3830' }
-  let(:procurement) { create(:facilities_management_procurement, aasm_state: 'detailed_search', user: subject.current_user) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, aasm_state: 'detailed_search', user: subject.current_user) }
   let(:procurement_id) { procurement.id }
 
   describe 'GET #new' do

@@ -1,9 +1,9 @@
 Given('I have a procurement in DA draft at the {string} stage named {string}') do |da_journey_state, contract_name|
-  create(:facilities_management_procurement_direct_award, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: da_journey_state)
+  create(:facilities_management_rm3830_procurement_direct_award, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: da_journey_state)
 end
 
 Given('I have a procurement with completed contract details named {string}') do |contract_name|
-  create(:facilities_management_procurement_with_contact_details, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: 'contract_details')
+  create(:facilities_management_rm3830_procurement_with_contact_details, user: @user, contract_name: contract_name, aasm_state: 'da_draft', da_journey_state: 'contract_details')
 end
 
 When('I answer the {string} contract detail question') do |contract_detail|
@@ -56,7 +56,7 @@ end
 Given('I upload security policy document that is {string}') do |option|
   filepath = case option
              when 'valid'
-               Rails.root.join('public', 'Authorised Customer List.docx')
+               Rails.root.join('public', 'facilities-management', 'rm3830', 'Attachment 1 - About the Direct Award v3.0.pdf')
              when 'invalid'
                Rails.root.join('features', 'facilities_management', 'rm3830', 'procurements', 'contract_details', 'validations', 'security_policy_document_validations.feature')
              end

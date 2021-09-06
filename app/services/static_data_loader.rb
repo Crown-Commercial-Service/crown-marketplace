@@ -1,7 +1,6 @@
 class StaticDataLoader
   @queries = {
-    Region: 'SELECT code, name FROM fm_regions;',
-    Rates: 'SELECT code, framework, benchmark FROM fm_rates',
+    Region: 'SELECT code, name FROM facilities_management_regions;',
     Nuts1Region: 'SELECT code, name FROM nuts_regions where  nuts1_code is null and nuts2_code is null',
     Nuts2Region: 'SELECT code, nuts1_code, name FROM nuts_regions where not nuts1_code is null',
     Nuts3Region: 'SELECT code, name, nuts2_code FROM nuts_regions where not nuts2_code is null',
@@ -12,7 +11,7 @@ class StaticDataLoader
     begin
       # typical SQL select query
       # query = <<~SQL
-      #   SELECT code, name FROM fm_regions
+      #   SELECT code, name FROM facilities_management_regions
       # SQL
       query = @queries[class_name.to_sym]
       static_data_class.load_db(query)

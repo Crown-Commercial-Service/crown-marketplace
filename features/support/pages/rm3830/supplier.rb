@@ -23,8 +23,8 @@ module Pages::RM3830
       element :'No closed', 'div:nth-child(10) > div > span'
     end
 
-    element :respond_to_contract_yes, '#facilities_management_procurement_supplier_contract_response_true'
-    element :respond_to_contract_no, '#facilities_management_procurement_supplier_contract_response_false'
-    element :reason_for_declining, '#facilities_management_procurement_supplier_reason_for_declining'
+    element :respond_to_contract_yes, '#facilities_management_rm3830_procurement_supplier_contract_response_true'
+    element :respond_to_contract_no, '#facilities_management_rm3830_procurement_supplier_contract_response_false'
+    element :reason_for_declining, '#facilities_management_rm3830_procurement_supplier_reason_for_declining'
   end
 end

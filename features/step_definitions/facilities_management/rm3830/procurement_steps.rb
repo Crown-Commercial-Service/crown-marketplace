@@ -4,19 +4,19 @@ Then('I enter {string} into the contract name field') do |contract_name|
 end
 
 Then('I have a procurement with the name {string}') do |contract_name|
-  create(:facilities_management_procurement, user: @user, contract_name: contract_name)
+  create(:facilities_management_rm3830_procurement, user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for entering requirements named {string}') do |contract_name|
-  create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name)
+  create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for entering requirements named {string} with the following servcies:') do |contract_name, service_codes_table|
-  create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
+  create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
 end
 
 Given('I have an empty procurement with buildings named {string} with the following servcies:') do |contract_name, service_codes_table|
-  procurement = create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
 
   @user.buildings.each do |building|
     procurement.procurement_buildings.create(building: building, active: true)
@@ -26,7 +26,7 @@ end
 Given('I have an empty procurement with buildings named {string} with the following servcies assigned:') do |contract_name, service_codes_table|
   service_codes = service_codes_table.raw.flatten
 
-  procurement = create(:facilities_management_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes)
+  procurement = create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes)
 
   @user.buildings.each do |building|
     procurement.procurement_buildings.create(building: building, active: true, service_codes: service_codes)
@@ -35,7 +35,7 @@ end
 
 Given('I have a procurement in detailed search named {string} with the following services:') do |contract_name, service_codes_table|
   service_codes = service_codes_table.raw.flatten
-  procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
+  procurement = create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
   building = create(:facilities_management_building, building_name: 'Test building', user: @user)
   @procurement_building_id = procurement.procurement_buildings.create(building: building, service_codes: service_codes, active: true).id
 end
@@ -45,7 +45,7 @@ Given('I have a procurement in detailed search named {string} with the following
   create(:facilities_management_building_london, building_name: 'Test London building', user: @user, building_type: 'Primary School')
 
   service_codes = service_codes_table.raw.flatten
-  procurement = create(:facilities_management_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
+  procurement = create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: @user, contract_name: contract_name, service_codes: service_codes, aasm_state: 'detailed_search')
 
   @user.buildings.each do |building|
     procurement.procurement_buildings.create(building: building, active: true, service_codes: service_codes)
@@ -53,7 +53,7 @@ Given('I have a procurement in detailed search named {string} with the following
 end
 
 Given('I have direct award procurements') do
-  create_contracts(@user, FacilitiesManagement::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
+  create_contracts(@user, FacilitiesManagement::RM3830::SupplierDetail.find('ca57bf4c-e8a5-468a-95f4-39fcf730c770'))
 end
 
 Given('the GIA for {string} is {int}') do |building_name, gia|

@@ -8,8 +8,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsHelper, type
   end
 
   describe '.warning_message and warning_title' do
-    let(:contract) { create(:facilities_management_procurement_supplier, aasm_state: aasm_state, offer_sent_date: Time.new(2021, 7, 5, 20, 0, 0).in_time_zone('London'), procurement: procurement, **attributes) }
-    let(:procurement) { create(:facilities_management_procurement_no_procurement_buildings, aasm_state: procurement_state) }
+    let(:contract) { create(:facilities_management_rm3830_procurement_supplier, aasm_state: aasm_state, offer_sent_date: Time.new(2021, 7, 5, 20, 0, 0).in_time_zone('London'), procurement: procurement, **attributes) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, aasm_state: procurement_state) }
     let(:procurement_state) { :direct_award }
     let(:attributes) { {} }
     let(:warning_title) { helper.warning_title }
@@ -129,7 +129,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::ContractsHelper, type
       end
 
       context 'with it being sent to another supplier' do
-        before { create(:facilities_management_procurement_supplier, direct_award_value: 110000, aasm_state: 'sent', procurement: procurement) }
+        before { create(:facilities_management_rm3830_procurement_supplier, direct_award_value: 110000, aasm_state: 'sent', procurement: procurement) }
 
         it 'has the correct warning' do
           expect(warning_title).to eq 'Closed'

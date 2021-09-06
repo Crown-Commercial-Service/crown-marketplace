@@ -6,12 +6,12 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type
   describe '#index' do
     login_fm_supplier
 
-    let(:supplier) { create(:facilities_management_supplier_detail) }
+    let(:supplier) { create(:facilities_management_rm3830_supplier_detail) }
 
-    let!(:received) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'sent') }
-    let!(:accepted) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'accepted') }
-    let!(:live) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'signed') }
-    let!(:closed) { create(:facilities_management_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'declined') }
+    let!(:received) { create(:facilities_management_rm3830_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'sent') }
+    let!(:accepted) { create(:facilities_management_rm3830_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'accepted') }
+    let!(:live) { create(:facilities_management_rm3830_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'signed') }
+    let!(:closed) { create(:facilities_management_rm3830_procurement_supplier_da, supplier_id: supplier.supplier_id, aasm_state: 'declined') }
 
     context 'with supplier not found' do
       before { get :index }

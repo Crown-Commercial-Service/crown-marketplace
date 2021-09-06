@@ -12,14 +12,14 @@ module FacilitiesManagement
       end
 
       def rates
-        @rates ||= FacilitiesManagement::Admin::Rates.all
+        @rates ||= FacilitiesManagement::RM3830::Admin::Rates.all
       end
 
       def full_services
-        services = FacilitiesManagement::Admin::StaticDataAdmin.services
-        work_packages = FacilitiesManagement::Admin::StaticDataAdmin.work_packages
-        work_packages_with_rates = FacilitiesManagement::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
-        @full_services = FacilitiesManagement::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
+        services = FacilitiesManagement::RM3830::StaticData.services
+        work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
+        work_packages_with_rates = FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper.add_rates_to_work_packages(work_packages, rates)
+        @full_services = FacilitiesManagement::RM3830::Supplier::SupplierRatesHelper.work_package_to_services(services, work_packages_with_rates)
       end
 
       def redirect_if_lot_out_of_range
@@ -27,7 +27,7 @@ module FacilitiesManagement
       end
 
       def set_supplier
-        @supplier = FacilitiesManagement::Admin::SuppliersAdmin.find(params[:supplier_framework_datum_id])
+        @supplier = FacilitiesManagement::RM3830::Admin::SuppliersAdmin.find(params[:supplier_framework_datum_id])
         @supplier_id = @supplier.supplier_id.to_sym
       end
 
