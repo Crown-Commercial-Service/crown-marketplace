@@ -31,6 +31,24 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::HomeController do
         expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
       end
     end
+
+    context 'when the framework is not recognised' do
+      let(:default_params) { { service: 'facilities_management/admin', framework: 'RM007' } }
+
+      login_fm_admin
+
+      before { get :index }
+
+      it 'renders the unrecognised framework page with the right http status' do
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'sets the framework variables' do
+        expect(assigns(:unrecognised_framework)).to eq 'RM007'
+        expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
+      end
+    end
   end
 
   describe 'validate service' do

@@ -35,7 +35,7 @@ RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller
       let(:default_params) { { service: 'apprenticeships' } }
 
       it 'renders the erros_not_found page' do
-        get :unrecognised_framework
+        get :accessibility_statement
 
         expect(response).to redirect_to errors_404_path
       end
@@ -46,15 +46,6 @@ RSpec.describe FacilitiesManagement::Supplier::HomeController, type: :controller
     it 'redirects to the RM3830 home page' do
       get :framework
       expect(response).to redirect_to facilities_management_rm3830_supplier_path
-    end
-  end
-
-  describe 'GET unrecognised_framework' do
-    login_fm_supplier
-
-    it 'renders the unrecognised_framework page' do
-      get :unrecognised_framework
-      expect(response).to render_template(:unrecognised_framework)
     end
   end
 end
