@@ -43,7 +43,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
         allow(spreadsheet_import).to receive(:save).with(context: :upload).and_return(valid)
         allow(FacilitiesManagement::RM3830::SpreadsheetImport).to receive(:new).with(anything).and_return(spreadsheet_import)
         allow(FacilitiesManagement::RM3830::UploadSpreadsheetWorker).to receive(:perform_async).with(spreadsheet_import.id).and_return(true)
-        post :create, params: { procurement_id: procurement.id, facilities_management_spreadsheet_import: { spreadsheet_file: fake_file } }
+        post :create, params: { procurement_id: procurement.id, facilities_management_rm3830_spreadsheet_import: { spreadsheet_file: fake_file } }
       end
 
       context 'when the spreadsheet is uploaded is valid' do
@@ -68,7 +68,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::SpreadsheetImportsCon
     context 'when canceling and returning' do
       before do
         spreadsheet_import
-        post :create, params: { procurement_id: procurement.id, cancel_and_return: 'Cancel and return to services and buildings template', facilities_management_spreadsheet_import: { spreadsheet_file: fake_file } }
+        post :create, params: { procurement_id: procurement.id, cancel_and_return: 'Cancel and return to services and buildings template', facilities_management_rm3830_spreadsheet_import: { spreadsheet_file: fake_file } }
       end
 
       it 'redirects to the spreadsheet template page' do
