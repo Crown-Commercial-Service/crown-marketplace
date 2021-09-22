@@ -36,12 +36,14 @@ Rails.application.routes.draw do
     delete '/sign-out', to: 'base/sessions#destroy', as: :destroy_user_session
 
     namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-      concerns %i[authenticatable registrable]
-      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-        concerns :authenticatable
-      end
-      namespace :admin, defaults: { service: 'facilities_management/admin' } do
-        concerns :authenticatable
+      namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+        concerns %i[authenticatable registrable]
+        namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+          concerns :authenticatable
+        end
+        namespace :admin, defaults: { service: 'facilities_management/admin' } do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -59,89 +61,99 @@ Rails.application.routes.draw do
     get '/cookie-settings', to: 'home#cookie_settings'
   end
 
+  concern :framework do
+    get '/', to: 'home#framework'
+  end
+
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-    concerns :shared_pages
-    get '/', to: 'buyer_account#buyer_account'
+    concerns %i[shared_pages framework]
     get '/not-permitted', to: 'home#not_permitted'
-    get '/start', to: 'home#index'
-    get '/buyer_account', to: 'buyer_account#buyer_account'
-    resources :buildings, only: %i[index show edit update new create] do
+
+    resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
       member do
         match 'add_address', via: %i[get post patch]
       end
     end
-    get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
-    match 'select-services', to: 'select_services#select_services', as: 'select_FM_services', via: %i[get post]
-    match '/select-locations', to: 'select_locations#select_location', as: 'select_FM_locations', via: %i[get post]
-    get 'spreadsheet-test', to: 'spreadsheet_test#index', as: 'spreadsheet_test'
-    get 'spreadsheet-test/dm-spreadsheet-download', to: 'spreadsheet_test#dm_spreadsheet_download', as: 'dm_spreadsheet_download'
-    get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
 
-    resources :procurements do
-      get 'delete'
-      get 'summary', to: 'procurements#summary'
-      get 'quick_view_results_spreadsheet'
-      get 'further_competition_spreadsheet'
-      get 'deliverables_matrix'
-      get 'price_matrix'
-      namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/procurements/contract_details' do
-        get '/', action: 'show'
-        put '/', action: 'update'
-        patch '/', action: 'update'
-        get '/edit', action: 'edit'
-      end
-      resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
-        resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
-        resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
-        namespace :documents, controller: '/facilities_management/procurements/contracts/documents' do
-          get '/call-off-schedule', action: :call_off_schedule
-          get '/call-off-schedule-2', action: :call_off_schedule_2
-          get '/zip', action: :zip_contracts
-          get '/download/zip', action: :download_zip_contracts
-        end
-      end
-      resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
-      resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
-        get '/progress', action: :progress
-      end
-      resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
-        member do
-          match 'add_address', via: %i[get post patch]
-        end
-      end
-    end
-    resources :procurement_buildings, only: %i[show edit update]
-    resources :procurement_buildings_services, only: %i[edit update]
-    resources 'buyer-details', only: %i[edit update], as: :buyer_details, controller: 'buyer_details' do
+    resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
     end
+
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-      concerns :shared_pages
-      get '/', to: 'home#index'
-      resources :dashboard, only: :index
-      resources :contracts, only: %i[show edit update], controller: 'contracts' do
-        resources :sent, only: %i[index], controller: 'sent'
-      end
-    end
-    namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns :shared_pages
-      get '/', to: 'home#index'
-      resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
-      resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
-        resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
-        resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
-      end
-      resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
-        get '/progress', action: :progress
-      end
-      get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
-      resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
-      resources :management_reports, only: %i[new create show]
+      concerns %i[shared_pages framework]
     end
 
-    get '/start', to: 'journey#start', as: 'journey_start'
-    get '/:slug', to: 'journey#question', as: 'journey_question'
-    get '/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+    namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+      concerns %i[shared_pages framework]
+    end
+
+    namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+      get '/start', to: 'home#index'
+      get '/', to: 'buyer_account#index'
+      get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
+      get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
+      resources :procurements do
+        get 'delete'
+        get 'summary', to: 'procurements#summary'
+        get 'quick_view_results_spreadsheet'
+        get 'further_competition_spreadsheet'
+        get 'deliverables_matrix'
+        get 'price_matrix'
+        namespace 'contract_details', path: 'contract-details', controller: '/facilities_management/rm3830/procurements/contract_details' do
+          get '/', action: 'show'
+          put '/', action: 'update'
+          patch '/', action: 'update'
+          get '/edit', action: 'edit'
+        end
+        resources :contracts, only: %i[show edit update], controller: 'procurements/contracts' do
+          resources :sent, only: %i[index], controller: 'procurements/contracts/sent'
+          resources :closed, only: %i[index], controller: 'procurements/contracts/closed'
+          namespace :documents, controller: '/facilities_management/rm3830/procurements/contracts/documents' do
+            get '/call-off-schedule', action: :call_off_schedule
+            get '/call-off-schedule-2', action: :call_off_schedule_2
+            get '/zip', action: :zip_contracts
+          end
+        end
+        resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
+        resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
+          get '/progress', action: :progress
+        end
+        resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
+          member do
+            match 'add_address', via: %i[get post patch]
+          end
+        end
+      end
+      resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings_services, only: %i[edit update]
+
+      namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+        get '/', to: 'home#index'
+        resources :dashboard, only: :index
+        resources :contracts, only: %i[show edit update], controller: 'contracts' do
+          resources :sent, only: %i[index], controller: 'sent'
+        end
+      end
+
+      namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        get '/', to: 'home#index'
+        resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
+        resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
+          resources :sublot_regions, path: 'sublot-regions', param: :lot, only: %i[edit update]
+          resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
+        end
+        resources :uploads, path: 'supplier-framework-data/uploads', only: %i[index show new create] do
+          get '/progress', action: :progress
+        end
+        get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
+        resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
+        resources :management_reports, only: %i[new create show]
+      end
+    end
+
+    get '/:framework/start', to: 'journey#start', as: 'journey_start'
+    get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
+    get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
   end
 
   namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
@@ -169,8 +181,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/:journey/start', to: 'journey#start', as: 'journey_start'
-  get '/:journey/:slug', to: 'journey#question', as: 'journey_question'
-  get '/:journey/:slug/answer', to: 'journey#answer', as: 'journey_answer'
+  get '/:journey/:framework/start', to: 'journey#start', as: 'journey_start'
+  get '/:journey/:framework/:slug', to: 'journey#question', as: 'journey_question'
+  get '/:journey/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'
 end
 # rubocop:enable Metrics/BlockLength

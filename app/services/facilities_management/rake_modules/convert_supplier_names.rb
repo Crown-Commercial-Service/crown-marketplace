@@ -30,7 +30,7 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   private
 
   def update_rate_cards
-    rate_card = CCS::FM::RateCard.order(updated_at: :desc).first
+    rate_card = FacilitiesManagement::RM3830::RateCard.order(updated_at: :desc).first
     rate_card.data = map_supplier_keys(rate_card.data)
     rate_card.save
   rescue StandardError => e
@@ -39,7 +39,7 @@ class FacilitiesManagement::RakeModules::ConvertSupplierNames
   end
 
   def update_frozen_rate_cards
-    CCS::FM::FrozenRateCard.find_in_batches(batch_size: 1) do |group|
+    FacilitiesManagement::RM3830::FrozenRateCard.find_in_batches(batch_size: 1) do |group|
       group.each do |frozen_rate_card|
         frozen_rate_card.data = map_supplier_keys(frozen_rate_card.data)
         frozen_rate_card.save

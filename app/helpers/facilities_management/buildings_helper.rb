@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::BuildingsHelper
   def building_rows
     {
@@ -46,11 +47,11 @@ module FacilitiesManagement::BuildingsHelper
   end
 
   def edit_link(change_answer, step)
-    link_to((change_answer ? t('facilities_management.buildings.show.answer_question_text') : t('facilities_management.buildings.show.change_text')), edit_facilities_management_building_path(@page_data[:model_object].id, step: step), role: 'link', class: 'govuk-link')
+    link_to((change_answer ? t('facilities_management.buildings.show.answer_question_text') : t('facilities_management.buildings.show.change_text')), edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: step), role: 'link', class: 'govuk-link')
   end
 
   def cant_find_address_link
-    add_address_facilities_management_building_path(@page_data[:model_object].id)
+    add_address_facilities_management_building_path(params[:framework], @page_data[:model_object].id)
   end
 
   def continuation_params(page_defs, form, step)
@@ -88,10 +89,24 @@ module FacilitiesManagement::BuildingsHelper
     end
   end
 
+  def building_type_radio_button(form, building_type, disabled)
+    tag.div(class: 'govuk-radios__item') do
+      capture do
+        concat(form.radio_button(:building_type, building_type[:id], class: 'govuk-radios__input', disabled: disabled))
+        concat(
+          form.label(:building_type, value: building_type[:id], class: 'govuk-label govuk-radios__label govuk-label--s') do
+            concat(building_type[:title])
+            concat(building_type_caption(building_type))
+          end
+        )
+      end
+    end
+  end
+
   def building_type_caption(building_type)
     tag.span(class: 'govuk-caption-m govuk-!-margin-top-1') do
       concat(building_type[:caption])
-      if FacilitiesManagement::Building.da_building_type? building_type[:id]
+      if building_type[:standard_building_type]
         concat(tag(:hr, class: 'govuk-section-break govuk-!-margin-top-1'))
         concat(govuk_tag_with_text(:grey, t('common.da_eligible')))
       end
@@ -106,3 +121,4 @@ module FacilitiesManagement::BuildingsHelper
     @full_region_visible ||= @page_data[:model_object].address_region.present?
   end
 end
+# rubocop:enable Metrics/ModuleLength

@@ -2,10 +2,10 @@ module FacilitiesManagement
   class Journey < GenericJourney
     include Rails.application.routes.url_helpers
 
-    def initialize(slug, params)
+    def initialize(framework, slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      first_step_class = ChooseServices
-      super(first_step_class, slug, params, paths)
+      first_step_class = "FacilitiesManagement::#{framework}::Journey::ChooseServices".constantize
+      super(first_step_class, framework, slug, params, paths)
     end
 
     def self.journey_name
@@ -13,13 +13,13 @@ module FacilitiesManagement
     end
 
     def start_path
-      facilities_management_path
+      facilities_management_path(framework: @framework)
     end
 
     def next_step_path
       case next_slug
       when 'procurement'
-        new_facilities_management_procurement_path(journey: self.class.journey_name, params: params)
+        "/facilities-management/#{@framework}/procurements/new?journey=facilities-management&#{params.to_query}"
       else
         super
       end

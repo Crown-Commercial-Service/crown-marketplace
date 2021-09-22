@@ -15,7 +15,7 @@ if ENV["fm"]
   services = FacilitiesManagement::StaticData.work_packages.select!{|wc| wc if wc['code'] != "G.1" && wk_codes.include?(wc['work_package_code'])}
   service_codes = services.map{|s| s['code']}
 
-  procurement = FacilitiesManagement::Procurement.create!(
+  procurement = FacilitiesManagement::RM3830::Procurement.create!(
     user_id: user.id,
     aasm_state: "detailed_search",
     service_codes: service_codes,
@@ -33,8 +33,8 @@ if ENV["fm"]
     extensions_required: true,
     da_journey_state: "pricing")
 
-  procurement.optional_call_off_extensions.create!(extension: 0, years: 2, months: 0)
-  procurement.optional_call_off_extensions.create!(extension: 1, years: 2, months: 0)
+  procurement.call_off_extensions.create!(extension: 0, years: 2, months: 0)
+  procurement.call_off_extensions.create!(extension: 1, years: 2, months: 0)
 
   # creates 1000 buildings
   (0..999).each do |index|
@@ -54,7 +54,7 @@ if ENV["fm"]
     building.address_region_code = region[0]['code']
     building.address_region = region[0]['region']
     building.save
-    procurement_building = FacilitiesManagement::ProcurementBuilding.create!(
+    procurement_building = FacilitiesManagement::RM3830::ProcurementBuilding.create!(
       procurement: procurement,
       building_id: building.id,
       service_codes: service_codes,
