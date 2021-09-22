@@ -2,8 +2,7 @@ class RenameFacilitiesManagementIndexes < ActiveRecord::Migration[6.0]
   INDEXES = [
     %i[facilities_management_management_reports index_facilities_management_management_reports_on_user_id index_fm_rm3830_management_reports_on_user_id user_id],
     %i[facilities_management_supplier_details index_facilities_management_supplier_details_on_contact_email index_fm_rm3830_supplier_details_on_contact_email contact_email],
-    %i[facilities_management_supplier_details index_facilities_management_supplier_details_on_supplier_name index_fm_rm3830_supplier_details_on_supplier_name supplier_name],
-    %i[facilities_management_supplier_details index_facilities_management_supplier_details_on_user_id index_fm_rm3830_supplier_details_on_user_id user_id]
+    %i[facilities_management_supplier_details index_facilities_management_supplier_details_on_supplier_name index_fm_rm3830_supplier_details_on_supplier_name supplier_name]
   ].freeze
 
   def up
