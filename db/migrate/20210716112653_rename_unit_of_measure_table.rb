@@ -28,6 +28,8 @@ class RenameUnitOfMeasureTable < ActiveRecord::Migration[6.0]
     end
 
     drop_table :fm_units_of_measurement
+
+    Rails.logger.info 'RM3830 migrations complete'
   end
 
   def down
