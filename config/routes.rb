@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
   concern :framework do
     get '/', to: 'home#framework'
+    get '/start', to: 'home#framework'
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do

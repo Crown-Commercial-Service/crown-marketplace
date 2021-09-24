@@ -669,7 +669,7 @@ en:
           manage_account_link: Manage my details
           manage_buildings: Manage my buildings
           manage_buildings_desc: Set up and manage your buildings for use in procurements
-          manage_procurements_desc: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
+          manage_procurements_desc_html: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
           manage_procurements_link: Continue a procurement
           new_procurement_desc: Quickly view suppliers who can provide services to your locations
           quick_view: Quick view suppliers

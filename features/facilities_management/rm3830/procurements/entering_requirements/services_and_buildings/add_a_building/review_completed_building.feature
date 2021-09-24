@@ -62,3 +62,7 @@ Feature: Review completed buildings in entering requirements
     Then I am on the 'Building details' page
     And I click on 'Return to building details summary'
     Then I am on the buildings summary page for 'Test building'
+    And I click on the 'Return to buildings' back link
+    Then I am on the 'Buildings' page
+    And I click on the 'Return to requirements' back link
+    Then I am on the 'Requirements' page
