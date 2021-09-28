@@ -87,6 +87,10 @@ Then('I refresh the page') do
   page.driver.browser.navigate.refresh
 end
 
+When('I visit {string}') do |url|
+  visit url
+end
+
 And('I start a procurement') do
   step "I click on 'Start a procurement'"
   step "I am on the 'What happens next' page"
