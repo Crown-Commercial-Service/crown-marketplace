@@ -24,7 +24,7 @@ module FacilitiesManagement
     def path_an_exception?
       full_path = request.path
 
-      %w[users sign-in sign-out resend_confirmation_email sign-up domain-not-on-safelist buyer-details api not-permitted cookies accessibility-statement].any? { |path_section| full_path.include?(path_section) }
+      %w[users sign-in sign-out resend_confirmation_email sign-up domain-not-on-safelist buyer-details api not-permitted cookies accessibility-statement].any? { |path_section| full_path.include?(path_section) } || action_name == 'framework'
     end
   end
 end

@@ -36,5 +36,14 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
       get :framework
       expect(response).to redirect_to facilities_management_rm3830_path
     end
+
+    context 'when the user is logged in without details' do
+      login_fm_buyer
+
+      it 'redirects to the RM3830 home page' do
+        get :framework
+        expect(response).to redirect_to facilities_management_rm3830_path
+      end
+    end
   end
 end
