@@ -89,14 +89,6 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '#miles_to_meters' do
-    it 'returns the distance in miles in meters' do
-      miles = 10
-      expected = DistanceConverter.miles_to_metres(miles)
-      expect(helper.miles_to_metres(miles)).to eq(expected)
-    end
-  end
-
   describe '#validation_message' do
     context 'when a classname only is used' do
       it 'an empty hash is returned' do
@@ -106,7 +98,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'returns a hash' do
-        proc = FacilitiesManagement::Procurement.new
+        proc = FacilitiesManagement::RM3830::Procurement.new
 
         validation_message = helper.validation_messages proc.class.name.underscore.downcase.to_sym
         expect(validation_message.class.name).to eq 'Hash'
@@ -128,7 +120,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
 
       it 'will return a populated hash when the attribute has translations' do
-        proc = FacilitiesManagement::Procurement.new
+        proc = FacilitiesManagement::RM3830::Procurement.new
 
         validation_message = helper.validation_messages(proc.class.name.underscore.downcase.to_sym, :initial_call_off_period_years)
         expect(validation_message.class.name).to eq 'Hash'
@@ -138,7 +130,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when rendering HTML' do
       it 'will list elements' do
-        validation_output = helper.display_potential_errors(FacilitiesManagement::Procurement.new, :initial_call_off_period_years, 'facilities_management_procurement_initial_call_off_period')
+        validation_output = helper.display_potential_errors(FacilitiesManagement::RM3830::Procurement.new, :initial_call_off_period_years, 'facilities_management_rm3830_procurement_initial_call_off_period')
         expect(validation_output).to include('div')
       end
     end

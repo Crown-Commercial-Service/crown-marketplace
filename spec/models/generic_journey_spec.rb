@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe GenericJourney, type: :model do
   subject :journey do
-    described_class.new(first_step_class, slug, params, paths)
+    described_class.new(first_step_class, framework, slug, params, paths)
   end
 
+  let(:framework) { 'X-BT3' }
   let(:params) { ActionController::Parameters.new }
   let(:paths) { instance_double('JourneyPaths') }
 
@@ -121,7 +122,7 @@ RSpec.describe GenericJourney, type: :model do
     describe '#first_step_path' do
       it 'returns the first step_s path' do
         allow(paths).to receive(:question)
-          .with(slug)
+          .with(framework, slug)
           .and_return(:a_path)
         expect(journey.first_step_path).to eq(:a_path)
         expect(paths).to have_received(:question)
@@ -131,7 +132,7 @@ RSpec.describe GenericJourney, type: :model do
     describe '#current_step_path' do
       it 'returns the current step_s path' do
         allow(paths).to receive(:question)
-          .with(slug, params)
+          .with(framework, slug, params)
           .and_return(:a_path)
         expect(journey.current_step_path).to eq(:a_path)
         expect(paths).to have_received(:question)
@@ -150,7 +151,7 @@ RSpec.describe GenericJourney, type: :model do
     describe '#next_step_path' do
       it 'probably blows up, passes nil to path' do
         allow(paths).to receive(:question)
-          .with(nil, params)
+          .with(framework, nil, params)
           .and_return(:a_path)
         expect(journey.next_step_path).to eq(:a_path)
         expect(paths).to have_received(:question)
@@ -193,7 +194,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#first_step_path' do
         it 'returns the first step_s path' do
           allow(paths).to receive(:question)
-            .with(slug)
+            .with(framework, slug)
             .and_return(:a_path)
           expect(journey.first_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -203,7 +204,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#current_step_path' do
         it 'returns the current step_s path' do
           allow(paths).to receive(:question)
-            .with(slug, params)
+            .with(framework, slug, params)
             .and_return(:a_path)
           expect(journey.current_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -222,7 +223,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#next_step_path' do
         it 'is the second step_s path' do
           allow(paths).to receive(:question)
-            .with(SecondStep.new.slug, params)
+            .with(framework, SecondStep.new.slug, params)
             .and_return(:a_path)
           expect(journey.next_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -276,7 +277,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#first_step_path' do
         it 'returns the first step path' do
           allow(paths).to receive(:question)
-            .with(journey.first_step.slug)
+            .with(framework, journey.first_step.slug)
             .and_return(:a_path)
           expect(journey.first_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -286,7 +287,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#current_step_path' do
         it 'returns the second step path' do
           allow(paths).to receive(:question)
-            .with(slug, params)
+            .with(framework, slug, params)
             .and_return(:a_path)
           expect(journey.current_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -296,7 +297,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#previous_step_path' do
         it 'returns the first step path' do
           allow(paths).to receive(:question)
-            .with(journey.first_step.slug, params)
+            .with(framework, journey.first_step.slug, params)
             .and_return(:a_path)
           expect(journey.previous_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)
@@ -306,7 +307,7 @@ RSpec.describe GenericJourney, type: :model do
       describe '#next_step_path' do
         it 'probably blows up, passes nil' do
           allow(paths).to receive(:question)
-            .with(nil, params)
+            .with(framework, nil, params)
             .and_return(:a_path)
           expect(journey.next_step_path).to eq(:a_path)
           expect(paths).to have_received(:question)

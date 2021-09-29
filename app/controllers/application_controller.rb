@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  class UnrecognisedFrameworkError < StandardError; end
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
   before_action :authenticate_user!, :validate_service
@@ -8,8 +10,17 @@ class ApplicationController < ActionController::Base
     redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
   end
 
-  rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
-    raise ActionController::RoutingError, 'Not Found'
+  if Rails.env.production?
+    rescue_from ActionController::UnknownFormat, ActionView::MissingTemplate do
+      raise ActionController::RoutingError, 'Not Found'
+    end
+  end
+
+  rescue_from UnrecognisedFrameworkError do
+    @unrecognised_framework = params[:framework]
+    params[:framework] = FacilitiesManagement::DEFAULT_FRAMEWORK
+
+    render 'home/unrecognised_framework', status: :bad_request
   end
 
   def sign_in_url
@@ -35,9 +46,13 @@ class ApplicationController < ActionController::Base
   end
 
   def facilities_management_url_for_user_type
-    return facilities_management_supplier_new_user_session_url if controller_path.split('/')[1] == 'supplier' && controller_path.split('/')[2] == 'contracts'
+    return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
 
-    facilities_management_new_user_session_path
+    if params[:framework] == 'RM3830'
+      facilities_management_rm3830_new_user_session_path
+    else
+      "/facilities-management/#{FacilitiesManagement::DEFAULT_FRAMEWORK}/sign-in"
+    end
   end
 
   delegate :ccs_homepage_url, to: Marketplace
@@ -71,4 +86,8 @@ class ApplicationController < ActionController::Base
   end
 
   VALID_SERVICE_NAMES = %w[facilities_management facilities_management/supplier facilities_management/admin facilities_management/procurements crown_marketplace].freeze
+
+  def raise_if_unrecognised_framework
+    raise UnrecognisedFrameworkError, 'Unrecognised Framework' unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
+  end
 end

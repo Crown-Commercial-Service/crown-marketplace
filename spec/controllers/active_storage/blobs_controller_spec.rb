@@ -4,8 +4,8 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
   describe '#show' do
     context 'when signed in' do
       login_fm_buyer_with_details
-      let(:contract) { build(:facilities_management_procurement_supplier_da_with_supplier) }
-      let(:procurement) { create(:facilities_management_procurement_with_security_document, user: controller.current_user, procurement_suppliers: [contract]) }
+      let(:contract) { build(:facilities_management_rm3830_procurement_supplier_da_with_supplier) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, user: controller.current_user, procurement_suppliers: [contract]) }
 
       context 'when signed in as the buyer that created the procurement' do
         it 'returns the path' do
@@ -41,8 +41,8 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
     end
 
     context 'when not signed in' do
-      let(:contract) { build(:facilities_management_procurement_supplier_da_with_supplier) }
-      let(:procurement) { create(:facilities_management_procurement_with_security_document, procurement_suppliers: [contract]) }
+      let(:contract) { build(:facilities_management_rm3830_procurement_supplier_da_with_supplier) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, procurement_suppliers: [contract]) }
 
       it 'returns :unauthorized' do
         get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }

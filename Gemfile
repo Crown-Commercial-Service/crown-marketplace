@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '2.7.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.7'
+gem 'rails', '~> 6.0.4', '>= 6.0.4.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -84,7 +84,7 @@ gem 'aasm', '~> 5.0'
 gem 'after_commit_everywhere', '~> 1.0'
 
 # for running background jobs
-gem 'sidekiq', '~> 6.0.7'
+gem 'sidekiq', '~> 6.2.1'
 gem 'sinatra', '~> 2.0.8', '>= 2.0.8.1', require: false
 gem 'slim', '~> 4.0.1'
 
@@ -108,14 +108,14 @@ gem 'sprockets-bumble_d', '>= 2.2.0'
 gem 'smarter_csv'
 
 # for date layout and validation
-gem 'gov_uk_date_fields', '>= 4.1.0'
+gem 'gov_uk_date_fields', '>= 4.2.0'
 gem 'date_validator', '>= 0.9.0'
 
 # for clamav
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.2'
+gem 'active_storage_validations', '>= 0.9.5'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 0.15.0'
 # gov notify
@@ -137,7 +137,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails', '>= 2.7.6'
-  gem 'factory_bot_rails', '>= 6.1.0'
+  gem 'factory_bot_rails', '>= 6.2.0'
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
@@ -166,7 +166,7 @@ group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', '>= 2.3.0', require: false
+  gem 'cucumber-rails', '>= 2.4.0', require: false
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.1'
   gem 'axe-core-capybara', '>= 4.1.0'

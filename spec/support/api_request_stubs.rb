@@ -10,7 +10,7 @@ module APIRequestStubs
             'User-Agent' => 'Ruby'
           }
         )
-        .to_return(status: 200, body: FacilitiesManagement::StaticData.bank_holidays.to_json, headers: {})
+        .to_return(status: 200, body: FacilitiesManagement::RM3830::StaticData.bank_holidays.to_json, headers: {})
     end
   end
 end

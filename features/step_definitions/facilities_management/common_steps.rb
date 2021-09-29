@@ -1,5 +1,5 @@
-Given 'I sign in and navigate to my account' do
-  visit facilities_management_new_user_session_path
+Given 'I sign in and navigate to my account for {string}' do |framework|
+  visit "/facilities-management/#{framework}/sign-in"
   update_banner_cookie(true) if @javascript
   create_user_with_details
   fill_in 'email', with: @user.email
@@ -53,7 +53,7 @@ Then('I enter the following details into the form:') do |table|
 end
 
 Then('I navigate to the building summary page for {string}') do |building_name|
-  visit facilities_management_buildings_path
+  visit facilities_management_buildings_path('RM3830')
   click_on building_name
   step "I am on the buildings summary page for '#{building_name}'"
 end
@@ -85,6 +85,10 @@ end
 
 Then('I refresh the page') do
   page.driver.browser.navigate.refresh
+end
+
+When('I visit {string}') do |url|
+  visit url
 end
 
 And('I start a procurement') do

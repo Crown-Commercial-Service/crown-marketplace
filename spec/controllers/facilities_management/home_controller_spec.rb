@@ -3,13 +3,6 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::HomeController, type: :controller do
   let(:default_params) { { service: 'facilities_management' } }
 
-  describe 'GET index' do
-    it 'renders the index page' do
-      get :index
-      expect(response).to render_template(:index)
-    end
-  end
-
   describe 'GET not_permitted' do
     it 'renders the not_permitted page' do
       get :not_permitted
@@ -38,14 +31,18 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
     end
   end
 
-  describe 'validate service' do
-    context 'when the service is not a valid service' do
-      let(:default_params) { { service: 'apprenticeships' } }
+  describe 'GET framework' do
+    it 'redirects to the RM3830 home page' do
+      get :framework
+      expect(response).to redirect_to facilities_management_rm3830_path
+    end
 
-      it 'renders the erros_not_found page' do
-        get :index
+    context 'when the user is logged in without details' do
+      login_fm_buyer
 
-        expect(response).to redirect_to errors_404_path
+      it 'redirects to the RM3830 home page' do
+        get :framework
+        expect(response).to redirect_to facilities_management_rm3830_path
       end
     end
   end
