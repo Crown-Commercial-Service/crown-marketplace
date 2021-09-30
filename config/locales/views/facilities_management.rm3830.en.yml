@@ -1123,15 +1123,15 @@ en:
               contract_documents:
                 call_off_24:
                   description: This is the Scottish Law optional schedule
-                  file_name: Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
+                  file_name: facilities-management/rm3830/Call-Off Schedule 24 (O) - Scottish Law (DA) v3.0.pdf
                   title: Call-off Schedule 24 - Scottish Law
                 call_off_25:
                   description: This is the Northern Ireland Law optional schedule
-                  file_name: Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
+                  file_name: facilities-management/rm3830/Call-Off Schedule 25 (O) - Northern Ireland Law (DA) v3.0.pdf
                   title: Call-off Schedule 25 - Northern Ireland Law
                 core_terms:
                   description: Clause 35 within the Core Terms states the position on English Law
-                  file_name: Core Terms (DA) v3.0.2.pdf
+                  file_name: facilities-management/rm3830/Core Terms (DA) v3.0.2.pdf
                   title: Core Terms
               description_html: "<p>As a default position this contract and any issues arising out of, or connected to it, are governed by English Law. Alternatively, you may opt to select either Scottish law or Northern Ireland Law to govern your contract. If you do opt to choose either Scottish or Northern Ireland Law, the relevant optional schedule will be included within your contract, and reflected in your order form.</p> <p>The optional schedule (Call-off Schedule 24 or 25) will adapt the Core Terms and Schedules so that the Call-off Contract is under either Scottish or Northern Ireland Law.</p> <p>For further information, please click on the schedules below:</p>\n"
               english: English Law
@@ -1168,7 +1168,7 @@ en:
               payment_description: Please select the payment method that will be used
             pension_funds:
               attachment_2:
-                file_name: Call-Off Schedule 2 - Staff Transfer (DA) v3.0.pdf
+                file_name: facilities-management/rm3830/Call-Off Schedule 2 - Staff Transfer (DA) v3.0.pdf
                 name: Call-off Schedule 2 - staff transfer
               description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
               form_title: List of pension funds
