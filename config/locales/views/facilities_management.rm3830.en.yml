@@ -407,7 +407,7 @@ en:
             file_generated_date: Created on %{created_at}
           generating_csv:
             generating: Generating report
-            guidance: The report will be available for download shortly. Please click refresh on your browser until the report file is available for download.
+            guidance: The report will be available for download shortly. Your browser will automatically refresh when the report file is available for download.
           new:
             breadcrumb_text_management_report: Management report
             download_btn_text: Generate and download report

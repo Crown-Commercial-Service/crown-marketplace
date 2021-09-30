@@ -2,13 +2,13 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class ManagementReportsController < FacilitiesManagement::Admin::FrameworkController
+        before_action :set_management_report, only: %i[show status]
+
         def new
           @management_report = ManagementReport.new
         end
 
-        def show
-          @management_report = ManagementReport.find(params[:id])
-        end
+        def show; end
 
         def create
           @management_report = current_user.management_reports.build(management_report_params)
@@ -20,7 +20,15 @@ module FacilitiesManagement
           end
         end
 
+        def status
+          render json: { status: @management_report.aasm_state }
+        end
+
         private
+
+        def set_management_report
+          @management_report = ManagementReport.find(params[:id] || params[:management_report_id])
+        end
 
         def management_report_params
           params.require(:facilities_management_rm3830_admin_management_report)
