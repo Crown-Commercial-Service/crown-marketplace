@@ -1,6 +1,6 @@
 module FacilitiesManagement
   class HomeController < FacilitiesManagement::FrameworkController
-    before_action :authenticate_user!, :authorize_user, :raise_if_unrecognised_framework, except: %i[not_permitted accessibility_statement cookie_policy cookie_settings framework]
+    before_action :authenticate_user!, :authorize_user, :raise_if_unrecognised_framework, :redirect_to_buyer_detail, except: %i[not_permitted accessibility_statement cookie_policy cookie_settings framework]
 
     def not_permitted
       render 'home/not_permitted', layout: 'error'
