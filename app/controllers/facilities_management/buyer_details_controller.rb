@@ -1,7 +1,7 @@
 module FacilitiesManagement
   class BuyerDetailsController < FacilitiesManagement::FrameworkController
     before_action :set_buyer_detail
-    before_action :redirect_to_buyer_detail, except: %i[edit edit_address edit_address]
+    before_action :redirect_to_buyer_detail, except: %i[edit edit_address update]
 
     def edit; end
 
