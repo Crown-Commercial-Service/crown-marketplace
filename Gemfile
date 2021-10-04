@@ -131,7 +131,7 @@ gem 'email_validator', require: 'email_validator/strict'
 
 # for cloud storage of assets
 gem 'asset_sync'
-gem 'fog-aws', '>= 3.10.0'
+gem 'fog-aws', '>= 3.11.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -141,12 +141,12 @@ group :development, :test do
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 5.0.1'
+  gem 'rspec-rails', '>= 5.0.2'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
   gem 'rubocop-rails', '>= 2.9.1', require: false
-  gem 'rubyXL', '>= 3.4.17'
+  gem 'rubyXL', '>= 3.4.18'
   gem 'i18n-tasks', '>= 0.9.34'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
@@ -169,6 +169,6 @@ group :test do
   gem 'cucumber-rails', '>= 2.4.0', require: false
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.1'
-  gem 'axe-core-capybara', '>= 4.1.0'
-  gem 'axe-core-cucumber', '>= 4.1.0'
+  gem 'axe-core-capybara', '>= 4.2.1'
+  gem 'axe-core-cucumber', '>= 4.2.1'
 end

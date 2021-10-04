@@ -148,7 +148,10 @@ Rails.application.routes.draw do
         end
         get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
         resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
-        resources :management_reports, only: %i[new create show]
+        resources :management_reports, only: %i[new create show] do
+          get '/status', action: :status
+          post '/update_status', action: :update_status
+        end
       end
     end
 
