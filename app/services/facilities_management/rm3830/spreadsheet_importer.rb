@@ -4,8 +4,8 @@ module FacilitiesManagement::RM3830
     BUILDINGS_COMPLETE_ROW = 14
     # This can be added as more parts of the bulk upload are completed
     IMPORT_PROCESS_ORDER = %i[check_file process_file check_processed_data].freeze
-    TEMPLATE_FILE_NAME = 'Services and buildings template v1.0.xlsx'.freeze
-    TEMPLATE_FILE_PATH = Rails.root.join('public', 'facilities-management', 'rm3830', TEMPLATE_FILE_NAME).freeze
+    TEMPLATE_FILE_NAME = 'facilities-management/rm3830/Services and buildings template v1.0.xlsx'.freeze
+    TEMPLATE_FILE_PATH = Rails.root.join('public', TEMPLATE_FILE_NAME).freeze
 
     def initialize(spreadsheet_import)
       @spreadsheet_import = spreadsheet_import

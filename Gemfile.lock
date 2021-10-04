@@ -619,8 +619,8 @@ DEPENDENCIES
   auto-session-timeout (~> 0.9.7)
   aws-sdk-cognitoidentityprovider (~> 1.23.0)
   aws-sdk-s3 (~> 1)
-  axe-core-capybara (>= 4.1.0)
-  axe-core-cucumber (>= 4.1.0)
+  axe-core-capybara (>= 4.2.1)
+  axe-core-cucumber (>= 4.2.1)
   bootsnap (>= 1.1.0)
   bullet
   byebug
@@ -640,7 +640,7 @@ DEPENDENCIES
   email_validator
   factory_bot_rails (>= 6.2.0)
   faker (~> 2.10.2)
-  fog-aws (>= 3.10.0)
+  fog-aws (>= 3.11.0)
   friendly_id (~> 5.2.5)
   geocoder (>= 1.6.1)
   gov_uk_date_fields (>= 4.2.0)
@@ -671,11 +671,11 @@ DEPENDENCIES
   role_model (~> 0.8.2)
   rollbar (~> 2.24.0)
   roo (~> 2.8.3)
-  rspec-rails (>= 5.0.1)
+  rspec-rails (>= 5.0.2)
   rubocop (>= 1.11.0)
   rubocop-rails (>= 2.9.1)
   rubocop-rspec (>= 2.2.0)
-  rubyXL (>= 3.4.17)
+  rubyXL (>= 3.4.18)
   rubyzip (>= 1.2.1)
   sass-rails (~> 5.1, >= 5.1.0)
   selenium-webdriver (>= 3.142.3)
