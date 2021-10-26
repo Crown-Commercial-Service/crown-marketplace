@@ -46,6 +46,7 @@ en:
             external_area:
               blank: External area must be a number between 0 and 999,999,999
               combined_area: External area must be greater than 0, if the internal area is 0
+              greater_than_or_equal_to: External area must be a number between 0 and 999,999,999
               less_than_or_equal_to: External area must be a number between 0 and 999,999,999
               not_a_number: External area must be a whole number
               not_an_integer: Enter a whole number for the size of external area of this building
@@ -53,6 +54,7 @@ en:
             gia:
               blank: Internal area must be a number between 0 and 999,999,999
               combined_area: Internal area must be greater than 0, if the external area is 0
+              greater_than_or_equal_to: Internal area must be a number between 0 and 999,999,999
               less_than_or_equal_to: Internal area must be a number between 0 and 999,999,999
               not_a_number: Gross Internal Area (GIA) must be a whole number
               not_an_integer: Enter a whole number for the size of internal area of this building
