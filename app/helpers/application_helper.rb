@@ -8,14 +8,6 @@ module ApplicationHelper
     link_to(t('common.feedback'), Marketplace.fm_survey_link, target: '_blank', rel: 'noopener', class: 'govuk-link')
   end
 
-  def support_email_link(label)
-    govuk_email_link(Marketplace.support_email_address, label, css_class: 'govuk-link ga-support-mailto')
-  end
-
-  def footer_email_link(label)
-    mail_to(Marketplace.support_email_address, Marketplace.support_email_address, class: 'govuk-link ga-support-mailto', 'aria-label': label)
-  end
-
   def dfe_account_request_url
     'https://ccsheretohelp.uk/contact/?type=ST18/19'
   end
@@ -353,6 +345,10 @@ module ApplicationHelper
     else
       facilities_management_accessibility_statement_path(framework: params[:framework])
     end
+  end
+
+  def contact_link(link_text)
+    link_to(link_text, Marketplace.support_form_link, target: :blank)
   end
 end
 # rubocop:enable Metrics/ModuleLength
