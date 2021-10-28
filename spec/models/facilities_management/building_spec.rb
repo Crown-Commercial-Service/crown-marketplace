@@ -200,6 +200,23 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
         end
       end
+
+      context 'and it is too small' do
+        let(:gia) { -5 }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
+          expect(building.errors.details[:gia].first[:error]).to eq :greater_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:gia].first).to eq 'Internal area must be a number between 0 and 999,999,999'
+        end
+      end
     end
 
     context 'when validating external aria' do
@@ -269,6 +286,23 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'will have the correct error' do
           expect(building.errors.details[:external_area].first[:error]).to eq :less_than_or_equal_to
+        end
+
+        it 'will have the correct error message' do
+          expect(building.errors[:external_area].first).to eq 'External area must be a number between 0 and 999,999,999'
+        end
+      end
+
+      context 'when external_area is too small' do
+        let(:external_area) { -1 }
+
+        it 'is invalid' do
+          expect(building.valid?(:all)).to eq false
+          expect(building.valid?(:gia)).to eq false
+        end
+
+        it 'will have the correct error' do
+          expect(building.errors.details[:external_area].first[:error]).to eq :greater_than_or_equal_to
         end
 
         it 'will have the correct error message' do

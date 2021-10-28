@@ -4,7 +4,7 @@
 
       <h1 class="govuk-heading-xl"><%= t('.title') %></h1>
 
-      <p><%= t('.details_html', email: mail_to(Marketplace.support_email_address, t('.ccs_support'))) %></p>
+      <p><%= t('.details_html', link: contact_link(t('.ccs_support'))) %></p>
     </div>
   </div>
 </div>
