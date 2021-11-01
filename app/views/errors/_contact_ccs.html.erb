@@ -1,12 +1,3 @@
 <p>
-  <%= t('.contact_ccs') %>
+  <%= t('.contact_ccs_html', link: contact_link(t('.link_text'))) %>
 </p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>
-    <%= t('.email')%>
-    <%= footer_email_link(t('layouts.application.support_link_aria_label')) %>
-  </li>
-  <li>
-    <%= "#{t('.call')} #{support_telephone_number}"%>
-  </li>
-</ul>

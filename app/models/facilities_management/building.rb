@@ -17,7 +17,7 @@ module FacilitiesManagement
 
     with_options on: %i[all gia] do
       validates :gia, :external_area, presence: true
-      validates :gia, :external_area, numericality: { only_integer: true, less_than_or_equal_to: 999999999 }
+      validates :gia, :external_area, numericality: { only_integer: true, less_than_or_equal_to: 999999999, greater_than_or_equal_to: 0 }
       validate  :combined_external_area_and_gia_greater_than_zero
     end
 
