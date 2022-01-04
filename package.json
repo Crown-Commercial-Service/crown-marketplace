@@ -2,9 +2,9 @@
   "name": "marketplace",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-external-helpers": "^7.16.0",
-    "@babel/plugin-transform-modules-umd": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-external-helpers": "^7.16.5",
+    "@babel/plugin-transform-modules-umd": "^7.16.5",
     "@hmcts/frontend": "0.0.29-alpha",
     "govuk-frontend": "^3.14.0",
     "html5shiv": "^3.7.3",
