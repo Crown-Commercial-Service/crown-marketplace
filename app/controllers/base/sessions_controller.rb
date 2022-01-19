@@ -91,5 +91,11 @@ module Base
         render :new
       end
     end
+
+    def challenge_path
+      cookies[:session] = { value: @result.session, expires: 20.minutes, httponly: true }
+
+      service_challenge_path
+    end
   end
 end

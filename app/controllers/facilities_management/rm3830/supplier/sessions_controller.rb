@@ -1,8 +1,7 @@
 class FacilitiesManagement::RM3830::Supplier::SessionsController < Base::SessionsController
   protected
 
-  def challenge_path
-    cookies[:session] = { value: @result.session, expires: 20.minutes, httponly: true }
+  def service_challenge_path
     facilities_management_rm3830_supplier_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
   end
 
