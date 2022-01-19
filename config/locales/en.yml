@@ -441,6 +441,10 @@ en:
         expires: 20 minutes
         name: session
         purpose: This cookie holds the session id when a user is challenged while logging in
+      reg_and_sign_in_cookie_3:
+        expires: 20 minutes
+        name: confirmation_email
+        purpose: This cookie holds the email of the user when activating their account
       reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
       we_do_not_let: We do not allow Google to use or share the data about how you use this site.
       what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
