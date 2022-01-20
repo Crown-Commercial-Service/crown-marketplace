@@ -11,6 +11,8 @@ module Base
     def confirm
       @result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
       if @result.success?
+        cookies.delete :confirmation_email
+
         sign_in_user(@result.user)
       else
         render :confirm_new
@@ -41,7 +43,8 @@ module Base
 
     def new_challenge_path
       cookies[:session] = @challenge.new_session
-      users_challenge_path(challenge_name: @challenge.new_challenge_name, username: params[:username])
+
+      new_service_challenge_path
     end
 
     def find_and_sign_in_user
