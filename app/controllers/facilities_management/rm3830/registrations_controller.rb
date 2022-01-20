@@ -7,8 +7,8 @@ module FacilitiesManagement
         :fm_access
       end
 
-      def after_sign_up_path_for(resource)
-        facilities_management_rm3830_users_confirm_path(email: resource.email)
+      def service_after_sign_up_path
+        facilities_management_rm3830_users_confirm_path
       end
 
       def domain_not_on_safelist_path

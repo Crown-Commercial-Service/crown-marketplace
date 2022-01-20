@@ -1,4 +1,4 @@
-FROM ruby:2.7-alpine
+FROM ruby:2.7.4-alpine
 
 # Build information
 ARG GIT_OWNER
@@ -73,7 +73,8 @@ ARG APP_RUN_PRECOMPILE_ASSETS
 LABEL app_run_precompile_assets=$APP_RUN_PRECOMPILE_ASSETS
 ENV APP_RUN_PRECOMPILE_ASSETS=$APP_RUN_PRECOMPILE_ASSETS
 
-
+# Potential fix for log4j vulnerability
+ENV LOG4J_FORMAT_MSG_NO_LOOKUPS=true
 
 ##_PARAMETER_STORE_MARKER_##
 

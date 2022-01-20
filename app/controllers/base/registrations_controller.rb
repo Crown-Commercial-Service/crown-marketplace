@@ -56,5 +56,11 @@ module Base
         render :new, erorr: result.error
       end
     end
+
+    def after_sign_up_path_for(resource)
+      cookies[:confirmation_email] = { value: resource.email, expires: 20.minutes, httponly: true }
+
+      service_after_sign_up_path
+    end
   end
 end
