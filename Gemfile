@@ -50,7 +50,7 @@ gem 'omniauth-oauth2', '~> 1.7.1'
 gem 'json-jwt', '>= 1.11.0'
 
 # for authentication
-gem 'devise', '~> 4.7.3'
+gem 'devise', '~> 4.8.1'
 
 # for timing out when session expires
 gem 'auto-session-timeout', '~> 0.9.7'
