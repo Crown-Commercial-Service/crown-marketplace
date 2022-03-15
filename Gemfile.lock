@@ -236,7 +236,7 @@ GEM
     down (5.2.0)
       addressable (~> 2.5)
     dumb_delegator (1.0.0)
-    email_validator (2.2.2)
+    email_validator (2.2.3)
       activemodel
     erubi (1.10.0)
     excon (0.85.0)
