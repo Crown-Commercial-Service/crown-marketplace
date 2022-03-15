@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.4",
-    "juice": "^5.0.1"
+    "juice": "^8.0.0"
   }
 }
