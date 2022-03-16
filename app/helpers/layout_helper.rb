@@ -102,7 +102,7 @@ module LayoutHelper
     options['aria-describedby'] = error_id(attribute) if attribute_errors
     options.merge!(property_name: attribute).symbolize_keys!
 
-    tag.div(options) do
+    tag.div(**options) do
       capture do
         concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
         concat(display_error(builder.object, attribute)) if show_errors && !hide_error_text
@@ -157,7 +157,7 @@ module LayoutHelper
 
   # rubocop:disable Metrics/AbcSize
   def fieldset_structure(form, caption, options, header_text, *attributes, &block)
-    tag.fieldset(options) do
+    tag.fieldset(**options) do
       capture do
         concat(tag.legend(caption, class: 'govuk-fieldset__legend govuk-fieldset__legend--m')) unless caption.nil?
         concat(tag.p(header_text, class: 'govuk-caption-m')) if header_text.present?

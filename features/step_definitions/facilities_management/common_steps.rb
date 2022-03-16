@@ -13,7 +13,13 @@ Given('I have buildings') do
   create(:facilities_management_building_london, building_name: 'Test London building', user: @user)
 end
 
+# There is an issue where this will sometimes raise a
+# undefined method `gsub' for nil:NilClass (NoMethodError)
+# I'm not exactly sure why this happens but adding the rescue
+# To try again does seem to sort it out
 Then 'I am on the {string} page' do |title|
+  expect(page.find('h1')).to have_content(title)
+rescue NoMethodError
   expect(page.find('h1')).to have_content(title)
 end
 
