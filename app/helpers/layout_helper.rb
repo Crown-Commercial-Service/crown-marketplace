@@ -155,7 +155,7 @@ module LayoutHelper
     end
   end
 
-  # rubocop:disable Metrics/ParameterLists, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   def fieldset_structure(form, caption, options, header_text, *attributes, &block)
     tag.fieldset(options) do
       capture do
@@ -169,7 +169,7 @@ module LayoutHelper
       end
     end
   end
-  # rubocop:enable Metrics/ParameterLists, Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
