@@ -58,7 +58,7 @@ module ApplicationHelper
     options = { class: 'govuk-fieldset' }
     options['aria-describedby'] = attributes_with_errors.map { |a| error_id(a) } if attributes_with_errors.any?
 
-    tag.fieldset(options, &block)
+    tag.fieldset(**options, &block)
   end
 
   def list_potential_errors(model_object, attribute, form_object_name, error_lookup = nil, error_position = nil)

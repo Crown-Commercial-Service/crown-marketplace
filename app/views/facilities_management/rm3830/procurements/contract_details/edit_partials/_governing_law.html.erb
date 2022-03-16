@@ -8,7 +8,7 @@
   <ul class="govuk-list">
     <% %w[core_terms call_off_24 call_off_25].each do |doc_key| %>
       <li class="govuk-!-margin-bottom-2">
-        <%= link_to_public_file_for_download(t(".contract_documents.#{doc_key}.file_name"), :pdf,  t(".contract_documents.#{doc_key}.title"), true, { style: 'min-height: 25px' }) %>
+        <%= link_to_public_file_for_download(t(".contract_documents.#{doc_key}.file_name"), :pdf,  t(".contract_documents.#{doc_key}.title"), true, style: 'min-height: 25px') %>
         <span class="govuk-caption-m" style="padding-left: 70px"><%= t(".contract_documents.#{doc_key}.description") %></span>
       </li>
     <% end %>

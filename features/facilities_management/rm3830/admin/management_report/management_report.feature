@@ -1,3 +1,4 @@
+@management_report
 Feature: Management report  - validations
 
   Background: Navigate to the management report page
