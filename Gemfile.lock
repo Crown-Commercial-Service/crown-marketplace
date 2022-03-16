@@ -68,8 +68,9 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.1.0)
-    after_commit_everywhere (1.0.0)
+    after_commit_everywhere (1.1.0)
       activerecord (>= 4.2)
+      activesupport
     amoeba (3.1.0)
       activerecord (>= 3.2.6)
     asset_sync (2.13.1)
@@ -613,7 +614,7 @@ DEPENDENCIES
   active_storage_validations (>= 0.9.5)
   activerecord-import (~> 0.15.0)
   activerecord-postgis-adapter (>= 5.2.2)
-  after_commit_everywhere (~> 1.0)
+  after_commit_everywhere (~> 1.1)
   amoeba (>= 3.1.0)
   asset_sync
   auto-session-timeout (~> 0.9.7)
