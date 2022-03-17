@@ -3,7 +3,7 @@ Given 'I sign in and navigate to my account for {string}' do |framework|
   update_banner_cookie(true) if @javascript
   create_user_with_details
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPasswrod'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content(@user.email)
 end

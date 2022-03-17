@@ -3,7 +3,7 @@ Given('I sign in as an admin and navigate to my dashboard') do
   update_banner_cookie(true) if @javascript
   create_admin_user_with_details
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPasswrod'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('RM3830 administration dashboard')
 end
@@ -26,7 +26,7 @@ Given('I sign out and sign in the admin user') do
   step "I click on 'Sign out'"
   visit facilities_management_rm3830_admin_new_user_session_path
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPasswrod'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('RM3830 administration dashboard')
 end

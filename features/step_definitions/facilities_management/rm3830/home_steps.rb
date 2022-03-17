@@ -7,7 +7,7 @@ Given('I sign in without details') do
   update_banner_cookie(true) if @javascript
   create_user_without_details
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPasswrod'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('Manage your details')
 end
@@ -32,7 +32,7 @@ end
 
 Then('I sign in') do
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPasswrod'
   click_on 'Sign in'
 end
 
