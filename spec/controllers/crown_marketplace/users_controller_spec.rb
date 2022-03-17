@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
+RSpec.describe CrownMarketplace::UsersController, type: :controller do
+  let(:default_params) { { service: 'crown_marketplace' } }
 
   describe 'GET challenge_new' do
     let(:user) { create(:user, cognito_uuid: SecureRandom.uuid, phone_number: Faker::PhoneNumber.cell_phone) }
@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
       let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
 
       it 'renders the new_password_required partial' do
-        expect(response).to render_template('facilities_management/rm3830/admin/users/_new_password_required')
+        expect(response).to render_template('crown_marketplace/users/_new_password_required')
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
       let(:challenge_name) { 'SMS_MFA' }
 
       it 'renders the sms_mfa partial' do
-        expect(response).to render_template('facilities_management/rm3830/admin/users/_sms_mfa')
+        expect(response).to render_template('crown_marketplace/users/_sms_mfa')
       end
     end
   end
@@ -74,8 +74,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
         context 'and there is an additional challange' do
           let(:new_challenge_name) { 'SMS_MFA' }
 
-          it 'redirects to facilities_management_rm3830_admin_users_challenge_path' do
-            expect(response).to redirect_to facilities_management_rm3830_admin_users_challenge_path(challenge_name: new_challenge_name)
+          it 'redirects to crown_marketplace_users_challenge_path' do
+            expect(response).to redirect_to crown_marketplace_users_challenge_path(challenge_name: new_challenge_name)
           end
 
           it 'the cookies are updated correctly' do
@@ -85,8 +85,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
         end
 
         context 'and there is no additional challange' do
-          it 'redirects to facilities_management_rm3830_admin_path' do
-            expect(response).to redirect_to facilities_management_rm3830_admin_path
+          it 'redirects to crown_marketplace_path' do
+            expect(response).to redirect_to crown_marketplace_path
           end
 
           it 'deletes the cookies' do
@@ -125,8 +125,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
       end
 
       context 'and it is valid' do
-        it 'redirects to facilities_management_rm3830_admin_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_path
+        it 'redirects to crown_marketplace_path' do
+          expect(response).to redirect_to crown_marketplace_path
         end
 
         it 'deletes the cookies' do

@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       delete '/sign-out', to: 'sessions#destroy', as: :destroy_user_session
       get '/users/forgot-password', to: 'passwords#new', as: :new_user_password
       post '/users/password', to: 'passwords#create'
-      get '/users/forgot-password-confirmation', to: 'passwords#confirm_new', as: :confirm_new_user_password
       get '/users/password', to: 'passwords#edit', as: :edit_user_password
       put '/users/password', to: 'passwords#update'
       get '/users/password-reset-success', to: 'passwords#password_reset_success', as: :password_reset_success
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
       post '/users/confirm', to: 'users#confirm'
       get '/users/challenge', to: 'users#challenge_new'
       post '/users/challenge', to: 'users#challenge'
-      get '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
+      post '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
     end
     concern :registrable do
       get '/sign-up', to: 'registrations#new', as: :new_user_registration

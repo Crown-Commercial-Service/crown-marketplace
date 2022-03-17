@@ -52,9 +52,9 @@
       </div>
 
 
-      <%= hidden_field_tag :session, cookies[:session] %>
+      <%= hidden_field_tag :session, cookies[:crown_marketplace_challenge_session] %>
 
-      <%= hidden_field_tag :username, params[:username] %>
+      <%= hidden_field_tag :username, cookies[:crown_marketplace_challenge_username] %>
 
       <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
 
