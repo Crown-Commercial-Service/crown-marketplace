@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
+RSpec.describe CrownMarketplace::SessionsController, type: :controller do
+  let(:default_params) { { service: 'crown_marketplace' } }
 
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
@@ -43,8 +43,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController, type: :c
       context 'when the password needs to be reset' do
         let(:exception) { Aws::CognitoIdentityProvider::Errors::PasswordResetRequiredException.new('oops', 'Oops') }
 
-        it 'redirects to facilities_management_rm3830_admin_edit_user_password_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_edit_user_password_path
+        it 'redirects to crown_marketplace_edit_user_password_path' do
+          expect(response).to redirect_to crown_marketplace_edit_user_password_path
         end
 
         it 'sets the crown_marketplace_reset_email cookie' do
@@ -59,7 +59,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController, type: :c
       let(:cognito_groups) do
         OpenStruct.new(groups: [
                          OpenStruct.new(group_name: 'ccs_employee'),
-                         OpenStruct.new(group_name: 'fm_access')
+                         OpenStruct.new(group_name: 'allow_list_access')
                        ])
       end
 
@@ -75,16 +75,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SessionsController, type: :c
       context 'and there is no challenge' do
         let(:challenge_name) { nil }
 
-        it 'redirects to facilities_management_rm3830_admin_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_path
+        it 'redirects to crown_marketplace_path' do
+          expect(response).to redirect_to crown_marketplace_path
         end
       end
 
       context 'and there is a challenge' do
         let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
 
-        it 'redirects to facilities_management_rm3830_admin_users_challenge_path' do
-          expect(response).to redirect_to facilities_management_rm3830_admin_users_challenge_path(challenge_name: challenge_name)
+        it 'redirects to crown_marketplace_users_challenge_path' do
+          expect(response).to redirect_to crown_marketplace_users_challenge_path(challenge_name: challenge_name)
         end
 
         it 'the cookies are updated correctly' do

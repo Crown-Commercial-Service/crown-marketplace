@@ -2,7 +2,7 @@ class FacilitiesManagement::RM3830::Supplier::SessionsController < Base::Session
   protected
 
   def service_challenge_path
-    facilities_management_rm3830_supplier_users_challenge_path(challenge_name: @result.challenge_name, username: @result.cognito_uuid)
+    facilities_management_rm3830_supplier_users_challenge_path(challenge_name: @result.challenge_name)
   end
 
   def after_sign_in_path_for(resource)
@@ -19,11 +19,11 @@ class FacilitiesManagement::RM3830::Supplier::SessionsController < Base::Session
     facilities_management_rm3830_supplier_new_user_session_path
   end
 
-  def confirm_forgot_password_path(username)
-    facilities_management_rm3830_supplier_edit_user_password_path(username: username)
+  def confirm_forgot_password_path
+    facilities_management_rm3830_supplier_edit_user_password_path
   end
 
-  def confirm_email_path(email)
-    facilities_management_rm3830_supplier_users_confirm_path(email: email)
+  def confirm_email_path
+    facilities_management_rm3830_supplier_users_confirm_path
   end
 end
