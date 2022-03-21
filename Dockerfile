@@ -1,4 +1,4 @@
-FROM ruby:2.7.4-alpine
+FROM ruby:2.7.5-alpine
 
 # Build information
 ARG GIT_OWNER
