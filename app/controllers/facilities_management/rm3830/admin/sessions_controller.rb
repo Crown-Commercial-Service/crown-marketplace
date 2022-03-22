@@ -13,7 +13,7 @@ module FacilitiesManagement
           # keep these lines for the moment, to remind us to use the logic as when a regular user signs in
           #  return edit_facilities_management_buyer_detail_path(FacilitiesManagement::BuyerDetail.find_or_create_by(user: current_user)) if current_user.fm_buyer_details_incomplete?
 
-          # stored_location_for(resource) || facilities_management_path
+          # stored_location_for(resource) || facilities_management_3830_path
           facilities_management_rm3830_admin_path
         end
         # rubocop:enable Lint/UnusedMethodArgument

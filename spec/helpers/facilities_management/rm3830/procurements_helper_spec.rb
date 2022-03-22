@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
       let(:region_codes) { nil }
 
       it 'when the previous journey_step is services' do
-        expect(result).to eq '/facilities-management/RM3830/choose-services?region_codes=&service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
+        expect(result).to eq '/facilities-management/RM3830/choose-services?service_codes%5B%5D=C.1&service_codes%5B%5D=D.1&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
       end
     end
 

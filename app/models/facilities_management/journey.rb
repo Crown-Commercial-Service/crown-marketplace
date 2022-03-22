@@ -13,7 +13,7 @@ module FacilitiesManagement
     end
 
     def start_path
-      facilities_management_path(framework: @framework)
+      facilities_management_index_path(framework: @framework)
     end
 
     def next_step_path

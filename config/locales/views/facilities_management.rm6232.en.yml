@@ -1,0 +1,40 @@
+---
+en:
+  facilities_management:
+    rm6232:
+      buyer_account:
+        index:
+          buyer_account_dashboard: Buyer account dashboard
+          buyer_account_title: Your account
+          further_information_help: "(opens in a new tab)"
+          further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6232
+          further_information_link_description: View further information about the Facilities Management framework RM6232
+          manage_account_desc: Update and edit your contact details
+          manage_account_link: Manage my details
+          manage_buildings: Manage my buildings
+          manage_buildings_desc: Set up and manage your buildings for use in procurements
+          manage_procurements_desc_html: Open your procurements dashboard to view<br/> and continue existing saved procurements<br />
+          manage_procurements_link: Continue a procurement
+          return_to_page: To return to this page at any time, just click on 'My account'.
+          start_procurement_desc: View suppliers who can provide services to your locations
+          start_procurement_link: Start a procurement
+      home:
+        index:
+          beforeyoustart: Before you start
+          further_information: View further information about the Facilities Management framework RM6232
+          heading: Find a facilities management supplier
+          startlist_html: |
+            <li>what services you are looking for</li>
+            <li>your building locations and information</li>
+            <li>your basic contract requirements</li>
+          startnow: Start now
+          subheading: 'Use this service to:'
+          usagelist_html: |
+            <li>quickly view suppliers who can provide services to your locations</li>
+            <li>compliantly create your procurement bid back</li>
+            <li>shortlist suppliers ready for further competition</li>
+          youneedtoknow: 'You need to know:'
+      sessions:
+        new:
+          email_hint_html: Enter the email address you used to set up your account.
+          sign_in_header: Sign in to your account

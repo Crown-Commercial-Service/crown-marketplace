@@ -7,8 +7,8 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
     end
   end
 
-  shared_context 'and RM6232 is live in the past' do
-    before { described_class.find_by(framework: 'RM6232').update(live_at: Time.zone.now - 1.day) }
+  shared_context 'and RM6232 is live in the future' do
+    before { described_class.find_by(framework: 'RM6232').update(live_at: Time.zone.now + 1.day) }
   end
 
   shared_context 'and RM6232 is live today' do
@@ -17,6 +17,8 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
 
   describe '.live_frameworks' do
     context 'when RM6232 goes live tomorrow' do
+      include_context 'and RM6232 is live in the future'
+
       it 'returns only RM3830' do
         expect(described_class.live_frameworks).to eq ['RM3830']
       end
@@ -31,8 +33,6 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
     end
 
     context 'when RM6232 went live yesterday' do
-      include_context 'and RM6232 is live in the past'
-
       it 'returns RM3830 and RM6232' do
         expect(described_class.live_frameworks).to eq ['RM3830', 'RM6232']
       end
@@ -41,6 +41,8 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
 
   describe '.default_framework' do
     context 'when RM6232 goes live tomorrow' do
+      include_context 'and RM6232 is live in the future'
+
       it 'returns RM3830' do
         expect(described_class.default_framework).to eq 'RM3830'
       end
@@ -55,8 +57,6 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
     end
 
     context 'when RM6232 went live yesterday' do
-      include_context 'and RM6232 is live in the past'
-
       it 'returns RM6232' do
         expect(described_class.default_framework).to eq 'RM6232'
       end
@@ -72,6 +72,8 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
 
     context 'when the framework is RM6232' do
       context 'and RM6232 goes live tomorrow' do
+        include_context 'and RM6232 is live in the future'
+
         it 'returns false' do
           expect(described_class.recognised_live_framework?('RM6232')).to be false
         end
@@ -86,8 +88,6 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
       end
 
       context 'and RM6232 went live yesterday' do
-        include_context 'and RM6232 is live in the past'
-
         it 'returns true' do
           expect(described_class.recognised_live_framework?('RM6232')).to be true
         end
@@ -110,6 +110,8 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
 
     context 'when the framework is RM6232' do
       context 'and RM6232 goes live tomorrow' do
+        include_context 'and RM6232 is live in the future'
+
         it 'returns true' do
           expect(described_class.recognised_framework?('RM6232')).to be true
         end
@@ -124,8 +126,6 @@ RSpec.describe FacilitiesManagement::Framework, type: :model do
       end
 
       context 'and RM6232 went live yesterday' do
-        include_context 'and RM6232 is live in the past'
-
         it 'returns true' do
           expect(described_class.recognised_framework?('RM6232')).to be true
         end

@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module RM3830
-    class UsersController < Base::UsersController
+    class UsersController < FacilitiesManagement::UsersController
       private
 
       def new_service_challenge_path
@@ -8,7 +8,7 @@ module FacilitiesManagement
       end
 
       def after_sign_in_path_for(resource)
-        stored_location_for(resource) || facilities_management_path
+        stored_location_for(resource) || facilities_management_rm3830_path
       end
 
       def confirm_user_registration_path

@@ -28,7 +28,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::SentController, type: :co
 
     context 'when not signed in' do
       it 'redirects to FM sign-in' do
-        expect(index).to redirect_to('/facilities-management/RM3830/supplier/sign-in')
+        expect(index).to redirect_to facilities_management_rm3830_supplier_new_user_session_path
       end
     end
   end

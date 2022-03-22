@@ -6,10 +6,23 @@ RSpec.describe FacilitiesManagement::RM3830::SessionsController, type: :controll
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
   describe 'GET new' do
-    before { get :new }
+    context 'when the framework is live' do
+      it 'renders the new page' do
+        get :new
 
-    it 'renders the new page' do
-      expect(response).to render_template(:new)
+        expect(response).to render_template(:new)
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 is not live'
+
+      it 'renders the unrecognised framework page with the right http status' do
+        get :new
+
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
@@ -87,7 +100,7 @@ RSpec.describe FacilitiesManagement::RM3830::SessionsController, type: :controll
       context 'and there is no challenge' do
         let(:challenge_name) { nil }
 
-        it 'redirects to facilities_management_path' do
+        it 'redirects to facilities_management_rm3830_path' do
           expect(response).to redirect_to facilities_management_rm3830_path
         end
       end
@@ -103,6 +116,17 @@ RSpec.describe FacilitiesManagement::RM3830::SessionsController, type: :controll
           expect(cookies[:crown_marketplace_challenge_session]).to eq(session)
           expect(cookies[:crown_marketplace_challenge_username]).to eq(username)
         end
+      end
+    end
+
+    context 'when the framework is not live' do
+      include_context 'and RM3830 is not live'
+
+      it 'renders the unrecognised framework page with the right http status' do
+        post :create, params: { user: { email: email, password: 'Password12345!' } }
+
+        expect(response).to render_template('home/unrecognised_framework')
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end

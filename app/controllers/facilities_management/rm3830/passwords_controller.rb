@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module RM3830
-    class PasswordsController < Base::PasswordsController
+    class PasswordsController < FacilitiesManagement::PasswordsController
       protected
 
       def new_password_path
