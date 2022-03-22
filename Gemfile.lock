@@ -234,8 +234,8 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    down (5.2.0)
-      addressable (~> 2.5)
+    down (5.3.0)
+      addressable (~> 2.8)
     dumb_delegator (1.0.0)
     email_validator (2.2.3)
       activemodel
