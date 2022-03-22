@@ -3,7 +3,7 @@ module HeaderNavigationLinksHelper
     framework = params[:framework] || FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
-      navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_path(framework: framework) } unless not_permitted_page?
+      navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_index_path(framework: framework) } unless not_permitted_page?
       navigation_links << sign_out_link(destroy_user_session_path)
     end
   end
@@ -60,7 +60,7 @@ module HeaderNavigationLinksHelper
     if !current_user || page_with_back_to_start?
       { link_text: t('header_navigation_links_helper.back_to_start'), link_url: "/facilities-management/#{framework}/start" }
     elsif !current_user.fm_buyer_details_incomplete?
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: "/facilities-management/#{framework}" }
+      { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_index_path(framework) }
     end
   end
 
@@ -68,7 +68,7 @@ module HeaderNavigationLinksHelper
     if current_user&.has_role?(:supplier)
       { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: "/facilities-management/#{framework}/supplier/dashboard" }
     elsif current_user&.has_role?(:buyer)
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: "/facilities-management/#{framework}" }
+      { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_index_path(framework) }
     end
   end
 

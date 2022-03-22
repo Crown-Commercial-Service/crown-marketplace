@@ -1,0 +1,39 @@
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">
+        <%= t('.heading') %>
+      </h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-!-font-size-19"><%= t('.subheading') %></p>
+      <ul class="govuk-list govuk-list--bullet">
+        <%= t('.usagelist_html') %>
+      </ul>
+
+      <p class="govuk-!-font-size-24 ccs-font-weight-semi-bold"><%= t('.beforeyoustart') %></p>
+      <p class="govuk-!-font-size-19"><%= t('.youneedtoknow') %></p>
+      <ul class="govuk-list govuk-list--bullet">
+        <%= t('.startlist_html') %>
+      </ul>
+
+      <%= link_to t('.further_information'), 'https://www.crowncommercial.gov.uk/agreements/rm6232', target: "_blank", class: 'govuk-link--no-visited-state' %>
+      <br/>
+      <%= govuk_button_start(t('.startnow'), facilities_management_rm6232_new_user_session_path, class: 'govuk-!-margin-top-6 govuk-!-margin-bottom-8', aria: { label: t('.startnow') }) %>
+    </div>
+  </div>
+</div>
+<script type="application/javascript">
+    if (localStorage)§ {
+        localStorage.clear();
+    }
+
+    if (sessionStorage) {
+        sessionStorage.clear();
+    }
+</script>

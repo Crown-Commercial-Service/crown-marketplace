@@ -28,9 +28,9 @@ module FacilitiesManagement
     def redirect_path(context)
       case context
       when :update
-        facilities_management_path(framework: params[:framework])
+        facilities_management_index_path
       when :update_address
-        edit_facilities_management_buyer_detail_path(params[:framework], current_user)
+        edit_facilities_management_buyer_detail_path
       end
     end
 

@@ -3,11 +3,13 @@ Feature: Framwork link
     When I visit '<url>'
     Then I am on the 'Find a facilities management supplier' page
     Then the following content should be displayed on the page:
-      | Use this service to:                                                                                                        |
-      | Direct award is only available for contracts less than £1.5 million, and can only be awarded to the lowest priced supplier. |
-      | Before you start                                                                                                            |
-      | View further information about the Facilities Management framework RM3830                                                   |
-      | Start now                                                                                                                   |
+      | Use this service to:                                                      |
+      | quickly view suppliers who can provide services to your locations         |
+      | compliantly create your procurement bid back                              |
+      | shortlist suppliers ready for further competition                         |
+      | Before you start                                                          |
+      | View further information about the Facilities Management framework RM6232 |
+      | Start now                                                                 |
 
   Examples:
     | url                           |

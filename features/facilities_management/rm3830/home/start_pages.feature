@@ -35,13 +35,13 @@ Feature: Start pages
     Then I should sign in as an fm buyer with details
     And I am on the Your account page
     Then the following content should be displayed on the page:
-      | Your account                                                                                                        |
-      | Quick view suppliers                                                                                                |
-      | Quickly view suppliers who can provide services to your locations                                                   |
-      | Start a procurement                                                                                                 |
-      | See shortlisted suppliers, estimated contract costs, and explore direct award or further competition options        |
-      | Continue a procurement                                                                                              |
-      | Manage my buildings                                                                                                 |
-      | Set up and manage your buildings for use in procurements                                                            |
-      | Manage my details                                                                                                   |
-      | Update and edit your contact details                                                                                |
+      | Your account                                                                                                  |
+      | Quick view suppliers                                                                                          |
+      | Quickly view suppliers who can provide services to your locations                                             |
+      | Start a procurement                                                                                           |
+      | See shortlisted suppliers, estimated contract costs, and explore direct award or further competition options  |
+      | Continue a procurement                                                                                        |
+      | Manage my buildings                                                                                           |
+      | Set up and manage your buildings for use in procurements                                                      |
+      | Manage my details                                                                                             |
+      | Update and edit your contact details                                                                          |
