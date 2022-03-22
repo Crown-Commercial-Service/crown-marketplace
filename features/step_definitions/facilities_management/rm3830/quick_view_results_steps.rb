@@ -1,5 +1,5 @@
 Then('I open all sections') do
-  step('I click on "Open all"') if @javascript
+  step('I click on "Show all sections"') if @javascript
 end
 
 Then('I select {string}') do |item|
