@@ -1,5 +1,5 @@
 class FacilitiesManagement::Supplier::HomeController < FacilitiesManagement::Supplier::FrameworkController
-  before_action :authenticate_user!, :authorize_user, :raise_if_unrecognised_framework, except: %i[accessibility_statement cookie_policy cookie_settings framework]
+  before_action :authenticate_user!, :authorize_user, :raise_if_unrecognised_live_framework, except: %i[accessibility_statement cookie_policy cookie_settings framework]
 
   def accessibility_statement
     render 'home/accessibility_statement'

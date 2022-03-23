@@ -56,7 +56,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::DashboardController, type
 
       it 'sets the framework variables' do
         expect(assigns(:unrecognised_framework)).to eq '↑↑↓↓←→←→BA'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
+        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
       end
     end
   end

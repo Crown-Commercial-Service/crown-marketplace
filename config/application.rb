@@ -152,4 +152,12 @@ module Marketplace
   def self.upload_privileges?
     ENV['APP_HAS_UPLOAD_PRIVILEGES'].present?
   end
+
+  def self.rails_env_url
+    @rails_env_url ||= ENV.fetch('RAILS_ENV_URL')
+  end
+
+  def self.can_edit_facilities_management_frameworks?
+    @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.crowncommercial.gov.uk'
+  end
 end

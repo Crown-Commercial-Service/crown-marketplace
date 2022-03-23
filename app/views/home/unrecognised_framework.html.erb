@@ -6,7 +6,7 @@
     <p><%= t('.make_sure_listed', framework: @unrecognised_framework) %></p>
     <p><%= t('.the_recognised_are') %></p>
     <ul class="govuk-list govuk-list--bullet">
-      <% FacilitiesManagement::RECOGNISED_FRAMEWORKS.each do |framework| %>
+      <% FacilitiesManagement::Framework.live_frameworks.each do |framework| %>
         <li>
           <%= link_to framework, "/facilities-management/#{framework}", class: 'govuk-link' %>
         </li>

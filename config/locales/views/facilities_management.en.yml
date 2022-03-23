@@ -96,11 +96,37 @@ en:
             telephone_number:
               blank: Enter a UK telephone number, for example 020 7946 0000
               invalid: Enter a UK telephone number, for example 020 7946 0000
+        facilities_management/framework:
+          attributes:
+            live_at:
+              blank: Enter a valid 'live at' date
+              not_a_date: Enter a valid 'live at' date
   dashboard:
     index:
       admin_link: Managing framework and supplier data
       supplier_link: Facilities management supplier account
   facilities_management:
+    admin:
+      frameworks:
+        edit:
+          buyer_section_visible: The buyer section for this framework will be visible if the 'live at' date is today (%{current_date}) or earlier.
+          page_title: Framework 'live at' date
+          return_to_frameworks: Return to facilities management frameworks
+          save_and_return: Save and return
+          update_live_at_date: Update framework 'live at' date for %{framework}
+        index:
+          change: Change
+          coming: coming
+          framework: Framework
+          if_the_framework: If the framework 'live at' date is before the current date (%{current_date}), the buyer section for this framework will be accessible to our customers.
+          live: live
+          live_at: Live at
+          page_title: Facilities management frameworks
+          section_not_accessible: This section is not accessible in production and is for testing purposes only.
+          status: Status
+          the_admin_section: The admin section for a framework will always be visible for any framework that is on the system no matter when it goes live.
+          this_section_allows: This section allows you to view and change the 'live at' date for a facilities management framework.
+          to_update_in_prod: To update the framework 'live at' date in production speak to a developer.
     basket:
       or_text: or
       selectall_text: Select all
