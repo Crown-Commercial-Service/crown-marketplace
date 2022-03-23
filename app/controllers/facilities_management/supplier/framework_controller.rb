@@ -1,7 +1,7 @@
 class FacilitiesManagement::Supplier::FrameworkController < ::ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
-  before_action :raise_if_unrecognised_framework
+  before_action :raise_if_unrecognised_live_framework
 
   protected
 

@@ -44,7 +44,7 @@ module FacilitiesManagement
 
         it 'sets the framework variables' do
           expect(assigns(:unrecognised_framework)).to eq 'RM3840'
-          expect(controller.params[:framework]).to eq FacilitiesManagement::DEFAULT_FRAMEWORK
+          expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
         end
       end
     end
