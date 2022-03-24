@@ -1,6 +1,6 @@
 module HeaderNavigationLinksHelper
   def default_navigation_links
-    framework = params[:framework] || FacilitiesManagement::DEFAULT_FRAMEWORK
+    framework = params[:framework] || FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
       navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_path(framework: framework) } unless not_permitted_page?
@@ -9,7 +9,7 @@ module HeaderNavigationLinksHelper
   end
 
   def facilities_management_navigation_links(framework)
-    framework ||= FacilitiesManagement::DEFAULT_FRAMEWORK
+    framework ||= FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
       navigation_links << back_to_start_link(framework) unless page_does_not_require_back_to_start?
@@ -19,7 +19,7 @@ module HeaderNavigationLinksHelper
   end
 
   def facilites_management_admin_navigation_links(framework)
-    framework ||= FacilitiesManagement::DEFAULT_FRAMEWORK
+    framework ||= FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
       navigation_links << { link_text: admin_back_to_start_text, link_url: "/facilities-management/#{framework}/admin" } unless sign_in_or_dashboard?('home')
@@ -28,7 +28,7 @@ module HeaderNavigationLinksHelper
   end
 
   def facilites_management_supplier_navigation_links(framework)
-    framework ||= FacilitiesManagement::DEFAULT_FRAMEWORK
+    framework ||= FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
       navigation_links << { link_text: supplier_back_to_start_text, link_url: "/facilities-management/#{framework}/supplier" } unless sign_in_or_dashboard?('dashboard')

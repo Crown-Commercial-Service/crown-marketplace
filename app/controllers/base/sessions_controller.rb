@@ -60,10 +60,10 @@ module Base
       when 'crown-marketplace'
         crown_marketplace_new_user_session_path(expired: true)
       when 'facilities-management'
-        framework = if FacilitiesManagement::RECOGNISED_FRAMEWORKS.include?(split_url[2])
+        framework = if FacilitiesManagement::Framework.recognised_live_framework?(split_url[2])
                       split_url[2]
                     else
-                      FacilitiesManagement::DEFAULT_FRAMEWORK
+                      FacilitiesManagement::Framework.default_framework
                     end
         service_type ||= split_url[3] if split_url[3] == 'supplier' || split_url[3] == 'admin'
 

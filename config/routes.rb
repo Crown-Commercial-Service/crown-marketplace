@@ -85,6 +85,7 @@ Rails.application.routes.draw do
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns %i[shared_pages framework]
+      resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
