@@ -56,8 +56,11 @@ class ApplicationController < ActionController::Base
   def facilities_management_url_for_user_type
     return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
 
-    if params[:framework] == 'RM3830'
+    case params[:framework]
+    when 'RM3830'
       facilities_management_rm3830_new_user_session_path
+    when 'RM6232'
+      facilities_management_rm6232_new_user_session_path
     else
       "/facilities-management/#{FacilitiesManagement::Framework.default_framework}/sign-in"
     end

@@ -3,7 +3,7 @@ require 'rails_helper'
 module FacilitiesManagement
   RSpec.describe BuyerDetailsController, type: :controller do
     let(:default_params) { { service: 'facilities_management', framework: framework } }
-    let(:framework) { 'RM3830' }
+    let(:framework) { 'RM6232' }
 
     render_views
 
@@ -90,8 +90,8 @@ module FacilitiesManagement
         context 'when there are no errors' do
           let(:full_name) { 'Fred Flintstone' }
 
-          it 'redirects to facilities_management_path' do
-            expect(response).to redirect_to facilities_management_path(framework: framework)
+          it 'redirects to facilities_management_index_path' do
+            expect(response).to redirect_to facilities_management_index_path(framework: framework)
           end
 
           it 'updates the buyer name' do
@@ -116,7 +116,7 @@ module FacilitiesManagement
         context 'when there are no errors' do
           let(:organisation_address_line_1) { '9 Downing Street' }
 
-          it 'redirects to facilities_management_path' do
+          it 'redirects to edit_facilities_management_buyer_detail_path' do
             expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, subject.current_user)
           end
 

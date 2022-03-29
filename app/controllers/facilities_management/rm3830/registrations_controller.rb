@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module RM3830
-    class RegistrationsController < Base::RegistrationsController
+    class RegistrationsController < FacilitiesManagement::RegistrationsController
       private
 
       def fm_access

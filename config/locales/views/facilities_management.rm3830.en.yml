@@ -1950,14 +1950,6 @@ en:
           step_3_content_2_list_2: a download of your procurement requirements
           step_3_title: Routes to market
           steps: The steps shown below outline the process that you'll follow within this portal.
-      registrations:
-        domain_not_on_safelist:
-          heading: You must use a public sector email address
-          lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
-          line_01: The email you used doesn’t belong to a recognised public sector domain.
-          line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
-          list_01: you think your domain should be recognised
-          list_02: you still can’t create an account
       service_specification:
         show:
           service_specification: Service specification

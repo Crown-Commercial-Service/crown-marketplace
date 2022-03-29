@@ -17,6 +17,7 @@ Feature: Contract summary accessibility
       | not_signed  | Sent offers |
       | signed      | Contracts   |
 
+  @contract_emails
   Scenario: Closed contract
     Given I sign in and navigate to my account for 'RM3830'
     And I have a contract that has been 'sent' called 'My contract'
