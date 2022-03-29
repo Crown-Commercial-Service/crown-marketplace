@@ -1,8 +1,23 @@
+.fm-buyer-account-panel__container {
+  @include govuk-media-query ($from: tablet) {
+    display: flex;
+  }
+}
+
 .fm-buyer-account-panel {
   border: 1px #DEE0E2 solid;
   padding: 10px;
   background: #F8F8F8;
   margin-bottom: 30px;
+
+  @include govuk-media-query ($from: tablet) {
+    margin-left: 10px;
+    margin-right: 10px;
+
+    &:first-child {
+      margin-left: 15px;
+    }
+  }
 }
 
 .fm-buyer-account-panel__title {
@@ -15,8 +30,4 @@
   color: #007196;
   cursor: pointer;
   text-decoration: none;
-}
-
-.fm-buyer-account-panel__body {
-  color: black;
 }
