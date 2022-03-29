@@ -20,7 +20,7 @@ module Pages::RM3830
       end
     end
 
-    section :results_container, '#proc-CCS-fm-suppliers-long-list' do
+    section :results_container, '#supplier-lot-list__container' do
       section :'1a', 'div > div:nth-child(1) > table > tbody' do
         elements :suppliers, 'tr'
       end

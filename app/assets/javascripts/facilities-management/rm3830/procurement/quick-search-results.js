@@ -3,7 +3,7 @@ $(() => {
     e.preventDefault();
 
     const requirementsPlane = $('#requirements-list');
-    const suppliersPlane = $('#proc-CCS-fm-suppliers-long-list');
+    const suppliersPlane = $('#supplier-lot-list__container');
 
     const btn = $('#results-filter-button');
     const isHidden = requirementsPlane.is(':hidden');
