@@ -100,13 +100,10 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.4.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    axe-core-api (4.2.1)
-      capybara
+    axe-core-api (4.4.0)
       dumb_delegator
-      selenium-webdriver
       virtus
-      watir
-    axe-core-capybara (4.2.1)
+    axe-core-capybara (4.4.0)
       axe-core-api
       dumb_delegator
     axe-core-cucumber (4.2.1)
@@ -586,9 +583,6 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    watir (6.19.1)
-      regexp_parser (>= 1.2, < 3)
-      selenium-webdriver (>= 3.142.7)
     wdm (0.1.1)
     webmock (3.12.1)
       addressable (>= 2.3.6)
