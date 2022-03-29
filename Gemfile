@@ -92,7 +92,7 @@ gem 'slim', '~> 4.0.1'
 gem 'capybara', '>= 3.35.3'
 gem 'show_me_the_cookies', '>= 5.0.1'
 
-gem 'faker', '~> 2.10.2'
+gem 'faker', '~> 2.20.0'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
