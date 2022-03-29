@@ -36,8 +36,6 @@ gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.1.0'
 gem 'caxlsx_rails', '>= 0.6.2'
-gem 'phonejack'
-gem 'holidays'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.4.0'
 
