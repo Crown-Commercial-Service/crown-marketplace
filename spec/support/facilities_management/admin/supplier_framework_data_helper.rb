@@ -30,7 +30,7 @@ module FacilitiesManagement::Admin
     end
 
     def write
-      File.write(OUTPUT_PATH, @package.to_stream.read)
+      File.write(OUTPUT_PATH, @package.to_stream.read, binmode: true)
     end
 
     private
