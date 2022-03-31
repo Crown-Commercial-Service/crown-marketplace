@@ -42,7 +42,7 @@ end
 PROCUREMENT_SUPPLIER_ATTRIBUTES = {
   sent: {},
   accepted: { supplier_response_date: Time.zone.today - 3.days },
-  signed: { supplier_response_date: Time.zone.today - 3.days, contract_start_date: Time.zone.tomorrow, contract_end_date: Time.zone.tomorrow + 3.years, contract_signed_date: Time.zone.today },
+  signed: { supplier_response_date: Time.zone.today - 3.days, contract_start_date: Time.zone.today + 1.day, contract_end_date: Time.zone.today + 1.day + 3.years, contract_signed_date: Time.zone.today },
   not_signed: { supplier_response_date: Time.zone.today - 3.days, contract_signed_date: Time.zone.today, reason_for_not_signing: 'The supplier would not respond to my emails' },
   declined: { supplier_response_date: Time.zone.today - 3.days, reason_for_declining: 'I cannot be bothered with it' },
   expired: { supplier_response_date: Time.zone.today - 3.days },
