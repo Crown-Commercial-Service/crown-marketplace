@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ReversibleMigration
 class ChangePostcodesToNutsRegions < ActiveRecord::Migration[5.2]
   def change
     ActiveRecord::Base.connection.execute('TRUNCATE postcodes_nuts_regions')
@@ -6,3 +7,4 @@ class ChangePostcodesToNutsRegions < ActiveRecord::Migration[5.2]
     change_column :postcodes_nuts_regions, :code, :string, limit: 20
   end
 end
+# rubocop:enable Rails/ReversibleMigration
