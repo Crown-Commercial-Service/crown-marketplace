@@ -278,7 +278,7 @@ GEM
     formatador (1.1.0)
     friendly_id (5.2.5)
       activerecord (>= 4.0.0)
-    geocoder (1.6.6)
+    geocoder (1.7.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
     gov_uk_date_fields (4.2.0)
