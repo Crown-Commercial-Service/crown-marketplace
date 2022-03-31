@@ -78,7 +78,7 @@ gem 'jsonpath', '~> 1.1.0'
 gem 'down', '>= 5.2.0'
 
 # state machine
-gem 'aasm', '~> 5.0'
+gem 'aasm', '~> 5.2'
 gem 'after_commit_everywhere', '~> 1.2'
 
 # for running background jobs
