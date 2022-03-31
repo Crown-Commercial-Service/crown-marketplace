@@ -221,7 +221,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    date_validator (0.10.0)
+    date_validator (0.12.0)
       activemodel (>= 3)
       activesupport (>= 3)
     debug_inspector (1.1.0)
