@@ -45,8 +45,6 @@ gem 'rollbar', '~> 2.24.0'
 gem 'omniauth', '~> 2.0.0'
 gem 'omniauth-oauth2', '~> 1.7.2'
 
-gem 'json-jwt', '>= 1.11.0'
-
 # for authentication
 gem 'devise', '~> 4.8.1'
 
@@ -59,23 +57,11 @@ gem 'aws-sdk-cognitoidentityprovider', '~> 1.65.0'
 # for pagination
 gem 'kaminari', '~> 1.2.1'
 
-# for pretty urls
-gem 'friendly_id', '~> 5.2.5'
-
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
 
-# for file uploads
-gem 'carrierwave', '~> 1.3'
-
 # handles spreadsheets
 gem 'roo', '~> 2.9.0'
-
-# manipulating JSON for anonymisation
-gem 'jsonpath', '~> 1.1.0'
-
-# robust file download from URL using open-uri
-gem 'down', '>= 5.2.0'
 
 # state machine
 gem 'aasm', '~> 5.2'
@@ -86,19 +72,10 @@ gem 'sidekiq', '~> 6.4.1'
 gem 'sinatra', '~> 2.0.8', '>= 2.0.8.1', require: false
 gem 'slim', '~> 4.0.1'
 
-# for rspec and ST data generation script
-gem 'capybara', '>= 3.35.3'
-gem 'show_me_the_cookies', '>= 5.0.1'
-
-gem 'faker', '~> 2.20.0'
-
 # for authorization
 gem 'cancan', '~> 1.6.10'
 
 gem 'role_model', '~> 0.8.2'
-
-# for S3 storage of files
-gem 'carrierwave-aws', '~> 1.3.0'
 
 gem 'sprockets', '>= 3.7.2'
 gem 'sprockets-bumble_d', '>= 2.2.0'
@@ -150,6 +127,7 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
+  gem 'faker', '~> 2.20.0'
 end
 
 group :development do
@@ -165,8 +143,10 @@ group :test do
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.4.0', require: false
+  gem 'capybara', '>= 3.35.3'
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.1'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
+  gem 'show_me_the_cookies', '>= 5.0.1'
 end
