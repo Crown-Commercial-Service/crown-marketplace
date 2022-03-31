@@ -81,8 +81,8 @@ GEM
       mime-types (>= 2.99)
       unf
     ast (2.4.2)
-    auto-session-timeout (0.9.7)
-      actionpack (>= 3.2, < 7)
+    auto-session-timeout (0.9.9)
+      actionpack (>= 3.2, < 7.1)
     aws-eventstream (1.2.0)
     aws-partitions (1.568.0)
     aws-sdk-cognitoidentityprovider (1.65.0)
@@ -598,7 +598,7 @@ DEPENDENCIES
   after_commit_everywhere (~> 1.2)
   amoeba (>= 3.1.0)
   asset_sync
-  auto-session-timeout (~> 0.9.7)
+  auto-session-timeout (~> 0.9.9)
   aws-sdk-cognitoidentityprovider (~> 1.65.0)
   aws-sdk-s3 (~> 1)
   axe-core-capybara (>= 4.2.1)
