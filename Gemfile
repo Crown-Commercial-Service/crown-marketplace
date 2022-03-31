@@ -73,7 +73,7 @@ gem 'sinatra', '~> 2.2.0', require: false
 gem 'slim', '~> 4.1.0'
 
 # for authorization
-gem 'cancan', '~> 1.6.10'
+gem 'cancancan', '~> 3.2.0'
 
 gem 'role_model', '~> 0.8.2'
 
