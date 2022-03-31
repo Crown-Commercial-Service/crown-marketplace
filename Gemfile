@@ -55,7 +55,7 @@ gem 'auto-session-timeout', '~> 0.9.7'
 gem 'aws-sdk-cognitoidentityprovider', '~> 1.65.0'
 
 # for pagination
-gem 'kaminari', '~> 1.2.1'
+gem 'kaminari', '~> 1.2.2'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
