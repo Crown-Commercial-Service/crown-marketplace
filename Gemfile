@@ -72,7 +72,7 @@ gem 'carrierwave', '~> 1.3'
 gem 'roo', '~> 2.9.0'
 
 # manipulating JSON for anonymisation
-gem 'jsonpath', '~> 0.5.8'
+gem 'jsonpath', '~> 1.1.0'
 
 # robust file download from URL using open-uri
 gem 'down', '>= 5.2.0'
