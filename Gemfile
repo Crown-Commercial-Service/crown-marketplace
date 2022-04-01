@@ -92,7 +92,7 @@ gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 0.9.5'
 # gem for  bulk inserts
-gem 'activerecord-import', '~> 1.3.0'
+gem 'activerecord-import', '~> 1.4.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
