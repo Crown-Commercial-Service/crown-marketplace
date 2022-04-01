@@ -70,7 +70,7 @@ gem 'after_commit_everywhere', '~> 1.2'
 # for running background jobs
 gem 'sidekiq', '~> 6.4.1'
 gem 'sinatra', '~> 2.2.0', require: false
-gem 'slim', '~> 4.0.1'
+gem 'slim', '~> 4.1.0'
 
 # for authorization
 gem 'cancan', '~> 1.6.10'
