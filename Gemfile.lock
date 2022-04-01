@@ -75,7 +75,7 @@ GEM
       activesupport
     amoeba (3.2.0)
       activerecord (>= 4.2.0)
-    asset_sync (2.13.1)
+    asset_sync (2.15.1)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -236,7 +236,7 @@ GEM
     email_validator (2.2.3)
       activemodel
     erubi (1.10.0)
-    excon (0.92.1)
+    excon (0.92.2)
     execjs (2.7.0)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -563,8 +563,8 @@ GEM
     uk_postcode (2.1.7)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.7)
-    unf_ext (0.0.7.7-x64-mingw32)
+    unf_ext (0.0.8.1)
+    unf_ext (0.0.8.1-x64-mingw32)
     unicode-display_width (2.1.0)
     uniform_notifier (1.14.2)
     virtus (2.0.0)
