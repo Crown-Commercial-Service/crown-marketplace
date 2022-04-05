@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_05_082014) do
+ActiveRecord::Schema.define(version: 2022_04_05_092624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -382,6 +382,37 @@ ActiveRecord::Schema.define(version: 2022_04_05_082014) do
     t.index ["work_package_code"], name: "index_rm6232_fm_services_on_fm_work_packages_code"
   end
 
+  create_table "facilities_management_rm6232_supplier_lot_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_supplier_id"
+    t.string "lot_code", limit: 1
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facilities_management_rm6232_supplier_id"], name: "index_fm_rm6232_supplier_lot_data_on_fm_rm6232_supplier_id"
+    t.index ["lot_code"], name: "index_fm_rm6232_supplier_lot_data_on_lot_number"
+  end
+
+  create_table "facilities_management_rm6232_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "supplier_name", limit: 255
+    t.string "contact_name", limit: 255
+    t.string "contact_email", limit: 255
+    t.string "contact_phone", limit: 255
+    t.boolean "sme"
+    t.string "duns", limit: 255
+    t.string "registration_number", limit: 255
+    t.string "address_line_1", limit: 255
+    t.string "address_line_2", limit: 255
+    t.string "address_town", limit: 255
+    t.string "address_county", limit: 255
+    t.string "address_postcode", limit: 255
+    t.boolean "active", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["active"], name: "index_facilities_management_rm6232_suppliers_on_active"
+    t.index ["supplier_name"], name: "index_facilities_management_rm6232_suppliers_on_supplier_name", unique: true
+  end
+
   create_table "facilities_management_rm6232_work_packages", primary_key: "code", id: :string, limit: 1, force: :cascade do |t|
     t.string "name", limit: 100
     t.boolean "selectable"
@@ -541,4 +572,5 @@ ActiveRecord::Schema.define(version: 2022_04_05_082014) do
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
+  add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
 end
