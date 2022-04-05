@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_23_103620) do
+ActiveRecord::Schema.define(version: 2022_04_05_082014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -363,6 +363,34 @@ ActiveRecord::Schema.define(version: 2022_03_23_103620) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_services", primary_key: "code", id: :string, limit: 5, force: :cascade do |t|
+    t.string "work_package_code", limit: 1, null: false
+    t.string "name", limit: 150
+    t.text "description"
+    t.boolean "core"
+    t.boolean "total"
+    t.boolean "hard"
+    t.boolean "soft"
+    t.integer "sort_order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_facilities_management_rm6232_services_on_code"
+    t.index ["hard"], name: "index_facilities_management_rm6232_services_on_hard"
+    t.index ["soft"], name: "index_facilities_management_rm6232_services_on_soft"
+    t.index ["sort_order"], name: "index_facilities_management_rm6232_services_on_sort_order"
+    t.index ["total"], name: "index_facilities_management_rm6232_services_on_total"
+    t.index ["work_package_code"], name: "index_rm6232_fm_services_on_fm_work_packages_code"
+  end
+
+  create_table "facilities_management_rm6232_work_packages", primary_key: "code", id: :string, limit: 1, force: :cascade do |t|
+    t.string "name", limit: 100
+    t.boolean "selectable"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_facilities_management_rm6232_work_packages_on_code"
+    t.index ["selectable"], name: "index_facilities_management_rm6232_work_packages_on_selectable"
+  end
+
   create_table "facilities_management_security_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
@@ -512,4 +540,5 @@ ActiveRecord::Schema.define(version: 2022_03_23_103620) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
 end

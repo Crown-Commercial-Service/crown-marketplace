@@ -10,6 +10,24 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
       get :index
       expect(response).to render_template(:index)
     end
+
+    context 'when logged in as a buyer' do
+      login_fm_buyer
+
+      it 'redirects to not permitted' do
+        get :index
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
+
+    context 'when logged in as a supplier' do
+      login_fm_supplier
+
+      it 'redirects to not permitted' do
+        get :index
+        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      end
+    end
   end
 
   describe 'GET edit' do
