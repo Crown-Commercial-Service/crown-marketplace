@@ -143,10 +143,10 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
     end
 
     context 'when lot number not selected by customer' do
+      before { report.instance_variable_set(:@assessed_value, assessed_value) }
+
       context 'when assessed value under 7m' do
-        before do
-          allow(report).to receive(:assessed_value).and_return(6_000_000)
-        end
+        let(:assessed_value) { 6_000_000 }
 
         it 'returns 1a' do
           expect(current_lot).to eq('1a')
@@ -154,9 +154,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       context 'when assessed between 7m - 50m' do
-        before do
-          allow(report).to receive(:assessed_value).and_return(8_000_000)
-        end
+        let(:assessed_value) { 8_000_000 }
 
         it 'returns 1b' do
           expect(current_lot).to eq('1b')
@@ -164,9 +162,7 @@ RSpec.describe FacilitiesManagement::RM3830::SummaryReport, type: :model do
       end
 
       context 'when assessed over 50m' do
-        before do
-          allow(report).to receive(:assessed_value).and_return(51_000_000)
-        end
+        let(:assessed_value) { 51_000_000 }
 
         it 'returns 1c' do
           expect(current_lot).to eq('1c')

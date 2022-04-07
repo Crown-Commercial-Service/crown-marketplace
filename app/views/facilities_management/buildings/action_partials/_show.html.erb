@@ -5,21 +5,22 @@
     <%= govuk_tag(@page_data[:model_object].building_status) %>
     <div class="govuk-inset-text">
       <%= t('.incomplete_text') if @page_data[:model_object].status == 'Incomplete' %>
-      <%= t('.complete_text', { name: @page_data[:model_object].building_name }) if @page_data[:model_object].status == 'Ready' %>
+      <%= t('.complete_text', name: @page_data[:model_object].building_name) if @page_data[:model_object].status == 'Ready' %>
     </div>
   </div>
   <h2 class="govuk-heading-m"><%= t('.section-header') %></h2>
   <div class="govuk-table govuk-!-width-three-quarters" data-module="table" id="fm-buildings-container">
+    <hr class="govuk-section-break govuk-section-break--visible">
     <table style="width:100%; border-collapse: collapse;">
       <tbody>
       <% building_rows.each do |attribute, building_detail| %>
-        <tr style="border-top : 1px solid #CCCCCC;">
+        <tr>
           <th class="govuk-!-width-one-third govuk-table__cell"><%= building_detail[:row_name] %></th>
           <% if building_detail[:row_text].present?%>
             <td class="govuk-table__cell">
               <%= building_row_text(attribute, @page_data[:model_object], building_detail[:row_text]) %>
             </td>
-            <td>
+            <td class="govuk-table__cell">
               <%= edit_link(false, building_detail[:step]) unless attribute == :region %>
             </td>
           <% else %>
@@ -33,5 +34,7 @@
       </tbody>
     </table>
   </div>
-  <%= link_to return_link_text, return_link, role: 'link', class: 'govuk-link' %>
+  <p>
+    <%= link_to return_link_text, return_link, role: 'link', class: 'govuk-link' %>
+  </p>
 <% end %>

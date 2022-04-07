@@ -1,7 +1,7 @@
 module Base
   class UsersController < ApplicationController
-    before_action :authenticate_user!, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
-    before_action :authorize_user, except: %i[confirm_new confirm challenge_new challenge resend_confirmation_email]
+    before_action :authenticate_user!, except: %i[confirm_new confirm resend_confirmation_email challenge_new challenge]
+    before_action :authorize_user, except: %i[confirm_new confirm resend_confirmation_email challenge_new challenge]
     before_action :set_user_phone, only: %i[challenge_new challenge]
 
     def confirm_new
@@ -11,12 +11,18 @@ module Base
     def confirm
       @result = Cognito::ConfirmSignUp.call(params[:email], params[:confirmation_code])
       if @result.success?
-        cookies.delete :confirmation_email
+        cookies.delete :crown_marketplace_confirmation_email
 
         sign_in_user(@result.user)
       else
         render :confirm_new
       end
+    end
+
+    def resend_confirmation_email
+      result = Cognito::ResendConfirmationCode.call(params[:email])
+
+      redirect_to confirm_user_registration_path, error: result.error
     end
 
     def challenge_new
@@ -33,22 +39,19 @@ module Base
       end
     end
 
-    def resend_confirmation_email
-      result = Cognito::ResendConfirmationCode.call(params[:email])
-
-      redirect_to confirm_user_registration_path, error: result.error
-    end
-
     private
 
     def new_challenge_path
-      cookies[:session] = @challenge.new_session
+      cookies[:crown_marketplace_challenge_session] = @challenge.new_session
+      cookies[:crown_marketplace_challenge_username] = @challenge.cognito_uuid
 
       new_service_challenge_path
     end
 
     def find_and_sign_in_user
-      cookies.delete :session
+      cookies.delete :crown_marketplace_challenge_session
+      cookies.delete :crown_marketplace_challenge_username
+
       user = Cognito::CreateUserFromCognito.call(params[:username]).user
       sign_in_user(user)
     end
@@ -59,8 +62,8 @@ module Base
     end
 
     def set_user_phone
-      user_phone_full = User.find_by(cognito_uuid: params[:username]).try(:phone_number) || Cognito::CreateUserFromCognito.call(params[:username]).try(:user).try(:phone_number)
-      @user_phone =   '*' * 9 + user_phone_full[(user_phone_full.length - 3)..user_phone_full.length] if user_phone_full
+      user_phone_full = User.find_by(cognito_uuid: cookies[:crown_marketplace_challenge_username]).try(:phone_number) || Cognito::CreateUserFromCognito.call(cookies[:crown_marketplace_challenge_username]).try(:user).try(:phone_number)
+      @user_phone = '*' * 9 + user_phone_full.last(3) if user_phone_full
     end
   end
 end

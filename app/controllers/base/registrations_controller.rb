@@ -58,7 +58,7 @@ module Base
     end
 
     def after_sign_up_path_for(resource)
-      cookies[:confirmation_email] = { value: resource.email, expires: 20.minutes, httponly: true }
+      cookies[:crown_marketplace_confirmation_email] = { value: resource.email, expires: 20.minutes, httponly: true }
 
       service_after_sign_up_path
     end

@@ -1,4 +1,4 @@
-@accessibility @javascript
+@accessibility @javascript @management_report
 Feature: Management report - accessibility
 
   Background: Navigate to the management report

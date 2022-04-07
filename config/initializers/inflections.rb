@@ -12,7 +12,6 @@
 
 # These inflection rules are supported but not enabled by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.acronym 'CCS'
-  inflect.acronym 'FM'
   inflect.acronym 'RM3830'
+  inflect.acronym 'RM6232'
 end

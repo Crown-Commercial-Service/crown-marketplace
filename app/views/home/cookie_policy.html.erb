@@ -62,21 +62,13 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_1.expires') %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_2.expires') %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.ga_cookies_3.expires') %></td>
-        </tr>
+        <% (1..3).each do |i| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.name") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.purpose") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".ga_cookies.row_#{i}.expires") %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
@@ -91,7 +83,7 @@
     </h2>
 
     <h3 class="govuk-heading-s">
-      <%= t('.cookies_message') %>
+      <%= t('.cookies_banner') %>
     </h3>
 
     <p>
@@ -107,16 +99,13 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t('.cookie_message_1.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_1.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_1.expires') %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t('.cookie_message_2.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_2.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.cookie_message_2.expires') %></td>
-        </tr>
+        <% (1..2).each do |i| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t(".cookie_banner_cookies.row_#{i}.name") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_#{i}.purpose") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".cookie_banner_cookies.row_#{i}.expires") %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
 
@@ -137,21 +126,13 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_1.expires') %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_2.expires') %></td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_3.name') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_3.purpose') %></td>
-          <td class="govuk-table__cell govuk-!-padding-right-2"><%= t('.reg_and_sign_in_cookie_3.expires') %></td>
-        </tr>
+      <% (1..4).each do |i| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-padding-right-2" style="word-break: break-all;"><%= t(".reg_and_sign_in_cookie.row_#{i}.name") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".reg_and_sign_in_cookie.row_#{i}.purpose") %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= t(".reg_and_sign_in_cookie.row_#{i}.expires") %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

@@ -60,6 +60,8 @@
         <%= paginate @page_data[:model_object], views_prefix: 'shared' %>
       </div>
     <% end %>
-    <%= link_to t('.return_to_your_account'), facilities_management_path(framework: params[:framework]), class: "govuk-link", 'aria-label': t('.return_to_your_account') %>
+    <p class="govuk-body">
+      <%= link_to t('.return_to_your_account'), facilities_management_index_path, class: "govuk-link", 'aria-label': t('.return_to_your_account') %>
+    </p>
   </div>
 <% end %>

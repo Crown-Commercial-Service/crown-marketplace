@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       delete '/sign-out', to: 'sessions#destroy', as: :destroy_user_session
       get '/users/forgot-password', to: 'passwords#new', as: :new_user_password
       post '/users/password', to: 'passwords#create'
-      get '/users/forgot-password-confirmation', to: 'passwords#confirm_new', as: :confirm_new_user_password
       get '/users/password', to: 'passwords#edit', as: :edit_user_password
       put '/users/password', to: 'passwords#update'
       get '/users/password-reset-success', to: 'passwords#password_reset_success', as: :password_reset_success
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
       post '/users/confirm', to: 'users#confirm'
       get '/users/challenge', to: 'users#challenge_new'
       post '/users/challenge', to: 'users#challenge'
-      get '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
+      post '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: :resend_confirmation_email
     end
     concern :registrable do
       get '/sign-up', to: 'registrations#new', as: :new_user_registration
@@ -44,6 +43,9 @@ Rails.application.routes.draw do
         namespace :admin, defaults: { service: 'facilities_management/admin' } do
           concerns :authenticatable
         end
+      end
+      namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
+        concerns %i[authenticatable registrable]
       end
     end
 
@@ -86,6 +88,7 @@ Rails.application.routes.draw do
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns %i[shared_pages framework]
+      resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
     end
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
@@ -155,6 +158,12 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
+      get '/start', to: 'home#index'
+      get '/', to: 'buyer_account#index'
+    end
+
+    get '/:framework', to: 'home#index', as: 'index'
     get '/:framework/start', to: 'journey#start', as: 'journey_start'
     get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
     get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'

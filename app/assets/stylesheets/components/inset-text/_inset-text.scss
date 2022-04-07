@@ -1,5 +1,13 @@
 $ccs_inset-text_bg_grey: ccs-colour("grey-4");
 
+.cmp-inset-text {
+  margin:1em 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
 .cmp-inset-text--neutral {
 	background-color:$ccs_inset-text_bg_grey; 
 	border-left:0;

@@ -1,0 +1,89 @@
+name: "Ruby on Rails CI"
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-18.04
+
+    services:
+      postgres:
+        image: postgis/postgis:11-2.5
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgis://rails:password@localhost:5432/rails_test"
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          bundler-cache: true
+
+      - name: Set up database schema
+        run: bin/rails db:test:prepare
+
+      - name: Compile assets
+        run: bin/rails assets:precompile
+
+      - name: Run unit tests
+        run: bin/rake
+
+      - name: publish code coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        with:
+          debug: true
+        if: github.event_name == 'pull_request'
+
+  feature-test:
+    runs-on: ubuntu-18.04
+
+    services:
+      postgres:
+        image: postgis/postgis:11-2.5
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgis://rails:password@localhost:5432/rails_test"
+
+    steps:
+      - name: Setup Gecko driver
+        uses: browser-actions/setup-geckodriver@latest
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          bundler-cache: true
+
+      - name: Set up database schema
+        run: bin/rails db:test:prepare
+
+      - name: Compile assets
+        run: bin/rails assets:precompile
+
+      - name: Seed DB with test data
+        run: bin/rails db:static
+
+      - name: Run feature tests
+        run: bin/rails cucumber:pipeline

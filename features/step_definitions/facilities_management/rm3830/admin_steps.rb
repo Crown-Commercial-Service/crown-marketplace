@@ -3,7 +3,7 @@ Given('I sign in as an admin and navigate to my dashboard') do
   update_banner_cookie(true) if @javascript
   create_admin_user_with_details
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('RM3830 administration dashboard')
 end
@@ -14,7 +14,7 @@ Given('I go to the admin dashboard') do
 end
 
 Given('I go to the buyer dashboard') do
-  visit '/facilities-management'
+  visit facilities_management_rm3830_path
 end
 
 Given('I go to the facilities management admin start page') do
@@ -26,7 +26,7 @@ Given('I sign out and sign in the admin user') do
   step "I click on 'Sign out'"
   visit facilities_management_rm3830_admin_new_user_session_path
   fill_in 'email', with: @user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('RM3830 administration dashboard')
 end
@@ -47,10 +47,7 @@ Then('I go to a quick view with the following services and regions:') do |servic
   service_codes = services_and_regions.transpose.raw[0].reject(&:blank?)
   region_codes = services_and_regions.transpose.raw[1].reject(&:blank?)
 
-  service_codes_param = service_codes.map { |code| "service_codes[]=#{code}" }.join('&')
-  region_codes_param = region_codes.map { |code| "region_codes[]=#{code}" }.join('&')
-
-  visit "/facilities-management/RM3830/procurements/new?journey=facilities-management&#{region_codes_param}&#{service_codes_param}"
+  visit new_facilities_management_rm3830_procurement_path(journey: 'facilities-management', service_codes: service_codes, region_codes: region_codes)
   expect(page.find('h1')).to have_content('Quick view results')
 end
 
