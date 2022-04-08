@@ -1,0 +1,172 @@
+code,name,description,core,work_package_code,total,hard,soft,sort_order
+A.1,Integration,,TRUE,A,TRUE,TRUE,TRUE,0
+A.2,Health and Safety,,TRUE,A,TRUE,TRUE,TRUE,1
+A.3,Management Services,,TRUE,A,TRUE,TRUE,TRUE,2
+A.4,Service Delivery Plans,,TRUE,A,TRUE,TRUE,TRUE,3
+A.5,Fire Safety,,TRUE,A,TRUE,TRUE,TRUE,4
+A.6,Accessibility Services,,TRUE,A,TRUE,TRUE,TRUE,5
+A.7,Risk management,,TRUE,A,TRUE,TRUE,TRUE,6
+A.8,Customer satisfaction,,TRUE,A,TRUE,TRUE,TRUE,7
+A.9,Reporting,,TRUE,A,TRUE,TRUE,TRUE,8
+A.10,Performance self-monitoring,,TRUE,A,TRUE,TRUE,TRUE,9
+A.11,Business Continuity and Disaster Recovery (BCDR) Plan,,TRUE,A,TRUE,TRUE,TRUE,10
+A.12,Quality Management Systems,,TRUE,A,TRUE,TRUE,TRUE,11
+A.13,"Staff Management, Recruitment and Training",,TRUE,A,TRUE,TRUE,TRUE,12
+A.14,Selection and Management of Subcontractors,,TRUE,A,TRUE,TRUE,TRUE,13
+A.15,Compliance,,TRUE,A,TRUE,TRUE,TRUE,14
+A.16,Sustainability,,TRUE,A,TRUE,TRUE,TRUE,15
+A.17,Social Value,,TRUE,A,TRUE,TRUE,TRUE,16
+A.18,Carbon Net Zero,,TRUE,A,TRUE,TRUE,TRUE,17
+B.1,Contract Mobilisation,,TRUE,B,TRUE,TRUE,TRUE,0
+C.1,Social Value,,TRUE,C,TRUE,TRUE,TRUE,0
+D.1,Carbon Net Zero,,TRUE,D,TRUE,TRUE,TRUE,0
+E.1,Mechanical and Electrical Engineering Maintenance,"Maintenance of mechanical, electrical and plumbing systems, ensuring optimum performance and statutory obligations",TRUE,E,TRUE,TRUE,FALSE,0
+E.2,Ventilation and air conditioning systems maintenance,Maintenance of ventilation and air conditioning systems ensuring optimum performance and statutory obligations,TRUE,E,TRUE,TRUE,FALSE,1
+E.3,Environmental cleaning service,Environmental cleaning service to ensure compliance with all statutory requirements,TRUE,E,TRUE,TRUE,FALSE,2
+E.4,Fire detection and firefighting systems maintenance,Maintenance and testing of fire detection and firefighting systems,TRUE,E,TRUE,TRUE,FALSE,3
+E.5,"Lifts, hoists and conveyance systems maintenance","Maintenance of the lifts, hoists and conveyance systems within the buyer premises",TRUE,E,TRUE,TRUE,FALSE,4
+E.6,"Security, access and intruder systems maintenance","Maintenance of all security, access and intruder systems within the buyer’s premises",TRUE,E,TRUE,TRUE,FALSE,5
+E.7,Internal and external building fabric maintenance,"Maintenance of the internal and external building fabric, taking account of the asset registers, and planned maintenance schedules",TRUE,E,TRUE,TRUE,FALSE,6
+E.8,Reactive maintenance services,"Provision of a professionally managed service for reactive repairs and maintenance 24 hours per day, 365 days per year",TRUE,E,TRUE,TRUE,FALSE,7
+E.9,Planned / Group re-lamping service,"Re-lamping service within the buyers premise, achieving the greatest possible reduction in replacement frequency and cost",FALSE,E,TRUE,TRUE,FALSE,8
+E.10,Automated barrier control system maintenance,"Maintenance service for automated barriers, shutters, turn-styles, doors and electrified fencing",TRUE,E,TRUE,TRUE,FALSE,9
+E.11,Building Management System (BMS) maintenance,Maintenance of the building management system to allow an efficient and effective building engineering service,TRUE,E,TRUE,TRUE,FALSE,10
+E.12,Standby power system maintenance,Maintenance and operation of backup generators and uninterrupted power supply equipment,TRUE,E,TRUE,TRUE,FALSE,11
+E.13,High Voltage (HV) and switchgear maintenance,Maintenance of high voltage (hv) and switchgear in accordance with manufacturers’ recommendations and statutory obligations,TRUE,E,TRUE,TRUE,FALSE,12
+E.14,Catering equipment maintenance,Maintenance of catering equipment in accordance with manufacturers’ and installers’ recommendations and statutory obligations,FALSE,E,TRUE,TRUE,FALSE,13
+E.15,Audio Visual (AV) equipment maintenance,Maintenance of any av equipment which is designed to display or take input from portable media or is computer driven,FALSE,E,TRUE,TRUE,FALSE,14
+E.16,Television cabling maintenance,Maintenance of the existing cabling infrastructure which is designated for the transmission of television pictures,FALSE,E,TRUE,TRUE,FALSE,15
+E.17,Mail room equipment maintenance,"Operation and maintenance of mail room equipment, including franking machines, sorters, postal scales and x-ray scanners",FALSE,E,TRUE,TRUE,FALSE,16
+E.18,Office Machinery Servicing and Maintenance,"Office machinery servicing and maintenance, including photocopiers, fax machines, scanners and shredders",FALSE,E,TRUE,TRUE,FALSE,17
+E.19,Voice announcement system maintenance,Provision and maintenance of all voice announcement systems and equipment,FALSE,E,TRUE,TRUE,FALSE,18
+E.20,Locksmith Services,Specialist locksmith service to repair or replace ironmongery,FALSE,E,TRUE,TRUE,FALSE,19
+E.21,Specialist maintenance Services,"Specialist maintenance services, including bulk aircraft fuel supply, offshore hazard markers, coal-fired boilers, sewerage plants",FALSE,E,TRUE,TRUE,FALSE,20
+F.1,Asbestos Management,Ensuring buyer premises are statutory compliant with asbestos regulations. Managing asbestos register and surveys,TRUE,F,TRUE,TRUE,FALSE,0
+F.2,Water Hygiene Maintenance,"Water hygiene maintenance services including statutory compliance, risk assessments, cleaning regime, inspection and monitoring",TRUE,F,TRUE,TRUE,FALSE,1
+F.3,Statutory Inspections,"Statutory inspections and certification, air monitoring, risk assessments, insurance inspections. Achieve and maintain statutory compliance",TRUE,F,TRUE,TRUE,FALSE,2
+F.4,Portable Appliance Testing,Portable appliance testing service for buyers equipment,FALSE,F,TRUE,TRUE,FALSE,3
+F.5,"Miscellaneous Surveys, Audits and Testing Services","Provision of surveys, audits and testing of services",FALSE,F,TRUE,TRUE,FALSE,4
+F.6,Condition surveys,"Manage condition surveys that shall cover all systems, assets and building fabric",FALSE,F,TRUE,TRUE,FALSE,5
+F.7,Electrical Testing,Electrical installation condition reports in accordance with current regulations,TRUE,F,TRUE,TRUE,FALSE,6
+F.8,Fire Risk Assessments,Review of fire risk assessment and fire safety plans. Subsequent reviews to ensure compliance,TRUE,F,TRUE,TRUE,FALSE,7
+F.9,Building Information Modelling and Government Soft Landings,Delivery of strategic priorities related to the wider government policy in line with building information modelling (level 2) and government soft landings,FALSE,F,TRUE,TRUE,FALSE,8
+F.10,Display Energy Certificates (DECs),"Perform the audit, issue and display and renewal of the energy certificates",TRUE,F,TRUE,TRUE,FALSE,9
+F.11,Energy Performance Certificates (EPCs),"Perform the audit, issue and display and renewal the EPC certificates",TRUE,F,TRUE,TRUE,FALSE,10
+F.12,Radon Gas Management Services,Manage radon surveys and radon risk assessments,FALSE,F,TRUE,TRUE,FALSE,11
+F.13,Permit to Work,Issue and manage Permits to Work,TRUE,F,TRUE,TRUE,FALSE,12
+G.1,Hard Landscaping Services,"Grounds maintenance services including planned and reactive maintenance, and hard landscaping maintenance",TRUE,G,TRUE,FALSE,TRUE,0
+G.2,Soft Landscaping Services,"Grounds maintenance services including planned and reactive maintenance, and soft landscaping maintenance",TRUE,G,TRUE,FALSE,TRUE,1
+G.3,Tree Surgery (Arboriculture),"Tree surgery service, including development and implementation of an arboriculture management plan, and ad hoc tree surgery",FALSE,G,TRUE,FALSE,TRUE,2
+G.4,Planned snow and ice clearance,Professionally managed and scheduled snow and ice clearance service,TRUE,G,TRUE,FALSE,TRUE,3
+G.5,Reactive snow and ice clearance,Professionally managed and proactive snow and ice clearance service,TRUE,G,TRUE,FALSE,TRUE,4
+G.6,"Reservoirs, ponds, river walls and water features maintenance","Maintenance services and inspection reports for reservoirs, ponds, river walls and water features",FALSE,G,TRUE,FALSE,TRUE,5
+G.7,Internal planting,Provision and maintenance of all indoor planting,FALSE,G,TRUE,FALSE,TRUE,6
+G.8,Cut flowers and Christmas trees,Cut flowers and christmas tree service,FALSE,G,TRUE,FALSE,TRUE,7
+H.1,Chilled potable water,The provision of chilled potable water,FALSE,H,TRUE,FALSE,TRUE,0
+H.2,Retail Services / Convenience Store,"Provision of a self-service retail outlet offering chilled food, beverages, confectionery and non-food items",TRUE,H,TRUE,FALSE,TRUE,1
+H.3,Deli / coffee bar,Provision of a counter service offering with a mix of ready-made items and made to order choices,TRUE,H,TRUE,FALSE,TRUE,2
+H.4,Events and functions,Provision of on-demand catering service for events and functions as required,FALSE,H,TRUE,FALSE,TRUE,3
+H.5,Full service restaurant,"A full service restaurant provision offering freshly prepared meals, snacks and beverages with seating areas",TRUE,H,TRUE,FALSE,TRUE,4
+H.6,Hospitality and meetings,"An on-demand service providing working lunches, beverages, hot meals and buffets",FALSE,H,TRUE,FALSE,TRUE,5
+H.7,Outside catering,Providing an on-demand outside catering service as required,FALSE,H,TRUE,FALSE,TRUE,6
+H.8,Trolley service,Supplier shall provide a trolley service offering a range of snacks and hot/cold beverages which follows a pre-determined route,FALSE,H,TRUE,FALSE,TRUE,7
+H.9,Vending Services (food and beverages),"A vending service that will include hot and cold drinks, sweets and snacks, fresh fruit and pre-packed food items",TRUE,H,TRUE,FALSE,TRUE,8
+H.10,Residential catering Services,"Catering services for full time residents within a buyers premises, examples include a full board food offering comprising breakfast, luncheon and dinner",FALSE,H,TRUE,FALSE,TRUE,9
+I.1,Routine cleaning,"Professional office cleaning to all areas, furniture, walls and floor spaces",TRUE,I,TRUE,FALSE,TRUE,0
+I.2,Infection Control / Touchpoint cleaning,Planned and routine infection control cleaning services,TRUE,I,TRUE,FALSE,TRUE,1
+I.3,Cleaning of integral barrier mats,Maintenance and cleaning of barrier matting,FALSE,I,TRUE,FALSE,TRUE,2
+I.4,Mobile cleaning Services,"Professional office cleaning to all areas, furniture, walls and floor spaces. Delivered via a mobile cleaning solution",FALSE,I,TRUE,FALSE,TRUE,3
+I.5,Deep (periodic) cleaning,"Deep (periodic) cleaning service - programme management, deep clean service, coordination with onsite staff",TRUE,I,TRUE,FALSE,TRUE,4
+I.6,Cleaning of external areas,"Cleaning of external building fabric, lighting, fixtures and fittings, and external areas",TRUE,I,TRUE,FALSE,TRUE,5
+I.7,Window cleaning (internal),"Internal window cleaning service including provision of access equipment, labour and materials",TRUE,I,TRUE,FALSE,TRUE,6
+I.8,Window cleaning (external),"External window cleaning service including provision of access equipment, labour and materials",TRUE,I,TRUE,FALSE,TRUE,7
+I.9,Cleaning of communications and equipment rooms,Cleaning of communication and equipment rooms to the required cleaning standard,FALSE,I,TRUE,FALSE,TRUE,8
+I.10,Reactive cleaning (outside cleaning operational hours),Managing and supplying reactive cleaning services,FALSE,I,TRUE,FALSE,TRUE,9
+I.11,Housekeeping,Professionally managed housekeeping service for staff and visitors at the buyer premises,FALSE,I,TRUE,FALSE,TRUE,10
+I.12,IT equipment cleaning,"Cleaning of desktop computers, screens and keyboards",FALSE,I,TRUE,FALSE,TRUE,11
+I.13,Specialist cleaning,"Specialist cleaning service, for example, for antiques, artwork, ceramics, pictures, fabrics and chandeliers",FALSE,I,TRUE,FALSE,TRUE,12
+I.14,Cleaning of curtains and window blinds,Professionally managed curtain and window blinds cleaning service,FALSE,I,TRUE,FALSE,TRUE,13
+I.15,Medical and clinical cleaning,"Cleaning of all medical, clinical and laboratories",FALSE,I,TRUE,FALSE,TRUE,14
+I.16,Pest control Services,"Planned and reactive pest control services, to keep the premises free from all types of rodents, birds and insects",TRUE,I,TRUE,FALSE,TRUE,15
+I.17,Linen and laundry Services,"Laundering, organisation and control of linen stocks. Supply of linen",FALSE,I,TRUE,FALSE,TRUE,16
+I.18,Hotel Services,Deliver and manage hotel services ,FALSE,I,TRUE,FALSE,TRUE,17
+J.1,Mail Services,The management and successful operation of a mail room service,TRUE,J,TRUE,FALSE,TRUE,0
+J.2,Internal messenger Service,Provision of a messenger service at each buyer premises,TRUE,J,TRUE,FALSE,TRUE,1
+J.3,Courier booking and distribution services,Managing and co-ordinating a national and international courier service for the buyer,TRUE,J,TRUE,FALSE,TRUE,2
+J.4,Repairperson Services,Provision of a repairperson and equipment,TRUE,J,TRUE,FALSE,TRUE,3
+J.5,Move and space management (internal moves),"Managing the moves, working with space planners",FALSE,J,TRUE,FALSE,TRUE,4
+J.6,Porterage,Provision of a professionally managed flexible porterage service,TRUE,J,TRUE,FALSE,TRUE,5
+J.7,Clocks,"Managing clocks on the premises, including battery replacement, clock adjustment and maintenance",FALSE,J,TRUE,FALSE,TRUE,6
+J.8,Signage,"Responsibility for signage regarding health and safety regulations, means of escape, statutory / mandatory signage",FALSE,J,TRUE,FALSE,TRUE,7
+J.9,Archiving (on-site),"A holistic document storage service, based on the buyer’s requirement and the on-site storage capacity",FALSE,J,TRUE,FALSE,TRUE,8
+J.10,Furniture Management,"Provision of all necessary office items for new starters, as moves occur, or for new premises",FALSE,J,TRUE,FALSE,TRUE,9
+J.11,Space management,Space management services and office moves,FALSE,J,TRUE,FALSE,TRUE,10
+J.12,Cable management,"Cable management service including installation of additional data cabling, and moving floor boxes and grommets",FALSE,J,TRUE,FALSE,TRUE,11
+J.13,Reprographics Service,"A service for the bulk copying, finishing and binding of documents",TRUE,J,TRUE,FALSE,TRUE,12
+J.14,Stores and Goods Management Services,"Provision, management and operation of a storage and supply service on behalf of the buyer at the buyer premises",FALSE,J,TRUE,FALSE,TRUE,13
+J.15,Portable washroom solutions,Management and cleaning of latrines. Supply of portable facilities on behalf of the buyer as-and-when required,FALSE,J,TRUE,FALSE,TRUE,14
+J.16,Additional support Services,"Provision of additional support services, for example, clerical support, event management, switchboard services",FALSE,J,TRUE,FALSE,TRUE,15
+K.1,Reception Service,Provision of a professional reception service appropriate to the business use of the buyer premises,TRUE,K,TRUE,FALSE,TRUE,0
+K.2,Taxi booking Service,Managing and co-ordinating a taxi booking service for the buyer,FALSE,K,TRUE,FALSE,TRUE,1
+K.3,Car park management and booking,A car park management and booking service,FALSE,K,TRUE,FALSE,TRUE,2
+K.4,Voice announcement system operation,"A service making broadcasts or announcements via the voice announcement system, as requested by the buyer",FALSE,K,TRUE,FALSE,TRUE,3
+K.5,Concierge Services,"Provision of concierge services, for example managing customer complaints",FALSE,K,TRUE,FALSE,TRUE,4
+L.1,Static Guarding Service,Static guarding service - covering the interior and exterior of each buyer premises,TRUE,L,TRUE,FALSE,TRUE,0
+L.2,CCTV / alarm monitoring,"Managing all CCTV systems on the buyers premise, monitoring activity, and providing evidence footage where necessary",TRUE,L,TRUE,FALSE,TRUE,1
+L.3,Control of access - Staff and Visitors,"Managing the control of access and security passes, produce passes as required, and manage the log of staff and visitors",TRUE,L,TRUE,FALSE,TRUE,2
+L.4,Control of access - Vehicles,"Managing the control of access and security passes, produce passes as required, and manage the log of vehicles",TRUE,L,TRUE,FALSE,TRUE,3
+L.5,Emergency response,"Provision of emergency response service, including alarm responses, and manage plans to deal with emergency situations",TRUE,L,TRUE,FALSE,TRUE,4
+L.6,Patrols (fixed or static guarding),"Mobile security patrol service for vacant/surplus buyer premises, and on occasion at an occupied buyer premises",TRUE,L,TRUE,FALSE,TRUE,5
+L.7,Management of visitors and passes,"Managing, producing and issuing visitor passes",TRUE,L,TRUE,FALSE,TRUE,6
+L.8,Reactive guarding,A reactive guarding service to meet the buyer’s requirements,TRUE,L,TRUE,FALSE,TRUE,7
+L.9,Additional security Services,"Additional security services for specific sites with particular requirements for example, court or prison security officers",FALSE,L,TRUE,FALSE,TRUE,8
+L.10,Enhanced security requirements,Supplier shall provide enhanced security service requirements to meet customers needs,FALSE,L,TRUE,FALSE,TRUE,9
+L.11,Key holding,A professional key holding service - custodian of building access keys and alarm system codes. Compliance with security industry authority,TRUE,L,TRUE,FALSE,TRUE,10
+L.12,Lock Up / open up of Buyer Premises,"Key holding, providing assistance to emergency services, and ensuring premises are secure",FALSE,L,TRUE,FALSE,TRUE,11
+L.13,Patrols (mobile via a specific visiting vehicle),"Mobile security patrol service for vacant/surplus buyer premises, and on occasion at an occupied buyer premises",TRUE,L,TRUE,FALSE,TRUE,12
+L.14,Remote CCTV / alarm monitoring,"Remote managing all CCTV systems on the buyers premise, monitoring activity, and providing evidence footage where necessary",FALSE,L,TRUE,FALSE,TRUE,13
+L.15,Blended Static Guarding Service,"Provide a blend of the static services, for example control of access and lock up / open up of Buyer Premises",TRUE,L,TRUE,FALSE,TRUE,14
+M.1,On Site / Mobile Classified Waste Shredding Service,"Provision of a suitable classified waste service, ensuring the secure collection, storage, removal and disposal of all classified materials on site",TRUE,M,TRUE,FALSE,TRUE,0
+M.2,Off Site / Mobile Classified Waste Shredding Service,"Provision of a suitable classified waste service, ensuring the secure collection, storage, removal and disposal of all classified materials off site",TRUE,M,TRUE,FALSE,TRUE,1
+M.3,General waste,"Collection, storage and removal of general waste from the supplier premise. Supply of waste dispose reports",TRUE,M,TRUE,FALSE,TRUE,2
+M.4,Recycled waste and waste for re-use,Collection and removal of all recyclable waste from the buyer premises,FALSE,M,TRUE,FALSE,TRUE,3
+M.5,Hazardous waste,"Disposal of hazardous wastes, and provision of suitable receptacles for this type of waste",FALSE,M,TRUE,FALSE,TRUE,4
+M.6,Specialist Waste Destruction Services,Destruction of hazardous and / or non-hazardous waste items for contraband items,FALSE,M,TRUE,FALSE,TRUE,5
+M.7,Clinical Waste,"Disposal of clinical waste, may include the provision of sharps bins, sanitary towel disposal service and other specialist receptacles",FALSE,M,TRUE,FALSE,TRUE,6
+M.8,Feminine hygiene waste,Disposal of feminine hygiene waste and provision of standard sized and suitable receptacles for this type of waste,TRUE,M,TRUE,FALSE,TRUE,7
+N.1,Childcare facility,Childcare nursery service for children aged between three months and an age suitable for first entry to school,FALSE,N,TRUE,FALSE,TRUE,0
+N.2,Sports and leisure,"Full management of the sports and leisure facilities including the booking of activity rooms, equipment and managing payment systems",FALSE,N,TRUE,FALSE,TRUE,1
+N.3,"Transport, Driver and Vehicle Service","Driver and vehicle service may include vehicle inspection and maintenance services, valet services, breakdown services",FALSE,N,TRUE,FALSE,TRUE,2
+N.4,First aid and medical service,First aid and medical services in line with health and safety executive guidance to visitors or staff who are injured whilst on the buyer premises,FALSE,N,TRUE,FALSE,TRUE,3
+N.5,Flag flying service,Provision of a flag flying service,FALSE,N,TRUE,FALSE,TRUE,4
+N.6,"Journal, magazine and newspaper supply","Managing the provision of journals, magazines and newspapers",FALSE,N,TRUE,FALSE,TRUE,5
+N.7,Hairdressing Services,"Hairdressing service at the buyer premises, including provision of all hairdressing equipment and materials",FALSE,N,TRUE,FALSE,TRUE,6
+N.8,Footwear cobbling Services,Provision of footwear cobbling service,FALSE,N,TRUE,FALSE,TRUE,7
+N.9,Provision of chaplaincy support Services,Provision of chaplaincy support service at the buyer premises,FALSE,N,TRUE,FALSE,TRUE,8
+N.10,Housing and residential accommodation management,"Professionally managed housing and estates management service, for residential occupancy and potential occupancy by buyer staff",FALSE,N,TRUE,TRUE,TRUE,9
+N.11,Energy and utilities management bureau Services,"Provide, operate and manage an Energy and Utilities Management Bureau",FALSE,N,TRUE,TRUE,FALSE,10
+N.12,Janitor Services (Education),Provision of janitor services in a place of education,FALSE,N,TRUE,FALSE,TRUE,11
+N.13,Specialist Health FM Services,"Provision of specialist health services, for example porter services",FALSE,N,TRUE,FALSE,TRUE,12
+O.1,End-User Accommodation Services,"Responsibility for the planning, preparation, designation, management and servicing of the End User’s accommodation requirements",FALSE,O,TRUE,FALSE,FALSE,0
+O.2,Management and Control of Ranges and Training Areas (MCRT) (including the Operation of a Bidding and Allocation Management (BAMS) system),"Responsibility for the management, maintenance and control of ranges, training areas and training facilities",FALSE,O,TRUE,FALSE,FALSE,1
+O.3,Training Areas and Ranges Operation and Management (TAROM) Services and the provision of a service for Targets deployed overseas,"Provide, manage and operate all ranges, training areas and training facilities",FALSE,O,TRUE,FALSE,FALSE,2
+O.4,Rural Estate Maintenance (REM) Services,"Managing of rural estate to ensure compliant, safe conditions",FALSE,O,TRUE,FALSE,FALSE,3
+O.5,Land Management Service (LMS),"Deliver comprehensive Land Management Services, for example Valuation and Negotiation of land",FALSE,O,TRUE,FALSE,FALSE,4
+P.1,Applications and Allocations Services,Provide a professionally managed Accommodation occupancy and property management services,FALSE,P,TRUE,FALSE,FALSE,0
+P.2,Occupancy Management,Administer and manage occupancy charging,FALSE,P,TRUE,FALSE,FALSE,1
+P.3,Rental Services,Provide a Property Rental Service for the private rental of Buyer Premises,FALSE,P,TRUE,FALSE,FALSE,2
+P.4,Emergency Accommodation,Provide emergency accommodation when a property has non-habitable faults,FALSE,P,TRUE,FALSE,FALSE,3
+P.5,Occupation Management,Provide an Occupation Management service for the Buyer's Premises,FALSE,P,TRUE,FALSE,FALSE,4
+P.7,Housing Stock Management,"managing the Housing Stock, for example condition reporting services",FALSE,P,TRUE,FALSE,FALSE,5
+P.8,Accommodation Stores Service,Provide an accommodation stores (AS) service to service families accommodation (SFA),FALSE,P,TRUE,FALSE,FALSE,6
+P.9,Special Need or Disability Adaptions,Make property modifications or adaptations linked to a special need or disability of the occupant ,FALSE,P,TRUE,FALSE,FALSE,7
+P.10,Third Party Claims,Act on behalf of the Buyer and carry out all necessary actions to complete a claim on a third-party,FALSE,P,TRUE,FALSE,FALSE,8
+P.11,Customer Service Centre,"Provide a customer service centre for all applications, allocations and occupancy management services",FALSE,P,TRUE,FALSE,FALSE,9
+P.12,Future Accommodation Model (FAM),"Provide a professional property advice and management Service for the private rental, management and purchase of Family Accommodation",FALSE,P,TRUE,FALSE,FALSE,10
+P.13,Property Maintenance Support Desk Services,Provide a property maintenance support desk service,FALSE,P,TRUE,FALSE,FALSE,11
+P.14,Accommodation Compliance Services,Manage all activities relating to compliance,FALSE,P,TRUE,FALSE,FALSE,12
+P.15,Accommodation Maintenance Services,Provide vacant/unoccupied property preparation and management services,FALSE,P,TRUE,FALSE,FALSE,13
+Q.1,CAFM – Soft FM Requirements,Provide the system and software required to deliver the Services when provision of a Soft FM service is included,TRUE,Q,FALSE,FALSE,TRUE,0
+Q.2,TFM & Hard FM CAFM Requirements,Provide the system and software required to deliver the Services when provision of a TFM and / or Hard FM service is included,TRUE,Q,TRUE,TRUE,FALSE,1
+R.1,Helpdesk Services,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting",TRUE,R,TRUE,TRUE,TRUE,0
+S.1,"Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works",Chargeable services delivered outside the agreed overall contract price for example small/large projects,TRUE,S,TRUE,TRUE,TRUE,0
