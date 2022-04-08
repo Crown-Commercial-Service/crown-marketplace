@@ -62,7 +62,7 @@ module FacilitiesManagement::RakeModules::SupplierData
     if Rails.env.production?
       s3_resource = Aws::S3::Resource.new(region: ENV['COGNITO_AWS_REGION'])
       object = s3_resource.bucket(ENV['CCS_APP_API_DATA_BUCKET']).object(ENV['SUPPLIER_DETAILS_DATA_KEY'])
-      response_target = 'data/facilities_management/Supplier_details_data.xlsx'
+      response_target = 'data/facilities_management/rm3830/Supplier_details_data.xlsx'
       object.get(response_target: response_target)
       response_target
     else
