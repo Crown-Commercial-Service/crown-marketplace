@@ -2,6 +2,16 @@
 en:
   facilities_management:
     rm6232:
+      admin:
+        home:
+          index:
+            header: RM6232 administration dashboard
+            manage_supplier_data: Manage the supplier's details and their lot data
+            supplier_data: Supplier data
+        sessions:
+          new:
+            admin_sign_in_header: Sign in to your administration dashboard
+            email_hint_html: Enter the email address you used to register
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

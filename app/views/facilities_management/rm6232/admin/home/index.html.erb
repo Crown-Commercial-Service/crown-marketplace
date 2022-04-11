@@ -1,0 +1,19 @@
+<%= content_for :page_title, t('.header') %>
+<div class="govuk-body">
+  <div class="govuk-grid-row govuk-!-padding-left-3">
+    <span class="govuk-caption-l"><%= @current_login_email %></span>
+    <h1 class="govuk-heading-xl"><%= t('.header') %></span>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-1"><%= t('.supplier_data') %></span>
+    </div>
+  </div>
+  <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-5">
+  <%= ccs_account_panel_row do %>
+    <%= ccs_account_panel(t('.supplier_data'), '#') do %>
+      <%= t('.manage_supplier_data') %>
+    <% end %>
+  <% end %>
+</div>
