@@ -500,60 +500,12 @@ en:
             update_button: Save and return to supplier framework data
             variances: Variances
         supplier_details:
-          additional_supplier_information:
-            duns_info: The nine-digit unique identifier for the business
-            duns_question: Enter the DUNS number for the supplier
-            registration_number_info: If the company registration number contains letters, make sure they are uppercase
-            registration_number_question: Enter the company registration number for the supplier
-          edit:
-            cancel_text: Cancel and return to the supplier details
-            page_title:
-              additional_supplier_information: Additional supplier information
-              supplier_address: Supplier address
-              supplier_contact_information: Supplier contact information
-              supplier_name: Supplier name
-              supplier_user: Supplier user account
-            save_and_return: Save and return
           index:
             heading: Supplier details
             search_for_a_supplier: Search for a supplier..
             supplier_contact_email: Contact email
             supplier_name: Supplier name
             view_supplier_details: You can view the full details for a supplier by clicking on their name
-          show:
-            additional_supplier_information: Additional supplier information
-            change: Change
-            contact_email: Contact email
-            contact_name: Contact name
-            contact_phone: Contact telephone number
-            current_user: Current user
-            duns: DUNS number
-            edit_supplier_details: You can edit the details for the supplier by clicking on change
-            full_address: Full address
-            page_title: "%{supplier_name} details"
-            registration_number: Company registration number
-            supplier_account_information: Supplier user account information
-            supplier_contact_information: Supplier contact information
-            supplier_details: Supplier details
-            supplier_name: Supplier name
-          supplier_address:
-            building_and_street: Building and street
-            county: County (optional)
-            postcode: Postcode
-            town_or_city: Town or city
-          supplier_contact_information:
-            contact_email_info: This email will be used when sending contracts to the supplier
-            contact_email_question: Enter the contact email for the supplier
-            contact_name_question: Enter the contact name for the supplier
-            contact_phone_question: Enter the telephone number for the supplier
-          supplier_name:
-            supplier_name_question: Enter the name for the supplier
-          supplier_user:
-            email_must: 'This user must:'
-            email_must_1: be a registered user with the facilities management service
-            email_must_2: have supplier access
-            email_must_3: not be the same user as another supplier
-            user_email_question: Changing the user email will change who can view the supplier dashboard.
         supplier_framework_data:
           index:
             heading: Supplier framework data

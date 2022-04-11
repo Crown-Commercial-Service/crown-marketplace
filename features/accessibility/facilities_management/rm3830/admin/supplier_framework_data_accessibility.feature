@@ -5,7 +5,7 @@ Feature: Supplier framework data - accessibility
     Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
 
   Scenario: Supplier framework data page
     Then the page should be axe clean

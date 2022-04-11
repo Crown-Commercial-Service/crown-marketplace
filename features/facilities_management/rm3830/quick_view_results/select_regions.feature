@@ -5,11 +5,11 @@ Feature: Select regions
     Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Quick view suppliers'
     Then I am on the 'Services' page
-    And I open all sections
+    And I show all sections
     And I select 'Building management system (BMS) maintenance'
     And I click on 'Continue'
     Then I am on the 'Regions' page
-    And I open all sections
+    And I show all sections
 
   Scenario: Service selection appears in basked
     Then the basket should say 'No regions selected'

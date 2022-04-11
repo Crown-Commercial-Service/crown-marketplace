@@ -11,7 +11,7 @@ Feature: Adding services for suppliers on the admin tool
     Given I go to the admin dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
     And select 'Services' for sublot '1a' for 'Shields, Ratke and Parisian'
     Then I am on the 'Sub-lot 1a services, prices, and variances' page
     And I select the following items:
@@ -32,7 +32,7 @@ Feature: Adding services for suppliers on the admin tool
     Given I go to the admin dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
     And select 'Services' for sublot '1b' for 'Rowe, Hessel and Heller'
     Then I am on the 'Sub-lot 1b services' page
     And I select the following items:
@@ -52,7 +52,7 @@ Feature: Adding services for suppliers on the admin tool
     Given I go to the admin dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
     And select 'Services' for sublot '1c' for 'Mayert, Kohler and Schowalter'
     Then I am on the 'Sub-lot 1c services' page
     And I select the following items:

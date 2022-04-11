@@ -13,7 +13,7 @@ Feature: Services accessibility
     Then the page should be axe clean
 
   Scenario: Services summary page
-    Given I open all sections
+    Given I show all sections
     And I select 'Building management system (BMS) maintenance'
     When I click on 'Save and continue'
     Then I am on the 'Services summary' page
