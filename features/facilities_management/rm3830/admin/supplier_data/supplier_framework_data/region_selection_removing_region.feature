@@ -1,7 +1,7 @@
 Feature: Removing regions for suppliers on the admin tool
 
   Background:
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
   Scenario: Deselecting a service for lot 1a
     Given I go to a quick view with the following services and regions:

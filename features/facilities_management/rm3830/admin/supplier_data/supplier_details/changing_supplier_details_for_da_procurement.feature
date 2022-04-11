@@ -2,7 +2,7 @@
 Feature: Changing the supplier details and seeing how they affect procurements
 
   Background: I sign in and have procurements
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I have direct award procurements
 
   Scenario: Changing the supplier details and checking DA procuremnets

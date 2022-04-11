@@ -167,10 +167,13 @@ Rails.application.routes.draw do
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/', to: 'home#index'
+        resources :supplier_data, path: 'supplier-data', only: :index
+        resources :supplier_lot_data, path: 'supplier-lot-data', only: :show
       end
     end
 
     get '/:framework', to: 'home#index', as: 'index'
+    get '/:framework/admin', to: 'admin/home#index', defaults: { service: 'facilities_management/admin' }, as: 'admin_index'
     get '/:framework/start', to: 'journey#start', as: 'journey_start'
     get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
     get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'

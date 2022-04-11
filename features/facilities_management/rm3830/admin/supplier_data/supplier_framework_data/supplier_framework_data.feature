@@ -1,7 +1,7 @@
 Feature: Supplier framework data
 
   Background: Navigate to the services and prices page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     Given I open all sections

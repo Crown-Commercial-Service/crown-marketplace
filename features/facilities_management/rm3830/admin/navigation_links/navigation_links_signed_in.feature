@@ -1,7 +1,7 @@
 Feature: Navigation links when signed in
 
   Background: Admin signs in
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
   Scenario: Cookies policy - Admin dashboard
     When I click on 'Cookie policy'
@@ -19,7 +19,7 @@ Feature: Navigation links when signed in
       | Admin dashboard |
       | Sign out        |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page
 
   Scenario: Cookies settings - Admin dashboard
     When I click on 'Cookie settings'
@@ -37,7 +37,7 @@ Feature: Navigation links when signed in
       | Admin dashboard |
       | Sign out        |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page
 
   Scenario: Accessibility statement - Admin dashboard
     When I click on 'Accessibility statement'
@@ -55,13 +55,13 @@ Feature: Navigation links when signed in
       | Admin dashboard |
       | Sign out        |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page
 
   Scenario: Admin dashboard - Sign out
       And I should see the following navigation links:
       | Sign out      |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page
 
   Scenario: Accessibility statement - Admin dashboard
     When I click on 'Accessibility statement'
@@ -79,7 +79,7 @@ Feature: Navigation links when signed in
       | Admin dashboard |
       | Sign out        |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page
 
   Scenario: Admin page - Admin dashboard
     When I click on 'Average framework rates'
@@ -97,4 +97,4 @@ Feature: Navigation links when signed in
       | Admin dashboard |
       | Sign out        |
     And I click on 'Sign out'
-    And I am on the 'Sign in to your administration dashboard' page
+    And I am on the 'Sign in to the RM3830 administration dashboard' page

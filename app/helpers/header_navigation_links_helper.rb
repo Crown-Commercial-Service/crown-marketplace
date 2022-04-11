@@ -22,7 +22,7 @@ module HeaderNavigationLinksHelper
     framework ||= FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
-      navigation_links << { link_text: admin_back_to_start_text, link_url: "/facilities-management/#{framework}/admin" } unless sign_in_or_dashboard?('home')
+      navigation_links << { link_text: admin_back_to_start_text, link_url: facilities_management_admin_index_path(framework: framework) } unless sign_in_or_dashboard?('home')
       navigation_links << sign_out_link("/facilities-management/#{framework}/admin/sign-out")
     end
   end
