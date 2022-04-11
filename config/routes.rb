@@ -46,6 +46,9 @@ Rails.application.routes.draw do
       end
       namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
         concerns %i[authenticatable registrable]
+        namespace :admin, defaults: { service: 'facilities_management/admin' } do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -161,6 +164,10 @@ Rails.application.routes.draw do
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
+
+      namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        get '/', to: 'home#index'
+      end
     end
 
     get '/:framework', to: 'home#index', as: 'index'
