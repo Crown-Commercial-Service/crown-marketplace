@@ -1,7 +1,7 @@
 Feature: Supplier address
 
   Scenario: Changing the supplier address
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Supplier details'
     Then I am on the 'Supplier details' page
     And I click on 'Abbott-Dooley'

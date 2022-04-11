@@ -10,8 +10,29 @@ en:
             supplier_data: Supplier data
         sessions:
           new:
-            admin_sign_in_header: Sign in to your administration dashboard
+            admin_sign_in_header: Sign in to the RM6232 administration dashboard
             email_hint_html: Enter the email address you used to register
+        supplier_data:
+          index:
+            find_supplier: You can find a specific supplier by entering their name in the search bar.
+            heading: Supplier data
+            search_for_a_supplier: Search for a supplier..
+            supplier_name: Supplier name
+            view_details: View details
+            view_lot_data: View lot data
+            view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        supplier_lot_data:
+          show:
+            change: Change
+            heading: View lot data
+            lot_code: 'Lot code: %{lot_code}'
+            lot_regions: lot %{lot_code} regions
+            lot_services: lot %{lot_code} services
+            regions: Regions
+            services: Services
+            show_regions: Show regions
+            show_services: Show services
+            you_can_edit: You can edit the lot data for a supplier by clicking on change.
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard
