@@ -32,3 +32,14 @@ Feature: Supplier data pages
       | Abshire, Schumm and Farrell | a     | b     |
       | Schultz-Wilkinson           | c     |       |
       | Terry-Greenholt             | b     | c     |
+
+  Scenario Outline: View details
+    Then I click on 'View details' for '<supplier_name>'
+    And I am on the 'Supplier details' page
+    And the supplier name on the details page is '<supplier_name>'
+  
+    Examples:
+      | supplier_name               |
+      | Bins, Yost and Donnelly     |
+      | Feest Group                 |
+      | Swift, Friesen and Predovic |

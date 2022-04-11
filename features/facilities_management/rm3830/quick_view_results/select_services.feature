@@ -5,7 +5,7 @@ Feature: Select services
     Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Quick view suppliers'
     Then I am on the 'Services' page
-    And I open all sections
+    And I show all sections
 
   Scenario: Service selection appears in basked
     Then the basket should say 'No services selected'

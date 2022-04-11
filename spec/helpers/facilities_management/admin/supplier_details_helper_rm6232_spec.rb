@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper, type: :helper do
-  let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail, **attributes) }
+# We have a spec for both frameworks to make sure
+# both suppliers admin models work with the helpers
+RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper, type: :helper do
+  let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin, **attributes) }
   let(:attributes) { {} }
 
   describe '.contact_detail' do
@@ -91,6 +93,8 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper, type:
   end
 
   describe '.full_address' do
+    let(:attributes) { { address_line_1: '17 Sailors road', address_line_2: 'Floor 2', address_town: 'Southend-On-Sea', address_county: 'Essex', address_postcode: 'SS84 6VF' } }
+
     before { @supplier = supplier }
 
     it 'returns the full_address' do
@@ -106,29 +110,13 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsHelper, type:
     end
   end
 
-  describe '.supplier_user_email' do
-    before { @supplier = supplier }
-
-    context 'and the supplier has a user' do
-      let(:attributes) { { user: user } }
-      let(:user) { create(:user) }
-
-      it 'returns the supplier user email' do
-        expect(helper.supplier_user_email).to eq user.email
-      end
-    end
-
-    context 'and it is nil' do
-      it 'returns None' do
-        expect(helper.supplier_user_email).to eq 'None'
-      end
-    end
-  end
-
   describe '.current_supplier_name' do
     let!(:origional_supplier_name) { supplier.supplier_name }
 
-    before { helper.params[:id] = supplier.supplier_id }
+    before do
+      @suppliers_admin_module = FacilitiesManagement::RM6232::Admin::SuppliersAdmin
+      helper.params[:id] = supplier.id
+    end
 
     context 'when the supplier name is unchanged' do
       it 'returns the origional supplier name' do
