@@ -41,6 +41,28 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
 
     before { get :edit, params: { supplier_lot_datum_id: lot_data.id, lot_data_type: lot_data_type } }
 
+    context 'when the lot data type is service codes' do
+      let(:lot_data_type) { 'service_codes' }
+
+      it 'renders the edit template' do
+        expect(response).to render_template(:edit)
+      end
+
+      it 'renders the service_codes partial' do
+        expect(response).to render_template(partial: 'facilities_management/rm6232/admin/supplier_lot_data/_service_codes')
+      end
+
+      it 'sets the lot data' do
+        expect(assigns(:lot_data)).to eq lot_data
+        expect(assigns(:lot_code)).to eq lot_data.lot_code
+        expect(assigns(:supplier).supplier_name).to eq lot_data.supplier_name
+      end
+
+      it 'sets the work_packages data' do
+        expect(assigns(:work_packages)).not_to be_nil
+      end
+    end
+
     context 'when the lot data type is region codes' do
       let(:lot_data_type) { 'region_codes' }
 
@@ -121,6 +143,25 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
         it 'sets the region data' do
           expect(assigns(:regions)).not_to be_nil
         end
+      end
+    end
+
+    context 'when the lot data type is service codes' do
+      let(:lot_data_type) { 'service_codes' }
+      let(:attributes) { { service_codes: %w[E.1 F.1] } }
+
+      it 'redirects to facilities_management_rm6232_admin_supplier_lot_datum_path' do
+        expect(response).to redirect_to facilities_management_rm6232_admin_supplier_lot_datum_path(lot_data.supplier.id)
+      end
+
+      it 'sets the lot data' do
+        expect(assigns(:lot_data)).to eq lot_data
+        expect(assigns(:lot_code)).to eq lot_data.lot_code
+        expect(assigns(:supplier).supplier_name).to eq lot_data.supplier_name
+      end
+
+      it 'does not set the work_packages data' do
+        expect(assigns(:work_packages)).to be_nil
       end
     end
 
