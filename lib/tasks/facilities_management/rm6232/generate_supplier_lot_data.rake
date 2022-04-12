@@ -62,7 +62,7 @@ module FM::RM6232
     end
 
     def self.random_service_codes
-      service_sample_size = (number_of_services * sample_ratio).to_i
+      service_sample_size = (number_of_services * (rand(0..15) / 20.0)).to_i
 
       service_code_selection = all_additional_services.sample(service_sample_size) + all_core_services
 
@@ -84,13 +84,9 @@ module FM::RM6232
     TOTAL_REGION_COUNT = 73
 
     def self.random_region_codes
-      region_sample_size = (TOTAL_REGION_COUNT * sample_ratio).to_i
+      region_sample_size = (TOTAL_REGION_COUNT * (rand(8..15) / 20.0)).to_i
 
       all_regions.sample(region_sample_size).sort
-    end
-
-    def self.sample_ratio
-      rand(0..15) / 20.0
     end
 
     def self.sorted_service_codes(service_codes)
