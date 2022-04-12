@@ -3,6 +3,10 @@ module FacilitiesManagement
     class Service < ApplicationRecord
       belongs_to :work_package, foreign_key: :work_package_code, inverse_of: :services
 
+      def label_name
+        "#{code} #{name}"
+      end
+
       def self.find_lot_number(service_codes, annual_contract_value)
         lot_number = determine_lot_number(service_codes)
 
