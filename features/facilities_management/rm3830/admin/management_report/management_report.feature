@@ -2,7 +2,7 @@
 Feature: Management report  - validations
 
   Background: Navigate to the management report page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Management report'
     Then I am on the 'Management report' page
 

@@ -2,7 +2,7 @@
 Feature: Assessed value - accessibility
 
   Background: Navigate to the dashboard
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
   Scenario: Average framework rates page
     And I click on 'Average framework rates'

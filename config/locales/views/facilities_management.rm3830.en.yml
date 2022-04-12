@@ -409,18 +409,19 @@ en:
             generating: Generating report
             guidance: The report will be available for download shortly. Your browser will automatically refresh when the report file is available for download.
           new:
-            breadcrumb_text_management_report: Management report
+            breadcrumb_text_generate_management_report: Generate management report
             download_btn_text: Generate and download report
             from: From
             from_example: For example, 15 06 2020
             heading_sub: Download management data
             heading_sub_detail: To generate a download file, please input your date range.
-            heading_title: Management report
+            heading_title: Generate management report
             return_link: Return to admin dashboard
             there_is_a_problem: There is a problem
             to: To
             to_example: For example, 30 06 2020
           show:
+            breadcrumb_text_generate_management_report: Generate management report
             breadcrumb_text_management_report: Management report
             download_btn_text: Generate another report
             heading_sub: Download management data
@@ -462,7 +463,7 @@ en:
             td_tupe: Direct award TUPE risk premium (%)
         sessions:
           new:
-            admin_sign_in_header: Sign in to your administration dashboard
+            admin_sign_in_header: Sign in to the RM3830 administration dashboard
             email_hint_html: Enter the email address you used to register
         sublot_regions:
           edit:

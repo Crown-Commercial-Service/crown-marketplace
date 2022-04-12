@@ -2,7 +2,7 @@
 Feature: Supplier contact information - validations
 
   Background: Navigate to the supplier contact informatin section
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Supplier details'
     Then I am on the 'Supplier details' page
     And I click on 'Bogan-Koch'

@@ -1,7 +1,7 @@
 Feature: Prices and variance
 
   Scenario: Changing the supplier values changes the results
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     Given I have a procurement in detailed search named 'AV Procurement' with the following services and multiple buildings:
       | C.1 |
       | G.1 |
