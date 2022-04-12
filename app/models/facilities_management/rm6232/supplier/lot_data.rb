@@ -5,6 +5,8 @@ module FacilitiesManagement
 
       delegate :supplier_name, to: :supplier
 
+      validates :region_codes, length: { minimum: 1 }, on: :region_codes
+
       def services
         Service.where(code: service_codes)
       end

@@ -170,7 +170,10 @@ Rails.application.routes.draw do
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/', to: 'home#index'
         resources :supplier_data, path: 'supplier-data', only: :index
-        resources :supplier_lot_data, path: 'supplier-lot-data', only: :show
+        resources :supplier_lot_data, path: 'supplier-lot-data', only: :show do
+          get '/:lot_data_type/edit', action: :edit, as: :edit
+          put '/:lot_data_type', action: :update, as: :update
+        end
       end
     end
 

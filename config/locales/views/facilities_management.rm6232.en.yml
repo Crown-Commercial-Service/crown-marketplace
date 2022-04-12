@@ -39,6 +39,10 @@ en:
               blank: You must enter a supplier name
               taken: A supplier with this name already exists
               too_long: The supplier name cannot be more than 100 characters
+        facilities_management/rm6232/supplier/lot_data:
+          attributes:
+            region_codes:
+              too_short: You must select at least one region for this lot
   facilities_management:
     rm6232:
       admin:
@@ -64,6 +68,12 @@ en:
           index:
             heading: Supplier data
         supplier_lot_data:
+          edit:
+            heading:
+              region_codes: Lot %{lot_code} regions
+            save_and_return: Save and return
+            the_check_boxes:
+              region_codes: The check boxes in the first column indicate what regions the supplier can provide their services in.
           show:
             change: Change
             heading: View lot data
