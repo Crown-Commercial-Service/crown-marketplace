@@ -89,6 +89,20 @@ Then('I am on a {string} page') do |option|
   expect(page.find('#wrapper > header > div > div.govuk-header__content > span')).to have_content(PAGE_HEADING[option])
 end
 
+Then('I show all sections') do
+  step('I click on "Show all sections"') if @javascript
+end
+
+Then('I select {string}') do |item|
+  page.check(item)
+end
+
+Then('I select the following items:') do |items|
+  items.raw.flatten.each do |item|
+    page.check(item)
+  end
+end
+
 Then('I refresh the page') do
   page.driver.browser.navigate.refresh
 end
