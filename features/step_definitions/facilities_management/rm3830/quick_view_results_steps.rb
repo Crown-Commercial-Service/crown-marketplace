@@ -1,4 +1,4 @@
-Then('I open all sections') do
+Then('I show all sections') do
   step('I click on "Show all sections"') if @javascript
 end
 

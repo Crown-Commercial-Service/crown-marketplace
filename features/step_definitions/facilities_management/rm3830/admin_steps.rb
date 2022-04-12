@@ -48,22 +48,6 @@ Then('{string} is a supplier in Sub-lot {string}') do |supplier, sublot|
   expect(supplier_list).to include supplier
 end
 
-Then('I change the {string} for the supplier details') do |supplier_detail|
-  admin_rm3830_page.supplier_details.send(supplier_detail.to_sym).change_link.click
-end
-
-Then('the {string} is {string} on the supplier details page') do |supplier_detail, text|
-  expect(admin_rm3830_page.supplier_details.send(supplier_detail.to_sym).detail).to have_content(text)
-end
-
-Then('the current user has the user email') do
-  expect(admin_rm3830_page.supplier_details.send(:'Current user'.to_sym).detail).to have_content(@user.email)
-end
-
-Then('I enter {string} into the {string} field') do |supplier_detail, field|
-  admin_rm3830_page.supplier_detail_form.send(field.to_sym).set(supplier_detail)
-end
-
 Given('I enter the user email into the user email field') do
   admin_rm3830_page.supplier_detail_form.send(:'User email').set(@user.email)
 end

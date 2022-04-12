@@ -4,7 +4,7 @@ Feature: Quick view results
     Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Quick view suppliers'
     Then I am on the 'Services' page
-    And I open all sections
+    And I show all sections
     And I select the following items:
       | Water hygiene maintenance                     |
       | Pest control services                         |
@@ -14,7 +14,7 @@ Feature: Quick view results
       | Patrols (fixed or static guarding)            |
     And I click on 'Continue'
     Then I am on the 'Regions' page
-    And I open all sections
+    And I show all sections
     When I select the following items:
       | Essex                                                                         |
       | Lancashire                                                                    |

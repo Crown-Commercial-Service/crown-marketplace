@@ -1,38 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model do
-  subject(:suppliers_admin) { described_class.find(supplier_id) }
-
-  let(:supplier_id) { 'ca57bf4c-e8a5-468a-95f4-39fcf730c770' }
-
-  describe '.replace_services_for_lot' do
-    let(:target_lot) { '1b' }
-    let(:changed_lot_data) { suppliers_admin.lot_data[target_lot] }
-
-    context 'when there are services selected' do
-      let(:new_services) { %w[bish bosh bash] }
-
-      before { suppliers_admin.replace_services_for_lot(new_services, target_lot) }
-
-      it 'modifies services of correct lot' do
-        expect(changed_lot_data['services']).to eq(new_services)
-      end
-    end
-
-    context 'when there are no services selected' do
-      let(:new_services) { nil }
-
-      before { suppliers_admin.replace_services_for_lot(new_services, target_lot) }
-
-      it 'modifies services to be an empty array' do
-        expect(changed_lot_data['services']).to eq([])
-      end
-    end
-  end
+RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model do
+  let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin) }
 
   describe 'validations' do
-    let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
-
     context 'when considering supplier name' do
       before { supplier.supplier_name = supplier_name }
 
@@ -89,7 +60,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
       end
 
       context 'and it belongs to another supplier' do
-        let(:existing_supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
+        let(:existing_supplier) { create(:facilities_management_rm6232_admin_suppliers_admin) }
         let(:supplier_name) { existing_supplier.supplier_name }
 
         it 'is not valid' do
@@ -787,135 +758,11 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
         end
       end
     end
-
-    context 'when considering user email' do
-      before { supplier.user_email = user_email }
-
-      context 'and not a valid format' do
-        let(:user_email) { 'invalid@email' }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-        end
-      end
-
-      context 'and is nil' do
-        let(:user_email) { nil }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-        end
-      end
-
-      context 'and is empty' do
-        let(:user_email) { '' }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-        end
-      end
-
-      context 'and is white space' do
-        let(:user_email) { '   ' }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'Enter an email address in the correct format, for example name@organisation.gov.uk'
-        end
-      end
-
-      context 'and there is no user with that email' do
-        let(:user_email) { 'valid@email.com' }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'The supplier must be registered with the facilities management service'
-        end
-      end
-
-      context 'and the user does not have supplier access' do
-        let(:user) { create(:user) }
-        let(:user_email) { user.email }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'The user must have supplier access'
-        end
-      end
-
-      context 'and the user belongs to another supplier' do
-        let(:user) { create(:user, roles: :supplier) }
-        let(:user_email) { user.email }
-
-        before { described_class.find('ef44b65d-de46-4297-8d2c-2c6130cecafc').update(user: user) }
-
-        it 'is not valid' do
-          expect(supplier.valid?(:supplier_user)).to be false
-        end
-
-        it 'has the correct error message' do
-          supplier.valid?(:supplier_user)
-          expect(supplier.errors[:user_email].first).to eq 'The user cannot belong to another supplier'
-        end
-      end
-
-      context 'and the user is not changed' do
-        let(:user) { create(:user, roles: :supplier) }
-        let(:user_email) { user.email }
-
-        before do
-          supplier.update(user: user)
-          supplier.user_email = user_email
-        end
-
-        it 'is valid' do
-          expect(supplier.valid?(:supplier_user)).to be true
-        end
-      end
-
-      context 'and it is an unasigned user' do
-        let(:user) { create(:user, roles: :supplier) }
-        let(:user_email) { user.email }
-
-        it 'is valid' do
-          expect(supplier.valid?(:supplier_user)).to be true
-        end
-      end
-    end
   end
 
   describe '.user_information_required?' do
-    let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
-
-    it 'returns true' do
-      expect(supplier.user_information_required?).to be true
+    it 'returns false' do
+      expect(supplier.user_information_required?).to be false
     end
   end
 end

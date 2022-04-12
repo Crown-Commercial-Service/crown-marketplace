@@ -1,47 +1,5 @@
 module Pages::RM3830
   class Admin < SitePrism::Page
-    section :supplier_details, '#main-content' do
-      section :'Current user', 'div:nth-child(5) > div > dl > div' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Supplier name', 'div:nth-child(6) > div > dl > div:nth-child(1)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Contact name', 'div:nth-child(6) > div > dl > div:nth-child(2)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Contact email', 'div:nth-child(6) > div > dl > div:nth-child(3)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Contact telephone number', 'div:nth-child(6) > div > dl > div:nth-child(4)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'DUNS number', 'div:nth-child(7) > div > dl > div:nth-child(1)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Company registration number', 'div:nth-child(7) > div > dl > div:nth-child(2)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-
-      section :'Full address', 'div:nth-child(7) > div > dl > div:nth-child(3)' do
-        element :change_link, 'dd.govuk-summary-list__actions > a'
-        element :detail, 'dd.govuk-summary-list__value'
-      end
-    end
-
     section :supplier_detail_form, 'form' do
       element :'User email', '#facilities_management_rm3830_admin_suppliers_admin_user_email'
       element :'Supplier name', '#facilities_management_rm3830_admin_suppliers_admin_supplier_name'

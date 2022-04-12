@@ -8,7 +8,7 @@ Feature: Services
     Then I am on the 'Requirements' page
     And I click on 'Services'
     Then I am on the 'Services' page
-    And I open all sections
+    And I show all sections
     Then the basket should say 'No services selected'
     And the remove all link should not be visible
     When I select 'Building management system (BMS) maintenance'

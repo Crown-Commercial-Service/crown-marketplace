@@ -94,6 +94,8 @@ Rails.application.routes.draw do
       resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
     end
 
+    resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
+
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
@@ -153,7 +155,7 @@ Rails.application.routes.draw do
           get '/progress', action: :progress
         end
         get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
-        resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
+        resources :supplier_details, path: 'supplier-details', only: :index
         resources :management_reports, only: %i[new create show] do
           get '/status', action: :status
           post '/update_status', action: :update_status
