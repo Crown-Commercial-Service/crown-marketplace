@@ -57,5 +57,8 @@ module Pages::RM6232
         end
       end
     end
+
+    element :active_true, '#facilities_management_rm6232_admin_suppliers_admin_active_true'
+    element :active_false, '#facilities_management_rm6232_admin_suppliers_admin_active_false'
   end
 end

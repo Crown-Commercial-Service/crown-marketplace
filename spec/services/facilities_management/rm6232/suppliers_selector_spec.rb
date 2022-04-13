@@ -19,6 +19,7 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
   let(:supplier_services) { service_codes }
   let(:supplier_regions) { region_codes }
 
+  # rubocop:disable RSpec/NestedGroups
   describe 'lot number and selected suppliers' do
     context 'when all services are hard' do
       let(:selection_one) { { total: true, hard: true, soft: false } }
@@ -34,6 +35,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is a more than 1,500,000 and less than 10,000,000' do
@@ -47,6 +56,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is more than 10,000,000' do
@@ -59,6 +76,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
 
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
+        end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
         end
       end
     end
@@ -77,6 +102,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is a more than 1,000,000 and less than 7,000,000' do
@@ -90,6 +123,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is more than 7,000,000' do
@@ -102,6 +143,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
 
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
+        end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
         end
       end
     end
@@ -121,6 +170,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is a more than 1,500,000 and less than 10,000,000' do
@@ -134,6 +191,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
         end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
       end
 
       context 'and the annual_contract_value is more than 10,000,000' do
@@ -146,6 +211,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
 
         it 'returns a list of suppliers that includes my_supplier' do
           expect(supplier_names).to include my_supplier.supplier_name
+        end
+
+        context 'and my_supplier is not active' do
+          before { my_supplier.update(active: false) }
+
+          it 'returns a list of suppliers that does not include my_supplier' do
+            expect(supplier_names).not_to include my_supplier.supplier_name
+          end
         end
       end
     end
@@ -247,4 +320,5 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
       end
     end
   end
+  # rubocop:enable RSpec/NestedGroups
 end

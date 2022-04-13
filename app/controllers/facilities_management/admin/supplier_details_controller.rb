@@ -49,7 +49,8 @@ module FacilitiesManagement
         supplier_contact_information: %i[contact_name contact_email contact_phone],
         additional_supplier_information: %i[duns registration_number],
         supplier_address: %i[address_line_1 address_line_2 address_town address_county address_postcode],
-        supplier_user: %i[user_email]
+        supplier_user: %i[user_email],
+        supplier_status: %i[active]
       }.freeze
 
       SUPPLIER_ADMIN_MODULES = {
