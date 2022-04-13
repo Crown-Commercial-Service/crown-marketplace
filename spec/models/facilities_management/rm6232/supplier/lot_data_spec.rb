@@ -37,4 +37,27 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
       expect(random_lot_data.region_codes.count).to be >= 1
     end
   end
+
+  describe 'validations' do
+    context 'when validating the region codes' do
+      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, region_codes: region_codes) }
+
+      context 'and there are none' do
+        let(:region_codes) { [] }
+
+        it 'is not valid and has the correct error message' do
+          expect(lot_data.valid?(:region_codes)).to be false
+          expect(lot_data.errors[:region_codes].first).to eq 'You must select at least one region for this lot'
+        end
+      end
+
+      context 'and there are some' do
+        let(:region_codes) { %w[UKC1 UKC2] }
+
+        it 'is valid' do
+          expect(lot_data.valid?(:region_codes)).to be true
+        end
+      end
+    end
+  end
 end

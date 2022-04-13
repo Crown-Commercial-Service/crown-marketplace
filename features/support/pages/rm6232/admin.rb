@@ -22,5 +22,40 @@ module Pages::RM6232
       element :'DUNS number', '#facilities_management_rm6232_admin_suppliers_admin_duns'
       element :'Company registration number', '#facilities_management_rm6232_admin_suppliers_admin_registration_number'
     end
+
+    section :lot_data, '#main-content' do
+      section :lot_a, '#lot-data_table--lot-a' do
+        section :services, 'dl > div:nth-child(1)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+        section :regions, 'dl > div:nth-child(2)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+      end
+
+      section :lot_b, '#lot-data_table--lot-b' do
+        section :services, 'dl > div:nth-child(1)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+        section :regions, 'dl > div:nth-child(2)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+      end
+
+      section :lot_c, '#lot-data_table--lot-c' do
+        section :services, 'dl > div:nth-child(1)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+        section :regions, 'dl > div:nth-child(2)' do
+          elements :names, 'details > div > ul > li'
+          element :change_link, 'dd.govuk-summary-list__actions > a'
+        end
+      end
+    end
   end
 end

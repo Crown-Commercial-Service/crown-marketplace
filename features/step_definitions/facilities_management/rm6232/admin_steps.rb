@@ -27,3 +27,18 @@ Then('they have services and regions for the following lots:') do |lots|
     expect(element).to have_content(value)
   end
 end
+
+Then('I change the {string} for lot {string}') do |lot_data_type, lot_code|
+  admin_rm6232_page.lot_data.send("lot_#{lot_code}").send(lot_data_type).change_link.click
+end
+
+Then('I deselect all checkboxes') do
+  admin_rm6232_page.all('input[type="checkbox"][checked="checked"]').each(&:uncheck)
+end
+
+Then('I should see the following {string} selected for lot {string}:') do |lot_data_type, lot_code, items|
+  expected_names = items.raw.flatten
+  actual_names = admin_rm6232_page.lot_data.send("lot_#{lot_code}").send(lot_data_type).names.map(&:text)
+
+  expect(actual_names).to eq expected_names
+end
