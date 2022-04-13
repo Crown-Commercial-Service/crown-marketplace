@@ -120,6 +120,26 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         expect(assigns(:page)).to eq page
       end
     end
+
+    context 'when on the supplier status page' do
+      let(:page) { :supplier_status }
+
+      it 'renders the edit page' do
+        expect(response).to render_template(:edit)
+      end
+
+      it 'renders the correct partial' do
+        expect(response).to render_template(partial: 'facilities_management/admin/supplier_details/_supplier_status')
+      end
+
+      it 'sets the supplier' do
+        expect(assigns(:supplier).supplier_name).to eq supplier.supplier_name
+      end
+
+      it 'sets the page' do
+        expect(assigns(:page)).to eq page
+      end
+    end
   end
 
   describe 'PUT update' do
@@ -204,6 +224,27 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
 
       context 'and the data is valid' do
         let(:address_postcode) { 'AA1 1AA' }
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
+        end
+      end
+    end
+
+    context 'when updating on the supplier status page' do
+      let(:page) { :supplier_status }
+      let(:supplier_params) { { active: supplier_status } }
+
+      context 'and the data is not valid' do
+        let(:supplier_status) { '' }
+
+        it 'renders the edit page' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'and the data is valid' do
+        let(:supplier_status) { 'true' }
 
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')

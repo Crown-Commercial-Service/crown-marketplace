@@ -5,6 +5,8 @@ en:
       models:
         facilities_management/rm6232/admin/suppliers_admin:
           attributes:
+            active:
+              inclusion: You must select a status for the supplier
             address_county:
               too_long: The county must be 50 characters or less
             address_line_1:

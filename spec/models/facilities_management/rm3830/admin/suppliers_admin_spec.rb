@@ -918,4 +918,12 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SuppliersAdmin, type: :model
       expect(supplier.user_information_required?).to be true
     end
   end
+
+  describe '.suspendable?' do
+    let(:supplier) { create(:facilities_management_rm3830_admin_supplier_detail) }
+
+    it 'returns false' do
+      expect(supplier.suspendable?).to be false
+    end
+  end
 end

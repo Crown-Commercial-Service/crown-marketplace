@@ -1,3 +1,7 @@
+Given('I have an inactive supplier called {string}') do |supplier_name|
+  create(:facilities_management_rm6232_admin_suppliers_admin, supplier_name: supplier_name, active: nil, address_county: 'Essex')
+end
+
 Then('I should see all the suppliers') do
   expect(admin_rm6232_page.suppliers.length).to eq 50
 end
@@ -57,6 +61,15 @@ Then("I can't select any core services") do
   core_service_names = core_services.map(&:label_name)
 
   expect(core_service_labels).to eq core_service_names
+end
+
+Then('I select {string} for the supplier status') do |option|
+  case option
+  when 'ACTIVE'
+    admin_rm6232_page.active_true.choose
+  when 'INACTIVE'
+    admin_rm6232_page.active_false.choose
+  end
 end
 
 def core_services

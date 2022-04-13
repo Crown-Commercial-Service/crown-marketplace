@@ -12,6 +12,11 @@ Feature: Supplier details - accessibility
   Scenario: Supplier detail page
     Then the page should be axe clean
 
+  Scenario: Supplier status page
+    And I change the 'Supplier status' for the supplier details
+    Then I am on the 'Supplier status' page
+    Then the page should be axe clean
+
   Scenario: Supplier name page
     And I change the 'Supplier name' for the supplier details
     Then I am on the 'Supplier name' page
