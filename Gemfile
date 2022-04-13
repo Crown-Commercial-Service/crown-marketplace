@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.11'
+gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -34,8 +34,8 @@ gem 'geocoder', '>= 1.6.1'
 gem 'activerecord-postgis-adapter', '>= 5.2.2'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
-gem 'caxlsx', '>= 3.1.0'
-gem 'caxlsx_rails', '>= 0.6.2'
+gem 'caxlsx', '>= 3.2.0'
+gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.4.0'
 
@@ -90,7 +90,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.5'
+gem 'active_storage_validations', '>= 0.9.7'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 1.4.0'
 # gov notify
@@ -106,7 +106,7 @@ gem 'email_validator', require: 'email_validator/strict'
 
 # for cloud storage of assets
 gem 'asset_sync'
-gem 'fog-aws', '>= 3.11.0'
+gem 'fog-aws', '>= 3.13.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -116,13 +116,13 @@ group :development, :test do
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 5.0.2'
+  gem 'rspec-rails', '>= 5.1.1'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
   gem 'rubocop-rails', '>= 2.9.1', require: false
-  gem 'rubyXL', '>= 3.4.18'
-  gem 'i18n-tasks', '>= 0.9.34'
+  gem 'rubyXL', '>= 3.4.22'
+  gem 'i18n-tasks', '>= 1.0.9'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
@@ -142,10 +142,10 @@ group :test do
   gem 'webmock', '>= 3.12.1'
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
-  gem 'cucumber-rails', '>= 2.4.0', require: false
-  gem 'capybara', '>= 3.35.3'
+  gem 'cucumber-rails', '>= 2.5.1', require: false
+  gem 'capybara', '>= 3.36.0'
   gem 'database_cleaner', '>= 2.0.1'
-  gem 'site_prism', '>= 3.7.1'
+  gem 'site_prism', '>= 3.7.3'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
   gem 'show_me_the_cookies', '>= 5.0.1'
