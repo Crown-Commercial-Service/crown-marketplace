@@ -760,9 +760,83 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
     end
   end
 
+  context 'when considering supplier_status' do
+    before { supplier.active = supplier_status }
+
+    context 'when the status is nil' do
+      let(:supplier_status) { nil }
+
+      it 'is invalid' do
+        expect(supplier.valid?(:supplier_status)).to eq false
+      end
+
+      it 'has the correct error message' do
+        supplier.valid?(:supplier_status)
+
+        expect(supplier.errors[:active].first).to eq 'You must select a status for the supplier'
+      end
+    end
+
+    context 'when the status is not present' do
+      let(:supplier_status) { '' }
+
+      it 'is invalid' do
+        expect(supplier.valid?(:supplier_status)).to eq false
+      end
+
+      it 'has the correct error message' do
+        supplier.valid?(:supplier_status)
+
+        expect(supplier.errors[:active].first).to eq 'You must select a status for the supplier'
+      end
+    end
+
+    context 'when the status is true' do
+      let(:supplier_status) { true }
+
+      it 'is valid' do
+        expect(supplier.valid?(:supplier_status)).to be true
+      end
+    end
+
+    context 'when the status is false' do
+      let(:supplier_status) { false }
+
+      it 'is valid' do
+        expect(supplier.valid?(:supplier_status)).to be true
+      end
+    end
+  end
+
   describe '.user_information_required?' do
     it 'returns false' do
       expect(supplier.user_information_required?).to be false
+    end
+  end
+
+  describe '.suspendable?' do
+    it 'returns true' do
+      expect(supplier.suspendable?).to be true
+    end
+  end
+
+  describe '.current_status' do
+    let(:supplier) { create(:facilities_management_rm6232_admin_suppliers_admin, active: active) }
+
+    context 'when the supplier is active' do
+      let(:active) { true }
+
+      it 'returns blue and ACTIVE' do
+        expect(supplier.current_status).to eq [:blue, 'ACTIVE']
+      end
+    end
+
+    context 'when the supplier is not active' do
+      let(:active) { false }
+
+      it 'returns red and INACTIVE' do
+        expect(supplier.current_status).to eq [:red, 'INACTIVE']
+      end
     end
   end
 end

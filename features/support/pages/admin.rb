@@ -8,6 +8,11 @@ module Pages
         element :detail, 'dd.govuk-summary-list__value'
       end
 
+      section :'Supplier status', '#supplier-details--supplier_status' do
+        element :change_link, 'dd.govuk-summary-list__actions > a'
+        element :detail, 'dd.govuk-summary-list__value'
+      end
+
       section :'Supplier name', '#supplier-details--supplier_name' do
         element :change_link, 'dd.govuk-summary-list__actions > a'
         element :detail, 'dd.govuk-summary-list__value'

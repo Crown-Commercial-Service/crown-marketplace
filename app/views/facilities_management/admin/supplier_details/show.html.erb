@@ -33,6 +33,30 @@
   </div>
 <% end %>
 
+<% if @supplier.suspendable? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">
+        <%= t('.supplier_status')%>
+      </h2>
+      <hr class="govuk-section-break govuk-section-break--visible">
+      <dl class="govuk-summary-list">
+        <div id="supplier-details--supplier_status" class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t('.current_status') %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= govuk_tag_with_text(*@supplier.current_status) %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_status), class: 'govuk-link--no-visited-state') %>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l">

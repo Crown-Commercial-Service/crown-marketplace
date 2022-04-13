@@ -21,11 +21,17 @@ Feature: Supplier details
     And I change the '<supplier_detail>' for the supplier details
     Then I am on the '<current_page>' page
     Given I click on '<text>'
-    Then I am on the '<page>' page
+    Then I am on the 'Supplier details' page
 
     Examples:
-      | supplier_detail | current_page                    | text                                      | page              |
-      | Supplier name   | Supplier name                   | Cancel and return to the supplier details | Supplier details  |
-      | Contact name    | Supplier contact information    | Cancel and return to the supplier details | Supplier details  |
-      | DUNS number     | Additional supplier information | Cancel and return to the supplier details | Supplier details  |
-      | Full address    | Supplier address                | Cancel and return to the supplier details | Supplier details  |
+      | supplier_detail | current_page                    | text                                      |
+      | Supplier status | Supplier status                 | Zboncak and Sons                          |
+      | Supplier status | Supplier status                 | Cancel and return to the supplier details |
+      | Supplier name   | Supplier name                   | Zboncak and Sons                          |
+      | Supplier name   | Supplier name                   | Cancel and return to the supplier details |
+      | Contact name    | Supplier contact information    | Zboncak and Sons                          |
+      | Contact name    | Supplier contact information    | Cancel and return to the supplier details |
+      | DUNS number     | Additional supplier information | Zboncak and Sons                          |
+      | DUNS number     | Additional supplier information | Cancel and return to the supplier details |
+      | Full address    | Supplier address                | Zboncak and Sons                          |
+      | Full address    | Supplier address                | Cancel and return to the supplier details |
