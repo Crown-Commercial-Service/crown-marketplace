@@ -14,3 +14,9 @@ Feature: View lot data - accessibility
     Then I am on the 'Lot c regions' page
     And the supplier name shown is 'Heidenreich Inc'
     Then the page should be axe clean
+
+  Scenario: Services page
+    And I change the 'services' for lot 'c'
+    Then I am on the 'Lot c services' page
+    And the supplier name shown is 'Heidenreich Inc'
+    Then the page should be axe clean

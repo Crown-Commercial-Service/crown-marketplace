@@ -50,10 +50,14 @@ module FacilitiesManagement
         def set_data
           case @lot_data_type
           when 'service_codes'
-            # TODO: Add method for services
+            set_work_packages
           when 'region_codes'
             set_regions
           end
+        end
+
+        def set_work_packages
+          @work_packages = WorkPackage.selectable.index_with(&:services)
         end
 
         def set_regions
@@ -63,6 +67,7 @@ module FacilitiesManagement
         def lot_data_params
           if params[:facilities_management_rm6232_supplier_lot_data]
             params.require(:facilities_management_rm6232_supplier_lot_data).permit(
+              service_codes: [],
               region_codes: [],
             )
           else
@@ -70,7 +75,7 @@ module FacilitiesManagement
           end
         end
 
-        RECOGNISED_LOT_DATA_TYPES = %w[region_codes].freeze
+        RECOGNISED_LOT_DATA_TYPES = %w[service_codes region_codes].freeze
       end
     end
   end

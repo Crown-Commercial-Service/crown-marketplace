@@ -32,7 +32,7 @@ Feature: Selecting region codes
       | South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire) |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following 'regions' selected for lot 'a':
+    And I should see the following regions selected for lot 'a':
       | South Yorkshire                                               |
       | Surrey, East and West Sussex                                  |
       | South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire) |    
@@ -49,7 +49,7 @@ Feature: Selecting region codes
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following 'regions' selected for lot 'b':
+    And I should see the following regions selected for lot 'b':
       | Essex                                             |
       | Gloucestershire, Wiltshire and Bristol/Bath area  | 
 
@@ -69,7 +69,7 @@ Feature: Selecting region codes
       | Belfast                 |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following 'regions' selected for lot 'c':
+    And I should see the following regions selected for lot 'c':
       | Tees Valley and Durham  |
       | North Yorkshire         |
       | Inner London - East     |
@@ -88,7 +88,7 @@ Feature: Selecting region codes
     Then I am on the '<page_title>' page
 
     Examples:
-      | link_text     | page_title                    |
+      | link_text     | page_title                      |
       | Home          | RM6232 administration dashboard |
       | Supplier data | Supplier data                   |
       | View lot data | View lot data                   |

@@ -71,9 +71,11 @@ en:
           edit:
             heading:
               region_codes: Lot %{lot_code} regions
+              service_codes: Lot %{lot_code} services
             save_and_return: Save and return
             the_check_boxes:
               region_codes: The check boxes in the first column indicate what regions the supplier can provide their services in.
+              service_codes: The check boxes in the first column indicate what services the supplier can provide. This is in addition to the core services which are greyed out.
           show:
             change: Change
             heading: View lot data
