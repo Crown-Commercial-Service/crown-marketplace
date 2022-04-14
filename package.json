@@ -2,16 +2,16 @@
   "name": "marketplace",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.16.5",
+    "@babel/core": "^7.17.8",
     "@babel/plugin-external-helpers": "^7.16.5",
     "@babel/plugin-transform-modules-umd": "^7.16.5",
     "@hmcts/frontend": "0.0.29-alpha",
-    "govuk-frontend": "^3.14.0",
+    "govuk-frontend": "^4.0.1",
     "html5shiv": "^3.7.3",
-    "js-cookie": "^2.2.1"
+    "js-cookie": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.5.4",
-    "juice": "^5.0.1"
+    "@babel/preset-env": "^7.16.11",
+    "juice": "^8.0.0"
   }
 }

@@ -107,7 +107,7 @@ module FacilitiesManagement::BuildingsHelper
     tag.span(class: 'govuk-caption-m govuk-!-margin-top-1') do
       concat(building_type[:caption])
       if building_type[:standard_building_type]
-        concat(tag(:hr, class: 'govuk-section-break govuk-!-margin-top-1'))
+        concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-1'))
         concat(govuk_tag_with_text(:grey, t('common.da_eligible')))
       end
     end

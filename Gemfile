@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.4'
+ruby '2.7.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.4', '>= 6.0.4.2'
+gem 'rails', '~> 6.0.4', '>= 6.0.4.7'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 5.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.1', '>= 5.1.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.9', '>= 2.9.1'
+gem 'jbuilder', '~> 2.11'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -36,71 +36,46 @@ gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.1.0'
 gem 'caxlsx_rails', '>= 0.6.2'
-gem 'phonejack'
-gem 'holidays'
 gem 'virtus'
 gem 'jquery-rails', '~> 4.4.0'
 
-gem 'rollbar', '~> 2.24.0'
+gem 'rollbar', '~> 3.3.0'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.0.0'
-gem 'omniauth-oauth2', '~> 1.7.1'
-
-gem 'json-jwt', '>= 1.11.0'
+gem 'omniauth-oauth2', '~> 1.7.2'
 
 # for authentication
-gem 'devise', '~> 4.7.3'
+gem 'devise', '~> 4.8.1'
 
 # for timing out when session expires
-gem 'auto-session-timeout', '~> 0.9.7'
+gem 'auto-session-timeout', '~> 0.9.9'
 
 # for cognito
-gem 'aws-sdk-cognitoidentityprovider', '~> 1.23.0'
+gem 'aws-sdk-cognitoidentityprovider', '~> 1.65.0'
 
 # for pagination
-gem 'kaminari', '~> 1.2.1'
-
-# for pretty urls
-gem 'friendly_id', '~> 5.2.5'
+gem 'kaminari', '~> 1.2.2'
 
 # aws s3 bucket access for postcode data
 gem 'aws-sdk-s3', '~> 1'
 
-# for file uploads
-gem 'carrierwave', '~> 1.3'
-
 # handles spreadsheets
-gem 'roo', '~> 2.8.3'
-
-# manipulating JSON for anonymisation
-gem 'jsonpath', '~> 0.5.8'
-
-# robust file download from URL using open-uri
-gem 'down', '>= 5.2.0'
+gem 'roo', '~> 2.9.0'
 
 # state machine
-gem 'aasm', '~> 5.0'
-gem 'after_commit_everywhere', '~> 1.0'
+gem 'aasm', '~> 5.2'
+gem 'after_commit_everywhere', '~> 1.2'
 
 # for running background jobs
-gem 'sidekiq', '~> 6.2.1'
-gem 'sinatra', '~> 2.0.8', '>= 2.0.8.1', require: false
-gem 'slim', '~> 4.0.1'
-
-# for rspec and ST data generation script
-gem 'capybara', '>= 3.35.3'
-gem 'show_me_the_cookies', '>= 5.0.1'
-
-gem 'faker', '~> 2.10.2'
+gem 'sidekiq', '~> 6.4.1'
+gem 'sinatra', '~> 2.2.0', require: false
+gem 'slim', '~> 4.1.0'
 
 # for authorization
-gem 'cancan', '~> 1.6.10'
+gem 'cancancan', '~> 3.2.0'
 
 gem 'role_model', '~> 0.8.2'
-
-# for S3 storage of files
-gem 'carrierwave-aws', '~> 1.3.0'
 
 gem 'sprockets', '>= 3.7.2'
 gem 'sprockets-bumble_d', '>= 2.2.0'
@@ -117,7 +92,7 @@ gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 0.9.5'
 # gem for  bulk inserts
-gem 'activerecord-import', '~> 0.15.0'
+gem 'activerecord-import', '~> 1.4.0'
 # gov notify
 gem 'notifications-ruby-client'
 # DOCX generation
@@ -152,11 +127,12 @@ group :development, :test do
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
   gem 'bullet', require: true
+  gem 'faker', '~> 2.20.0'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '>= 3.0.5', '< 3.8'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
@@ -167,8 +143,10 @@ group :test do
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.4.0', require: false
+  gem 'capybara', '>= 3.35.3'
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.1'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
+  gem 'show_me_the_cookies', '>= 5.0.1'
 end

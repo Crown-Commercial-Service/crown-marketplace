@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  class UnrecognisedLiveFrameworkError < StandardError; end
   class UnrecognisedFrameworkError < StandardError; end
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -16,9 +17,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from UnrecognisedLiveFrameworkError do
+    @unrecognised_framework = params[:framework]
+    params[:framework] = FacilitiesManagement::Framework.default_framework
+
+    render 'home/unrecognised_framework', status: :bad_request
+  end
+
   rescue_from UnrecognisedFrameworkError do
     @unrecognised_framework = params[:framework]
-    params[:framework] = FacilitiesManagement::DEFAULT_FRAMEWORK
+    params[:framework] = FacilitiesManagement::Framework.default_framework
 
     render 'home/unrecognised_framework', status: :bad_request
   end
@@ -48,10 +56,13 @@ class ApplicationController < ActionController::Base
   def facilities_management_url_for_user_type
     return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
 
-    if params[:framework] == 'RM3830'
+    case params[:framework]
+    when 'RM3830'
       facilities_management_rm3830_new_user_session_path
+    when 'RM6232'
+      facilities_management_rm6232_new_user_session_path
     else
-      "/facilities-management/#{FacilitiesManagement::DEFAULT_FRAMEWORK}/sign-in"
+      "/facilities-management/#{FacilitiesManagement::Framework.default_framework}/sign-in"
     end
   end
 
@@ -87,7 +98,11 @@ class ApplicationController < ActionController::Base
 
   VALID_SERVICE_NAMES = %w[facilities_management facilities_management/supplier facilities_management/admin facilities_management/procurements crown_marketplace].freeze
 
+  def raise_if_unrecognised_live_framework
+    raise UnrecognisedLiveFrameworkError, 'Unrecognised Live Framework' unless FacilitiesManagement::Framework.recognised_live_framework? params[:framework]
+  end
+
   def raise_if_unrecognised_framework
-    raise UnrecognisedFrameworkError, 'Unrecognised Framework' unless FacilitiesManagement::RECOGNISED_FRAMEWORKS.include? params[:framework]
+    raise UnrecognisedFrameworkError, 'Unrecognised Framework' unless FacilitiesManagement::Framework.recognised_framework? params[:framework]
   end
 end

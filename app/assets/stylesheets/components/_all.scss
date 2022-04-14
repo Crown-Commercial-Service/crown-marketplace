@@ -3,22 +3,15 @@
 
 /* Override with my own components */
 @import "button/button";
-@import "calculator-form/calculator-form";
 @import "header/header";
 @import "footer/footer";
-@import "fm-supplier-record/fm-supplier-record";
 @import "details/details";
+@import "documents/documents";
 @import "inset-text/inset-text";
 @import "label/label";
 @import "logo/logo";
-@import "master-vendor-record/master-vendor-record";
-@import "neutral-vendor-record/neutral-vendor-record";
-@import "panel/panel";
-@import "sidebar/sidebar";
-@import "st-supplier-page/st-supplier-page";
 @import "supplier-record/supplier-record";
 @import "typography/typography";
 /* CCS override and bespoke styles; re-used globally across all modules */
-@import "ccs-character-count/ccs-character-count";
 @import "ccs-global/ccs-global";
 @import "step-by-step-nav/all";

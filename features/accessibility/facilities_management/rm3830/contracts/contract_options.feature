@@ -1,4 +1,4 @@
-@accessibility @javascript
+@accessibility @javascript @contract_emails
 Feature: Contract options accessibility
 
   Background: I navigate to my sent contract

@@ -47,7 +47,7 @@ module FacilitiesManagement
               end
 
               @review_your_contract_static_files.each do |file|
-                zip.put_next_entry file
+                zip.put_next_entry file.split('/').last
                 zip.print IO.read(Rails.root + files_path + file)
               end
 

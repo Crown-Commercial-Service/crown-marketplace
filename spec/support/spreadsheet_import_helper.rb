@@ -12,7 +12,7 @@ module SpreadsheetImportHelper
     OUTPUT_PATH = './tmp/test.xlsx'.freeze
 
     def write
-      File.write(OUTPUT_PATH, @package.to_stream.read)
+      File.write(OUTPUT_PATH, @package.to_stream.read, binmode: true)
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity

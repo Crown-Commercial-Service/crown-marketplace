@@ -1,4 +1,4 @@
-@accessibility @javascript
+@accessibility @javascript @contract_emails
 Feature: Supplier contracts accessibility
 
   Scenario Outline: Contract summary

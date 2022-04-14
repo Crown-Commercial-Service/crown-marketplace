@@ -37,7 +37,7 @@ Given('I logout and sign in the supplier {string}') do |email|
   visit facilities_management_rm3830_supplier_new_user_session_path
   update_banner_cookie(true) if @javascript
   fill_in 'email', with: @supplier_user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('Direct award dashboard')
 end
@@ -46,7 +46,7 @@ Given('I logout and sign in the supplier again') do
   step "I click on 'Sign out'"
   visit facilities_management_rm3830_supplier_new_user_session_path
   fill_in 'email', with: @supplier_user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('Direct award dashboard')
 end
@@ -93,7 +93,7 @@ Then('sign in supplier') do
   visit facilities_management_rm3830_supplier_new_user_session_path
   update_banner_cookie(true) if @javascript
   fill_in 'email', with: @supplier_user.email
-  fill_in 'password', with: nil
+  fill_in 'password', with: 'ValidPassword'
   click_on 'Sign in'
   expect(page.find('h1')).to have_content('Direct award dashboard')
 end

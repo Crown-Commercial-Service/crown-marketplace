@@ -1,9 +1,0 @@
-.cmp-sidebar {
-	background-color: ccs-colour("grey-4");
-	padding: 25px;
-}
-@media print {
-	.cmp-sidebar a[href]:after { 
-		content: none !important; 
-	}
-}

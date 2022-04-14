@@ -11,24 +11,20 @@
   <%= t('.further_info_html') %>
 </p>
 <input type="hidden" name="step" value="gia"/>
-<%= govuk_start_individual_field(f, :gia, {}, false, true, { 'data-module': 'ccs-character-count', 'data-maxlength': '9', 'data-numbertype': 'integer' }) do %>
-  <span class="ccs-character-count-container">
-    <%= f.label :gia, 'gia', class: "govuk-heading-s govuk-!-margin-bottom-0 govuk-visually-hidden"%>
-    <div class="govuk-input__wrapper">
-      <%= govuk_text_input(f, :gia, :large, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 9, size: 12, class: 'govuk-input govuk-input--width-5 ccs-character-count', style: 'min-width: 10ex', 'aria-live': 'polite', 'aria-describedby': "facilities_management_building_gia") %>
-      <div class="govuk-input__suffix" aria-hidden="true">sqm</div>
-    </div>
-  </span>
+<%= govuk_start_individual_field(f, :gia, {}, false, true, data: { maxlength: '9', numbertype: 'integer' }) do %>
+  <%= f.label :gia, 'gia', class: "govuk-heading-s govuk-!-margin-bottom-0 govuk-visually-hidden"%>
+  <div class="govuk-input__wrapper">
+    <%= govuk_text_input(f, :gia, :large, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 9, size: 12, class: 'govuk-input govuk-input--width-5 ccs-character-count', style: 'min-width: 10ex', 'aria-live': 'polite', 'aria-describedby': "facilities_management_building_gia") %>
+    <div class="govuk-input__suffix" aria-hidden="true">sqm</div>
+  </div>
 <% end %>
 
 <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t('.external_area_header') %></h2>
 <p class="govuk-caption-m"><%= t('.external_area_description_html') %></p>
-<%= govuk_start_individual_field(f, :external_area, {}, false, true, { 'data-module': 'ccs-character-count', 'data-maxlength': '9', 'data-numbertype': 'integer' }) do %>
-  <span class="ccs-character-count-container">
-    <%= f.label :external_area, 'external_area', class: "govuk-heading-s govuk-!-margin-bottom-0 govuk-visually-hidden"%>
-    <div class="govuk-input__wrapper">
-      <%= govuk_text_input(f, :external_area, :large, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 9, size: 12, class: 'govuk-input govuk-input--width-5 ccs-character-count', style: 'min-width: 10ex', 'aria-live': 'polite', 'aria-describedby': "facilities_management_building_gia") %>
-      <div class="govuk-input__suffix" aria-hidden="true">sqm</div>
-    </div>
-  </span>
+<%= govuk_start_individual_field(f, :external_area, {}, false, true, data: { maxlength: '9', numbertype: 'integer' }) do %>
+  <%= f.label :external_area, 'external_area', class: "govuk-heading-s govuk-!-margin-bottom-0 govuk-visually-hidden"%>
+  <div class="govuk-input__wrapper">
+    <%= govuk_text_input(f, :external_area, :large, type: 'number', pattern: '[0-9]', required: 'true', maxlength: 9, size: 12, class: 'govuk-input govuk-input--width-5 ccs-character-count', style: 'min-width: 10ex', 'aria-live': 'polite', 'aria-describedby': "facilities_management_building_gia") %>
+    <div class="govuk-input__suffix" aria-hidden="true">sqm</div>
+  </div>
 <% end %>

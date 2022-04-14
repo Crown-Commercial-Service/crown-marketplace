@@ -102,7 +102,7 @@ module LayoutHelper
     options['aria-describedby'] = error_id(attribute) if attribute_errors
     options.merge!(property_name: attribute).symbolize_keys!
 
-    tag.div(options) do
+    tag.div(**options) do
       capture do
         concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
         concat(display_error(builder.object, attribute)) if show_errors && !hide_error_text
@@ -155,9 +155,9 @@ module LayoutHelper
     end
   end
 
-  # rubocop:disable Metrics/ParameterLists, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   def fieldset_structure(form, caption, options, header_text, *attributes, &block)
-    tag.fieldset(options) do
+    tag.fieldset(**options) do
       capture do
         concat(tag.legend(caption, class: 'govuk-fieldset__legend govuk-fieldset__legend--m')) unless caption.nil?
         concat(tag.p(header_text, class: 'govuk-caption-m')) if header_text.present?
@@ -169,7 +169,7 @@ module LayoutHelper
       end
     end
   end
-  # rubocop:enable Metrics/ParameterLists, Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize
 
   INPUT_WIDTH = { tiny: 'govuk-input--width-2',
                   small: 'govuk-input--width-4',
@@ -248,6 +248,27 @@ module LayoutHelper
     capture do
       concat(tag.h2(heading, class: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-margin-bottom-2'))
       concat(tag.div(class: 'govuk-body govuk-!-padding-left-5', &block))
+    end
+  end
+
+  def ccs_account_panel_row(**options, &block)
+    class_list = ['govuk-grid-row govuk-!-margin-bottom-6 fm-buyer-account-panel__container']
+    class_list << options.delete(:class)
+
+    tag.div(class: class_list, **options, &block)
+  end
+
+  def ccs_account_panel(title, title_url, **options, &block)
+    class_list = ['govuk-grid-column-one-third fm-buyer-account-panel']
+    class_list << options.delete(:class)
+
+    tag.div(class: class_list, **options) do
+      capture do
+        concat(tag.p do
+          link_to(title, title_url, class: 'ccs-font-weight-semi-bold fm-buyer-account-panel__title_no_link govuk-!-margin-bottom-2 govuk-link--no-visited-state')
+        end)
+        concat(tag.p(class: 'govuk-!-top-padding-4', &block))
+      end
     end
   end
 end

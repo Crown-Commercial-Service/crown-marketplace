@@ -9,7 +9,7 @@
     </h1>
 
     <p class="govuk-body-l">
-      <%= t('.lead_start') %> <span class="ccs-email-example"><%= cookies[:confirmation_email] %></span> <%= t('.lead_end') %>
+      <%= t('.lead_start') %> <span class="ccs-email-example"><%= cookies[:crown_marketplace_confirmation_email] %></span> <%= t('.lead_end') %>
     </p>
 
     <%= form_tag confirm_path, class: 'ccs-form', id: 'cop_confirmation_code', specialvalidation: true, novalidate: true, method: :post do %>
@@ -23,8 +23,8 @@
         <%= text_field_tag :confirmation_code, nil, class: "govuk-input govuk-!-width-one-third", id: 'confirmation', type: 'number' %>
       </div>
 
-      <% if cookies[:confirmation_email] %>
-        <%= hidden_field_tag :email, cookies[:confirmation_email] %>
+      <% if cookies[:crown_marketplace_confirmation_email] %>
+        <%= hidden_field_tag :email, cookies[:crown_marketplace_confirmation_email] %>
       <% else %>
         <div class="govuk-form-group <%= 'govuk-form-group--error' if @result.errors[:email].any? %>">
           <label class="govuk-label" for="email">
@@ -40,10 +40,14 @@
 
     <% end %>
 
-    <% if cookies[:confirmation_email] %>
-      <p class="govuk-body govuk-!-margin-bottom-7">
-        <%= t('.resend_the_confirmation_email_html', link: resend_path) %>
-      </p>
+    <% if cookies[:crown_marketplace_confirmation_email] %>
+      <%= form_tag resend_path, class: 'ccs-form', id: 'cop_resend_confirmation_code', specialvalidation: true, novalidate: true, method: :post do %>
+        <%= hidden_field_tag :email, cookies[:crown_marketplace_confirmation_email] %>
+
+        <p class="govuk-body govuk-!-margin-bottom-7">
+          <%= submit_tag t('.resend_the_confirmation_email'), id: "resend-the-confirmation-email", class: "govuk-link button_as_link", aria: { label: t('.resend_the_confirmation_email') } %>
+        </p>
+      <% end %>
     <% end %>
   </div>
 </div>
