@@ -71,7 +71,7 @@ Layout/TrailingEmptyLines:
 Layout/LineLength:
     Max: 120
     Enabled: false
-    IgnoredPatterns:
+    AllowedPatterns:
         - 'it .* do$'
         - 'context .* do$'
         - 'scenario .* do$'
