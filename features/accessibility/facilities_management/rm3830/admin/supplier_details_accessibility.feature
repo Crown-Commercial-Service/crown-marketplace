@@ -2,7 +2,7 @@
 Feature: Supplier details - accessibility
 
   Background: Navigate to the supplier
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     Then I click on 'Supplier details'
     Then I am on the 'Supplier details' page
 

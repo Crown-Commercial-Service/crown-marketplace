@@ -95,4 +95,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Prevents against DNS rebinding and other Host header attacks.
+  config.hosts << ENV['ENVIRONMENT_HOST']
 end

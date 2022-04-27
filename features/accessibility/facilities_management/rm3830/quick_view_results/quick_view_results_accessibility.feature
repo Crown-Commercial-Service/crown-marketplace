@@ -5,7 +5,7 @@ Feature: Quick view results accessibility
     Given I sign in and navigate to my account for 'RM3830'
     And I click on 'Quick view suppliers'
     Then I am on the 'Services' page
-    And I open all sections
+    And I show all sections
 
   Scenario: Select services page
     Then the page should be axe clean
@@ -20,7 +20,7 @@ Feature: Quick view results accessibility
       | Patrols (fixed or static guarding)            |
     And I click on 'Continue'
     Then I am on the 'Regions' page
-    And I open all sections
+    And I show all sections
     Then the page should be axe clean
 
   Scenario: Quick view restuls page
@@ -33,7 +33,7 @@ Feature: Quick view results accessibility
       | Patrols (fixed or static guarding)            |
     And I click on 'Continue'
     Then I am on the 'Regions' page
-    And I open all sections
+    And I show all sections
     When I select the following items:
       | Essex                                                                         |
       | Lancashire                                                                    |
@@ -56,7 +56,7 @@ Feature: Quick view results accessibility
       | Patrols (fixed or static guarding)            |
     And I click on 'Continue'
     Then I am on the 'Regions' page
-    And I open all sections
+    And I show all sections
     When I select the following items:
       | Essex                                                                         |
       | Lancashire                                                                    |

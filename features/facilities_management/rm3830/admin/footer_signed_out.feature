@@ -1,7 +1,7 @@
 Feature: Admin footer links - signed out
 
   Background: Admin on sign in page
-    Given I go to the facilities management admin start page
+    Given I go to the facilities management 'RM3830' admin start page
 
   Scenario: Cookies policy
     When I click on 'Cookie policy'

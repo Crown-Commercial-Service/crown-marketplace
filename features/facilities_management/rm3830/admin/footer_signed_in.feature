@@ -1,7 +1,7 @@
 Feature: Admin footer links - signed in
 
   Background: Admin signs in
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
   Scenario: Cookies policy
     When I click on 'Cookie policy'

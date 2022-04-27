@@ -25,7 +25,7 @@
         <% @suppliers.each do |supplier| %>
           <tr class="govuk-table__row">
             <th class="govuk-table__header govuk-!-padding-right-2" scope="row">
-              <%= link_to supplier.supplier_name, facilities_management_rm3830_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link--no-visited-state' %>
+              <%= link_to supplier.supplier_name, facilities_management_admin_supplier_detail_path(id: supplier.supplier_id), class: 'govuk-link--no-visited-state' %>
             </th>
             <td class="govuk-table__cell govuk-!-padding-right-2"><%= contact_detail(:contact_email, supplier) %></td>
           </tr>

@@ -46,6 +46,9 @@ Rails.application.routes.draw do
       end
       namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
         concerns %i[authenticatable registrable]
+        namespace :admin, defaults: { service: 'facilities_management/admin' } do
+          concerns :authenticatable
+        end
       end
     end
 
@@ -90,6 +93,8 @@ Rails.application.routes.draw do
       concerns %i[shared_pages framework]
       resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
     end
+
+    resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
       get '/start', to: 'home#index'
@@ -150,7 +155,7 @@ Rails.application.routes.draw do
           get '/progress', action: :progress
         end
         get '/uploads/spreadsheet_template', controller: 'facilities_management/admin/uploads'
-        resources :supplier_details, path: 'supplier-details', only: %i[index show edit update]
+        resources :supplier_details, path: 'supplier-details', only: :index
         resources :management_reports, only: %i[new create show] do
           get '/status', action: :status
           post '/update_status', action: :update_status
@@ -161,9 +166,19 @@ Rails.application.routes.draw do
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
+
+      namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        get '/', to: 'home#index'
+        resources :supplier_data, path: 'supplier-data', only: :index
+        resources :supplier_lot_data, path: 'supplier-lot-data', only: :show do
+          get '/:lot_data_type/edit', action: :edit, as: :edit
+          put '/:lot_data_type', action: :update, as: :update
+        end
+      end
     end
 
     get '/:framework', to: 'home#index', as: 'index'
+    get '/:framework/admin', to: 'admin/home#index', defaults: { service: 'facilities_management/admin' }, as: 'admin_index'
     get '/:framework/start', to: 'journey#start', as: 'journey_start'
     get '/:framework/:slug', to: 'journey#question', as: 'journey_question'
     get '/:framework/:slug/answer', to: 'journey#answer', as: 'journey_answer'

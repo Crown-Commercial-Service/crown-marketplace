@@ -81,8 +81,8 @@ RSpec.describe FacilitiesManagement::HomeController, type: :controller do
 
     context 'when RM6232 is live' do
       # This is because in practice, the rails router will have already used the correct framework controller,
-      # therfore, this test is just to make sure that the UnrecognisedLiveFrameworkError is not invoked
-      it 'renders the unrecognised framework page with the right http status' do
+      # therefore, this test is just to make sure that the UnrecognisedLiveFrameworkError is not invoked
+      it 'raises the MissingExactTemplate error' do
         expect do
           get :index, params: { framework: 'RM6232' }
         end.to raise_error(ActionController::MissingExactTemplate)

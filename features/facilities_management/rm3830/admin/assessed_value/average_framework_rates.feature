@@ -1,7 +1,7 @@
 Feature: Average framework rates
 
   Background: Navigate to the average framework rates page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Average framework rates'
     Then I am on the 'Average framework rates' page
 

@@ -2,7 +2,7 @@
 Feature: Call-off benchmark rates  - validations
 
   Background: Navigate to the call-off benchmark rates page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Call-off benchmark rates'
     Then I am on the 'Call-off benchmark rates' page
 

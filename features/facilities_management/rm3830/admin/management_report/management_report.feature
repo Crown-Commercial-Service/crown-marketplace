@@ -2,19 +2,18 @@
 Feature: Management report  - validations
 
   Background: Navigate to the management report page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Management report'
-    Then I am on the 'Management report' page
+    Then I am on the 'Generate management report' page
 
   Scenario Outline: Return links work
     Given I click on '<text>'
     Then I am on the '<page>' page
 
     Examples:
-      | text                      | page                            |
-      | Home                      | RM3830 administration dashboard |
-      | Management report         | Management report               |
-      | Return to admin dashboard | RM3830 administration dashboard |
+      | text                        | page                            |
+      | Home                        | RM3830 administration dashboard |
+      | Return to admin dashboard   | RM3830 administration dashboard |
 
   Scenario: Able to download the management report
     Given I enter 'yesterday' as the 'From' date
@@ -33,5 +32,5 @@ Feature: Management report  - validations
 
     Examples:
       | text                      | page                            |
-      | Generate another report   | Management report               |
+      | Generate another report   | Generate management report      |
       | Return to admin dashboard | RM3830 administration dashboard |

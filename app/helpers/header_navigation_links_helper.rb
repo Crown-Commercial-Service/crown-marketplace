@@ -22,13 +22,13 @@ module HeaderNavigationLinksHelper
     framework ||= FacilitiesManagement::Framework.default_framework
 
     build_navigation_links do |navigation_links|
-      navigation_links << { link_text: admin_back_to_start_text, link_url: "/facilities-management/#{framework}/admin" } unless sign_in_or_dashboard?('home')
+      navigation_links << { link_text: admin_back_to_start_text, link_url: facilities_management_admin_index_path(framework: framework) } unless sign_in_or_dashboard?('home')
       navigation_links << sign_out_link("/facilities-management/#{framework}/admin/sign-out")
     end
   end
 
   def facilites_management_supplier_navigation_links(framework)
-    framework ||= FacilitiesManagement::Framework.default_framework
+    framework ||= 'RM3830'
 
     build_navigation_links do |navigation_links|
       navigation_links << { link_text: supplier_back_to_start_text, link_url: "/facilities-management/#{framework}/supplier" } unless sign_in_or_dashboard?('dashboard')
@@ -66,7 +66,7 @@ module HeaderNavigationLinksHelper
 
   def navigation_link_supplier_and_buyer(framework)
     if current_user&.has_role?(:supplier)
-      { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: "/facilities-management/#{framework}/supplier/dashboard" }
+      { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: '/facilities-management/RM3830/supplier/dashboard' }
     elsif current_user&.has_role?(:buyer)
       { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_index_path(framework) }
     end
