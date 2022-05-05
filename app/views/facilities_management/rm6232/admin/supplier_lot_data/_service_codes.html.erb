@@ -1,0 +1,54 @@
+<% @work_packages.each do |work_package, services| %>
+  <fieldset class="govuk-fieldset">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header govuk-!-width-two-thirds">
+          <legend class="govuk-padding-left-0">
+            <%= work_package.name %>
+          </legend>
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Total
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Hard
+        </th>
+        <th scope="col" class="govuk-table__header">
+          Soft
+        </th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%= f.collection_check_boxes(:service_codes, services, :code, :label_name, include_hidden: false) do |check_box_field| %>
+          <tr class="govuk-table__row">
+            <% if check_box_field.object.core %>
+              <%= f.hidden_field :service_codes, multiple: true, value: check_box_field.object.code, id: "facilities_management_rm6232_supplier_lot_data_service_codes_hidden-#{check_box_field.object.code}" %>
+            <% end %>
+            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+              <div class="govuk-checkboxes__item">
+                <%= check_box_field.check_box(class: 'govuk-checkboxes__input', disabled: check_box_field.object.core) %>
+                <%= check_box_field.label(class: 'govuk-label govuk-checkboxes__label') %>
+              </div>
+            </th>
+            <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
+              <% if check_box_field.object.total %>
+                <span class="supplier-lot-data__true"></span>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
+              <% if check_box_field.object.hard %>
+                <span class="supplier-lot-data__true"></span>
+              <% end %>
+            </td>
+            <td class="govuk-table__cell supplier-rates-td supplier-lot-data">
+             <% if check_box_field.object.soft %>
+                <span class="supplier-lot-data__true"></span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </fieldset>
+<% end %>

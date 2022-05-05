@@ -332,14 +332,6 @@ en:
     unacceptable:
       changes_rejected: Sorry, the change you wanted was rejected
       explanation: Maybe you tried to change something you didn’t have access to.
-  faker:
-    company:
-      name:
-      - "#{Name.last_name} #{suffix}"
-      suffix:
-      - Ltd
-      - plc
-      - LLP
   home:
     accessibility_statement:
       CCS_is_committed: Crown Commercial Service is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.

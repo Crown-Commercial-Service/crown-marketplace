@@ -2,10 +2,10 @@
 Feature: Prices and variance - validations
 
   Background: Navigate to the services and prices page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
     And select 'Services' for sublot '1a' for 'Halvorson, Corwin and O\'Connell'
     Then I am on the 'Sub-lot 1a services, prices, and variances' page
 

@@ -1,0 +1,27 @@
+<% @regions.each do |nuts_1_region, regions| %>
+  <fieldset class="govuk-fieldset">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header govuk-!-font-weight-bold">
+          <legend class="govuk-padding-left-0">
+            <%= nuts_1_region %>
+          </legend>
+        </th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <%= f.collection_check_boxes(:region_codes, regions, :code, :name, include_hidden: false) do |check_box_field| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header govuk-!-width-one-quarter govuk-!-font-weight-regular supplier-rates-td">
+              <div class="govuk-checkboxes__item">
+                <%= check_box_field.check_box(class: 'govuk-checkboxes__input') %>
+                <%= check_box_field.label(class: 'govuk-label govuk-checkboxes__label') %>
+              </div>
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </fieldset>
+<% end %>

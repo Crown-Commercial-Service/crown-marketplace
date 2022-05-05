@@ -1,7 +1,7 @@
 Feature: Prices and variance
 
   Scenario: Changing the supplier values changes the results
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     Given I have a procurement in detailed search named 'AV Procurement' with the following services and multiple buildings:
       | C.1 |
       | G.1 |
@@ -29,7 +29,7 @@ Feature: Prices and variance
     And I go to the admin dashboard
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
-    Given I open all sections
+    Given I show all sections
     And select 'Services' for sublot '1a' for 'Kunze, Langworth and Parisian'
     Then I am on the 'Sub-lot 1a services, prices, and variances' page
     And I enter '2.4867' into the price for 'C.1 Mechanical and electrical engineering maintenance' under 'Warehouses'

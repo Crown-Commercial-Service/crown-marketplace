@@ -1,17 +1,6 @@
 <%= content_for :page_title, t('.heading_title') %>
 <%= form_for @management_report, url: facilities_management_rm3830_admin_management_reports_path, method: :post, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
-<div class="govuk-breadcrumbs">
-  <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="<%= facilities_management_rm3830_admin_path %>">Home</a>
-    </li>
-    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-      <a class="govuk-breadcrumbs__link" href="<%= new_facilities_management_rm3830_admin_management_report_path %>">
-        <%= t('.breadcrumb_text_management_report') %>
-      </a>
-    </li>
-  </ol>
-</div>
+<%= admin_breadcrumbs({text: t('.breadcrumb_text_generate_management_report')}) %>
 
 <% if f.object.errors.any? %>
   <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary" id="error-summary">

@@ -1,6 +1,14 @@
 module Pages
   def admin_page
-    @admin_page ||= RM3830::Admin.new
+    @admin_page ||= Admin.new
+  end
+
+  def admin_rm3830_page
+    @admin_rm3830_page ||= RM3830::Admin.new
+  end
+
+  def admin_rm6232_page
+    @admin_rm6232_page ||= RM6232::Admin.new
   end
 
   def building_page

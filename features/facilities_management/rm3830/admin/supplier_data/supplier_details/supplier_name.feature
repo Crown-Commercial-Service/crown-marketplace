@@ -1,7 +1,7 @@
 Feature: Supplier name
 
   Background: Sign in
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
 
   Scenario: Changing the name is saved
     And I click on 'Supplier details'

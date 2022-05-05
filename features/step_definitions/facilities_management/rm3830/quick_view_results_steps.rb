@@ -1,17 +1,3 @@
-Then('I open all sections') do
-  step('I click on "Show all sections"') if @javascript
-end
-
-Then('I select {string}') do |item|
-  page.check(item)
-end
-
-Then('I select the following items:') do |items|
-  items.raw.flatten.each do |item|
-    page.check(item)
-  end
-end
-
 Then('I select all for {string}') do |item_group|
   page.find("[data-sectionname='#{item_group}']").find('input[name="section-checkbox_select_all"]').check
 end

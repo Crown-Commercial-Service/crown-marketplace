@@ -1,7 +1,94 @@
 ---
 en:
+  activerecord:
+    errors:
+      models:
+        facilities_management/rm6232/admin/suppliers_admin:
+          attributes:
+            active:
+              inclusion: You must select a status for the supplier
+            address_county:
+              too_long: The county must be 50 characters or less
+            address_line_1:
+              blank: Enter the building or street name
+              too_long: Building or street name must be 100 characters or less
+            address_line_2:
+              too_long: Second address line must be 100 characters or less
+            address_postcode:
+              blank: Enter a valid postcode, for example SW1A 1AA
+              invalid: Enter a valid postcode, for example SW1A 1AA
+              too_short: Enter a valid postcode, for example SW1A 1AA
+            address_town:
+              blank: Enter the town or city
+              too_long: The town or city name for this building must be 50 characters or less
+            contact_email:
+              blank: Enter an email address in the correct format, for example name@organisation.gov.uk
+              invalid: Enter an email address in the correct format, for example name@organisation.gov.uk
+            contact_name:
+              blank: You must enter a name for the contact
+              too_long: The contact name cannot be more than 100 characters
+            contact_phone:
+              blank: You must enter a telephone number for the contact
+              invalid: Enter a UK telephone number, for example 020 7946 0000
+              too_long: The telephone number cannot be more than 15 characters
+            duns:
+              blank: Enter the DUNS number
+              invalid: Enter the DUNS number in the correct format with 9 digits, for example 214567885
+            registration_number:
+              blank: Enter the company registration number
+              invalid: Enter the company registration number in the correct format, for example AC123456
+            supplier_name:
+              blank: You must enter a supplier name
+              taken: A supplier with this name already exists
+              too_long: The supplier name cannot be more than 100 characters
+        facilities_management/rm6232/supplier/lot_data:
+          attributes:
+            region_codes:
+              too_short: You must select at least one region for this lot
   facilities_management:
     rm6232:
+      admin:
+        home:
+          index:
+            header: RM6232 administration dashboard
+            manage_supplier_data: Manage the supplier's details and their lot data
+            supplier_data: Supplier data
+        sessions:
+          new:
+            admin_sign_in_header: Sign in to the RM6232 administration dashboard
+            email_hint_html: Enter the email address you used to register
+        supplier_data:
+          index:
+            find_supplier: You can find a specific supplier by entering their name in the search bar.
+            heading: Supplier data
+            search_for_a_supplier: Search for a supplier..
+            supplier_name: Supplier name
+            view_details: View details
+            view_lot_data: View lot data
+            view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        supplier_details:
+          index:
+            heading: Supplier data
+        supplier_lot_data:
+          edit:
+            heading:
+              region_codes: Lot %{lot_code} regions
+              service_codes: Lot %{lot_code} services
+            save_and_return: Save and return
+            the_check_boxes:
+              region_codes: The check boxes in the first column indicate what regions the supplier can provide their services in.
+              service_codes: The check boxes in the first column indicate what services the supplier can provide. This is in addition to the core services which are greyed out.
+          show:
+            change: Change
+            heading: View lot data
+            lot_code: 'Lot code: %{lot_code}'
+            lot_regions: lot %{lot_code} regions
+            lot_services: lot %{lot_code} services
+            regions: Regions
+            services: Services
+            show_regions: Show regions
+            show_services: Show services
+            you_can_edit: You can edit the lot data for a supplier by clicking on change.
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

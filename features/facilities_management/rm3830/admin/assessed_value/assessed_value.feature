@@ -1,7 +1,7 @@
 Feature: Assessed value
 
   Background: Log in and navigate to admin dashboard
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     Given I have a procurement in detailed search named 'AV Procurement' with the following services:
       | C.1 |
       | D.3 |

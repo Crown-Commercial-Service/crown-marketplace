@@ -1,7 +1,7 @@
 Feature: Call-off benchmark rates
 
   Background: Navigate to the average framework rates page
-    Given I sign in as an admin and navigate to my dashboard
+    Given I sign in as an admin and navigate to the 'RM3830' dashboard
     And I click on 'Call-off benchmark rates'
     Then I am on the 'Call-off benchmark rates' page
 
