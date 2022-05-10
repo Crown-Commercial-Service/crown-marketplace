@@ -1047,25 +1047,32 @@ en:
             what_next:
               heading: Below outlines the steps you will follow to direct award your contract.
               or: or
-              step_1_content_1: we will inform you about some key contract information on the next page
-              step_1_content_2: you will be asked a few questions that will help us build your contract
-              step_1_title: Creating your contract
-              step_2_content_1: you can review details of your contract before deciding how to proceed
-              step_2_content_2: if you are happy with the content of your contract, you can send your offer to the supplier
-              step_2_content_3_html: the supplier has <b><u>2 working days (48 hours)</u></b> to accept or decline your offer
-              step_2_title: Review contract and send offer
-              step_3_content_1: the system will notify you that the offer has been accepted, and take you through the next steps
-              step_3_content_2: the supplier will sign the contract and send it back to you (this step will happen offline, outside of this portal)
-              step_3_content_3: you will then sign the contract and send it back to the supplier (this step will happen offline, outside of this portal)
-              step_3_content_4: you will confirm on this portal that the contract has been signed by both parties
-              step_3_title: When your offer has been accepted
-              step_4_content_1: 'You will be notified if the supplier has declined your contract offer, with the reason why. If the supplier has not responded within 2 working days (48 hours), you will also be notified, as this is deemed to be an automatic decline. You will then have a choice to:'
-              step_4_content_2: offer the contract to the next placed supplier (after reviewing their price)
-              step_4_content_3: switch to a further competition
-              step_4_content_4: change your requirements
-              step_4_content_5: stop the process
-              step_4_title: If your offer was declined
-              waiting_html: waiting<br/>on<br/>response
+              step_1:
+                list:
+                  item_1: we will inform you about some key contract information on the next page
+                  item_2: you will be asked a few questions that will help us build your contract
+                title: Creating your contract
+              step_2:
+                list:
+                  item_1: you can review details of your contract before deciding how to proceed
+                  item_2: if you are happy with the content of your contract, you can send your offer to the supplier
+                  item_3_html: the supplier has <b><u>2 working days (48 hours)</u></b> to accept or decline your offer
+                title: Review contract and send offer
+              step_3:
+                list:
+                  item_1: the system will notify you that the offer has been accepted, and take you through the next steps
+                  item_2: the supplier will sign the contract and send it back to you (this step will happen offline, outside of this portal)
+                  item_3: you will then sign the contract and send it back to the supplier (this step will happen offline, outside of this portal)
+                  item_4: you will confirm on this portal that the contract has been signed by both parties
+                title: When your offer has been accepted
+              step_4:
+                content: 'You will be notified if the supplier has declined your contract offer, with the reason why. If the supplier has not responded within 2 working days (48 hours), you will also be notified, as this is deemed to be an automatic decline. You will then have a choice to:'
+                list:
+                  item_1: offer the contract to the next placed supplier (after reviewing their price)
+                  item_2: switch to a further competition
+                  item_3: change your requirements
+                  item_4: stop the process
+                title: If your offer was declined
           edit_partials:
             authorised_representative:
               authorised_representative_detail_description: Select an authorised representative
@@ -1503,8 +1510,6 @@ en:
           total_contract_value: Total contract value
         further_competition:
           further_competition_partial:
-            awarding_the_contract: Awarding the contract
-            awarding_the_contract_1: awarding the contract to the successful supplier, and notifying unsuccessful suppliers
             description_header: What will the summary contain?
             description_list_1: building information
             description_list_2: services required, and volume details
@@ -1525,11 +1530,6 @@ en:
             help: Need help?
             help_description: Please find our contact details below.
             help_description_1: When speaking to us please reference your procurement summary reference number.
-            invitation_to_tender: Creating your invitation to tender (ITT)
-            invitation_to_tender_1: defining your specific requirements
-            invitation_to_tender_2: setting your evaluation criteria – price and quality
-            invitation_to_tender_3: creating your Terms and Conditions, and order form
-            invitation_to_tender_4: detailing your pricing model, key performance indicators, and other contract tools
             make_a_copy: If you wish to make a copy of your requirements and re-run your results, click on the ‘Make a copy of your requirements’ button below.
             more_information: Where to find more information
             more_information_1: buyer guides
@@ -1537,18 +1537,35 @@ en:
             more_information_3: call-off schedules and core terms
             more_information_4: service specifications
             more_information_5: bid pack guidance documents
-            publishing_invitation: Publishing your ITT
-            publishing_invitation_1: inviting your shortlisted suppliers to bid by issuing the ITT, requirements document and draft contract
             save_as_fc_instructions: Click the 'Save as further competition' button below to save your results and access your procurement summary, which details your buildings and service requirements, ready for your tender pack.
+            step_1:
+              list:
+                item_1: used to communicate to the supplier’s high level details of your requirements, timescales etc, and receive feedback
+                item_2: allows creation of further shortlisted suppliers (based on suppliers interest), who wish to progress to the next stage.
+                item_3: dependent on the level of interest, also allows you to make an initial decision on whether to proceed to the next stage, or alter your requirements
+              title: Supplier brief
+            step_2:
+              list:
+                item_1: defining your specific requirements
+                item_2: setting your evaluation criteria – price and quality
+                item_3: creating your Terms and Conditions, and order form
+                item_4: detailing your pricing model, key performance indicators, and other contract tools
+              title: Creating your invitation to tender (ITT)
+            step_3:
+              list:
+                item_1: inviting your shortlisted suppliers to bid by issuing the ITT, requirements document and draft contract
+              title: Publishing your ITT
+            step_4:
+              list:
+                item_1: answer clarification questions
+                item_2: receiving suppliers tenders (bids)
+                item_3: evaluate suppliers’ responses
+              title: Tender period
+            step_5:
+              list:
+                item_1: awarding the contract to the successful supplier, and notifying unsuccessful suppliers
+              title: Awarding the contract
             summary_header: Download your procurement summary
-            supplier_brief: Supplier brief
-            supplier_brief_1: used to communicate to the supplier’s high level details of your requirements, timescales etc, and receive feedback
-            supplier_brief_2: allows creation of further shortlisted suppliers (based on suppliers interest), who wish to progress to the next stage.
-            supplier_brief_3: dependent on the level of interest, also allows you to make an initial decision on whether to proceed to the next stage, or alter your requirements
-            tender_period: Tender period
-            tender_period_1: answer clarification questions
-            tender_period_2: receiving suppliers tenders (bids)
-            tender_period_3: evaluate suppliers’ responses
             what_happens_next_description: 'Running a further competition allows you to ask your shortlisted framework suppliers to bid for your business, based on your particular requirements. This allows you to get a competitive price for a solution that meets your specific needs. The key stages of the process are:'
             what_happens_next_title: What happens next
           return_to_dashboard: Return to procurements dashboard
@@ -1875,33 +1892,46 @@ en:
           heading: What happens next
           return: Return to your account
         what_happens_next_body:
-          first_information: We will first ask you for some information including
-          or: or
-          step_1_content_1: 'basic contract information such as: '
-          step_1_content_1_list_1: your current annual cost (if known)
-          step_1_content_1_list_2: any TUPE involvement
-          step_1_content_1_list_3: your required contract length, start date, optional extension periods
-          step_1_content_2: your buildings and service requirements
-          step_1_content_2_list_1: where your buildings are located, their size and what they're used for
-          step_1_content_2_list_2: which services you want to have provided, and in which of your buildings
-          step_1_content_3: 'You will be given the option of completing your building and service requirements either: '
-          step_1_content_3_list_1: within this portal with us guiding you through the questions
-          step_1_content_3_list_2: using a spreadsheet template, which you can download, fill out the information, then upload back into this portal.
-          step_1_content_4: We recommend that the first option is more suited to simpler procurements with a fewer number of buildings and services needed, and the spreadsheet option is more suited to more complex procurements with a larger number of buildings and services, however it is also down to your own preferred way of working.
-          step_1_title: Your requirements
-          step_2_content_1: 'You will be shown: '
-          step_2_content_1_list_1: your estimated contract cost
-          step_2_content_1_list_2: a compliant sub-lot, and a shortlist of potential suppliers
-          step_2_content_1_list_3: the options available for your next steps if you want to proceed into a procurement - this may include a direct award or further competition
-          step_2_title: Results
-          step_3_content_1: 'If direct award is an option you select, you will then be guided through further steps online, including: '
-          step_3_content_1_list_1: reviewing direct award pricing
-          step_3_content_1_list_2: building a contract online
-          step_3_content_1_list_3: sending a contract offer to the supplier
-          step_3_content_2: 'If further competition is selected, you will be presented with: '
-          step_3_content_2_list_1: guidance on what to do next
-          step_3_content_2_list_2: a download of your procurement requirements
-          step_3_title: Routes to market
+          step_1:
+            content: We recommend that the first option is more suited to simpler procurements with a fewer number of buildings and services needed, and the spreadsheet option is more suited to more complex procurements with a larger number of buildings and services, however it is also down to your own preferred way of working.
+            information:
+              content: 'We will first ask you for some information including basic contract information such as:'
+              part_1:
+                list:
+                  item_1: your current annual cost (if known)
+                  item_2: any TUPE involvement
+                  item_3: your required contract length, start date, optional extension periods
+              part_2:
+                content: 'and your buildings and service requirements:'
+                list:
+                  item_1: where your buildings are located, their size and what they're used for
+                  item_2: which services you want to have provided, and in which of your buildings
+            requirements:
+              content: 'You will be given the option of completing your building and service requirements either:'
+              list:
+                item_1: within this portal with us guiding you through the questions
+                item_2: or
+                item_3: using a spreadsheet template, which you can download, fill out the information, then upload back into this portal.
+            title: Your requirements
+          step_2:
+            content: 'You will be shown:'
+            list:
+              item_1: your estimated contract cost
+              item_2: a compliant sub-lot, and a shortlist of potential suppliers
+              item_3: the options available for your next steps if you want to proceed into a procurement - this may include a direct award or further competition
+            title: Results
+          step_3:
+            content:
+              part_1: 'If direct award is an option you select, you will then be guided through further steps online, including:'
+              part_2: 'If further competition is selected, you will be presented with:'
+            list_1:
+              item_1: reviewing direct award pricing
+              item_2: building a contract online
+              item_3: sending a contract offer to the supplier
+            list_2:
+              item_1: guidance on what to do next
+              item_2: a download of your procurement requirements
+            title: Routes to market
           steps: The steps shown below outline the process that you'll follow within this portal.
       service_specification:
         show:
