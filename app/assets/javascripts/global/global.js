@@ -150,8 +150,8 @@ function ifChecked(sWrap, h) {
   
   function initStepByStepNav() {
     const $element = $('#step-by-step-navigation');
-    const stepByStepNavigation = new window.GOVUKFrontend.AppStepNav();
-    stepByStepNavigation.start($element);
+    const stepByStepNavigation = new window.GOVUKFrontend.Modules.Gemstepnav($element.get(0))
+    stepByStepNavigation.init();
   }
   
   function initCustomFnc() {
