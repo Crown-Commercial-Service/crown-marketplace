@@ -236,7 +236,7 @@ GEM
     email_validator (2.2.3)
       activemodel
     erubi (1.10.0)
-    excon (0.92.2)
+    excon (0.92.3)
     execjs (2.7.0)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -251,7 +251,7 @@ GEM
     faraday-net_http (2.0.1)
     ffi (1.15.5)
     ffi (1.15.5-x64-mingw32)
-    fog-aws (3.13.0)
+    fog-aws (3.14.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
       fog-xml (~> 0.1)
