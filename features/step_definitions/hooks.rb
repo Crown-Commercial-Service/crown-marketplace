@@ -25,3 +25,7 @@ end
 Before('@management_report') do
   stub_management_report
 end
+
+Before('@mobile') do
+  resize_window_to_mobile
+end
