@@ -6,7 +6,7 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
 
   rescue_from CanCan::AccessDenied do
-    redirect_to not_permitted_path(service: 'facilities_management')
+    redirect_to facilities_management_rm3830_not_permitted_path
   end
 
   def show
@@ -17,30 +17,19 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
   protected
 
   def authorize_user
-    if params[:management_report_id].present?
-      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::ManagementReport, params[:management_report_id])
-    elsif params[:admin_upload_id].present?
-      authenticate_admin_view(FacilitiesManagement::RM3830::Admin::Upload, params[:admin_upload_id])
-    else
-      authorize_contract_procurement_view
-    end
-  end
+    raise CanCan::AccessDenied unless params[:key] && params[:value] && KEY_TO_MODEL.key?(params[:key].to_sym)
 
-  def authorize_contract_procurement_view
-    contract = FacilitiesManagement::RM3830::ProcurementSupplier.find_by(id: params[:contract_id])
-    procurement = FacilitiesManagement::RM3830::Procurement.find_by(id: params[:procurement_id])
-
-    raise ActionController::RoutingError, 'not found' if contract.blank? && procurement.blank?
-
-    authorize! :view, contract if contract.present?
-    authorize! :view, procurement if procurement.present?
-  end
-
-  def authenticate_admin_view(model, id)
-    object = model.find_by(id: id)
+    object = KEY_TO_MODEL[params[:key].to_sym].find_by(id: params[:value])
 
     raise ActionController::RoutingError, 'not found' if object.blank?
 
     authorize! :view, object if object.present?
   end
+
+  KEY_TO_MODEL = {
+    management_report_id: FacilitiesManagement::RM3830::Admin::ManagementReport,
+    admin_upload_id: FacilitiesManagement::RM3830::Admin::Upload,
+    contract_id: FacilitiesManagement::RM3830::ProcurementSupplier,
+    procurement_id: FacilitiesManagement::RM3830::Procurement
+  }.freeze
 end

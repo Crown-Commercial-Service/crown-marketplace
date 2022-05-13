@@ -18,8 +18,11 @@ Then('I should sign in as an fm buyer with details') do
   step 'I sign in'
 end
 
-When('I go to the not permitted page') do
-  visit not_permitted_path(service: 'facilities_management')
+When('I go to the {string} not permitted page for {string}') do |user_type, framework|
+  not_permitted_path_base = "/facilities-management/#{framework}/"
+  not_permitted_path_base += user_type unless user_type == 'buyer'
+
+  visit "#{not_permitted_path_base}/not-permitted"
 end
 
 Then('I am on the Your account page') do

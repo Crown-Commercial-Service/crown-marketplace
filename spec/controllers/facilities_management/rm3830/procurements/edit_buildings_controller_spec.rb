@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::EditBuildingsControll
       it 'redirects to the not permitted page' do
         get :new, params: { procurement_id: procurement_id }
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::EditBuildingsControll
       it 'redirects to the not permitted page' do
         get :show, params: { id: building.id, procurement_id: procurement_id }
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
   end

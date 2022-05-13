@@ -1,53 +1,392 @@
 require 'rails_helper'
 
 RSpec.describe ActiveStorage::BlobsController, type: :controller do
+  let(:default_params) do
+    {
+      signed_id: signed_id,
+      filename: filename,
+      disposition: 'attachment',
+      key: object_id_key,
+      value: object_id
+    }
+  end
+
+  # rubocop:disable RSpec/NestedGroups
   describe '#show' do
-    context 'when signed in' do
-      login_fm_buyer_with_details
-      let(:contract) { build(:facilities_management_rm3830_procurement_supplier_da_with_supplier) }
-      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, user: controller.current_user, procurement_suppliers: [contract]) }
+    context 'when trying to download a management report' do
+      let(:signed_id) { management_report.management_report_csv.blob.signed_id }
+      let(:filename) { management_report.management_report_csv.blob.filename }
+      let(:object_id_key) { :management_report_id }
+      let(:object_id) { management_report.id }
+      let(:management_report) { create(:facilities_management_rm3830_admin_management_report_with_report, user: create(:user)) }
 
-      context 'when signed in as the buyer that created the procurement' do
-        it 'returns the path' do
-          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
-          expect(response).to have_http_status(:found)
-        end
-      end
-
-      context 'when signed in as the supplier that the procurement belongs to' do
-        login_fm_supplier
-        it 'returns the path' do
-          contract.supplier.update(contact_email: controller.current_user.email)
-
-          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
-          expect(response).to have_http_status(:found)
-        end
-      end
-
-      context 'when signed in as a different buyer than the one that created the procurement' do
+      context 'when signed in as a buyer' do
         login_fm_buyer_with_details
-        it 'redirects to not permitted page' do
-          procurement.update(user: create(:user))
-          get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id, procurement_id: procurement.id }
-          expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
         end
       end
 
-      context 'when procurement_id or contract_id is not passed through' do
-        it 'raises not found exception' do
-          expect { get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment' } }.to raise_error('not found')
+      context 'when signed in as a supplier' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
         end
       end
     end
 
-    context 'when not signed in' do
-      let(:contract) { build(:facilities_management_rm3830_procurement_supplier_da_with_supplier) }
-      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, procurement_suppliers: [contract]) }
+    context 'when trying to download an admin upload' do
+      let(:signed_id) { admin_upload.supplier_data_file.blob.signed_id }
+      let(:filename) { admin_upload.supplier_data_file.blob.filename }
+      let(:object_id_key) { :admin_upload_id }
+      let(:object_id) { admin_upload.id }
+      let(:admin_upload) { create(:facilities_management_rm3830_admin_upload_with_upload) }
 
-      it 'returns :unauthorized' do
-        get :show, params: { signed_id: procurement.security_policy_document_file.blob.signed_id, filename: procurement.security_policy_document_file.blob.filename, disposition: 'attachment', contract_id: contract.id }
-        expect(response).to have_http_status(:unauthorized)
+      context 'when signed in as a buyer' do
+        login_fm_buyer_with_details
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as a supplier' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when trying to download a security policy document' do
+      let(:signed_id) { procurement.security_policy_document_file.blob.signed_id }
+      let(:filename) { procurement.security_policy_document_file.blob.filename }
+      let(:object_id_key) { :procurement_id }
+      let(:object_id) { procurement.id }
+      let(:procurement) { create(:facilities_management_rm3830_procurement_with_security_document, user: user) }
+      let(:user) { create(:user) }
+
+      context 'when signed in as a buyer who created the procurement' do
+        login_fm_buyer_with_details
+
+        let(:user) { controller.current_user }
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when signed in as a buyer and they did not create the procurement' do
+        login_fm_buyer_with_details
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as a supplier' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when trying to download the contract documents' do
+      let(:signed_id) { contract.contract_documents_zip.blob.signed_id }
+      let(:filename) { contract.contract_documents_zip.blob.filename }
+      let(:object_id_key) { :contract_id }
+      let(:object_id) { contract.id }
+      let(:contract) { create(:facilities_management_rm3830_procurement_supplier_with_contract_documents) }
+      let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+      let(:user) { create(:user) }
+
+      context 'when signed in as a buyer who created the procurement' do
+        login_fm_buyer_with_details
+
+        let(:user) { controller.current_user }
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when signed in as a buyer and they did not create the procurement' do
+        login_fm_buyer_with_details
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as a supplier who is part of the contract' do
+        login_fm_supplier
+
+        it 'allows the blob to be downloaded' do
+          contract.supplier.update(contact_email: controller.current_user.email)
+
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+      end
+
+      context 'when signed in as a supplier who is not part of the contract' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
+        end
       end
     end
   end
+  # rubocop:enable RSpec/NestedGroups
 end

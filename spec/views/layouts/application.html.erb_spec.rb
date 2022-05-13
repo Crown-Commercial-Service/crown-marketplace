@@ -10,7 +10,11 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
       def ccs_homepage_url
         'https://CCSHOMEPAGE'
       end
-      helper_method :ccs_homepage_url
+
+      def service_path_base
+        '/supply-teachers'
+      end
+      helper_method :ccs_homepage_url, :service_path_base
     end
     cookies[:crown_marketplace_google_analytics_enabled] = 'true'
     allow(cookies.class).to receive(:new).and_return(cookies)

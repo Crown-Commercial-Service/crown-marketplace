@@ -31,7 +31,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SublotRegionsController, typ
         before { get :edit, params: { supplier_framework_datum_id: supplier_id, lot: '1a' } }
 
         it 'redirects to not permitted page' do
-          expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+          expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
         end
       end
     end

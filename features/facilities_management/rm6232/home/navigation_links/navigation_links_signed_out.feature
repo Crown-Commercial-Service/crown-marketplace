@@ -7,7 +7,7 @@ Feature: Navigation links when signed out
     Then there are no header navigation links
 
   Scenario: Not permitted page
-    And I go to the not permitted page
+    And I go to the 'buyer' not permitted page for 'RM6232'
     Then there are no header navigation links
 
   Scenario: Sign in page 
