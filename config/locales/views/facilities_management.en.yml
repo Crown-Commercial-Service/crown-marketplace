@@ -101,10 +101,6 @@ en:
             live_at:
               blank: Enter a valid 'live at' date
               not_a_date: Enter a valid 'live at' date
-  dashboard:
-    index:
-      admin_link: Managing framework and supplier data
-      supplier_link: Facilities management supplier account
   facilities_management:
     admin:
       frameworks:

@@ -200,14 +200,6 @@ module ApplicationHelper
     html
   end
 
-  def service_header_banner
-    if params[:service]
-      render partial: "#{params[:service]}/header-banner"
-    else
-      render partial: 'layouts/header-banner'
-    end
-  end
-
   def format_date(date_object)
     date_object&.in_time_zone('London')&.strftime '%e %B %Y'
   end
@@ -309,42 +301,15 @@ module ApplicationHelper
   end
 
   def cookie_policy_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_cookie_policy_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_policy_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_cookie_policy_path
-    else
-      facilities_management_cookie_policy_path(framework: params[:framework])
-    end
+    "#{service_path_base}/cookie-policy"
   end
 
   def cookie_settings_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_cookie_settings_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_settings_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_cookie_settings_path
-    else
-      facilities_management_cookie_settings_path(framework: params[:framework])
-    end
+    "#{service_path_base}/cookie-settings"
   end
 
   def accessibility_statement_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_accessibility_statement_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_accessibility_statement_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_accessibility_statement_path
-    else
-      facilities_management_accessibility_statement_path(framework: params[:framework])
-    end
+    "#{service_path_base}/accessibility-statement"
   end
 
   def contact_link(link_text)

@@ -29,7 +29,7 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       before { get :show, params: { id: supplier.supplier_id } }
 
       it 'redirects to not permitted page' do
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
   end

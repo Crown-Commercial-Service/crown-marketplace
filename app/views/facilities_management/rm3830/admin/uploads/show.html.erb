@@ -47,7 +47,7 @@
       <tbody class="govuk-table__body">
         <tr>
           <td class="govuk-table__cell"><%= t('.file_name') %></td>
-          <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.supplier_data_file, disposition: 'attachment', admin_upload_id: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
+          <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.supplier_data_file, disposition: 'attachment', key: :admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
         </tr>
       </tbody>
     </table>
