@@ -190,6 +190,24 @@ en:
               item_2: other spreadsheets
             title: Final results
           the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
+      procurements:
+        new:
+          based_on_info: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          change: Change
+          contract_name_hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
+          contract_name_label: Save your search
+          estimated_annual_contract_value: Estimated annual contract value
+          heading: Results
+          regions: Regions
+          return_to_contract_cost: Return to annual contract value
+          return_to_dashboard: Return to your account
+          save_and_continue: Save and continue
+          save_and_return: Save and return to procurements dashboard
+          selection_summary: Selection summary
+          services: Services
+          sub_lot: Sub-lot %{sub_lot}
+          suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
+          who_can_provide: who can provide the services you require in your
       sessions:
         new:
           email_hint_html: Enter the email address you used to set up your account.
