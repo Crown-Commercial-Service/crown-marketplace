@@ -111,7 +111,16 @@
   </div>
 </div>
 
-<%= form_tag @form_path, method: :get do %>
+<%= form_with url: @form_path, method: :get, local: true, html: { specialvalidation: true, novalidate: true } do %>
+  <div>
+    <% params[:service_codes]&.split(" ") do |service_code| %>
+      <%= hidden_field_tag "service_codes[]", service_code %>
+    <% end %>
+    <% params[:region_codes]&.split(" ") do |region_code| %>
+      <%= hidden_field_tag "region_codes[]", region_code %>
+    <% end %>
+    <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>  <div class="govuk-grid-row">
+  </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= submit_tag t('common.submit'), class: 'govuk-button', aria: { label: t('common.submit') } %>

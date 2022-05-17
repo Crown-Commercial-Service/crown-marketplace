@@ -168,5 +168,6 @@ P.14,Accommodation Compliance Services,Manage all activities relating to complia
 P.15,Accommodation Maintenance Services,Provide vacant/unoccupied property preparation and management services,FALSE,P,TRUE,FALSE,FALSE,13
 Q.1,CAFM – Soft FM Requirements,Provide the system and software required to deliver the Services when provision of a Soft FM service is included,TRUE,Q,FALSE,FALSE,TRUE,0
 Q.2,TFM & Hard FM CAFM Requirements,Provide the system and software required to deliver the Services when provision of a TFM and / or Hard FM service is included,TRUE,Q,TRUE,TRUE,FALSE,1
+Q.3,CAFM system,"CAFM system and associated software required to deliver FM services, aligned to asset requirements and SFG20",TRUE,Q,TRUE,TRUE,TRUE,0
 R.1,Helpdesk Services,"Fully staffed, supervised helpdesk service for all FM related service requests and fault reporting",TRUE,R,TRUE,TRUE,TRUE,0
 S.1,"Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works",Chargeable services delivered outside the agreed overall contract price for example small/large projects,TRUE,S,TRUE,TRUE,TRUE,0

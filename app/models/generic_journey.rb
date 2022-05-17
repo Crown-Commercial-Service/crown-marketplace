@@ -92,8 +92,7 @@ class GenericJourney
     },
     'RM6232' => {
       'start-a-procurement' => 'Return to your account',
-      'choose-services' => 'Return to your account',
-      'choose-locations' => 'Return to services'
+      'choose-services' => "Return to 'Start a procurement'"
     }
   }.freeze
 end
