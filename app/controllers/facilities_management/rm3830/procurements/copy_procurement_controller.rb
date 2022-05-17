@@ -26,7 +26,7 @@ module FacilitiesManagement
         private
 
         def set_procurement_data
-          @procurement = current_user.procurements.find_by(id: params[:procurement_id])
+          @procurement = current_user.rm3830_procurements.find_by(id: params[:procurement_id])
         end
 
         def set_contract_data

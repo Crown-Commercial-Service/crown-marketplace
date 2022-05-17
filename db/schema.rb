@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_05_092624) do
+ActiveRecord::Schema.define(version: 2022_05_17_142407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -363,6 +363,19 @@ ActiveRecord::Schema.define(version: 2022_04_05_092624) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "aasm_state", limit: 30
+    t.text "service_codes", default: [], array: true
+    t.text "region_codes", default: [], array: true
+    t.bigint "annual_contract_value"
+    t.string "contract_name", limit: 100
+    t.string "lot_number", limit: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
+  end
+
   create_table "facilities_management_rm6232_services", primary_key: "code", id: :string, limit: 5, force: :cascade do |t|
     t.string "work_package_code", limit: 1, null: false
     t.string "name", limit: 150
@@ -571,6 +584,7 @@ ActiveRecord::Schema.define(version: 2022_04_05_092624) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_procurements", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
   add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"
 end

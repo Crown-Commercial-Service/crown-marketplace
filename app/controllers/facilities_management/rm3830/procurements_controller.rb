@@ -19,12 +19,12 @@ module FacilitiesManagement
       before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
       def index
-        @searches = current_user.procurements.where(aasm_state: Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| Procurement::SEARCH_ORDER.index(search.aasm_state) }
-        @in_draft = current_user.procurements.da_draft.order(updated_at: :asc)
+        @searches = current_user.rm3830_procurements.where(aasm_state: Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| Procurement::SEARCH_ORDER.index(search.aasm_state) }
+        @in_draft = current_user.rm3830_procurements.da_draft.order(updated_at: :asc)
         @sent_offers = sent_offers
         @contracts = live_contracts
         @closed_contracts = closed_contracts
-        @further_competition_contracts = current_user.procurements.further_competition.order(updated_at: :asc)
+        @further_competition_contracts = current_user.rm3830_procurements.further_competition.order(updated_at: :asc)
       end
 
       def show
@@ -35,13 +35,13 @@ module FacilitiesManagement
       def summary; end
 
       def new
-        @procurement = current_user.procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
+        @procurement = current_user.rm3830_procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
         @back_path = back_path
         @back_text = 'Return to regions'
       end
 
       def create
-        @procurement = current_user.procurements.build(procurement_params)
+        @procurement = current_user.rm3830_procurements.build(procurement_params)
 
         if @procurement.save(context: :contract_name)
           if @procurement.region_codes.empty?
@@ -367,15 +367,15 @@ module FacilitiesManagement
       RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
 
       def sent_offers
-        current_user.procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
+        current_user.rm3830_procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
       end
 
       def live_contracts
-        current_user.procurements.direct_award.map(&:live_contracts)&.flatten&.sort_by(&:contract_signed_date)
+        current_user.rm3830_procurements.direct_award.map(&:live_contracts)&.flatten&.sort_by(&:contract_signed_date)
       end
 
       def closed_contracts
-        current_user.procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| [sent_offer.contract_closed_date ? 1 : 0, sent_offer.contract_closed_date] }&.reverse
+        current_user.rm3830_procurements.where(aasm_state: ['direct_award', 'closed']).map(&:closed_contracts)&.flatten&.sort_by { |sent_offer| [sent_offer.contract_closed_date ? 1 : 0, sent_offer.contract_closed_date] }&.reverse
       end
 
       def procurement_route_params
