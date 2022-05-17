@@ -1,0 +1,11 @@
+<%= render(
+  partial: 'facilities_management/shared/baskets/basket',
+  locals: {
+    basket_name: 'locations',
+    number_selected_text: {
+      many: t('.locations_selected.many'),
+      none: t('.locations_selected.none'),
+      one: t('.locations_selected.one')
+    }
+  }
+) %>

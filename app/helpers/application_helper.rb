@@ -315,5 +315,47 @@ module ApplicationHelper
   def contact_link(link_text)
     link_to(link_text, Marketplace.support_form_link, target: :blank)
   end
+
+  def accordion_region_items(region_codes)
+    nuts1_regions = Nuts1Region.all.map { |region| [region.code, { name: region.name, items: [] }] }.to_h
+
+    FacilitiesManagement::Region.all.each do |region|
+      region_group_code = region.code[..2]
+
+      next unless nuts1_regions[region_group_code]
+
+      nuts1_regions[region.code[..2]][:items] << {
+        code: region.code,
+        value: region.code,
+        name: region.name.gsub(160.chr('UTF-8'), ' '),
+        selected: region_codes.include?(region.code)
+      }
+    end
+
+    nuts1_regions
+  end
+
+  def rm3830_accordion_service_items(service_codes)
+    services = FacilitiesManagement::RM3830::StaticData.services
+    work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
+
+    services.map do |service|
+      [
+        service['code'],
+        {
+          name: service['name'],
+          items: work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.map do |work_package|
+            {
+              code: work_package['code'].tr('.', '-'),
+              value: work_package['code'],
+              name: work_package['name'],
+              selected: service_codes&.include?(work_package['code']),
+              description: work_package['description']
+            }
+          end
+        }
+      ]
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength
