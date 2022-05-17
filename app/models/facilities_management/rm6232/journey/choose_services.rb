@@ -11,7 +11,7 @@ module FacilitiesManagement
       attribute :annual_contract_value, Numeric
 
       def next_step_class
-        # Journey::ChooseLocations
+        Journey::ChooseLocations
       end
 
       private
