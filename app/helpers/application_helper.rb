@@ -357,5 +357,25 @@ module ApplicationHelper
       ]
     end
   end
+
+  def rm6232_accordion_service_items(service_codes)
+    FacilitiesManagement::RM6232::WorkPackage.selectable.map do |work_package|
+      [
+        work_package.code,
+        {
+          name: work_package.name,
+          items: work_package.selectable_services.map do |service|
+            {
+              code: service.code.tr('.', '-'),
+              value: service.code,
+              name: service.name,
+              selected: service_codes&.include?(service.code),
+              description: service.description
+            }
+          end
+        }
+      ]
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength
