@@ -121,6 +121,40 @@ en:
             <li>compliantly create your procurement bid back</li>
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
+      journey:
+        start_a_procurement:
+          heading: Start a procurement
+          return_text: Return to your account
+          step_1:
+            content: 'We will first ask you for some basic service and contract information:'
+            list:
+              item_1: which services you want to have provided
+              item_2: where your buildings are located
+              item_3: your current annual cost
+            title: Basic Requirements
+          step_2:
+            content: 'You will be shown:'
+            list:
+              item_1: a compliant sub-lot, and a shortlist of potential suppliers
+              item_2: the options available for your next steps if you want to proceed into a procurement
+            title: Results
+          step_3:
+            content:
+              part_1: 'You will be given the option of completing further building and service requirements either:'
+              part_2: Using this information we will be able to generate documents for you that you can use for your procurement
+            list:
+              item_1: within this portal with us guiding you through the questions
+              item_2: using a spreadsheet template, which you can download, fill out the information, and upload
+            title: Further service and contract requirements (optional)
+          step_4:
+            content:
+              part_1: On this page you will be able to download a copy of your search results.
+              part_2: 'If you have added further service and contract requirements, you will be able to download:'
+            list:
+              item_1: a deliverables matrix
+              item_2: other spreadsheets
+            title: Final results
+          the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
       sessions:
         new:
           email_hint_html: Enter the email address you used to set up your account.

@@ -53,10 +53,7 @@ class GenericJourney
   end
 
   def previous_step_text
-    return 'Return to your account' if @slug == 'choose-services'
-    return 'Return to services' if @slug == 'choose-locations'
-
-    nil
+    PREVIOUS_STEP_TEXT[@framework][@slug]
   end
 
   def next_step_path
@@ -87,4 +84,16 @@ class GenericJourney
 
   delegate :valid?, :errors, to: :current_step
   delegate :inputs, to: :current_step
+
+  PREVIOUS_STEP_TEXT = {
+    'RM3830' => {
+      'choose-services' => 'Return to your account',
+      'choose-locations' => 'Return to services'
+    },
+    'RM6232' => {
+      'start-a-procurement' => 'Return to your account',
+      'choose-services' => 'Return to your account',
+      'choose-locations' => 'Return to services'
+    }
+  }.freeze
 end

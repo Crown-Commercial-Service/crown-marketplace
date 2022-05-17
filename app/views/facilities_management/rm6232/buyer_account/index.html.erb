@@ -7,7 +7,7 @@
     </div>
   </div>
   <%= ccs_account_panel_row do %>
-    <%= ccs_account_panel(t('.start_procurement_link'), '#') do %>
+    <%= ccs_account_panel(t('.start_procurement_link'), facilities_management_journey_question_path(slug: 'start-a-procurement')) do %>
       <%= t('.start_procurement_desc') %>
     <% end %>
     <%= ccs_account_panel(t('.manage_procurements_link'), '#') do %>
