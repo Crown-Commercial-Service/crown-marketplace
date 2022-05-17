@@ -67,7 +67,7 @@
       <h3 class="govuk-heading-s"><%= t('.security_policy.heading') %></h3>
       <ul class="govuk-list govuk-!-margin-top-6 documents">
         <li class="govuk-!-margin-bottom-3 govuk-!-margin-left-2">
-          <%= link_to_file_for_download("#{rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment', procurement_id: @procurement.id)}&format=#{security_policy_document_file_type}", security_policy_document_file_type, t('.security_policy.title'), true) %>
+          <%= link_to_file_for_download("#{rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment', key: :procurement_id, value: @procurement.id)}&format=#{security_policy_document_file_type}", security_policy_document_file_type, t('.security_policy.title'), true) %>
           <p class="govuk-body govuk-!-font-size-16 govuk-!-margin-left-8"><%= t('.security_policy.guidance') %></p>
         </li>
       </ul>

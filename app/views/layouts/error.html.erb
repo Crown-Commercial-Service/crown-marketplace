@@ -32,7 +32,7 @@
     <div class="error-content">
       <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link"><%= t('layouts.application.skip') %></a>
       <%= render partial: '/layouts/cookie-banner' unless cookies[:crown_marketplace_cookie_settings_viewed] == 'true' || controller.action_name == 'cookie_settings' %>
-      <%= service_header_banner %>
+      <%= render partial: '/layouts/header' %>
 
       <main class="govuk-width-container govuk-!-margin-bottom-6" role="main">
         <%= render partial: '/layouts/phase-banner' %>

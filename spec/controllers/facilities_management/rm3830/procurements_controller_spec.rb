@@ -1068,7 +1068,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
     it 'redirects to the not permitted page' do
       procurement.update(aasm_state: 'detailed_search', user_id: create(:user).id)
       patch :update, params: { id: procurement.id, step: 'name', facilities_management_rm3830_procurement: { contract_name: 'Updated name' } }
-      expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+      expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
     end
   end
 

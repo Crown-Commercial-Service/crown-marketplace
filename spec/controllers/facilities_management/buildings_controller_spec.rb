@@ -41,7 +41,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'redirects to the not permitted page' do
         get :index
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
 
       it 'redirects to the not permitted page' do
         get :new
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe FacilitiesManagement::BuildingsController, type: :controller do
       it 'redirects to the not permitted page' do
         get :show, params: { id: building.id }
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
   end

@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
 
       it 'redirects to not permitted' do
         get :index
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
 
