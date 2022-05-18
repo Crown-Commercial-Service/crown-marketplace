@@ -20,7 +20,7 @@ Feature: Supplier name
       | C.1 | UKD3  |
       | C.2 |       |
     Then '<supplier_name>' is a supplier in Sub-lot '1a'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier details'
     Then I am on the 'Supplier details' page
     And I click on '<supplier_name>'

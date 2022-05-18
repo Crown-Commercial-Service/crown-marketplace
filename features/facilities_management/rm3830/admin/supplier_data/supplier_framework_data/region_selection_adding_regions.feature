@@ -8,7 +8,7 @@ Feature: Adding regions for suppliers on the admin tool
       | C.1 | UKC2  |
       | C.2 |       |
     Then 'Cartwright and Sons' is not a supplier in Sub-lot '1a'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1a' for 'Cartwright and Sons'
@@ -28,7 +28,7 @@ Feature: Adding regions for suppliers on the admin tool
       | C.1 | UKH1  |
       | C.2 |       |
     Then 'Hickle-Schinner' is not a supplier in Sub-lot '1b'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1b' for 'Hickle-Schinner'
@@ -47,7 +47,7 @@ Feature: Adding regions for suppliers on the admin tool
       | C.1 | UKM65 |
       | C.2 |       |
     Then 'Krajcik-Gibson' is not a supplier in Sub-lot '1c'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1c' for 'Krajcik-Gibson'
