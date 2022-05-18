@@ -8,7 +8,7 @@ Feature: Removing services for suppliers on the admin tool
       | C.1 | UKC1  |
       |     | UKC2  |
     Then 'Abernathy and Sons' is a supplier in Sub-lot '1a'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Services' for sublot '1a' for 'Abernathy and Sons'
@@ -28,7 +28,7 @@ Feature: Removing services for suppliers on the admin tool
       | D.2 | UKI6  |
       |     | UKI7  |
     Then 'Treutel LLC' is a supplier in Sub-lot '1b'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Services' for sublot '1b' for 'Treutel LLC'
@@ -47,7 +47,7 @@ Feature: Removing services for suppliers on the admin tool
       | K.1 | UKC1  |
       |     | UKC2  |
     Then 'Dickens and Sons' is a supplier in Sub-lot '1c'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Services' for sublot '1c' for 'Dickens and Sons'

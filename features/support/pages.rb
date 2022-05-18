@@ -15,6 +15,10 @@ module Pages
     @building_page ||= Building.new
   end
 
+  def buyer_detail_page
+    @buyer_detail_page ||= BuyerDetail.new
+  end
+
   def contract_page
     @contract_page ||= RM3830::Contract.new
   end
@@ -37,6 +41,10 @@ module Pages
 
   def quick_view_results_page
     @quick_view_results_page ||= RM3830::QuickViewResults.new
+  end
+
+  def quick_view_rm6232_page
+    @quick_view_rm6232_page ||= RM6232::QuickView.new
   end
 
   def service_requirement_page

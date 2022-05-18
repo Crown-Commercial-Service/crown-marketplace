@@ -8,7 +8,7 @@ Feature: Removing regions for suppliers on the admin tool
       | C.1 | UKD3  |
       | C.2 |       |
     Then 'Bode and Sons' is a supplier in Sub-lot '1a'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1a' for 'Bode and Sons'
@@ -28,7 +28,7 @@ Feature: Removing regions for suppliers on the admin tool
       | C.1 | UKH1  |
       | C.2 |       |
     Then 'Dickens and Sons' is a supplier in Sub-lot '1b'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1b' for 'Dickens and Sons'
@@ -47,7 +47,7 @@ Feature: Removing regions for suppliers on the admin tool
       | C.1 | UKK1  |
       | C.2 |       |
     Then 'Mann Group' is a supplier in Sub-lot '1c'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     And select 'Regions' for sublot '1c' for 'Mann Group'

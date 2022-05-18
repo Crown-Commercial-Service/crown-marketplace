@@ -26,7 +26,7 @@ Feature: Prices and variance
     Then I am on the 'Results' page
     And I click on 'Change requirements'
     Then I am on the 'Requirements' page
-    And I go to the admin dashboard
+    And I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     Given I show all sections

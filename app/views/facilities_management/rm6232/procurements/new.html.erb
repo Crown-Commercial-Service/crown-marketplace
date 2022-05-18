@@ -74,7 +74,7 @@
     </div>
   </div>
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 id="procurement-sub-lot" class="govuk-heading-l">
       <%= t('.sub_lot', sub_lot: @procurement.lot_number) %>
     </h2>
     <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
@@ -100,11 +100,11 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with url: facilities_management_rm6232_procurements_path, model: @procurement, method: :post, local: true, html: { specialvalidation: true, novalidate: true } do |f| %>
       <% f.object.service_codes.each do |service_code| %>
-        <%= f.hidden_field :service_codes, value: service_code, multipart: true %>
+        <%= f.hidden_field :service_codes, value: service_code, multipart: true, id: nil %>
       <% end %>
 
       <% f.object.region_codes.each do |region_code| %>
-        <%= f.hidden_field :region_codes, value: region_code, multipart: true %>
+        <%= f.hidden_field :region_codes, value: region_code, multipart: true, id: nil  %>
       <% end %>
 
       <%= f.hidden_field :annual_contract_value %>
