@@ -1,66 +1,93 @@
 <p class="govuk-body-l"><%= t('.heading') %></p>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= govuk_step_by_step_navigation do %>
-      <%= govuk_step_by_step_navigation_step(t('.step_1_title'), 1) do %>
-        <ol class="app-step-nav__list " data-length="2">
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="1.1"><%= t('.step_1_content_1') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="1.2"><%= t('.step_1_content_2') %></span>
-          </li>
-        </ol>
-      <% end %>
-      <%= govuk_step_by_step_navigation_step(t('.step_2_title'), 2) do %>
-        <ol class="app-step-nav__list " data-length="3">
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="2.1"><%= t('.step_2_content_1') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="2.2"><%= t('.step_2_content_2') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="2.3"><%= t('.step_2_content_3_html') %></span>
-          </li>
-        </ol>
-      <% end %>
-      <%= govuk_step_by_step_navigation_break(t('.waiting_html'), true) %>
-      <%= govuk_step_by_step_navigation_step(t('.step_3_title'), 3) do %>
-        <ol class="app-step-nav__list " data-length="4">
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="3.1"><%= t('.step_3_content_1') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="3.2"><%= t('.step_3_content_2') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="3.3"><%= t('.step_3_content_3') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="3.4"><%= t('.step_3_content_4') %></span>
-          </li>
-        </ol>
-      <% end %>
-      <%= govuk_step_by_step_navigation_break(t('.or')) %>
-      <%= govuk_step_by_step_navigation_step(t('.step_4_title'), 4) do %>
-        <p class="app-step-nav__paragraph"><%= t('.step_4_content_1') %></p>
-        <ol class="app-step-nav__list " data-length="4">
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="4.1"><%= t('.step_4_content_2') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="4.2"><%= t('.step_4_content_3') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="4.3"><%= t('.step_4_content_4') %></span>
-          </li>
-          <li class="app-step-nav__list-item js-list-item ">
-            <span data-position="4.4"><%= t('.step_4_content_5') %></span>
-          </li>
-        </ol>
-      <% end %>
-    <% end %>
+    <%= govuk_step_by_step_navigation(
+      [
+        {
+          title: t('.step_1.title'),
+          content: [
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_1.list.item_1')
+                },
+                {
+                  text: t('.step_1.list.item_2')
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: t('.step_2.title'),
+          content: [
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_2.list.item_1')
+                },
+                {
+                  text: t('.step_2.list.item_2')
+                },
+                {
+                  text: t('.step_2.list.item_3_html')
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: t('.step_3.title'),
+          content: [
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_3.list.item_1')
+                },
+                {
+                  text: t('.step_3.list.item_2')
+                },
+                {
+                  text: t('.step_3.list.item_3')
+                },
+                {
+                  text: t('.step_3.list.item_4')
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: t('.step_4.title'),
+          logic: t('.or'),
+          content: [
+            {
+              type: :paragraph,
+              text: t('.step_4.content')
+            },
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_4.list.item_1')
+                },
+                {
+                  text: t('.step_4.list.item_2')
+                },
+                {
+                  text: t('.step_4.list.item_3')
+                },
+                {
+                  text: t('.step_4.list.item_4')
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    ) %>
   </div>
 </div>
-

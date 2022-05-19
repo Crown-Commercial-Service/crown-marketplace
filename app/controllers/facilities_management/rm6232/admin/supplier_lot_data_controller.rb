@@ -57,7 +57,7 @@ module FacilitiesManagement
         end
 
         def set_work_packages
-          @work_packages = WorkPackage.selectable.index_with(&:services)
+          @work_packages = WorkPackage.selectable.index_with(&:supplier_services)
         end
 
         def set_regions

@@ -44,7 +44,7 @@ module FacilitiesManagement
         private
 
         def set_procurement
-          @procurement = current_user.procurements.find(params[:id] || params[:procurement_id])
+          @procurement = current_user.rm3830_procurements.find(params[:id] || params[:procurement_id])
         end
 
         def redirect_if_not_da_draft

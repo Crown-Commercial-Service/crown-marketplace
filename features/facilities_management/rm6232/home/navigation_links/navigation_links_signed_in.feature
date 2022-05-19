@@ -9,7 +9,7 @@ Feature: Navigation links when signed in
       | Sign out |
 
   Scenario: Not permitted page - My accout
-    And I go to the not permitted page
+    And I go to the 'buyer' not permitted page for 'RM6232'
     And I should see the following navigation links:
       | My account  |
       | Sign out    |
@@ -17,7 +17,7 @@ Feature: Navigation links when signed in
     And I am on the Your account page
 
   Scenario: Not permitted page - sign out
-    And I go to the not permitted page
+    And I go to the 'buyer' not permitted page for 'RM6232'
     And I should see the following navigation links:
       | My account  |
       | Sign out    |

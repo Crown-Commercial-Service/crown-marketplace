@@ -16,9 +16,9 @@ module FacilitiesManagement
     validates :telephone_number, numericality: { greater_than: 0, message: :blank }, on: :update
     validates :organisation_name, length: { maximum: MAX_FIELD_LENGTH }, presence: true, on: :update
 
-    validates :central_government, length: { maximum: MAX_FIELD_LENGTH }, inclusion: { in: [true, false], message: :blank }, on: :update
-
     include AddressValidator
+
+    validates :central_government, length: { maximum: MAX_FIELD_LENGTH }, inclusion: { in: [true, false], message: :blank }, on: :update
 
     delegate :email, to: :user
 

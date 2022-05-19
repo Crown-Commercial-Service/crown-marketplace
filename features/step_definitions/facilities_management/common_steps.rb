@@ -86,7 +86,7 @@ And('I click on the link with text {string}') do |button_text|
 end
 
 Then('I am on a {string} page') do |option|
-  expect(page.find('#wrapper > header > div > div.govuk-header__content > span')).to have_content(PAGE_HEADING[option])
+  expect(page.find('#wrapper > header > div > div.govuk-header__content > div')).to have_content(PAGE_HEADING[option])
 end
 
 Then('I show all sections') do

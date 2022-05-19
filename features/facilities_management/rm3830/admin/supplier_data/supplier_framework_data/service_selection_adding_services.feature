@@ -8,7 +8,7 @@ Feature: Adding services for suppliers on the admin tool
       | D.3 | UKC1  |
       |     | UKC2  |
     Then 'Shields, Ratke and Parisian' is not a supplier in Sub-lot '1a'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     Given I show all sections
@@ -29,7 +29,7 @@ Feature: Adding services for suppliers on the admin tool
       | L.5 | UKC1  |
       |     | UKC2  |
     Then 'Rowe, Hessel and Heller' is not a supplier in Sub-lot '1b'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     Given I show all sections
@@ -49,7 +49,7 @@ Feature: Adding services for suppliers on the admin tool
       | F.3 | UKC1  |
       |     | UKC2  |
     Then 'Mayert, Kohler and Schowalter' is not a supplier in Sub-lot '1c'
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier framework data'
     Then I am on the 'Supplier framework data' page
     Given I show all sections

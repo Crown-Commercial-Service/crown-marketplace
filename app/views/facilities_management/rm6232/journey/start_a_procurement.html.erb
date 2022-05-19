@@ -1,0 +1,131 @@
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t('.heading') %>  
+    </h1>
+    <p class="govuk-body-l">
+      <%= t('.the_steps_shown') %>
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= govuk_step_by_step_navigation(
+      [
+        {
+          title: t('.step_1.title'),
+          content: [
+            {
+              type: :paragraph,
+              text: t('.step_1.content')
+            },
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_1.list.item_1')
+                },
+                {
+                  text: t('.step_1.list.item_2')
+                },
+                {
+                  text: t('.step_1.list.item_3')
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: t('.step_2.title'),
+          content: [
+            {
+              type: :paragraph,
+              text: t('.step_2.content')
+            },
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_2.list.item_1')
+                },
+                {
+                  text: t('.step_2.list.item_2')
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: t('.step_3.title'),
+          content: [
+            {
+              type: :paragraph,
+              text: t('.step_3.content.part_1')
+            },
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_3.list.item_1')
+                },
+                {
+                  text: t('.step_3.list.item_2')
+                }
+              ]
+            },
+            {
+              type: :paragraph,
+              text: t('.step_3.content.part_2')
+            },
+          ]
+        },
+        {
+          title: t('.step_4.title'),
+          content: [
+            {
+              type: :paragraph,
+              text: t('.step_4.content.part_1')
+            },
+            {
+              type: :paragraph,
+              text: t('.step_4.content.part_2')
+            },
+            {
+              type: :list,
+              items: [
+                {
+                  text: t('.step_4.list.item_1')
+                },
+                {
+                  text: t('.step_4.list.item_2')
+                }
+              ]
+            },
+          ]
+        },
+      ]
+    ) %>
+  </div>
+</div>
+
+<%= form_with url: @form_path, method: :get, local: true, html: { specialvalidation: true, novalidate: true } do %>
+  <div>
+    <% params[:service_codes]&.split(" ") do |service_code| %>
+      <%= hidden_field_tag "service_codes[]", service_code %>
+    <% end %>
+    <% params[:region_codes]&.split(" ") do |region_code| %>
+      <%= hidden_field_tag "region_codes[]", region_code %>
+    <% end %>
+    <%= hidden_field_tag :annual_contract_value, params[:annual_contract_value] if params[:annual_contract_value] %>  <div class="govuk-grid-row">
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= submit_tag t('common.submit'), class: 'govuk-button', aria: { label: t('common.submit') } %>
+      <br>
+      <%= link_to t('.return_text'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
+    </div>
+  </div>
+<% end %>

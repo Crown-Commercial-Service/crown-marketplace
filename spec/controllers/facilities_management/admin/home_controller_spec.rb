@@ -3,27 +3,6 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Admin::HomeController do
   let(:default_params) { { service: 'facilities_management/admin' } }
 
-  describe 'GET accessibility_statement' do
-    it 'renders the accessibility_statement page' do
-      get :accessibility_statement
-      expect(response).to render_template(:accessibility_statement)
-    end
-  end
-
-  describe 'GET cookie_policy' do
-    it 'renders the cookie policy page' do
-      get :cookie_policy
-      expect(response).to render_template('home/cookie_policy')
-    end
-  end
-
-  describe 'GET cookie_settings' do
-    it 'renders the cookie settings page' do
-      get :cookie_settings
-      expect(response).to render_template('home/cookie_settings')
-    end
-  end
-
   describe 'GET framework' do
     context 'when RM6232 is live in the future' do
       include_context 'and RM6232 is not live'

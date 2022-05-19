@@ -2,7 +2,9 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class HomeController < FacilitiesManagement::Admin::FrameworkController
-        before_action :redirect_if_needed, :authenticate_user!, :authorize_user
+        include SharedPagesConcern
+
+        before_action :redirect_if_needed, :authenticate_user!, :authorize_user, only: :index
 
         def index
           @current_login_email = current_user.email.to_s

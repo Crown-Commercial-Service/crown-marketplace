@@ -1,0 +1,127 @@
+<% content_for :page_title, t('.heading') %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @procurement.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+    <p class="govuk-body-l">
+      <%= t('.based_on_info') %>
+    </p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">
+      <%= t('.selection_summary') %>
+    </h2>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <span class="ccs-summary-box__title">
+          <%= t('.services') %>
+        </span>
+        <span class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-services', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), class: 'govuk-link--no-visited-state' %>
+        </span>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= govuk_details("#{@procurement.services.count} selected") do %>
+          <ul class="govuk-list govuk-list--bullet">
+            <% @procurement.services.each do |service| %>
+              <li>
+                <%= service.name %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <span class="ccs-summary-box__title">
+          <%= t('.regions') %>
+        </span>
+        <span class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'choose-locations', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), class: 'govuk-link--no-visited-state' %>
+        </span>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= govuk_details("#{@procurement.regions.count} selected") do %>
+          <ul class="govuk-list govuk-list--bullet">
+            <% @procurement.regions.each do |region| %>
+              <li>
+                <%= region.name %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <div class="ccs-summary-box">
+      <div class="ccs-summary-box__headings">
+        <div class="ccs-summary-box__title">
+          <%= t('.estimated_annual_contract_value') %>
+        </div>
+        <div class="ccs-summary-box__change">
+          <%= link_to t('.change'), journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), class: 'govuk-link--no-visited-state' %>
+        </div>
+      </div>
+      <div class="ccs-summary-box__content">
+        <%= format_money(@procurement.annual_contract_value, 0) %>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-two-thirds">
+    <h2 id="procurement-sub-lot" class="govuk-heading-l">
+      <%= t('.sub_lot', sub_lot: @procurement.lot_number) %>
+    </h2>
+    <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
+      <%= t('.suppliers_shortlisted', number_of_suppliers: @suppliers.length) %>
+    </h3>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      <%= t('.who_can_provide') %>
+    </p>
+    <ul class="govuk-list">
+      <% @suppliers.each do |supplier| %>
+        <li class="govuk-!-width-one-half">
+          <%= supplier.supplier_name %>
+          <% if supplier != @suppliers.last  %>
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<hr class="govuk-section-break govuk-section-break--l govuk-!-margin-top-0"/>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with url: facilities_management_rm6232_procurements_path, model: @procurement, method: :post, local: true, html: { specialvalidation: true, novalidate: true } do |f| %>
+      <% f.object.service_codes.each do |service_code| %>
+        <%= f.hidden_field :service_codes, value: service_code, multipart: true, id: nil %>
+      <% end %>
+
+      <% f.object.region_codes.each do |region_code| %>
+        <%= f.hidden_field :region_codes, value: region_code, multipart: true, id: nil  %>
+      <% end %>
+
+      <%= f.hidden_field :annual_contract_value %>
+
+      <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
+        <%= f.label :contract_name, t('.contract_name_label'), class: 'govuk-label govuk-label--m' %>
+        <div class="govuk-hint">
+          <%= t('.contract_name_hint') %>
+        </div>
+        <%= f.text_field :contract_name, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}" %>
+      <% end %>
+
+      <%= f.submit t('.save_and_continue'), class: 'govuk-button govuk-!-margin-right-4', name: 'after_save' %>
+      <%= f.submit t('.save_and_return'), class: 'govuk-button govuk-button--secondary', name: 'after_save' %>
+      <p>
+        <%= link_to t('.return_to_dashboard'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
+      </p>
+    <% end %>
+  </div>
+</div>

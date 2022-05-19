@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierDetailsController, t
       before { get :index }
 
       it 'redirects to not permitted page' do
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
   end

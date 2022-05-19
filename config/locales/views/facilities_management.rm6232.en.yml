@@ -1,5 +1,24 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/rm6232/journey/annual_contract_value:
+          attributes:
+            annual_contract_value:
+              greater_than: The annual contract value must be a whole number greater than 0
+              less_than: The annual contract value must be less than 1,000,000,000,000 (1 trillion)
+              not_a_number: The annual contract value must be a whole number greater than 0
+              not_an_integer: The annual contract value must be a whole number greater than 0
+        facilities_management/rm6232/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
+        facilities_management/rm6232/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
+              too_short: Select at least one service you need to include in your procurement
   activerecord:
     errors:
       models:
@@ -121,6 +140,74 @@ en:
             <li>compliantly create your procurement bid back</li>
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
+      journey:
+        annual_contract_value:
+          heading: Annual contract value
+          question: What is your estimate for the annual contract value?
+          return_text: Return to your account
+          subtitle: Enter your estimate for the annual contract value. Include everything in your calculation.
+        choose_locations:
+          heading: Regions
+          question: Where are your buildings located?
+          return_text: Return to your account
+          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
+        choose_services:
+          caption: Choose all facilities management services required within your estate, even if you want services in just one building.
+          heading: Services
+          learn_more: Further details (opens in a new tab)
+          question: Select the facilities management services that you need
+          return_text: Return to your account
+        start_a_procurement:
+          heading: Start a procurement
+          return_text: Return to your account
+          step_1:
+            content: 'We will first ask you for some basic service and contract information:'
+            list:
+              item_1: which services you want to have provided
+              item_2: where your buildings are located
+              item_3: your current annual cost
+            title: Basic Requirements
+          step_2:
+            content: 'You will be shown:'
+            list:
+              item_1: a compliant sub-lot, and a shortlist of potential suppliers
+              item_2: the options available for your next steps if you want to proceed into a procurement
+            title: Results
+          step_3:
+            content:
+              part_1: 'You will be given the option of completing further building and service requirements either:'
+              part_2: Using this information we will be able to generate documents for you that you can use for your procurement
+            list:
+              item_1: within this portal with us guiding you through the questions
+              item_2: using a spreadsheet template, which you can download, fill out the information, and upload
+            title: Further service and contract requirements (optional)
+          step_4:
+            content:
+              part_1: On this page you will be able to download a copy of your search results.
+              part_2: 'If you have added further service and contract requirements, you will be able to download:'
+            list:
+              item_1: a deliverables matrix
+              item_2: other spreadsheets
+            title: Final results
+          the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
+      procurements:
+        new:
+          based_on_info: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          change: Change
+          contract_name_hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
+          contract_name_label: Save your search
+          estimated_annual_contract_value: Estimated annual contract value
+          heading: Results
+          regions: Regions
+          return_to_contract_cost: Return to annual contract value
+          return_to_dashboard: Return to your account
+          save_and_continue: Save and continue
+          save_and_return: Save and return to procurements dashboard
+          selection_summary: Selection summary
+          services: Services
+          sub_lot: Sub-lot %{sub_lot}
+          suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
+          who_can_provide: who can provide the services you require in your
       sessions:
         new:
           email_hint_html: Enter the email address you used to set up your account.

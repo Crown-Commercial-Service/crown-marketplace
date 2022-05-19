@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::RM3830::Procurements::Contracts::SentContro
         procurement.update(user: create(:user))
         get :index, params: { procurement_id: contract.procurement.id, contract_id: contract.id }
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
       end
     end
 

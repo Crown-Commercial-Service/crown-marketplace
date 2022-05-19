@@ -101,10 +101,6 @@ en:
             live_at:
               blank: Enter a valid 'live at' date
               not_a_date: Enter a valid 'live at' date
-  dashboard:
-    index:
-      admin_link: Managing framework and supplier data
-      supplier_link: Facilities management supplier account
   facilities_management:
     admin:
       frameworks:
@@ -184,9 +180,6 @@ en:
           email_must_2: have supplier access
           email_must_3: not be the same user as another supplier
           user_email_question: Changing the user email will change who can view the supplier dashboard.
-    basket:
-      or_text: or
-      selectall_text: Select all
     buildings:
       action_partials:
         add_address:
@@ -329,6 +322,20 @@ en:
         your_details: Organisation address
     select_services:
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
+    shared:
+      baskets:
+        basket:
+          remove_all: Remove all
+        regions_basket:
+          locations_selected:
+            many: regions selected
+            none: No regions selected
+            one: region selected
+        services_basket:
+          services_selected:
+            many: services selected
+            none: No services selected
+            one: service selected
     users:
       sign_in_error: You must provide a correct username or password
   header_navigation_links_helper:

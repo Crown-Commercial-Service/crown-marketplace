@@ -18,8 +18,11 @@ Then('I should sign in as an fm buyer with details') do
   step 'I sign in'
 end
 
-When('I go to the not permitted page') do
-  visit not_permitted_path(service: 'facilities_management')
+When('I go to the {string} not permitted page for {string}') do |user_type, framework|
+  not_permitted_path_base = "/facilities-management/#{framework}/"
+  not_permitted_path_base += user_type unless user_type == 'buyer'
+
+  visit "#{not_permitted_path_base}/not-permitted"
 end
 
 Then('I am on the Your account page') do
@@ -85,11 +88,20 @@ Given('I enter {string} for the password confirmation') do |password_confirmatio
 end
 
 Then('there are no header navigation links') do
-  expect(home_page.navigation_links).to be_empty
+  expect(home_page.navigation.links).to be_empty
 end
 
 Then('I should see the following navigation links:') do |navigation_links|
-  home_page.navigation_links.zip(navigation_links.raw.flatten).each do |actual, expected|
+  home_page.navigation.links.zip(navigation_links.raw.flatten).each do |actual, expected|
     expect(actual).to have_content expected
+  end
+end
+
+Then('the header navigation links {string} visible') do |option|
+  case option
+  when 'are'
+    expect(home_page.navigation).to be_visible
+  when 'are not'
+    expect(home_page.navigation).to_not be_visible
   end
 end

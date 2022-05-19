@@ -200,14 +200,6 @@ module ApplicationHelper
     html
   end
 
-  def service_header_banner
-    if params[:service]
-      render partial: "#{params[:service]}/header-banner"
-    else
-      render partial: 'layouts/header-banner'
-    end
-  end
-
   def format_date(date_object)
     date_object&.in_time_zone('London')&.strftime '%e %B %Y'
   end
@@ -309,46 +301,81 @@ module ApplicationHelper
   end
 
   def cookie_policy_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_cookie_policy_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_policy_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_cookie_policy_path
-    else
-      facilities_management_cookie_policy_path(framework: params[:framework])
-    end
+    "#{service_path_base}/cookie-policy"
   end
 
   def cookie_settings_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_cookie_settings_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_cookie_settings_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_cookie_settings_path
-    else
-      facilities_management_cookie_settings_path(framework: params[:framework])
-    end
+    "#{service_path_base}/cookie-settings"
   end
 
   def accessibility_statement_path
-    case params[:service]
-    when 'facilities_management/admin'
-      facilities_management_admin_accessibility_statement_path(framework: params[:framework])
-    when 'facilities_management/supplier'
-      facilities_management_supplier_accessibility_statement_path(framework: params[:framework])
-    when 'crown_marketplace'
-      crown_marketplace_accessibility_statement_path
-    else
-      facilities_management_accessibility_statement_path(framework: params[:framework])
-    end
+    "#{service_path_base}/accessibility-statement"
   end
 
   def contact_link(link_text)
     link_to(link_text, Marketplace.support_form_link, target: :blank)
+  end
+
+  def accordion_region_items(region_codes)
+    nuts1_regions = Nuts1Region.all.map { |region| [region.code, { name: region.name, items: [] }] }.to_h
+
+    FacilitiesManagement::Region.all.each do |region|
+      region_group_code = region.code[..2]
+
+      next unless nuts1_regions[region_group_code]
+
+      nuts1_regions[region.code[..2]][:items] << {
+        code: region.code,
+        value: region.code,
+        name: region.name.gsub(160.chr('UTF-8'), ' '),
+        selected: region_codes.include?(region.code)
+      }
+    end
+
+    nuts1_regions
+  end
+
+  def rm3830_accordion_service_items(service_codes)
+    services = FacilitiesManagement::RM3830::StaticData.services
+    work_packages = FacilitiesManagement::RM3830::StaticData.work_packages
+
+    services.map do |service|
+      [
+        service['code'],
+        {
+          name: service['name'],
+          items: work_packages.select { |work_package| work_package['work_package_code'] == service['code'] }.map do |work_package|
+            {
+              code: work_package['code'].tr('.', '-'),
+              value: work_package['code'],
+              name: work_package['name'],
+              selected: service_codes&.include?(work_package['code']),
+              description: work_package['description']
+            }
+          end
+        }
+      ]
+    end
+  end
+
+  def rm6232_accordion_service_items(service_codes)
+    FacilitiesManagement::RM6232::WorkPackage.selectable.map do |work_package|
+      [
+        work_package.code,
+        {
+          name: work_package.name,
+          items: work_package.selectable_services.map do |service|
+            {
+              code: service.code.tr('.', '-'),
+              value: service.code,
+              name: service.name,
+              selected: service_codes&.include?(service.code),
+              description: service.description
+            }
+          end
+        }
+      ]
+    end
   end
 end
 # rubocop:enable Metrics/ModuleLength

@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataControl
 
       it 'redirects to not permitted page' do
         get :index
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
   end
@@ -24,9 +24,13 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataControl
   describe 'verify data' do
     it 'returns if to show lot section' do
       get :index
-      expect(assigns(:supplier_lot1a_present)['Abernathy and Sons']).to eq true
-      expect(assigns(:supplier_lot1b_present)['Abernathy and Sons']).to eq true
-      expect(assigns(:supplier_lot1c_present)['Abernathy and Sons']).to eq nil
+
+      # Abernathy and Sons
+      supplier_id = 'ca57bf4c-e8a5-468a-95f4-39fcf730c770'
+
+      expect(assigns(:supplier_present)['1a'][supplier_id]).to eq true
+      expect(assigns(:supplier_present)['1b'][supplier_id]).to eq true
+      expect(assigns(:supplier_present)['1c'][supplier_id]).to eq nil
     end
   end
 end

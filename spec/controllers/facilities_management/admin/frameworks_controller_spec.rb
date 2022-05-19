@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
 
       it 'redirects to not permitted' do
         get :index
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM6232/admin/not-permitted'
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
 
       it 'redirects to not permitted' do
         get :index
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM6232/admin/not-permitted'
       end
     end
   end

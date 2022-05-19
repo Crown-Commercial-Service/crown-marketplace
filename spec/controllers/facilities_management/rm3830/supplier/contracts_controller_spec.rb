@@ -90,7 +90,7 @@ RSpec.describe FacilitiesManagement::RM3830::Supplier::ContractsController, type
       it 'redirects to the not permited page' do
         get :show, params: { procurement_id: procurement.id, id: contract.id }
 
-        expect(response).to redirect_to not_permitted_url(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/supplier/not-permitted'
       end
     end
 

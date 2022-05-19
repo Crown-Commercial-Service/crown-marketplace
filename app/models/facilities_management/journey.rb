@@ -4,7 +4,7 @@ module FacilitiesManagement
 
     def initialize(framework, slug, params)
       paths = JourneyPaths.new(self.class.journey_name)
-      first_step_class = "FacilitiesManagement::#{framework}::Journey::ChooseServices".constantize
+      first_step_class = FIRST_STEP_CLASS[framework]
       super(first_step_class, framework, slug, params, paths)
     end
 
@@ -24,5 +24,10 @@ module FacilitiesManagement
         super
       end
     end
+
+    FIRST_STEP_CLASS = {
+      'RM3830' => FacilitiesManagement::RM3830::Journey::ChooseServices,
+      'RM6232' => FacilitiesManagement::RM6232::Journey::StartAProcurement
+    }.freeze
   end
 end
