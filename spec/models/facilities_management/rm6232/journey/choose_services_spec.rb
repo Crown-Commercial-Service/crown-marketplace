@@ -147,7 +147,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices, type: :mod
   end
 
   describe '.next_step_class' do
-    pending 'returns Journey::ChooseLocations' do
+    it 'returns Journey::ChooseLocations' do
       expect(choose_services.next_step_class).to be FacilitiesManagement::RM6232::Journey::ChooseLocations
     end
   end
@@ -177,7 +177,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseServices, type: :mod
   end
 
   describe '.final?' do
-    pending 'returns false' do
+    it 'returns false' do
       expect(choose_services.final?).to be false
     end
   end

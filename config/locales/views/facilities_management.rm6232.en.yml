@@ -3,6 +3,10 @@ en:
   activemodel:
     errors:
       models:
+        facilities_management/rm6232/journey/choose_locations:
+          attributes:
+            region_codes:
+              too_short: Select at least one region you need to include in your procurement
         facilities_management/rm6232/journey/choose_services:
           attributes:
             service_codes:
@@ -130,6 +134,11 @@ en:
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
       journey:
+        choose_locations:
+          heading: Regions
+          question: Where are your buildings located?
+          return_text: Return to your account
+          subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
         choose_services:
           caption: Choose all facilities management services required within your estate, even if you want services in just one building.
           heading: Services
