@@ -515,9 +515,10 @@ en:
             return_link: Return to admin dashboard
             service_prices: Services, prices and variances
             services: Services
-            sub_lot_1a: Sub-lot 1a
-            sub_lot_1b: Sub-lot 1b
-            sub_lot_1c: Sub-lot 1c
+            sub_lot:
+              1a: Sub-lot 1a
+              1b: Sub-lot 1b
+              1c: Sub-lot 1c
         uploads:
           failed:
             below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
@@ -685,11 +686,7 @@ en:
       journey:
         choose_locations:
           heading: Regions
-          location_selected: region selected
-          locations_selected: regions selected
-          no_locations_selected: No regions selected
           question: Where are your buildings located?
-          remove_all: Remove all
           return_text: Return to your account
           subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
         choose_services:
@@ -697,12 +694,8 @@ en:
           caption2: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a service can be direct awarded.
           heading: Services
           learn_more: Further details (opens in a new tab)
-          no_services_selected: No services selected
           question: Select the facilities management services that you need
-          remove_all: Remove all
           return_text: Return to your account
-          service_selected: service selected
-          services_selected: services selected
       procurement_buildings:
         buildings_and_services:
           heading: Assigning services to a building
@@ -1464,11 +1457,7 @@ en:
           heading: Results
           quick_search: Quick search
           regions:
-            location_selected: Region selected
-            locations_selected: Regions selected
-            no_locations_selected: No Regions selected
             question: Where are your buildings located?
-            remove_all: Remove all
             subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
           return_to_requirements: Return to requirements
           save_and_continue: Save and continue
