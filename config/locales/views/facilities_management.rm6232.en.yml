@@ -1,5 +1,13 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        facilities_management/rm6232/journey/choose_services:
+          attributes:
+            service_codes:
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
+              too_short: Select at least one service you need to include in your procurement
   activerecord:
     errors:
       models:
@@ -122,6 +130,12 @@ en:
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
       journey:
+        choose_services:
+          caption: Choose all facilities management services required within your estate, even if you want services in just one building.
+          heading: Services
+          learn_more: Further details (opens in a new tab)
+          question: Select the facilities management services that you need
+          return_text: Return to your account
         start_a_procurement:
           heading: Start a procurement
           return_text: Return to your account
