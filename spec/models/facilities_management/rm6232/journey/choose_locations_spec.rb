@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseLocations, type: :mo
   end
 
   describe '.next_step_class' do
-    pending 'returns Journey::AnnualContractValue' do
+    it 'returns Journey::AnnualContractValue' do
       expect(choose_locations.next_step_class).to be FacilitiesManagement::RM6232::Journey::AnnualContractValue
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::ChooseLocations, type: :mo
   end
 
   describe '.final?' do
-    pending 'returns false' do
+    it 'returns false' do
       expect(choose_locations.final?).to be false
     end
   end

@@ -9,7 +9,7 @@ module FacilitiesManagement
       attribute :annual_contract_value, Numeric
 
       def next_step_class
-        # Journey::AnnualContractValue
+        Journey::AnnualContractValue
       end
     end
   end

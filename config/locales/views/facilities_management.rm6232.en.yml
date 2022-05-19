@@ -3,6 +3,13 @@ en:
   activemodel:
     errors:
       models:
+        facilities_management/rm6232/journey/annual_contract_value:
+          attributes:
+            annual_contract_value:
+              greater_than: The annual contract value must be a whole number greater than 0
+              less_than: The annual contract value must be less than 1,000,000,000,000 (1 trillion)
+              not_a_number: The annual contract value must be a whole number greater than 0
+              not_an_integer: The annual contract value must be a whole number greater than 0
         facilities_management/rm6232/journey/choose_locations:
           attributes:
             region_codes:
@@ -134,6 +141,11 @@ en:
             <li>shortlist suppliers ready for further competition</li>
           youneedtoknow: 'You need to know:'
       journey:
+        annual_contract_value:
+          heading: Annual contract value
+          question: What is your estimate for the annual contract value?
+          return_text: Return to your account
+          subtitle: Enter your estimate for the annual contract value. Include everything in your calculation.
         choose_locations:
           heading: Regions
           question: Where are your buildings located?
