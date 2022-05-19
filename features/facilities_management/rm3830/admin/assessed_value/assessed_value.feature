@@ -24,7 +24,7 @@ Feature: Assessed value
     And the assessed value is '£161,289.08'
     And I click on 'Change requirements'
     Then I am on the 'Requirements' page
-    And I go to the admin dashboard
+    And I go to the admin dashboard for 'RM3830'
 
   Scenario: When the average framework rates are changed, so is the assessed value
     Given I click on 'Average framework rates'

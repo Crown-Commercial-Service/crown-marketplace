@@ -1,3 +1,9 @@
+Given('I go to the admin dashboard for {string}') do |framework|
+  visit "/facilities-management/#{framework}/admin/"
+
+  expect(page.find('h1')).to have_content("#{framework} administration dashboard")
+end
+
 Given('I sign in as an admin and navigate to the {string} dashboard') do |framework|
   @framework = framework
   visit "/facilities-management/#{framework}/admin/sign-in"
