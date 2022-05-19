@@ -58,7 +58,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::AnnualContractValue, type:
   end
 
   describe '.next_step_class' do
-    pending 'returns Journey::Procurement' do
+    it 'returns Journey::Procurement' do
       expect(annual_contract_value.next_step_class).to be FacilitiesManagement::RM6232::Journey::Procurement
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe FacilitiesManagement::RM6232::Journey::AnnualContractValue, type:
   end
 
   describe '.final?' do
-    pending 'returns false' do
+    it 'returns false' do
       expect(annual_contract_value.final?).to be false
     end
   end
