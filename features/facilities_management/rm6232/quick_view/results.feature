@@ -1,4 +1,3 @@
-@pipline
 Feature: Information appears correctly on results page
 
   Background: Navigate to the results page
@@ -32,6 +31,7 @@ Feature: Information appears correctly on results page
     And I should see the following 'annual contract value' in the selection summary:
       | £123,456  |
 
+  @pipline
   Scenario: I can change the services from the results page
     Given I change the 'services' from the selection summary
     Then I am on the 'Services' page
@@ -50,6 +50,7 @@ Feature: Information appears correctly on results page
       | Planned / Group re-lamping service                |
       | Outside catering                                  |
 
+  @pipline
   Scenario: I can change the regions from the results page
     Given I change the 'regions' from the selection summary
     Then I am on the 'Regions' page
@@ -65,6 +66,7 @@ Feature: Information appears correctly on results page
       | Essex                                             |
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
 
+  @pipline
   Scenario: I can change the annual contract value from the results page
     Given I change the 'annual contract value' from the selection summary
     Then I am on the 'Annual contract value' page
@@ -74,3 +76,46 @@ Feature: Information appears correctly on results page
     And I should be in sub-lot '2c'
     And I should see the following 'annual contract value' in the selection summary:
       | £123,456,789  |
+
+  # TODO: Add this when we have the dashboard
+  # Scenario: Save and return goes to the dashboard
+  #   Then I enter 'Colony 4 procurement' into the contract name field
+  #   And I click on 'Save and return to procurements dashboard'
+  #   Then I am on the 'Procurements dashboard' page
+  #   And the procurement 'Colony 4 procurement' is on the dashboard
+  #   And the procurement 'Colony 4 procurement' should have the state 'Quick view'
+  #   Then I click on 'Colony 4 procurement'
+  #   And I am on the 'What happens next?' page
+  #   And the contract name on the quick search results page is shown to be 'Colony 9 procurement'
+
+  Scenario: Save and continue to 'What happens next?'
+   And I enter the following details into the form:
+      | Save your search | Agnis search |
+    And I click on 'Save and continue'
+    Then I am on the 'What happens next?' page
+    And the procurement name is shown to be 'Agnis search'
+    # TODO: Add this when we have the dashboard
+    # And I click on 'Return to procurements dashboard'
+    # And the procurement 'Alba Cavanich search' is on the dashboard
+    # And the procurement 'Alba Cavanich search' should have the state 'Entering requirements'
+
+  # TODO: Add when we have entering requirements
+  # @pipeline 
+  # Scenario: Contract name and service selection saved in requirements
+  #   Then I enter 'Mechonis field contract' into the contract name field
+  #   And I click on 'Save and continue to procurement'
+  #   Then I am on the 'What happens next' page
+  #   And I click on 'Continue'
+  #   Then I am on the 'Requirements' page
+  #   And the contract name is shown to be 'Mechonis field contract'
+  #   And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
+  #   And 'Services' should have the status 'Completed' in 'Services and buildings'
+  #   And I click on 'Services'
+  #   Then I am on the 'Services summary' page
+  #   And I should see the following seleceted services in the summary:
+  #     | High voltage (HV) and switchgear maintenance  |
+  #     | Water hygiene maintenance                     |
+  #     | Pest control services                         |
+  #     | Courier booking and external distribution     |
+  #     | Administrative support services               |
+  #     | Patrols (fixed or static guarding)            |
