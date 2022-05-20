@@ -90,7 +90,7 @@ gem 'date_validator', '>= 0.9.0'
 gem 'ratonvirus', '>= 0.1.1'
 gem 'ratonvirus-clamby', '>= 0.1.0'
 # for active storage validation
-gem 'active_storage_validations', '>= 0.9.7'
+gem 'active_storage_validations', '>= 0.9.8'
 # gem for  bulk inserts
 gem 'activerecord-import', '~> 1.4.0'
 # gov notify
@@ -106,7 +106,7 @@ gem 'email_validator', require: 'email_validator/strict'
 
 # for cloud storage of assets
 gem 'asset_sync'
-gem 'fog-aws', '>= 3.13.0'
+gem 'fog-aws', '>= 3.14.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -116,13 +116,13 @@ group :development, :test do
   gem 'launchy', '>= 2.5.0'
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
-  gem 'rspec-rails', '>= 5.1.1'
+  gem 'rspec-rails', '>= 5.1.2'
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
   gem 'rubocop-rails', '>= 2.9.1', require: false
-  gem 'rubyXL', '>= 3.4.22'
-  gem 'i18n-tasks', '>= 1.0.9'
+  gem 'rubyXL', '>= 3.4.23'
+  gem 'i18n-tasks', '>= 1.0.10'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
@@ -143,7 +143,7 @@ group :test do
   gem 'simplecov', '>= 0.16.1', require: false
   gem 'selenium-webdriver', '>= 3.142.3'
   gem 'cucumber-rails', '>= 2.5.1', require: false
-  gem 'capybara', '>= 3.36.0'
+  gem 'capybara', '>= 3.37.1'
   gem 'database_cleaner', '>= 2.0.1'
   gem 'site_prism', '>= 3.7.3'
   gem 'axe-core-capybara', '>= 4.2.1'
