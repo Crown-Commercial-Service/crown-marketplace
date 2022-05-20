@@ -100,25 +100,26 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with url: facilities_management_rm6232_procurements_path, model: @procurement, method: :post, local: true, html: { specialvalidation: true, novalidate: true } do |f| %>
       <% f.object.service_codes.each do |service_code| %>
-        <%= f.hidden_field :service_codes, value: service_code, multipart: true, id: nil %>
+        <%= f.hidden_field :service_codes, value: service_code, multiple: true, id: nil %>
       <% end %>
 
       <% f.object.region_codes.each do |region_code| %>
-        <%= f.hidden_field :region_codes, value: region_code, multipart: true, id: nil  %>
+        <%= f.hidden_field :region_codes, value: region_code, multiple: true, id: nil  %>
       <% end %>
 
       <%= f.hidden_field :annual_contract_value %>
 
       <%= form_group_with_error(f.object, :contract_name) do |displayed_error, any_errors| %>
         <%= f.label :contract_name, t('.contract_name_label'), class: 'govuk-label govuk-label--m' %>
+        <%= displayed_error %>
         <div class="govuk-hint">
           <%= t('.contract_name_hint') %>
         </div>
         <%= f.text_field :contract_name, class: "govuk-input govuk-input--width-20 #{'govuk-input--error' if any_errors}" %>
       <% end %>
 
-      <%= f.submit t('.save_and_continue'), class: 'govuk-button govuk-!-margin-right-4', name: 'after_save' %>
-      <%= f.submit t('.save_and_return'), class: 'govuk-button govuk-button--secondary', name: 'after_save' %>
+      <%= f.submit t('.save_and_continue'), class: 'govuk-button govuk-!-margin-right-4', name: 'save_and_continue' %>
+      <%= f.submit t('.save_and_return'), class: 'govuk-button govuk-button--secondary', name: 'save_and_return' %>
       <p>
         <%= link_to t('.return_to_dashboard'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
       </p>

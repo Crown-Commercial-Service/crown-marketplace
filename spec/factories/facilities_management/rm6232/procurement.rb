@@ -6,5 +6,29 @@ FactoryBot.define do
     contract_name { Faker::Name.unique.name }
     lot_number { '2a' }
     association :user
+
+    trait :skip_generate_contract_number do
+      before(:create) { |procurement| procurement.class.skip_callback(:create, :before, :generate_contract_number, raise: false) }
+
+      after(:create) { |procurement| procurement.class.set_callback(:create, :before, :generate_contract_number) }
+    end
+
+    trait :skip_determine_lot_number do
+      before(:create) { |procurement| procurement.class.skip_callback(:create, :before, :determine_lot_number, raise: false) }
+
+      after(:create) { |procurement| procurement.class.set_callback(:create, :before, :determine_lot_number) }
+    end
+
+    trait :skip_before_create do
+      before(:create) do |procurement|
+        procurement.class.skip_callback(:create, :before, :generate_contract_number, raise: false)
+        procurement.class.skip_callback(:create, :before, :determine_lot_number, raise: false)
+      end
+
+      after(:create) do |procurement|
+        procurement.class.set_callback(:create, :before, :generate_contract_number)
+        procurement.class.set_callback(:create, :before, :determine_lot_number)
+      end
+    end
   end
 end

@@ -174,7 +174,7 @@ Rails.application.routes.draw do
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
 
-      resources :procurements, only: %i[new create] do
+      resources :procurements, only: %i[new create show] do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
