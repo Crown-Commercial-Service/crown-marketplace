@@ -465,13 +465,13 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when no eligible suppliers' do
       it 'does not create any procurement suppliers' do
         allow(obj).to receive(:sorted_list).and_return([])
-        expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::RM3830::ProcurementSupplier.count }.by(0)
+        expect { procurement.set_state_to_results_if_possible }.to change(FacilitiesManagement::RM3830::ProcurementSupplier, :count).by(0)
       end
     end
 
     context 'when some eligible suppliers' do
       it 'creates procurement_suppliers' do
-        expect { procurement.set_state_to_results_if_possible }.to change { FacilitiesManagement::RM3830::ProcurementSupplier.count }.by(2)
+        expect { procurement.set_state_to_results_if_possible }.to change(FacilitiesManagement::RM3830::ProcurementSupplier, :count).by(2)
       end
 
       it 'creates procurement_suppliers with the right direct award value' do
