@@ -1,5 +1,7 @@
 class FacilitiesManagement::RM3830::Supplier::HomeController < FacilitiesManagement::Supplier::FrameworkController
-  before_action :authenticate_user!, :authorize_user, except: %i[index]
+  include SharedPagesConcern
+
+  skip_before_action :authenticate_user!, :authorize_user
 
   def index
     if user_signed_in?

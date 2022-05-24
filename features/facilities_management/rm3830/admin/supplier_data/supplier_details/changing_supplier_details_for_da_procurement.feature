@@ -16,7 +16,7 @@ Feature: Changing the supplier details and seeing how they affect procurements
       | Telephone: 01440 603986                           |
       | abernathy-and-sons@yopmail.com                    |
       | Address: 2 Thirteenth Avenue, Liversedge WF15 8LG |
-    Given I go to the admin dashboard
+    Given I go to the admin dashboard for 'RM3830'
     And I click on 'Supplier details'
     Then I am on the 'Supplier details' page
     And I click on 'Abernathy and Sons'

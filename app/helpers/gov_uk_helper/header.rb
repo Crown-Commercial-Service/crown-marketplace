@@ -26,21 +26,23 @@ module GovUKHelper::Header
   def govuk_header_content(service, navigation_links)
     tag.div(class: 'govuk-header__content') do
       capture do
-        concat(tag.span(service, class: 'govuk-header__link govuk-header__link--service-name ccs-header__service-name'))
-        concat(tag.button('Menu', type: 'button', class: 'govuk-header__menu-button govuk-js-header-toggle', aria: { controls: 'navigation', label: 'Show or hide navigation menu' }))
-        concat(tag.nav do
-          tag.ul(id: 'navigation', class: 'govuk-header__navigation', aria: { label: 'Navigation menu' }) do
-            capture do
-              navigation_links.each do |navigation_link|
-                concat(
-                  govuk_header_navigation_item(
-                    navigation_link[:link_text],
-                    navigation_link[:link_url],
-                    **(navigation_link[:options] || {})
+        concat(tag.div(service, class: 'govuk-header__link govuk-header__link--service-name ccs-header__service-name'))
+        concat(tag.nav(class: 'govuk-header__navigation', aria: { label: 'Menu' }) do
+          capture do
+            concat(tag.button('Menu', type: 'button', class: 'govuk-header__menu-button govuk-js-header-toggle', aria: { controls: 'navigation', label: 'Show or hide menu' }))
+            concat(tag.ul(id: 'navigation', class: 'govuk-header__navigation-list') do
+              capture do
+                navigation_links.each do |navigation_link|
+                  concat(
+                    govuk_header_navigation_item(
+                      navigation_link[:link_text],
+                      navigation_link[:link_url],
+                      **(navigation_link[:options] || {})
+                    )
                   )
-                )
+                end
               end
-            end
+            end)
           end
         end)
       end

@@ -72,6 +72,43 @@ Then('I select {string} for the supplier status') do |option|
   end
 end
 
+Given('I go to a quick view with the following services, regions and annual contract value:') do |quick_view_data|
+  service_codes = quick_view_data.transpose.raw[0].reject(&:blank?)
+  region_codes = quick_view_data.transpose.raw[1].reject(&:blank?)
+  annual_cost = quick_view_data.transpose.raw[2].first
+
+  parameters = [
+    service_codes.map { |code| "service_codes[]=#{code}" }.join('&'),
+    region_codes.map { |code| "region_codes[]=#{code}" }.join('&'),
+    "annual_contract_value=#{annual_cost}"
+  ]
+
+  visit "/facilities-management/RM6232/procurements/new?journey=facilities-management&#{parameters.join('&')}"
+  expect(page.find('h1')).to have_content('Results')
+end
+
+Then('I {string} see the supplier {string} in the results') do |option, supplier|
+  supplier_list = quick_view_rm6232_page.results_container.suppliers.map(&:text)
+
+  case option
+  when 'should'
+    expect(supplier_list).to include supplier
+  when 'should not'
+    expect(supplier_list).not_to include supplier
+  end
+end
+
+Then('the supplier {string} {string} in the results') do |supplier, option|
+  supplier_list = quick_view_rm6232_page.results_container.suppliers.map(&:text)
+
+  case option
+  when 'is not'
+    expect(supplier_list).not_to include supplier
+  when 'is'
+    expect(supplier_list).to include supplier
+  end
+end
+
 def core_services
-  FacilitiesManagement::RM6232::WorkPackage.selectable.map { |work_package| work_package.services.select(&:core) }.flatten
+  FacilitiesManagement::RM6232::WorkPackage.selectable.map { |work_package| work_package.supplier_services.select(&:core) }.flatten
 end

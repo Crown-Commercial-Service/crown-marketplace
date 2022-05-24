@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   auto_session_timeout Devise.timeout_in
 
   rescue_from CanCan::AccessDenied do
-    redirect_to not_permitted_path(service: request.path_parameters[:controller].split('/').first)
+    redirect_to not_permitted_path
   end
 
   if Rails.env.production?
@@ -40,6 +40,24 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def service_path_base
+    @service_path_base ||= begin
+      service_path_base = ['']
+
+      service = params[:service] || 'facilities-management'
+      service_name = service.split('/').first
+
+      service_path_base << service_name.gsub('_', '-')
+      service_path_base << (params[:framework] || FacilitiesManagement::Framework.default_framework) unless service_name == 'crown_marketplace'
+      service_path_base << 'admin' if service.include?('admin')
+      service_path_base << 'supplier' if service.include?('supplier')
+
+      service_path_base.join('/')
+    end
+  end
+
+  helper_method :service_path_base
 
   def determine_non_admin_after_sign_in
     case controller_path.split('/').first
@@ -90,6 +108,10 @@ class ApplicationController < ActionController::Base
     else
       redirect_to sign_in_url
     end
+  end
+
+  def not_permitted_path
+    "#{service_path_base}/not-permitted"
   end
 
   def validate_service

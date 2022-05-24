@@ -1,74 +1,59 @@
 module HeaderNavigationLinksHelper
-  def default_navigation_links
-    framework = params[:framework] || FacilitiesManagement::Framework.default_framework
-
-    build_navigation_links do |navigation_links|
-      navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: facilities_management_index_path(framework: framework) } unless not_permitted_page?
-      navigation_links << sign_out_link(destroy_user_session_path)
-    end
-  end
-
-  def facilities_management_navigation_links(framework)
-    framework ||= FacilitiesManagement::Framework.default_framework
-
-    build_navigation_links do |navigation_links|
-      navigation_links << back_to_start_link(framework) unless page_does_not_require_back_to_start?
-      navigation_links << navigation_link_supplier_and_buyer(framework) if not_permitted_page? && user_signed_in?
-      navigation_links << sign_out_link("/facilities-management/#{framework}/sign-out")
-    end
-  end
-
-  def facilites_management_admin_navigation_links(framework)
-    framework ||= FacilitiesManagement::Framework.default_framework
-
-    build_navigation_links do |navigation_links|
-      navigation_links << { link_text: admin_back_to_start_text, link_url: facilities_management_admin_index_path(framework: framework) } unless sign_in_or_dashboard?('home')
-      navigation_links << sign_out_link("/facilities-management/#{framework}/admin/sign-out")
-    end
-  end
-
-  def facilites_management_supplier_navigation_links(framework)
-    framework ||= 'RM3830'
-
-    build_navigation_links do |navigation_links|
-      navigation_links << { link_text: supplier_back_to_start_text, link_url: "/facilities-management/#{framework}/supplier" } unless sign_in_or_dashboard?('dashboard')
-      navigation_links << navigation_link_supplier_and_buyer if not_permitted_page? && user_signed_in?
-      navigation_links << sign_out_link("/facilities-management/#{framework}/supplier/sign-out")
-    end
-  end
-
-  def crown_marketplace_navigation_links
-    build_navigation_links do |navigation_links|
-      navigation_links << { link_text: t('header_navigation_links_helper.back_to_start'), link_url: crown_marketplace_path } if user_signed_in? && request.original_fullpath != crown_marketplace_path && request.original_fullpath != crown_marketplace_allow_list_index_path
-      navigation_links << sign_out_link(crown_marketplace_destroy_user_session_path)
-    end
-  end
-
-  def build_navigation_links
+  def service_navigation_links
     navigation_links = []
 
-    yield(navigation_links)
+    navigation_links << case params[:service]
+                        when 'crown_marketplace'
+                          crown_marketplace_navigation_link
+                        when 'facilities_management/admin'
+                          facilites_management_admin_navigation_link
+                        when 'facilities_management/supplier'
+                          facilites_management_supplier_navigation_link
+                        else
+                          facilities_management_navigation_link
+                        end
+
+    navigation_links << { link_text: t('header_navigation_links_helper.sign_out'), link_url: "#{service_path_base}/sign-out", options: { method: :delete } } if user_signed_in?
 
     navigation_links.compact
   end
 
-  def sign_out_link(sign_out_path)
-    { link_text: t('header_navigation_links_helper.sign_out'), link_url: sign_out_path, options: { method: :delete } } if user_signed_in?
-  end
-
-  def back_to_start_link(framework)
-    if !current_user || page_with_back_to_start?
-      { link_text: t('header_navigation_links_helper.back_to_start'), link_url: "/facilities-management/#{framework}/start" }
-    elsif !current_user.fm_buyer_details_incomplete?
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_index_path(framework) }
+  def service_name_text
+    case params[:service]
+    when 'crown_marketplace'
+      t('home.index.crown_marketplace_link')
+    when 'facilities_management/admin'
+      t('home.index.facilities_management_admin_link')
+    when 'facilities_management/supplier'
+      t('home.index.facilities_management_supplier_link')
+    else
+      t('home.index.facilities_management_link')
     end
   end
 
-  def navigation_link_supplier_and_buyer(framework)
-    if current_user&.has_role?(:supplier)
-      { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: '/facilities-management/RM3830/supplier/dashboard' }
-    elsif current_user&.has_role?(:buyer)
-      { link_text: t('header_navigation_links_helper.my_account'), link_url: facilities_management_index_path(framework) }
+  def crown_marketplace_navigation_link
+    { link_text: t('header_navigation_links_helper.back_to_start'), link_url: crown_marketplace_path } if user_signed_in? && request.path != crown_marketplace_allow_list_index_path
+  end
+
+  def facilites_management_admin_navigation_link
+    { link_text: admin_back_to_start_text, link_url: service_path_base } unless sign_in_or_dashboard?('home')
+  end
+
+  def facilites_management_supplier_navigation_link
+    return { link_text: supplier_back_to_start_text, link_url: service_path_base } unless sign_in_or_dashboard?('dashboard')
+    return { link_text: t('header_navigation_links_helper.my_dashboard'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+  end
+
+  def facilities_management_navigation_link
+    return back_to_start_link unless page_does_not_require_back_to_start?
+    return { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base } if not_permitted_page? && user_signed_in?
+  end
+
+  def back_to_start_link
+    if !current_user || page_with_back_to_start?
+      { link_text: t('header_navigation_links_helper.back_to_start'), link_url: "#{service_path_base}/start" }
+    elsif !current_user.fm_buyer_details_incomplete?
+      { link_text: t('header_navigation_links_helper.my_account'), link_url: service_path_base }
     end
   end
 

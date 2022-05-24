@@ -120,7 +120,7 @@
           <% case @procurement.security_policy_document_required %>
           <% when true %>
             <% if @procurement.security_policy_document_file.attached? %>
-              <%= link_to_file_for_download("#{rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment', procurement_id: @procurement.id)}&format=#{security_policy_document_file_type}", security_policy_document_file_type, @procurement.security_policy_document_file.filename.to_s, false) %>
+              <%= link_to_file_for_download("#{rails_blob_path(@procurement.security_policy_document_file, disposition: 'attachment', key: :procurement_id, value: @procurement.id)}&format=#{security_policy_document_file_type}", security_policy_document_file_type, @procurement.security_policy_document_file.filename.to_s, false) %>
             <% else %>
               Please upload a security policy document
             <% end %>

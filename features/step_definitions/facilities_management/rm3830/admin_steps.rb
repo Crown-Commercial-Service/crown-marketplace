@@ -1,8 +1,3 @@
-Given('I go to the admin dashboard') do
-  visit facilities_management_rm3830_admin_path
-  expect(page.find('h1')).to have_content('RM3830 administration dashboard')
-end
-
 Given('I go to the buyer dashboard') do
   visit facilities_management_rm3830_path
 end

@@ -3,7 +3,6 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   get '/', to: 'home#index'
   get '/status', to: 'home#status'
-  get '/not-permitted', to: 'home#not_permitted'
 
   authenticate :user, ->(u) { u.has_role? :ccs_employee } do
     mount Sidekiq::Web => '/sidekiq-log'
@@ -61,6 +60,7 @@ Rails.application.routes.draw do
   end
 
   concern :shared_pages do
+    get '/not-permitted', to: 'home#not_permitted'
     get '/accessibility-statement', to: 'home#accessibility_statement'
     get '/cookie-policy', to: 'home#cookie_policy'
     get '/cookie-settings', to: 'home#cookie_settings'
@@ -72,8 +72,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
-    concerns %i[shared_pages framework]
-    get '/not-permitted', to: 'home#not_permitted'
+    concerns :framework
 
     resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
       member do
@@ -86,17 +85,19 @@ Rails.application.routes.draw do
     end
 
     namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
-      concerns %i[shared_pages framework]
+      concerns :framework
     end
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-      concerns %i[shared_pages framework]
+      concerns :framework
       resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
     end
 
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
+      concerns :shared_pages
+
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
@@ -137,6 +138,8 @@ Rails.application.routes.draw do
       resources :procurement_buildings_services, only: %i[edit update]
 
       namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
+        concerns :shared_pages
+
         get '/', to: 'home#index'
         resources :dashboard, only: :index
         resources :contracts, only: %i[show edit update], controller: 'contracts' do
@@ -145,6 +148,8 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        concerns :shared_pages
+
         get '/', to: 'home#index'
         resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
         resources :supplier_framework_data, path: 'supplier-framework-data', only: :index do
@@ -164,10 +169,17 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
+      concerns :shared_pages
+
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
 
+      resources :procurements, only: %i[new create] do
+      end
+
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
+        concerns :shared_pages
+
         get '/', to: 'home#index'
         resources :supplier_data, path: 'supplier-data', only: :index
         resources :supplier_lot_data, path: 'supplier-lot-data', only: :show do
@@ -186,7 +198,7 @@ Rails.application.routes.draw do
 
   namespace :crown_marketplace, path: 'crown-marketplace', defaults: { service: 'crown_marketplace' } do
     concerns :shared_pages
-    get '/not-permitted', to: 'home#not_permitted'
+
     get '/', to: 'home#index'
     resources :allow_list, path: 'allow-list', only: %i[index new create]
     delete '/allow-list/destroy', to: 'allow_list#destroy'

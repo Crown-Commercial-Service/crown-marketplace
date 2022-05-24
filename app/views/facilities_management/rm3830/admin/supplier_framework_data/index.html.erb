@@ -9,40 +9,19 @@
 </p>
 
 <div class="govuk-!-width-two-thirds">
-  <%= govuk_accordion('supplier-framework-data') do %>
-    <% @fm_suppliers.each_with_index do |(supplier_name, data), index| %>
-      <% supplier_id = data[:supplier_id] %>
-      <%= govuk_accordion_add_section(index, supplier_name) do %>
-        <% if (@supplier_lot1a_present[supplier_name]) %>
-          <div class="govuk-!-margin-bottom-5">
-            <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">
-              <%= t('.sub_lot_1a') %>
-            </span>
-            <br />
-            <%= link_to t('.service_prices'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, '1a'), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
-            <%= link_to t('.regions'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, '1a'), class: 'govuk-link govuk-!-font-size-19' %>
-          </div>
-        <% end %>
-        <% if (@supplier_lot1b_present[supplier_name]) %>
-          <div class="govuk-!-margin-bottom-5">
-            <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">
-              <%= t('.sub_lot_1b') %>
-            </span>
-            <br />
-            <%= link_to t('.services'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, '1b'), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
-            <%= link_to t('.regions'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, '1b'), class: 'govuk-link govuk-!-font-size-19' %>
-          </div>
-        <% end %>
-        <% if (@supplier_lot1c_present[supplier_name]) %>
-          <div class="govuk-!-margin-bottom-5">
-            <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">
-              <%= t('.sub_lot_1c') %>
-            </span>
-            <br />
-            <%= link_to t('.services'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, '1c'), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
-            <%= link_to t('.regions'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, '1c'), class: 'govuk-link govuk-!-font-size-19' %>
-          </div>
-        <% end %>
+  <%= govuk_accordion('supplier-framework-data', @fm_suppliers) do |data| %>
+    <% supplier_id = data[:supplier_id] %>
+
+    <% %w[1a 1b 1c].each do |lot_number| %>
+      <% if (@supplier_present[lot_number][supplier_id]) %>
+        <div class="govuk-!-margin-bottom-5">
+          <span class="govuk-body govuk-!-font-size-19 govuk-!-margin-bottom-5 govuk-!-font-weight-bold">
+            <%= t(".sub_lot.#{lot_number}") %>
+          </span>
+          <br />
+          <%= link_to lot_number == '1a' ? t('.service_prices') : t('.services'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_service_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19 govuk-!-margin-right-3' %>
+          <%= link_to t('.regions'), edit_facilities_management_rm3830_admin_supplier_framework_datum_sublot_region_path(supplier_id, lot_number), class: 'govuk-link govuk-!-font-size-19' %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

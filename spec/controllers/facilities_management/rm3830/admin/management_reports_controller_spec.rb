@@ -20,7 +20,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController,
       it 'redirects to the not permitted page' do
         get :new
 
-        expect(response).to redirect_to not_permitted_path(service: 'facilities_management')
+        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
       end
     end
 

@@ -39,7 +39,7 @@ RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
       'N': 13,
       'O': 5,
       'P': 14,
-      'Q': 2,
+      'Q': 3,
       'R': 1,
       'S': 1
     }
@@ -49,6 +49,86 @@ RSpec.describe FacilitiesManagement::RM6232::WorkPackage, type: :model do
         it "has #{number_of_services} services" do
           expect(described_class.find(code).services.count).to eq number_of_services
         end
+      end
+    end
+  end
+
+  describe '.selectable_services' do
+    context 'when checking the number of services' do
+      work_packages_with_num_of_services = {
+        'A': 18,
+        'B': 1,
+        'C': 1,
+        'D': 1,
+        'E': 21,
+        'F': 13,
+        'G': 8,
+        'H': 10,
+        'I': 18,
+        'J': 16,
+        'K': 5,
+        'L': 15,
+        'M': 8,
+        'N': 13,
+        'O': 5,
+        'P': 14,
+        'Q': 1,
+        'R': 1,
+        'S': 1
+      }
+
+      work_packages_with_num_of_services.each do |code, number_of_services|
+        context "and the code is #{code}" do
+          it "has #{number_of_services} services" do
+            expect(described_class.find(code).selectable_services.count).to eq number_of_services
+          end
+        end
+      end
+    end
+
+    context 'when checking CAFM (Q) services' do
+      it 'has the right services' do
+        expect(described_class.find('Q').selectable_services.map(&:code)).to eq ['Q.3']
+      end
+    end
+  end
+
+  describe '.supplier_services' do
+    context 'when checking the number of services' do
+      work_packages_with_num_of_services = {
+        'A': 18,
+        'B': 1,
+        'C': 1,
+        'D': 1,
+        'E': 21,
+        'F': 13,
+        'G': 8,
+        'H': 10,
+        'I': 18,
+        'J': 16,
+        'K': 5,
+        'L': 15,
+        'M': 8,
+        'N': 13,
+        'O': 5,
+        'P': 14,
+        'Q': 2,
+        'R': 1,
+        'S': 1
+      }
+
+      work_packages_with_num_of_services.each do |code, number_of_services|
+        context "and the code is #{code}" do
+          it "has #{number_of_services} services" do
+            expect(described_class.find(code).supplier_services.count).to eq number_of_services
+          end
+        end
+      end
+    end
+
+    context 'when checking CAFM (Q) services' do
+      it 'has the right services' do
+        expect(described_class.find('Q').supplier_services.map(&:code)).to eq ['Q.1', 'Q.2']
       end
     end
   end

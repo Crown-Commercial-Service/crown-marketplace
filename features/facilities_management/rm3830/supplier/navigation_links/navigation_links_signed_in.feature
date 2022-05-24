@@ -4,7 +4,7 @@ Feature: Navigation links when signed in
     Given I sign in as a supplier and navigate to my account
 
   Scenario: Not permitted page - My dashboard
-    And I go to the not permitted page
+    And I go to the 'supplier' not permitted page for 'RM3830'
     And I should see the following navigation links:
       | My dashboard  |
       | Sign out      |
@@ -12,7 +12,7 @@ Feature: Navigation links when signed in
     And I am on the 'Direct award dashboard' page
 
   Scenario: Not permitted page - sign out
-    And I go to the not permitted page
+    And I go to the 'supplier' not permitted page for 'RM3830'
     And I should see the following navigation links:
       | My dashboard  |
       | Sign out      |
