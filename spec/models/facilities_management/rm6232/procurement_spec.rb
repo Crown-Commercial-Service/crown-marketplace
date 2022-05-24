@@ -387,10 +387,87 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe 'aasm_state' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, aasm_state: state) }
 
-    it 'sets the initial aasm state to what_happens_next' do
-      expect(procurement.what_happens_next?).to be true
+    context 'when considering the initial state' do
+      let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings) }
+
+      it 'is what_happens_next' do
+        expect(procurement.what_happens_next?).to be true
+      end
+    end
+
+    context 'when the state is what_happens_next' do
+      let(:state) { 'what_happens_next' }
+
+      context 'and set_state_to_entering_requirements is called' do
+        it 'changes the state to entering_requirements' do
+          procurement.set_state_to_entering_requirements
+
+          expect(procurement.entering_requirements?).to be true
+        end
+      end
+    end
+
+    context 'when the state is entering_requirements' do
+      let(:state) { 'entering_requirements' }
+
+      context 'and set_state_to_results is called' do
+        it 'changes the state to results' do
+          procurement.set_state_to_results
+
+          expect(procurement.results?).to be true
+        end
+      end
+    end
+
+    context 'when the state is results' do
+      let(:state) { 'results' }
+
+      context 'and set_state_to_further_competition is called' do
+        it 'changes the state to further_competition' do
+          procurement.set_state_to_further_competition
+
+          expect(procurement.further_competition?).to be true
+        end
+      end
+    end
+  end
+
+  describe 'scope' do
+    before do
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 1')
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'results', contract_name: 'R procurement 1')
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', contract_name: 'FC procurement 1')
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 2')
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'entering_requirements', contract_name: 'ER procurement 1')
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', contract_name: 'FC procurement 2')
+    end
+
+    context 'when the searches scope is called' do
+      it 'returns the epxected procurements in the right order' do
+        searches = described_class.searches
+
+        expect(searches.length).to eq 4
+        expect(searches.map(&:contract_name)).to eq ['WHN procurement 1', 'WHN procurement 2', 'ER procurement 1', 'R procurement 1']
+      end
+
+      it 'has the right data' do
+        expect(described_class.searches.first.attributes.keys).to eq(%w[id aasm_state contract_name updated_at])
+      end
+    end
+
+    context 'when the advanced_procurement_activities scope is called' do
+      it 'returns the epxected procurements in the right order' do
+        advanced_procurement_activities = described_class.advanced_procurement_activities
+
+        expect(advanced_procurement_activities.length).to eq 2
+        expect(advanced_procurement_activities.map(&:contract_name)).to eq ['FC procurement 1', 'FC procurement 2']
+      end
+
+      it 'has the right data' do
+        expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name updated_at contract_number])
+      end
     end
   end
 end

@@ -15,6 +15,64 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     end
   end
 
+  describe 'GET index' do
+    before do
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'entering_requirements', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'results', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', user: controller.current_user)
+      get :index
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template('index')
+    end
+
+    it 'groups up the procurements' do
+      expect(assigns(:searches).length).to eq 3
+      expect(assigns(:advanced_procurement_activities).length).to eq 2
+    end
+
+    it 'sets the back path' do
+      expect(assigns(:back_path)).to eq facilities_management_rm6232_path
+      expect(assigns(:back_text)).to eq 'Return to your account'
+    end
+  end
+
+  describe 'GET show' do
+    before { get :show, params: { id: procurement.id } }
+
+    render_views
+
+    context 'and the procurement state is what_happens_next' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', user: controller.current_user) }
+
+      it 'renders the what happens next partial' do
+        expect(response).to render_template(partial: '_what_happens_next')
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
+      it 'sets the back path' do
+        expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
+        expect(assigns(:back_text)).to eq 'Return to procurements dashboard'
+      end
+    end
+
+    context 'when the user did not create the procurement' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: create(:user)) }
+
+      before { get :show, params: { id: procurement.id } }
+
+      it 'redirects to the not permitted path' do
+        expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
+      end
+    end
+  end
+
   describe 'GET new' do
     before { get :new, params: { annual_contract_value: 123_456, region_codes: ['UKC1'], service_codes: ['E.1'] } }
 
@@ -94,42 +152,9 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
       context 'and the user clicked "Save and return to procurements dashboard"' do
         let(:options) { { save_and_return: 'Save and return to procurements dashboard' } }
 
-        pending 'redirects to the index page' do
+        it 'redirects to the index page' do
           expect(response).to redirect_to facilities_management_rm6232_procurements_path
         end
-      end
-    end
-  end
-
-  describe 'GET show' do
-    before { get :show, params: { id: procurement.id } }
-
-    render_views
-
-    context 'and the procurement state is what_happens_next' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', user: controller.current_user,) }
-
-      it 'renders the what happens next partial' do
-        expect(response).to render_template(partial: '_what_happens_next')
-      end
-
-      it 'sets the procurement' do
-        expect(assigns(:procurement)).to eq procurement
-      end
-
-      pending 'sets the back path' do
-        expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
-        expect(assigns(:back_text)).to eq 'Return to procurement dashboard'
-      end
-    end
-
-    context 'when the user did not create the procurement' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: create(:user)) }
-
-      before { get :show, params: { id: procurement.id } }
-
-      it 'redirects to the not permitted path' do
-        expect(response).to redirect_to facilities_management_rm6232_not_permitted_path
       end
     end
   end

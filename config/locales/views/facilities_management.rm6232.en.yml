@@ -198,6 +198,21 @@ en:
             title: Final results
           the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
       procurements:
+        index:
+          advanced_procurement_activities: Advanced procurement activities
+          date_saved: Date saved
+          description: Your saved searches and procurements are shown below. Click on the search/contract name to view the details or progress further.
+          heading: Procurements dashboard
+          name: Name
+          ref_number: Ref number
+          return_to_your_account: Return to your account
+          search_names:
+            entering_requirements: Entering requirements
+            results: Results
+            what_happens_next: Completed search
+          searches: Searches
+          stage: Stage
+          you_do_not_have_any: You do not have any procurements in this section
         new:
           based_on_info: 'Based on information provided, this procurement is eligible for the following sub-lot:'
           change: Change
@@ -216,7 +231,7 @@ en:
           suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
           who_can_provide: who can provide the services you require in your
         show:
-          return_to_procurement_dashboard: Return to procurement dashboard
+          return_to_procurement_dashboard: Return to procurements dashboard
           return_to_your_account: Return to your account
           save_and_continue: Save and continue
           title:
