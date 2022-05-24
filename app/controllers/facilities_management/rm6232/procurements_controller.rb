@@ -1,20 +1,17 @@
 module FacilitiesManagement
   module RM6232
     class ProcurementsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement, only: %i[show supplier_shortlist_spreadsheet]
+      before_action :set_procurement, only: %i[show update_show supplier_shortlist_spreadsheet]
       before_action :authorize_user
-      before_action :build_new_procurement, :set_back_path, only: :new
 
       def index
         @searches = current_user.rm6232_procurements.searches
         @advanced_procurement_activities = current_user.rm6232_procurements.advanced_procurement_activities
-        @back_path = facilities_management_rm6232_path
-        @back_text = t('facilities_management.rm6232.procurements.index.return_to_your_account')
+        set_back_path(:index)
       end
 
       def show
-        @back_path = facilities_management_rm6232_procurements_path
-        @back_text = t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')
+        set_back_path(:show)
       end
 
       def new
@@ -24,6 +21,7 @@ module FacilitiesManagement
 
         @procurement.lot_number = @procurement.quick_view_suppliers.lot_number
         @suppliers = @procurement.quick_view_suppliers.selected_suppliers
+        set_back_path(:new)
       end
 
       def create
@@ -37,8 +35,17 @@ module FacilitiesManagement
           end
         else
           build_new_procurement
-          set_back_path
+          set_back_path(:new)
           render :new
+        end
+      end
+
+      def update_show
+        if @procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!
+          redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
+        else
+          set_back_path(:show)
+          render :show
         end
       end
 
@@ -54,10 +61,18 @@ module FacilitiesManagement
 
       private
 
-      def set_back_path
-        @back_path = helpers.journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes)
-        @back_text = t('facilities_management.rm6232.procurements.new.return_to_contract_cost')
+      # rubocop:disable Naming/AccessorMethodName
+      def set_back_path(action)
+        @back_path, @back_text = case action
+                                 when :index
+                                   [facilities_management_rm6232_path, t('facilities_management.rm6232.procurements.index.return_to_your_account')]
+                                 when :show
+                                   [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')]
+                                 when :new
+                                   [helpers.journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), t('facilities_management.rm6232.procurements.new.return_to_contract_cost')]
+                                 end
       end
+      # rubocop:enable Naming/AccessorMethodName
 
       def build_new_procurement
         @procurement ||= current_user.rm6232_procurements.build(

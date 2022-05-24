@@ -2,6 +2,7 @@
 module FacilitiesManagement::RM3830
   module ProcurementsHelper
     include Procurements::ContractDatesHelper
+    include FacilitiesManagement::ProcurementsHelper
 
     def journey_step_url_former(journey_step:, framework:, region_codes: nil, service_codes: nil)
       facilities_management_journey_question_path(framework: framework, slug: "choose-#{journey_step}", region_codes: region_codes, service_codes: service_codes)
@@ -101,24 +102,6 @@ module FacilitiesManagement::RM3830
       end
     end
 
-    def requirements_errors_list
-      @requirements_errors_list ||= @procurement.errors.details[:base].map.with_index { |detail, index| [detail[:error], @procurement.errors[:base][index]] }.to_h
-    end
-
-    def section_errors(section)
-      if section == 'contract_period'
-        %i[contract_period_incomplete initial_call_off_period_in_past mobilisation_period_in_past mobilisation_period_required]
-      else
-        ["#{section}_incomplete".to_sym]
-      end
-    end
-
-    def section_has_error?(section)
-      return false unless @procurement.errors.any?
-
-      (requirements_errors_list.keys & section_errors(section)).any?
-    end
-
     def display_all_errors(errors, section_errors)
       capture do
         section_errors.each do |attribute|
@@ -154,10 +137,6 @@ module FacilitiesManagement::RM3830
 
     def call_off_extension_meet_conditions?(call_off_extension)
       call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
-    end
-
-    def section_id(section)
-      "#{section.downcase.gsub(' ', '-')}-tag"
     end
 
     def work_packages_names

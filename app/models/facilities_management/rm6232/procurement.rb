@@ -2,6 +2,7 @@ module FacilitiesManagement
   module RM6232
     class Procurement < ApplicationRecord
       include AASM
+      include ProcurementValidator
 
       scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
       scope :advanced_procurement_activities, -> { further_competition.select(:id, :contract_name, :contract_number, :updated_at).order(updated_at: :asc) }
@@ -9,13 +10,6 @@ module FacilitiesManagement
       belongs_to :user, inverse_of: :rm6232_procurements
 
       before_create :generate_contract_number, :determine_lot_number
-
-      with_options on: :contract_name do
-        before_validation :remove_excess_whitespace_from_name
-        validates :contract_name, presence: true
-        validates :contract_name, uniqueness: { scope: :user }
-        validates :contract_name, length: 1..100
-      end
 
       # The service CAFM – Soft FM Requirements (Q.1) can only be selected when all other services are soft.
       # Because we don't want to pass that logic onto the user, we determine which CAFM service they need for them.
@@ -41,20 +35,64 @@ module FacilitiesManagement
         state :results
         state :further_competition
 
-        event :set_state_to_entering_requirements do
+        event :set_to_next_state do
           transitions from: :what_happens_next, to: :entering_requirements
-        end
-
-        event :set_state_to_results do
           transitions from: :entering_requirements, to: :results
-        end
-
-        event :set_state_to_further_competition do
           transitions from: :results, to: :further_competition
         end
       end
 
       SEARCH = %w[what_happens_next entering_requirements results].freeze
+
+      def contract_name_status
+        contract_name.present? ? :completed : :not_started
+      end
+
+      def annual_contract_value_status
+        annual_contract_value.present? ? :completed : :not_started
+      end
+
+      def tupe_status
+        # TODO: Add in when appropriate
+        # tupe.nil? ? :not_started : :completed
+        :not_started
+      end
+
+      def contract_period_status
+        # TODO: Add in when appropriate
+        # relevant_attributes = [
+        #   initial_call_off_period_years,
+        #   initial_call_off_period_months,
+        #   initial_call_off_start_date,
+        #   mobilisation_period_required,
+        #   extensions_required
+        # ]
+
+        # return :not_started if relevant_attributes.all?(&:nil?)
+
+        # relevant_attributes.any?(&:nil?) ? :incomplete : :completed
+        :not_started
+      end
+
+      def services_status
+        @services_status ||= service_codes.any? ? :completed : :not_started
+      end
+
+      def buildings_status
+        # TODO: Add in when appropriate
+        # @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
+        :not_started
+      end
+
+      def buildings_and_services_status
+        # TODO: Add in when appropriate
+        # @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
+        #                                      :cannot_start
+        #                                    else
+        #                                      buildings_and_services_completed? ? :completed : :incomplete
+        #                                    end
+        :cannot_start
+      end
 
       private
 
@@ -78,10 +116,6 @@ module FacilitiesManagement
 
       def determine_lot_number
         self.lot_number = Service.find_lot_number(service_codes_without_cafm, annual_contract_value)
-      end
-
-      def remove_excess_whitespace_from_name
-        contract_name&.squish!
       end
     end
   end

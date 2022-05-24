@@ -15,10 +15,10 @@ Feature: What happens next
     And I click on 'Selected suppliers'
     Then the spreadsheet 'Supplier shortlist (My WHN procurement)' is downloaded
 
-  @wip
-  Scenario: I can continue to entering requirements
+  @pipeline
+  Scenario: I can continue to 'Further service and contract requirements'
     And I click on 'Save and continue'
-    Then I am on the 'Entering requirements' page
+    Then I am on the 'Further service and contract requirements' page
 
   Scenario: Back button link
     And I click on 'Return to procurements dashboard'
