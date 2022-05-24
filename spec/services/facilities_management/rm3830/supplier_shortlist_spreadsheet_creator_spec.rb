@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::QuickViewResultsSpreadsheetCreator do
+RSpec.describe FacilitiesManagement::RM3830::SupplierShortlistSpreadsheetCreator do
   let(:procurement) { create(:facilities_management_rm3830_procurement, user: user, service_codes: ['G.9', 'H.1', 'L.11'], region_codes: ['UKF3', 'UKM28', 'UKM36', 'UKM62', 'UKN03'], contract_name: 'My quick view test', aasm_state: 'quick_search') }
   let(:user) { create(:user, :with_detail) }
   let(:buyer_detail) { user.buyer_detail }

@@ -261,7 +261,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
   describe 'before_create' do
     context 'when a procurement is created' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, lot_number: nil) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, lot_number: nil, contract_number: nil) }
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'sets the contract number and lot number' do

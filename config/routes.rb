@@ -175,6 +175,7 @@ Rails.application.routes.draw do
       get '/', to: 'buyer_account#index'
 
       resources :procurements, only: %i[index show new create] do
+        get 'supplier_shortlist_spreadsheet'
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do

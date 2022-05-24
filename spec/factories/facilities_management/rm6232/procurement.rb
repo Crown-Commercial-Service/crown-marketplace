@@ -5,6 +5,7 @@ FactoryBot.define do
     annual_contract_value { 12345 }
     contract_name { Faker::Name.unique.name }
     lot_number { '2a' }
+    contract_number { 'RM6232-000001-2022' }
     association :user
 
     trait :skip_generate_contract_number do
