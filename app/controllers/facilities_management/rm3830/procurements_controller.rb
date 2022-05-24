@@ -86,9 +86,9 @@ module FacilitiesManagement
 
       def quick_view_results_spreadsheet
         if @procurement.quick_search?
-          spreadsheet_builder = QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
           spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
+          send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         else
           redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         end
@@ -98,7 +98,7 @@ module FacilitiesManagement
         if @procurement.further_competition?
           spreadsheet_builder = FurtherCompetitionDeliverablesMatrix.new(@procurement.id)
           spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+          send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         else
           redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         end
