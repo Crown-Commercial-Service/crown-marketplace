@@ -62,6 +62,8 @@ en:
               too_long: The supplier name cannot be more than 100 characters
         facilities_management/rm6232/procurement:
           attributes:
+            base:
+              incomplete: Your requirements are incomplete
             contract_name:
               blank: Enter your contract name
               taken: This contract name is already in use
@@ -235,8 +237,13 @@ en:
           return_to_your_account: Return to your account
           save_and_continue: Save and continue
           title:
+            entering_requirements: Further service and contract requirements
             what_happens_next: What happens next?
         show_partial:
+          entering_requirements:
+            contract_details: 1. Contract details
+            description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'Save and continue' button to see your supplier shortlist and procurement options.
+            services_and_buildings: 2. Services and buildings
           what_happens_next:
             if_you_need_to_talk: If you need to talk to us or refer to your procurement at any point please use the below reference number
             option_1:

@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe '.services' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
     let(:base_service_codes) { ['E.1', 'E.2'] }
     let(:service_codes) { base_service_codes }
     let(:lot_number) { '1a' }
@@ -72,7 +72,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe '.regions' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next) }
 
     it 'returns an array of FacilitiesManagement::Region' do
       expect(procurement.regions.length).to eq 2
@@ -81,7 +81,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe '.service_codes_without_cafm' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes: service_codes) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes) }
     let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
 
     context 'when the service codes contain Q.3' do
@@ -104,7 +104,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe '.true_service_codes' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, service_codes: service_codes, lot_number: lot_number) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
     let(:base_service_codes) { ['E.1', 'E.2', 'F.1', 'F.2', 'H.1'] }
     let(:lot_number) { '1a' }
 
@@ -190,71 +190,6 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       it 'returns the service codes unchanged' do
         expect(procurement.service_codes).to eq service_codes
         expect(procurement.send(:true_service_codes)).to eq service_codes
-      end
-    end
-  end
-
-  describe 'validations' do
-    describe '#contract_name' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: user) }
-      let(:user) { create(:user) }
-
-      before { procurement.contract_name = contract_name }
-
-      context 'when the name is more than 100 characters' do
-        let(:contract_name) { (0...101).map { ('a'..'z').to_a.sample }.join }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to eq false
-          expect(procurement.errors[:contract_name].first).to eq 'Your contract name must be 100 characters or fewer'
-        end
-      end
-
-      context 'when the name is nil' do
-        let(:contract_name) { nil }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to eq false
-          expect(procurement.errors[:contract_name].first).to eq 'Enter your contract name'
-        end
-      end
-
-      context 'when the name is empty' do
-        let(:contract_name) { '' }
-
-        it 'is expected to not be valid and has the correct error message' do
-          expect(procurement.valid?(:contract_name)).to eq false
-          expect(procurement.errors[:contract_name].first).to eq 'Enter your contract name'
-        end
-      end
-
-      context 'when the name is taken by the same user' do
-        let(:contract_name) { 'My taken name' }
-
-        it 'is expected to not be valid and has the correct error message' do
-          create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: user, contract_name: contract_name)
-
-          expect(procurement.valid?(:contract_name)).to eq false
-          expect(procurement.errors[:contract_name].first).to eq 'This contract name is already in use'
-        end
-      end
-
-      context 'when the name is taken by the a different user' do
-        let(:contract_name) { 'My taken name' }
-
-        it 'is valid' do
-          create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: create(:user), contract_name: contract_name)
-
-          expect(procurement.valid?(:contract_name)).to eq true
-        end
-      end
-
-      context 'when the name is correct' do
-        let(:contract_name) { 'Valid Name' }
-
-        it 'expected to be valid' do
-          expect(procurement.valid?(:contract_name)).to eq true
-        end
       end
     end
   end
@@ -387,47 +322,39 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
   end
 
   describe 'aasm_state' do
-    let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings, aasm_state: state) }
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state) }
 
     context 'when considering the initial state' do
-      let(:procurement) { build(:facilities_management_rm6232_procurement_no_procurement_buildings) }
+      let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next) }
 
       it 'is what_happens_next' do
         expect(procurement.what_happens_next?).to be true
       end
     end
 
-    context 'when the state is what_happens_next' do
-      let(:state) { 'what_happens_next' }
+    context 'when the event set_to_next_state is called' do
+      before { procurement.set_to_next_state }
 
-      context 'and set_state_to_entering_requirements is called' do
+      context 'and the state is what_happens_next' do
+        let(:state) { 'what_happens_next' }
+
         it 'changes the state to entering_requirements' do
-          procurement.set_state_to_entering_requirements
-
           expect(procurement.entering_requirements?).to be true
         end
       end
-    end
 
-    context 'when the state is entering_requirements' do
-      let(:state) { 'entering_requirements' }
+      context 'and the state is entering_requirements' do
+        let(:state) { 'entering_requirements' }
 
-      context 'and set_state_to_results is called' do
         it 'changes the state to results' do
-          procurement.set_state_to_results
-
           expect(procurement.results?).to be true
         end
       end
-    end
 
-    context 'when the state is results' do
-      let(:state) { 'results' }
+      context 'and the state is results' do
+        let(:state) { 'results' }
 
-      context 'and set_state_to_further_competition is called' do
         it 'changes the state to further_competition' do
-          procurement.set_state_to_further_competition
-
           expect(procurement.further_competition?).to be true
         end
       end
@@ -436,12 +363,12 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
   describe 'scope' do
     before do
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 1')
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'results', contract_name: 'R procurement 1')
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', contract_name: 'FC procurement 1')
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 2')
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'entering_requirements', contract_name: 'ER procurement 1')
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', contract_name: 'FC procurement 2')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 1')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', contract_name: 'R procurement 1')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', contract_name: 'FC procurement 1')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 2')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', contract_name: 'ER procurement 1')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', contract_name: 'FC procurement 2')
     end
 
     context 'when the searches scope is called' do
@@ -467,6 +394,232 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
       it 'has the right data' do
         expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name updated_at contract_number])
+      end
+    end
+  end
+
+  describe '.contract_name_status' do
+    subject(:status) { procurement.contract_name_status }
+
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, contract_name: contract_name) }
+
+    context 'when the contract name section has not been completed' do
+      let(:contract_name) { '' }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the contract name section has been completed' do
+      let(:contract_name) { 'My contract name' }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.annual_contract_value_status' do
+    subject(:status) { procurement.annual_contract_value_status }
+
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value: annual_contract_value) }
+
+    context 'when the annual contract value section has not been completed' do
+      let(:annual_contract_value) { nil }
+
+      it 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the annual contract value section has been completed' do
+      let(:annual_contract_value) { 123_456 }
+
+      it 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.tupe_status' do
+    subject(:status) { procurement.tupe_status }
+
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, tupe: tupe) }
+
+    context 'when the tupe section has not been completed' do
+      let(:tupe) { nil }
+
+      pending 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when the tupe section has been completed' do
+      let(:tupe) { true }
+
+      pending 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.contract_period_status' do
+    subject(:status) { procurement.contract_period_status }
+
+    context 'when all contract period sections have not been started' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
+
+      pending 'has a status of not_started' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when all contract period sections have not been completed' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
+
+      pending 'has a status of not_started' do
+        expect(status).to eq(:incomplete)
+      end
+    end
+
+    context 'when all contract period sections have been completed' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, mobilisation_period_required: false, extensions_required: false) }
+
+      pending 'has a status of completed' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.services_status' do
+    subject(:status) { procurement.services_status }
+
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, service_codes: service_codes) }
+
+    context 'when user has not yet selected services' do
+      let(:service_codes) { [] }
+
+      it 'shown with the NOT STARTED status label' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when user has already selected services' do
+      let(:service_codes) { %w[E.1 E.2] }
+
+      it 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  describe '.buildings_status' do
+    subject(:status) { procurement.buildings_status }
+
+    context 'when user has not yet selected buildings' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+
+      it 'shown with the NOT STARTED status label' do
+        expect(status).to eq(:not_started)
+      end
+    end
+
+    context 'when user has already selected buildings' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+
+      pending 'shown with the COMPLETED status label' do
+        expect(status).to eq(:completed)
+      end
+    end
+  end
+
+  shared_context 'with buildings and services' do
+    let(:procurement) do
+      create(:facilities_management_rm6232_procurement_entering_requirements, procurement_buildings: procurement_buildings)
+    end
+
+    let(:procurement_buildings) { [procurement_building1, procurement_building2] }
+
+    let(:procurement_building1) { build(:facilities_management_rm6232_procurement_building) }
+    let(:procurement_building2) { build(:facilities_management_rm6232_procurement_building) }
+  end
+
+  describe '.buildings_and_services_completed' do
+    include_context 'with buildings and services'
+
+    before do
+      procurement_building1.update(service_codes: service_codes)
+      procurement_building2.update(service_codes: %w[E.1 E.2])
+    end
+
+    context 'when one building has no service codes' do
+      let(:service_codes) { [] }
+
+      pending 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when one building has an invalid selection' do
+      let(:service_codes) { %w[Q.3 R.1 S.1] }
+
+      pending 'returns false' do
+        expect(procurement.buildings_and_services_completed?).to eq false
+      end
+    end
+
+    context 'when both buildings have a valid selection' do
+      let(:service_codes) { %w[Q.3 R.1 S.1 E.1] }
+
+      pending 'returns true' do
+        expect(procurement.buildings_and_services_completed?).to eq true
+      end
+    end
+  end
+
+  describe '.buildings_and_services_status' do
+    subject(:status) { procurement.buildings_and_services_status }
+
+    include_context 'with buildings and services'
+
+    context 'when both Services and Buildings tasks are not COMPLETED yet' do
+      before do
+        allow(procurement).to receive(:services_status).and_return(:not_started)
+        allow(procurement).to receive(:buildings_status).and_return(:not_started)
+      end
+
+      pending 'shown with the CANNOT START YET status label' do
+        expect(status).to eq(:cannot_start)
+      end
+    end
+
+    context 'when both Services and Buildings tasks are COMPLETED' do
+      before do
+        allow(procurement).to receive(:services_status).and_return(:completed)
+        allow(procurement).to receive(:buildings_status).and_return(:completed)
+      end
+
+      context 'when no service has been assigned to any building yet' do
+        before do
+          procurement_building1.procurement_building_services.delete_all
+          procurement_building2.procurement_building_services.delete_all
+        end
+
+        pending 'shown with the NOT STARTED status label' do
+          expect(status).to eq(:incomplete)
+        end
+      end
+
+      context 'when at least one service is assigned to each and every building' do
+        before do
+          procurement_building1.update(service_codes: ['E.1'])
+          procurement_building2.update(service_codes: ['F.1', 'G.4', 'R.1'])
+        end
+
+        pending 'shown with the COMPLETED status label' do
+          expect(status).to eq(:completed)
+        end
       end
     end
   end

@@ -4,8 +4,6 @@ FactoryBot.define do
     region_codes { ['UKI4', 'UKI5'] }
     annual_contract_value { 12345 }
     contract_name { Faker::Name.unique.name }
-    lot_number { '2a' }
-    contract_number { 'RM6232-000001-2022' }
     association :user
 
     trait :skip_generate_contract_number do
@@ -31,5 +29,15 @@ FactoryBot.define do
         procurement.class.set_callback(:create, :before, :determine_lot_number)
       end
     end
+  end
+
+  factory :facilities_management_rm6232_procurement_what_happens_next, parent: :facilities_management_rm6232_procurement_no_procurement_buildings, traits: [:skip_before_create] do
+    aasm_state { 'what_happens_next' }
+    lot_number { '2a' }
+    contract_number { 'RM6232-000001-2022' }
+  end
+
+  factory :facilities_management_rm6232_procurement_entering_requirements, parent: :facilities_management_rm6232_procurement_what_happens_next do
+    aasm_state { 'entering_requirements' }
   end
 end

@@ -17,11 +17,11 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
   describe 'GET index' do
     before do
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'entering_requirements', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'results', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'further_competition', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: controller.current_user)
       get :index
     end
 
@@ -46,7 +46,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     render_views
 
     context 'and the procurement state is what_happens_next' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: 'what_happens_next', user: controller.current_user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: controller.current_user) }
 
       it 'renders the what happens next partial' do
         expect(response).to render_template(partial: '_what_happens_next')
@@ -62,8 +62,25 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
       end
     end
 
+    context 'and the procurement state is entering_requirements' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: controller.current_user) }
+
+      it 'renders the entering requirements next partial' do
+        expect(response).to render_template(partial: '_entering_requirements')
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
+      it 'sets the back path' do
+        expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
+        expect(assigns(:back_text)).to eq 'Return to procurements dashboard'
+      end
+    end
+
     context 'when the user did not create the procurement' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: create(:user)) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: create(:user)) }
 
       before { get :show, params: { id: procurement.id } }
 
@@ -159,11 +176,62 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     end
   end
 
+  describe 'PUT update_show' do
+    context 'and the procurement state is entering_requirements' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: controller.current_user) }
+
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(procurement.class).to receive(:valid?).and_return(safe_to_continue)
+        allow_any_instance_of(procurement.class).to receive(:valid?).with(:entering_requirements).and_return(safe_to_continue)
+        # rubocop:enable RSpec/AnyInstance
+        put :update_show, params: { procurement_id: procurement.id }
+      end
+
+      context 'when it is safe to continue' do
+        let(:safe_to_continue) { true }
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
+        it 'redirects to the show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement.id)
+        end
+
+        it 'updates the procurement state' do
+          procurement.reload
+
+          expect(procurement.results?).to be true
+        end
+      end
+
+      context 'when it is not safe to continue' do
+        let(:safe_to_continue) { false }
+
+        render_views
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
+        it 'renders the entering requirements next partial' do
+          expect(response).to render_template(partial: '_entering_requirements')
+        end
+
+        it 'sets the back path' do
+          expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
+          expect(assigns(:back_text)).to eq 'Return to procurements dashboard'
+        end
+      end
+    end
+  end
+
   describe 'GET supplier_shortlist_spreadsheet' do
     login_fm_buyer_with_details
 
     let(:state) { 'what_happens_next' }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, aasm_state: state, user: controller.current_user, contract_name: 'New search') }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state, user: controller.current_user, contract_name: 'New search') }
 
     before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
 
