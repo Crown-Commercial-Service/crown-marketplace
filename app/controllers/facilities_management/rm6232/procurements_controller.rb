@@ -5,6 +5,18 @@ module FacilitiesManagement
       before_action :authorize_user
       before_action :build_new_procurement, :set_back_path, only: :new
 
+      def index
+        @searches = current_user.rm6232_procurements.searches
+        @advanced_procurement_activities = current_user.rm6232_procurements.advanced_procurement_activities
+        @back_path = facilities_management_rm6232_path
+        @back_text = t('facilities_management.rm6232.procurements.index.return_to_your_account')
+      end
+
+      def show
+        @back_path = facilities_management_rm6232_procurements_path
+        @back_text = t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')
+      end
+
       def new
         @procurement = current_user.rm6232_procurements.build(service_codes: params[:service_codes],
                                                               region_codes: params[:region_codes],
@@ -19,8 +31,7 @@ module FacilitiesManagement
 
         if @procurement.save(context: :contract_name)
           if params[:save_and_return].present?
-            # TODO: Change to dashboard facilities_management_rm6232_procurements_path
-            redirect_to facilities_management_rm6232_path
+            redirect_to facilities_management_rm6232_procurements_path
           else
             redirect_to facilities_management_rm6232_procurement_path(@procurement)
           end
@@ -29,12 +40,6 @@ module FacilitiesManagement
           set_back_path
           render :new
         end
-      end
-
-      def show
-        # TODO: Change to dashboard path facilities_management_rm6232_procurements_path
-        @back_path = '#'
-        @back_text = t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')
       end
 
       private

@@ -77,16 +77,16 @@ Feature: Information appears correctly on results page
     And I should see the following 'annual contract value' in the selection summary:
       | £123,456,789  |
 
-  # TODO: Add this when we have the dashboard
-  # Scenario: Save and return goes to the dashboard
-  #   Then I enter 'Colony 4 procurement' into the contract name field
-  #   And I click on 'Save and return to procurements dashboard'
-  #   Then I am on the 'Procurements dashboard' page
-  #   And the procurement 'Colony 4 procurement' is on the dashboard
-  #   And the procurement 'Colony 4 procurement' should have the state 'Quick view'
-  #   Then I click on 'Colony 4 procurement'
-  #   And I am on the 'What happens next?' page
-  #   And the contract name on the quick search results page is shown to be 'Colony 9 procurement'
+  Scenario: Save and return goes to the dashboard
+    And I enter the following details into the form:
+      | Save your search | Colony 4 procurement |
+    And I click on 'Save and return to procurements dashboard'
+    Then I am on the 'Procurements dashboard' page
+    And the procurement 'Colony 4 procurement' is on the dashboard
+    And the RM6232 procurement 'Colony 4 procurement' should have the state 'Completed search'
+    Then I click on 'Colony 4 procurement'
+    And I am on the 'What happens next?' page
+    And the procurement name is shown to be 'Colony 4 procurement'
 
   Scenario: Save and continue to 'What happens next?'
    And I enter the following details into the form:
@@ -94,10 +94,9 @@ Feature: Information appears correctly on results page
     And I click on 'Save and continue'
     Then I am on the 'What happens next?' page
     And the procurement name is shown to be 'Agnis search'
-    # TODO: Add this when we have the dashboard
-    # And I click on 'Return to procurements dashboard'
-    # And the procurement 'Alba Cavanich search' is on the dashboard
-    # And the procurement 'Alba Cavanich search' should have the state 'Entering requirements'
+    And I click on 'Return to procurements dashboard'
+    And the procurement 'Agnis search' is on the dashboard
+    And the RM6232 procurement 'Agnis search' should have the state 'Completed search'
 
   # TODO: Add when we have entering requirements
   # @pipeline 

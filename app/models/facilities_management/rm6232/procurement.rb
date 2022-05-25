@@ -3,6 +3,9 @@ module FacilitiesManagement
     class Procurement < ApplicationRecord
       include AASM
 
+      scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
+      scope :advanced_procurement_activities, -> { further_competition.select(:id, :contract_name, :contract_number, :updated_at).order(updated_at: :asc) }
+
       belongs_to :user, inverse_of: :rm6232_procurements
 
       before_create :generate_contract_number, :determine_lot_number
@@ -34,7 +37,24 @@ module FacilitiesManagement
 
       aasm do
         state :what_happens_next, initial: true
+        state :entering_requirements
+        state :results
+        state :further_competition
+
+        event :set_state_to_entering_requirements do
+          transitions from: :what_happens_next, to: :entering_requirements
+        end
+
+        event :set_state_to_results do
+          transitions from: :entering_requirements, to: :results
+        end
+
+        event :set_state_to_further_competition do
+          transitions from: :results, to: :further_competition
+        end
       end
+
+      SEARCH = %w[what_happens_next entering_requirements results].freeze
 
       private
 
