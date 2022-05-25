@@ -7,7 +7,7 @@ Given('I have an empty procurement for {string} named {string}') do |state, cont
 end
 
 Then('the procurement name is shown to be {string}') do |contract_name|
-  expect(page.find('#main-content > div:nth-child(2) > div > span')).to have_content(contract_name)
+  expect(page.find('#procurement-subtitle')).to have_content(contract_name)
 end
 
 Then('the RM6232 procurement {string} should have the state {string}') do |contract_name, status|

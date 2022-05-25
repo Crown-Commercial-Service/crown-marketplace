@@ -336,6 +336,20 @@ en:
             many: services selected
             none: No services selected
             one: service selected
+      details:
+        edit:
+          return_to_requirements: Return to requirements
+          save_and_return: Save and return
+          title:
+            annual_contract_value: Annual contract value
+            contract_name: Contract name
+        edit_partials:
+          annual_contract_value:
+            hint_text: Enter your estimate for the annual contract value. Include everything in your calculation.
+            label_text: What is your estimate for the annual contract value?
+          contract_name:
+            hint_text: This will help you to refer to your contracts when talking to suppliers.
+            label_text: What do you want to call your contract?
       summary_tables:
         contract_summary_table:
           annual_contract_value: Annual contract value
