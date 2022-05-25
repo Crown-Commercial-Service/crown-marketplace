@@ -1,5 +1,5 @@
 @javascript @pipeline
-Feature: Procuremnt journey - Direct Award
+Feature: Procurement journey - Direct Award
 
   Scenario: Taking a procurement through to direct award
     Given I sign in and navigate to my account for 'RM3830'
