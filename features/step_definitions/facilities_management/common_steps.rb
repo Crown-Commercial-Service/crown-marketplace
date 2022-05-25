@@ -111,6 +111,11 @@ When('I visit {string}') do |url|
   visit url
 end
 
+Then('the spreadsheet {string} is downloaded') do |spreadsheet_name|
+  expect(page.response_headers['Content-Type']).to eq 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  expect(page.response_headers['Content-Disposition']).to include "filename=\"#{spreadsheet_name}".gsub('(', '%28').gsub(')', '%29')
+end
+
 And('I start a procurement') do
   step "I click on 'Start a procurement'"
   step "I am on the 'What happens next' page"
