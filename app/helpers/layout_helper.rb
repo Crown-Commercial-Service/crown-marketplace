@@ -104,7 +104,7 @@ module LayoutHelper
 
     tag.div(**options) do
       capture do
-        concat(govuk_label(builder, builder.object, attribute, label_text)) if require_label
+        concat(govuk_label_old(builder, builder.object, attribute, label_text)) if require_label
         concat(display_error(builder.object, attribute)) if show_errors && !hide_error_text
         block.call(attribute) if block_given?
       end
@@ -171,25 +171,6 @@ module LayoutHelper
   end
   # rubocop:enable Metrics/AbcSize
 
-  INPUT_WIDTH = { tiny: 'govuk-input--width-2',
-                  small: 'govuk-input--width-4',
-                  medium: 'govuk-input--width-10',
-                  large: 'govuk-input--width-20',
-                  one_half: 'govuk-!-width-one-half',
-                  two_thirds: 'govuk-!-width-two-thirds',
-                  one_quarter: 'govuk-!-width-one-quarter' }.freeze
-
-  def govuk_text_input(builder, attribute, text_size, **options)
-    css_classes = ['govuk-input']
-    css_classes += ['govuk-input--error'] if builder.object.errors.key?(attribute)
-    css_classes += [INPUT_WIDTH[text_size]]
-
-    options.merge!(class: css_classes.join(' ')) { |_key, oldval, newval| "#{newval} #{oldval}" }
-    options.merge!('aria-describedby': error_id(attribute)) if builder.object.errors.key?(attribute)
-
-    builder.text_field attribute, options
-  end
-
   def govuk_button(builder, text, options = { submit: true, class: '' })
     css_classes = ['govuk-button']
     css_classes << options[:class]
@@ -202,7 +183,7 @@ module LayoutHelper
     builder.button(value: nil, class: css_classes)
   end
 
-  def govuk_label(builder, model, attribute, label_text = {})
+  def govuk_label_old(builder, model, attribute, label_text = {})
     builder.label attribute, generate_label_text(model, attribute, label_text), class: 'govuk-label govuk-!-margin-bottom-1'
   end
 

@@ -3,7 +3,11 @@ module FacilitiesManagement::RM6232
     include FacilitiesManagement::ProcurementsHelper
 
     def page_subtitle
-      "#{@procurement.contract_name} - #{@procurement.contract_number}"
+      "#{current_contract_name} - #{@procurement.contract_number}"
+    end
+
+    def current_contract_name
+      @procurement.errors.include?(:contract_name) ? @procurement.class.find(params[:id] || params[:procurement_id]).contract_name : @procurement.contract_name
     end
 
     def journey_step_url_former(journey_slug:, annual_contract_value: nil, region_codes: nil, service_codes: nil)
