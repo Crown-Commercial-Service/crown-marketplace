@@ -9,12 +9,9 @@ module FacilitiesManagement::RM6232
     def link_url(section)
       case section
       when 'contract_period', 'services', 'buildings', 'buildings_and_services'
-        # TODO: Add the summary section
-        # facilities_management_rm6232_procurement_summary_path(@procurement, summary: section)
-        '#summary'
+        facilities_management_rm6232_procurement_details_path(procurement_id: @procurement.id, section: section.dasherize)
       else
-        '#edit'
-        # edit_facilities_management_rm6232_procurement_path(@procurement, step: section)
+        facilities_management_rm6232_procurement_details_edit_path(procurement_id: @procurement.id, section: section.dasherize)
       end
     end
   end

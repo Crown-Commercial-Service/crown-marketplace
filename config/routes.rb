@@ -72,6 +72,14 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
+    concern :procurement_details do
+      namespace :details, path: '/details/:section', controller: :details do
+        get '/', action: :show
+        get '/edit', action: :edit
+        put '/', action: :update
+      end
+    end
+
     concerns :framework
 
     resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
@@ -175,6 +183,7 @@ Rails.application.routes.draw do
       get '/', to: 'buyer_account#index'
 
       resources :procurements, only: %i[index show new create] do
+        concerns :procurement_details
         get 'supplier_shortlist_spreadsheet'
         put 'update-show', action: 'update_show'
       end
