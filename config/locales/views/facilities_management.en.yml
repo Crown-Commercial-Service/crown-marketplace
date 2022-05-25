@@ -336,6 +336,17 @@ en:
             many: services selected
             none: No services selected
             one: service selected
+      summary_tables:
+        contract_summary_table:
+          annual_contract_value: Annual contract value
+          buildings: Buildings
+          buildings_and_services: Assigning services to buildings
+          contract_name: Contract name
+          contract_period: Contract period
+          estimated_annual_cost: Estimated annual cost
+          service_requirements: Service requirements
+          services: Services
+          tupe: TUPE
     users:
       sign_in_error: You must provide a correct username or password
   header_navigation_links_helper:

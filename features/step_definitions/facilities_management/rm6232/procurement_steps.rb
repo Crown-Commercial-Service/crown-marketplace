@@ -1,9 +1,9 @@
 Given('I have an RM6232 procurement with the name {string}') do |contract_name|
-  create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: @user, contract_name: contract_name)
+  create(:facilities_management_rm6232_procurement_what_happens_next, user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for {string} named {string}') do |state, contract_name|
-  @procurement = create(:facilities_management_rm6232_procurement_no_procurement_buildings, :skip_before_create, user: @user, contract_name: contract_name, aasm_state: state)
+  @procurement = create(:facilities_management_rm6232_procurement_what_happens_next, user: @user, contract_name: contract_name, aasm_state: state)
 end
 
 Then('the procurement name is shown to be {string}') do |contract_name|
