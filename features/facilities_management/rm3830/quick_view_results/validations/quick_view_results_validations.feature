@@ -1,5 +1,5 @@
 @pipeline
-Feature: Select region validations
+Feature: Quick view results validations
 
   Background: Navigate to the Quick view results page
     Given I sign in and navigate to my account for 'RM3830'
