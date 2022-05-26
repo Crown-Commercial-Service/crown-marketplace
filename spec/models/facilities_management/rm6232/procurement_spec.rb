@@ -450,7 +450,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when the tupe section has not been completed' do
       let(:tupe) { nil }
 
-      pending 'has a status of not_started' do
+      it 'has a status of not_started' do
         expect(status).to eq(:not_started)
       end
     end
@@ -458,7 +458,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when the tupe section has been completed' do
       let(:tupe) { true }
 
-      pending 'has a status of completed' do
+      it 'has a status of completed' do
         expect(status).to eq(:completed)
       end
     end
