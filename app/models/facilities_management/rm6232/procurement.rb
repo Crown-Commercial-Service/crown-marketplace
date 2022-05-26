@@ -53,9 +53,7 @@ module FacilitiesManagement
       end
 
       def tupe_status
-        # TODO: Add in when appropriate
-        # tupe.nil? ? :not_started : :completed
-        :not_started
+        tupe.nil? ? :not_started : :completed
       end
 
       def contract_period_status

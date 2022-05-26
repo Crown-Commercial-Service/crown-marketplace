@@ -74,6 +74,9 @@ en:
               taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
+            tupe:
+              inclusion: Select one option
+              not_present: You must answer the question about ‘TUPE’
         facilities_management/rm6232/supplier/lot_data:
           attributes:
             region_codes:

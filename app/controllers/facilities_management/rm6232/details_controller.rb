@@ -9,7 +9,7 @@ module FacilitiesManagement
         @procurement = Procurement.find(params[:procurement_id])
       end
 
-      RECOGNISED_DETAILS_EDIT_STEPS = %i[contract_name annual_contract_value].freeze
+      RECOGNISED_DETAILS_EDIT_STEPS = %i[contract_name annual_contract_value tupe].freeze
       RECOGNISED_DETAILS_SHOW_PAGES = %i[contract_period services buildings buildings_and_services].freeze
     end
   end

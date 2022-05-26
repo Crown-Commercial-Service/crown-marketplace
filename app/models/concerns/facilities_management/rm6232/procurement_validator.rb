@@ -3,7 +3,6 @@ module FacilitiesManagement::RM6232
     extend ActiveSupport::Concern
 
     included do
-      # Validations on the contract name
       with_options on: :contract_name do
         before_validation :remove_excess_whitespace_from_name
         validates :contract_name, presence: true
@@ -12,6 +11,8 @@ module FacilitiesManagement::RM6232
       end
 
       validates :annual_contract_value, numericality: { only_integer: true, greater_than: 0, less_than: 1_000_000_000_000 }, on: :annual_contract_value
+
+      validates :tupe, inclusion: [true, false], on: :tupe
 
       # Validations on entering requirements
       with_options on: :entering_requirements do
