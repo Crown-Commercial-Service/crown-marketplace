@@ -1,33 +1,41 @@
-function contractPeriod() {
+function contractPeriod(framework) {
   const pagePeriods = {
     totalContractPeriod: 0,
 
+    init() {
+      this.$initialCallOffPeriodYears = $(`#facilities_management_${framework}_procurement_initial_call_off_period_years`);
+      this.$initialCallOffPeriodMonths = $(`#facilities_management_${framework}_procurement_initial_call_off_period_months`);
+      this.$mobilisationPeriodRequiredTrue = $(`#facilities_management_${framework}_procurement_mobilisation_period_required_true`);
+      this.$mobilisationPeriod = $(`#facilities_management_${framework}_procurement_mobilisation_period`);
+      this.$extensionsRequiredTrue = $(`#facilities_management_${framework}_procurement_extensions_required_true`);
+    },
+
     callOffPeriodYears() {
-      return parseInt($('#facilities_management_rm3830_procurement_initial_call_off_period_years').val()) * 156;
+      return parseInt(this.$initialCallOffPeriodYears.val(), 10) * 156;
     },
 
     callOffPeriodMonths() {
-      return parseInt($('#facilities_management_rm3830_procurement_initial_call_off_period_months').val()) * 13;
+      return parseInt(this.$initialCallOffPeriodMonths.val(), 10) * 13;
     },
 
     mobilisationPeriodChecked() {
-      return $('#facilities_management_rm3830_procurement_mobilisation_period_required_true').is(':checked');
+      return this.$mobilisationPeriodRequiredTrue.is(':checked');
     },
 
     mobilisationPeriod() {
-      return parseInt($('#facilities_management_rm3830_procurement_mobilisation_period').val()) * 3;
+      return parseInt(this.$mobilisationPeriod.val(), 10) * 3;
     },
 
     extensionChecked() {
-      return $('#facilities_management_rm3830_procurement_extensions_required_true').is(':checked');
+      return this.$extensionsRequiredTrue.is(':checked');
     },
 
     extensionYears(extension) {
-      return parseInt($(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_years`).val()) * 156;
+      return parseInt($(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_years`).val(), 10) * 156;
     },
 
     extensionMonths(extension) {
-      return parseInt($(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_months`).val()) * 13;
+      return parseInt($(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_months`).val(), 10) * 13;
     },
 
     yearsAndMonthsInomplete(years, months) {
@@ -89,9 +97,9 @@ function contractPeriod() {
   const extensionPeriods = {
     showExtensionPeriod(extension) {
       $(`#extension-${extension}-container`).removeClass('govuk-visually-hidden');
-      $(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_years`).attr('tabindex', 0);
-      $(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_months`).attr('tabindex', 0);
-      $(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_extension_required`).val('true');
+      $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_years`).attr('tabindex', 0);
+      $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_months`).attr('tabindex', 0);
+      $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_extension_required`).val('true');
       this.showRemoveButton(extension);
     },
 
@@ -99,9 +107,9 @@ function contractPeriod() {
       $(`#extension-${extension}-container`).addClass('govuk-visually-hidden');
       this.resetInput(extension, 'years');
       this.resetInput(extension, 'months');
-      $(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_extension_required`).val('false');
-      $(`#extension-${extension}-container .govuk-error-message`).each(function () {
-        $(this).remove();
+      $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_extension_required`).val('false');
+      $(`#extension-${extension}-container .govuk-error-message`).each((_, errorMessage) => {
+        $(errorMessage).remove();
       });
       this.hideRemoveButton(extension);
     },
@@ -117,7 +125,7 @@ function contractPeriod() {
     },
 
     resetInput(extension, attribute) {
-      const element = $(`#facilities_management_rm3830_procurement_call_off_extensions_attributes_${extension}_${attribute}`);
+      const element = $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_${extension}_${attribute}`);
 
       element.attr('tabindex', -1);
       element.val('');
@@ -167,7 +175,7 @@ function contractPeriod() {
     },
 
     forthExtensionRequired() {
-      return $('#facilities_management_rm3830_procurement_call_off_extensions_attributes_3_extension_required').val() === 'true';
+      return $(`#facilities_management_${framework}_procurement_call_off_extensions_attributes_3_extension_required`).val() === 'true';
     },
 
     noTimePeriodLeftToAdd() {
@@ -193,25 +201,27 @@ function contractPeriod() {
     },
   };
 
-  $('#facilities_management_rm3830_procurement_extensions_required_true').on('click', () => {
+  pagePeriods.init();
+
+  $(`#facilities_management_${framework}_procurement_extensions_required_true`).on('click', () => {
     extensionPeriods.showExtensionPeriod(0);
     addExtensionPeriodButton.hideButton();
     if (addExtensionPeriodButton.ableToAddPeriod()) addExtensionPeriodButton.showButton();
   });
 
-  $('#facilities_management_rm3830_procurement_extensions_required_false').on('click', () => {
+  $(`#facilities_management_${framework}_procurement_extensions_required_false`).on('click', () => {
     $('.extension-container').each((extension) => {
       extensionPeriods.hideExtensionPeriod(extension);
     });
     addExtensionPeriodButton.hideButton();
   });
 
-  $('.extension-remove-button').each(function () {
-    $(this).on('click', (e) => {
+  $('.extension-remove-button').each((_, button) => {
+    $(button).on('click', (e) => {
       e.preventDefault();
 
-      extensionPeriods.hideExtensionPeriod($(this).attr('data-extension'));
-      extensionPeriods.showRemoveButton($(this).attr('data-extension') - 1);
+      extensionPeriods.hideExtensionPeriod($(button).attr('data-extension'));
+      extensionPeriods.showRemoveButton($(button).attr('data-extension') - 1);
 
       if (addExtensionPeriodButton.ableToAddPeriod()) {
         addExtensionPeriodButton.updateButtonVisibility();
@@ -237,11 +247,11 @@ function contractPeriod() {
     addExtensionPeriodButton.updateButtonState();
   });
 
-  $('#facilities_management_rm3830_procurement_mobilisation_period_required_true').on('click', () => {
+  $(`#facilities_management_${framework}_procurement_mobilisation_period_required_true`).on('click', () => {
     addExtensionPeriodButton.updateButtonState();
   });
 
-  $('#facilities_management_rm3830_procurement_mobilisation_period_required_false').on('click', () => {
+  $(`#facilities_management_${framework}_procurement_mobilisation_period_required_false`).on('click', () => {
     addExtensionPeriodButton.updateButtonState();
   });
 
@@ -254,7 +264,9 @@ function contractPeriod() {
 }
 
 $(() => {
-  if ($('.extension-container').length > 0) {
-    contractPeriod();
+  const $callOffExtensionsContainer = $('#call-off-extensions');
+
+  if ($callOffExtensionsContainer.length > 0) {
+    contractPeriod($callOffExtensionsContainer.data().framework);
   }
 });

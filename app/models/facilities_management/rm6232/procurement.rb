@@ -2,12 +2,18 @@ module FacilitiesManagement
   module RM6232
     class Procurement < ApplicationRecord
       include AASM
-      include ProcurementValidator
-
-      scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
-      scope :advanced_procurement_activities, -> { further_competition.select(:id, :contract_name, :contract_number, :updated_at).order(updated_at: :asc) }
+      include ProcurementConcern
+      include RM6232::ProcurementValidator
 
       belongs_to :user, inverse_of: :rm6232_procurements
+
+      has_many :call_off_extensions, foreign_key: :facilities_management_rm6232_procurement_id, inverse_of: :procurement, dependent: :destroy
+      accepts_nested_attributes_for :call_off_extensions, allow_destroy: true
+
+      acts_as_gov_uk_date :initial_call_off_start_date, error_clash_behaviour: :omit_gov_uk_date_field_error
+
+      scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :initial_call_off_start_date, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
+      scope :advanced_procurement_activities, -> { further_competition.select(:id, :contract_name, :initial_call_off_start_date, :contract_number, :updated_at).order(updated_at: :asc) }
 
       before_create :generate_contract_number, :determine_lot_number
 
@@ -44,36 +50,8 @@ module FacilitiesManagement
 
       SEARCH = %w[what_happens_next entering_requirements results].freeze
 
-      def contract_name_status
-        contract_name.present? ? :completed : :not_started
-      end
-
       def annual_contract_value_status
         annual_contract_value.present? ? :completed : :not_started
-      end
-
-      def tupe_status
-        tupe.nil? ? :not_started : :completed
-      end
-
-      def contract_period_status
-        # TODO: Add in when appropriate
-        # relevant_attributes = [
-        #   initial_call_off_period_years,
-        #   initial_call_off_period_months,
-        #   initial_call_off_start_date,
-        #   mobilisation_period_required,
-        #   extensions_required
-        # ]
-
-        # return :not_started if relevant_attributes.all?(&:nil?)
-
-        # relevant_attributes.any?(&:nil?) ? :incomplete : :completed
-        :not_started
-      end
-
-      def services_status
-        @services_status ||= service_codes.any? ? :completed : :not_started
       end
 
       def buildings_status

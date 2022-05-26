@@ -380,7 +380,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
 
       it 'has the right data' do
-        expect(described_class.searches.first.attributes.keys).to eq(%w[id aasm_state contract_name updated_at])
+        expect(described_class.searches.first.attributes.keys).to eq(%w[id aasm_state contract_name updated_at initial_call_off_start_date])
       end
     end
 
@@ -393,7 +393,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
 
       it 'has the right data' do
-        expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name updated_at contract_number])
+        expect(described_class.advanced_procurement_activities.first.attributes.keys).to eq(%w[id contract_name updated_at contract_number initial_call_off_start_date])
       end
     end
   end
@@ -470,7 +470,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when all contract period sections have not been started' do
       let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
 
-      pending 'has a status of not_started' do
+      it 'has a status of not_started' do
         expect(status).to eq(:not_started)
       end
     end
@@ -478,7 +478,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when all contract period sections have not been completed' do
       let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
 
-      pending 'has a status of not_started' do
+      it 'has a status of not_started' do
         expect(status).to eq(:incomplete)
       end
     end
@@ -486,7 +486,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when all contract period sections have been completed' do
       let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, mobilisation_period_required: false, extensions_required: false) }
 
-      pending 'has a status of completed' do
+      it 'has a status of completed' do
         expect(status).to eq(:completed)
       end
     end
@@ -619,6 +619,209 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
         pending 'shown with the COMPLETED status label' do
           expect(status).to eq(:completed)
+        end
+      end
+    end
+  end
+
+  describe '.initial_call_off_period' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: initial_call_off_period_years, initial_call_off_period_months: initial_call_off_period_months) }
+
+    context 'when the years are 0 and months 3' do
+      let(:initial_call_off_period_years) { 0 }
+      let(:initial_call_off_period_months) { 3 }
+
+      it 'is 3 months' do
+        expect(procurement.initial_call_off_period).to eq(3.months)
+      end
+    end
+
+    context 'when the years are 4 and months are 0' do
+      let(:initial_call_off_period_years) { 4 }
+      let(:initial_call_off_period_months) { 0 }
+
+      it 'is 4 years' do
+        expect(procurement.initial_call_off_period).to eq(4.years)
+      end
+    end
+
+    context 'when the years are 2 and months are 6' do
+      let(:initial_call_off_period_years) { 2 }
+      let(:initial_call_off_period_months) { 6 }
+
+      it 'is 2 years and 6 months' do
+        expect(procurement.initial_call_off_period).to eq(2.years + 6.months)
+      end
+    end
+  end
+
+  describe '.initial_call_off_end_date' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, initial_call_off_period_years: initial_call_off_period_years, initial_call_off_period_months: initial_call_off_period_months, initial_call_off_start_date: initial_call_off_start_date) }
+
+    context 'when the start date is 2022/03/01 and the period is 3 years and 4 months' do
+      let(:initial_call_off_start_date) { Time.new(2022, 3, 1).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 3 }
+      let(:initial_call_off_period_months) { 4 }
+
+      it 'the initial call-off end date is 2025/06/30' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2025, 6, 30).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2021/28/02 and the period is 6 years and 1 month' do
+      let(:initial_call_off_start_date) { Time.new(2021, 2, 28).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 6 }
+      let(:initial_call_off_period_months) { 1 }
+
+      it 'the initial call-off end date is 2027/03/27' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2027, 3, 27).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2021/07/18 and the period is 1 years and 7 months' do
+      let(:initial_call_off_start_date) { Time.new(2021, 7, 18).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 1 }
+      let(:initial_call_off_period_months) { 7 }
+
+      it 'the initial call-off end date is 2023/02/17' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2023, 2, 17).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2024/02/29 and the period is 5 years and 0 months' do
+      let(:initial_call_off_start_date) { Time.new(2024, 2, 29).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 5 }
+      let(:initial_call_off_period_months) { 0 }
+
+      it 'the initial call-off end date is 2029/02/28' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2029, 2, 28).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2022/01/31 and the period is 0 years and 5 months' do
+      let(:initial_call_off_start_date) { Time.new(2022, 1, 31).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 0 }
+      let(:initial_call_off_period_months) { 5 }
+
+      it 'the initial call-off end date is 2022/06/30' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2022, 6, 30).in_time_zone('London').to_date)
+      end
+    end
+
+    context 'when the start date is 2023/10/10 and the period is 6 years and 3 months' do
+      let(:initial_call_off_start_date) { Time.new(2023, 10, 10).in_time_zone('London') }
+      let(:initial_call_off_period_years) { 6 }
+      let(:initial_call_off_period_months) { 3 }
+
+      it 'the initial call-off end date is 2030/01/9' do
+        expect(procurement.initial_call_off_end_date).to eq(Time.new(2030, 1, 9).in_time_zone('London').to_date)
+      end
+    end
+  end
+
+  describe 'mobilisation period start and end dates' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+
+    context 'when considering the mobilisation_end_date' do
+      it 'is one day before the initial_call_off_start_date' do
+        expect(procurement.mobilisation_end_date).to eq(procurement.initial_call_off_start_date - 1.day)
+      end
+    end
+
+    context 'when considering the mobilisation_start_date' do
+      before { procurement.mobilisation_period = mobilisation_period }
+
+      context 'and the mobilisation_period is 2 weeks' do
+        let(:mobilisation_period) { 2 }
+
+        it 'is 2 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 2.weeks - 1.day)
+        end
+      end
+
+      context 'and the mobilisation_period is 4 weeks' do
+        let(:mobilisation_period) { 4 }
+
+        it 'is 4 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 4.weeks - 1.day)
+        end
+      end
+
+      context 'and the mobilisation_period is 8 weeks' do
+        let(:mobilisation_period) { 8 }
+
+        it 'is 8 weeks and a day before the initial_call_off_start_date' do
+          expect(procurement.mobilisation_start_date).to eq(procurement.initial_call_off_start_date - 8.weeks - 1.day)
+        end
+      end
+    end
+  end
+
+  describe 'extension periods start and end dates' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_with_extension_periods) }
+
+    describe 'extension_period_start_date' do
+      context 'when there is one extenesion period' do
+        it 'is expected to return the date one day after the end of the initial call off period' do
+          expect(procurement.extension_period_start_date(0)).to eq(procurement.initial_call_off_end_date + 1.day)
+        end
+      end
+
+      context 'when there is a second extension period' do
+        it 'is expected to return the date one day after the end of the first extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..0).sum(&:period)
+
+          expect(procurement.extension_period_start_date(1)).to eq(extension_period_start_date + 1.day)
+        end
+      end
+
+      context 'when there is a third extension period' do
+        it 'is expected to return the date one day after the end of the second extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..1).sum(&:period)
+
+          expect(procurement.extension_period_start_date(2)).to eq(extension_period_start_date + 1.day)
+        end
+      end
+
+      context 'when there is a forth extension period' do
+        it 'is expected to return the date one day after the end of the third extension period' do
+          extension_period_start_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..2).sum(&:period)
+
+          expect(procurement.extension_period_start_date(3)).to eq(extension_period_start_date + 1.day)
+        end
+      end
+    end
+
+    describe 'extension_period_end_date' do
+      context 'when there is one extenesion period' do
+        it 'is expected to return the date one year after the end of the initial call off period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..0).sum(&:period)
+
+          expect(procurement.extension_period_end_date(0)).to eq(extension_period_end_date)
+        end
+      end
+
+      context 'when there is a second extension period' do
+        it 'is expected to return the date one year after the end of the first extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..1).sum(&:period)
+
+          expect(procurement.extension_period_end_date(1)).to eq(extension_period_end_date)
+        end
+      end
+
+      context 'when there is a third extension period' do
+        it 'is expected to return the date one year after the end of the second extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..2).sum(&:period)
+
+          expect(procurement.extension_period_end_date(2)).to eq(extension_period_end_date)
+        end
+      end
+
+      context 'when there is a forth extension period' do
+        it 'is expected to return the date one year after the end of the third extension period' do
+          extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..3).sum(&:period)
+
+          expect(procurement.extension_period_end_date(3)).to eq(extension_period_end_date)
         end
       end
     end
