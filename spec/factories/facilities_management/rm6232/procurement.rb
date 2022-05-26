@@ -40,5 +40,23 @@ FactoryBot.define do
   factory :facilities_management_rm6232_procurement_entering_requirements, parent: :facilities_management_rm6232_procurement_what_happens_next do
     aasm_state { 'entering_requirements' }
     tupe { false }
+    initial_call_off_period_years { 1 }
+    initial_call_off_period_months { 0 }
+    initial_call_off_start_date { Time.zone.now + 6.months }
+    mobilisation_period_required { false }
+    extensions_required { false }
+  end
+
+  factory :facilities_management_rm6232_procurement_with_extension_periods, parent: :facilities_management_rm6232_procurement_entering_requirements do
+    mobilisation_period_required { true }
+    mobilisation_period { 4 }
+    extensions_required { true }
+    call_off_extensions do
+      build_list(:facilities_management_rm6232_procurement_call_off_extension, 4) do |call_off_extension, index|
+        call_off_extension.extension = index
+        call_off_extension.years = index
+        call_off_extension.months = (index + 1) % 4
+      end
+    end
   end
 end

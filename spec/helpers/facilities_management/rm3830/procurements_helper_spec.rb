@@ -712,7 +712,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.call_off_extension_visible' do
+  describe '.call_off_extension_visible?' do
     let(:extensions_required) { true }
     let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required: extensions_required) }
     let(:result) { helper.call_off_extension_visible?(0) }

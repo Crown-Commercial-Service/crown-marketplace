@@ -2,7 +2,7 @@ module FacilitiesManagement::RM3830
   class DirectAwardDeliverablesMatrix < DeliverableMatrixSpreadsheetCreator
     include ActionView::Helpers::SanitizeHelper
     include ActionView::Helpers::TextHelper
-    include Procurements::ContractDatesHelper
+    include FacilitiesManagement::ContractDatesHelper
 
     def initialize(contract_id)
       @contract = ProcurementSupplier.find(contract_id)
