@@ -31,8 +31,7 @@ Feature: Results validations
 
   Scenario: Contract name is taken
     Given I have an RM6232 procurement with the name 'Taken contract name'
-    And I enter the following details into the form:
-      | Save your search | Taken contract name |
+    And I enter 'Taken contract name' into the contract name field
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use  |

@@ -40,14 +40,16 @@ module GovUKHelper::TextInput
     class_list << input_options.delete(:classes) if input_options[:classes]
     class_list << 'govuk-input--error' if any_errors
 
+    prefix = input_options.delete(:prefix)
+    suffix = input_options.delete(:suffix)
     text_field = form.text_field(attribute, class: class_list, **input_options)
 
-    if input_options[:prefix] || input_options[:suffix]
+    if prefix || suffix
       tag.div(class: 'govuk-input__wrapper') do
         capture do
-          concat(tag.div(input_options[:prefix][:text], class: 'govuk-input__prefix', aria: { hidden: true })) if input_options[:prefix]
+          concat(tag.div(prefix[:text], class: 'govuk-input__prefix', aria: { hidden: true })) if prefix
           concat(text_field)
-          concat(tag.div(input_options[:suffix][:text], class: 'govuk-input__suffix', aria: { hidden: true })) if input_options[:suffix]
+          concat(tag.div(suffix[:text], class: 'govuk-input__suffix', aria: { hidden: true })) if suffix
         end
       end
     else

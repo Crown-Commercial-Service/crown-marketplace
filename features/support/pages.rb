@@ -28,7 +28,20 @@ module Pages
   end
 
   def entering_requirements_page
-    @entering_requirements_page ||= RM3830::EnteringRequirements.new
+    @entering_requirements_page ||= case @framework
+                                    when 'RM3830'
+                                      entering_requirements_rm3830_page
+                                    when 'RM6232'
+                                      entering_requirements_rm6232_page
+                                    end
+  end
+
+  def entering_requirements_rm3830_page
+    @entering_requirements_rm3830_page ||= RM3830::EnteringRequirements.new
+  end
+
+  def entering_requirements_rm6232_page
+    @entering_requirements_rm6232_page ||= RM6232::EnteringRequirements.new
   end
 
   def home_page
@@ -36,7 +49,20 @@ module Pages
   end
 
   def procurement_page
-    @procurement_page ||= RM3830::Procurement.new
+    @procurement_page ||= case @framework
+                          when 'RM3830'
+                            procurement_rm3830_page
+                          when 'RM6232'
+                            procurement_rm6232_page
+                          end
+  end
+
+  def procurement_rm3830_page
+    @procurement_rm3830_page ||= RM3830::Procurement.new
+  end
+
+  def procurement_rm6232_page
+    @procurement_rm6232_page ||= RM6232::Procurement.new
   end
 
   def quick_view_results_page

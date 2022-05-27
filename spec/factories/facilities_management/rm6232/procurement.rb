@@ -47,6 +47,10 @@ FactoryBot.define do
     extensions_required { false }
   end
 
+  factory :facilities_management_rm6232_procurement_entering_requirements_empty, parent: :facilities_management_rm6232_procurement_what_happens_next do
+    aasm_state { 'entering_requirements' }
+  end
+
   factory :facilities_management_rm6232_procurement_with_extension_periods, parent: :facilities_management_rm6232_procurement_entering_requirements do
     mobilisation_period_required { true }
     mobilisation_period { 4 }

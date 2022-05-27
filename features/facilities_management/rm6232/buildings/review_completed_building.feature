@@ -1,7 +1,7 @@
 Feature: Review completed buildings
 
   Background:
-    Given I sign in and navigate to my account for 'RM3830'
+    Given I sign in and navigate to my account for 'RM6232'
     And I have buildings
     And I click on 'Manage my buildings'
     Then I am on the 'Buildings' page

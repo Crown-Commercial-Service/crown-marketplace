@@ -26,7 +26,6 @@ module FacilitiesManagement::ProcurementDetailsConcern
     if @procurement.save(context: section.to_sym)
       redirect_to(self.class::RECOGNISED_DETAILS_SHOW_PAGES.include?(section) ? show_path : procurement_show_path)
     else
-      set_procurement_data
       render 'facilities_management/shared/details/edit'
     end
   end
