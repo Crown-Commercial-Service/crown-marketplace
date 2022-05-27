@@ -47,5 +47,14 @@ module FacilitiesManagement
     def call_off_extension_meet_conditions?(call_off_extension)
       call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
     end
+
+    def accordion_service_items_for_framework
+      case params[:framework]
+      when 'RM3830'
+        # TODO: Add when ready
+      when 'RM6232'
+        rm6232_accordion_service_items(@procurement.service_codes)
+      end
+    end
   end
 end

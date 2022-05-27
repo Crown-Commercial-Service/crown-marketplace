@@ -96,23 +96,20 @@ Feature: Information appears correctly on results page
     And the procurement 'Agnis search' is on the dashboard
     And the RM6232 procurement 'Agnis search' should have the state 'Completed search'
 
-  # TODO: Add when we have entering requirements
-  # @pipeline 
-  # Scenario: Contract name and service selection saved in requirements
-  #   Then I enter 'Mechonis field contract' into the contract name field
-  #   And I click on 'Save and continue to procurement'
-  #   Then I am on the 'What happens next' page
-  #   And I click on 'Continue'
-  #   Then I am on the 'Further service and contract requirements' page
-  #   And the contract name is shown to be 'Mechonis field contract'
-  #   And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
-  #   And 'Services' should have the status 'Completed' in 'Services and buildings'
-  #   And I click on 'Services'
-  #   Then I am on the 'Services summary' page
-  #   And I should see the following seleceted services in the summary:
-  #     | High voltage (HV) and switchgear maintenance  |
-  #     | Water hygiene maintenance                     |
-  #     | Pest control services                         |
-  #     | Courier booking and external distribution     |
-  #     | Administrative support services               |
-  #     | Patrols (fixed or static guarding)            |
+  @pipeline 
+  Scenario: Contract name and service selection saved in requirements
+    Then I enter 'Mechonis field contract' into the contract name field
+    And I click on 'Save and continue'
+    Then I am on the 'What happens next' page
+    And I click on 'Save and continue'
+    Then I am on the 'Further service and contract requirements' page
+    And the procurement name is shown to be 'Mechonis field contract'
+    And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Services' should have the status 'Completed' in 'Services and buildings'
+    And I click on 'Services'
+    Then I am on the 'Services summary' page
+    And I should see the following seleceted services in the summary:
+      | Mechanical and Electrical Engineering Maintenance           |
+      | Planned / Group re-lamping service                          |
+      | Building Information Modelling and Government Soft Landings |

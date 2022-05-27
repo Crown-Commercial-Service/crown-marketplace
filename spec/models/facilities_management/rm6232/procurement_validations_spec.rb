@@ -167,5 +167,93 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         end
       end
     end
+
+    describe 'services' do
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, service_codes: service_codes) }
+
+      context 'when no service codes are present' do
+        let(:service_codes) { [] }
+
+        it 'is not valid and has the correct error message' do
+          expect(procurement.valid?(:services)).to be false
+          expect(procurement.errors[:service_codes].first).to eq 'Select at least one service you need to include in your procurement'
+        end
+      end
+
+      # rubocop:disable RSpec/NestedGroups
+      context 'when validateing that not all services are mandatory' do
+        context 'when the only code is Q.3' do
+          let(:service_codes) { %w[Q.3] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only code is R.1' do
+          let(:service_codes) { %w[R.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only code is S.1' do
+          let(:service_codes) { %w[S.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only codes are Q.3 and R.1' do
+          let(:service_codes) { %w[Q.3 R.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only codes are Q.3 and S.1' do
+          let(:service_codes) { %w[Q.3 S.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only codes are S.1 and R.1' do
+          let(:service_codes) { %w[S.1 R.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+
+        context 'when the only codes are Q.3, S.1 and R.1' do
+          let(:service_codes) { %w[Q.3 S.1 R.1] }
+
+          it 'is not valid and has the correct error message' do
+            expect(procurement.valid?(:services)).to be false
+            expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
+          end
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
+
+      context 'when service codes are present' do
+        let(:service_codes) { %w[E.1 Q.3 S.1 R.1] }
+
+        it 'is valid' do
+          expect(procurement.valid?(:services)).to be true
+        end
+      end
+    end
   end
 end

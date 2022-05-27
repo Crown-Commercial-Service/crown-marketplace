@@ -22,7 +22,7 @@ module Pages::RM6232
       end
     end
 
-    section 'Services and buildings', 'form > table:nth-of-type(2)' do
+    section 'Services and buildings', '#main-content > div:nth-child(3) > div > div:nth-child(3) > table' do
       section 'Services', 'tr:nth-of-type(1)' do
         element :name, 'td:nth-of-type(1)'
         element :status, 'td:nth-of-type(2)'
@@ -89,7 +89,7 @@ module Pages::RM6232
       element :add_extension, '#add-contract-extension-button'
     end
 
-    section :contract_period_summary, '#main-content > div:nth-child(3) > table' do
+    section :contract_period_summary, '#main-content > div:nth-child(3) > div:nth-child(1) > div > table' do
       element :initial_call_off_period_length, '#contract-period > td'
       element :initial_call_off_period, '#contract-period-description > td:nth-child(2)'
 
@@ -109,7 +109,7 @@ module Pages::RM6232
       element :extension_4_period, '#call-off-extension-3-description > td:nth-child(2)'
     end
 
-    # element :number_of_selected_servcies, '#number-of-services'
+    element :number_of_selected_servcies, '#number-of-services'
     # element :number_of_selected_buildings, '#number-of-buildings'
 
     # element :no_buildings_text, 'form > div.procurement > div:nth-child(5)'

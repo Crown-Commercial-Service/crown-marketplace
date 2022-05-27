@@ -178,3 +178,15 @@ def extension_end_date(extension)
 
   @initial_call_off_end_date + additional_period
 end
+
+Then('the summary should say {int} servcies selected') do |number_of_selected_servcies|
+  expect(entering_requirements_page.number_of_selected_servcies).to have_content("#{number_of_selected_servcies} services")
+end
+
+Then('the summary should say {int} servcie selected') do |number_of_selected_servcies|
+  expect(entering_requirements_page.number_of_selected_servcies).to have_content("#{number_of_selected_servcies} service")
+end
+
+Then('I should see the following seleceted services in the summary:') do |services_summary|
+  expect(entering_requirements_page.all('table > tbody > tr > td').map(&:text)).to match services_summary.raw.flatten
+end
