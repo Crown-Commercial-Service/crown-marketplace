@@ -78,8 +78,7 @@ Feature: Information appears correctly on results page
       | £123,456,789  |
 
   Scenario: Save and return goes to the dashboard
-    And I enter the following details into the form:
-      | Save your search | Colony 4 procurement |
+    Then I enter 'Colony 4 procurement' into the contract name field
     And I click on 'Save and return to procurements dashboard'
     Then I am on the 'Procurements dashboard' page
     And the procurement 'Colony 4 procurement' is on the dashboard
@@ -89,8 +88,7 @@ Feature: Information appears correctly on results page
     And the procurement name is shown to be 'Colony 4 procurement'
 
   Scenario: Save and continue to 'What happens next?'
-   And I enter the following details into the form:
-      | Save your search | Agnis search |
+    Then I enter 'Agnis search' into the contract name field
     And I click on 'Save and continue'
     Then I am on the 'What happens next?' page
     And the procurement name is shown to be 'Agnis search'
@@ -105,7 +103,7 @@ Feature: Information appears correctly on results page
   #   And I click on 'Save and continue to procurement'
   #   Then I am on the 'What happens next' page
   #   And I click on 'Continue'
-  #   Then I am on the 'Requirements' page
+  #   Then I am on the 'Further service and contract requirements' page
   #   And the contract name is shown to be 'Mechonis field contract'
   #   And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
   #   And 'Services' should have the status 'Completed' in 'Services and buildings'

@@ -28,7 +28,7 @@ Feature: Results accessibility
     And I show all sections
     Then the page should be axe clean
 
-  Scenario: Annual contract cost page
+  Scenario: Annual contract value page
     And I click on 'Continue'
     Then I am on the 'Services' page
     And I show all sections

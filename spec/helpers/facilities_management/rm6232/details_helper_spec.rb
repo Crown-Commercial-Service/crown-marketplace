@@ -26,7 +26,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsHelper, type: :helper do
       let(:section) { :tupe }
 
       it 'returns Tupe' do
-        expect(result).to eq('Tupe')
+        expect(result).to eq('TUPE')
       end
     end
 

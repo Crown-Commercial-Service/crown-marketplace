@@ -344,7 +344,7 @@ en:
             annual_contract_value: Annual contract value
             contract_name: Contract name
             contract_period: Contract period
-            tupe: Tupe
+            tupe: TUPE
         edit_partials:
           annual_contract_value:
             hint_text: Enter your estimate for the annual contract value. Include everything in your calculation.

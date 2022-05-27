@@ -15,16 +15,20 @@
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
-        <%= f.number_field :years, class: "govuk-input govuk-input--width-5 period-input #{'govuk-input--error' if f.object.errors[:years].any?}", tabindex: input_visible?(row_visible), aria: { label: t('.aria_label_years', extension: f.index + 1) } %>
-        <span class="govuk-label--s govuk-!-margin-left-2">
-          <%= t('.years') %>
-        </span>
+        <div class="govuk-input__wrapper">
+          <%= f.number_field :years, class: "govuk-input govuk-input--width-5 period-input #{'govuk-input--error' if f.object.errors[:years].any?}", tabindex: input_visible?(row_visible), aria: { label: t('.aria_label_years', extension: f.index + 1) } %>
+          <div class="govuk-input__suffix" aria-hidden="true">
+            <%= t('.years') %>
+          </div>
+        </div>
       </div>
       <div class="govuk-grid-column-one-quarter">
-        <%= f.number_field :months, class: "govuk-input govuk-input--width-5 period-input #{'govuk-input--error' if f.object.errors[:months].any?}", tabindex: input_visible?(row_visible), aria: { label: t('.aria_label_months', extension: f.index + 1) } %>
-        <span class="govuk-label--s govuk-!-margin-left-2">
-          <%= t('.months') %>
-        </span>
+        <div class="govuk-input__wrapper">
+          <%= f.number_field :months, class: "govuk-input govuk-input--width-5 period-input #{'govuk-input--error' if f.object.errors[:months].any?}", tabindex: input_visible?(row_visible), aria: { label: t('.aria_label_months', extension: f.index + 1) } %>
+          <div class="govuk-input__suffix" aria-hidden="true">
+            <%= t('.months') %>
+          </div>
+        </div>
       </div>
       <div class="govuk-grid-column-one-half">
         <%= f.hidden_field :extension, value: f.index %>
