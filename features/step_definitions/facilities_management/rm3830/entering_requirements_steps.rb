@@ -15,18 +15,6 @@ And('I enter {string} for estimated annual cost') do |estimated_annual_cost|
   entering_requirements_page.estimated_cost_known.set(estimated_annual_cost)
 end
 
-Then('the summary should say {int} servcies selected') do |number_of_selected_servcies|
-  expect(entering_requirements_page.number_of_selected_servcies).to have_content("#{number_of_selected_servcies} services")
-end
-
-Then('the summary should say {int} servcie selected') do |number_of_selected_servcies|
-  expect(entering_requirements_page.number_of_selected_servcies).to have_content("#{number_of_selected_servcies} service")
-end
-
-Then('I should see the following seleceted services in the summary:') do |services_summary|
-  expect(entering_requirements_page.all('table > tbody > tr > td').map(&:text)).to match services_summary.raw.flatten
-end
-
 And('I find and select the building with the name {string}') do |building_name|
   continue = true
 

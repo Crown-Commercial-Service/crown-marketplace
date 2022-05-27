@@ -71,6 +71,52 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     end
   end
 
+  describe '.services_without_lot_consideration' do
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes, lot_number: lot_number) }
+    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:service_codes) { base_service_codes }
+    let(:lot_number) { '1a' }
+
+    it 'returns an array of FacilitiesManagement::RM6232::Service' do
+      expect(procurement.services_without_lot_consideration.length).to eq 2
+      expect(procurement.services_without_lot_consideration.first).to be_a FacilitiesManagement::RM6232::Service
+    end
+
+    context 'when the service codes contain Q.3' do
+      let(:service_codes) { base_service_codes + ['Q.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+
+      context 'and it is a total sub lot' do
+        let(:lot_number) { '1a' }
+
+        it 'returns services with Q.3 instead of Q.2' do
+          expect(procurement.services_without_lot_consideration).not_to include service_Q2
+          expect(procurement.services_without_lot_consideration).to include service_Q3
+        end
+      end
+
+      context 'and it is a hard sub lot' do
+        let(:lot_number) { '2a' }
+
+        it 'returns services with Q.3 instead of Q.2' do
+          expect(procurement.services_without_lot_consideration).not_to include service_Q2
+          expect(procurement.services_without_lot_consideration).to include service_Q3
+        end
+      end
+
+      context 'and it is a soft sub lot' do
+        let(:lot_number) { '3a' }
+
+        it 'returns services with Q.3 instead of Q.1' do
+          expect(procurement.services_without_lot_consideration).not_to include service_Q1
+          expect(procurement.services_without_lot_consideration).to include service_Q3
+        end
+      end
+    end
+  end
+
   describe '.regions' do
     let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next) }
 

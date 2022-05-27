@@ -41,7 +41,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsHelper, type: :helper do
     context 'when the section is services' do
       let(:section) { :services }
 
-      pending 'returns Services' do
+      it 'returns Services' do
         expect(result).to eq('Services')
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsHelper, type: :helper do
     context 'when the section is services' do
       let(:section) { :services }
 
-      pending 'returns Services summary' do
+      it 'returns Services summary' do
         expect(result).to eq('Services summary')
       end
     end

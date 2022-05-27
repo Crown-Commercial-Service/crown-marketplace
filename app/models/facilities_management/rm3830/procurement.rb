@@ -541,6 +541,8 @@ module FacilitiesManagement
       def service_question_complete_for_codes?(codes, context)
         procurement_building_services.where(code: codes).pluck(context).all?(&:present?)
       end
+
+      MANDATORY_SERVICES = %w[M.1 N.1 O.1].freeze
     end
   end
 end

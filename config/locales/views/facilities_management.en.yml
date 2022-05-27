@@ -344,6 +344,7 @@ en:
             annual_contract_value: Annual contract value
             contract_name: Contract name
             contract_period: Contract period
+            services: Services
             tupe: TUPE
         edit_partials:
           annual_contract_value:
@@ -379,6 +380,10 @@ en:
               hint_text: A minimum of 4 weeks required if TUPE is involved.
               label_text: Enter mobilisation length
               unit: weeks
+          services:
+            choose_the_required_services: Choose all facilities management services required within your estate, even if you want services in just one building.
+            learn_more: Further details (opens in a new tab)
+            select_the_services: Select the facilities management services that you need
           tupe:
             body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.<br/> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -390,6 +395,7 @@ en:
           return_to_requirements: Return to requirements
           title:
             contract_period: Contract period summary
+            services: Services summary
         show_partials:
           contract_period:
             call_off_extension_period: Optional call-off extension period
@@ -398,6 +404,12 @@ en:
             initial_call_off_period: Initial call-off period
             mobilisation_period: Mobilisation period
             none: None
+          services:
+            caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
+            change: Change
+            heading: You have selected
+            service: service
+            table_caption: Services
       summary_tables:
         contract_summary_table:
           annual_contract_value: Annual contract value

@@ -83,7 +83,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       context 'when the services are not complete' do
         let(:service_codes) { [] }
 
-        pending 'redirects to the edit page with the services section' do
+        it 'redirects to the edit page with the services section' do
           expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
         end
       end
@@ -93,7 +93,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
         render_views
 
-        pending 'renders the services partial' do
+        it 'renders the services partial' do
           expect(response).to render_template(partial: '_services')
         end
 
@@ -245,7 +245,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       render_views
 
-      pending 'renders the services partial' do
+      it 'renders the services partial' do
         expect(response).to render_template(partial: '_services')
       end
 
@@ -540,6 +540,48 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'contract-period')
+        end
+
+        it 'does no update the unpermitted attribute' do
+          expect { procurement.reload }.not_to change(procurement, :contract_name)
+        end
+      end
+    end
+
+    context 'when updating services' do
+      let(:section_name) { 'services' }
+
+      context 'and the data is valid' do
+        let(:update_params) { { service_codes: %w[F.1 F.2] } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
+        end
+
+        it 'updates service_codes' do
+          expect { procurement.reload }.to change(procurement, :service_codes)
+
+          expect(procurement.service_codes).to eq %w[F.1 F.2]
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { service_codes: %w[] } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update tupe' do
+          expect { procurement.reload }.not_to change(procurement, :service_codes)
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { contract_name: 'Hello there' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
         end
 
         it 'does no update the unpermitted attribute' do
