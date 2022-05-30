@@ -15,7 +15,7 @@ module FacilitiesManagement
       validates :description, length: { maximum: 50 }
     end
 
-    with_options on: %i[all gia] do
+    with_options on: %i[all building_area] do
       validates :gia, :external_area, presence: true
       validates :gia, :external_area, numericality: { only_integer: true, less_than_or_equal_to: 999999999, greater_than_or_equal_to: 0 }
       validate  :combined_external_area_and_gia_greater_than_zero
@@ -42,7 +42,7 @@ module FacilitiesManagement
       validate :postcode_format, if: -> { address_postcode.present? }
     end
 
-    with_options on: %i[all type] do
+    with_options on: %i[all building_type] do
       before_validation :prepare_building_type_selection
       validates :building_type, presence: true
       validate :building_type_selection
@@ -53,7 +53,7 @@ module FacilitiesManagement
       end
     end
 
-    with_options on: %i[all security] do
+    with_options on: %i[all security_type] do
       before_validation :prepare_security_type_selection
       validates :security_type, presence: true
       validate :security_type_selection

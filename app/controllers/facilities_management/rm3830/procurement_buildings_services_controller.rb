@@ -54,7 +54,7 @@ module FacilitiesManagement
       end
 
       def building_valid?
-        return false unless @building.valid?(:gia)
+        return false unless @building.valid?(:building_area)
 
         @building.errors.add(:gia, :required) unless @procurement_building.valid?(:gia)
         @building.errors.add(:external_area, :required) unless @procurement_building.valid?(:external_area)

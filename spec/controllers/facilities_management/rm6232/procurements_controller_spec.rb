@@ -160,7 +160,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
         let(:options) { { save_and_continue: 'Save and continue' } }
 
         it 'redirects to the show page' do
-          new_procurement = FacilitiesManagement::RM6232::Procurement.all.order(created_at: :asc).first
+          new_procurement = FacilitiesManagement::RM6232::Procurement.order(created_at: :asc).first
 
           expect(response).to redirect_to facilities_management_rm6232_procurement_path(new_procurement.id)
         end

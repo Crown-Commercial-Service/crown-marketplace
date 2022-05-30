@@ -54,15 +54,20 @@ Feature: Review completed buildings in entering requirements
   Scenario: Return links
     And I change the 'Security clearance'
     Then I am on the 'Security clearance' page
+    And the step is 4
     And I click on 'Return to building type'
     Then I am on the 'Building type' page
+    And the step is 3
     And I click on 'Return to building size'
     Then I am on the 'Internal and external areas' page
+    And the step is 2
+    And I click on 'Return to building details'
+    Then I am on the 'Building details' page
+    And the step is 1
+    And I click on "I can’t find my building’s address in the list"
+    Then I am on the 'Add building address' page
+    And the step is 1
     And I click on 'Return to building details'
     Then I am on the 'Building details' page
     And I click on 'Return to building details summary'
     Then I am on the buildings summary page for 'Test building'
-    And I click on the 'Return to buildings' back link
-    Then I am on the 'Buildings' page
-    And I click on the 'Return to requirements' back link
-    Then I am on the 'Requirements' page

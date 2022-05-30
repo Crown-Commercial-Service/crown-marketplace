@@ -72,17 +72,19 @@ Rails.application.routes.draw do
   end
 
   namespace 'facilities_management', path: 'facilities-management', defaults: { service: 'facilities_management' } do
+    concern :buildings do
+      resources :buildings, only: %i[index show edit update new create]
+    end
+
+    concern :edit_buildings do
+      resources :edit_buildings, path: 'edit-buildings', only: %i[show edit update new create]
+    end
+
     concern :procurement_details do
       resources :details, param: :section, only: %i[show edit update]
     end
 
     concerns :framework
-
-    resources :buildings, path: '/:framework/buildings', only: %i[index show edit update new create] do
-      member do
-        match 'add_address', via: %i[get post patch]
-      end
-    end
 
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
       get 'edit-address', as: :edit_address
@@ -100,13 +102,15 @@ Rails.application.routes.draw do
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
-      concerns :shared_pages
+      concerns :shared_pages, :buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
       get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
       resources :procurements do
+        concerns :edit_buildings
+
         get 'delete'
         get 'summary', to: 'procurements#summary'
         get 'quick_view_results_spreadsheet'
@@ -131,11 +135,6 @@ Rails.application.routes.draw do
         resources :copy_procurement, only: %i[new create], controller: 'procurements/copy_procurement'
         resources :spreadsheet_imports, only: %i[new create show destroy], controller: 'procurements/spreadsheet_imports' do
           get '/progress', action: :progress
-        end
-        resources 'edit-buildings', only: %i[show edit update new create], as: 'edit_buildings', controller: 'procurements/edit_buildings' do
-          member do
-            match 'add_address', via: %i[get post patch]
-          end
         end
       end
       resources :procurement_buildings, only: %i[show edit update]
@@ -173,13 +172,13 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
-      concerns :shared_pages
+      concerns :shared_pages, :buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
 
       resources :procurements, only: %i[index show new create] do
-        concerns :procurement_details
+        concerns :procurement_details # , :edit_buildings
         get 'supplier_shortlist_spreadsheet'
         put 'update-show', action: 'update_show'
       end

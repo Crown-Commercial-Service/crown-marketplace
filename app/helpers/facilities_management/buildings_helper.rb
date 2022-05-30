@@ -1,82 +1,41 @@
-# rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::BuildingsHelper
   def building_rows
     {
-      building_name: { row_name: t('facilities_management.buildings.action_partials.show.caption_name'), row_text: @page_data[:model_object].building_name, step: 'building_details' },
-      building_description: { row_name: t('facilities_management.buildings.action_partials.show.caption_desc'), row_text: @page_data[:model_object].description, step: 'building_details' },
-      address: { row_name: t('facilities_management.buildings.action_partials.show.caption_addr'), row_text: @page_data[:model_object].address_line_1, step: 'building_details' },
-      region: { row_name: t('facilities_management.buildings.action_partials.show.caption_region_nuts'), row_text: @page_data[:model_object].address_region, step: 'building_details' },
-      gia: { row_name: t('facilities_management.buildings.action_partials.show.caption_gia'), row_text: @page_data[:model_object].gia, step: 'gia' },
-      external_area: { row_name: t('facilities_management.buildings.action_partials.show.caption_external_area'), row_text: @page_data[:model_object].external_area, step: 'gia' },
-      building_type: { row_name: t('facilities_management.buildings.action_partials.show.caption_type'), row_text: @page_data[:model_object].building_type, step: 'type' },
-      security_type: { row_name: t('facilities_management.buildings.action_partials.show.caption_sec'), row_text: @page_data[:model_object].security_type, step: 'security' }
+      building_name: { value: @building.building_name, section: 'building_details' },
+      building_description: { value: @building.description, section: 'building_details' },
+      address: { value: @building.address_line_1, section: 'building_details' },
+      region: {  value: @building.address_region, section: 'building_details' },
+      gia: { value: @building.gia, section: 'building_area' },
+      external_area: { value: @building.external_area, section: 'building_area' },
+      building_type: { value: @building.building_type, section: 'building_type' },
+      security_type: { value: @building.security_type, section: 'security_type' }
     }
   end
 
-  def address?(building)
-    return false if building.blank?
-
-    building.address_town || building.address_line_1 || building.address_postcode || building.address_region
-  end
-
-  def address_in_a_line(building)
-    [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
-  end
-
-  def building_row_text(attribute, building, text)
+  def building_row_text(attribute, text)
     case attribute
     when :address
-      address_in_a_line(building)
+      address_in_a_line
     when :gia, :external_area
       "#{number_with_delimiter(text.to_i, delimiter: ',')} sqm"
     when :building_type
-      type_description(building_type_description(text), building, :other_building_type)
+      type_description(building_type_description(text), :other_building_type)
     when :security_type
-      type_description(text, building, :other_security_type)
+      type_description(text, :other_security_type)
     else
       text
     end
   end
 
-  def type_description(text, building, attribute)
+  def address_in_a_line
+    [@building.address_line_1, @building.address_line_2, @building.address_town].reject(&:blank?).join(', ') + " #{@building.address_postcode}"
+  end
+
+  def type_description(text, attribute)
     if ['Other', 'other'].include?(text)
-      "Other — #{building[attribute].truncate(150)}"
+      "Other — #{@building[attribute].truncate(150)}"
     else
       text
-    end
-  end
-
-  def edit_link(change_answer, step)
-    link_to((change_answer ? t('facilities_management.buildings.show.answer_question_text') : t('facilities_management.buildings.show.change_text')), edit_facilities_management_building_path(params[:framework], @page_data[:model_object].id, step: step), role: 'link', class: 'govuk-link')
-  end
-
-  def cant_find_address_link
-    add_address_facilities_management_building_path(params[:framework], @page_data[:model_object].id)
-  end
-
-  def continuation_params(page_defs, form, step)
-    case step
-    when 'building_details'
-      [page_defs, form, true, false, true]
-    when 'security'
-      [page_defs, form, false]
-    else
-      [page_defs, form]
-    end
-  end
-
-  def open_state_of_building_details
-    @open_state_of_building_details ||= should_building_details_be_open?
-  end
-
-  def should_building_details_be_open?
-    return false if @page_data[:model_object][:building_type].blank?
-
-    if @page_data[:model_object].building_type == 'other' || @page_data[:model_object].errors.key?(:other_building_type) ||
-       FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:id] }.exclude?(@page_data[:model_object][:building_type])
-      true
-    else
-      false
     end
   end
 
@@ -86,6 +45,20 @@ module FacilitiesManagement::BuildingsHelper
       building_type[:title].capitalize
     else
       building_type_id.capitalize
+    end
+  end
+
+  def section_number
+    (SECTIONS.index(section) || 0) + 1
+  end
+
+  SECTIONS = %i[building_details building_area building_type security_type].freeze
+
+  def should_building_details_be_open?
+    @should_building_details_be_open ||= begin
+      return false if @building.building_type.blank?
+
+      @building.building_type == 'other' || @building.errors.key?(:other_building_type) || FacilitiesManagement::Building::BUILDING_TYPES[0..1].map { |bt| bt[:id] }.exclude?(@building.building_type)
     end
   end
 
@@ -108,17 +81,24 @@ module FacilitiesManagement::BuildingsHelper
       concat(building_type[:caption])
       if building_type[:standard_building_type]
         concat(tag.hr(class: 'govuk-section-break govuk-!-margin-top-1'))
-        concat(govuk_tag_with_text(:grey, t('common.da_eligible')))
+        concat(govuk_tag_with_text(:grey, t('common.da_eligible'))) if params[:framework] == 'RM3830'
       end
     end
   end
 
+  def cant_find_address_link
+    edit_path(@building, 'add_address')
+  end
+
   def select_a_region_visible?
-    @select_a_region_visible ||= @page_data[:model_object].address_line_1.present? && @page_data[:model_object].address_region.blank?
+    @select_a_region_visible ||= @building.address_line_1.present? && @building.address_region.blank?
   end
 
   def full_region_visible?
-    @full_region_visible ||= @page_data[:model_object].address_region.present?
+    @full_region_visible ||= @building.address_region.present?
+  end
+
+  def multiple_regions?
+    valid_regions.length > 1
   end
 end
-# rubocop:enable Metrics/ModuleLength

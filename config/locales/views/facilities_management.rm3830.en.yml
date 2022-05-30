@@ -1479,9 +1479,6 @@ en:
             tupe_title: TUPE
             what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
             what_you_need_to_know_title: What you need to know about TUPE
-        edit_buildings:
-          show:
-            return_to_buildings: Return to buildings
         filter_details:
           change_add_region: Change
           change_add_service: Change

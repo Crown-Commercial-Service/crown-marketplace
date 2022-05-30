@@ -9,6 +9,6 @@
       </div>
     <% end %>
     <%= govuk_radio_driver %>
-    <%= render partial: 'facilities_management/buildings/other', locals: { f: f, attribute: :security_type, other_attribute: :other_security_type, description: t('.describe_security'), disabled: false, not_other: f.object.security_type != 'other'}%>
+    <%= render partial: 'facilities_management/buildings/edit_partials/other', locals: { f: f, attribute: :security_type, other_attribute: :other_security_type, description: t('.describe_security'), disabled: false, not_other: f.object.security_type != 'other'}%>
   <% end %>
 <% end %>
