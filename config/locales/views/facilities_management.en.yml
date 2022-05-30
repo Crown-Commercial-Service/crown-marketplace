@@ -181,7 +181,36 @@ en:
           email_must_3: not be the same user as another supplier
           user_email_question: Changing the user email will change who can view the supplier dashboard.
     buildings:
-      action_partials:
+      add_address:
+        heading: Add building address
+        return_to_building_details: Return to building details
+        save_and_continue: Save and continue
+        step: Step 1 of 4
+        sub_title: Buildings
+      edit:
+        heading:
+          add_address: Add building address
+          building_area: Internal and external areas
+          building_details: Building details
+          building_type: Building type
+          security_type: Security clearance
+        next_step: 'Next: %{next_step}'
+        next_steps:
+          building_area: Building type
+          building_details: Building size
+          building_type: Security clearance
+        previous_step_back_text:
+          add_address: Return to building details
+          building_area: Return to building details
+          building_details: Return to building details summary
+          building_type: Return to building size
+          security_type: Return to building type
+        save_and_continue: Save and continue
+        save_and_return: Save and return to building details summary
+        skip_this_step: Skip this step
+        step: Step %{step_number} of 4
+        sub_title: Buildings — %{building_name}
+      edit_partials:
         add_address:
           add_address_header: Address
           description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
@@ -189,37 +218,62 @@ en:
           line_2_of_2: Building and street line 2 of 2 (optional)
           postcode: Postcode
           town_or_city: Town or city
-        show:
-          caption_addr: Address
-          caption_desc: Description (optional)
-          caption_external_area: External area
-          caption_gia: Gross internal area
-          caption_name: Name
-          caption_region_nuts: Region
-          caption_sec: Security clearance
-          caption_type: Building type
-          complete_text: This building is ready to use in procurements.
-          incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
-          section-header: Building details summary
-          status: 'Status:'
-      area:
-        description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
-        external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
-        external_area_header: What's the size of the external area?
-        further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
-        gia_header: What’s the size of the internal area of this building?
-        guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
-      building_details:
-        building_name_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0">What is the name of your building?</h2><span class="govuk-caption-m">This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.</span>
-        description_label_html: <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">Add a description (optional)</h2> <span class="govuk-caption-m govuk-!-margin-top-0">Enter a description or reference, for example, some users put cost centres in this field.</span>
+        building_area:
+          description_html: Gross internal area (GIA) is the area of a building measured to the internal face of the perimeter walls at each floor level.<br/>For example, 1800 square metres.
+          external_area_description_html: An external area can be the grounds surrounding a building, or an area without any building for example a park, and is measured in square metres.<br/> For example 18000 square metres.
+          external_area_header: What's the size of the external area?
+          further_info_html: 'For further information on GIA <a aria-label="Read the Valuation Office Agency advice on the Code of measuring practice" title="Code of measuring practice: definitions for rating purposes" target="_blank" href="https://www.gov.uk/government/publications/measuring-practice-for-voa-property-valuations/code-of-measuring-practice-definitions-for-rating-purposes#gross-internal-area">follow this link (opens in a new tab)</a>.'
+          gia_header: What’s the size of the internal area of this building?
+          guidance: Please enter your building's internal and external area sizes below. These are used to calculate service pricing, where necessary. If your building does not have an internal or external area, please enter '0' in the relevant field.
+        building_details:
+          building_name:
+            hint: This will help you refer to your building or part of the building when selecting services. For example, Newbury office 3rd floor.
+            label: What is the name of your building?
+          description:
+            hint: Enter a description or reference, for example, some users put cost centres in this field.
+            label: Add a description (optional)
+        building_type:
+          choose_building_type: Choose the building type that best describes your building
+          describe_building: Describe building type
+          help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
+          view_more: View more building types
+        other:
+          other: Other
+        postcode_lookup_container:
+          address: Address
+          address_plural: addresses found
+          address_singular: address found
+          cant_find_address: I can’t find my building’s address in the list
+          change: Change
+          find_address: Find address
+          option_text: "%{number} %{location} found"
+          please_select_address: Please select an address
+          postcode: Postcode
+          select_an_address: Select an address
+          what_is_address: What is the address?
+          what_is_address_description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
+        region_lookup_container:
+          change: Change
+          option_text: "%{number} %{location} found"
+          please_select_a_region: Please select a region
+          region: Region
+          region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
+          region_plural: regions found
+          region_singular: region found
+          select_a_region: Select a region
+        security_type:
+          describe_security: Describe security level
+          security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
+          select_security: Select the level of security clearance needed
       index:
         column_desc_header: Description
         column_lstup_header: Last updated
         column_name_header: Building name
         column_status_header: Status
         create_new_button: Add a building
+        heading: Buildings
         how_it_works: How it works
-        link_to_building_summary: View details for
+        link_to_building_summary: View details for %{building_name}
         my_buildings_header: My buildings
         no_buildings_text: You have no saved buildings
         return_to_your_account: Return to your account
@@ -228,65 +282,32 @@ en:
         start_warning_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
         start_warning_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
         start_warning_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
-      other:
-        other: Other
-      page_definitions:
-        add_building_address: Add building address
-        building_details: Building details
-        create_new_building: Save and continue
-        create_single_building: Add a building
-        gia: Internal and external areas
-        manage_building_title: Buildings
-        return_to_building_details: Return to building details
-        return_to_building_details_summary: Return to building details summary
-        return_to_building_size: Return to building size
-        return_to_building_type: Return to building type
+      new:
+        heading: Add a building
+        next_step: 'Next: Building size'
         return_to_buildings: Return to buildings
-        return_to_manage_buildings: Return to manage buildings
         save_and_continue: Save and continue
-        save_and_return_to_detailed_summary: Save and return to building details summary
-        security: Security clearance
-        skip_this_step: Skip this step
-        type: Building type
-      postcode_lookup_container:
-        address: Address
-        address_plural: addresses found
-        address_singular: address found
-        cant_find_address: I can’t find my building’s address in the list
-        change: Change
-        find_address: Find address
-        option_text: "%{number} %{location} found"
-        please_select_address: Please select an address
-        postcode: Postcode
-        select_an_address: Select an address
-        what_is_address: What is the address?
-        what_is_address_description: We’ll use the address to assess the region in which your building is located. This will help us to shortlist the suppliers who can deliver your services.
-      region_lookup_container:
-        change: Change
-        option_text: "%{number} %{location} found"
-        please_select_a_region: Please select a region
-        region: Region
-        region_desc: Please confirm the region your building is located in. This will help us shortlist the suppliers who can deliver your services.
-        region_plural: regions found
-        region_singular: region found
-        select_a_region: Select a region
-      security:
-        describe_security: Describe security level
-        security_description_html: Select the level of security clearance a supplier’s staff will need to access this building. This is the security level of the contractor’s staff.
-        select_security: Select the level of security clearance needed
+        save_and_return: Save and return to building details summary
+        step: Step 1 of 4
+        sub_title: Buildings
       show:
-        answer_question_text: Answer question
-        change_text: Change
+        answer_question: Answer question
+        change: Change
+        complete_text: This building is ready to use in procurements.
+        incomplete_text: You need to answer all questions before this building can be ready to use in procurements.
+        page_title: Building details summary
         return_to_buildings: Return to buildings
-      step_footer:
-        step_footer: 'Next: %{description}'
-      step_title:
-        step_title: Step %{position} of 4
-      type:
-        choose_building_type: Choose the building type that best describes your building
-        describe_building: Describe building type
-        help_text: Look for the 'DIRECT AWARD ELIGIBLE' label that indicates if a building type can be direct awarded.
-        view_more: View more building types
+        row_name:
+          address: Address
+          building_description: Description (optional)
+          building_name: Name
+          building_type: Building type
+          external_area: External area
+          gia: Gross internal area
+          region: Region
+          security_type: Security clearance
+        status: 'Status:'
+        sub_title: Buildings
     buyer_details:
       contact_detail_address_container:
         address_plural: addresses found

@@ -59,7 +59,7 @@ Then('I enter the following details into the form:') do |table|
 end
 
 Then('I navigate to the building summary page for {string}') do |building_name|
-  visit facilities_management_buildings_path('RM3830')
+  visit "/facilities-management/#{@framework}/buildings/"
   click_on building_name
   step "I am on the buildings summary page for '#{building_name}'"
 end
@@ -109,6 +109,10 @@ end
 
 When('I visit {string}') do |url|
   visit url
+end
+
+Then('the framework is {string}') do |framework|
+  expect(current_path).to start_with("/facilities-management/#{framework}")
 end
 
 Then('the spreadsheet {string} is downloaded') do |spreadsheet_name|

@@ -1,0 +1,54 @@
+<div id="building-details-form">
+
+  <%= govuk_text_input(
+    f,
+    :building_name,
+    {
+      label: {
+        text: t('.building_name.label'),
+        classes: 'govuk-label--m'
+      },
+      hint: {
+        text: t('.building_name.hint'),
+        id: 'building-name-hint'
+      },
+      input: {
+        classes: 'govuk-input--width-20',
+        attributes: {
+          required: true,
+          maxlength: 50,
+          aria: {
+            describedby: 'building-name-hint'
+          }
+        }
+      }
+    }
+  )%>
+  <%= govuk_text_input(
+    f,
+    :description,
+    {
+      label: {
+        text: t('.description.label'),
+        classes: 'govuk-label--m'
+      },
+      hint: {
+        text: t('.description.hint'),
+        id: 'building-description-hint'
+      },
+      input: {
+        classes: 'govuk-input--width-20',
+        attributes: {
+          required: true,
+          maxlength: 50,
+          aria: {
+            describedby: 'building-description-hint'
+          }
+        }
+      }
+    }
+  )%>
+
+  <%= render(partial: 'facilities_management/buildings/edit_partials/postcode_lookup_container', locals: { f: f })%>
+  <%= render(partial: 'facilities_management/buildings/edit_partials/region_lookup_container', locals: { f: f })%>
+</div>

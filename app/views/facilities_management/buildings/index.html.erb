@@ -1,18 +1,21 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object], false, true, false) do |pd| %>
-<%= content_for :page_title, pd.heading_details.text %>
-  <div id="buildings-container">
-    <%= link_to t('.create_new_button'), new_facilities_management_building_path(params[:framework]), class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", 'aria-label': t('.create_new_button') %>
-    <div class="govuk-!-width-two-thirds">
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= link_to t('.create_new_button'), "/facilities-management/#{params[:framework]}/buildings/new", class: "govuk-button ccs-no-print govuk-!-margin-bottom-6", role: "button", aria: { label: t('.create_new_button') } %>
+    <div>
       <p class="govuk-!-margin-bottom-2">
-        <%= t('.start_paragraph_html', start_a_procurement_link: link_to(t('.start_a_procurement_link_text'), facilities_management_rm3830_what_happens_next_path, class: 'govuk-link govuk-link--no-visited-state')) %>
+        <%= t('.start_paragraph_html', start_a_procurement_link: link_to(t('.start_a_procurement_link_text'), start_a_procurement_path, class: 'govuk-link govuk-link--no-visited-state')) %>
       </p>
-      <details class="govuk-details" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
-            <%= t('.how_it_works') %>
-          </span>
-        </summary>
-        <div class="govuk-details__text">
+      <%= govuk_details(t('.how_it_works')) do %>
           <p class="govuk-!-margin-bottom-2">
             <%= t('.start_warning_1') %>
           </p>
@@ -22,46 +25,61 @@
           <p>
             <%= t('.start_warning_3') %>
           </p>
-        </div>
-      </details>
-
-
+      <% end %>
     </div>
-    <h2 class="govuk-heading-m govuk-!-margin-top-6"><%= t('.my_buildings_header') %></h2>
-    <% if @page_data[:model_object].count.zero? %>
-      <div class="govuk-!-width-two-thirds govuk-!-padding-2" style="border-top: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC">
-        <span class="govuk-caption-m"><%= t('.no_buildings_text') %></span></th>
-      </div>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-m">
+      <%= t('.my_buildings_header') %>
+    </h2>
+    <% if @buildings.count.zero? %>
+      <hr class="govuk-section-break govuk-section-break--visible">
+      <p class="govuk-!-margin-top-4">
+        <%= t('.no_buildings_text') %>
+      </p>
+      <hr class="govuk-section-break govuk-section-break--visible">
     <% else %>
-      <div class="govuk-table govuk-!-width-full-width" data-module="table">
-        <table style="width: 100%" class="ccs-at-govuk-table--3070">
-          <thead>
-          <tr>
-            <th><%= t('.column_name_header') %></th>
-            <th><%= t('.column_desc_header') %></th>
-            <th style="min-width: 10em"><%= t('.column_lstup_header') %></th>
-            <th><%= t('.column_status_header') %></th>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header"><%= t('.column_name_header') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.column_desc_header') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.column_lstup_header') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.column_status_header') %></th>
           </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <% @page_data[:model_object].each do |building| %>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @buildings.each do |building| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= link_to building.building_name, facilities_management_building_path(params[:framework], building.id), class: 'govuk-link', 'aria-label': "#{t('.link_to_building_summary')} #{building.building_name}" %>
+              <td class="govuk-table__cell">
+                <%= link_to building.building_name, show_path(building), class: 'govuk-link', aria: { label: t('.link_to_building_summary', building_name: building.building_name) } %>
               </td>
-              <td class="govuk-table__cell"><%= building.description.to_s.length > 0 ? building['description'].to_s : '-' %></td>
-              <td class="govuk-table__cell" style="word-wrap: break-spaces;"><span style="display: inline-block; word-break: keep-all">&#32;
-                <%= building.updated_at.in_time_zone('London').to_datetime.strftime("%-d %B %Y,")%>&nbsp;</span><span style="display: inline-block; word-break:keep-all">
-                <%= building.updated_at.in_time_zone('London').to_datetime.strftime("%-I:%M%#p") %></span></td>
-              <td class="govuk-table__cell"><%= govuk_tag(building.building_status) %></td>
+              <td class="govuk-table__cell">
+                <%= building.description.to_s.length > 0 ? building.description : '-' %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= format_date_time(building.updated_at) %>
+              <td class="govuk-table__cell">
+                <%= govuk_tag(building.building_status) %>
+              </td>
             </tr>
           <% end %>
-          </tbody>
-        </table>
-        <%= paginate @page_data[:model_object], views_prefix: 'shared' %>
-      </div>
+        </tbody>
+      </table>
+      <%= paginate @buildings, views_prefix: 'shared' %>
     <% end %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
     <p class="govuk-body">
-      <%= link_to t('.return_to_your_account'), facilities_management_index_path, class: "govuk-link", 'aria-label': t('.return_to_your_account') %>
+      <%= link_to t('.return_to_your_account'), facilities_management_index_path, class: "govuk-link", aria: { label: t('.return_to_your_account') } %>
     </p>
   </div>
-<% end %>
+</div>
