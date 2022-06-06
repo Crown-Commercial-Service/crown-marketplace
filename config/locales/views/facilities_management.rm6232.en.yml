@@ -62,6 +62,11 @@ en:
               too_long: The supplier name cannot be more than 100 characters
         facilities_management/rm6232/procurement:
           attributes:
+            annual_contract_value:
+              greater_than: The annual contract value must be a whole number greater than 0
+              less_than: The annual contract value must be less than 1,000,000,000,000 (1 trillion)
+              not_a_number: The annual contract value must be a whole number greater than 0
+              not_an_integer: The annual contract value must be a whole number greater than 0
             base:
               incomplete: Your requirements are incomplete
             contract_name:

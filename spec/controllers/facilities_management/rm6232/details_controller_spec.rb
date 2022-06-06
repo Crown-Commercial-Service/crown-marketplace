@@ -173,7 +173,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       render_views
 
-      pending 'renders the contract_name partial' do
+      it 'renders the contract_name partial' do
         expect(response).to render_template(partial: '_contract_name')
       end
 
@@ -187,7 +187,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       render_views
 
-      pending 'renders the annual_contract_value partial' do
+      it 'renders the annual_contract_value partial' do
         expect(response).to render_template(partial: '_annual_contract_value')
       end
 
@@ -249,6 +249,104 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       it 'sets the procurement' do
         expect(assigns(:procurement)).to eq procurement
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    before { put :update, params: { procurement_id: procurement.id, section: section_name, facilities_management_rm6232_procurement: update_params } }
+
+    context 'when updating the contract name' do
+      let(:section_name) { 'contract-name' }
+
+      context 'and the data is valid' do
+        let(:update_params) { { contract_name: 'Hello there' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'updates the contract name' do
+          procurement.reload
+
+          expect(procurement.contract_name).to eq('Hello there')
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { contract_name: nil } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update the contract name' do
+          procurement.reload
+
+          expect(procurement.contract_name).not_to be_nil
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { annual_contract_value: 87_654 } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'does no update the unpermitted attribute' do
+          procurement.reload
+
+          expect(procurement.annual_contract_value).to eq(12_345)
+        end
+      end
+    end
+
+    context 'when updating the annual contract value' do
+      let(:section_name) { 'annual-contract-value' }
+
+      context 'and the data is valid' do
+        let(:update_params) { { annual_contract_value: '567890' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'updates the annual contract value' do
+          procurement.reload
+
+          expect(procurement.annual_contract_value).to eq(567_890)
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { annual_contract_value: nil } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update the annual contract value' do
+          procurement.reload
+
+          expect(procurement.annual_contract_value).not_to be_nil
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { contract_name: 'Hello there' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'does no update the unpermitted attribute' do
+          origional_contract_name = procurement.contract_name
+          procurement.reload
+
+          expect(procurement.contract_name).not_to eq('Hello there')
+          expect(procurement.contract_name).to eq(origional_contract_name)
+        end
       end
     end
   end

@@ -29,7 +29,7 @@
           <%= govuk_radios_conditional_item(f, :contract_response, true, t('.yes')) %>
           <%= govuk_radios_conditional_item(f, :contract_response, false, t('.no')) %>
           <%= govuk_radios_conditional_area(:contract_response, false, class: 'govuk-!-width-one-half') do %>
-            <%= govuk_label(f, f.object, :reason_for_declining, { reason_for_declining: t('.reason_for_declining')}) %>
+            <%= govuk_label_old(f, f.object, :reason_for_declining, { reason_for_declining: t('.reason_for_declining')}) %>
             <%= display_error(f.object, :reason_for_declining) %>
             <hr class="govuk-section-break govuk-!-margin-top-4">
             <%= govuk_character_count(f, :reason_for_declining, 500, 5) %>
