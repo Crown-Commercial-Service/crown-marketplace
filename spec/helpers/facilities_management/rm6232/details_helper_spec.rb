@@ -49,7 +49,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsHelper, type: :helper do
     context 'when the section is buildings' do
       let(:section) { :buildings }
 
-      pending 'returns Buildings' do
+      it 'returns Buildings' do
         expect(result).to eq('Buildings')
       end
     end

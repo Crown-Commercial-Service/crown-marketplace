@@ -178,7 +178,7 @@ Rails.application.routes.draw do
       get '/', to: 'buyer_account#index'
 
       resources :procurements, only: %i[index show new create] do
-        concerns :procurement_details # , :edit_buildings
+        concerns :procurement_details, :edit_buildings
         get 'supplier_shortlist_spreadsheet'
         put 'update-show', action: 'update_show'
       end

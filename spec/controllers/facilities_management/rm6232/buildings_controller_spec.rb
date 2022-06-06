@@ -6,8 +6,6 @@ RSpec.describe FacilitiesManagement::RM6232::BuildingsController, type: :control
   let(:building) { create(:facilities_management_building, user: user) }
   let(:user) { controller.current_user }
 
-  render_views
-
   describe 'GET #index' do
     context 'when logging in as a fm buyer with details' do
       login_fm_buyer_with_details

@@ -66,6 +66,11 @@ module FacilitiesManagement::ProcurementDetailsConcern
 
   def set_procurement_data
     @procurement.build_call_off_extensions if section == :contract_period
+    set_buildings if section == :buildings
+  end
+
+  def set_buildings
+    @buildings = current_user.buildings.order_by_building_name.page(params[:page])
   end
 
   def procurement_params
