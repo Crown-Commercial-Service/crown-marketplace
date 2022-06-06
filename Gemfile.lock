@@ -75,7 +75,7 @@ GEM
       activesupport
     amoeba (3.2.0)
       activerecord (>= 4.2.0)
-    asset_sync (2.15.1)
+    asset_sync (2.15.2)
       activemodel (>= 4.1.0)
       fog-core
       mime-types (>= 2.99)
@@ -563,8 +563,7 @@ GEM
     uk_postcode (2.1.7)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8.1)
-    unf_ext (0.0.8.1-x64-mingw32)
+    unf_ext (0.0.8.2)
     unicode-display_width (2.1.0)
     uniform_notifier (1.16.0)
     virtus (2.0.0)
