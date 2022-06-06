@@ -120,7 +120,7 @@ group :development, :test do
   gem 'shoulda-matchers', '>= 4.2.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.9.1', require: false
+  gem 'rubocop-rails', '>= 2.14.2', require: false
   gem 'rubyXL', '>= 3.4.23'
   gem 'i18n-tasks', '>= 1.0.10'
   gem 'poltergeist', '>= 1.18.1'
