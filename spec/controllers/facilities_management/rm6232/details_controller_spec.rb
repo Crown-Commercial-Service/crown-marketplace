@@ -259,7 +259,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       render_views
 
-      pending 'renders the buildings partial' do
+      it 'renders the buildings partial' do
         expect(response).to render_template(partial: '_buildings')
       end
 
