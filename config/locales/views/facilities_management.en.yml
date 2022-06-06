@@ -343,6 +343,7 @@ en:
           title:
             annual_contract_value: Annual contract value
             contract_name: Contract name
+            contract_period: Contract period
             tupe: Tupe
         edit_partials:
           annual_contract_value:
@@ -351,6 +352,33 @@ en:
           contract_name:
             hint_text: This will help you to refer to your contracts when talking to suppliers.
             label_text: What do you want to call your contract?
+          contract_period:
+            call_off_extensions:
+              add_extension_period: Add another extension period
+              description: Including this in your contract gives you the option to extend the end date of the agreement. Call-off contracts can be let for a maximum period of 10 years, inclusive of mobilisation period and all call-off extensions.
+              heading: Do you want the option to extend your call-off contract?
+            extension:
+              aria_label_months: Optional extension %{extension} months
+              aria_label_years: Optional extension %{extension} years
+              extension_period: Extension period %{extension}
+              months: months
+              remove: Remove
+              years: years
+            initial_call_off_period:
+              aria_label_months: The month part of the initial call off period
+              aria_label_years: The year part of the initial call off period
+              description: The initial period in which the services are provided. This is the date you want services to begin and can be a maximum of 7 years.
+              example: For example, 01 11 2030.
+              heading: Initial call-off period
+              initial_call_off_period_start_date: Initial call-off period start date
+              unit_months: months
+              unit_years: years
+            mobilisation_period:
+              description: This is the period in which the supplier gets ready to start providing the services. A mobilisation period of between 3 to 6 months is recommended depending on the complexity of services and buildings. A shorter term can be entered if required, however enough time should be allowed for suitable mobilisation ready for service delivery.
+              heading: Do you need a mobilisation period?
+              hint_text: A minimum of 4 weeks required if TUPE is involved.
+              label_text: Enter mobilisation length
+              unit: weeks
           tupe:
             body_text_html: When a supplier changes, the original service provider’s workers may be protected under TUPE.<br/> For example, a new supplier is awarded the contract to provide cleaning services to a building.</br> The cleaners, who are employed by the current service provider, may be protected under TUPE.
             first_question: Do you believe that Transfer of Undertakings (TUPE) Regulations applies to your contract?
@@ -358,6 +386,18 @@ en:
             tupe_link_text: Find out when TUPE applies (opens in a new tab)
             what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
             what_you_need_to_know_title: What you need to know about TUPE
+        show:
+          return_to_requirements: Return to requirements
+          title:
+            contract_period: Contract period summary
+        show_partials:
+          contract_period:
+            call_off_extension_period: Optional call-off extension period
+            call_off_extensions: Optional call-off extensions
+            change: Change
+            initial_call_off_period: Initial call-off period
+            mobilisation_period: Mobilisation period
+            none: None
       summary_tables:
         contract_summary_table:
           annual_contract_value: Annual contract value

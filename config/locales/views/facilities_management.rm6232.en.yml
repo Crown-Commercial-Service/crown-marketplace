@@ -68,15 +68,64 @@ en:
               not_a_number: The annual contract value must be a whole number greater than 0
               not_an_integer: The annual contract value must be a whole number greater than 0
             base:
-              incomplete: Your requirements are incomplete
+              total_contract_length: Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total
+              total_contract_period: The total initial call-off period must be between 1 month and 7 years
             contract_name:
               blank: Enter your contract name
               taken: This contract name is already in use
               too_long: Your contract name must be 100 characters or fewer
               too_short: Enter your contract name
+            extensions_required:
+              inclusion: Select one option for call-off contract extension
+            initial_call_off_period_months:
+              blank: Enter the months for the initial call-off period
+              greater_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              less_than_or_equal_to: The months for the initial call-off period must be between 0 and 11
+              not_a_number: The months for the initial call-off period must be a whole number
+              not_an_integer: The months for the initial call-off period must be a whole number
+            initial_call_off_period_years:
+              blank: Enter the years for the initial call-off period
+              greater_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              less_than_or_equal_to: The years for the initial call-off period must be between 0 and 7
+              not_a_number: The years for the initial call-off period must be a whole number
+              not_an_integer: The years for the initial call-off period must be a whole number
+              not_present: You must answer all questions about ‘Contract period’
+            initial_call_off_start_date:
+              blank: Enter a valid initial call-off start date
+              date_after_or_equal_to: Initial call-off period start date must be today or in the future
+              date_before: Initial call-off period start date cannot be later than 31 December 2100
+              not_a_date: Enter a valid initial call-off start date
+            mobilisation_period:
+              blank: Enter mobilisation period length
+              greater_than: Mobilisation length must be between 1 and 52 weeks
+              greater_than_or_equal_to: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+              less_than_or_equal_to: Mobilisation length must be between 1 and 52 weeks
+              not_a_number: Enter mobilisation length
+              not_an_integer: Enter mobilisation length as a whole number
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_period_required:
+              inclusion: Select one option for mobilisation period
+              not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
+            mobilisation_start_date:
+              greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
             tupe:
               inclusion: Select one option
               not_present: You must answer the question about ‘TUPE’
+        facilities_management/rm6232/procurement/call_off_extension:
+          attributes:
+            base:
+              minimum_period: The total for extension period %{extension} must be greater than 1 month
+            months:
+              blank: Enter the months for the extension period
+              greater_than_or_equal_to: The months for the extension period must be between 0 and 11
+              less_than_or_equal_to: The months for the extension period must be between 0 and 11
+              not_a_number: The months for the extension period must be a whole number
+              not_an_integer: The months for the extension period must be a whole number
+            years:
+              blank: Enter the years for the extension period
+              greater_than_or_equal_to: The years for the extension period must be greater than or equal to 0
+              not_a_number: The years for the extension period must be a whole number
+              not_an_integer: The years for the extension period must be a whole number
         facilities_management/rm6232/supplier/lot_data:
           attributes:
             region_codes:

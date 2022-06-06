@@ -1,29 +1,34 @@
 # rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::RM3830
   module ProcurementsHelper
-    include Procurements::ContractDatesHelper
+    include FacilitiesManagement::ContractDatesHelper
     include FacilitiesManagement::ProcurementsHelper
 
     def journey_step_url_former(journey_step:, framework:, region_codes: nil, service_codes: nil)
       facilities_management_journey_question_path(framework: framework, slug: "choose-#{journey_step}", region_codes: region_codes, service_codes: service_codes)
     end
 
+    # TODO: Marked for destruction
     def initial_call_off_period_error?
       @procurement.errors[:initial_call_off_period_years].any? || @procurement.errors[:initial_call_off_period_months].any? || total_contract_period_error?
     end
 
+    # TODO: Marked for destruction
     def total_contract_period_error?
       @total_contract_period_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_period }
     end
 
+    # TODO: Marked for destruction
     def extension_periods_error?
       %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
     end
 
+    # TODO: Marked for destruction
     def total_contract_length_error?
       @total_contract_length_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_length }
     end
 
+    # TODO: Marked for destruction
     def display_extension_error_anchor
       error_list = []
 
@@ -121,10 +126,12 @@ module FacilitiesManagement::RM3830
       end
     end
 
+    # TODO: Marked for destruction
     def call_off_extensions
       @call_off_extensions ||= @procurement.call_off_extensions.sort_by(&:extension)
     end
 
+    # TODO: Marked for destruction
     def call_off_extension_visible?(extension)
       return false unless @procurement.extensions_required
 
@@ -135,6 +142,7 @@ module FacilitiesManagement::RM3830
       call_off_extension_meet_conditions?(call_off_extension)
     end
 
+    # TODO: Marked for destruction
     def call_off_extension_meet_conditions?(call_off_extension)
       call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
     end
