@@ -56,12 +56,17 @@ module FacilitiesManagement::ProcurementDetailsConcern
   end
 
   def procurement_params
-    params.require(@procurement.model_name.param_key).permit(PERMITED_PARAMS[section])
+    if params[@procurement.model_name.param_key]
+      params.require(@procurement.model_name.param_key).permit(PERMITED_PARAMS[section])
+    else
+      {}
+    end
   end
 
   PERMITED_PARAMS = {
     contract_name: [:contract_name],
-    annual_contract_value: [:annual_contract_value]
+    annual_contract_value: [:annual_contract_value],
+    tupe: [:tupe]
   }.freeze
 
   protected

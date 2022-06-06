@@ -39,5 +39,6 @@ FactoryBot.define do
 
   factory :facilities_management_rm6232_procurement_entering_requirements, parent: :facilities_management_rm6232_procurement_what_happens_next do
     aasm_state { 'entering_requirements' }
+    tupe { false }
   end
 end

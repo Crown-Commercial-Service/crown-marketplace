@@ -201,7 +201,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       render_views
 
-      pending 'renders the tupe partial' do
+      it 'renders the tupe partial' do
         expect(response).to render_template(partial: '_tupe')
       end
 
@@ -267,7 +267,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'updates the contract name' do
-          procurement.reload
+          expect { procurement.reload }.to change(procurement, :contract_name)
 
           expect(procurement.contract_name).to eq('Hello there')
         end
@@ -281,9 +281,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'does not update the contract name' do
-          procurement.reload
-
-          expect(procurement.contract_name).not_to be_nil
+          expect { procurement.reload }.not_to change(procurement, :contract_name)
         end
       end
 
@@ -295,9 +293,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'does no update the unpermitted attribute' do
-          procurement.reload
-
-          expect(procurement.annual_contract_value).to eq(12_345)
+          expect { procurement.reload }.not_to change(procurement, :annual_contract_value)
         end
       end
     end
@@ -313,7 +309,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'updates the annual contract value' do
-          procurement.reload
+          expect { procurement.reload }.to change(procurement, :annual_contract_value)
 
           expect(procurement.annual_contract_value).to eq(567_890)
         end
@@ -327,9 +323,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'does not update the annual contract value' do
-          procurement.reload
-
-          expect(procurement.annual_contract_value).not_to be_nil
+          expect { procurement.reload }.not_to change(procurement, :annual_contract_value)
         end
       end
 
@@ -341,11 +335,49 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'does no update the unpermitted attribute' do
-          origional_contract_name = procurement.contract_name
-          procurement.reload
+          expect { procurement.reload }.not_to change(procurement, :contract_name)
+        end
+      end
+    end
 
-          expect(procurement.contract_name).not_to eq('Hello there')
-          expect(procurement.contract_name).to eq(origional_contract_name)
+    context 'when updating tupe' do
+      let(:section_name) { 'tupe' }
+
+      context 'and the data is valid' do
+        let(:update_params) { { tupe: true } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'updates tupe' do
+          expect { procurement.reload }.to change(procurement, :tupe)
+
+          expect(procurement.tupe).to be true
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { tupe: nil } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update tupe' do
+          expect { procurement.reload }.not_to change(procurement, :tupe)
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { contract_name: 'Hello there' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
+        end
+
+        it 'does no update the unpermitted attribute' do
+          expect { procurement.reload }.not_to change(procurement, :contract_name)
         end
       end
     end

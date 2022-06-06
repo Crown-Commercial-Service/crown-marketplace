@@ -121,5 +121,51 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         end
       end
     end
+
+    describe 'tupe' do
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements, tupe: tupe) }
+
+      context 'when it is blank' do
+        let(:tupe) { '' }
+
+        it 'is not valid and has the correct error message' do
+          expect(procurement.valid?(:tupe)).to be false
+          expect(procurement.errors[:tupe].first).to eq 'Select one option'
+        end
+      end
+
+      context 'when it is nil' do
+        let(:tupe) { nil }
+
+        it 'is not valid and has the correct error message' do
+          expect(procurement.valid?(:tupe)).to be false
+          expect(procurement.errors[:tupe].first).to eq 'Select one option'
+        end
+      end
+
+      context 'when it is a string' do
+        let(:tupe) { 'I am a string' }
+
+        it 'is valid as it evaluates to truthy' do
+          expect(procurement.valid?(:tupe)).to be true
+        end
+      end
+
+      context 'when it is true' do
+        let(:tupe) { true }
+
+        it 'is valid' do
+          expect(procurement.valid?(:tupe)).to be true
+        end
+      end
+
+      context 'when it is false' do
+        let(:tupe) { false }
+
+        it 'is valid' do
+          expect(procurement.valid?(:tupe)).to be true
+        end
+      end
+    end
   end
 end
