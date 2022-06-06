@@ -21,10 +21,10 @@ Feature: Select services validations
       | You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works' |
 
     Examples:
-      | service                                                                                                 |
-      | CAFM system                                                                                             |
-      | Helpdesk Services                                                                                       |
-      | Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works  |
+      | service                       |
+      | CAFM system                   |
+      | Helpdesk Services             |
+      | Management of Billable Works  |
   
   Scenario Outline: Only mandatory services - two extra
     When I select the following items:
@@ -35,16 +35,16 @@ Feature: Select services validations
       | You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works' |
 
     Examples:
-      | service_1                       | service_2                                                                                               |
-      | CAFM system                     | Helpdesk Services                                                                                       |
-      | CAFM system                     | Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works  |
-      | Helpdesk Services               | Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works  |
+      | service_1         | service_2                     |
+      | CAFM system       | Helpdesk Services             |
+      | CAFM system       | Management of Billable Works  |
+      | Helpdesk Services | Management of Billable Works  |
 
   Scenario: Only mandatory services - three extra
     When I select the following items:
-      | CAFM system                                                                                             |
-      | Helpdesk Services                                                                                       |
-      | Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works  |
+      | CAFM system                   |
+      | Helpdesk Services             |
+      | Management of Billable Works  |
     And I click on 'Continue'
     Then I should see the following error messages:
       | You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works' |

@@ -1,7 +1,3 @@
-Given('I have an empty procurement for entering requirements named {string} with the following servcies:') do |contract_name, service_codes_table|
-  create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
-end
-
 Given('I have an empty procurement with buildings named {string} with the following servcies:') do |contract_name, service_codes_table|
   procurement = create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
 

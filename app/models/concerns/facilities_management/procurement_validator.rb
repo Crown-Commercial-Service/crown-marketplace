@@ -32,6 +32,11 @@ module FacilitiesManagement
 
         after_validation :total_contract_length, :remove_empty_extensions
       end
+
+      with_options on: :services do
+        validates :service_codes, length: { minimum: 1 }
+        validate :validate_not_all_mandatory
+      end
     end
 
     private
@@ -105,6 +110,10 @@ module FacilitiesManagement
 
     # End of validation methods for the overall contract period
     #############################################
+
+    def validate_not_all_mandatory
+      errors.add(:service_codes, :invalid_cafm_helpdesk_billable) if (service_codes - self.class::MANDATORY_SERVICES).empty?
+    end
 
     def all_complete
       errors.add(:base, :incomplete)

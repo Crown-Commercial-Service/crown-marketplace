@@ -179,9 +179,9 @@ Feature: Service and selection and annual contract value result in correct sub l
 
   Scenario Outline: Select total and hard/soft services
     When I select the following items:
-      | CAFM system                                                                                             |
-      | Management of Billable Works; Small Works, Projects, Installation Works and Reactive Maintenance Works  |
-      | Housing and residential accommodation management                                                        |
+      | CAFM system                                       |
+      | Management of Billable Works                      |
+      | Housing and residential accommodation management  |
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:

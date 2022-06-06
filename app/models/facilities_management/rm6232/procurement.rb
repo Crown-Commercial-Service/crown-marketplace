@@ -31,6 +31,10 @@ module FacilitiesManagement
         @services ||= Service.where(code: true_service_codes).order(:work_package_code, :sort_order)
       end
 
+      def services_without_lot_consideration
+        @services_without_lot_consideration ||= Service.where(code: service_codes).order(:work_package_code, :sort_order)
+      end
+
       def regions
         @regions ||= Region.where(code: region_codes)
       end
@@ -93,6 +97,8 @@ module FacilitiesManagement
       def determine_lot_number
         self.lot_number = Service.find_lot_number(service_codes_without_cafm, annual_contract_value)
       end
+
+      MANDATORY_SERVICES = %w[Q.3 R.1 S.1].freeze
     end
   end
 end

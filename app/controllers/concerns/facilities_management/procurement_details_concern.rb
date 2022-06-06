@@ -72,6 +72,7 @@ module FacilitiesManagement::ProcurementDetailsConcern
     if params[@procurement.model_name.param_key]
       params.require(@procurement.model_name.param_key).permit(PERMITED_PARAMS[section])
     else
+      @procurement.service_codes = [] if section == :services
       {}
     end
   end
@@ -90,7 +91,8 @@ module FacilitiesManagement::ProcurementDetailsConcern
       :mobilisation_period,
       :extensions_required,
       { call_off_extensions_attributes: %i[id extension years months extension_required] }
-    ]
+    ],
+    services: [service_codes: []]
   }.freeze
 
   protected
