@@ -10,6 +10,9 @@ module FacilitiesManagement
       has_many :call_off_extensions, foreign_key: :facilities_management_rm6232_procurement_id, inverse_of: :procurement, dependent: :destroy
       accepts_nested_attributes_for :call_off_extensions, allow_destroy: true
 
+      has_many :procurement_buildings, foreign_key: :facilities_management_rm6232_procurement_id, inverse_of: :procurement, dependent: :destroy
+      accepts_nested_attributes_for :procurement_buildings, allow_destroy: true
+
       acts_as_gov_uk_date :initial_call_off_start_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
       scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :initial_call_off_start_date, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
@@ -56,12 +59,6 @@ module FacilitiesManagement
 
       def annual_contract_value_status
         annual_contract_value.present? ? :completed : :not_started
-      end
-
-      def buildings_status
-        # TODO: Add in when appropriate
-        # @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
-        :not_started
       end
 
       def buildings_and_services_status

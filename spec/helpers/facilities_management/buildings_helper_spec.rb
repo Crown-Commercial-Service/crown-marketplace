@@ -5,6 +5,8 @@ RSpec.describe FacilitiesManagement::BuildingsHelper, type: :helper do
   let(:building_options) { {} }
 
   describe '.building_rows' do
+    let(:building_options) { { building_name: 'asa' } }
+
     before { @building = building }
 
     # rubocop:disable RSpec/ExampleLength

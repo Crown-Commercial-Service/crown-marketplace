@@ -63,4 +63,12 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :facilities_management_rm6232_procurement_entering_requirements_with_buildings, parent: :facilities_management_rm6232_procurement_entering_requirements do
+    procurement_buildings do |procurement|
+      build_list(:facilities_management_rm6232_procurement_building, 2) do |procurement_building|
+        procurement_building.building.update(user: procurement.user)
+      end
+    end
+  end
 end
