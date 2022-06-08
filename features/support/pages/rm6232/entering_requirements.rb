@@ -112,7 +112,7 @@ module Pages::RM6232
     element :number_of_selected_servcies, '#number-of-services'
     element :number_of_selected_buildings, '#number-of-buildings'
 
-    element :no_buildings_text, 'form > div.procurement > div:nth-child(5)'
+    element :no_buildings_text, '#procurement_buildings-form-group > div:nth-child(2) > div > p'
     elements :checked_buildings, 'input[checked="checked"]'
 
     # element :building_status, '.govuk-body > span > strong'
