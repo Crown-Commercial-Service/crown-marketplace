@@ -29,7 +29,9 @@ module FacilitiesManagement
       @services_status ||= service_codes.any? ? :completed : :not_started
     end
 
-    # def buildings_status; end
+    def buildings_status
+      @buildings_status ||= procurement_buildings.where(active: true).any? ? :completed : :not_started
+    end
 
     # def buildings_and_services_status; end
 

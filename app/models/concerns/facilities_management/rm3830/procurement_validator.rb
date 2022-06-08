@@ -19,9 +19,6 @@ module FacilitiesManagement::RM3830
         end
       end
 
-      # validations on :procurement_buildings step
-      validate :at_least_one_active_procurement_building, on: :buildings
-
       validate :service_code_selection, on: %i[services service_codes]
 
       validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
@@ -80,10 +77,6 @@ module FacilitiesManagement::RM3830
     # rubocop:enable Metrics/BlockLength
 
     private
-
-    def at_least_one_active_procurement_building
-      errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
-    end
 
     def service_code_selection
       return errors.add(:service_codes, :invalid) if service_codes.blank?

@@ -68,7 +68,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
     let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
     let(:user) { create(:user) }
     let(:spreadsheet_building) { create(:facilities_management_building) }
-    let(:spreadsheet_building_2) { create(:facilities_management_building) }
+    let(:spreadsheet_building_2) { create(:facilities_management_building, building_name: spreadsheet_building.building_name) }
 
     describe 'import with valid data' do
       let(:building_data) { [[spreadsheet_building, 'Complete']] }
@@ -369,10 +369,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the gia is not numeric' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building).tap { |b| allow(b).to receive(:gia).and_return('abc') }
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building).tap { |b| allow(b).to receive(:gia).and_return('abc') } }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
@@ -504,10 +501,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the building_type is Other' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, building_type: 'Other', other_building_type: 'Spanish Villa')
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, building_type: 'Other', other_building_type: 'Spanish Villa') }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to succeeded' do
@@ -521,10 +515,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the building_type is other and other is blank' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, building_type: 'Other', other_building_type: nil)
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, building_type: 'Other', other_building_type: nil) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
@@ -542,10 +533,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the building_type is other and other is more than 150 characters' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, building_type: 'Other', other_building_type: 'a' * 151)
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, building_type: 'Other', other_building_type: 'a' * 151) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
@@ -619,10 +607,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the security_type is Other' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, security_type: 'Other', other_security_type: 'Super Secret')
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, security_type: 'Other', other_security_type: 'Super Secret') }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to succeeded' do
@@ -636,10 +621,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the security_type is other and other is blank' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, security_type: 'Other', other_security_type: nil)
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, security_type: 'Other', other_security_type: nil) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
@@ -657,10 +639,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
         end
 
         context 'when the security_type is other and other is more than 150 characters' do
-          let(:spreadsheet_building) do
-            create(:facilities_management_building, security_type: 'Other', other_security_type: 'a' * 151)
-          end
-
+          let(:spreadsheet_building) { create(:facilities_management_building, security_type: 'Other', other_security_type: 'a' * 151) }
           let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
           it 'changes the state of the spreadsheet_import to failed' do
@@ -689,10 +668,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       # rubocop:enable RSpec/AnyInstance
 
       context 'when the postcodes are the same' do
-        let(:spreadsheet_building) do
-          create(:facilities_management_building, address_postcode: user_building.address_postcode)
-        end
-
+        let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: user_building.address_postcode, building_name: user_building.building_name) }
         let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
         it 'changes the state of the spreadsheet_import to succeeded' do
@@ -707,7 +683,7 @@ RSpec.describe FacilitiesManagement::RM3830::SpreadsheetImporter, type: :service
       end
 
       context 'when the postcodes are different' do
-        let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: 'AB101AA') }
+        let(:spreadsheet_building) { create(:facilities_management_building, address_postcode: 'AB101AA', building_name: user_building.building_name) }
         let(:building_data) { [[spreadsheet_building, 'Complete']] }
 
         it 'changes the state of the spreadsheet_import to succeeded' do

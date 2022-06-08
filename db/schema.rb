@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_27_080556) do
+ActiveRecord::Schema.define(version: 2022_06_08_075207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -363,6 +363,18 @@ ActiveRecord::Schema.define(version: 2022_05_27_080556) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_procurement_id"
+    t.uuid "building_id"
+    t.boolean "active"
+    t.text "service_codes", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["active"], name: "index_fm_rm6232_procurement_buildings_on_active"
+    t.index ["building_id"], name: "index_building_on_fm_rm6232_procurements_id"
+    t.index ["facilities_management_rm6232_procurement_id"], name: "index_procurement_building_on_fm_rm6232_procurements_id"
+  end
+
   create_table "facilities_management_rm6232_procurement_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_procurement_id"
     t.integer "extension"
@@ -603,6 +615,8 @@ ActiveRecord::Schema.define(version: 2022_05_27_080556) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_buildings", column: "building_id"
+  add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_rm6232_procurements"
   add_foreign_key "facilities_management_rm6232_procurement_call_off_extensions", "facilities_management_rm6232_procurements"
   add_foreign_key "facilities_management_rm6232_procurements", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"

@@ -57,27 +57,22 @@ module FacilitiesManagement
       end
     end
 
-    def procurement_building_row(_form, building)
-      # TODO: To add when doing this section
-      # if building.status == 'Ready'
-      #   tag.div(class: 'govuk-checkboxes govuk-checkboxes--small') do
-      #     tag.div(class: 'govuk-checkboxes__item') do
-      #       capture do
-      #         concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @building_params[building.id] == '1'))
-      #         concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
-      #           procurement_building_checkbox_text(building)
-      #         end)
-      #       end
-      #     end
-      #   end
-      # else
-      #   tag.div(class: 'govuk-!-padding-left-7') do
-      #     procurement_building_checkbox_text(building)
-      #   end
-      # end
-
-      tag.div(class: 'govuk-!-padding-left-7') do
-        procurement_building_checkbox_text(building)
+    def procurement_building_row(form, building)
+      if building.status == 'Ready'
+        tag.div(class: 'govuk-checkboxes govuk-checkboxes--small') do
+          tag.div(class: 'govuk-checkboxes__item') do
+            capture do
+              concat(form.check_box(:active, class: 'govuk-checkboxes__input', title: building.building_name, checked: @building_params[building.id] == '1'))
+              concat(form.label(:active, class: 'govuk-label govuk-checkboxes__label govuk-!-padding-top-0') do
+                procurement_building_checkbox_text(building)
+              end)
+            end
+          end
+        end
+      else
+        tag.div(class: 'govuk-!-padding-left-7') do
+          procurement_building_checkbox_text(building)
+        end
       end
     end
 

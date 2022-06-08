@@ -371,10 +371,6 @@ module FacilitiesManagement
         estimated_cost_known.nil? ? :not_started : :completed
       end
 
-      def buildings_status
-        @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
-      end
-
       def buildings_and_services_status
         @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
                                              :cannot_start
