@@ -433,6 +433,7 @@ en:
           return_to_requirements: Return to requirements
           title:
             buildings: Buildings summary
+            buildings_and_services: Assigning services to buildings summary
             contract_period: Contract period summary
             services: Services summary
         show_partials:
@@ -442,6 +443,14 @@ en:
             table_caption: Buildings
             the_buildings_below: The buildings below have been selected for this procurement. If you wish to add or remove buildings please click on the 'change' button.
             you_have_selected: You have selected
+          buildings_and_services:
+            buildings: Building name and address
+            buildings_link_text: Buildings
+            no_service_selected: No service selected
+            service: service
+            services: Assigned services
+            status: Status
+            summary_html: Please click on each of your buildings listed below and select the services you require within each building. The status indicator above will show as 'complete' once services have been selected for all your buildings listed. To add to, or change your list of buildings, please go back to your Requirements summary page, and click on '%{buildings_link}' in section 2.
           contract_period:
             call_off_extension_period: Optional call-off extension period
             call_off_extensions: Optional call-off extensions

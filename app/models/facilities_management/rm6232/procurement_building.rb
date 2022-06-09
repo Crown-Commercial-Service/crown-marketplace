@@ -9,6 +9,15 @@ module FacilitiesManagement
 
       delegate :building_name, to: :building
       delegate :address_no_region, to: :building
+
+      def service_selection_complete?
+        false
+        # service_codes.any? && service_code_selection_error_code.nil?
+      end
+
+      def services
+        @services ||= Service.where(code: service_codes).order(:work_package_code, :sort_order).pluck(:name)
+      end
     end
   end
 end

@@ -602,7 +602,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when one building has no service codes' do
       let(:service_codes) { [] }
 
-      pending 'returns false' do
+      it 'returns false' do
         expect(procurement.buildings_and_services_completed?).to eq false
       end
     end
@@ -610,7 +610,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when one building has an invalid selection' do
       let(:service_codes) { %w[Q.3 R.1 S.1] }
 
-      pending 'returns false' do
+      it 'returns false' do
         expect(procurement.buildings_and_services_completed?).to eq false
       end
     end
@@ -648,11 +648,11 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
       context 'when no service has been assigned to any building yet' do
         before do
-          procurement_building1.procurement_building_services.delete_all
-          procurement_building2.procurement_building_services.delete_all
+          procurement_building1.update(service_codes: [])
+          procurement_building2.update(service_codes: [])
         end
 
-        pending 'shown with the NOT STARTED status label' do
+        it 'shown with the NOT STARTED status label' do
           expect(status).to eq(:incomplete)
         end
       end
@@ -868,6 +868,49 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
           extension_period_end_date = procurement.initial_call_off_end_date + procurement.call_off_extensions.where(extension: 0..3).sum(&:period)
 
           expect(procurement.extension_period_end_date(3)).to eq(extension_period_end_date)
+        end
+      end
+    end
+  end
+
+  describe '.active_procurement_buildings' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:result) { procurement.active_procurement_buildings }
+
+    context 'when there are no procurement buildings' do
+      it 'returns no procurement buildings' do
+        expect(result).to be_empty
+      end
+    end
+
+    context 'when there are procurement buildings' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings) }
+      let(:building_1) { procurement.procurement_buildings.first }
+      let(:building_2) { procurement.procurement_buildings.last }
+
+      context 'and none are active' do
+        before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(active: false) } }
+
+        it 'returns no procurement buildings' do
+          expect(result).to be_empty
+        end
+      end
+
+      context 'and some are active' do
+        before { building_1.update(active: false) }
+
+        it 'returns only the procurement buildings that are active' do
+          expect(result.count).to eq 1
+          expect(result.class.to_s).to eq 'FacilitiesManagement::RM6232::ProcurementBuilding::ActiveRecord_AssociationRelation'
+          expect(result).to match_array([building_2])
+        end
+      end
+
+      context 'and all are active' do
+        it 'returns all the procurement buildings' do
+          expect(result.count).to eq 2
+          expect(result.class.to_s).to eq 'FacilitiesManagement::RM6232::ProcurementBuilding::ActiveRecord_AssociationRelation'
+          expect(result.sort).to match_array([building_1, building_2].sort)
         end
       end
     end
