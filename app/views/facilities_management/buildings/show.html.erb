@@ -37,11 +37,11 @@
               <%= building_row_text(attribute, building_detail[:value]) %>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <%= link_to(t('.change'), edit_path(@building, building_detail[:section]), role: 'link', class: 'govuk-link') %>
+              <%= link_to(t('.change'), edit_path(@building, building_detail[:section]), role: 'link', class: 'govuk-link') unless attribute == :region %>
             </dd>
           <% else %>
             <dd class="govuk-summary-list__value">
-              <%= link_to(t('.answer_question'), edit_path(@building, building_detail[:section]), role: 'link', class: 'govuk-link') unless attribute == :region %>
+              <%= link_to(t('.answer_question'), edit_path(@building, building_detail[:section]), role: 'link', class: 'govuk-link') %>
             </dd>
             <dd class="govuk-summary-list__actions"></dd>
           <% end %>

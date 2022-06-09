@@ -915,4 +915,104 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
     end
   end
+
+  describe '.update_procurement_building_service_codes' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings) }
+    let(:building_1) { procurement.procurement_buildings.first }
+    let(:building_2) { procurement.procurement_buildings.last }
+    let(:service_codes) { %w[E.1] }
+    let(:saving_the_procurement) do
+      procurement.service_codes = service_codes
+      procurement.save(context: :services)
+    end
+
+    before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement.service_codes) } }
+
+    context 'when there are procurement buildings none active' do
+      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(active: false) } }
+
+      it 'updates all the procurement buildings' do
+        expect do
+          saving_the_procurement
+        end.to(
+          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
+          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+        )
+      end
+    end
+
+    context 'when there are procurement buildings with some active' do
+      before { building_1.update(active: false) }
+
+      it 'updates all the procurement buildings' do
+        expect do
+          saving_the_procurement
+        end.to(
+          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
+          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+        )
+      end
+    end
+
+    context 'when there are procurement buildings with all active' do
+      it 'updates all the procurement buildings' do
+        expect do
+          saving_the_procurement
+        end.to(
+          change(building_1, :service_codes).from(%w[E.1 E.2]).to(%w[E.1])
+          .and(change(building_2, :service_codes).from(%w[E.1 E.2]).to(%w[E.1]))
+        )
+      end
+    end
+
+    context 'when no service codes are changed' do
+      let(:service_codes) { %w[E.1 E.2] }
+
+      before { allow(procurement).to receive(:update_procurement_building_service_codes) }
+
+      it 'updates no procurement buildings' do
+        saving_the_procurement
+
+        expect(procurement).not_to have_received(:update_procurement_building_service_codes)
+      end
+    end
+  end
+
+  describe '.procurement_buildings_missing_regions?' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings, aasm_state: state) }
+
+    context 'when the procurement is in a what_happens_next state' do
+      let(:state) { 'what_happens_next' }
+
+      it 'returns false' do
+        expect(procurement.procurement_buildings_missing_regions?).to eq false
+      end
+    end
+
+    context 'when the procurement is in entering_requirements' do
+      let(:state) { 'entering_requirements' }
+
+      context 'when a building address region is nil' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: nil) }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is empty' do
+        before { procurement.active_procurement_buildings.first.building.update(address_region_code: '') }
+
+        it 'returns true' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq true
+        end
+      end
+
+      context 'when a building address region is present' do
+        it 'returns false' do
+          expect(procurement.procurement_buildings_missing_regions?).to eq false
+        end
+      end
+    end
+  end
 end

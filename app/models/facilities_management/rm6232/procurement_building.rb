@@ -8,6 +8,7 @@ module FacilitiesManagement
       belongs_to :building, class_name: 'FacilitiesManagement::Building'
 
       delegate :building_name, to: :building
+      delegate :full_address, to: :building
       delegate :address_no_region, to: :building
 
       before_validation :cleanup_service_codes, on: :buildings_and_services
@@ -20,6 +21,10 @@ module FacilitiesManagement
 
       def services
         @services ||= Service.where(code: service_codes).order(:work_package_code, :sort_order).pluck(:name)
+      end
+
+      def missing_region?
+        building.address_region_code.blank? || building.address_region.blank?
       end
 
       private

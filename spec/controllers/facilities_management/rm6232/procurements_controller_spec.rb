@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
+  let(:user) { controller.current_user }
 
   login_fm_buyer_with_details
 
@@ -11,17 +12,17 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     it 'will redirect to buyer details' do
       get :new
 
-      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: controller.current_user.buyer_detail.id)
+      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: user.buyer_detail.id)
     end
   end
 
   describe 'GET index' do
     before do
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: controller.current_user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: controller.current_user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: user)
       get :index
     end
 
@@ -46,7 +47,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     render_views
 
     context 'and the procurement state is what_happens_next' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: controller.current_user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user) }
 
       it 'renders the what happens next partial' do
         expect(response).to render_template(partial: '_what_happens_next')
@@ -63,7 +64,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     end
 
     context 'and the procurement state is entering_requirements' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: controller.current_user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
 
       it 'renders the entering requirements next partial' do
         expect(response).to render_template(partial: '_entering_requirements')
@@ -76,6 +77,15 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
       it 'sets the back path' do
         expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
         expect(assigns(:back_text)).to eq 'Return to procurements dashboard'
+      end
+
+      context 'and the procurement has buildings with missing regions' do
+        let(:building) { create(:facilities_management_building, user: user, address_region: nil, address_region_code: nil) }
+        let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user, procurement_buildings_attributes: { '0': { building_id: building.id, active: true } }) }
+
+        it 'redirects to missing_regions' do
+          expect(response).to redirect_to(facilities_management_rm6232_missing_regions_path(procurement_id: procurement.id))
+        end
       end
     end
 
@@ -110,7 +120,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
       expect(
         assigns(:procurement).attributes.slice('user_id', 'service_codes', 'region_codes', 'annual_contract_value', 'lot_number')
       ).to eq(
-        { 'user_id' => controller.current_user.id,
+        { 'user_id' => user.id,
           'service_codes' => ['E.1'],
           'region_codes' => ['UKC1'],
           'annual_contract_value' => 123_456,
@@ -144,7 +154,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
         expect(
           assigns(:procurement).attributes.slice('user_id', 'service_codes', 'region_codes', 'annual_contract_value', 'lot_number')
         ).to eq(
-          { 'user_id' => controller.current_user.id,
+          { 'user_id' => user.id,
             'service_codes' => ['E.1'],
             'region_codes' => ['UKC1'],
             'annual_contract_value' => 123_456,
@@ -178,7 +188,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
   describe 'PUT update_show' do
     context 'and the procurement state is entering_requirements' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: controller.current_user) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
 
       before do
         # rubocop:disable RSpec/AnyInstance
@@ -231,7 +241,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     login_fm_buyer_with_details
 
     let(:state) { 'what_happens_next' }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state, user: controller.current_user, contract_name: 'New search') }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state, user: user, contract_name: 'New search') }
 
     before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
 

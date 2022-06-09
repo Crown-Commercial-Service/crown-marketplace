@@ -200,4 +200,94 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuilding, type: :model d
       end
     end
   end
+
+  describe '.missing_region?' do
+    before { procurement_building.building.update(address_region_code: address_region_code, address_region: address_region) }
+
+    let(:result) { procurement_building.missing_region? }
+
+    context 'when the address region code is nil' do
+      let(:address_region_code) { nil }
+
+      context 'and the region is nil' do
+        let(:address_region) { nil }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is empty' do
+        let(:address_region) { '' }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is present' do
+        let(:address_region) { 'Essex' }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when the address region code is empty' do
+      let(:address_region_code) { '' }
+
+      context 'and the region is nil' do
+        let(:address_region) { nil }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is empty' do
+        let(:address_region) { '' }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is present' do
+        let(:address_region) { 'Essex' }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+    end
+
+    context 'when the address region code is present' do
+      let(:address_region_code) { 'UKH1' }
+
+      context 'and the region is nil' do
+        let(:address_region) { nil }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is empty' do
+        let(:address_region) { '' }
+
+        it 'returns true' do
+          expect(result).to be true
+        end
+      end
+
+      context 'and the region is present' do
+        let(:address_region) { 'Essex' }
+
+        it 'returns false' do
+          expect(result).to be false
+        end
+      end
+    end
+  end
 end

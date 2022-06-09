@@ -1,3 +1,7 @@
+And('everything is completed') do
+  expect(page.all('td > strong').all? { |status| status.text == 'completed' }).to be true
+end
+
 Then('{string} should have the status {string} in {string}') do |detail, status, section|
   expect(entering_requirements_page.send(section).send(detail).status.text).to eq status.downcase
 end
@@ -324,4 +328,20 @@ end
 
 def building_status(building_name)
   entering_requirements_page.find(:xpath, "//td[* = '#{building_name}']/following-sibling::td")
+end
+
+Then('there are {int} buildings missing a region') do |number_of_buildings|
+  expect(entering_requirements_page.all('tbody > tr').count).to eq number_of_buildings
+end
+
+Then('there is {int} building missing a region') do |number_of_buildings|
+  step "there are #{number_of_buildings} buildings missing a region"
+end
+
+Then('I select region for {string}') do |building_name|
+  entering_requirements_page.find('td', text: building_name).sibling('td', text: 'Select region').find('a').click
+end
+
+Then('I select {string} for the missing region') do |region|
+  entering_requirements_page.region_drop_down.find(:option, region).select_option
 end

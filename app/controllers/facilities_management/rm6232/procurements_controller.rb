@@ -3,6 +3,7 @@ module FacilitiesManagement
     class ProcurementsController < FacilitiesManagement::FrameworkController
       before_action :set_procurement, only: %i[show update_show supplier_shortlist_spreadsheet]
       before_action :authorize_user
+      before_action :redirect_if_missing_regions, only: :show
 
       def index
         @searches = current_user.rm6232_procurements.searches
@@ -60,6 +61,10 @@ module FacilitiesManagement
       end
 
       private
+
+      def redirect_if_missing_regions
+        redirect_to facilities_management_rm6232_missing_regions_path(procurement_id: @procurement.id) if @procurement.procurement_buildings_missing_regions?
+      end
 
       # rubocop:disable Naming/AccessorMethodName
       def set_back_path(action)

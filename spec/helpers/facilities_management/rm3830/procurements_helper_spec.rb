@@ -337,37 +337,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.buildings_with_missing_regions' do
-    let(:procurement_building1) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
-    let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, address_region_code: nil)) }
-    let(:procurement_building3) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
-    let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, address_region_code: nil)) }
-    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
-
-    before do
-      procurement_building1
-      procurement_building2
-      procurement_building3
-      procurement_building4
-      @procurement = procurement
-    end
-
-    context 'when there are buildings with missing regions' do
-      it 'returns the buildings missing regions' do
-        expect(helper.buildings_with_missing_regions).to match_array [procurement_building2, procurement_building4]
-      end
-    end
-
-    context 'when there are no buildings with missing regions' do
-      let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
-      let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building)) }
-
-      it 'returns the buildings missing regions' do
-        expect(helper.buildings_with_missing_regions).to match_array []
-      end
-    end
-  end
-
   describe '.continue_button_text' do
     before { helper.params[:step] = procurement_step }
 

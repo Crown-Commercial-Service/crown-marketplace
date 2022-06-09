@@ -158,7 +158,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
   describe 'GET edit' do
     before { get :edit, params: { procurement_id: procurement.id, section: section_name } }
 
-    context 'when the show page is not recognised' do
+    context 'when the edit page is not recognised' do
       let(:section_name) { 'services-and-buildings' }
 
       it 'redirects to the procurement show page' do
