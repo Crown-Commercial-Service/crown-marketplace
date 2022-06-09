@@ -267,16 +267,6 @@ en:
               item_2: other spreadsheets
             title: Final results
           the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
-      procurement_buildings:
-        edit:
-          hint_text_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
-          label: Which of your services are required within this building?
-          or: Or
-          page_title: Assigning services to a building
-          return_to_summary: Return to assigning services to buildings summary page
-          save_and_return: Save and return
-          select_all: Select all
-          services_link_text: Services
       procurements:
         index:
           advanced_procurement_activities: Advanced procurement activities

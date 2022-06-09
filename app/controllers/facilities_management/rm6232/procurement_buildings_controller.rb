@@ -1,37 +1,24 @@
 module FacilitiesManagement
   module RM6232
-    class ProcurementBuildingsController < FacilitiesManagement::FrameworkController
-      before_action :set_procurement_building_data
-      before_action :authorize_user
-
-      def edit; end
-
-      def update
-        @procurement_building.assign_attributes(procurement_building_params)
-
-        if @procurement_building.save(context: :buildings_and_services)
-          redirect_to facilities_management_rm6232_procurement_detail_path(@procurement, section: 'buildings-and-services')
-        else
-          render :edit
-        end
-      end
-
+    class ProcurementBuildingsController < FacilitiesManagement::ProcurementBuildingsController
       private
-
-      def procurement_building_params
-        params.require(:facilities_management_rm6232_procurement_building)
-              .permit(service_codes: [])
-      end
 
       def set_procurement_building_data
         @procurement_building = ProcurementBuilding.find(params[:id])
-        @procurement = @procurement_building.procurement
+
+        super
       end
 
-      protected
+      def set_procurement_data
+        @procurement = Procurement.find(params[:procurement_id])
+      end
 
-      def authorize_user
-        authorize! :manage, @procurement
+      def return_link
+        section == :missing_region ? procurement_show_path : "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/details/buildings-and-services"
+      end
+
+      def after_update_path
+        "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/details/buildings-and-services"
       end
     end
   end

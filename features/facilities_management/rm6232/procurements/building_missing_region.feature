@@ -1,7 +1,7 @@
 Feature: Buildings used in a procurement are missing a region
 
   Background: Sign in and navigate to the page
-    Given I sign in and navigate to my account for 'RM3830'
+    Given I sign in and navigate to my account for 'RM6232'
     And I have a completed procurement for entering requirements named 'My missing regions procurement' with buildings missing regions
     When I navigate to the procurement 'My missing regions procurement'
     Then I am on the 'Review your buildings' page
@@ -25,14 +25,13 @@ Feature: Buildings used in a procurement are missing a region
     Then I am on the "Confirm your building's region" page
     And I select 'Shropshire and Staffordshire' for the missing region
     And I click on 'Save and return'
-    Then I am on the 'Requirements' page
+    Then I am on the 'Further service and contract requirements' page
     And everything is completed
 
   Scenario: Return links work
     Given I select region for 'Test building 1'
     Then I am on the "Confirm your building's region" page
-    And I click on the 'Return to review your buildings' return link
-    Then I am on the 'Review your buildings' page
+    And I click on 'Return to review your buildings'
     Then I am on the 'Review your buildings' page
     Given I click on the 'Return to procurements dashboard' return link
     Then I am on the 'Procurements dashboard' page

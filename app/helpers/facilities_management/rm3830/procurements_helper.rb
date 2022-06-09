@@ -61,10 +61,6 @@ module FacilitiesManagement::RM3830
       parts.last.sort_by(&:created_at) + parts.first
     end
 
-    def buildings_with_missing_regions
-      @buildings_with_missing_regions ||= @procurement.active_procurement_buildings.order_by_building_name.select(&:missing_region?)
-    end
-
     def continue_button_text
       ProcurementRouter::SUMMARY.include?(params[:step]) ? 'save_and_continue' : 'save_and_return'
     end

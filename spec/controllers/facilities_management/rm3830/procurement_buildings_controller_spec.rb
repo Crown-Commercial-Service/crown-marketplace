@@ -1,136 +1,230 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management', framework: framework } }
-  let(:framework) { 'RM3830' }
-  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement, user: subject.current_user)) }
+  let(:default_params) { { service: 'facilities_management', framework: 'RM3830' } }
+  let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: procurement) }
+  let(:procurement) { create(:facilities_management_rm3830_procurement, user: user) }
+  let(:user) { controller.current_user }
 
-  describe 'GET #show' do
-    context 'when logged in as the fm buyer that created the procurement' do
-      login_fm_buyer_with_details
-      it 'returns http success' do
-        get :show, params: { id: procurement_building.id }
-        expect(response).to have_http_status(:ok)
-      end
-    end
+  login_fm_buyer_with_details
 
-    context 'when logged in as a different fm buyer than the one that created the procurement' do
-      login_fm_buyer_with_details
+  context 'without buyer details' do
+    login_fm_buyer
 
-      it 'redirects to not permitted page' do
-        procurement_building.procurement.update(user: create(:user))
-        get :show, params: { id: procurement_building.id }
-        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
-      end
-    end
+    it 'will redirect to buyer details' do
+      get :show, params: { id: procurement_building.id }
 
-    context 'when logging in without buyer details' do
-      login_fm_buyer
-
-      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
-        get :show, params: { id: procurement_building.id }
-
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
-      end
+      expect(response).to redirect_to edit_facilities_management_buyer_detail_path(id: controller.current_user.buyer_detail.id)
     end
   end
 
-  describe 'GET #edit' do
-    login_fm_buyer_with_details
-
-    before { get :edit, params: { id: procurement_building.id, step: step } }
-
-    context 'when the step is not recognised' do
-      let(:step) { 'missing_service' }
-
-      it 'redirects to the  procurement show page' do
-        expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement_building.procurement)
-      end
-    end
-
-    context 'when the step is missing_regions' do
-      let(:step) { 'missing_region' }
-
-      it 'renders the template' do
-        expect(response).to render_template :edit
-      end
-    end
-
-    context 'when the step is buildings_and_services' do
-      let(:step) { 'buildings_and_services' }
-
-      it 'renders the template' do
-        expect(response).to render_template :edit
-      end
-    end
-  end
-
-  describe 'PATCH #update' do
-    login_fm_buyer_with_details
-
-    context 'when updating a missing region' do
-      before do
-        patch :update, params: { id: procurement_building.id, step: 'missing_region', facilities_management_building: { address_region: address_region } }
-      end
-
-      context 'when the building has a region' do
-        let(:address_region) { 'Cardiff and Vale of Glamorgan' }
-
-        it 'redirects to the procurement show page' do
-          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement_building.procurement)
-        end
-      end
-
-      context 'when the building does not have a region' do
-        let(:address_region) { nil }
-
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
-        end
-      end
-    end
-
-    context 'when updating service selections' do
-      before do
-        patch :update, params: { id: procurement_building.id, step: 'buildings_and_services', facilities_management_rm3830_procurement_building: { service_codes: service_codes } }
-      end
-
-      context 'when no services are selected' do
-        let(:service_codes) { [''] }
-
-        it 'renders the edit page' do
-          expect(response).to render_template(:edit)
-        end
-      end
-
-      context 'when services are selected' do
-        let(:service_codes) { ['', 'C.1'] }
-
-        it 'redirects to the procurement summary page' do
-          expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
-        end
-      end
-    end
-  end
-
-  describe 'methods called on show' do
-    login_fm_buyer_with_details
-
+  describe 'GET show' do
     before do
       procurement_building.update(service_codes: %w[C.1 E.4 C.2 C.3 C.4 G.3 C.5 K.4 I.3 O.1 N.1])
-      procurement_building.reload
+
       get :show, params: { id: procurement_building.id }
     end
 
-    context 'when set_standards_procurement_building_services is used' do
-      it 'returns the correct procurement_building_services' do
-        expect(assigns(:standards_procurement_building_services).map(&:code)).to eq %w[C.1 C.2 C.3 C.4 C.5 G.3]
+    it 'renders the show page' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'assigns standards_procurement_building_services' do
+      expect(assigns(:standards_procurement_building_services).map(&:code)).to eq %w[C.1 C.2 C.3 C.4 C.5 G.3]
+    end
+
+    it 'assigns volume_procurement_building_services' do
+      expect(assigns(:volume_procurement_building_services).map { |service_and_context| service_and_context[:procurement_building_service].code }).to eq %w[C.1 C.2 C.3 C.4 C.5 E.4 G.3 G.3 I.3 K.4]
+    end
+
+    context 'when the user does not own the procurement' do
+      let(:user) { create(:user) }
+
+      it 'redirects to the not permitted path' do
+        expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+      end
+    end
+  end
+
+  describe 'GET edit' do
+    before { get :edit, params: { id: procurement_building.id, section: section_name } }
+
+    context 'when the edit page is not recognised' do
+      let(:section_name) { 'services-and-buildings' }
+
+      it 'redirects to the procurement show page' do
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
       end
     end
 
-    context 'when set_volume_procurement_building_services is used' do
-      it 'returns the correct procurement_building_services' do
-        expect(assigns(:volume_procurement_building_services).map { |service_and_context| service_and_context[:procurement_building_service].code }).to eq %w[C.1 C.2 C.3 C.4 C.5 E.4 G.3 G.3 I.3 K.4]
+    context 'when the user does not own the procurement' do
+      let(:section_name) { 'services-and-buildings' }
+      let(:user) { create(:user) }
+
+      it 'redirects to the not permitted path' do
+        expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+      end
+    end
+
+    context 'when the user wants to assign buildings and services' do
+      let(:section_name) { 'buildings-and-services' }
+
+      render_views
+
+      it 'renders the buildings_and_services partial' do
+        expect(response).to render_template(partial: '_buildings_and_services')
+      end
+
+      it 'sets the procurement, procurement building and building' do
+        expect(assigns(:procurement)).to eq procurement
+        expect(assigns(:procurement_building)).to eq procurement_building
+        expect(assigns(:building)).to eq procurement_building.building
+      end
+    end
+
+    context 'when the user wants to edit the missing region' do
+      let(:section_name) { 'missing_region' }
+
+      render_views
+
+      it 'renders the missing_region partial' do
+        expect(response).to render_template(partial: '_missing_region')
+      end
+
+      it 'sets the procurement, procurement building and building' do
+        expect(assigns(:procurement)).to eq procurement
+        expect(assigns(:procurement_building)).to eq procurement_building
+        expect(assigns(:building)).to eq procurement_building.building
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    before { put :update, params: { id: procurement_building.id, section: section_name, model_name => update_params } }
+
+    context 'when updating the services for the building' do
+      let(:section_name) { 'buildings-and-services' }
+      let(:model_name) { :facilities_management_rm3830_procurement_building }
+
+      context 'and the data is valid' do
+        let(:update_params) { { service_codes: %w[F.1 F.2] } }
+
+        it 'redirects to the details show page' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
+        end
+
+        it 'updates service_codes' do
+          expect { procurement_building.reload }.to change(procurement_building, :service_codes).to(%w[F.1 F.2])
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { service_codes: [''] } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update service_codes' do
+          expect { procurement_building.reload }.not_to change(procurement_building, :service_codes)
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { service_codes: %w[F.1 F.2], active: false } }
+
+        it 'redirects to the details show page' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement_building.procurement, summary: 'buildings_and_services')
+        end
+
+        it 'does no update the unpermitted attribute' do
+          expect { procurement_building.reload }.not_to change(procurement_building, :active)
+        end
+      end
+    end
+
+    context 'when updating the missing region' do
+      let(:building) { procurement_building.building }
+      let(:section_name) { 'missing_region' }
+      let(:model_name) { :facilities_management_building }
+
+      context 'and the data is valid' do
+        let(:update_params) { { address_region: 'Tees Valley and Durham', address_region_code: 'UKC1' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
+        end
+
+        it 'updates regions' do
+          expect { building.reload }.to(
+            change(building, :address_region).to('Tees Valley and Durham')
+            .and(change(building, :address_region_code).to('UKC1'))
+          )
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { address_region: nil, address_region_code: nil } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update service_codes' do
+          RSpec::Matchers.define_negated_matcher :not_change, :change
+
+          expect { building.reload }.to(
+            not_change(building, :address_region)
+            .and(not_change(building, :address_region_code))
+          )
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { address_region: 'Tees Valley and Durham', address_region_code: 'UKC1', building_name: 'Noah' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
+        end
+
+        it 'does no update the unpermitted attribute' do
+          expect { building.reload }.not_to change(building, :building_name)
+        end
+      end
+    end
+  end
+
+  describe 'GET missing_regions' do
+    let(:building) { create(:facilities_management_building, user: user, **building_params) }
+    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building_no_services, procurement: procurement, building: building) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_entering_requirements, user: user, procurement_buildings_attributes: { '0': { building_id: building.id, active: true } }) }
+    let(:building_params) { {} }
+
+    before { get :missing_regions, params: { procurement_id: procurement.id } }
+
+    context 'when the user does not own the procurement' do
+      let(:user) { create(:user) }
+
+      it 'redirects to the not permitted path' do
+        expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+      end
+    end
+
+    context 'when there are no missing regions' do
+      it 'redirects to the procurement show page' do
+        expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
+      end
+    end
+
+    context 'when there are missing regions' do
+      let(:building_params) { { address_region: nil, address_region_code: nil } }
+
+      it 'renders missing_regions' do
+        expect(response).to render_template(:missing_regions)
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
       end
     end
   end

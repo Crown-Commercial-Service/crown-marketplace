@@ -20,6 +20,8 @@ module FacilitiesManagement
 
       before_create :generate_contract_number, :determine_lot_number
 
+      before_save :update_procurement_building_service_codes, if: :service_codes_changed?
+
       # The service CAFM – Soft FM Requirements (Q.1) can only be selected when all other services are soft.
       # Because we don't want to pass that logic onto the user, we determine which CAFM service they need for them.
       # To make the selection easier we have added the Q.3 service for the user to select,
@@ -65,6 +67,12 @@ module FacilitiesManagement
         annual_contract_value.present? ? :completed : :not_started
       end
 
+      def procurement_buildings_missing_regions?
+        return false unless entering_requirements?
+
+        active_procurement_buildings.includes(:building).pluck('facilities_management_buildings.address_region_code').any?(&:blank?)
+      end
+
       private
 
       def service_codes_without_cafm
@@ -87,6 +95,12 @@ module FacilitiesManagement
 
       def determine_lot_number
         self.lot_number = Service.find_lot_number(service_codes_without_cafm, annual_contract_value)
+      end
+
+      def update_procurement_building_service_codes
+        procurement_buildings.each do |procurement_building|
+          procurement_building.service_codes.select! { |service_code| service_codes&.include? service_code }
+        end
       end
 
       MANDATORY_SERVICES = %w[Q.3 R.1 S.1].freeze
