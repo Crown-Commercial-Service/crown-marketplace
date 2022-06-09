@@ -131,6 +131,12 @@ en:
               greater_than_or_equal_to: The years for the extension period must be greater than or equal to 0
               not_a_number: The years for the extension period must be a whole number
               not_an_integer: The years for the extension period must be a whole number
+        facilities_management/rm6232/procurement_building:
+          attributes:
+            service_codes:
+              invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
+              invalid_cleaning: "'Mobile cleaning' and 'Routine cleaning' are the same, but differ by delivery method. Please choose one of these services only"
+              too_short: You must select at least one service for this building
         facilities_management/rm6232/supplier/lot_data:
           attributes:
             region_codes:
@@ -261,6 +267,16 @@ en:
               item_2: other spreadsheets
             title: Final results
           the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
+      procurement_buildings:
+        edit:
+          hint_text_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
+          label: Which of your services are required within this building?
+          or: Or
+          page_title: Assigning services to a building
+          return_to_summary: Return to assigning services to buildings summary page
+          save_and_return: Save and return
+          select_all: Select all
+          services_link_text: Services
       procurements:
         index:
           advanced_procurement_activities: Advanced procurement activities

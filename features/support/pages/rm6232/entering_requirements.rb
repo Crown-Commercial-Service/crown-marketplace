@@ -115,11 +115,11 @@ module Pages::RM6232
     element :no_buildings_text, '#procurement_buildings-form-group > div:nth-child(2) > div > p'
     elements :checked_buildings, 'input[checked="checked"]'
 
-    # element :building_status, '.govuk-body > span > strong'
-    # element :assigning_services_to_buildings_status, '.govuk-body > span > strong'
+    element :building_status, '.govuk-body > span > strong'
+    element :assigning_services_to_buildings_status, '#main-content > div:nth-child(3) > div > span.govuk-\!-padding-left-2 > strong'
 
-    # element :select_all_services_checkbox, '#box-all'
-    # elements :all_checkboxes, 'input[type=checkbox]'
+    element :select_all_services_checkbox, '#box-all'
+    elements :all_checkboxes, 'input[type=checkbox]'
 
     # element :next_pagination, 'li.ccs-last > button'
     # element :previous_pagination, 'li.ccs-first > button'

@@ -15,6 +15,14 @@ Given('I have an empty procurement for entering requirements named {string} with
   create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:empty_entering_requirements], user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
 end
 
+Given('I have an empty procurement with buildings named {string} with the following servcies:') do |contract_name, service_codes_table|
+  procurement = create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:empty_entering_requirements], user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
+
+  @user.buildings.each do |building|
+    procurement.procurement_buildings.create(building: building, active: true)
+  end
+end
+
 FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM3830' => {
     initial: :facilities_management_rm3830_procurement,
