@@ -170,7 +170,3 @@ end
 Then('I change my contact detail postcode') do
   contract_detail_page.change_postcode.click
 end
-
-Then('I change my contact detail address') do
-  contract_detail_page.change_address.click
-end

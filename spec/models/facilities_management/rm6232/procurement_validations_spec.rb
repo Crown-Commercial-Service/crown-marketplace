@@ -181,7 +181,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
 
       # rubocop:disable RSpec/NestedGroups
-      context 'when validateing that not all services are mandatory' do
+      context 'when validating that not all services are mandatory' do
         context 'when the only code is Q.3' do
           let(:service_codes) { %w[Q.3] }
 

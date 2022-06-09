@@ -633,7 +633,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       context 'and the data is valid' do
         let(:update_params) { { service_codes: %w[F.1 F.2] } }
 
-        it 'redirects to the procurement show page' do
+        it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
         end
 
@@ -659,7 +659,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       context 'and an unpermitted parameters are passed in' do
         let(:update_params) { { contract_name: 'Hello there' } }
 
-        it 'redirects to the procurement show page' do
+        it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
         end
 
@@ -679,7 +679,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       context 'and the data is valid' do
         let(:update_params) { { procurement_buildings_attributes: { '0': { active: '1', building_id: building_1.id }, '1': { active: '0', building_id: building_2.id }, '2': { active: '1', building_id: new_building.id } } } }
 
-        it 'redirects to the procurement show page' do
+        it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
         end
 
@@ -725,7 +725,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       context 'and an unpermitted parameters are passed in' do
         let(:update_params) { { contract_name: 'Hello there' } }
 
-        it 'redirects to the procurement show page' do
+        it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
         end
 

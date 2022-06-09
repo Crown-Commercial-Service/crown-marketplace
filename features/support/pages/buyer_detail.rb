@@ -14,5 +14,6 @@ module Pages
     end
 
     element :postcode_error_message, '#error_facilities_management_buyer_detail_organisation_address_postcode > span'
+    element :change_address, '#change-input-2'
   end
 end
