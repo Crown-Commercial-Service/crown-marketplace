@@ -11,7 +11,7 @@ module FacilitiesManagement::ProcurementDetailsConcern
     before_action :redirect_if_unrecognised_edit_section, only: :edit
     before_action :set_procurement_edit_data, only: :edit
 
-    helper_method :section, :edit_path, :procurement_show_path
+    helper_method :section, :show_path, :edit_path, :procurement_show_path
   end
 
   def show
@@ -62,12 +62,12 @@ module FacilitiesManagement::ProcurementDetailsConcern
     "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}"
   end
 
-  def show_path
-    "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/details/#{params[:section]}"
+  def show_path(section = params[:section])
+    "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/details/#{section}"
   end
 
-  def edit_path
-    "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/details/#{params[:section]}/edit"
+  def edit_path(section = params[:section])
+    "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/details/#{section}/edit"
   end
 
   def set_procurement_edit_data
@@ -76,7 +76,7 @@ module FacilitiesManagement::ProcurementDetailsConcern
   end
 
   def set_procurement_show_data
-    @active_procurement_buildings = @procurement.procurement_buildings.where(active: true).order_by_building_name.page(params[:page]) if section == :buildings
+    @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page]) if section == :buildings || section == :buildings_and_services
   end
 
   # Methods relating to paginating the buildings

@@ -10,8 +10,7 @@ module FacilitiesManagement
       end
 
       RECOGNISED_DETAILS_EDIT_STEPS = %i[contract_name annual_contract_value tupe contract_period services buildings].freeze
-      RECOGNISED_DETAILS_SHOW_PAGES = %i[contract_period services buildings].freeze
-      # buildings_and_services
+      RECOGNISED_DETAILS_SHOW_PAGES = %i[contract_period services buildings buildings_and_services].freeze
     end
   end
 end

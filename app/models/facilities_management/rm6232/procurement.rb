@@ -42,6 +42,10 @@ module FacilitiesManagement
         @regions ||= Region.where(code: region_codes)
       end
 
+      def active_procurement_buildings
+        @active_procurement_buildings ||= procurement_buildings.where(active: true)
+      end
+
       aasm do
         state :what_happens_next, initial: true
         state :entering_requirements
@@ -59,16 +63,6 @@ module FacilitiesManagement
 
       def annual_contract_value_status
         annual_contract_value.present? ? :completed : :not_started
-      end
-
-      def buildings_and_services_status
-        # TODO: Add in when appropriate
-        # @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
-        #                                      :cannot_start
-        #                                    else
-        #                                      buildings_and_services_completed? ? :completed : :incomplete
-        #                                    end
-        :cannot_start
       end
 
       private
