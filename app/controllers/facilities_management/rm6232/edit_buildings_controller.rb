@@ -4,7 +4,7 @@ module FacilitiesManagement
       private
 
       def index_path
-        edit_facilities_management_rm6232_procurement_detail_path(@procurement, section: :buildings)
+        edit_facilities_management_rm6232_procurement_procurement_detail_path(@procurement, section: :buildings)
       end
 
       def show_path(building = @building)

@@ -76,7 +76,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'contract_name' }
 
       it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/contract-name/edit"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-name/edit"
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'annual_contract_value' }
 
       it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/annual-contract-value/edit"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/annual-contract-value/edit"
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'tupe' }
 
       it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/tupe/edit"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/tupe/edit"
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'contract_period' }
 
       it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/contract-period"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-period"
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'services' }
 
       it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/services"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/services"
       end
     end
 
@@ -116,7 +116,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'buildings' }
 
       it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/buildings"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings"
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       let(:section) { 'buildings_and_services' }
 
       it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/buildings-and-services"
+        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings-and-services"
       end
     end
   end
