@@ -135,15 +135,22 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
     context 'when the user wants to assign services to buildings' do
       let(:section_name) { 'buildings-and-services' }
+      let(:building) { create(:facilities_management_building, user: user) }
+      let(:procurement_options) { { procurement_buildings_attributes: { '0': { building_id: building.id, active: true } } } }
 
       render_views
 
-      pending 'renders the contract_periods partial' do
+      it 'renders the buildings_and_services partial' do
         expect(response).to render_template(partial: '_buildings_and_services')
       end
 
       it 'sets the procurement' do
         expect(assigns(:procurement)).to eq procurement
+      end
+
+      it 'sets the active procurement buildings' do
+        expect(assigns(:active_procurement_buildings).count).to eq 1
+        expect(assigns(:active_procurement_buildings).class.to_s).to eq 'FacilitiesManagement::RM6232::ProcurementBuilding::ActiveRecord_AssociationRelation'
       end
     end
   end

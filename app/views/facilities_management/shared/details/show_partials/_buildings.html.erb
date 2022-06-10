@@ -5,10 +5,10 @@
     </h2>
     <div id="number-of-buildings">
       <p class="govuk-!-font-size-48 govuk-!-font-weight-bold govuk-!-margin-bottom-0">
-        <%= @active_procurement_buildings.count %>
+        <%= @procurement.active_procurement_buildings.count %>
       </p>
       <p class="govuk-!-font-weight-bold">
-        <%= t('.building').pluralize(@active_procurement_buildings.count) %>
+        <%= t('.building').pluralize(@procurement.active_procurement_buildings.count) %>
       </p>
     </div>
     <p class="govuk-caption-m">

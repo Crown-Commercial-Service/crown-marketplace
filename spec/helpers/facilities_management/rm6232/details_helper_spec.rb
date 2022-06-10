@@ -87,7 +87,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsHelper, type: :helper do
     context 'when the section is buildings_and_services' do
       let(:section) { :buildings_and_services }
 
-      pending 'returns Assigning services to buildings summary' do
+      it 'returns Assigning services to buildings summary' do
         expect(result).to eq('Assigning services to buildings summary')
       end
     end

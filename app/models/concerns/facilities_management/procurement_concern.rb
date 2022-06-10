@@ -30,10 +30,20 @@ module FacilitiesManagement
     end
 
     def buildings_status
-      @buildings_status ||= procurement_buildings.where(active: true).any? ? :completed : :not_started
+      @buildings_status ||= active_procurement_buildings.any? ? :completed : :not_started
     end
 
-    # def buildings_and_services_status; end
+    def buildings_and_services_status
+      @buildings_and_services_status ||= if services_status == :not_started || buildings_status == :not_started
+                                           :cannot_start
+                                         else
+                                           buildings_and_services_completed? ? :completed : :incomplete
+                                         end
+    end
+
+    def buildings_and_services_completed?
+      active_procurement_buildings.all?(&:service_selection_complete?)
+    end
 
     def initial_call_off_period
       initial_call_off_period_years.years + initial_call_off_period_months.months
