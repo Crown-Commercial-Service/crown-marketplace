@@ -21,5 +21,15 @@ module FacilitiesManagement
         ["#{section}_incomplete".to_sym]
       end
     end
+
+    def display_all_errors(errors, section_errors)
+      capture do
+        section_errors.each do |attribute|
+          next unless errors[attribute]
+
+          concat(tag.span(errors[attribute].to_s, id: error_id(attribute), class: 'govuk-error-message'))
+        end
+      end
+    end
   end
 end

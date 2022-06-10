@@ -68,8 +68,16 @@ en:
               not_a_number: The annual contract value must be a whole number greater than 0
               not_an_integer: The annual contract value must be a whole number greater than 0
             base:
+              buildings_and_services_incomplete: "‘Assigning services to buildings’ must be ‘COMPLETED’"
+              buildings_incomplete: "‘Buildings’ must be ‘COMPLETED’"
+              contract_period_incomplete: "‘Contract period’ must be ‘COMPLETED’"
+              initial_call_off_period_in_past: Initial call-off period start date must not be in the past
+              mobilisation_period_in_past: Mobilisation period start date must not be in the past
+              mobilisation_period_required: Mobilisation period length must be a minimum of 4 weeks when TUPE is selected
+              services_incomplete: "‘Services’ must be ‘COMPLETED’"
               total_contract_length: Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total
               total_contract_period: The total initial call-off period must be between 1 month and 7 years
+              tupe_incomplete: "‘TUPE’ must be ‘COMPLETED’"
             contract_name:
               blank: Enter your contract name
               taken: This contract name is already in use
