@@ -7,8 +7,9 @@ module FacilitiesManagement::ProcurementDetailsConcern
     before_action :authorize_user
     before_action :redirect_if_unrecognised_section, only: :show
     before_action :redirect_to_edit_from_show, only: :show
+    before_action :set_procurement_show_data, only: :show
     before_action :redirect_if_unrecognised_edit_section, only: :edit
-    before_action :set_procurement_data, only: :edit
+    before_action :set_procurement_edit_data, only: :edit
 
     helper_method :section, :edit_path, :procurement_show_path
   end
@@ -69,9 +70,13 @@ module FacilitiesManagement::ProcurementDetailsConcern
     "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/details/#{params[:section]}/edit"
   end
 
-  def set_procurement_data
+  def set_procurement_edit_data
     @procurement.build_call_off_extensions if section == :contract_period
     set_buildings if section == :buildings
+  end
+
+  def set_procurement_show_data
+    @active_procurement_buildings = @procurement.procurement_buildings.where(active: true).order_by_building_name.page(params[:page]) if section == :buildings
   end
 
   # Methods relating to paginating the buildings

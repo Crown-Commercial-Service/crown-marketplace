@@ -125,6 +125,11 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         it 'sets the procurement' do
           expect(assigns(:procurement)).to eq procurement
         end
+
+        it 'sets the active procurement buildings' do
+          expect(assigns(:active_procurement_buildings).count).to eq 1
+          expect(assigns(:active_procurement_buildings).class.to_s).to eq 'FacilitiesManagement::RM6232::ProcurementBuilding::ActiveRecord_AssociationRelation'
+        end
       end
     end
 

@@ -432,9 +432,16 @@ en:
         show:
           return_to_requirements: Return to requirements
           title:
+            buildings: Buildings summary
             contract_period: Contract period summary
             services: Services summary
         show_partials:
+          buildings:
+            building: building
+            change: Change
+            table_caption: Buildings
+            the_buildings_below: The buildings below have been selected for this procurement. If you wish to add or remove buildings please click on the 'change' button.
+            you_have_selected: You have selected
           contract_period:
             call_off_extension_period: Optional call-off extension period
             call_off_extensions: Optional call-off extensions
