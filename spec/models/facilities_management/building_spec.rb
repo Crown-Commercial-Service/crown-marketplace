@@ -952,5 +952,75 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       end
     end
   end
+
+  describe '.reselect_region' do
+    RSpec::Matchers.define_negated_matcher :not_change, :change
+
+    subject(:building) { create(:facilities_management_building) }
+
+    let(:returned_regions) { [] }
+
+    before do
+      allow(Postcode::PostcodeCheckerV2).to receive(:find_region).and_return(returned_regions)
+      building.assign_attributes(address_postcode: address_postcode)
+    end
+
+    context 'when there are errors' do
+      let(:address_postcode) { nil }
+
+      it 'does not change the region' do
+        expect { building.valid?(:add_address) }.to(
+          not_change(building, :address_region_code)
+          .and(not_change(building, :address_region))
+        )
+      end
+    end
+
+    context 'when the address postcode has not changed' do
+      let(:address_postcode) { building.address_postcode }
+
+      it 'does not change the region' do
+        expect { building.valid?(:add_address) }.to(
+          not_change(building, :address_region_code)
+          .and(not_change(building, :address_region))
+        )
+      end
+    end
+
+    context 'when 0 regions are returned' do
+      let(:address_postcode) { 'ST16 1AA' }
+
+      it 'changes the region to be nil' do
+        expect { building.valid?(:add_address) }.to(
+          change(building, :address_region_code).from('UKH1').to(nil)
+          .and(change(building, :address_region).from('Essex').to(nil))
+        )
+      end
+    end
+
+    context 'when multiple regions are returned' do
+      let(:address_postcode) { 'ST16 1AA' }
+      let(:returned_regions) { [{ code: 'UKH2', region: 'Bedfordshire and Hertfordshire' }, { code: 'UKJ1', region: 'Berkshire, Buckinghamshire and Oxfordshire' }] }
+
+      it 'changes the region to be nil' do
+        expect { building.valid?(:add_address) }.to(
+          change(building, :address_region_code).from('UKH1').to(nil)
+          .and(change(building, :address_region).from('Essex').to(nil))
+        )
+      end
+    end
+
+    context 'when 1 region is returned' do
+      let(:address_postcode) { 'ST16 1AA' }
+      let(:returned_regions) { [{ code: 'UKJ1', region: 'Berkshire, Buckinghamshire and Oxfordshire' }] }
+
+      it 'changes the region to be the found region' do
+        expect { building.valid?(:add_address) }.to(
+          change(building, :address_region_code).from('UKH1').to('UKJ1')
+          .and(change(building, :address_region).from('Essex').to('Berkshire, Buckinghamshire and Oxfordshire'))
+        )
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/NestedGroups

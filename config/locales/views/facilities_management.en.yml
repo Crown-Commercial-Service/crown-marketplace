@@ -341,6 +341,42 @@ en:
         submit: Save and continue
         town_or_city: Town or city
         your_details: Organisation address
+    procurement_buildings:
+      buildings_and_services:
+        hint_text_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
+        label: Which of your services are required within this building?
+        or: Or
+        select_all: Select all
+        services_link_text: Services
+      edit:
+        return_link:
+          buildings_and_services: Return to assigning services to buildings summary page
+          missing_region: Return to review your buildings
+        save_and_return: Save and return
+        title:
+          missing_region: Confirm your building's region
+      missing_region:
+        building_address: Building address
+        building_name: Building name
+        change_link: Change
+        change_link_aria_label: Change region
+        for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
+        prompt: Please select a region
+        region: Region
+        select_region: Select region
+        we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
+      missing_regions:
+        before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
+        building: building
+        building_address: Building address
+        building_name: Building name
+        building_region: Region
+        could_you_review: Could you review the building(s) below by clicking into each one and confirming the correct region by selecting from the short list of regions you will see displayed.
+        return_link: Return to procurements dashboard
+        return_to_dashboard: Return to procurements dashboard
+        review_buildings: Review %{building_count} with missing region
+        select_region: Select region
+        title: Review your buildings
     select_services:
       servicespec_link_alttext: RM3830 Facilities Management Marketplace
     shared:

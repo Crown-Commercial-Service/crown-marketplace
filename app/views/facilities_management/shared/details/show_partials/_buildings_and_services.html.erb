@@ -32,7 +32,7 @@
     <% @active_procurement_buildings.each do |procurement_building| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-padding-right-2" style="vertical-align: top;">
-          <%= link_to procurement_building.building_name, edit_facilities_management_rm6232_procurement_procurement_building_path(id: procurement_building.id), class: 'govuk-link--no-visited-state ccs-font-weight-semi-bold' %>
+          <%= link_to procurement_building.building_name, "/facilities-management/#{params[:framework]}/procurement-buildings/#{procurement_building.id}/buildings-and-services/edit", class: 'govuk-link--no-visited-state ccs-font-weight-semi-bold' %>
           <br/>
           <%= procurement_building.address_no_region %>
         </td>

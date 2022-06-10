@@ -39,19 +39,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
     end
   end
 
-  describe '.regions' do
-    let(:building) { create(:facilities_management_building) }
-
-    before do
-      @building = building
-      allow(Postcode::PostcodeCheckerV2).to receive(:find_region).and_return([{ "code": 'UKH2', "region": 'Bedfordshire and Hertfordshire' }, { "code": 'UKJ1', "region": 'Berkshire, Buckinghamshire and Oxfordshire' }])
-    end
-
-    it 'returns the region names' do
-      expect(helper.regions).to eq ['Bedfordshire and Hertfordshire', 'Berkshire, Buckinghamshire and Oxfordshire']
-    end
-  end
-
   describe '#get_service_question' do
     context 'when question is service_standard' do
       it 'will return service_standards' do
@@ -144,33 +131,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
     end
   end
 
-  describe '.form_object' do
-    let(:procurement_building) { create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement)) }
-    let(:building) { create(:facilities_management_building) }
-
-    before do
-      @step = edit_step
-      @procurement_building = procurement_building
-      @building = building
-    end
-
-    context 'when the step is building_and_services' do
-      let(:edit_step) { 'building_and_services' }
-
-      it 'returns the procurement building object' do
-        expect(helper.form_object).to eq procurement_building
-      end
-    end
-
-    context 'when the step is missing regions' do
-      let(:edit_step) { 'missing_region' }
-
-      it 'returns the building object' do
-        expect(helper.form_object).to eq building
-      end
-    end
-  end
-
   describe '.question_id' do
     let(:procurement_building_service) { create(:facilities_management_rm3830_procurement_building_service, code: 'K.5', procurement_building: create(:facilities_management_rm3830_procurement_building, procurement: create(:facilities_management_rm3830_procurement))) }
 
@@ -230,6 +190,30 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuildingsHelper, type: :
       it 'returns false' do
         expect(result).to eq false
       end
+    end
+  end
+
+  describe '.page_subtitle' do
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user), contract_name: 'I am a contract name') }
+    let(:user) { create(:user) }
+
+    before { @procurement = procurement }
+
+    it 'returns the procurement contract name' do
+      expect(helper.page_subtitle).to eq('I am a contract name')
+    end
+  end
+
+  describe '.procurement_services' do
+    let(:procurement) { create(:facilities_management_rm3830_procurement, user: create(:user), service_codes: %w[C.1 C.2]) }
+    let(:user) { create(:user) }
+    let(:result) { helper.procurement_services }
+
+    before { @procurement = procurement }
+
+    it 'returns the services for the procurement' do
+      expect(result.first.class.to_s).to eq('FacilitiesManagement::RM3830::Service')
+      expect(result.map(&:code)).to match_array(%w[C.1 C.2])
     end
   end
 end

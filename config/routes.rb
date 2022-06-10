@@ -84,6 +84,14 @@ Rails.application.routes.draw do
       resources :details, param: :section, only: %i[show edit update]
     end
 
+    concern :procurement_buildings do
+      namespace 'procurement_buildings', path: 'procurement-buildings/:id' do
+        get '/:section/edit', action: :edit
+        put '/:section/', action: :update
+      end
+      get 'procurements/:procurement_id/missing-regions', as: :missing_regions, to: 'procurement_buildings#missing_regions'
+    end
+
     concerns :framework
 
     resources :buyer_details, path: '/:framework/buyer-details', only: %i[edit update] do
@@ -102,7 +110,7 @@ Rails.application.routes.draw do
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'
 
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
-      concerns :shared_pages, :buildings
+      concerns :shared_pages, :buildings, :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
@@ -137,7 +145,7 @@ Rails.application.routes.draw do
           get '/progress', action: :progress
         end
       end
-      resources :procurement_buildings, only: %i[show edit update]
+      resources :procurement_buildings, path: 'procurement-buildings', only: :show
       resources :procurement_buildings_services, only: %i[edit update]
 
       namespace :supplier, defaults: { service: 'facilities_management/supplier' } do
@@ -172,7 +180,7 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
-      concerns :shared_pages, :buildings
+      concerns :shared_pages, :buildings, :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
@@ -182,8 +190,6 @@ Rails.application.routes.draw do
 
         get 'supplier_shortlist_spreadsheet'
         put 'update-show', action: 'update_show'
-
-        resources :procurement_buildings, path: 'procurement-buildings', only: %i[edit update]
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
