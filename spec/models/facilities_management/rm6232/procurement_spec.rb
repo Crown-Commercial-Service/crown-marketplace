@@ -618,7 +618,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     context 'when both buildings have a valid selection' do
       let(:service_codes) { %w[Q.3 R.1 S.1 E.1] }
 
-      pending 'returns true' do
+      it 'returns true' do
         expect(procurement.buildings_and_services_completed?).to eq true
       end
     end
@@ -663,7 +663,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
           procurement_building2.update(service_codes: ['F.1', 'G.4', 'R.1'])
         end
 
-        pending 'shown with the COMPLETED status label' do
+        it 'shown with the COMPLETED status label' do
           expect(status).to eq(:completed)
         end
       end

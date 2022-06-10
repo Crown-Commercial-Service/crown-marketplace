@@ -18,3 +18,7 @@ Then('the following buyer details have been entered:') do |buyer_details_table|
     end
   end
 end
+
+Then('I change my contact detail address') do
+  buyer_detail_page.change_address.click
+end

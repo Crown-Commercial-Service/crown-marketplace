@@ -179,8 +179,11 @@ Rails.application.routes.draw do
 
       resources :procurements, only: %i[index show new create] do
         concerns :procurement_details, :edit_buildings
+
         get 'supplier_shortlist_spreadsheet'
         put 'update-show', action: 'update_show'
+
+        resources :procurement_buildings, path: 'procurement-buildings', only: %i[edit update]
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do

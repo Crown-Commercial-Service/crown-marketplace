@@ -1,0 +1,63 @@
+<% content_for :page_title, t('.page_title') %>
+<%= render partial: 'shared/error_summary', locals: { errors: @procurement_building.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-m govuk-!-font-size-24">
+      <%= page_subtitle %>
+    </span>
+    <h1 class="govuk-heading-xl">
+      <%= @procurement_building.building_name %>
+    </h1>
+  </div>
+</div>
+
+<%= form_with url: facilities_management_rm6232_procurement_procurement_building_path, model: @procurement_building, method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_group_with_error(f.object, :service_codes) do |displayed_error| %>
+        <fieldset class="govuk-fieldset" aria-describedby="assigning-services-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              <%= t('.label') %>
+            </h2>
+          </legend>
+          <div id="assigning-services-hint" class="govuk-hint">
+            <%= t('.hint_text_html', services_link: link_to(t('.services_link_text'), facilities_management_rm6232_procurement_detail_path(procurement_id: @procurement.id, section: :services), class: 'govuk-link govuk-link--no-visited-state')) %>
+          </div>
+          <%= displayed_error %>
+          <div class="govuk-checkboxes buildings_and_services">
+            <ul class="govuk-list">
+              <li class="govuk-checkboxes__item ccs-select-all govuk-!-margin-bottom-4">
+                <input class="govuk-checkboxes__input" id="box-all" name="box-all" type="checkbox">
+                <label class="govuk-label govuk-checkboxes__label" for="box-all">
+                  <%= t('.select_all') %>
+                </label>
+              </li>
+              <li class="govuk-!-margin-bottom-4">
+                <p class="govuk-body govuk-!-margin-bottom-0"><%= t('.or') %></p>
+              </li>
+              <%= f.collection_check_boxes(:service_codes, @procurement.services_without_lot_consideration, :code, :name) do |c| %>
+                <li class="govuk-!-margin-bottom-4">
+                  <div class="govuk-checkboxes__item">
+                    <%= c.check_box(class: 'govuk-checkboxes__input procurement-building__input') %>
+                    <%= c.label(class: 'govuk-label govuk-checkboxes__label') %>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </fieldset>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row govuk-!-margin-top-5">
+    <div class="govuk-grid-column-full">
+      <%= f.submit(t('.save_and_return'), class: 'govuk-button', data: { module: 'govuk-button' }) %>
+      <p>
+        <%= link_to t('.return_to_summary'), facilities_management_rm6232_procurement_detail_path(procurement_id: @procurement.id, section: 'buildings-and-services'), class: 'govuk-link--no-visited-state' %>
+      </p>
+    </div>
+  </div>
+<% end%>
