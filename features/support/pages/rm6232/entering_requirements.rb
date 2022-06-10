@@ -110,10 +110,10 @@ module Pages::RM6232
     end
 
     element :number_of_selected_servcies, '#number-of-services'
-    # element :number_of_selected_buildings, '#number-of-buildings'
+    element :number_of_selected_buildings, '#number-of-buildings'
 
-    # element :no_buildings_text, 'form > div.procurement > div:nth-child(5)'
-    # elements :checked_buildings, 'input[checked="checked"]'
+    element :no_buildings_text, 'form > div.procurement > div:nth-child(5)'
+    elements :checked_buildings, 'input[checked="checked"]'
 
     # element :building_status, '.govuk-body > span > strong'
     # element :assigning_services_to_buildings_status, '.govuk-body > span > strong'

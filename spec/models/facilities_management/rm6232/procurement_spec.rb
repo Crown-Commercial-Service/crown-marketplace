@@ -572,9 +572,9 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     end
 
     context 'when user has already selected buildings' do
-      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings) }
 
-      pending 'shown with the COMPLETED status label' do
+      it 'shown with the COMPLETED status label' do
         expect(status).to eq(:completed)
       end
     end
@@ -635,7 +635,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         allow(procurement).to receive(:buildings_status).and_return(:not_started)
       end
 
-      pending 'shown with the CANNOT START YET status label' do
+      it 'shown with the CANNOT START YET status label' do
         expect(status).to eq(:cannot_start)
       end
     end

@@ -106,24 +106,19 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
     context 'when the user wants to edit buildings' do
       let(:section_name) { 'buildings' }
 
-      before do
-        procurement.active_procurement_buildings.each { |pb| pb.update(active: false) } if delete_procurement_buildings
-      end
-
       context 'when there are no active_procurement_buildings' do
-        let(:delete_procurement_buildings) { true }
-
-        pending 'redirects to the edit page with the buildings section' do
+        it 'redirects to the edit page with the buildings section' do
           expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
         end
       end
 
       context 'when there are active_procurement_buildings' do
-        let(:delete_procurement_buildings) { false }
+        let(:building) { create(:facilities_management_building, user: user) }
+        let(:procurement_options) { { procurement_buildings_attributes: { '0': { building_id: building.id, active: true } } } }
 
         render_views
 
-        pending 'renders the contract_periods partial' do
+        it 'renders the contract_periods partial' do
           expect(response).to render_template(partial: '_buildings')
         end
 
@@ -266,11 +261,83 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
       it 'sets the procurement' do
         expect(assigns(:procurement)).to eq procurement
       end
+
+      # rubocop:disable RSpec/NestedGroups
+      context 'and the user has buildings' do
+        let(:first_building) { user.buildings.find_by(building_name: 'aa') }
+        let(:last_building) { user.buildings.find_by(building_name: 'af') }
+
+        before do
+          allow(FacilitiesManagement::Building).to receive(:default_per_page).and_return(5)
+
+          ('aa'..'af').each { |building_name| create(:facilities_management_building, user: user, building_name: building_name) }
+        end
+
+        context 'and none are active' do
+          before { get :edit, params: { procurement_id: procurement.id, section: section_name } }
+
+          it 'sets building_params and it is empty' do
+            expect(assigns(:building_params)).to be_empty
+          end
+
+          it 'sets buildings' do
+            expect(assigns(:buildings).length).to eq 5
+            expect(assigns(:buildings).class.to_s).to eq 'FacilitiesManagement::Building::ActiveRecord_AssociationRelation'
+          end
+
+          it 'sets hidden_buildings and it is empty' do
+            expect(assigns(:hidden_buildings)).to be_empty
+          end
+        end
+
+        context 'and some are active' do
+          before do
+            create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: first_building, active: true)
+            get :edit, params: { procurement_id: procurement.id, section: section_name }
+          end
+
+          it 'sets building_params' do
+            expect(assigns(:building_params)).to eq({ first_building.id => '1' })
+          end
+
+          it 'sets buildings' do
+            expect(assigns(:buildings).length).to eq 5
+            expect(assigns(:buildings).class.to_s).to eq 'FacilitiesManagement::Building::ActiveRecord_AssociationRelation'
+          end
+
+          it 'sets hidden_buildings and it is empty' do
+            expect(assigns(:hidden_buildings)).to be_empty
+          end
+        end
+
+        context 'and some are active on the next page' do
+          before do
+            create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: first_building, active: true)
+            create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: last_building, active: true)
+            get :edit, params: { procurement_id: procurement.id, section: section_name }
+          end
+
+          it 'sets building_params' do
+            expect(assigns(:building_params)).to eq({ first_building.id => '1', last_building.id => '1' })
+          end
+
+          it 'sets buildings' do
+            expect(assigns(:buildings).length).to eq 5
+            expect(assigns(:buildings).class.to_s).to eq 'FacilitiesManagement::Building::ActiveRecord_AssociationRelation'
+          end
+
+          it 'sets hidden_buildings' do
+            expect(assigns(:hidden_buildings).class.to_s).to eq 'FacilitiesManagement::Building::ActiveRecord_AssociationRelation'
+            expect(assigns(:hidden_buildings)).to eq([last_building])
+          end
+        end
+      end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
   describe 'PUT update' do
-    before { put :update, params: { procurement_id: procurement.id, section: section_name, facilities_management_rm6232_procurement: update_params } }
+    before { put :update, params: { procurement_id: procurement.id, section: section_name, facilities_management_rm6232_procurement: update_params, commit: 'Save and return' } }
 
     context 'when updating the contract name' do
       let(:section_name) { 'contract-name' }
@@ -520,7 +587,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
           expect(response).to render_template(:edit)
         end
 
-        it 'does not update tupe' do
+        it 'does not update the contract periods' do
           RSpec::Matchers.define_negated_matcher :not_change, :change
 
           expect do
@@ -572,7 +639,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
           expect(response).to render_template(:edit)
         end
 
-        it 'does not update tupe' do
+        it 'does not update service_codes' do
           expect { procurement.reload }.not_to change(procurement, :service_codes)
         end
       end
@@ -587,6 +654,157 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         it 'does no update the unpermitted attribute' do
           expect { procurement.reload }.not_to change(procurement, :contract_name)
         end
+      end
+    end
+
+    context 'when updating buildings' do
+      let(:section_name) { 'buildings' }
+      let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings, user: user) }
+      let(:building_1) { procurement.procurement_buildings.first.building }
+      let(:building_2) { procurement.procurement_buildings.last.building }
+      let(:new_building) { create(:facilities_management_building, user: user) }
+
+      context 'and the data is valid' do
+        let(:update_params) { { procurement_buildings_attributes: { '0': { active: '1', building_id: building_1.id }, '1': { active: '0', building_id: building_2.id }, '2': { active: '1', building_id: new_building.id } } } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
+        end
+
+        it 'updates procurement_buildings' do
+          expect { procurement.reload }.to change(procurement, :procurement_buildings).and(change { procurement.procurement_buildings.length }.to(3))
+          expect(
+            procurement.procurement_buildings.order(:created_at).pluck(:facilities_management_rm6232_procurement_id, :building_id, :active).sort
+          ).to eq(
+            [
+              [procurement.id, building_1.id, true],
+              [procurement.id, building_2.id, false],
+              [procurement.id, new_building.id, true],
+            ].sort
+          )
+        end
+      end
+
+      context 'and the data is not valid' do
+        let(:update_params) { { procurement_buildings_attributes: { '0': { active: '0', building_id: building_1.id }, '1': { active: '0', building_id: building_2.id }, '2': { active: '0', building_id: new_building.id } } } }
+
+        it 'renders the edit page' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'does not update procurement buildings' do
+          expect { procurement.reload }.not_to change { procurement.procurement_buildings.length }.from(2)
+        end
+
+        it 'sets building_params' do
+          expect(assigns(:building_params)).to eq({ building_1.id => '0', building_2.id => '0' })
+        end
+
+        it 'sets buildings' do
+          expect(assigns(:buildings).length).to eq 3
+          expect(assigns(:buildings).class.to_s).to eq 'FacilitiesManagement::Building::ActiveRecord_AssociationRelation'
+        end
+
+        it 'sets hidden_buildings and it is empty' do
+          expect(assigns(:hidden_buildings)).to be_empty
+        end
+      end
+
+      context 'and an unpermitted parameters are passed in' do
+        let(:update_params) { { contract_name: 'Hello there' } }
+
+        it 'redirects to the procurement show page' do
+          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
+        end
+
+        it 'does no update the unpermitted attribute' do
+          expect { procurement.reload }.not_to change(procurement, :contract_name)
+        end
+      end
+    end
+  end
+
+  describe 'paginating the buildings page' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements_with_buildings, user: user) }
+
+    let(:building1) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 1') }
+    let(:building2) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 2') }
+    let(:building3) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 3') }
+    let(:building4) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 4') }
+
+    let(:building1_active) { '1' }
+    let(:building2_active) { '0' }
+    let(:building3_active) { '0' }
+    let(:building4_active) { '0' }
+
+    before do
+      procurement.procurement_buildings.first.update(building_id: building1.id)
+      procurement.procurement_buildings.second.update(building_id: building2.id, active: false)
+      put :update, params: { procurement_id: procurement.id, section: 'buildings', page: '1', 'paginate-2': '2', facilities_management_rm6232_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
+    end
+
+    context 'when a building as checked' do
+      let(:building2_active) { '1' }
+
+      it 'adds to the building_params' do
+        expect(assigns(:building_params).keys).to include building1.id
+        expect(assigns(:building_params).keys).to include building2.id
+        expect(assigns(:building_params).size).to eq 2
+      end
+
+      it 'adds to the hidden_procurement_buildings' do
+        hidden_building_ids = assigns(:hidden_buildings).map(&:id)
+        expect(hidden_building_ids).to include building1.id
+        expect(hidden_building_ids).to include building2.id
+      end
+
+      it 'updates the page param' do
+        expect(controller.params[:page]).to eq '2'
+      end
+
+      it 'renders the edit page' do
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'when a building is un-checked' do
+      let(:building1_active) { '0' }
+
+      it 'updates the building_params' do
+        expect(assigns(:building_params)[building1.id]).to eq '0'
+      end
+
+      it 'does not change hidden_procurement_buildings' do
+        hidden_building_ids = assigns(:hidden_buildings).map(&:id)
+        expect(hidden_building_ids).to eq [building1.id]
+      end
+
+      it 'updates the page param' do
+        expect(controller.params[:page]).to eq '2'
+      end
+
+      it 'renders the edit page' do
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context 'when no buildings are checked' do
+      it 'does not change the building_params' do
+        expect(assigns(:building_params).keys).to eq [building1.id]
+        expect(assigns(:building_params)[building1.id]).to eq '1'
+      end
+
+      it 'does not change hidden_procurement_buildings' do
+        hidden_building_ids = assigns(:hidden_buildings).map(&:id)
+        expect(hidden_building_ids).to eq [building1.id]
+      end
+
+      it 'updates the page param' do
+        expect(controller.params[:page]).to eq '2'
+      end
+
+      it 'renders the edit page' do
+        expect(response).to render_template :edit
       end
     end
   end

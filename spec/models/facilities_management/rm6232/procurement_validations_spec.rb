@@ -255,5 +255,33 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
         end
       end
     end
+
+    describe 'procurement buildings' do
+      let(:procurement) { build(:facilities_management_rm6232_procurement_entering_requirements) }
+
+      context 'when there are no procurement buildings' do
+        it 'is not valid and has the correct error message' do
+          expect(procurement.valid?(:buildings)).to be false
+          expect(procurement.errors[:procurement_buildings].first).to eq 'Select at least one building'
+        end
+      end
+
+      context 'when there are procurement buildings but none are active' do
+        before { procurement.procurement_buildings.build(procurement: procurement, building: create(:facilities_management_building), active: false) }
+
+        it 'is not valid and has the correct error message' do
+          expect(procurement.valid?(:buildings)).to be false
+          expect(procurement.errors[:procurement_buildings].first).to eq 'Select at least one building'
+        end
+      end
+
+      context 'when there are procurement buildings and some are active' do
+        before { procurement.procurement_buildings.build(procurement: procurement, building: create(:facilities_management_building), active: true) }
+
+        it 'is valid' do
+          expect(procurement.valid?(:buildings)).to be true
+        end
+      end
+    end
   end
 end

@@ -108,6 +108,8 @@ en:
               not_valid_with_tupe: Mobilisation length must be a minimum of 4 weeks when TUPE is selected
             mobilisation_start_date:
               greater_than: Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'
+            procurement_buildings:
+              invalid: Select at least one building
             service_codes:
               invalid_cafm_helpdesk_billable: You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'
               too_short: Select at least one service you need to include in your procurement

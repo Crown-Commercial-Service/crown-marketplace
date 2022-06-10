@@ -37,6 +37,8 @@ module FacilitiesManagement
         validates :service_codes, length: { minimum: 1 }
         validate :validate_not_all_mandatory
       end
+
+      validate :at_least_one_active_procurement_building, on: :buildings
     end
 
     private
@@ -113,6 +115,10 @@ module FacilitiesManagement
 
     def validate_not_all_mandatory
       errors.add(:service_codes, :invalid_cafm_helpdesk_billable) if (service_codes - self.class::MANDATORY_SERVICES).empty?
+    end
+
+    def at_least_one_active_procurement_building
+      errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
     end
 
     def all_complete
