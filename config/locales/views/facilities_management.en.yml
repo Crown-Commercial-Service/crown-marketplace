@@ -363,6 +363,7 @@ en:
           save_and_return: Save and return
           title:
             annual_contract_value: Annual contract value
+            buildings: Buildings
             contract_name: Contract name
             contract_period: Contract period
             services: Services
@@ -371,6 +372,22 @@ en:
           annual_contract_value:
             hint_text: Enter your estimate for the annual contract value. Include everything in your calculation.
             label_text: What is your estimate for the annual contract value?
+          buildings:
+            add_a_building: Add a building
+            building_name_and_address: Building name and address
+            details: Details
+            details_link_aria_label: Details for "%{building_name}"
+            how_it_works: How it works
+            how_it_works_1: When creating your buildings, you are not restricted to create just full buildings, for example you may choose to set up just a floor or a specific area within a building. You may also set up an external area, such as a park, as a ‘building’.
+            how_it_works_2: Your service pricing will be broken down to show a cost per service per ‘building’, allowing you to manage your contract effectively. You should therefore create ‘buildings’ dependent on the level of detail you require.
+            how_it_works_3: If you have a site, campus, group of buildings, these should be set up individually and not grouped together into one site.
+            my_buildings: My buildings
+            new_buildings: New buildings
+            new_buildings_details: If you wish to set up a new building so that it can be included in this procurement, click on the 'Add a building' button below.
+            no_saved_buildings: You have no saved buildings. Click on 'Add a building' to start setting up your building(s)
+            page_details_1: Please select all of the buildings you want to include in your procurement. Only 'completed' buildings can be selected. To view a buildings details or finish setting up an incomplete building, please click on 'details' next to the building.
+            page_details_2: Once you have selected all your buildings for this procurement, click on the 'save and continue' button.
+            status: Status
           contract_name:
             hint_text: This will help you to refer to your contracts when talking to suppliers.
             label_text: What do you want to call your contract?

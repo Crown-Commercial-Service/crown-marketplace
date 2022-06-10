@@ -1,74 +1,29 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::EditBuildingsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: framework } }
-  let(:framework) { 'RM3830' }
+  let(:framework) { 'RM6232' }
   let(:building) { create(:facilities_management_building, user: user) }
+  let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
   let(:user) { controller.current_user }
-
-  describe 'GET #index' do
-    context 'when logging in as a fm buyer with details' do
-      login_fm_buyer_with_details
-
-      it 'render the index' do
-        get :index
-
-        expect(response).to render_template(:index)
-      end
-    end
-
-    context 'when the framework is not recognised' do
-      login_fm_buyer_with_details
-
-      let(:framework) { 'RM3840' }
-
-      before { get :index }
-
-      it 'renders the unrecognised framework page with the right http status' do
-        expect(response).to render_template('home/unrecognised_framework')
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it 'sets the framework variables' do
-        expect(assigns(:unrecognised_framework)).to eq 'RM3840'
-        expect(controller.params[:framework]).to eq FacilitiesManagement::Framework.default_framework
-      end
-    end
-
-    context 'when logging in as a buyer without permissions' do
-      login_buyer_without_permissions
-
-      it 'redirects to the not permitted page' do
-        get :index
-
-        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
-      end
-    end
-
-    context 'when logging in without buyer details' do
-      login_fm_buyer
-
-      it 'is expected to redirect to edit_facilities_management_buyer_detail_path' do
-        get :index
-
-        expect(response).to redirect_to edit_facilities_management_buyer_detail_path(framework, controller.current_user.buyer_detail)
-      end
-    end
-  end
 
   describe 'GET #show' do
     login_fm_buyer_with_details
 
-    before { get :show, params: { id: building.id } }
+    before { get :show, params: { procurement_id: procurement.id, id: building.id } }
 
     context 'when logging in as the fm buyer that created the building' do
       it 'render the show page' do
         expect(response).to render_template(:show)
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq facilities_management_rm3830_buildings_path
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
       end
     end
 
@@ -76,7 +31,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       let(:user) { create(:user) }
 
       it 'redirects to the not permitted page' do
-        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
+        expect(response).to redirect_to '/facilities-management/RM6232/not-permitted'
       end
     end
   end
@@ -86,24 +41,28 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       login_buyer_without_permissions
 
       it 'redirects to the not permitted page' do
-        get :new
+        get :new, params: { procurement_id: procurement.id }
 
-        expect(response).to redirect_to '/facilities-management/RM3830/not-permitted'
+        expect(response).to redirect_to '/facilities-management/RM6232/not-permitted'
       end
     end
 
     context 'when logged in as FM buyer' do
       login_fm_buyer_with_details
 
-      before { get :new }
+      before { get :new, params: { procurement_id: procurement.id } }
 
       it 'render the new page' do
         expect(response).to render_template(:new)
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq facilities_management_rm3830_buildings_path
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
       end
     end
   end
@@ -111,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
   describe 'GET #edit' do
     login_fm_buyer_with_details
 
-    before { get :edit, params: { id: building.id, section: section } }
+    before { get :edit, params: { procurement_id: procurement.id, id: building.id, section: section } }
 
     render_views
 
@@ -119,7 +78,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       let(:section) { 'contract_name' }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_rm3830_building_path(building)
+        expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building)
       end
     end
 
@@ -134,9 +93,13 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         expect(response).to render_template('_building_details')
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to building details summary'
-        expect(assigns(:back_path)).to eq facilities_management_rm3830_building_path(building)
+        expect(assigns(:back_path)).to eq facilities_management_rm6232_procurement_edit_building_path(procurement, building)
       end
     end
 
@@ -151,9 +114,13 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         expect(response).to render_template('_add_address')
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to building details'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building, section: 'building_details')
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building, section: 'building_details')
       end
     end
 
@@ -168,9 +135,13 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         expect(response).to render_template('_building_area')
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to building details'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building, section: 'building_details')
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building, section: 'building_details')
       end
     end
 
@@ -185,9 +156,13 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         expect(response).to render_template('_building_type')
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to building size'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building, section: 'building_area')
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building, section: 'building_area')
       end
     end
 
@@ -202,9 +177,13 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         expect(response).to render_template('_security_type')
       end
 
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to building type'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building, section: 'building_type')
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building, section: 'building_type')
       end
     end
   end
@@ -218,23 +197,31 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
     before do
       allow(controller).to receive(:resolve_region)
-      post :create, params: { facilities_management_building: building_options, **options }
+      post :create, params: { procurement_id: procurement.id, facilities_management_building: building_options, **options }
     end
 
     context 'when the data is valid' do
       let(:new_building) { FacilitiesManagement::Building.order(created_at: :asc).first }
 
       context 'and the user clicked "Save and continue"' do
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the edit area page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(new_building.id, section: 'building_area')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, new_building.id, section: 'building_area')
         end
       end
 
       context 'and the user clicked "Save and return to building details summary"' do
         let(:options) { { save_and_return: 'Save and return to building details summary' } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm3830_building_path(new_building.id)
+          expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, new_building.id)
         end
       end
     end
@@ -248,7 +235,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
       it 'sets the back path and text correctly' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq facilities_management_rm3830_buildings_path
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
       end
     end
 
@@ -270,6 +261,10 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       it 'sets the back path and text correctly' do
         expect(assigns(:back_text)).to eq 'Return to building details'
         expect(assigns(:back_path)).to eq 'javascript:history.back()'
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
       end
     end
 
@@ -301,7 +296,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'sets the back path and text correctly' do
           expect(assigns(:back_text)).to eq 'Return to buildings'
-          expect(assigns(:back_path)).to eq facilities_management_rm3830_buildings_path
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -320,6 +319,10 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
           expect(assigns(:back_text)).to eq 'Return to building details'
           expect(assigns(:back_path)).to eq 'javascript:history.back()'
         end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
       end
     end
   end
@@ -332,7 +335,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
     before do
       allow(controller).to receive(:resolve_region)
-      put :update, params: { id: building.id, section: section_name, facilities_management_building: update_params, **options }
+      put :update, params: { procurement_id: procurement.id, id: building.id, section: section_name, facilities_management_building: update_params, **options }
     end
 
     context 'when updating the building details' do
@@ -341,8 +344,12 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       context 'and the data is valid' do
         let(:update_params) { { building_name: 'New building name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA', address_region: 'Inner London - West', address_region_code: 'UKI3' } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the building area edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_area')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_area')
         end
 
         it 'updates the building details' do
@@ -362,7 +369,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
           let(:options) { { save_and_return: 'Save and return to building details summary' } }
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_rm3830_building_path(building.id)
+            expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building.id)
           end
         end
       end
@@ -393,7 +400,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'has correct backlink text and destination' do
           expect(assigns(:back_text)).to eq 'Return to building details summary'
-          expect(assigns(:back_path)).to eq facilities_management_rm3830_building_path(building)
+          expect(assigns(:back_path)).to eq facilities_management_rm6232_procurement_edit_building_path(procurement, building)
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -401,7 +412,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         let(:update_params) { { building_name: 'New building name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA', address_region: 'Inner London - West', address_region_code: 'UKI3', gia: 1234 } }
 
         it 'redirects to the building area edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_area')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_area')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -416,8 +427,12 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       context 'and the data is valid' do
         let(:update_params) { { address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA' } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the building details edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_details')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_details')
         end
 
         it 'updates the building address' do
@@ -438,7 +453,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
           let(:options) { { save_and_return: 'Save and return to building details summary' } }
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_rm3830_building_path(building.id)
+            expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building.id)
           end
         end
       end
@@ -468,7 +483,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'has correct backlink text and destination' do
           expect(assigns(:back_text)).to eq 'Return to building details'
-          expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building, section: 'building_details')
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building, section: 'building_details')
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -476,7 +495,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         let(:update_params) { { building_name: 'New building name', address_line_1: 'line 1', address_town: 'town', address_postcode: 'SW1A 1AA' } }
 
         it 'redirects to the building details edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_details')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_details')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -491,8 +510,12 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       context 'and the data is valid' do
         let(:update_params) { { gia: 1_234, external_area: 4_321 } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the building type edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_type')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_type')
         end
 
         it 'updates the building areas' do
@@ -508,7 +531,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
           let(:options) { { save_and_return: 'Save and return to building details summary' } }
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_rm3830_building_path(building.id)
+            expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building.id)
           end
         end
       end
@@ -533,7 +556,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'has correct backlink text and destination' do
           expect(assigns(:back_text)).to eq 'Return to building details'
-          expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building.id, section: 'building_details')
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_details')
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -541,7 +568,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         let(:update_params) { { building_name: 'New building name', gia: 1_234, external_area: 4_321 } }
 
         it 'redirects to the building area edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'building_type')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_type')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -556,8 +583,12 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       context 'and the data is valid' do
         let(:update_params) { { building_type: 'Call Centre Operations' } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the security type edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'security_type')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'security_type')
         end
 
         it 'updates the building type' do
@@ -572,7 +603,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
           let(:options) { { save_and_return: 'Save and return to building details summary' } }
 
           it 'redirects to the show page' do
-            expect(response).to redirect_to facilities_management_rm3830_building_path(building.id)
+            expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building.id)
           end
         end
       end
@@ -596,7 +627,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'has correct backlink text and destination' do
           expect(assigns(:back_text)).to eq 'Return to building size'
-          expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building.id, section: 'building_area')
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_area')
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -604,7 +639,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         let(:update_params) { { building_name: 'New building name', building_type: 'Call Centre Operations' } }
 
         it 'redirects to the security type edit page' do
-          expect(response).to redirect_to edit_facilities_management_rm3830_building_path(building.id, section: 'security_type')
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'security_type')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -619,8 +654,12 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
       context 'and the data is valid' do
         let(:update_params) { { security_type: 'Counter terrorist check (CTC)' } }
 
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
+        end
+
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm3830_building_path(building)
+          expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building)
         end
 
         it 'updates the building type' do
@@ -651,7 +690,11 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
 
         it 'has correct backlink text and destination' do
           expect(assigns(:back_text)).to eq 'Return to building type'
-          expect(assigns(:back_path)).to eq edit_facilities_management_rm3830_building_path(building.id, section: 'building_type')
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_edit_building_path(procurement, building.id, section: 'building_type')
+        end
+
+        it 'sets the procurement' do
+          expect(assigns(:procurement)).to eq procurement
         end
       end
 
@@ -659,7 +702,7 @@ RSpec.describe FacilitiesManagement::RM3830::BuildingsController, type: :control
         let(:update_params) { { building_name: 'New building name', security_type: 'Counter terrorist check (CTC)' } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm3830_building_path(building)
+          expect(response).to redirect_to facilities_management_rm6232_procurement_edit_building_path(procurement, building)
         end
 
         it 'does no update the unpermitted attribute' do

@@ -7,8 +7,6 @@ RSpec.describe FacilitiesManagement::RM3830::EditBuildingsController, type: :con
   let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, user: user) }
   let(:user) { controller.current_user }
 
-  render_views
-
   describe 'GET #show' do
     login_fm_buyer_with_details
 

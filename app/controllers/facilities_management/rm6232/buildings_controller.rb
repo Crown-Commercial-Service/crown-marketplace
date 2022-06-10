@@ -26,10 +26,6 @@ module FacilitiesManagement
       def start_a_procurement_path
         facilities_management_journey_question_path(slug: 'start-a-procurement')
       end
-
-      def set_procurement
-        @procurement = current_user.rm6232_procurements.find(params[:procurement_id])
-      end
     end
   end
 end
