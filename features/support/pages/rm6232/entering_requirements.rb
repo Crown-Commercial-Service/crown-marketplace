@@ -89,7 +89,7 @@ module Pages::RM6232
       element :add_extension, '#add-contract-extension-button'
     end
 
-    section :contract_period_summary, '#main-content > div:nth-child(3) > div:nth-child(1) > div > table' do
+    section :contract_period_summary, '#main-content > div:nth-child(3) > div > table' do
       element :initial_call_off_period_length, '#contract-period > td'
       element :initial_call_off_period, '#contract-period-description > td:nth-child(2)'
 

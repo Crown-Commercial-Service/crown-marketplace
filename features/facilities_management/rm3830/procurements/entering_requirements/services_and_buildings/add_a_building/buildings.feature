@@ -118,6 +118,7 @@ Feature: Buildings in entering requirements
   Scenario: Add a building complete journey
     And I click on 'Add a building'
     Then I am on the 'Add a building' page
+    And the framework is 'RM3830'
     And I enter 'New building' for the building name
     And I enter the following details into the form:
       | Postcode  | ST16 1AA  |
@@ -125,16 +126,20 @@ Feature: Buildings in entering requirements
     And I select 'Stafford Delivery Office, Newport Road, Stafford' from the address drop down
     Then I click on 'Save and continue'
     Then I am on the 'Internal and external areas' page
+    And the framework is 'RM3830'
     And I enter '300' for the building 'GIA'
     And I enter '600' for the building 'external area'
     And I click on 'Save and continue'
     Then I am on the 'Building type' page
+    And the framework is 'RM3830'
     And I select 'General office - customer facing' for the building type
     And I click on 'Save and continue'
     Then I am on the 'Security clearance' page
+    And the framework is 'RM3830'
     And I select 'Baseline personnel security standard (BPSS)' for the security type
     And I click on 'Save and return to building details summary'
     Then I am on the buildings summary page for 'New building'
+    And the framework is 'RM3830'
     And my building's 'Name' is 'New building'
     And my building's 'Address' is 'Stafford Delivery Office, Newport Road, Stafford'
     And my building's 'Region' is 'Shropshire and Staffordshire'

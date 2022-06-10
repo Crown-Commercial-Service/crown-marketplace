@@ -130,7 +130,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     context 'when validating GIA' do
       before do
         building.gia = gia
-        building.valid? :gia
+        building.valid? :building_area
       end
 
       context 'and it is not present' do
@@ -138,7 +138,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have gia errors' do
@@ -155,7 +155,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -172,7 +172,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -189,7 +189,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -206,7 +206,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -222,7 +222,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
     context 'when validating external aria' do
       before do
         building.external_area = external_area
-        building.valid? :gia
+        building.valid? :building_area
       end
 
       context 'when external_area is not present' do
@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have gia errors' do
@@ -247,7 +247,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -264,7 +264,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -281,7 +281,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -298,7 +298,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
 
         it 'is invalid' do
           expect(building.valid?(:all)).to eq false
-          expect(building.valid?(:gia)).to eq false
+          expect(building.valid?(:building_area)).to eq false
         end
 
         it 'will have the correct error' do
@@ -315,7 +315,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
       before do
         building.gia = gia
         building.external_area = external_area
-        building.valid? :gia
+        building.valid? :building_area
       end
 
       context 'when external_area and gia are both zero' do
@@ -359,7 +359,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:building_type) { nil }
 
         it 'is not valid and has the correct error message' do
-          expect(building.valid?(:type)).to eq false
+          expect(building.valid?(:building_type)).to eq false
           expect(building.errors[:building_type].first).to eq 'You must select a building type or describe your own'
         end
       end
@@ -368,7 +368,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:building_type) { 'something' }
 
         it 'will not be valid' do
-          expect(building.valid?(:type)).to eq false
+          expect(building.valid?(:building_type)).to eq false
         end
       end
 
@@ -376,7 +376,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:building_type) { 'General office - Customer Facing' }
 
         it 'will be valid' do
-          expect(building.valid?(:type)).to eq true
+          expect(building.valid?(:building_type)).to eq true
         end
       end
 
@@ -389,7 +389,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_building_type) { nil }
 
           it 'will be invalid and have the correct error message' do
-            expect(building.valid?(:type)).to be false
+            expect(building.valid?(:building_type)).to be false
             expect(building.errors[:other_building_type].first).to eq 'You must enter your description of a building type'
           end
         end
@@ -399,11 +399,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_building_type) { 'other building type' }
 
           it 'will be valid' do
-            expect(building.valid?(:type)).to eq true
+            expect(building.valid?(:building_type)).to eq true
           end
 
           it 'will not save other_building_type' do
-            building.save(context: :type)
+            building.save(context: :building_type)
             expect(building.other_building_type).to eq nil
           end
         end
@@ -412,7 +412,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_building_type) { ('a' * 140) + ("\r\n" * 10) }
 
           it 'will be valid' do
-            expect(building.valid?(:type)).to eq true
+            expect(building.valid?(:building_type)).to eq true
           end
         end
 
@@ -420,7 +420,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_building_type) { ('a' * 141) + ("\r\n" * 10) }
 
           it 'will not be valid and it will have the correct error message' do
-            expect(building.valid?(:type)).to eq false
+            expect(building.valid?(:building_type)).to eq false
             expect(building.errors[:other_building_type].first).to eq 'The description for the building type cannot be more than 150 characters'
           end
         end
@@ -429,7 +429,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_building_type) { 'other building type' }
 
           it 'will be valid' do
-            expect(building.valid?(:type)).to eq true
+            expect(building.valid?(:building_type)).to eq true
           end
         end
       end
@@ -442,7 +442,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:security_type) { nil }
 
         it 'will be invalid and have the correct error message' do
-          expect(building.valid?(:security)).to eq false
+          expect(building.valid?(:security_type)).to eq false
           expect(building.errors[:security_type].first).to eq 'You must select a security clearance level'
         end
       end
@@ -451,7 +451,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:security_type) { 'something' }
 
         it 'will not be valid' do
-          expect(building.valid?(:security)).to eq false
+          expect(building.valid?(:security_type)).to eq false
         end
       end
 
@@ -459,7 +459,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
         let(:security_type) { 'Baseline personnel security standard (BPSS)' }
 
         it 'will be valid' do
-          expect(building.valid?(:security)).to eq true
+          expect(building.valid?(:security_type)).to eq true
         end
       end
 
@@ -472,7 +472,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_security_type) { nil }
 
           it 'will be invalid and have the correct error message' do
-            expect(building.valid?(:security)).to be false
+            expect(building.valid?(:security_type)).to be false
             expect(building.errors[:other_security_type].first).to eq 'You must describe the security clearance level'
           end
         end
@@ -482,11 +482,11 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_security_type) { 'other security type' }
 
           it 'will be valid' do
-            expect(building.valid?(:security)).to eq true
+            expect(building.valid?(:security_type)).to eq true
           end
 
           it 'will be not save other_security_type' do
-            building.save(context: :security)
+            building.save(context: :security_type)
             expect(building.other_security_type).to eq nil
           end
         end
@@ -495,7 +495,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_security_type) { ('a' * 140) + ("\r\n" * 10) }
 
           it 'will be valid' do
-            expect(building.valid?(:security)).to eq true
+            expect(building.valid?(:security_type)).to eq true
           end
         end
 
@@ -503,7 +503,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_security_type) { ('a' * 141) + ("\r\n" * 10) }
 
           it 'will not be valid and it will have the correct error message' do
-            expect(building.valid?(:security)).to eq false
+            expect(building.valid?(:security_type)).to eq false
             expect(building.errors[:other_security_type].first).to eq 'The description for the security clearance cannot be more than 150 characters'
           end
         end
@@ -512,7 +512,7 @@ RSpec.describe FacilitiesManagement::Building, type: :model do
           let(:other_security_type) { 'other security type' }
 
           it 'will be valid' do
-            expect(building.valid?(:security)).to eq true
+            expect(building.valid?(:security_type)).to eq true
           end
         end
       end

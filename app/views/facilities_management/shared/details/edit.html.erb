@@ -11,7 +11,6 @@
     </h1>
   </div>
 </div>
-<div>
 
 <%= form_with url: facilities_management_rm6232_procurement_detail_path, model: @procurement, method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
   <%= render partial: "facilities_management/shared/details/edit_partials/#{section}", locals: { f: f } %>

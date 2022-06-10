@@ -1,7 +1,6 @@
 <p class="govuk-body">
   <%= t('.guidance') %>
 </p>
-<input type="hidden" name="step" value="gia"/>
 
 <% gia_hint_html = capture do 
   concat(tag.p(t('.description_html'), class: 'govuk-hint'))
