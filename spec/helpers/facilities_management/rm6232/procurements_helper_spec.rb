@@ -176,7 +176,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     context 'when all sections are incomplete' do
       let(:incomplete_sections) { %i[tupe_incomplete contract_period_incomplete services_incomplete buildings_incomplete buildings_and_services_incomplete] }
 
-      pending 'returns the full list' do
+      it 'returns the full list' do
         expect(helper.requirements_errors_list).to eq({
                                                         tupe_incomplete: '‘TUPE’ must be ‘COMPLETED’',
                                                         contract_period_incomplete: '‘Contract period’ must be ‘COMPLETED’',
@@ -190,7 +190,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     context 'when some sections are incomplete' do
       let(:incomplete_sections) { %i[services_incomplete buildings_incomplete buildings_and_services_incomplete] }
 
-      pending 'returns a partial list' do
+      it 'returns a partial list' do
         expect(helper.requirements_errors_list).to eq({
                                                         services_incomplete: '‘Services’ must be ‘COMPLETED’',
                                                         buildings_incomplete: '‘Buildings’ must be ‘COMPLETED’',
