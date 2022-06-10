@@ -76,7 +76,7 @@
         <% end %>
 
         <input type="hidden" name="page" value="<%= params[:page]%>"/>
-        <%= paginate @buildings, views_prefix: 'facilities_management/shared/details', f: f %>
+        <%= paginate @buildings, views_prefix: 'facilities_management/procurement_details', f: f %>
       <% else %>
         <hr class="govuk-section-break govuk-section-break--visible">
           <p class="govuk-hint govuk-!-margin-top-2 govuk-!-margin-bottom-2">

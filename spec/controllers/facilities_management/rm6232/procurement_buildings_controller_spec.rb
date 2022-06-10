@@ -82,7 +82,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuildingsController, typ
         let(:update_params) { { service_codes: %w[F.1 F.2] } }
 
         it 'redirects to the details show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings-and-services')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'buildings-and-services')
         end
 
         it 'updates service_codes' do
@@ -106,7 +106,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementBuildingsController, typ
         let(:update_params) { { service_codes: %w[F.1 F.2], active: false } }
 
         it 'redirects to the details show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings-and-services')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'buildings-and-services')
         end
 
         it 'does no update the unpermitted attribute' do

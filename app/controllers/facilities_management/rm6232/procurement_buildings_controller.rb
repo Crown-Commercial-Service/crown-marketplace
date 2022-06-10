@@ -14,11 +14,11 @@ module FacilitiesManagement
       end
 
       def return_link
-        section == :missing_region ? procurement_show_path : "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/details/buildings-and-services"
+        section == :missing_region ? procurement_show_path : "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/procurement-details/buildings-and-services"
       end
 
       def after_update_path
-        "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/details/buildings-and-services"
+        "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/procurement-details/buildings-and-services"
       end
     end
   end

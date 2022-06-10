@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controller do
+RSpec.describe FacilitiesManagement::RM6232::ProcurementDetailsController, type: :controller do
   let(:default_params) { { service: 'facilities_management', framework: 'RM6232' } }
   let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
   let(:user) { controller.current_user }
@@ -49,7 +49,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:procurement_options) { { initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil } }
 
         it 'redirects to the edit page with contract-period section' do
-          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: section_name)
         end
       end
 
@@ -57,7 +57,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:procurement_options) { { initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false } }
 
         it 'redirects to the edit page with the contract-period section' do
-          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: section_name)
         end
       end
 
@@ -84,7 +84,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:service_codes) { [] }
 
         it 'redirects to the edit page with the services section' do
-          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: section_name)
         end
       end
 
@@ -108,7 +108,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
 
       context 'when there are no active_procurement_buildings' do
         it 'redirects to the edit page with the buildings section' do
-          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_detail_path(procurement, section: section_name)
+          expect(response).to redirect_to edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: section_name)
         end
       end
 
@@ -522,7 +522,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         end
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'contract-period')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'contract-period')
         end
 
         # rubocop:disable RSpec/ExampleLength
@@ -618,7 +618,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:update_params) { { contract_name: 'Hello there' } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'contract-period')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'contract-period')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -634,7 +634,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:update_params) { { service_codes: %w[F.1 F.2] } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'services')
         end
 
         it 'updates service_codes' do
@@ -660,7 +660,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:update_params) { { contract_name: 'Hello there' } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'services')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'services')
         end
 
         it 'does no update the unpermitted attribute' do
@@ -680,7 +680,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:update_params) { { procurement_buildings_attributes: { '0': { active: '1', building_id: building_1.id }, '1': { active: '0', building_id: building_2.id }, '2': { active: '1', building_id: new_building.id } } } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'buildings')
         end
 
         it 'updates procurement_buildings' do
@@ -726,7 +726,7 @@ RSpec.describe FacilitiesManagement::RM6232::DetailsController, type: :controlle
         let(:update_params) { { contract_name: 'Hello there' } }
 
         it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_rm6232_procurement_detail_path(procurement, 'buildings')
+          expect(response).to redirect_to facilities_management_rm6232_procurement_procurement_detail_path(procurement, 'buildings')
         end
 
         it 'does no update the unpermitted attribute' do
