@@ -386,19 +386,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['O.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Management of billable works'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -407,19 +407,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['N.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -428,19 +428,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['M.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -449,19 +449,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['O.1', 'M.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Management of billable works'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -470,19 +470,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['O.1', 'N.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'Helpdesk services', 'Management of billable works'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -491,19 +491,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['M.1', 'N.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -512,19 +512,19 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
       let(:service_codes) { ['O.1', 'N.1', 'M.1'] }
 
       it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be false
+        expect(procurement.valid?(:services)).to be false
       end
 
       it 'will have the correct error message' do
-        procurement.valid?(:service_codes)
-        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services', 'Management of billable works'"
+        procurement.valid?(:services)
+        expect(procurement.errors[:service_codes].first).to eq "You must select another service to include 'CAFM system', 'Helpdesk services' and/or 'Management of billable works'"
       end
 
       context 'when another service is included as well' do
         before { procurement.service_codes << 'C.1' }
 
         it 'will be valid' do
-          expect(procurement.valid?(:service_codes)).to be true
+          expect(procurement.valid?(:services)).to be true
         end
       end
     end
@@ -532,8 +532,8 @@ RSpec.describe FacilitiesManagement::RM3830::Procurement, type: :model do
     context 'when the only service codes selected include G.1 and G.3' do
       let(:service_codes) { ['G.1', 'G.3'] }
 
-      it 'will not be valid' do
-        expect(procurement.valid?(:service_codes)).to be true
+      it 'will be valid' do
+        expect(procurement.valid?(:services)).to be true
       end
     end
   end

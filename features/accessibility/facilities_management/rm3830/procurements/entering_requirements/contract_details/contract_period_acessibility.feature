@@ -17,7 +17,7 @@ Feature: Contract period accessibility
     Then I enter '3' years and '6' months for the contract period
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     Then the page should be axe clean
 
@@ -34,6 +34,6 @@ Feature: Contract period accessibility
     Then I enter '1' years and '2' months for optional extension 3
     And I add another extension
     Then I enter '3' years and '7' months for optional extension 4
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     Then the page should be axe clean

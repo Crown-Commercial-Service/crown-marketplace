@@ -52,7 +52,7 @@ Feature: Changing the service selection
     When I deselect the following items:
       | Mechanical and electrical engineering maintenance |
       | Routine cleaning                                  |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Services summary' page
     And the summary should say 3 servcies selected
     And I should see the following seleceted services in the summary:

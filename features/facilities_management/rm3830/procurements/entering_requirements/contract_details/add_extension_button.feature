@@ -71,7 +71,7 @@ Feature: Add extension button
     And the add an extension button should have the text 'Add another extension period (1 month remaining)'
     Then I enter '5' weeks for the mobilisation period
     And the add an extension button should be 'hidden'
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     And I am on the 'Contract period summary' page
 
   Scenario: Button is not visibile with invalid data
@@ -83,7 +83,7 @@ Feature: Add extension button
     Then I enter '1' years and '1' months for optional extension 1
     Then the add an extension button should be 'visible'
     Then I add another extension
-    Given I click on 'Save and continue'
+    Given I click on 'Save and return'
     Then I should see the following error messages:
       | Enter the years for the extension period  |
       | Enter the months for the extension period |

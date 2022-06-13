@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <% @procurement.services_without_lot_consideration.pluck(:name).each do |service_name| %>
+        <% porcurement_services.each do |service_name| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= service_name %></td>
           </tr>

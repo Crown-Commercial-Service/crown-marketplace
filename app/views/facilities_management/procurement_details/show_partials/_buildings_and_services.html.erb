@@ -32,15 +32,15 @@
     <% @active_procurement_buildings.each do |procurement_building| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell govuk-!-padding-right-2" style="vertical-align: top;">
-          <%= link_to procurement_building.building_name, "/facilities-management/#{params[:framework]}/procurement-buildings/#{procurement_building.id}/buildings-and-services/edit", class: 'govuk-link--no-visited-state ccs-font-weight-semi-bold' %>
+          <%= link_to building_name(procurement_building), "/facilities-management/#{params[:framework]}/procurement-buildings/#{procurement_building.id}/buildings-and-services/edit", class: 'govuk-link--no-visited-state ccs-font-weight-semi-bold' %>
           <br/>
           <%= procurement_building.address_no_region %>
         </td>
         <% if procurement_building.service_codes.any? %>
           <td class="govuk-table__cell govuk-!-padding-right-2" style="vertical-align: top;">
-            <%= govuk_details("#{pluralize(procurement_building.services.length, t('.service'))} selected") do %>
+            <%= govuk_details("#{pluralize(procurement_building.service_names.length, t('.service'))} selected") do %>
               <ul class="govuk-!-padding-left-3 govuk-!-margin-top-0">
-                <% procurement_building.services.each_with_index do |service_name, index| %>
+                <% procurement_building.service_names.each_with_index do |service_name, index| %>
                   <li class="<%= 'govuk-!-padding-top-2' unless index == 0%>">
                     <%= service_name %>
                   </li>

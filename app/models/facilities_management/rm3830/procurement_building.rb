@@ -25,6 +25,14 @@ module FacilitiesManagement
         include_association :procurement_building_services
       end
 
+      def service_names
+        @service_names ||= begin
+          service_code_order = FacilitiesManagement::RM3830::StaticData.work_packages.map { |wp| wp['code'] }
+
+          Service.where(code: service_codes).sort_by { |service| service_code_order.index(service.code) }.pluck(:name)
+        end
+      end
+
       # rubocop:disable Metrics/AbcSize, Rails/SkipsModelValidations
       def freeze_building_data
         # This freezes the GIA so if a user changes it later, it doesn't affect procurements in progress

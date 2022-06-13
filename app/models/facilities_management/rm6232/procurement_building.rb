@@ -19,8 +19,8 @@ module FacilitiesManagement
         service_codes.any? && !all_mandatory?
       end
 
-      def services
-        @services ||= Service.where(code: service_codes).order(:work_package_code, :sort_order).pluck(:name)
+      def service_names
+        @service_names ||= Service.where(code: service_codes).order(:work_package_code, :sort_order).pluck(:name)
       end
 
       def missing_region?
