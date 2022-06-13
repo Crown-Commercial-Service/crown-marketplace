@@ -386,6 +386,7 @@ en:
           buildings: Buildings
           contract_name: Contract name
           contract_period: Contract period
+          estimated_annual_cost: Estimated annual cost
           services: Services
           tupe: TUPE
       edit_partials:
@@ -438,6 +439,10 @@ en:
             hint_text: A minimum of 4 weeks required if TUPE is involved.
             label_text: Enter mobilisation length
             unit: weeks
+        estimated_annual_cost:
+          content: This will help us to place you into the correct sub-lot. The cost should include all the buildings and services included in the procurement. This annual cost should not include any additional billable works.
+          do_you_know: Do you know your current or estimated annual cost?
+          label: Enter the estimated annual cost, excluding VAT
         services:
           choose_the_required_services: Choose all facilities management services required within your estate, even if you want services in just one building.
           learn_more: Further details (opens in a new tab)
@@ -455,6 +460,7 @@ en:
           buildings: Buildings summary
           buildings_and_services: Assigning services to buildings summary
           contract_period: Contract period summary
+          service_requirements: Service requirements summary
           services: Services summary
       show_partials:
         buildings:
@@ -478,6 +484,10 @@ en:
           initial_call_off_period: Initial call-off period
           mobilisation_period: Mobilisation period
           none: None
+        service_requirements:
+          buildings: Buildings
+          instructions: We need to understand your requirements for your services within each of your buildings. For the list of your buildings below, please click on the buildings with an 'incomplete' status to see the service requirement questions that need to be answered. Once all the buildings show as 'completed' please click on the 'return to requirements' link.
+          status: Status
         services:
           caption: You have selected the services below as being required in one or more of your buildings. If you wish to add or remove services please click on the 'change' button.
           change: Change

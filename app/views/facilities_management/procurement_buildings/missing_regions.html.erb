@@ -43,7 +43,7 @@
       <tbody class="govuk-table__body">
         <% buildings_with_missing_regions.each do |procurement_building| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-right-2"><%= procurement_building.building_name || procurement_building.name %></td>
+            <td class="govuk-table__cell govuk-!-padding-right-2"><%= building_name(procurement_building) %></td>
             <td class="govuk-table__cell govuk-!-padding-right-2"><%= procurement_building.full_address %></td>
             <td class="govuk-table__cell govuk-!-padding-right-2"><%= link_to t('.select_region'), "/facilities-management/#{params[:framework]}/procurement-buildings/#{procurement_building.id}/missing-region/edit", class: 'govuk-link govuk-link--no-visited-state' %></td>
           </tr>

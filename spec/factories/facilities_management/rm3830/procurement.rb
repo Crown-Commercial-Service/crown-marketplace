@@ -135,6 +135,14 @@ FactoryBot.define do
     service_codes { ['C.1', 'C.2'] }
   end
 
+  factory :facilities_management_rm3830_procurement_entering_requirements_with_buildings, parent: :facilities_management_rm3830_procurement_entering_requirements do
+    procurement_buildings do |procurement|
+      build_list(:facilities_management_rm3830_procurement_building, 2) do |procurement_building|
+        procurement_building.building.update(user: procurement.user)
+      end
+    end
+  end
+
   factory :facilities_management_rm3830_procurement_completed_procurement_no_suppliers, parent: :facilities_management_rm3830_procurement_entering_requirements_complete do
     aasm_state { 'direct_award' }
     da_journey_state { 'sent' }

@@ -48,15 +48,6 @@ module FacilitiesManagement
       call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
     end
 
-    def accordion_service_items_for_framework
-      case params[:framework]
-      when 'RM3830'
-        # TODO: Add when ready
-      when 'RM6232'
-        rm6232_accordion_service_items(@procurement.service_codes)
-      end
-    end
-
     def procurement_building_row(form, building)
       if building.status == 'Ready'
         tag.div(class: 'govuk-checkboxes govuk-checkboxes--small') do
@@ -81,6 +72,26 @@ module FacilitiesManagement
         concat(tag.span(building.building_name, class: 'govuk-fieldset__legend'))
         concat(tag.span(building.address_no_region, class: 'govuk-hint govuk-!-margin-bottom-0'))
       end
+    end
+
+    def address_in_a_line(building)
+      [building.address_line_1, building.address_line_2, building.address_town].reject(&:blank?).join(', ') + " #{building.address_postcode}"
+    end
+
+    def edit_page_title
+      @edit_page_title ||= t("facilities_management.procurement_details.edit.title.#{section}")
+    end
+
+    def show_page_title
+      @show_page_title ||= t("facilities_management.procurement_details.show.title.#{section}")
+    end
+
+    def new_building_path
+      "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/edit-buildings/new"
+    end
+
+    def show_building_path(building_id)
+      "/facilities-management/#{params[:framework]}/procurements/#{params[:procurement_id]}/edit-buildings/#{building_id}"
     end
   end
 end

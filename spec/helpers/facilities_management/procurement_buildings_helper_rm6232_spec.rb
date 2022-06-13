@@ -35,8 +35,20 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
   end
 
   describe '.building_name' do
-    it 'returns the building name' do
-      expect(helper.building_name).to eq(building.building_name)
+    let(:building) { create(:facilities_management_building, user: user, building_name: 'Super building 1') }
+    let(:building2) { create(:facilities_management_building, user: user, building_name: 'Super building 2') }
+    let(:procurement_building2) { create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: building2) }
+
+    context 'when no procurement_building is provided' do
+      it 'returns the building name' do
+        expect(helper.building_name).to eq('Super building 1')
+      end
+    end
+
+    context 'when the procurement_building is provided' do
+      it 'returns the building name' do
+        expect(helper.building_name(procurement_building2)).to eq('Super building 2')
+      end
     end
   end
 
@@ -96,6 +108,32 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
 
       it 'returns the buildings missing regions' do
         expect(result).to match_array []
+      end
+    end
+  end
+
+  describe '.return_link' do
+    let(:result) { helper.return_link }
+
+    before do
+      allow(helper).to receive(:section).and_return(section_name)
+      allow(helper).to receive(:procurement_show_path).and_return('procurement_show_path')
+      helper.params[:framework] = 'RM6232'
+    end
+
+    context 'when the section is missing_region' do
+      let(:section_name) { :missing_region }
+
+      it 'returns the procurement show page link' do
+        expect(result).to eq('procurement_show_path')
+      end
+    end
+
+    context 'when the section is buildings_and_services' do
+      let(:section_name) { :buildings_and_services }
+
+      it 'returns the procurement details link' do
+        expect(result).to eq("/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings-and-services")
       end
     end
   end

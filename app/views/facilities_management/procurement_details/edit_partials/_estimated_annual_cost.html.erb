@@ -1,5 +1,3 @@
-<%= govuk_page_header(FacilitiesManagement::PageDetail::Heading.new(t('.heading'), @procurement.contract_name, nil, nil, nil)) %>
-<% content_for :page_title, t('.heading') %>
 <fieldset class="govuk-fieldset govuk-!-width-three-quarters">
   <div class="govuk-form-group <%= 'govuk-form-group--error' if model_attribute_has_error(@procurement, :estimated_cost_known, :estimated_annual_cost)%>">
     <%= hint_details(t('.do_you_know'), t('.content')) %>

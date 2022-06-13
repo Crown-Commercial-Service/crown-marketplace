@@ -9,6 +9,6 @@ Feature: Buildings validations
     Then I am on the 'Requirements' page
     And I click on 'Buildings'
     Then I am on the 'Buildings' page
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I should see the following error messages:
       | Select at least one building  |

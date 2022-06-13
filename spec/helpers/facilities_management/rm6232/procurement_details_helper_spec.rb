@@ -1,95 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::ProcurementDetailsHelper, type: :helper do
-  describe '.edit_page_title' do
-    let(:result) { helper.edit_page_title }
+  describe '.porcurement_services' do
+    before { @procurement = create(:facilities_management_rm6232_procurement_entering_requirements, service_codes: %w[E.1 F.1 Q.3]) }
 
-    before { allow(helper).to receive(:section).and_return(section) }
-
-    context 'when the section is contract_name' do
-      let(:section) { :contract_name }
-
-      it 'returns Contract name' do
-        expect(result).to eq('Contract name')
-      end
-    end
-
-    context 'when the section is annual_contract_value' do
-      let(:section) { :annual_contract_value }
-
-      it 'returns Annual contract value' do
-        expect(result).to eq('Annual contract value')
-      end
-    end
-
-    context 'when the section is tupe' do
-      let(:section) { :tupe }
-
-      it 'returns Tupe' do
-        expect(result).to eq('TUPE')
-      end
-    end
-
-    context 'when the section is contract_period' do
-      let(:section) { :contract_period }
-
-      it 'returns Contract period' do
-        expect(result).to eq('Contract period')
-      end
-    end
-
-    context 'when the section is services' do
-      let(:section) { :services }
-
-      it 'returns Services' do
-        expect(result).to eq('Services')
-      end
-    end
-
-    context 'when the section is buildings' do
-      let(:section) { :buildings }
-
-      it 'returns Buildings' do
-        expect(result).to eq('Buildings')
-      end
+    it 'returns the service names withou consideration of the lot' do
+      expect(helper.porcurement_services).to eq(['Mechanical and Electrical Engineering Maintenance', 'Asbestos Management', 'CAFM system'])
     end
   end
 
-  describe '.show_page_title' do
-    let(:result) { helper.show_page_title }
+  describe '.building_name' do
+    let(:building) { create(:facilities_management_building, user: user, building_name: 'Super building name') }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, user: user) }
+    let(:procurement_building) { create(:facilities_management_rm6232_procurement_building_no_services, procurement: procurement, building: building) }
+    let(:user) { create(:user) }
 
-    before { allow(helper).to receive(:section).and_return(section) }
-
-    context 'when the section is contract_period' do
-      let(:section) { :contract_period }
-
-      it 'returns Contract period summary' do
-        expect(result).to eq('Contract period summary')
-      end
-    end
-
-    context 'when the section is services' do
-      let(:section) { :services }
-
-      it 'returns Services summary' do
-        expect(result).to eq('Services summary')
-      end
-    end
-
-    context 'when the section is buildings' do
-      let(:section) { :buildings }
-
-      it 'returns Buildings summary' do
-        expect(result).to eq('Buildings summary')
-      end
-    end
-
-    context 'when the section is buildings_and_services' do
-      let(:section) { :buildings_and_services }
-
-      it 'returns Assigning services to buildings summary' do
-        expect(result).to eq('Assigning services to buildings summary')
-      end
+    it 'returns the building name' do
+      expect(helper.building_name(procurement_building)).to eq('Super building name')
     end
   end
 end

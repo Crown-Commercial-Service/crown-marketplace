@@ -12,7 +12,7 @@
                 <%= t('.choose_the_required_services') %>
               </p>
               <p>
-                <%#= service_specification_document('rm3830') %>
+                <%= service_specification_document('rm3830') %>
               </p>
             </div>
             <div>
@@ -20,11 +20,17 @@
               <div class="chooser-input">
                 <%= govuk_accordion_with_checkboxes(
                   'edit-services',
-                  accordion_service_items_for_framework,
+                  accordion_service_items,
                   "facilities_management_#{params[:framework].downcase}_procurement_service_codes",
                   "facilities_management_#{params[:framework].downcase}_procurement[service_codes]"
-                ) do %>
-                  <%= link_to t('.learn_more'), '#' %>
+                    ) do |section_id, item| %>
+                  <% case params[:framework]%>
+                  <% when 'RM3830' %>
+                    <%= link_to t('.learn_more'), facilities_management_rm3830_service_specification_path(item[:code], section_id), target: '_blank' %>
+                    <%= govuk_tag_with_text(:grey, t('common.da_eligible')) if da_eligible?(item[:value]) %>
+                  <% when 'RM6232' %>
+                    <%= link_to t('.learn_more'), '#' %>
+                  <% end %>
                 <% end %>
               </div>
             </div>

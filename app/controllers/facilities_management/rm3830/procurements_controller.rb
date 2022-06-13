@@ -9,14 +9,10 @@ module FacilitiesManagement
       before_action :redirect_from_delete_if_needed, only: %i[delete destroy]
       before_action :redirect_if_missing_regions, :redirect_to_contract_details_if_da_draft, only: :show
       before_action :redirect_if_unrecognised_step, only: :edit
-      before_action :redirect_if_unrecognised_summary_page, only: :summary
-      before_action :ready_buildings, only: %i[show summary edit update]
-      before_action :set_procurement_data, only: %i[show summary edit update]
       before_action :procurement_valid?, only: :show, if: -> { params[:validate].present? }
       before_action :set_current_step, only: %i[show edit]
       before_action :set_view_name, only: :show
       before_action :initialize_page_description_from_view_name, only: :show, if: -> { page_definitions.key?(@view_name.to_sym) }
-      before_action :redirect_to_edit_from_summary, :set_summary_data, only: :summary
 
       def index
         @searches = current_user.rm3830_procurements.where(aasm_state: Procurement::SEARCH).order(updated_at: :asc).sort_by { |search| Procurement::SEARCH_ORDER.index(search.aasm_state) }
@@ -31,8 +27,6 @@ module FacilitiesManagement
         redirect_to facilities_management_rm3830_procurements_path if @procurement.da_journey_state == 'sent'
         redirect_to facilities_management_rm3830_procurement_spreadsheet_import_path(procurement_id: @procurement, id: @procurement.spreadsheet_import) if @procurement.detailed_search_bulk_upload? && @procurement.spreadsheet_import.present?
       end
-
-      def summary; end
 
       def new
         @procurement = current_user.rm3830_procurements.build(service_codes: params[:service_codes], region_codes: params[:region_codes])
@@ -54,7 +48,6 @@ module FacilitiesManagement
           end
         else
           @errors = @procurement.errors
-          set_procurement_data
           @back_path = back_path
           render :new
         end
@@ -62,8 +55,6 @@ module FacilitiesManagement
 
       def edit
         redirect_to facilities_management_rm3830_procurement_path(@procurement) if params[:step].nil?
-
-        @back_link = ProcurementRouter.new(@procurement.id, @procurement.aasm_state).back_link
       end
 
       def update
@@ -164,7 +155,6 @@ module FacilitiesManagement
       end
 
       PARAMS_METHODS_SHOW = {
-        'page': :paginate_procurement_buildings,
         'bulk_upload_spreadsheet': :start_bulk_upload,
         'change_the_contract_value': :change_the_contract_value,
         'change_requirements': :continue_to_summary,
@@ -255,11 +245,7 @@ module FacilitiesManagement
       def update_service_codes
         @procurement.assign_attributes(service_codes: procurement_params[:service_codes])
         if @procurement.save(context: :service_codes)
-          if @procurement.quick_search?
-            redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
-          else
-            redirect_to facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'services')
-          end
+          redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         else
           params[:step] = 'services'
           render :edit
@@ -280,56 +266,6 @@ module FacilitiesManagement
         @procurement.set_state_to_detailed_search! if @procurement.detailed_search_bulk_upload?
 
         redirect_to facilities_management_rm3830_procurement_path(@procurement)
-      end
-
-      def paginate_procurement_buildings
-        paramatise_building_selection
-        find_buildings_with_update
-
-        update_procurement_building_selection && return if params.key?(:buildings)
-
-        params[:page] = params.keys.select { |key| key.include?('paginate') }.first.split('-').last
-        params[:step] = 'buildings'
-
-        set_paginated_buildings_data
-
-        render :edit
-      end
-
-      def update_procurement_building_selection
-        current_procurement_buildings = @procurement.procurement_buildings.select(:id, :building_id).map { |pb| [pb.building_id, pb.id] }.to_h
-        @procurement.assign_attributes(procurement_buildings_attributes: @building_params.map { |building_id, active| { id: current_procurement_buildings[building_id], building_id: building_id, active: active } })
-
-        if @procurement.save(context: :buildings)
-          redirect_to facilities_management_rm3830_procurement_summary_path(@procurement, summary: 'buildings')
-        else
-          params[:step] = 'buildings'
-          set_paginated_buildings_data
-
-          render :edit
-        end
-      end
-
-      def paramatise_building_selection
-        @building_params = procurement_params['procurement_buildings_attributes'].to_h.values.select { |building| building['active'] }.map { |item| [item['building_id'], item['active']] }.to_h
-      end
-
-      def find_buildings_with_update
-        active_procurement_building_ids = @procurement.procurement_buildings.select(&:active).pluck(:building_id)
-
-        active_procurement_building_ids.each do |building_id|
-          @building_params[building_id] = '1' unless @building_params[building_id]
-        end
-
-        @building_params.select! { |building_id, active| active == '1' || active_procurement_building_ids.include?(building_id) }
-      end
-
-      def set_paginated_buildings_data
-        @buildings = current_user.buildings.order_by_building_name.page(params[:page])
-        visible_buildings_ids = @buildings.map(&:id)
-
-        hidden_building_ids = @building_params.reject { |building_id, _| visible_buildings_ids.include? building_id }.keys
-        @hidden_buildings = current_user.buildings.order_by_building_name.where(id: hidden_building_ids)
       end
 
       # sets the state of the procurement depending on the submission from the results view
@@ -363,12 +299,7 @@ module FacilitiesManagement
         redirect_to facilities_management_rm3830_procurement_path(@procurement) unless RECOGNISED_STEPS.include? params[:step]
       end
 
-      def redirect_if_unrecognised_summary_page
-        redirect_to facilities_management_rm3830_procurement_path(@procurement) unless RECOGNISED_SUMMARY_PAGES.include? summary_page
-      end
-
-      RECOGNISED_STEPS = %w[services regions contract_name estimated_annual_cost tupe contract_period buildings].freeze
-      RECOGNISED_SUMMARY_PAGES = %w[contract_period services buildings buildings_and_services service_requirements].freeze
+      RECOGNISED_STEPS = %w[services regions].freeze
 
       def sent_offers
         current_user.rm3830_procurements.direct_award&.map(&:sent_offers)&.flatten&.sort_by { |each| [ProcurementSupplier::SENT_OFFER_ORDER.index(each.aasm_state), each.offer_sent_date] }
@@ -389,28 +320,11 @@ module FacilitiesManagement
       def procurement_params
         params.require(:facilities_management_rm3830_procurement)
               .permit(
-                :tupe,
                 :contract_name,
-                :procurement_data,
-                :estimated_annual_cost,
-                :estimated_cost_known,
-                :initial_call_off_start_date_dd,
-                :initial_call_off_start_date_mm,
-                :initial_call_off_start_date_yyyy,
-                :initial_call_off_period_years,
-                :initial_call_off_period_months,
-                :mobilisation_period,
-                :mobilisation_period_required,
-                :extensions_required,
                 :lot_number,
                 :lot_number_selected_by_customer,
                 service_codes: [],
                 region_codes: [],
-                procurement_buildings_attributes: [:id,
-                                                   :building_id,
-                                                   :active,
-                                                   { service_codes: [] }],
-                call_off_extensions_attributes: %i[id extension years months extension_required]
               )
       end
 
@@ -423,57 +337,8 @@ module FacilitiesManagement
         @procurement = Procurement.find(params[:id] || params[:procurement_id])
       end
 
-      def set_procurement_data
-        @active_procurement_buildings = @procurement.procurement_buildings.try(:active).try(:order_by_building_name)
-        set_buildings if params['step'] == 'buildings'
-        set_active_procurement_buildings if %w[buildings buildings_and_services].include? params['summary']
-        @procurement.build_call_off_extensions if params['step'] == 'contract_period'
-      end
-
-      def set_buildings
-        @building_params = {}
-        find_buildings_with_update
-
-        set_paginated_buildings_data
-      end
-
-      def summary_page
-        @summary_page ||= params['summary']
-      end
-
-      def redirect_to_edit_from_summary
-        redirect_to edit_facilities_management_rm3830_procurement_path(@procurement, step: @summary_page) if summary_page_status == :not_started || (summary_page == 'contract_period' && summary_page_status == :incomplete)
-      end
-
-      def summary_page_status
-        @summary_page_status ||= @procurement.send("#{summary_page}_status")
-      end
-
-      def set_summary_data
-        case summary_page
-        when 'buildings'
-          set_active_procurement_buildings
-        when 'service_requirements'
-          set_procurement_buildings_requireing_service_info
-        end
-      end
-
-      def set_active_procurement_buildings
-        @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page])
-      end
-
-      def set_procurement_buildings_requireing_service_info
-        active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.select(&:requires_service_questions?)
-
-        @active_procurement_buildings = Kaminari.paginate_array(active_procurement_buildings).page(params[:page])
-      end
-
       def set_step_param
         params[:step] = params[:facilities_management_rm3830_procurement][:step] unless @procurement.quick_search?
-      end
-
-      def ready_buildings
-        @building_count = FacilitiesManagement::Building.where(user_id: current_user.id, status: 'Ready').size
       end
 
       def set_deleted_action_occurred

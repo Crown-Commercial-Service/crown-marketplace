@@ -832,4 +832,20 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementBuilding, type: :model d
       end
     end
   end
+
+  describe '.service_names' do
+    before { procurement_building.update(service_codes: %w[F.1 C.21 M.1 C.5 L.1]) }
+
+    it 'returns the service names sorted based on the work package' do
+      expect(procurement_building.service_names).to eq(
+        [
+          'Lifts, hoists & conveyance systems maintenance',
+          'Airport and aerodrome maintenance services',
+          'Chilled potable water',
+          'Childcare facility',
+          'CAFM system'
+        ]
+      )
+    end
+  end
 end

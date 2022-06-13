@@ -13,7 +13,7 @@ Feature: Contract period
     Then I enter '<years>' years and '<months>' months for the contract period
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And my inital call off period length is '<initial_call_off_period_length>'
     And my inital call off period is correct given the contract start date
@@ -37,7 +37,7 @@ Feature: Contract period
     Then I enter '4' years and '8' months for the contract period
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And my inital call off period length is '4 years and 8 months'
     And my inital call off period is correct given the contract start date
@@ -48,7 +48,7 @@ Feature: Contract period
     Then I enter '1' years and '0' months for the contract period
     And I select 'Yes' for mobilisation period required
     Then I enter '18' weeks for the mobilisation period
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And my inital call off period length is '1 year'
     And my inital call off period is correct given the contract start date
@@ -69,7 +69,7 @@ Feature: Contract period
     And I select 'Yes' for optional extension required
     And only the first optional extension is required
     Then I enter '2' years and '3' months for optional extension 1
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And my inital call off period length is '3 years and 2 months'
     And my inital call off period is correct given the contract start date
@@ -92,7 +92,7 @@ Feature: Contract period
     Then I enter '1' years and '2' months for optional extension 3
     And I add another extension
     Then I enter '3' years and '7' months for optional extension 4
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And my inital call off period length is '2 years and 7 months'
     And my inital call off period is correct given the contract start date

@@ -1,4 +1,3 @@
-
 <%= link_to t('.return_to_requirements'), @back_link, class: 'govuk-back-link govuk-!-margin-top-0 govuk-!-margin-bottom-6' if @procurement.detailed_search? && requires_back_link? %>
 <%= form_for @procurement, url: facilities_management_rm3830_procurement_path(@procurement.id), method: :put, html: { specialvalidation: true, novalidate: true, multipart: true } do |f| %>
   <% unless params[:step] == "buildings_and_services"%>

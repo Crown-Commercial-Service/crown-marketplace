@@ -19,8 +19,6 @@ module FacilitiesManagement::RM3830
         end
       end
 
-      validate :service_code_selection, on: %i[services service_codes]
-
       validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
 
       validates :using_buyer_detail_for_invoice_details, inclusion: { in: [true, false] }, on: %i[invoicing_contact_details]
@@ -77,45 +75,6 @@ module FacilitiesManagement::RM3830
     # rubocop:enable Metrics/BlockLength
 
     private
-
-    def service_code_selection
-      return errors.add(:service_codes, :invalid) if service_codes.blank?
-
-      service_code_selection_validation
-    end
-
-    def service_code_selection_validation
-      add_selection_error(service_code_selection_error_code)
-    end
-
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def service_code_selection_error_code
-      case service_codes.sort
-      when ['O.1']
-        0
-      when ['N.1']
-        1
-      when ['M.1']
-        2
-      when ['M.1', 'O.1']
-        3
-      when ['N.1', 'O.1']
-        4
-      when ['M.1', 'N.1']
-        5
-      when ['M.1', 'N.1', 'O.1']
-        6
-      end
-    end
-    # rubocop:enable Metrics/CyclomaticComplexity
-
-    const_set(:SERVICE_SELECTION_INVALID_TYPE, %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable])
-
-    def add_selection_error(index)
-      return unless index
-
-      errors.add(:service_codes, self.class::SERVICE_SELECTION_INVALID_TYPE[index])
-    end
 
     def security_policy_document_date_valid?
       errors.add(:security_policy_document_date, :not_a_date) unless all_security_policy_document_date_fields_valid?

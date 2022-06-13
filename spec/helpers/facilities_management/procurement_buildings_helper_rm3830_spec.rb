@@ -35,23 +35,45 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
   end
 
   describe '.building_name' do
-    let(:result) { helper.building_name }
-
     before { procurement_building.update(building_name: building_name) }
 
-    context 'when the building name is nil on the procurement building' do
-      let(:building_name) { nil }
+    context 'when no procurement_building is provided' do
+      let(:result) { helper.building_name }
 
-      it 'returns the building name from the building' do
-        expect(result).to eq(building.building_name)
+      context 'when the building name is nil on the procurement building' do
+        let(:building_name) { nil }
+
+        it 'returns the building name from the building' do
+          expect(result).to eq(building.building_name)
+        end
+      end
+
+      context 'when the building name is present on the procurement building' do
+        let(:building_name) { 'My building name' }
+
+        it 'returns the building name from the procurement building' do
+          expect(result).to eq(building_name)
+        end
       end
     end
 
-    context 'when the building name is present on the procurement building' do
-      let(:building_name) { 'My building name' }
+    context 'when the procurement_building is provided' do
+      let(:result) { helper.building_name(procurement_building) }
 
-      it 'returns the building name from the procurement building' do
-        expect(result).to eq(building_name)
+      context 'when the building name is nil on the procurement building' do
+        let(:building_name) { nil }
+
+        it 'returns the building name from the building' do
+          expect(result).to eq(building.building_name)
+        end
+      end
+
+      context 'when the building name is present on the procurement building' do
+        let(:building_name) { 'My building name' }
+
+        it 'returns the building name from the procurement building' do
+          expect(result).to eq(building_name)
+        end
       end
     end
   end
@@ -112,6 +134,32 @@ RSpec.describe FacilitiesManagement::ProcurementBuildingsHelper, type: :helper d
 
       it 'returns the buildings missing regions' do
         expect(result).to match_array []
+      end
+    end
+  end
+
+  describe '.return_link' do
+    let(:result) { helper.return_link }
+
+    before do
+      allow(helper).to receive(:section).and_return(section_name)
+      allow(helper).to receive(:procurement_show_path).and_return('procurement_show_path')
+      helper.params[:framework] = 'RM3830'
+    end
+
+    context 'when the section is missing_region' do
+      let(:section_name) { :missing_region }
+
+      it 'returns the procurement show page link' do
+        expect(result).to eq('procurement_show_path')
+      end
+    end
+
+    context 'when the section is buildings_and_services' do
+      let(:section_name) { :buildings_and_services }
+
+      it 'returns the procurement details link' do
+        expect(result).to eq("/facilities-management/RM3830/procurements/#{procurement.id}/procurement-details/buildings-and-services")
       end
     end
   end
