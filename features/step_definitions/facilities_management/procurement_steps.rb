@@ -4,7 +4,7 @@ Then('I enter {string} into the contract name field') do |contract_name|
 end
 
 Then('I have a procurement with the name {string}') do |contract_name|
-  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
+  @procurement =  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for entering requirements named {string}') do |contract_name|
@@ -58,6 +58,10 @@ def create_completed_procurement(contract_name, **options)
   procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') } if @framework == 'RM3830'
 end
 
+Given('I have a completed procurement for results named {string}') do |contract_name|
+  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:results], user: @user, contract_name: contract_name)
+end
+
 FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM3830' => {
     initial: :facilities_management_rm3830_procurement,
@@ -67,7 +71,8 @@ FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM6232' => {
     initial: :facilities_management_rm6232_procurement_what_happens_next,
     empty_entering_requirements: :facilities_management_rm6232_procurement_entering_requirements_empty,
-    entering_requirements: :facilities_management_rm6232_procurement_entering_requirements
+    entering_requirements: :facilities_management_rm6232_procurement_entering_requirements,
+    results: :facilities_management_rm6232_procurement_results
   }
 }.freeze
 

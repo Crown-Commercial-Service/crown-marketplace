@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_075207) do
+ActiveRecord::Schema.define(version: 2022_06_15_094222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -370,6 +370,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_075207) do
     t.text "service_codes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "frozen_building_data", default: {}
     t.index ["active"], name: "index_fm_rm6232_procurement_buildings_on_active"
     t.index ["building_id"], name: "index_building_on_fm_rm6232_procurements_id"
     t.index ["facilities_management_rm6232_procurement_id"], name: "index_procurement_building_on_fm_rm6232_procurements_id"

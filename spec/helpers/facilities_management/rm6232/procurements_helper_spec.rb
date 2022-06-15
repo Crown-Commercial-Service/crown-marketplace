@@ -199,4 +199,71 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
       end
     end
   end
+
+  describe '.active_procurement_buildings' do
+    let(:procurement_building1) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'Z building')) }
+    let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'L building')) }
+    let(:procurement_building3) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'K building')) }
+    let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'T building')) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+
+    before do
+      procurement_building1
+      procurement_building2
+      procurement_building3
+      procurement_building4
+      @procurement = procurement
+    end
+
+    it 'returns the buildings sorted by building name' do
+      expect(helper.active_procurement_buildings).to eq [procurement_building3, procurement_building2, procurement_building4, procurement_building1]
+    end
+  end
+
+  describe '.procurement_service_names' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes, lot_number: lot_number) }
+    let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4', 'E.5'] }
+    let(:service_codes) { base_service_codes }
+    let(:lot_number) { '1a' }
+    let(:result) { helper.procurement_service_names }
+
+    before { @procurement = procurement }
+
+    it 'returns the service names from the active procurement buildings' do
+      expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance']
+    end
+
+    context 'when the service codes contain Q.3' do
+      let(:service_codes) { base_service_codes + ['Q.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+
+      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['Q.3']) } }
+
+      context 'and it is a total sub lot' do
+        let(:lot_number) { '1a' }
+
+        it 'returns services with TFM & Hard FM CAFM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'TFM & Hard FM CAFM Requirements']
+        end
+      end
+
+      context 'and it is a hard sub lot' do
+        let(:lot_number) { '2a' }
+
+        it 'returns services with TFM & Hard FM CAFM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'TFM & Hard FM CAFM Requirements']
+        end
+      end
+
+      context 'and it is a soft sub lot' do
+        let(:lot_number) { '3a' }
+
+        it 'returns services with CAFM – Soft FM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'CAFM – Soft FM Requirements']
+        end
+      end
+    end
+  end
 end

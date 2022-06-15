@@ -13,13 +13,14 @@
   </div>
 </div>
 
-<%= render partial: "facilities_management/rm6232/procurements/show_partial/#{@procurement.aasm_state}" %>
+<%= render partial: "facilities_management/rm6232/procurements/show_partials/#{@procurement.aasm_state}" %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= form_with url: facilities_management_rm6232_procurement_update_show_path(@procurement), method: :put, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
-      <div class="govuk-!-margin-top-5">
-        <%= f.submit t('.save_and_continue'), class: 'govuk-button' %>
+      <div class="govuk-button-group govuk-!-margin-top-5">
+        <%= f.submit t('.save_and_continue'), class: 'govuk-button', data: { module: 'govuk-button' } %>
+        <%= f.submit t('.change_requirements'), class: 'govuk-button govuk-button--secondary', data: { module: 'govuk-button' }, name: :change_requirements if @procurement.results? %>
       </div>
       <p>
         <%= link_to t('.return_to_your_account'), facilities_management_rm6232_path, class: 'govuk-body govuk-link--no-visited-state' %>
