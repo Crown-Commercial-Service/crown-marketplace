@@ -70,6 +70,18 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           expect(assigns(:view_name)).to eq 'requirements'
         end
+
+        context 'and the procurement has buildings with missing regions' do
+          let(:building) { create(:facilities_management_building, user: subject.current_user, address_region: nil, address_region_code: nil) }
+
+          before { procurement.update(procurement_buildings_attributes: { '0': { building_id: building.id, active: true } }) }
+
+          it 'redirects to missing_regions' do
+            get :show, params: { id: procurement.id }
+
+            expect(response).to redirect_to(facilities_management_rm3830_missing_regions_path(procurement_id: procurement.id))
+          end
+        end
       end
 
       context 'with a procurement which has just bulk uploaded successfully' do

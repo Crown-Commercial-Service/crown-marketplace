@@ -7,7 +7,7 @@ module FacilitiesManagement
       before_action :authorize_user
       before_action :set_deleted_action_occurred, only: :index
       before_action :redirect_from_delete_if_needed, only: %i[delete destroy]
-      before_action :redirect_to_contract_details_if_da_draft, only: :show
+      before_action :redirect_if_missing_regions, :redirect_to_contract_details_if_da_draft, only: :show
       before_action :redirect_if_unrecognised_step, only: :edit
       before_action :redirect_if_unrecognised_summary_page, only: :summary
       before_action :ready_buildings, only: %i[show summary edit update]
@@ -86,9 +86,9 @@ module FacilitiesManagement
 
       def quick_view_results_spreadsheet
         if @procurement.quick_search?
-          spreadsheet_builder = QuickViewResultsSpreadsheetCreator.new(@procurement.id)
+          spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
           spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.ms-excel'
+          send_data spreadsheet_builder.to_xlsx, filename: "Quick view results (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         else
           redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         end
@@ -98,7 +98,7 @@ module FacilitiesManagement
         if @procurement.further_competition?
           spreadsheet_builder = FurtherCompetitionDeliverablesMatrix.new(@procurement.id)
           spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.ms-excel'
+          send_data spreadsheet_builder.to_xlsx, filename: 'further_competition_procurement_summary.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         else
           redirect_to facilities_management_rm3830_procurement_path(id: @procurement.id)
         end
@@ -145,6 +145,10 @@ module FacilitiesManagement
 
           render :edit
         end
+      end
+
+      def redirect_if_missing_regions
+        redirect_to facilities_management_rm3830_missing_regions_path(procurement_id: @procurement.id) if @procurement.procurement_buildings_missing_regions?
       end
 
       def assign_procurement_parameters

@@ -697,27 +697,6 @@ en:
           question: Select the facilities management services that you need
           return_text: Return to your account
       procurement_buildings:
-        buildings_and_services:
-          heading: Assigning services to a building
-          or: or
-          question: Which of your services are required within this building?
-          return_link: Return to assigning services to buildings summary page
-          save_and_return: Save and return
-          select_all: Select all
-          select_all_that_apply_html: To add to, or change your list of services to select from, please go back to your Requirements summary page, and click on '%{services_link}' in section 2.
-          services_link_text: Services
-        missing_region:
-          building_address: Building address
-          building_name: Building name
-          change_link: Change
-          change_link_aria_label: Change region
-          for_this_building: For this building, we have been unable to automatically place it into a single region, so could you please confirm the region below by selecting from the short list of regions displayed.
-          heading: Confirm your building's region
-          prompt: Please select a region
-          region: Region
-          return_link: Return to review your buildings
-          select_region: Select region
-          we_use_your_buildings: We use your buildings’ address to assess the region that your building is located in. This helps us shortlist the suppliers who can deliver your services to your exact locations.
         show:
           answer_question: Answer question
           change: Change
@@ -1479,9 +1458,6 @@ en:
             tupe_title: TUPE
             what_you_need_to_know_html: TUPE, the Transfer of Undertakings (Protection of Employment) protects the rights of employees when the business or commercial contract that they are working on changes to new ownership.<br/>It ensures that employees who find themselves transferred to a new business, retain exactly the same hours and rate of pay as they were contracted to with the old employer.
             what_you_need_to_know_title: What you need to know about TUPE
-        edit_buildings:
-          show:
-            return_to_buildings: Return to buildings
         filter_details:
           change_add_region: Change
           change_add_service: Change
@@ -1571,15 +1547,6 @@ en:
           searches_title: Searches
           sent_offers: Sent offers
           was_deleted: "'%{contract_name}' was deleted."
-        missing_regions_summary:
-          before_you_proceed: Before you proceed to review your procurement, we have identified building(s) which we have been unable to automatically place into a geographical region, using their address. The regions help us shortlist the suppliers who can deliver your services to your exact locations.
-          building_address: Building address
-          building_name: Building name
-          building_region: Region
-          could_you_review: Could you review the building(s) below by clicking into each one and confirming the correct region by selecting from the short list of regions you will see displayed.
-          heading: Review your buildings
-          return_link: Return to procurements dashboard
-          select_region: Select region
         new:
           cancel_text: Return to your account
           no_suppliers: Unfortunately, there are no suppliers available who can meet your requirements.
@@ -1603,15 +1570,6 @@ en:
         requirements:
           contract_details:
             contract_details: 1. Contract details
-          contract_summary_table:
-            buildings: Buildings
-            buildings_and_services: Assigning services to buildings
-            contract_name: Contract name
-            contract_period: Contract period
-            estimated_annual_cost: Estimated annual cost
-            service_requirements: Service requirements
-            services: Services
-            tupe: TUPE
           description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'continue to results' button to see your estimated contract cost, supplier shortlist and procurement options.
           services_and_buildings:
             excel: Click here to download an Excel template

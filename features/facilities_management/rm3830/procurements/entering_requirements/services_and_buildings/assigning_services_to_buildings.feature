@@ -110,10 +110,5 @@ Feature: Assigning services to buildings
     Given I click on 'Test building'
     Then I am on the 'Test building' page
     And I am on the page with secondary heading 'Which of your services are required within this building?'
-    When I click on the 'Return to assigning services to buildings summary page' back link
-    Then I am on the 'Assigning services to buildings summary' page
-    Given I click on 'Test building'
-    Then I am on the 'Test building' page
-    And I am on the page with secondary heading 'Which of your services are required within this building?'
-    When I click on the 'Return to assigning services to buildings summary page' return link
+    When I click on 'Return to assigning services to buildings summary page'
     Then I am on the 'Assigning services to buildings summary' page

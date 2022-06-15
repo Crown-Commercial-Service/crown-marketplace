@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_142407) do
+ActiveRecord::Schema.define(version: 2022_06_08_075207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -363,6 +363,28 @@ ActiveRecord::Schema.define(version: 2022_05_17_142407) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_procurement_id"
+    t.uuid "building_id"
+    t.boolean "active"
+    t.text "service_codes", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["active"], name: "index_fm_rm6232_procurement_buildings_on_active"
+    t.index ["building_id"], name: "index_building_on_fm_rm6232_procurements_id"
+    t.index ["facilities_management_rm6232_procurement_id"], name: "index_procurement_building_on_fm_rm6232_procurements_id"
+  end
+
+  create_table "facilities_management_rm6232_procurement_call_off_extensions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_procurement_id"
+    t.integer "extension"
+    t.integer "years"
+    t.integer "months"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facilities_management_rm6232_procurement_id"], name: "index_optional_call_off_on_fm_rm6232_procurements_id"
+  end
+
   create_table "facilities_management_rm6232_procurements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "aasm_state", limit: 30
@@ -373,6 +395,15 @@ ActiveRecord::Schema.define(version: 2022_05_17_142407) do
     t.string "lot_number", limit: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contract_number"
+    t.boolean "tupe"
+    t.integer "initial_call_off_period_years"
+    t.integer "initial_call_off_period_months"
+    t.date "initial_call_off_start_date"
+    t.boolean "mobilisation_period_required"
+    t.integer "mobilisation_period"
+    t.boolean "extensions_required"
+    t.index ["user_id", "contract_name"], name: "index_rm6232_procurement_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_fm_rm6232_procurements_on_user_id"
   end
 
@@ -584,6 +615,9 @@ ActiveRecord::Schema.define(version: 2022_05_17_142407) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_buildings", column: "building_id"
+  add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_rm6232_procurements"
+  add_foreign_key "facilities_management_rm6232_procurement_call_off_extensions", "facilities_management_rm6232_procurements"
   add_foreign_key "facilities_management_rm6232_procurements", "users"
   add_foreign_key "facilities_management_rm6232_services", "facilities_management_rm6232_work_packages", column: "work_package_code", primary_key: "code"
   add_foreign_key "facilities_management_rm6232_supplier_lot_data", "facilities_management_rm6232_suppliers"

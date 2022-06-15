@@ -1,5 +1,5 @@
 $(() => {
-  if ($('#facilities_management_building_building_type').length) {
+  if ($('.building-type').length) {
     const enableRadios = (detailsOpen) => {
       const radioInputs = $('.govuk-details__text .govuk-radios__item');
       if (detailsOpen === true) {

@@ -15,7 +15,7 @@ module FacilitiesManagement
       validates :description, length: { maximum: 50 }
     end
 
-    with_options on: %i[all gia] do
+    with_options on: %i[all building_area] do
       validates :gia, :external_area, presence: true
       validates :gia, :external_area, numericality: { only_integer: true, less_than_or_equal_to: 999999999, greater_than_or_equal_to: 0 }
       validate  :combined_external_area_and_gia_greater_than_zero
@@ -40,9 +40,10 @@ module FacilitiesManagement
       validates :address_town, presence: true, length: { maximum: 30 }
       validates :address_postcode, presence: true
       validate :postcode_format, if: -> { address_postcode.present? }
+      after_validation :reselect_region
     end
 
-    with_options on: %i[all type] do
+    with_options on: %i[all building_type] do
       before_validation :prepare_building_type_selection
       validates :building_type, presence: true
       validate :building_type_selection
@@ -53,7 +54,7 @@ module FacilitiesManagement
       end
     end
 
-    with_options on: %i[all security] do
+    with_options on: %i[all security_type] do
       before_validation :prepare_security_type_selection
       validates :security_type, presence: true
       validate :security_type_selection
@@ -143,6 +144,20 @@ module FacilitiesManagement
 
     def address_region_selection
       errors.add(:address_region, :blank) unless address_region.present? && address_region_code.present?
+    end
+
+    def reselect_region
+      return if errors.any? || !address_postcode_changed?
+
+      regions = Postcode::PostcodeCheckerV2.find_region(address_postcode)
+
+      if regions.length == 1
+        self.address_region_code = regions.first[:code]
+        self.address_region = regions.first[:region]
+      else
+        self.address_region_code = nil
+        self.address_region = nil
+      end
     end
 
     def prepare_building_type_selection

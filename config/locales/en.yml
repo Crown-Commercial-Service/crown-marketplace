@@ -263,7 +263,7 @@ en:
     type_csv: application/csv
     type_doc: application/msword
     type_pdf: application/pdf
-    type_xlsx: application/msexcel
+    type_xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
   companies:
     unit:

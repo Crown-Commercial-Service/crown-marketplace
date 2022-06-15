@@ -1,7 +1,7 @@
 class FacilitiesManagement::RM3830::DeliverableMatrixSpreadsheetCreator
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
-  include FacilitiesManagement::RM3830::Procurements::ContractDatesHelper
+  include FacilitiesManagement::ContractDatesHelper
 
   def buildings_data
     @buildings_data ||= @active_procurement_buildings.map { |b| { building_id: b.building_id, service_codes: b.service_codes } }

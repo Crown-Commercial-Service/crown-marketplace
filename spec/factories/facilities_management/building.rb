@@ -9,7 +9,7 @@ FactoryBot.define do
     status { 'Ready' }
     gia { 1002 }
     external_area { 4596 }
-    building_name { 'asa' }
+    building_name { "#{Faker::Company.unique.name[0..40]} building" }
     description { 'non-json description' }
     building_type { 'General office - Customer Facing' }
     security_type { 'Baseline personnel security standard (BPSS)' }
