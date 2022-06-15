@@ -30,7 +30,7 @@ Feature: Results validations
       | Save and return to procurements dashboard |
 
   Scenario: Contract name is taken
-    Given I have an RM6232 procurement with the name 'Taken contract name'
+    Given I have a procurement with the name 'Taken contract name'
     And I enter 'Taken contract name' into the contract name field
     And I click on 'Save and continue'
     Then I should see the following error messages:

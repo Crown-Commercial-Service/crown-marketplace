@@ -48,10 +48,6 @@ module FacilitiesManagement::RM3830
       @work_packages_names ||= StaticData.work_packages.map { |wp| [wp['code'], wp['name']] }.to_h
     end
 
-    def active_procurement_buildings
-      @active_procurement_buildings ||= @procurement.active_procurement_buildings.order_by_building_name
-    end
-
     def number_of_suppliers
       @procurement.procurement_suppliers.count
     end

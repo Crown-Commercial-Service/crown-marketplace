@@ -27,6 +27,14 @@ module FacilitiesManagement
         building.address_region_code.blank? || building.address_region.blank?
       end
 
+      def freeze_building_data
+        update(frozen_building_data: building.attributes.slice(*FROZEN_BUILDING_ATTRIBUTES))
+      end
+
+      def get_frozen_attribute(attribute)
+        frozen_building_data[attribute]
+      end
+
       private
 
       def cleanup_service_codes
@@ -54,6 +62,8 @@ module FacilitiesManagement
 
       CLEANING_SERVICES = %w[I.1 I.4].freeze
       MANDATORY_SERVICES = %w[Q.3 R.1 S.1].freeze
+
+      FROZEN_BUILDING_ATTRIBUTES = %w[building_name description address_town address_line_1 address_line_2 address_postcode address_region address_region_code gia external_area building_type other_building_type security_type other_security_type].freeze
     end
   end
 end

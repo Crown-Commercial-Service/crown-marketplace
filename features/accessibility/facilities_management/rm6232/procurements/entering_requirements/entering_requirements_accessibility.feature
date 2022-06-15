@@ -10,10 +10,9 @@ Feature: Entering requirements accessibility
     Then I am on the 'Further service and contract requirements' page
     Then the page should be axe clean
 
-  # TODO: Add when all are completed
-  # Scenario: Everything is completed
-  #   Given I have a completed procurement for entering requirements named 'My completed procurement'
-  #   When I navigate to the procurement 'My completed procurement'
-  #   Then I am on the 'Further service and contract requirements' page
-  #   And everything is completed
-  #   Then the page should be axe clean
+  Scenario: Everything is completed
+    Given I have a completed procurement for entering requirements named 'My completed procurement'
+    When I navigate to the procurement 'My completed procurement'
+    Then I am on the 'Further service and contract requirements' page
+    And everything is completed
+    Then the page should be axe clean

@@ -2,7 +2,7 @@ Feature: What happens next
 
   Background: I navigate to the What happens next page
     Given I sign in and navigate to my account for 'RM6232'
-    And I have an empty procurement for 'what_happens_next' named 'My WHN procurement'
+    And I have a procurement with the name 'My WHN procurement'
     When I navigate to the procurement 'My WHN procurement'
     And I am on the 'What happens next?' page
   
