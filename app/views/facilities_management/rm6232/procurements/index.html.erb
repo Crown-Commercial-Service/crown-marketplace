@@ -1,0 +1,95 @@
+<% content_for :page_title, t('.heading') %>
+
+<div class="govuk-grid-column-full">
+  <h1 class="govuk-heading-xl">
+    <%= t('.heading') %>
+  </h1>
+  <p class="govuk-body">
+    <%= t('.description') %>
+  </p>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="ccs-info-panel">
+      <% if @searches.length > 0 %>
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.searches') %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.name') %></th>
+              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.date_saved') %></th>
+              <th scope="col" class="govuk-table__header" style="width: 50%"><%= t('.stage') %></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @searches.each do |search| %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__cell">
+                  <%= link_to search.contract_name, facilities_management_rm6232_procurement_path(search), class: ' govuk-link--no-visited-state' %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= format_date_time(search.updated_at) %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= t(".search_names.#{search.aasm_state}") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <h2 class="govuk-heading-m govuk-!-font-weight-bold">
+          <%= t('.searches') %>
+        </h2>
+        <hr class="govuk-section-break govuk-section-break--visible">
+        <p class="govuk-!-margin-top-4">
+          <%= t('.you_do_not_have_any') %>
+        </p>
+        <hr class="govuk-section-break govuk-section-break--visible">
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="ccs-info-panel">
+      <% if @advanced_procurement_activities.length > 0 %>
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m"><%= t('.advanced_procurement_activities') %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.name') %></th>
+              <th scope="col" class="govuk-table__header" style="width: 25%"><%= t('.date_saved') %></th>
+              <th scope="col" class="govuk-table__header" style="width: 50%"><%= t('.ref_number') %></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @advanced_procurement_activities.each do |advanced_procurement_activity| %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__cell">
+                  <%= link_to advanced_procurement_activity.contract_name, facilities_management_rm6232_procurement_path(advanced_procurement_activity), class: ' govuk-link--no-visited-state' %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= format_date_time(advanced_procurement_activity.updated_at) %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= advanced_procurement_activity.contract_number %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <h2 class="govuk-heading-m govuk-!-font-weight-bold">
+          <%= t('.advanced_procurement_activities') %>
+        </h2>
+        <hr class="govuk-section-break govuk-section-break--visible">
+        <p class="govuk-!-margin-top-4">
+          <%= t('.you_do_not_have_any') %>
+        </p>
+        <hr class="govuk-section-break govuk-section-break--visible">
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -33,9 +33,6 @@ Feature: Buildings used in a procurement are missing a region
     Then I am on the "Confirm your building's region" page
     And I click on the 'Return to review your buildings' return link
     Then I am on the 'Review your buildings' page
-    Given I select region for 'Test building 2'
-    Then I am on the "Confirm your building's region" page
-    And I click on the 'Return to review your buildings' back link
     Then I am on the 'Review your buildings' page
     Given I click on the 'Return to procurements dashboard' return link
     Then I am on the 'Procurements dashboard' page

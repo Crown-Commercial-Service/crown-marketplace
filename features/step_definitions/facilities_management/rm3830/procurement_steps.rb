@@ -1,28 +1,3 @@
-Then('I enter {string} into the contract name field') do |contract_name|
-  @contract_name = contract_name
-  procurement_page.contract_name_field.set(contract_name)
-end
-
-Then('I have a procurement with the name {string}') do |contract_name|
-  create(:facilities_management_rm3830_procurement, user: @user, contract_name: contract_name)
-end
-
-Given('I have an empty procurement for entering requirements named {string}') do |contract_name|
-  create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name)
-end
-
-Given('I have an empty procurement for entering requirements named {string} with the following servcies:') do |contract_name, service_codes_table|
-  create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
-end
-
-Given('I have an empty procurement with buildings named {string} with the following servcies:') do |contract_name, service_codes_table|
-  procurement = create(:facilities_management_rm3830_procurement_entering_requirements, user: @user, contract_name: contract_name, service_codes: service_codes_table.raw.flatten)
-
-  @user.buildings.each do |building|
-    procurement.procurement_buildings.create(building: building, active: true)
-  end
-end
-
 Given('I have an empty procurement with buildings named {string} with the following servcies assigned:') do |contract_name, service_codes_table|
   service_codes = service_codes_table.raw.flatten
 
@@ -87,10 +62,6 @@ Then('I select {string} on results') do |option|
   when 'further competition'
     procurement_page.further_competition_route_to_market.choose
   end
-end
-
-Then('the procurement {string} is on the dashboard') do |contract_name|
-  expect(procurement_page).to have_link(contract_name)
 end
 
 Then('the procurement {string} should have the state {string}') do |contract_name, status|

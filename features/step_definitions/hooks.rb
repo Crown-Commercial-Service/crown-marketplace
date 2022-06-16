@@ -1,3 +1,11 @@
+Before do |scenario|
+  if scenario.location.file.include? 'rm3830'
+    @framework = 'RM3830'
+  elsif scenario.location.file.include? 'rm6232'
+    @framework = 'RM6232'
+  end
+end
+
 Before('@javascript') do
   @javascript = true
 end

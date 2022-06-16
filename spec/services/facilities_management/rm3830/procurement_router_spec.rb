@@ -80,7 +80,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
         let(:step) { 'building_services' }
 
         it 'returns a route for the show procurement_building page' do
-          expect(procurement_router.route).to eq("/facilities-management/RM3830/procurement_buildings/#{procurement_building.id}")
+          expect(procurement_router.route).to eq("/facilities-management/RM3830/procurement-buildings/#{procurement_building.id}")
         end
       end
 

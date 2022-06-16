@@ -1,4 +1,3 @@
-@pipline
 Feature: Information appears correctly on results page
 
   Background: Navigate to the results page
@@ -32,6 +31,7 @@ Feature: Information appears correctly on results page
     And I should see the following 'annual contract value' in the selection summary:
       | £123,456  |
 
+  @pipline
   Scenario: I can change the services from the results page
     Given I change the 'services' from the selection summary
     Then I am on the 'Services' page
@@ -50,6 +50,7 @@ Feature: Information appears correctly on results page
       | Planned / Group re-lamping service                |
       | Outside catering                                  |
 
+  @pipline
   Scenario: I can change the regions from the results page
     Given I change the 'regions' from the selection summary
     Then I am on the 'Regions' page
@@ -65,6 +66,7 @@ Feature: Information appears correctly on results page
       | Essex                                             |
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
 
+  @pipline
   Scenario: I can change the annual contract value from the results page
     Given I change the 'annual contract value' from the selection summary
     Then I am on the 'Annual contract value' page
@@ -74,3 +76,40 @@ Feature: Information appears correctly on results page
     And I should be in sub-lot '2c'
     And I should see the following 'annual contract value' in the selection summary:
       | £123,456,789  |
+
+  Scenario: Save and return goes to the dashboard
+    Then I enter 'Colony 4 procurement' into the contract name field
+    And I click on 'Save and return to procurements dashboard'
+    Then I am on the 'Procurements dashboard' page
+    And the procurement 'Colony 4 procurement' is on the dashboard
+    And the RM6232 procurement 'Colony 4 procurement' should have the state 'Completed search'
+    Then I click on 'Colony 4 procurement'
+    And I am on the 'What happens next?' page
+    And the procurement name is shown to be 'Colony 4 procurement'
+
+  Scenario: Save and continue to 'What happens next?'
+    Then I enter 'Agnis search' into the contract name field
+    And I click on 'Save and continue'
+    Then I am on the 'What happens next?' page
+    And the procurement name is shown to be 'Agnis search'
+    And I click on 'Return to procurements dashboard'
+    And the procurement 'Agnis search' is on the dashboard
+    And the RM6232 procurement 'Agnis search' should have the state 'Completed search'
+
+  @pipeline 
+  Scenario: Contract name and service selection saved in requirements
+    Then I enter 'Mechonis field contract' into the contract name field
+    And I click on 'Save and continue'
+    Then I am on the 'What happens next' page
+    And I click on 'Save and continue'
+    Then I am on the 'Further service and contract requirements' page
+    And the procurement name is shown to be 'Mechonis field contract'
+    And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Services' should have the status 'Completed' in 'Services and buildings'
+    And I click on 'Services'
+    Then I am on the 'Services summary' page
+    And I should see the following seleceted services in the summary:
+      | Mechanical and Electrical Engineering Maintenance           |
+      | Planned / Group re-lamping service                          |
+      | Building Information Modelling and Government Soft Landings |

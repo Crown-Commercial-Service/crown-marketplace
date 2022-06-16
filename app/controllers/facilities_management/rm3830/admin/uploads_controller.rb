@@ -29,7 +29,7 @@ module FacilitiesManagement
         def spreadsheet_template
           spreadsheet_builder = SupplierFrameworkDataSpreadsheet.new
           spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: 'RM30 Supplier Framework Data (template).xlsx', type: 'application/vnd.ms-excel'
+          send_data spreadsheet_builder.to_xlsx, filename: 'RM30 Supplier Framework Data (template).xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         end
 
         def progress

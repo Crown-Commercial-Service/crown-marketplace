@@ -8,4 +8,5 @@ module GovUKHelper
   include NotificationBanner
   include Radios
   include StepByStepNavigation
+  include TextInput
 end

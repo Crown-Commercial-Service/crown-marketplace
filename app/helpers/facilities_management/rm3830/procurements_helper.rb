@@ -1,28 +1,34 @@
 # rubocop:disable Metrics/ModuleLength
 module FacilitiesManagement::RM3830
   module ProcurementsHelper
-    include Procurements::ContractDatesHelper
+    include FacilitiesManagement::ContractDatesHelper
+    include FacilitiesManagement::ProcurementsHelper
 
     def journey_step_url_former(journey_step:, framework:, region_codes: nil, service_codes: nil)
       facilities_management_journey_question_path(framework: framework, slug: "choose-#{journey_step}", region_codes: region_codes, service_codes: service_codes)
     end
 
+    # TODO: Marked for destruction
     def initial_call_off_period_error?
       @procurement.errors[:initial_call_off_period_years].any? || @procurement.errors[:initial_call_off_period_months].any? || total_contract_period_error?
     end
 
+    # TODO: Marked for destruction
     def total_contract_period_error?
       @total_contract_period_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_period }
     end
 
+    # TODO: Marked for destruction
     def extension_periods_error?
       %i[extensions_required call_off_extensions.months call_off_extensions.years call_off_extensions.base].any? { |extension_error| @procurement.errors.keys.include? extension_error }
     end
 
+    # TODO: Marked for destruction
     def total_contract_length_error?
       @total_contract_length_error ||= @procurement.errors[:base] && @procurement.errors.details[:base].any? { |error| error[:error] == :total_contract_length }
     end
 
+    # TODO: Marked for destruction
     def display_extension_error_anchor
       error_list = []
 
@@ -53,10 +59,6 @@ module FacilitiesManagement::RM3830
       # problem was for pension funds with duplicated names,the validation has an error so there is no created_at
       parts = @procurement.procurement_pension_funds.partition { |o| o.created_at.nil? }
       parts.last.sort_by(&:created_at) + parts.first
-    end
-
-    def buildings_with_missing_regions
-      @buildings_with_missing_regions ||= @procurement.active_procurement_buildings.order_by_building_name.select(&:missing_region?)
     end
 
     def continue_button_text
@@ -101,24 +103,6 @@ module FacilitiesManagement::RM3830
       end
     end
 
-    def requirements_errors_list
-      @requirements_errors_list ||= @procurement.errors.details[:base].map.with_index { |detail, index| [detail[:error], @procurement.errors[:base][index]] }.to_h
-    end
-
-    def section_errors(section)
-      if section == 'contract_period'
-        %i[contract_period_incomplete initial_call_off_period_in_past mobilisation_period_in_past mobilisation_period_required]
-      else
-        ["#{section}_incomplete".to_sym]
-      end
-    end
-
-    def section_has_error?(section)
-      return false unless @procurement.errors.any?
-
-      (requirements_errors_list.keys & section_errors(section)).any?
-    end
-
     def display_all_errors(errors, section_errors)
       capture do
         section_errors.each do |attribute|
@@ -138,10 +122,12 @@ module FacilitiesManagement::RM3830
       end
     end
 
+    # TODO: Marked for destruction
     def call_off_extensions
       @call_off_extensions ||= @procurement.call_off_extensions.sort_by(&:extension)
     end
 
+    # TODO: Marked for destruction
     def call_off_extension_visible?(extension)
       return false unless @procurement.extensions_required
 
@@ -152,12 +138,9 @@ module FacilitiesManagement::RM3830
       call_off_extension_meet_conditions?(call_off_extension)
     end
 
+    # TODO: Marked for destruction
     def call_off_extension_meet_conditions?(call_off_extension)
       call_off_extension.extension_required || call_off_extension.years.present? || call_off_extension.months.present? || call_off_extension.errors.any?
-    end
-
-    def section_id(section)
-      "#{section.downcase.gsub(' ', '-')}-tag"
     end
 
     def work_packages_names

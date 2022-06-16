@@ -1,7 +1,0 @@
-<%= govuk_page_content(@page_description, @page_data[:model_object], false, false, false) do |pd| %>
-<%= content_for :page_title, pd.heading_details.text %>
-  <%= form_for @page_data[:model_object], url: add_address_form_details[:url], method: add_address_form_details[:method], html: { specialvalidation: false, novalidate: true, multipart: true } do |f| %>
-    <input type="hidden" name="step" value="add_address"/>
-    <%= render partial: 'facilities_management/buildings/action_partials/add_address', locals: { f: f, pd: pd }%>
-  <% end %>
-<% end %>

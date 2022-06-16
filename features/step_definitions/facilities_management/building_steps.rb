@@ -44,7 +44,8 @@ Then('I can change the region') do
 end
 
 Then('I am on the buildings summary page for {string}') do |building_name|
-  expect(page.find('h1')).to have_content("Buildings#{building_name}")
+  expect(page.find('#main-content > div:nth-child(2) > div > span')).to have_content('Buildings')
+  expect(page.find('h1')).to have_content(building_name)
 end
 
 Then("my building's status is {string}") do |status|
@@ -61,4 +62,8 @@ end
 
 Then('I change my building address') do
   building_page.change_address.click
+end
+
+And('the step is {int}') do |step_number|
+  expect(building_page.step_number).to have_content("Step #{step_number} of 4")
 end
