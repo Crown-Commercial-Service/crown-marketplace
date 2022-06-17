@@ -21,8 +21,8 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', user: user)
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', user: user)
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', user: user)
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', user: user)
       get :index
     end
 
@@ -94,6 +94,23 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
       it 'renders the results partial' do
         expect(response).to render_template(partial: '_results')
+      end
+
+      it 'sets the procurement' do
+        expect(assigns(:procurement)).to eq procurement
+      end
+
+      it 'sets the back path' do
+        expect(assigns(:back_path)).to eq facilities_management_rm6232_procurements_path
+        expect(assigns(:back_text)).to eq 'Return to procurements dashboard'
+      end
+    end
+
+    context 'and the procurement state is further_information' do
+      let(:procurement) { create(:facilities_management_rm6232_procurement_further_information, user: user) }
+
+      it 'renders the further_information partial' do
+        expect(response).to render_template(partial: '_further_information')
       end
 
       it 'sets the procurement' do
@@ -269,10 +286,10 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
           expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement.id)
         end
 
-        it 'updates the procurement state to further competition' do
+        it 'updates the procurement state to further information' do
           procurement.reload
 
-          expect(procurement.further_competition?).to be true
+          expect(procurement.further_information?).to be true
         end
       end
 

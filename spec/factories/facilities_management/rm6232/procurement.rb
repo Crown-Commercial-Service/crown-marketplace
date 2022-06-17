@@ -81,4 +81,8 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :facilities_management_rm6232_procurement_further_information, parent: :facilities_management_rm6232_procurement_results do
+    aasm_state { 'further_information' }
+  end
 end
