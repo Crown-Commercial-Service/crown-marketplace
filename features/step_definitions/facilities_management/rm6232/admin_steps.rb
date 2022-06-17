@@ -88,7 +88,7 @@ Given('I go to a quick view with the following services, regions and annual cont
 end
 
 Then('I {string} see the supplier {string} in the results') do |option, supplier|
-  supplier_list = quick_view_rm6232_page.results_container.suppliers.map(&:text)
+  supplier_list = quick_view_page.results_container.suppliers.map(&:text)
 
   case option
   when 'should'
@@ -99,7 +99,7 @@ Then('I {string} see the supplier {string} in the results') do |option, supplier
 end
 
 Then('the supplier {string} {string} in the results') do |supplier, option|
-  supplier_list = quick_view_rm6232_page.results_container.suppliers.map(&:text)
+  supplier_list = quick_view_page.results_container.suppliers.map(&:text)
 
   case option
   when 'is not'

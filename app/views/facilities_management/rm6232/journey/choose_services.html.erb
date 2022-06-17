@@ -22,7 +22,7 @@
                   <%= t('.caption') %>
                 </p>
                 <p>
-                  <%#= service_specification_document('rm6232') %>
+                  <%= service_specification_document('rm6232') %>
                 </p>
               </div>
               <div class="govuk-grid-column-full" style="padding-left:0">
@@ -34,8 +34,8 @@
                       rm6232_accordion_service_items(@journey.current_step.service_codes),
                       'service',
                       'service_codes'
-                    ) do %>
-                      <%= link_to t('.learn_more'), '#' %>
+                    ) do |section_id, item| %>
+                      <%= link_to t('.learn_more'), facilities_management_rm6232_service_specification_path(item[:code]), target: '_blank' %>
                     <% end %>
                   </div>
                 <% end %>

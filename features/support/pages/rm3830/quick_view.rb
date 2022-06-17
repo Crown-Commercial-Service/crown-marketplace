@@ -1,12 +1,8 @@
-module Pages::RM3830
-  class QuickViewResults < SitePrism::Page
-    element :quick_search_contract_name, 'form > div > div:nth-child(1) > div > span'
+require_relative '../quick_view'
 
-    section :basket, '.basket' do
-      elements :selection, 'ul > li > div:nth-of-type(2)'
-      element :selection_count, 'h3'
-      element :remove_all, 'a[aria-label="Remove all"]'
-    end
+module Pages::RM3830
+  class QuickView < Pages::QuickView
+    element :quick_search_contract_name, 'form > div > div:nth-child(1) > div > span'
 
     section :requirements_list, '#requirements-list' do
       section :services, 'div > div > div[data-section="service"]' do

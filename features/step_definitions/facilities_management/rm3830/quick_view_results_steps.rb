@@ -13,24 +13,24 @@ Then('I select the following service codes:') do |services|
 end
 
 Then('{int} {string} are slected') do |number, section|
-  expect(quick_view_results_page.requirements_list.send(section.to_sym).summary).to have_content("#{number} selected")
+  expect(quick_view_page.requirements_list.send(section.to_sym).summary).to have_content("#{number} selected")
 end
 
 Then('the following {string} are in the drop down:') do |section, items|
-  quick_view_results_page.requirements_list.send(section.to_sym).summary.click
+  quick_view_page.requirements_list.send(section.to_sym).summary.click
 
-  expect(quick_view_results_page.requirements_list.send(section.to_sym).details.map(&:text)).to match(items.raw.flatten)
+  expect(quick_view_page.requirements_list.send(section.to_sym).details.map(&:text)).to match(items.raw.flatten)
 end
 
 Then('the requirements {string} be visible') do |status|
   case status
   when 'should'
-    expect(quick_view_results_page.requirements_list).to be_visible
+    expect(quick_view_page.requirements_list).to be_visible
   when 'should not'
-    expect(quick_view_results_page.requirements_list).not_to be_visible
+    expect(quick_view_page.requirements_list).not_to be_visible
   end
 end
 
 Then('the contract name on the quick search results page is shown to be {string}') do |contract_name|
-  expect(quick_view_results_page.quick_search_contract_name.text).to eq contract_name
+  expect(quick_view_page.quick_search_contract_name.text).to eq contract_name
 end

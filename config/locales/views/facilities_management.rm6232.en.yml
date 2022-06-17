@@ -209,6 +209,10 @@ en:
           return_to_page: To return to this page at any time, just click on 'My account'.
           start_procurement_desc: View suppliers who can provide services to your locations
           start_procurement_link: Start a procurement
+      documents:
+        service_specification_document:
+          name: facilities-management/rm6232/RM6232 Service requirements and standards.pdf
+          text: Read the service specification document
       home:
         index:
           beforeyoustart: Before you start
@@ -344,6 +348,11 @@ en:
             selected_suppliers: Selected suppliers
             you_have_two_option: You now have two options to complete you procurement activity. You can either continue using this portal to complete the facilities services requirements or you can carry out the further competition with your own templates and system.
             your_unique_reference_number: Your unique reference number
+      service_specification:
+        show:
+          generic_requirements: "%{work_package_name} - Generic Requirements"
+          heading: Work Package %{code} - %{work_package_name}
+          service_specification: Service specification
       sessions:
         new:
           email_hint_html: Enter the email address you used to set up your account.
