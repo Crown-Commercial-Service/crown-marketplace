@@ -16,7 +16,7 @@ module FacilitiesManagement
       acts_as_gov_uk_date :initial_call_off_start_date, error_clash_behaviour: :omit_gov_uk_date_field_error
 
       scope :searches, -> { where(aasm_state: SEARCH).select(:id, :contract_name, :aasm_state, :initial_call_off_start_date, :updated_at).order(updated_at: :asc).sort_by { |search| SEARCH.index(search.aasm_state) } }
-      scope :advanced_procurement_activities, -> { further_competition.select(:id, :contract_name, :initial_call_off_start_date, :contract_number, :updated_at).order(updated_at: :asc) }
+      scope :advanced_procurement_activities, -> { further_information.select(:id, :contract_name, :initial_call_off_start_date, :contract_number, :updated_at).order(updated_at: :asc) }
 
       before_create :generate_contract_number, :determine_lot_number
 
@@ -60,12 +60,12 @@ module FacilitiesManagement
         state :what_happens_next, initial: true
         state :entering_requirements
         state :results, before_enter: %i[freeze_data determine_lot]
-        state :further_competition
+        state :further_information
 
         event :set_to_next_state do
           transitions from: :what_happens_next, to: :entering_requirements
           transitions from: :entering_requirements, to: :results
-          transitions from: :results, to: :further_competition
+          transitions from: :results, to: :further_information
         end
 
         event :go_back_to_entering_requirements do

@@ -491,8 +491,8 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       context 'and the state is results' do
         let(:state) { 'results' }
 
-        it 'changes the state to further_competition' do
-          expect(procurement.further_competition?).to be true
+        it 'changes the state to further_information' do
+          expect(procurement.further_information?).to be true
         end
       end
     end
@@ -528,10 +528,10 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     before do
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 1')
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', contract_name: 'R procurement 1')
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', contract_name: 'FC procurement 1')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', contract_name: 'FC procurement 1')
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', contract_name: 'WHN procurement 2')
       create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', contract_name: 'ER procurement 1')
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_competition', contract_name: 'FC procurement 2')
+      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', contract_name: 'FC procurement 2')
     end
 
     context 'when the searches scope is called' do

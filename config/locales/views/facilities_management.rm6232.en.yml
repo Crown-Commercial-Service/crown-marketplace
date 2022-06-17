@@ -319,6 +319,7 @@ en:
           save_and_continue: Save and continue
           title:
             entering_requirements: Further service and contract requirements
+            further_information: What do I do next?
             results: Results
             what_happens_next: What happens next?
         show_partials:
@@ -326,6 +327,20 @@ en:
             contract_details: 1. Contract details
             description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'Save and continue' button to see your supplier shortlist and procurement options.
             services_and_buildings: 2. Services and buildings
+          further_information:
+            deliverables_matrix: Prepopulated 'Deliverables matrix'
+            fm_framework_page: facilities management framework page
+            fm_framework_page_url: https://www.crowncommercial.gov.uk/agreements/rm6232
+            information_list:
+              item_1: Customer guidence documents
+              item_2: Framework benifits
+              item_3: How to buy
+              item_4: Bid pack documents
+            on_the_framework_page_html: 'On the %{framework_page_link}, you can view information including:'
+            step_1: Step 1 - Download your results
+            step_2: Step 2 - Review the Facilities Management framework page
+            supplier_brief: Prepopulated 'Supplier brief'
+            we_have_used: We have used the information entered on the previous pages to prepopulate a deliverables matrix and a supplier bief which you can use when running your further competition.
           results:
             based_on_information: 'Based on the further information you provided, this procurement is eligible for the following sub-lot:'
             building: Building
