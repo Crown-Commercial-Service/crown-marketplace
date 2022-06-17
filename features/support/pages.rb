@@ -65,8 +65,17 @@ module Pages
     @procurement_rm6232_page ||= RM6232::Procurement.new
   end
 
-  def quick_view_results_page
-    @quick_view_results_page ||= RM3830::QuickViewResults.new
+  def quick_view_page
+    @quick_view_page ||= case @framework
+                         when 'RM3830'
+                           quick_view_rm3830_page
+                         when 'RM6232'
+                           quick_view_rm6232_page
+                         end
+  end
+
+  def quick_view_rm3830_page
+    @quick_view_rm3830_page ||= RM3830::QuickView.new
   end
 
   def quick_view_rm6232_page

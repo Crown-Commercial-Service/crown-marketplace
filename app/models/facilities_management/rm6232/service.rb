@@ -7,6 +7,10 @@ module FacilitiesManagement
         "#{code} #{name}"
       end
 
+      def service_specification
+        ServiceSpecificationParser.new(work_package_code, code)
+      end
+
       def self.find_lot_number(service_codes, annual_contract_value)
         lot_number = determine_lot_number(service_codes)
 
