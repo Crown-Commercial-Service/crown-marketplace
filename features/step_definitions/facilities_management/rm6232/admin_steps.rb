@@ -26,8 +26,13 @@ Then('the supplier name shown is {string}') do |supplier_name|
   expect(admin_rm6232_page.supplier_name_sub_title).to have_content(supplier_name)
 end
 
-Then('they have services and regions for the following lots:') do |lots|
-  admin_rm6232_page.lot_data_tables.map(&:title).zip(lots.raw.flatten).each do |element, value|
+Then('they have services and regions for the following lots {string}') do |lots|
+  expected_lots = lots.split(',').map(&:strip)
+  actual_lots = admin_rm6232_page.lot_data_tables.map(&:title)
+
+  expect(actual_lots.length).to eq expected_lots.length
+
+  actual_lots.zip(expected_lots).each do |element, value|
     expect(element).to have_content(value)
   end
 end

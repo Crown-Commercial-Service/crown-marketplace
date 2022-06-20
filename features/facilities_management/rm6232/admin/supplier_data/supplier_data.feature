@@ -23,15 +23,13 @@ Feature: Supplier data pages
     Then I click on 'View lot data' for '<supplier_name>'
     And I am on the 'View lot data' page
     And the supplier name shown is '<supplier_name>'
-    And they have services and regions for the following lots:
-      | <lot_1> |
-      | <lot_2> |
-    
+    And they have services and regions for the following lots '<lots>'
+
     Examples:
-      | supplier_name               | lot_1 | lot_2 |
-      | Abshire, Schumm and Farrell | a     | b     |
-      | Schultz-Wilkinson           | c     |       |
-      | Terry-Greenholt             | b     | c     |
+      | supplier_name               | lots                    |
+      | Abshire, Schumm and Farrell | 1a, 1b, 2a, 2b, 3a, 3b  |
+      | Schultz-Wilkinson           | 1c, 2c, 3c              |
+      | Terry-Greenholt             | 1b, 1c, 2b, 2c, 3b, 3c  |
 
   Scenario Outline: View details
     Then I click on 'View details' for '<supplier_name>'

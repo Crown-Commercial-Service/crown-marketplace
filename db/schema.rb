@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_20_085433) do
+ActiveRecord::Schema.define(version: 2022_06_20_130633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -429,7 +429,7 @@ ActiveRecord::Schema.define(version: 2022_06_20_085433) do
 
   create_table "facilities_management_rm6232_supplier_lot_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_supplier_id"
-    t.string "lot_code", limit: 1
+    t.string "lot_code", limit: 2
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
