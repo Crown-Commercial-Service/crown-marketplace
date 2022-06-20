@@ -1,21 +1,14 @@
 module Pages::RM3830
+  class ContractNames < SitePrism::Section
+    elements :contract_names, 'tbody > tr > td:nth-of-type(1)'
+  end
+
   class Supplier < SitePrism::Page
     section :supplier_tables, '#main-content' do
-      section :'Received offers', 'div.govuk-grid-row:nth-child(4) > div:nth-child(1) > table:nth-child(1)' do
-        elements :contract_names, 'tbody > tr > td:nth-of-type(1)'
-      end
-
-      section :'Accepted offers', 'div.govuk-grid-row:nth-child(6) > div:nth-child(1) > table:nth-child(1)' do
-        elements :contract_names, 'tbody > tr > td:nth-of-type(1)'
-      end
-
-      section :Contracts, 'div.govuk-grid-row:nth-child(8) > div:nth-child(1) > table:nth-child(1)' do
-        elements :contract_names, 'tbody > tr > td:nth-of-type(1)'
-      end
-
-      section :Closed, 'div.govuk-grid-row:nth-child(10) > div:nth-child(1) > table:nth-child(1)' do
-        elements :contract_names, 'tbody > tr > td:nth-of-type(1)'
-      end
+      section :'Received offers', ContractNames, 'div.govuk-grid-row:nth-child(4) > div:nth-child(1) > table:nth-child(1)'
+      section :'Accepted offers', ContractNames, 'div.govuk-grid-row:nth-child(6) > div:nth-child(1) > table:nth-child(1)'
+      section :Contracts, ContractNames, 'div.govuk-grid-row:nth-child(8) > div:nth-child(1) > table:nth-child(1)'
+      section :Closed, ContractNames, 'div.govuk-grid-row:nth-child(10) > div:nth-child(1) > table:nth-child(1)'
 
       element :'No received offers', 'div:nth-child(4) > div > span'
       element :'No accepted offers', 'div:nth-child(6) > div > span'

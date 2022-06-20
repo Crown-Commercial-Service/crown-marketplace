@@ -29,8 +29,6 @@ Feature: Supplier details
       | Supplier status | Supplier status                 | Cancel and return to the supplier details |
       | Supplier name   | Supplier name                   | Zboncak and Sons                          |
       | Supplier name   | Supplier name                   | Cancel and return to the supplier details |
-      | Contact name    | Supplier contact information    | Zboncak and Sons                          |
-      | Contact name    | Supplier contact information    | Cancel and return to the supplier details |
       | DUNS number     | Additional supplier information | Zboncak and Sons                          |
       | DUNS number     | Additional supplier information | Cancel and return to the supplier details |
       | Full address    | Supplier address                | Zboncak and Sons                          |
