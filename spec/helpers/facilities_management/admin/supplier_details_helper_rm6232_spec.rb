@@ -21,48 +21,6 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsHelper, type: :helper
       end
     end
 
-    context 'when considering the contact_name' do
-      it 'returns the contact name' do
-        expect(helper.contact_detail(:contact_name, supplier)).to eq supplier.contact_name
-      end
-
-      context 'and it is nil' do
-        let(:attributes) { { contact_name: nil } }
-
-        it 'returns None' do
-          expect(helper.contact_detail(:contact_name, supplier)).to eq 'None'
-        end
-      end
-    end
-
-    context 'when considering the contact_email' do
-      it 'returns the contact email' do
-        expect(helper.contact_detail(:contact_email, supplier)).to eq supplier.contact_email
-      end
-
-      context 'and it is nil' do
-        let(:attributes) { { contact_email: nil } }
-
-        it 'returns None' do
-          expect(helper.contact_detail(:contact_email, supplier)).to eq 'None'
-        end
-      end
-    end
-
-    context 'when considering the contact_phone' do
-      it 'returns the contact email' do
-        expect(helper.contact_detail(:contact_phone, supplier)).to eq supplier.contact_phone
-      end
-
-      context 'and it is nil' do
-        let(:attributes) { { contact_phone: nil } }
-
-        it 'returns None' do
-          expect(helper.contact_detail(:contact_phone, supplier)).to eq 'None'
-        end
-      end
-    end
-
     context 'when considering the duns' do
       it 'returns the duns' do
         expect(helper.contact_detail(:duns, supplier)).to eq supplier.duns

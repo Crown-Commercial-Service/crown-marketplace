@@ -35,7 +35,7 @@ module FM::RM6232
     end
 
     def self.import_supplier_details
-      attributes = %i[id supplier_name contact_name contact_email contact_phone sme duns registration_number address_line_1 address_line_2 address_town address_county address_postcode]
+      attributes = %i[supplier_name sme duns registration_number address_line_1 address_line_2 address_town address_county address_postcode]
 
       supplier_details = Roo::Spreadsheet.open(supplier_details_path, extension: :xlsx)
 
@@ -51,7 +51,7 @@ module FM::RM6232
 
     def self.import_supplier_lot_data
       supplier_lot_data.each do |data|
-        supplier = FacilitiesManagement::RM6232::Supplier.find(data['id'])
+        supplier = FacilitiesManagement::RM6232::Supplier.find_by(duns: data['id'])
 
         data['lot_data'].each do |lot_data|
           FacilitiesManagement::RM6232::Supplier::LotData.create(supplier: supplier, **lot_data)

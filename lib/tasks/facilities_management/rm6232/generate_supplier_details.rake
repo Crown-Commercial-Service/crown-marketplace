@@ -19,9 +19,6 @@ module FM::RM6232
 
       suppliers.each do |supplier|
         data = {
-          contact_name: Faker::Name.unique.name,
-          contact_email: Faker::Internet.unique.email,
-          contact_phone: Faker::PhoneNumber.unique.phone_number,
           sme: rand > 0.75,
           duns: Faker::Company.unique.duns_number.gsub('-', ''),
           registration_number: "0#{rand(100000...999999)}",
@@ -71,9 +68,9 @@ module FM::RM6232
       end
     end
 
-    HEADERS = ['Supplier ID', 'Supplier name', 'Contact name', 'Contact email', 'Contact phone number', 'SME', 'DUNS number', 'Registration number', 'Address line 1', 'Address line 2', 'Town', 'County', 'Postcode'].freeze
-    ATTRIBUTES = ['id', 'supplier_name', 'contact_name', 'contact_email', 'contact_phone', 'sme', 'duns', 'registration_number', 'address_line_1', 'address_line_2', 'address_town', 'address_county', 'address_postcode'].freeze
-    COLUMN_WIDTHS = [42, 20, 25, 35, 23, 5, 15, 20, 25, 25, 20, 20, 15].freeze
+    HEADERS = ['Supplier name', 'SME', 'DUNS number', 'Registration number', 'Address line 1', 'Address line 2', 'Town', 'County', 'Postcode'].freeze
+    ATTRIBUTES = ['supplier_name', 'sme', 'duns', 'registration_number', 'address_line_1', 'address_line_2', 'address_town', 'address_county', 'address_postcode'].freeze
+    COLUMN_WIDTHS = [20, 5, 15, 20, 25, 25, 20, 20, 15].freeze
 
     def self.save_spreadsheet
       file_path = Rails.root.join('data', 'facilities_management', 'rm6232', 'RM6232 Suppliers Details (for Dev & Test).xlsx')
