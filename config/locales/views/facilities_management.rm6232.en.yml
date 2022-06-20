@@ -309,17 +309,29 @@ en:
           suppliers_shortlisted: "%{number_of_suppliers} supplier(s) shortlisted"
           who_can_provide: who can provide the services you require in your
         show:
+          change_requirements: Change requirements
           return_to_procurement_dashboard: Return to procurements dashboard
           return_to_your_account: Return to your account
           save_and_continue: Save and continue
           title:
             entering_requirements: Further service and contract requirements
+            results: Results
             what_happens_next: What happens next?
-        show_partial:
+        show_partials:
           entering_requirements:
             contract_details: 1. Contract details
             description: Please complete each section below by clicking on each link and answering the questions. Once all sections are complete, click on the 'Save and continue' button to see your supplier shortlist and procurement options.
             services_and_buildings: 2. Services and buildings
+          results:
+            based_on_information: 'Based on the further information you provided, this procurement is eligible for the following sub-lot:'
+            building: Building
+            buildings_and_services: Buildings and services summary
+            if_you_wish: If you wish to change your requirements, click the 'Change requirements' button below. Any changes may result in a different outcome.
+            service: Service
+            sub_lot: Sub-lot %{sub_lot}
+            suppliers_shortlisted: "%{number} supplier(s) shortlisted"
+            warning_text: You will not be able to change your requirements for this procurement once you click 'Continue'
+            who_can_provide: who can provide the services you require in your location(s)
           what_happens_next:
             if_you_need_to_talk: If you need to talk to us or refer to your procurement at any point please use the below reference number
             option_1:

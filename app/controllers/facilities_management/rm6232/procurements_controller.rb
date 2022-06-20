@@ -42,7 +42,7 @@ module FacilitiesManagement
       end
 
       def update_show
-        if @procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!
+        if (params[:change_requirements] && @procurement.go_back_to_entering_requirements!) || (@procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!)
           redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
         else
           set_back_path(:show)

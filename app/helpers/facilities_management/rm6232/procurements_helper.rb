@@ -22,5 +22,9 @@ module FacilitiesManagement::RM6232
         edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement_id: @procurement.id, section: section.dasherize)
       end
     end
+
+    def procurement_service_names
+      @procurement_service_names ||= @procurement.procurement_services.pluck(:name)
+    end
   end
 end
