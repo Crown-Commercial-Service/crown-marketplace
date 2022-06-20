@@ -77,6 +77,11 @@
     content: ".PDF";
 }
 
+.supplier-record__file-download[href*='format=odt']:before {
+  background-color: #0D85CD;
+  content: ".ODT";
+}
+
 .supplier-record__print-option {
     min-height: 35px;
 }

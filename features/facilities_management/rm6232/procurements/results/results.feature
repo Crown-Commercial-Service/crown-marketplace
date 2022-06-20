@@ -1,6 +1,6 @@
 Feature: Results
 
-  Background: I navigate to the Entering requirements page
+  Background: I navigate to the Results
     Given I sign in and navigate to my account for 'RM6232'
     Given I have a completed procurement for results named 'My completed procurement'
     When I navigate to the procurement 'My completed procurement'
@@ -12,10 +12,10 @@ Feature: Results
     And I have 2 buildings in my results
     And I have 2 services in my results
 
-  # @pipeline
-  # Scenario: I can continue to 'Further competition'
-  #   And I click on 'Save and continue'
-  #   Then I am on the 'Results' page
+  @pipeline
+  Scenario: I can continue to 'What do I do next?
+    And I click on 'Save and continue'
+    Then I am on the 'What do I do next?' page
 
   @pipeline
   Scenario: I can change my requirements

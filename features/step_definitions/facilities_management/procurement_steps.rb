@@ -62,6 +62,10 @@ Given('I have a completed procurement for results named {string}') do |contract_
   create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:results], user: @user, contract_name: contract_name)
 end
 
+Given('I have a completed procurement for further information named {string}') do |contract_name|
+  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:further_information], user: @user, contract_name: contract_name)
+end
+
 FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM3830' => {
     initial: :facilities_management_rm3830_procurement,
@@ -72,7 +76,8 @@ FRMAEOWRK_AND_STATE_TO_FACTORY = {
     initial: :facilities_management_rm6232_procurement_what_happens_next,
     empty_entering_requirements: :facilities_management_rm6232_procurement_entering_requirements_empty,
     entering_requirements: :facilities_management_rm6232_procurement_entering_requirements,
-    results: :facilities_management_rm6232_procurement_results
+    results: :facilities_management_rm6232_procurement_results,
+    further_information: :facilities_management_rm6232_procurement_further_information
   }
 }.freeze
 
