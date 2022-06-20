@@ -121,8 +121,43 @@ module FacilitiesManagement
       errors.add(:procurement_buildings, :invalid) unless procurement_buildings.map(&:active).any?(true)
     end
 
-    def all_complete
-      errors.add(:base, :incomplete)
+    def all_buildings_have_regions
+      errors.add(:base, :missing_regions) if procurement_buildings_missing_regions?
+    end
+
+    #############################################
+    # Start of validation methods for contract period when continuing from the requirements page
+
+    def check_contract_period_completed
+      if contract_period_status == :completed
+        errors.add(:base, :initial_call_off_period_in_past) if contract_period_in_past?
+        errors.add(:base, :mobilisation_period_in_past) if mobilisation_period_in_past?
+        errors.add(:base, :mobilisation_period_required) unless mobilisation_period_valid_when_tupe_required?
+      else
+        errors.add(:base, :contract_period_incomplete)
+      end
+    end
+
+    def contract_period_in_past?
+      initial_call_off_start_date < Time.now.in_time_zone('London').to_date
+    end
+
+    def mobilisation_period_valid_when_tupe_required?
+      return true unless tupe
+
+      (mobilisation_period_required && mobilisation_period >= 4)
+    end
+
+    # End of validation methods for contract period when continuing from the requirements page
+    #############################################
+
+    def check_service_and_buildings_present
+      errors.add(:base, :services_incomplete) unless services_status == :completed
+      errors.add(:base, :buildings_incomplete) unless buildings_status == :completed
+    end
+
+    def error_list
+      errors.details[:base].map { |detail| detail[:error] }
     end
   end
 end
