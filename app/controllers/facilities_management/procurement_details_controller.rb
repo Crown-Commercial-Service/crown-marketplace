@@ -68,7 +68,7 @@ module FacilitiesManagement
     end
 
     def set_procurement_show_data
-      @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page]) if section == :buildings || section == :buildings_and_services
+      @active_procurement_buildings = @procurement.active_procurement_buildings.order_by_building_name.page(params[:page]) if section == :buildings || section == :buildings_and_services || section == :service_requirements
     end
 
     # Methods relating to paginating the buildings
@@ -135,6 +135,7 @@ module FacilitiesManagement
     PERMITED_PARAMS = {
       contract_name: [:contract_name],
       annual_contract_value: [:annual_contract_value],
+      estimated_annual_cost: %i[estimated_cost_known estimated_annual_cost],
       tupe: [:tupe],
       contract_period: [
         :initial_call_off_start_date_dd,

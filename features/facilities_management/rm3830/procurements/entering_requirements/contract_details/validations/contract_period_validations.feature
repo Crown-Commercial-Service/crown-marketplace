@@ -10,7 +10,7 @@ Feature: Contract period validations
     And I am on the 'Contract period' page
 
   Scenario: All empty
-    Given I click on 'Save and continue'
+    Given I click on 'Save and return'
     Then I should see the following error messages:
       | Enter the years for the initial call-off period   |
       | Enter the months for the initial call-off period  |
@@ -23,7 +23,7 @@ Feature: Contract period validations
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
     Then I enter '<years>' years and '<months>' months for the contract period
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -43,7 +43,7 @@ Feature: Contract period validations
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
     Then I enter '<date>' as the inital call-off period start date
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -60,7 +60,7 @@ Feature: Contract period validations
     And I select 'Yes' for mobilisation period required
     And I select 'No' for optional extension required
     Then I enter '<mobilisation_period>' weeks for the mobilisation period
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -70,7 +70,7 @@ Feature: Contract period validations
       | 0                   | Mobilisation length must be between 1 and 52 weeks  |
       | 54                  | Mobilisation length must be between 1 and 52 weeks  |
       | text                | Enter mobilisation length                           |
-      | 12.5                | Enter mobilisation length as a whole number         |
+      | .5                  | Enter mobilisation length as a whole number         |
 
   Scenario: Validating the mobilisation period with tupe
     Given I click on 'Return to requirements'
@@ -87,7 +87,7 @@ Feature: Contract period validations
     And I select 'Yes' for mobilisation period required
     And I select 'No' for optional extension required
     Then I enter '3' weeks for the mobilisation period
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | Mobilisation length must be a minimum of 4 weeks when TUPE is selected  |
 
@@ -97,7 +97,7 @@ Feature: Contract period validations
     And I select 'Yes' for mobilisation period required
     And I select 'No' for optional extension required
     Then I enter '4' weeks for the mobilisation period
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | Mobilisation start date must be in the future, please review your 'Initial call-off-period' and 'Mobilisation period length'  |
 
@@ -108,7 +108,7 @@ Feature: Contract period validations
     And I select 'Yes' for optional extension required
     And only the first optional extension is required
     Then I enter '<years>' years and '<months>' months for optional extension 1
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -141,7 +141,7 @@ Feature: Contract period validations
     Then I enter 'text' years and '' months for optional extension 3
     Then I enter '1' years and '12' months for optional extension 4
     And I remove extension period 4
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | Enter the months for the extension period                     |
       | The total for extension period 2 must be greater than 1 month |
@@ -164,7 +164,7 @@ Feature: Contract period validations
     Then I enter '3' years and '2' months for optional extension 1
     And I add another extension
     Then I enter '3' years and '3' months for optional extension 2
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total |
 
@@ -178,6 +178,6 @@ Feature: Contract period validations
     Then I enter '3' years and '2' months for optional extension 1
     And I add another extension
     Then I enter '3' years and '2' months for optional extension 2
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I should see the following error messages:
       | Call-off contract period, including extensions and mobilisation period, must not be more than 10 years in total |

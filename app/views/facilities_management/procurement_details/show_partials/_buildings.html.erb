@@ -28,7 +28,7 @@
       <tbody class="govuk-table__body">
         <% @active_procurement_buildings.each do |procurement_building| %>
           <tr class="govuk-table__row">
-            <th class="govuk-table__header govuk-table__cell govuk-border-bottom_none govuk-!-padding-bottom-0"><%= procurement_building.building_name %></th>
+            <th class="govuk-table__header govuk-table__cell govuk-border-bottom_none govuk-!-padding-bottom-0"><%= building_name(procurement_building) %></th>
           </tr>
           <tr>
             <td class="govuk-table__cell govuk-!-padding-top-0"><%= procurement_building.address_no_region %></td>

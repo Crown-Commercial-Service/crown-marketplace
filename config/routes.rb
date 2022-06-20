@@ -117,10 +117,9 @@ Rails.application.routes.draw do
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
       get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
       resources :procurements do
-        concerns :edit_buildings
+        concerns :procurement_details, :edit_buildings
 
         get 'delete'
-        get 'summary', to: 'procurements#summary'
         get 'quick_view_results_spreadsheet'
         get 'further_competition_spreadsheet'
         get 'deliverables_matrix'

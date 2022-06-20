@@ -23,8 +23,3 @@ Feature: Tupe
     Given I click on the 'Return to requirements' return link
     Then I am on the 'Requirements' page
     And 'TUPE' should have the status 'NOT STARTED' in 'Contract details'
-    Then I click on 'TUPE'
-    And I am on the 'TUPE' page
-    Given I click on the 'Return to requirements' back link
-    Then I am on the 'Requirements' page
-    And 'TUPE' should have the status 'NOT STARTED' in 'Contract details'

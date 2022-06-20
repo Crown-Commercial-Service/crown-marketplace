@@ -26,6 +26,6 @@ Feature: Buildings accessibility
     And I find and select the following buildings:
       | Test building         |
       | Test London building  |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     Then the page should be axe clean

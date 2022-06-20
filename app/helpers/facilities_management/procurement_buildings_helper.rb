@@ -3,8 +3,8 @@ module FacilitiesManagement::ProcurementBuildingsHelper
     section == :missing_region ? t('facilities_management.procurement_buildings.edit.title.missing_region') : building_name
   end
 
-  def building_name
-    @building_name ||= @procurement_building.building_name || @procurement_building.name
+  def building_name(procurement_building = @procurement_building)
+    procurement_building.building_name || procurement_building.name
   end
 
   def building_summary(title, vlaue)
@@ -28,5 +28,9 @@ module FacilitiesManagement::ProcurementBuildingsHelper
 
   def buildings_with_missing_regions
     @buildings_with_missing_regions ||= @procurement.active_procurement_buildings.order_by_building_name.select(&:missing_region?)
+  end
+
+  def return_link
+    section == :missing_region ? procurement_show_path : "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/procurement-details/buildings-and-services"
   end
 end

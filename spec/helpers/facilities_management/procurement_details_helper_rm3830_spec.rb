@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
   describe '.initial_call_off_period_error?' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before { @procurement = procurement }
 
@@ -48,7 +48,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
   end
 
   describe '.extension_periods_error?' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:extensions_required) { true }
     let(:years) { 1 }
     let(:months) { 1 }
@@ -114,7 +114,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
   end
 
   describe '.total_contract_length_error?' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before { @procurement = procurement }
 
@@ -152,7 +152,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
   end
 
   describe '.display_extension_error_anchor' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:years) { 1 }
     let(:months) { 1 }
 
@@ -213,7 +213,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
     let(:call_off_extension2) { procurement.call_off_extensions.create(extension: 0, years: 1, months: 1) }
     let(:call_off_extension3) { procurement.call_off_extensions.create(extension: 3, years: 1, months: 1) }
     let(:call_off_extension4) { procurement.call_off_extensions.create(extension: 1, years: 1, months: 1) }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
       call_off_extension1
@@ -230,7 +230,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
 
   describe '.call_off_extension_visible?' do
     let(:extensions_required) { true }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, extensions_required: extensions_required) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings, extensions_required: extensions_required) }
     let(:result) { helper.call_off_extension_visible?(0) }
 
     before { @procurement = procurement }
@@ -253,7 +253,7 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
       let(:extension_required) { nil }
       let(:years) { nil }
       let(:months) { nil }
-      let(:call_off_extension) { create(:facilities_management_rm6232_procurement_call_off_extension, years: years, months: months, extension_required: extension_required) }
+      let(:call_off_extension) { create(:facilities_management_rm3830_procurement_call_off_extension, years: years, months: months, extension_required: extension_required) }
 
       before { procurement.update(call_off_extensions: [call_off_extension]) }
 
@@ -298,29 +298,29 @@ RSpec.describe FacilitiesManagement::ProcurementDetailsHelper, type: :helper do
   end
 
   describe '.new_building_path' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
 
     before do
-      helper.params[:framework] = 'RM6232'
+      helper.params[:framework] = 'RM3830'
       helper.params[:procurement_id] = procurement.id
     end
 
     it 'returns the new building path' do
-      expect(helper.new_building_path).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/edit-buildings/new"
+      expect(helper.new_building_path).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/edit-buildings/new"
     end
   end
 
   describe '.show_building_path' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+    let(:procurement) { create(:facilities_management_rm3830_procurement_no_procurement_buildings) }
     let(:building) { create(:facilities_management_building) }
 
     before do
-      helper.params[:framework] = 'RM6232'
+      helper.params[:framework] = 'RM3830'
       helper.params[:procurement_id] = procurement.id
     end
 
     it 'returns the show building path' do
-      expect(helper.show_building_path(building.id)).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/edit-buildings/#{building.id}"
+      expect(helper.show_building_path(building.id)).to eq "/facilities-management/RM3830/procurements/#{procurement.id}/edit-buildings/#{building.id}"
     end
   end
 end
