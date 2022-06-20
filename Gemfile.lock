@@ -70,7 +70,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    after_commit_everywhere (1.2.0)
+    after_commit_everywhere (1.2.1)
       activerecord (>= 4.2)
       activesupport
     amoeba (3.2.0)
