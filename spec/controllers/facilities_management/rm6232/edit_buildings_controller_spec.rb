@@ -23,7 +23,7 @@ RSpec.describe FacilitiesManagement::RM6232::EditBuildingsController, type: :con
 
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: :buildings)
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.describe FacilitiesManagement::RM6232::EditBuildingsController, type: :con
 
       it 'has correct backlink text and destination' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: :buildings)
       end
     end
   end
@@ -235,7 +235,7 @@ RSpec.describe FacilitiesManagement::RM6232::EditBuildingsController, type: :con
 
       it 'sets the back path and text correctly' do
         expect(assigns(:back_text)).to eq 'Return to buildings'
-        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+        expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: :buildings)
       end
 
       it 'sets the procurement' do
@@ -296,7 +296,7 @@ RSpec.describe FacilitiesManagement::RM6232::EditBuildingsController, type: :con
 
         it 'sets the back path and text correctly' do
           expect(assigns(:back_text)).to eq 'Return to buildings'
-          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_detail_path(procurement, section: :buildings)
+          expect(assigns(:back_path)).to eq edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement, section: :buildings)
         end
 
         it 'sets the procurement' do

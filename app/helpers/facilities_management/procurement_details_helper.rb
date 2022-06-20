@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  module DetailsHelper
+  module ProcurementDetailsHelper
     include ContractDatesHelper
 
     def initial_call_off_period_error?

@@ -81,7 +81,7 @@ Rails.application.routes.draw do
     end
 
     concern :procurement_details do
-      resources :details, param: :section, only: %i[show edit update]
+      resources :procurement_details, path: 'procurement-details', param: :section, only: %i[show edit update]
     end
 
     concern :procurement_buildings do

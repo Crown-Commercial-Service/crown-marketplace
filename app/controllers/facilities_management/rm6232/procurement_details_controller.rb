@@ -1,8 +1,6 @@
 module FacilitiesManagement
   module RM6232
-    class DetailsController < FacilitiesManagement::FrameworkController
-      include ProcurementDetailsConcern
-
+    class ProcurementDetailsController < FacilitiesManagement::ProcurementDetailsController
       private
 
       def set_procurement
