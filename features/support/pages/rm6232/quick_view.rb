@@ -1,5 +1,7 @@
+require_relative '../quick_view'
+
 module Pages::RM6232
-  class QuickView < SitePrism::Page
+  class QuickView < Pages::QuickView
     element :annual_contract_value, '#annual_contract_value'
 
     element :sub_lot, '#procurement-sub-lot'
@@ -23,6 +25,11 @@ module Pages::RM6232
 
     section :results_container, '#main-content > div:nth-child(3) > div.govuk-grid-column-two-thirds > ul' do
       elements :suppliers, 'li'
+    end
+
+    section :service_specification, '#main-content' do
+      element :sub_title, 'div.govuk-clearfix > div:nth-child(1) > div > span'
+      element :service_name_and_code, 'h2'
     end
   end
 end

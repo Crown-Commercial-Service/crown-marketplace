@@ -106,7 +106,7 @@ Feature: Select services
       | Water Hygiene Maintenance                     |
       | Pest control Services                         |
       | Building Management System (BMS) maintenance  |
-      | Additional support Services               |
+      | Additional support Services                   |
       | Courier booking and distribution services     |
     And I click on 'Continue'
     Then I am on the 'Regions' page
@@ -117,4 +117,4 @@ Feature: Select services
       | Water Hygiene Maintenance                     |
       | Pest control Services                         |
       | Courier booking and distribution services     |
-      | Additional support Services               |
+      | Additional support Services                   |
