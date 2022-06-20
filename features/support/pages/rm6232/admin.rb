@@ -16,9 +16,6 @@ module Pages::RM6232
 
     section :supplier_detail_form, 'form' do
       element :'Supplier name', '#facilities_management_rm6232_admin_suppliers_admin_supplier_name'
-      element :'Contact name', '#facilities_management_rm6232_admin_suppliers_admin_contact_name'
-      element :'Contact email', '#facilities_management_rm6232_admin_suppliers_admin_contact_email'
-      element :'Contact telephone number', '#facilities_management_rm6232_admin_suppliers_admin_contact_phone'
       element :'DUNS number', '#facilities_management_rm6232_admin_suppliers_admin_duns'
       element :'Company registration number', '#facilities_management_rm6232_admin_suppliers_admin_registration_number'
     end

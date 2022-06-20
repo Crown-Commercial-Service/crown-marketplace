@@ -116,7 +116,7 @@ module FM::RM6232
         end
 
         {
-          id: supplier.id,
+          id: supplier.duns,
           supplier_name: supplier.supplier_name,
           lot_data: lot_data
         }
