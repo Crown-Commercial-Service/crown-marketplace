@@ -7,7 +7,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
     Given I go to a quick view with the following services, regions and annual contract value:
       | E.16  | UKC1  | <contract_value>  |
       | M.3   | UKG1  |                   |
-    Then I should be in sub-lot '1<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should not' see the supplier "<supplier_name>" in the results
     Given I go to the admin dashboard for 'RM6232'
     And I click on 'Supplier data'
@@ -23,20 +23,20 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
     Given I go to a quick view with the following services, regions and annual contract value:
       | E.16  | UKC1  | <contract_value>  |
       | M.3   | UKG1  |                   |
-    Then I should be in sub-lot '1<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should' see the supplier "<supplier_name>" in the results
 
     Examples:
       | contract_value  | lot_number  | supplier_name                 |
-      | 500000          | a           | Donnelly, Wiegand and Krajcik |
-      | 2000000         | b           | Lind, Stehr and Dickinson     |
-      | 11000000        | c           | Swift, Friesen and Predovic   |
+      | 500000          | 1a          | Donnelly, Wiegand and Krajcik |
+      | 2000000         | 1b          | Lind, Stehr and Dickinson     |
+      | 11000000        | 1c          | Swift, Friesen and Predovic   |
 
   Scenario Outline: Hard services - region selection
     Given I go to a quick view with the following services, regions and annual contract value:
       | E.6 | UKD1  | <contract_value>  |
       | F.2 | UKE2  |                   |
-    Then I should be in sub-lot '2<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should not' see the supplier "<supplier_name>" in the results
     Given I go to the admin dashboard for 'RM6232'
     And I click on 'Supplier data'
@@ -52,21 +52,21 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
     Given I go to a quick view with the following services, regions and annual contract value:
       | E.6 | UKE2  | <contract_value>  |
       | F.2 | UKE2  |                   |
-    Then I should be in sub-lot '2<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should' see the supplier "<supplier_name>" in the results
 
     Examples:
       | contract_value  | lot_number  | supplier_name                 |
-      | 500000          | a           | Howell, Sanford and Shanahan  |
-      | 2000000         | b           | Lind, Stehr and Dickinson     |
-      | 11000000        | c           | Wiegand LLC                   |
+      | 500000          | 2a          | Howell, Sanford and Shanahan  |
+      | 2000000         | 2b          | Lind, Stehr and Dickinson     |
+      | 11000000        | 2c          | Wiegand LLC                   |
 
   @pipeline
   Scenario Outline: Soft services - region selection
     Given I go to a quick view with the following services, regions and annual contract value:
       | G.6 | UKG2  | <contract_value>  |
       | J.1 | UKD6  |                   |
-    Then I should be in sub-lot '3<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should not' see the supplier "<supplier_name>" in the results
     Given I go to the admin dashboard for 'RM6232'
     And I click on 'Supplier data'
@@ -82,11 +82,11 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
     Given I go to a quick view with the following services, regions and annual contract value:
       | G.6 | UKG2  | <contract_value>  |
       | J.1 | UKD6  |                   |
-    Then I should be in sub-lot '3<lot_number>'
+    Then I should be in sub-lot '<lot_number>'
     And I 'should' see the supplier "<supplier_name>" in the results
 
     Examples:
       | contract_value  | lot_number  | supplier_name               |
-      | 500000          | a           | Abshire, Schumm and Farrell |
-      | 2000000         | b           | Muller Inc                  |
-      | 11000000        | c           | Schmeler Inc                |
+      | 500000          | 3a          | Abshire, Schumm and Farrell |
+      | 2000000         | 3b          | Muller Inc                  |
+      | 11000000        | 3c          | Schmeler Inc                |

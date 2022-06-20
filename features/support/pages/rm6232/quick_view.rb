@@ -1,21 +1,19 @@
 require_relative '../quick_view'
 
 module Pages::RM6232
+  class SummarySection < SitePrism::Section
+    elements :selection, 'details > div > ul > li'
+    element :change, 'a'
+  end
+
   class QuickView < Pages::QuickView
     element :annual_contract_value, '#annual_contract_value'
 
     element :sub_lot, '#procurement-sub-lot'
 
     section :selection_summary, '#main-content > div:nth-child(3) > div.govuk-grid-column-one-third' do
-      section :services, 'div.ccs-summary-box:nth-of-type(1)' do
-        elements :selection, 'details > div > ul > li'
-        element :change, 'a'
-      end
-
-      section :regions, 'div.ccs-summary-box:nth-of-type(2)' do
-        elements :selection, 'details > div > ul > li'
-        element :change, 'a'
-      end
+      section :services, SummarySection, 'div.ccs-summary-box:nth-of-type(1)'
+      section :regions, SummarySection, 'div.ccs-summary-box:nth-of-type(2)'
 
       section :'annual contract value', 'div.ccs-summary-box:nth-of-type(3)' do
         element :selection, '.ccs-summary-box__content'

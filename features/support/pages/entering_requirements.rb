@@ -1,4 +1,24 @@
 module Pages
+  class DetailSection < SitePrism::Section
+    element :name, 'td:nth-of-type(1)'
+    element :status, 'td:nth-of-type(2)'
+  end
+
+  class ContractDetailsSection < SitePrism::Section
+    section 'Contract name', DetailSection, 'tr:nth-of-type(1)'
+    section 'Estimated annual cost', DetailSection, 'tr:nth-of-type(2)'
+    section 'Annual contract value', DetailSection, 'tr:nth-of-type(2)'
+    section 'TUPE', DetailSection, 'tr:nth-of-type(3)'
+    section 'Contract period', DetailSection, 'tr:nth-of-type(4)'
+  end
+
+  class ServicesAndBuildingsSection < SitePrism::Section
+    section 'Services', DetailSection, 'tr:nth-of-type(1)'
+    section 'Buildings', DetailSection, 'tr:nth-of-type(2)'
+    section 'Assigning services to buildings', DetailSection, 'tr:nth-of-type(3)'
+    section 'Service requirements', DetailSection, 'tr:nth-of-type(4)'
+  end
+
   class EnteringRequirements < SitePrism::Page
     section :contract_period_summary, '#main-content > div:nth-child(3) > div > table' do
       element :initial_call_off_period_length, '#contract-period > td'
