@@ -43,7 +43,7 @@ gem 'rollbar', '~> 3.3.0'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.0'
-gem 'omniauth-oauth2', '~> 1.7.2'
+gem 'omniauth-oauth2', '~> 1.8.0'
 
 # for authentication
 gem 'devise', '~> 4.8.1'
