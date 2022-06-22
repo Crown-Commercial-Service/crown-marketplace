@@ -13,10 +13,10 @@ Feature: Selecting service codes
     And the supplier name shown is '<supplier_name>'
 
     Examples:
-      | supplier_name               | lot | title           |
-      | Abshire, Schumm and Farrell | 3a   | Lot 3a services  |
-      | Terry-Greenholt             | 2b   | Lot 2b services  |
-      | Schultz-Wilkinson           | 1c   | Lot 1c services  |
+      | supplier_name               | lot | title             |
+      | Abshire, Schumm and Farrell | 3a  | Lot 3a services   |
+      | Terry-Greenholt             | 2b  | Lot 2b services   |
+      | Schultz-Wilkinson           | 1c  | Lot 1c services   |
 
   Scenario: I change the services and it changes on View lot data - lot 1a
     Then I click on 'View lot data' for 'Conn, Hayes and Lakin'
@@ -45,13 +45,13 @@ Feature: Selecting service codes
     And the supplier name shown is 'Terry-Greenholt'
     And I deselect all checkboxes
     And I select the following items:
-      | I.9 Cleaning of communications and equipment rooms          |
-      | I.10 Reactive cleaning (outside cleaning operational hours) |
+      | F.9 Building Information Modelling and Government Soft Landings |
+      | N.11 Energy and utilities management bureau Services            |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I should see the following services selected for lot '2b':
-      | Cleaning of communications and equipment rooms          |
-      | Reactive cleaning (outside cleaning operational hours)  |
+      | Building Information Modelling and Government Soft Landings |
+      | Energy and utilities management bureau Services             |
 
   Scenario: I change the services and it changes on View lot data - lot 3c
     Then I click on 'View lot data' for 'Cummerata, Lubowitz and Ebert'
@@ -61,33 +61,25 @@ Feature: Selecting service codes
     And the supplier name shown is 'Cummerata, Lubowitz and Ebert'
     And I deselect all checkboxes
     And I select the following items:
-      | E.20 Locksmith Services                                         |
-      | F.9 Building Information Modelling and Government Soft Landings |
-      | G.7 Internal planting                                           |
-      | H.8 Trolley service                                             |
-      | I.15 Medical and clinical cleaning                              |
-      | J.9 Archiving (on-site)                                         |
-      | K.4 Voice announcement system operation                         |
-      | L.14 Remote CCTV / alarm monitoring                             |
-      | M.7 Clinical Waste                                              |
-      | N.6 Journal, magazine and newspaper supply                      |
-      | O.4 Rural Estate Maintenance (REM) Services                     |
-      | P.12 Future Accommodation Model (FAM)                           |
+      | G.7 Internal planting                       |
+      | H.8 Trolley service                         |
+      | I.15 Medical and clinical cleaning          |
+      | J.9 Archiving (on-site)                     |
+      | K.4 Voice announcement system operation     |
+      | L.14 Remote CCTV / alarm monitoring         |
+      | M.7 Clinical Waste                          |
+      | N.6 Journal, magazine and newspaper supply  |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I should see the following services selected for lot '3c':
-      | Locksmith Services                                          |
-      | Building Information Modelling and Government Soft Landings |
-      | Internal planting                                           |
-      | Trolley service                                             |
-      | Medical and clinical cleaning                               |
-      | Archiving (on-site)                                         |
-      | Voice announcement system operation                         |
-      | Remote CCTV / alarm monitoring                              |
-      | Clinical Waste                                              |
-      | Journal, magazine and newspaper supply                      |
-      | Rural Estate Maintenance (REM) Services                     |
-      | Future Accommodation Model (FAM)                            |
+      | Internal planting                       |
+      | Trolley service                         |
+      | Medical and clinical cleaning           |
+      | Archiving (on-site)                     |
+      | Voice announcement system operation     |
+      | Remote CCTV / alarm monitoring          |
+      | Clinical Waste                          |
+      | Journal, magazine and newspaper supply  |
 
   @pipline
   Scenario Outline: Breadcrumb links work from services
