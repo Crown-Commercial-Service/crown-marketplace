@@ -13,17 +13,17 @@ Feature: Selecting service codes
     And the supplier name shown is '<supplier_name>'
 
     Examples:
-      | supplier_name               | lot | title             |
-      | Abshire, Schumm and Farrell | 3a  | Lot 3a services   |
-      | Terry-Greenholt             | 2b  | Lot 2b services   |
-      | Schultz-Wilkinson           | 1c  | Lot 1c services   |
+      | supplier_name           | lot | title             |
+      | Haag LLC                | 3a  | Lot 3a services   |
+      | Glover, Koepp and Rohan | 2b  | Lot 2b services   |
+      | Skiles-Reynolds         | 1c  | Lot 1c services   |
 
   Scenario: I change the services and it changes on View lot data - lot 1a
-    Then I click on 'View lot data' for 'Conn, Hayes and Lakin'
+    Then I click on 'View lot data' for 'Will and Sons'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '1a'
     Then I am on the 'Lot 1a services' page
-    And the supplier name shown is 'Conn, Hayes and Lakin'
+    And the supplier name shown is 'Will and Sons'
     And I deselect all checkboxes
     And I select the following items:
       | E.14 Catering equipment maintenance |
@@ -38,11 +38,11 @@ Feature: Selecting service codes
 
   @pipline
   Scenario: I change the services and it changes on View lot data - lot 2b
-    Then I click on 'View lot data' for 'Terry-Greenholt'
+    Then I click on 'View lot data' for 'Gleichner, Wintheiser and Wilderman'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '2b'
     Then I am on the 'Lot 2b services' page
-    And the supplier name shown is 'Terry-Greenholt'
+    And the supplier name shown is 'Gleichner, Wintheiser and Wilderman'
     And I deselect all checkboxes
     And I select the following items:
       | F.9 Building Information Modelling and Government Soft Landings |
@@ -54,11 +54,11 @@ Feature: Selecting service codes
       | Energy and utilities management bureau Services             |
 
   Scenario: I change the services and it changes on View lot data - lot 3c
-    Then I click on 'View lot data' for 'Cummerata, Lubowitz and Ebert'
+    Then I click on 'View lot data' for 'Lehner, Bosco and Kuphal'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '3c'
     Then I am on the 'Lot 3c services' page
-    And the supplier name shown is 'Cummerata, Lubowitz and Ebert'
+    And the supplier name shown is 'Lehner, Bosco and Kuphal'
     And I deselect all checkboxes
     And I select the following items:
       | G.7 Internal planting                       |
@@ -83,11 +83,11 @@ Feature: Selecting service codes
 
   @pipline
   Scenario Outline: Breadcrumb links work from services
-    Then I click on 'View lot data' for 'Yost LLC'
+    Then I click on 'View lot data' for 'Beer, Renner and Davis'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '1c'
     Then I am on the 'Lot 1c services' page
-    And the supplier name shown is 'Yost LLC'
+    And the supplier name shown is 'Beer, Renner and Davis'
     And I click on '<link_text>'
     Then I am on the '<page_title>' page
 
@@ -99,9 +99,9 @@ Feature: Selecting service codes
 
   @pipline
   Scenario: I can't select core services
-    Then I click on 'View lot data' for 'Skiles LLC'
+    Then I click on 'View lot data' for 'Schaden Inc'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '1a'
     Then I am on the 'Lot 1a services' page
-    And the supplier name shown is 'Skiles LLC'
+    And the supplier name shown is 'Schaden Inc'
     And I can't select any core services

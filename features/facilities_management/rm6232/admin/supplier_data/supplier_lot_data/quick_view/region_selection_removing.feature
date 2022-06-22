@@ -27,10 +27,10 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
     And I 'should not' see the supplier "<supplier_name>" in the results
 
     Examples:
-      | contract_value  | lot_number  | supplier_name                 |
-      | 500000          | 1a          | Sawayn, Abbott and Huels      |
-      | 2000000         | 1b          | Zboncak and Sons              |
-      | 11000000        | 1c          | Cummerata, Lubowitz and Ebert |
+      | contract_value  | lot_number  | supplier_name       |
+      | 500000          | 1a          | Gottlieb Group      |
+      | 2000000         | 1b          | Bode-Wisoky         |
+      | 11000000        | 1c          | Runolfsdottir-Hane  |
 
 
   @pipeline
@@ -58,10 +58,10 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
     And I 'should not' see the supplier "<supplier_name>" in the results
 
     Examples:
-      | contract_value  | lot_number  | supplier_name             |
-      | 500000          | 2a          | Harber LLC                |
-      | 2000000         | 2b          | Lind, Stehr and Dickinson |
-      | 11000000        | 2c          | Breitenberg-Mante         |
+      | contract_value  | lot_number  | supplier_name   |
+      | 500000          | 2a          | Nicolas Group   |
+      | 2000000         | 2b          | Dach-Rowe       |
+      | 11000000        | 2c          | Skiles-Reynolds |
 
   Scenario Outline: Soft services - region selection
     Given I go to a quick view with the following services, regions and annual contract value:
@@ -87,7 +87,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
     And I 'should not' see the supplier "<supplier_name>" in the results
 
     Examples:
-      | contract_value  | lot_number  | supplier_name                   |
-      | 500000          | 3a          | O'Reilly, Emmerich and Reichert |
-      | 2000000         | 3b          | Howell, Sanford and Shanahan    |
-      | 11000000        | 3c          | Muller Inc                      |
+      | contract_value  | lot_number  | supplier_name           |
+      | 500000          | 3a          | Berge and Sons          |
+      | 2000000         | 3b          | Brekke-Zemlak           |
+      | 11000000        | 3c          | Glover, Koepp and Rohan |

@@ -3,7 +3,7 @@ Given('I have an inactive supplier called {string}') do |supplier_name|
 end
 
 Then('I should see all the suppliers') do
-  expect(admin_rm6232_page.suppliers.length).to eq 50
+  expect(admin_rm6232_page.suppliers.length).to eq 45
 end
 
 Then('I enter {string} for the supplier search') do |supplier_name|

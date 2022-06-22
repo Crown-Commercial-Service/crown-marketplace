@@ -4,9 +4,9 @@ Feature: Supplier address
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
     And I click on 'Supplier data'
     Then I am on the 'Supplier data' page
-    Then I click on 'View details' for 'Abshire, Schumm and Farrell'
+    Then I click on 'View details' for 'Gottlieb Group'
     And I am on the 'Supplier details' page
-    And the supplier name on the details page is 'Abshire, Schumm and Farrell'
+    And the supplier name on the details page is 'Gottlieb Group'
     And I change the 'Full address' for the supplier details
     Then I am on the 'Supplier address' page
     And I enter the following details into the form:

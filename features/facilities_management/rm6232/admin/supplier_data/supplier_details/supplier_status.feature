@@ -6,9 +6,9 @@ Feature: Supplier status
   Scenario: Changing the supplier status is saved
     And I click on 'Supplier data'
     Then I am on the 'Supplier data' page
-    Then I click on 'View details' for 'Hudson, Spinka and Schuppe'
+    Then I click on 'View details' for 'Hansen-Mante'
     And I am on the 'Supplier details' page
-    And the supplier name on the details page is 'Hudson, Spinka and Schuppe'
+    And the supplier name on the details page is 'Hansen-Mante'
     And the 'Supplier status' is 'ACTIVE' on the supplier details page
     And I change the 'Supplier status' for the supplier details
     Then I am on the 'Supplier status' page
@@ -39,8 +39,7 @@ Feature: Supplier status
     Then I 'should not' see the supplier '<supplier_name>' in the results 
 
     Examples:
-      | supplier_name             |
-      | Conn, Hayes and Lakin     |
-      | Jenkins, Price and White  |
-      | Turner-Pouros             |
-  
+      | supplier_name   |
+      | Dach-Rowe       |
+      | Mayer and Sons  |
+      | Ritchie-Turner  |

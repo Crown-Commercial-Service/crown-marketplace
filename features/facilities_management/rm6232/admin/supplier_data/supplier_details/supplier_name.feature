@@ -6,9 +6,9 @@ Feature: Supplier name
   Scenario: Changing the name is saved
     And I click on 'Supplier data'
     Then I am on the 'Supplier data' page
-    Then I click on 'View details' for 'Abshire, Schumm and Farrell'
+    Then I click on 'View details' for 'Abbott-Gerlach'
     And I am on the 'Supplier details' page
-    And the supplier name on the details page is 'Abshire, Schumm and Farrell'
+    And the supplier name on the details page is 'Abbott-Gerlach'
     And I change the 'Supplier name' for the supplier details
     Then I am on the 'Supplier name' page
     And I enter 'The Argentum trade guild' into the 'Supplier name' field
@@ -39,8 +39,7 @@ Feature: Supplier name
     And I 'should' see the supplier 'New supplier' in the results
 
     Examples:
-      | supplier_name   |
-      | Feest Group     |
-      | Okuneva-Fritsch |
-      | Torphy Inc      |
-
+      | supplier_name |
+      | Bode-Wisoky   |
+      | Nicolas Group |
+      | Will and Sons |

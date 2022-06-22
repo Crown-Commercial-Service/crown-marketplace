@@ -125,9 +125,9 @@ Feature: Information appears correctly on results page
 
   Examples:
       | annual_contract_value | lot_letter  | number_of_suppliers |
-      | 50000                 | a           | 14                  |
-      | 5000000               | b           | 13                  |
-      | 50000000              | c           | 13                  |
+      | 50000                 | a           | 11                  |
+      | 5000000               | b           | 20                  |
+      | 50000000              | c           | 12                  |
 
   @pipeline
   Scenario Outline: I select hard services
@@ -177,9 +177,9 @@ Feature: Information appears correctly on results page
 
   Examples:
       | annual_contract_value | lot_letter  | number_of_suppliers |
-      | 50000                 | a           | 14                  |
-      | 5000000               | b           | 13                  |
-      | 50000000              | c           | 13                  |
+      | 50000                 | a           | 13                  |
+      | 5000000               | b           | 23                  |
+      | 50000000              | c           | 12                  |
 
   Scenario Outline: I select soft services
     And I click on 'Annual contract value'
@@ -232,7 +232,6 @@ Feature: Information appears correctly on results page
 
   Examples:
       | annual_contract_value | lot_letter  | number_of_suppliers |
-      | 50000                 | a           | 14                  |
-      | 5000000               | b           | 13                  |
-      | 50000000              | c           | 14                  |
-
+      | 50000                 | a           | 9                   |
+      | 5000000               | b           | 17                  |
+      | 50000000              | c           | 11                  |

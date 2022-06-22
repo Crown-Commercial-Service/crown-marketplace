@@ -4,9 +4,9 @@ Feature: Supplier details
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
     And I click on 'Supplier data'
     Then I am on the 'Supplier data' page
-    Then I click on 'View details' for 'Zboncak and Sons'
+    Then I click on 'View details' for 'Wyman LLC'
     And I am on the 'Supplier details' page
-    And the supplier name on the details page is 'Zboncak and Sons'
+    And the supplier name on the details page is 'Wyman LLC'
 
   Scenario Outline: Supplier details breadcrumbs
     Given I click on '<text>'
@@ -25,11 +25,11 @@ Feature: Supplier details
 
     Examples:
       | supplier_detail | current_page                    | text                                      |
-      | Supplier status | Supplier status                 | Zboncak and Sons                          |
+      | Supplier status | Supplier status                 | Wyman LLC                                 |
       | Supplier status | Supplier status                 | Cancel and return to the supplier details |
-      | Supplier name   | Supplier name                   | Zboncak and Sons                          |
+      | Supplier name   | Supplier name                   | Wyman LLC                                 |
       | Supplier name   | Supplier name                   | Cancel and return to the supplier details |
-      | DUNS number     | Additional supplier information | Zboncak and Sons                          |
+      | DUNS number     | Additional supplier information | Wyman LLC                                 |
       | DUNS number     | Additional supplier information | Cancel and return to the supplier details |
-      | Full address    | Supplier address                | Zboncak and Sons                          |
+      | Full address    | Supplier address                | Wyman LLC                                 |
       | Full address    | Supplier address                | Cancel and return to the supplier details |

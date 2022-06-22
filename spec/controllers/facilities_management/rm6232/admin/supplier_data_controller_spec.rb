@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataController, type
         suppliers = assigns(:suppliers)
         first_supplier = FacilitiesManagement::RM6232::Supplier.order(:supplier_name).first
 
-        expect(suppliers.size).to eq 50
+        expect(suppliers.size).to eq 45
         expect(suppliers.first.attributes).to eq({ 'id' => first_supplier.id, 'supplier_name' => first_supplier.supplier_name })
       end
     end

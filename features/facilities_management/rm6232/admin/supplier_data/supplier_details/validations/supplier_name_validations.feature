@@ -5,9 +5,9 @@ Feature: Supplier name - validations
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
     And I click on 'Supplier data'
     Then I am on the 'Supplier data' page
-    Then I click on 'View details' for 'Torphy Inc'
+    Then I click on 'View details' for 'Thiel Group'
     And I am on the 'Supplier details' page
-    And the supplier name on the details page is 'Torphy Inc'
+    And the supplier name on the details page is 'Thiel Group'
     And I change the 'Supplier name' for the supplier details
     Then I am on the 'Supplier name' page
 
@@ -18,6 +18,6 @@ Feature: Supplier name - validations
       | <error_message> |
 
     Examples:
-      | supplier_name   | error_message                             |
-      |                 | You must enter a supplier name            |
-      | Satterfield LLC | A supplier with this name already exists  |
+      | supplier_name     | error_message                             |
+      |                   | You must enter a supplier name            |
+      | Stracke and Sons  | A supplier with this name already exists  |

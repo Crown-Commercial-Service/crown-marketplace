@@ -36,7 +36,7 @@ RSpec.describe FacilitiesManagement::RM6232::SupplierShortlistSpreadsheetCreator
     let(:sheet) { work_book.sheet('Supplier shortlists') }
 
     it 'has the correct suppliers' do
-      expect(sheet.column(1)[6..]).to eq ['Dach Inc', 'Feest Group', 'Harber LLC', 'Hudson, Spinka and Schuppe', 'Metz Inc', "O'Reilly, Emmerich and Reichert", 'Roob-Kessler', 'Skiles LLC', 'Torphy Inc', 'Turner-Pouros']
+      expect(sheet.column(1)[6..]).to eq ['Berge and Sons', 'Dach-Rowe', 'Hansen-Mante', 'Mayer and Sons', 'Nicolas Group', 'Paucek, Ebert and Cremin', 'Schaden Inc', 'Stracke and Sons', 'Will and Sons']
     end
   end
 

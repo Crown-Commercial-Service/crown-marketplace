@@ -13,18 +13,18 @@ Feature: Selecting region codes
     And the supplier name shown is '<supplier_name>'
 
     Examples:
-      | supplier_name               | lot | title         |
-      | Abshire, Schumm and Farrell | 1a   | Lot 1a regions |
-      | Terry-Greenholt             | 2b   | Lot 2b regions |
-      | Schultz-Wilkinson           | 3c   | Lot 3c regions |
+      | supplier_name             | lot  | title          |
+      | Nicolas Group             | 1a   | Lot 1a regions |
+      | Lehner, Bosco and Kuphal  | 2b   | Lot 2b regions |
+      | Murray Group              | 3c   | Lot 3c regions |
 
   @pipline
   Scenario: I change the regions and it changes on View lot data - lot 1a
-    Then I click on 'View lot data' for 'Brakus, Lueilwitz and Blanda'
+    Then I click on 'View lot data' for 'Bode-Wisoky'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '1a'
     Then I am on the 'Lot 1a regions' page
-    And the supplier name shown is 'Brakus, Lueilwitz and Blanda'
+    And the supplier name shown is 'Bode-Wisoky'
     And I deselect all checkboxes
     And I select the following items:
       | South Yorkshire                                               |
@@ -38,11 +38,11 @@ Feature: Selecting region codes
       | South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire) |    
 
   Scenario: I change the regions and it changes on View lot data - lot 2b
-    Then I click on 'View lot data' for 'Donnelly, Wiegand and Krajcik'
+    Then I click on 'View lot data' for 'Veum-Hermann'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '2b'
     Then I am on the 'Lot 2b regions' page
-    And the supplier name shown is 'Donnelly, Wiegand and Krajcik'
+    And the supplier name shown is 'Veum-Hermann'
     And I deselect all checkboxes
     And I select the following items:
       | Essex                                             |
@@ -54,11 +54,11 @@ Feature: Selecting region codes
       | Gloucestershire, Wiltshire and Bristol/Bath area  | 
 
   Scenario: I change the regions and it changes on View lot data - lot 3c
-    Then I click on 'View lot data' for 'Lind, Stehr and Dickinson'
+    Then I click on 'View lot data' for 'Pfeffer-Orn'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '3c'
     Then I am on the 'Lot 3c regions' page
-    And the supplier name shown is 'Lind, Stehr and Dickinson'
+    And the supplier name shown is 'Pfeffer-Orn'
     And I deselect all checkboxes
     And I select the following items:
       | Tees Valley and Durham  |
@@ -79,11 +79,11 @@ Feature: Selecting region codes
 
   @pipline
   Scenario Outline: Breadcrumb links work from regions
-    Then I click on 'View lot data' for 'Yost LLC'
+    Then I click on 'View lot data' for 'Beer, Renner and Davis'
     And I am on the 'View lot data' page
     And I change the 'regions' for lot '1c'
     Then I am on the 'Lot 1c regions' page
-    And the supplier name shown is 'Yost LLC'
+    And the supplier name shown is 'Beer, Renner and Davis'
     And I click on '<link_text>'
     Then I am on the '<page_title>' page
 
