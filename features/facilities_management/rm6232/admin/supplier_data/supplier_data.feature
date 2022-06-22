@@ -27,9 +27,9 @@ Feature: Supplier data pages
 
     Examples:
       | supplier_name               | lots                    |
-      | Abshire, Schumm and Farrell | 1a, 1b, 2a, 2b, 3a, 3b  |
+      | Abshire, Schumm and Farrell | 1a, 2a, 3a, 1b, 2b, 3b  |
       | Schultz-Wilkinson           | 1c, 2c, 3c              |
-      | Terry-Greenholt             | 1b, 1c, 2b, 2c, 3b, 3c  |
+      | Terry-Greenholt             | 1b, 2b, 3b, 1c, 2c, 3c  |
 
   Scenario Outline: View details
     Then I click on 'View details' for '<supplier_name>'
