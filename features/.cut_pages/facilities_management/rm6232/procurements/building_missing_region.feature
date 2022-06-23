@@ -34,8 +34,8 @@ Feature: Buildings used in a procurement are missing a region
     And I click on 'Return to review your buildings'
     Then I am on the 'Review your buildings' page
     Given I click on the 'Return to procurements dashboard' return link
-    Then I am on the 'Procurements dashboard' page
+    Then I am on the 'Saved searches' page
     And I click on 'My missing regions procurement'
     Then I am on the 'Review your buildings' page
     Given I click on the 'Return to procurements dashboard' back link
-    Then I am on the 'Procurements dashboard' page
+    Then I am on the 'Saved searches' page

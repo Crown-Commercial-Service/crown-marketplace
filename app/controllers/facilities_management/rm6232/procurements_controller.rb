@@ -6,8 +6,7 @@ module FacilitiesManagement
       before_action :redirect_if_missing_regions, only: :show
 
       def index
-        @searches = current_user.rm6232_procurements.searches
-        @advanced_procurement_activities = current_user.rm6232_procurements.advanced_procurement_activities
+        @searches = current_user.rm6232_procurements.order(updated_at: :asc)
         set_back_path(:index)
       end
 

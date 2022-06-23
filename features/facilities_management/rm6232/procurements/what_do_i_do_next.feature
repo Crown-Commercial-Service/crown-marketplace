@@ -24,7 +24,7 @@ Feature: What do I do next
 
   Scenario: Back button link
     And I click on 'Return to saved searches'
-    Then I am on the 'Procurements dashboard' page
+    Then I am on the 'Saved searches' page
 
   Scenario: Return link
     And I click on 'Return to your account'
