@@ -19,7 +19,7 @@ Feature: Supplier status
 
   @pipline
   Scenario Outline: Change supplier status removes it from the results
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKH3  | 654321 |
       | L.1  | UKK1  |        |
     And I 'should' see the supplier '<supplier_name>' in the results
@@ -33,7 +33,7 @@ Feature: Supplier status
     And I select 'INACTIVE' for the supplier status
     And I click on 'Save and return'
     Then I am on the 'Supplier details' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKH3  | 654321 |
       | L.1  | UKK1  |        |
     Then I 'should not' see the supplier '<supplier_name>' in the results 

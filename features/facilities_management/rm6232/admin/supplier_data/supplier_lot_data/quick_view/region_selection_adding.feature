@@ -4,7 +4,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
 
   Scenario Outline: Total services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.16  | UKC1  | <contract_value>  |
       | M.3   | UKG1  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -20,7 +20,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
       | Herefordshire, Worcestershire and Warwickshire  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.16  | UKC1  | <contract_value>  |
       | M.3   | UKG1  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -33,7 +33,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
       | 11000000        | 1c          | Swift, Friesen and Predovic   |
 
   Scenario Outline: Hard services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.6 | UKD1  | <contract_value>  |
       | F.2 | UKE2  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -49,7 +49,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
       | North Yorkshire |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.6 | UKE2  | <contract_value>  |
       | F.2 | UKE2  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -63,7 +63,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
 
   @pipeline
   Scenario Outline: Soft services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | G.6 | UKG2  | <contract_value>  |
       | J.1 | UKD6  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -79,7 +79,7 @@ Feature: Adding regions for suppliers on the admin tool and seeing the effect on
       | Cheshire  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | G.6 | UKG2  | <contract_value>  |
       | J.1 | UKD6  |                   |
     Then I should be in sub-lot '<lot_number>'

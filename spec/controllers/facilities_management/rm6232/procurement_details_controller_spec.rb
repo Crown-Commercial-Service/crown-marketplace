@@ -190,7 +190,7 @@
 #       end
 #     end
 
-#     context 'when the user wants to edit the annual contract value' do
+#     context 'when the user wants to edit the annual contract cost' do
 #       let(:section_name) { 'annual-contract-value' }
 
 #       render_views
@@ -394,7 +394,7 @@
 #       end
 #     end
 
-#     context 'when updating the annual contract value' do
+#     context 'when updating the annual contract cost' do
 #       let(:section_name) { 'annual-contract-value' }
 
 #       context 'and the data is valid' do
@@ -404,7 +404,7 @@
 #           expect(response).to redirect_to facilities_management_rm6232_procurement_path(procurement)
 #         end
 
-#         it 'updates the annual contract value' do
+#         it 'updates the annual contract cost' do
 #           expect { procurement.reload }.to change(procurement, :annual_contract_value)
 
 #           expect(procurement.annual_contract_value).to eq(567_890)
@@ -418,7 +418,7 @@
 #           expect(response).to render_template(:edit)
 #         end
 
-#         it 'does not update the annual contract value' do
+#         it 'does not update the annual contract cost' do
 #           expect { procurement.reload }.not_to change(procurement, :annual_contract_value)
 #         end
 #       end

@@ -16,8 +16,8 @@ Feature: Information appears correctly on results page
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '123456' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '123456' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '2a'
@@ -28,7 +28,7 @@ Feature: Information appears correctly on results page
     And I should see the following 'regions' in the selection summary:
       | Tees Valley and Durham  |
       | Essex                   |
-    And I should see the following 'annual contract value' in the selection summary:
+    And I should see the following 'annual contract cost' in the selection summary:
       | £123,456  |
 
   @pipline
@@ -41,7 +41,7 @@ Feature: Information appears correctly on results page
     And I click on 'Continue'
     Then I am on the 'Regions' page
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
+    Then I am on the 'Annual contract cost' page
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '1a'
@@ -58,7 +58,7 @@ Feature: Information appears correctly on results page
       | Tees Valley and Durham  |
     And I select 'Gloucestershire, Wiltshire and Bristol/Bath area'
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
+    Then I am on the 'Annual contract cost' page
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '2a'
@@ -67,14 +67,14 @@ Feature: Information appears correctly on results page
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
 
   @pipline
-  Scenario: I can change the annual contract value from the results page
-    Given I change the 'annual contract value' from the selection summary
-    Then I am on the 'Annual contract value' page
-    And I enter '123456789' for the annual contract value
+  Scenario: I can change the annual contract cost from the results page
+    Given I change the 'annual contract cost' from the selection summary
+    Then I am on the 'Annual contract cost' page
+    And I enter '123456789' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '2c'
-    And I should see the following 'annual contract value' in the selection summary:
+    And I should see the following 'annual contract cost' in the selection summary:
       | £123,456,789  |
 
   Scenario: Save and return goes to the dashboard
