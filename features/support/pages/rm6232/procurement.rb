@@ -15,5 +15,9 @@ module Pages::RM6232
 
     section :buildings, ProcurementSummarySection, '#main-content > div:nth-child(6) > div > div.govuk-\!-margin-bottom-4 > details'
     section :services, ProcurementSummarySection, '#main-content > div:nth-child(6) > div > div.govuk-\!-margin-bottom-6 > details'
+
+    section :saved_searches, '#main-content > div.govuk-grid-row > div > div > table' do
+      elements :search_names, 'tbody > tr > th'
+    end
   end
 end
