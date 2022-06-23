@@ -156,7 +156,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
     it 'sets the back path and text correctly' do
       expect(assigns(:back_path)).to eq '/facilities-management/RM6232/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=UKC1&service_codes%5B%5D=E.1'
-      expect(assigns(:back_text)).to eq 'Return to annual contract value'
+      expect(assigns(:back_text)).to eq 'Return to annual contract cost'
     end
 
     it 'sets the suppliers' do
@@ -190,7 +190,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
       it 'sets the back path and text correctly' do
         expect(assigns(:back_path)).to eq '/facilities-management/RM6232/annual-contract-value?annual_contract_value=123456&region_codes%5B%5D=UKC1&service_codes%5B%5D=E.1'
-        expect(assigns(:back_text)).to eq 'Return to annual contract value'
+        expect(assigns(:back_text)).to eq 'Return to annual contract cost'
       end
 
       it 'sets the suppliers' do

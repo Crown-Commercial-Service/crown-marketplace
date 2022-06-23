@@ -1,4 +1,4 @@
-Then('I enter {string} for the annual contract value') do |value|
+Then('I enter {string} for the annual contract cost') do |value|
   quick_view_page.annual_contract_value.set(value)
 end
 
@@ -12,7 +12,7 @@ Then('I should see the following {string} in the selection summary:') do |option
     quick_view_page.selection_summary.send(option.to_sym).selection.zip(selection_summary_table.raw.flatten).each do |element, expected_value|
       expect(element).to have_content(expected_value)
     end
-  when 'annual contract value'
+  when 'annual contract cost'
     expect(quick_view_page.selection_summary.send(option.to_sym).selection).to have_content(selection_summary_table.raw.flatten.first)
   end
 end

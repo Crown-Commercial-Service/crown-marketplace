@@ -588,7 +588,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
 
     let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements, annual_contract_value: annual_contract_value) }
 
-    context 'when the annual contract value section has not been completed' do
+    context 'when the annual contract cost section has not been completed' do
       let(:annual_contract_value) { nil }
 
       it 'has a status of not_started' do
@@ -596,7 +596,7 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
       end
     end
 
-    context 'when the annual contract value section has been completed' do
+    context 'when the annual contract cost section has been completed' do
       let(:annual_contract_value) { 123_456 }
 
       it 'has a status of completed' do

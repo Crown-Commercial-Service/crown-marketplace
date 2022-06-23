@@ -17,8 +17,8 @@ Feature: Information appears correctly on results page
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '123456' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '123456' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '2a'
@@ -74,12 +74,12 @@ Feature: Information appears correctly on results page
     And 'Buildings' should have the status 'COMPLETED' in 'Services and buildings'
 
   Scenario Outline: I select total services
-    And I click on 'Annual contract value'
-    And I am on the 'Annual contract value' page
-    And I enter '<annual_contract_value>' for annual contract value
+    And I click on 'Annual contract cost'
+    And I am on the 'Annual contract cost' page
+    And I enter '<annual_contract_value>' for annual contract cost
     And I click on 'Save and return'
     Then I am on the 'Further service and contract requirements' page
-    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract cost' should have the status 'COMPLETED' in 'Contract details'
     And I click on 'Assigning services to buildings'
     Then I am on the 'Assigning services to buildings summary' page
     Given I click on 'Test building' 
@@ -131,12 +131,12 @@ Feature: Information appears correctly on results page
 
   @pipeline
   Scenario Outline: I select hard services
-    And I click on 'Annual contract value'
-    And I am on the 'Annual contract value' page
-    And I enter '<annual_contract_value>' for annual contract value
+    And I click on 'Annual contract cost'
+    And I am on the 'Annual contract cost' page
+    And I enter '<annual_contract_value>' for annual contract cost
     And I click on 'Save and return'
     Then I am on the 'Further service and contract requirements' page
-    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract cost' should have the status 'COMPLETED' in 'Contract details'
     And I click on 'Assigning services to buildings'
     Then I am on the 'Assigning services to buildings summary' page
     Given I click on 'Test building' 
@@ -182,12 +182,12 @@ Feature: Information appears correctly on results page
       | 50000000              | c           | 13                  |
 
   Scenario Outline: I select soft services
-    And I click on 'Annual contract value'
-    And I am on the 'Annual contract value' page
-    And I enter '<annual_contract_value>' for annual contract value
+    And I click on 'Annual contract cost'
+    And I am on the 'Annual contract cost' page
+    And I enter '<annual_contract_value>' for annual contract cost
     And I click on 'Save and return'
     Then I am on the 'Further service and contract requirements' page
-    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract cost' should have the status 'COMPLETED' in 'Contract details'
     And I click on 'Assigning services to buildings'
     Then I am on the 'Assigning services to buildings summary' page
     Given I click on 'Test building' 

@@ -15,7 +15,7 @@ module Pages::RM6232
       section :services, SummarySection, 'div.ccs-summary-box:nth-of-type(1)'
       section :regions, SummarySection, 'div.ccs-summary-box:nth-of-type(2)'
 
-      section :'annual contract value', 'div.ccs-summary-box:nth-of-type(3)' do
+      section :'annual contract cost', 'div.ccs-summary-box:nth-of-type(3)' do
         element :selection, '.ccs-summary-box__content'
         element :change, 'a'
       end

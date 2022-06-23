@@ -5,7 +5,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
 
   @pipeline
   Scenario Outline: Total services - service selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | <contract_value> |
       | O.1  | UKE4  |                  |
     Then I should be in sub-lot '<lot_number>'
@@ -21,7 +21,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
       | End-User Accommodation Services  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | <contract_value>  |
       | O.1  | UKE4  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -34,7 +34,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
       | 11000000        | 1c          | Schultz-Wilkinson             |
 
   Scenario Outline: Hard services - service selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.6  | UKD1  | <contract_value>  |
       | E.9  | UKI3  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -50,7 +50,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
       | Planned / Group re-lamping service  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.6  | UKD1  | <contract_value>  |
       | E.9  | UKI3  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -63,7 +63,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
       | 11000000        | 2c          | Berge-Koepp             |
 
   Scenario Outline: Soft services - service selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | I.2  | UKD1  | <contract_value> |
       | G.3  | UKI3  |                  |
     Then I should be in sub-lot '<lot_number>'
@@ -79,7 +79,7 @@ Feature: Adding services for suppliers on the admin tool and seeing the effect o
       | Tree Surgery (Arboriculture)  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | I.2  | UKD1  | <contract_value>  |
       | G.3  | UKI3  |                   |
     Then I should be in sub-lot '<lot_number>'
