@@ -27,7 +27,7 @@ Feature: Results validations
   Examples:
       | save_button                               |
       | Save and continue                         |
-      | Save and return to procurements dashboard |
+      # | Save and return to procurements dashboard |
 
   Scenario: Contract name is taken
     Given I have a procurement with the name 'Taken contract name'
@@ -35,3 +35,5 @@ Feature: Results validations
     And I click on 'Save and continue'
     Then I should see the following error messages:
       | This contract name is already in use  |
+
+  # Some steps are commented out due to us not showing the state on the dahsboard anymore
