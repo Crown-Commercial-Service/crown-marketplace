@@ -179,8 +179,8 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
-      concerns :shared_pages, :buildings
-      # This has been cut but it may return on the future: concerns :procurement_buildings
+      concerns :shared_pages
+      # This has been cut but it may return on the future: concerns :buildings, :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
