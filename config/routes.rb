@@ -179,17 +179,18 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
-      concerns :shared_pages, :buildings, :procurement_buildings
+      concerns :shared_pages, :buildings
+      # This has been cut but it may return on the future: concerns :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
       get '/service-specification/:service_code', to: 'service_specification#show', as: 'service_specification'
 
       resources :procurements, only: %i[index show new create] do
-        concerns :procurement_details, :edit_buildings
+        # This has been cut but it may return on the future: concerns :procurement_details, :edit_buildings
+        # put 'update-show', action: 'update_show'
 
         get 'supplier_shortlist_spreadsheet'
-        put 'update-show', action: 'update_show'
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do

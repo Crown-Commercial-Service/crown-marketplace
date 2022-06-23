@@ -66,68 +66,69 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.link_url' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
-    let(:result) { helper.link_url(section) }
+  # This has been cut but it may return on the future
+  # describe '.link_url' do
+  #   let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+  #   let(:result) { helper.link_url(section) }
 
-    before { @procurement = procurement }
+  #   before { @procurement = procurement }
 
-    context 'when the section is contract_name' do
-      let(:section) { 'contract_name' }
+  #   context 'when the section is contract_name' do
+  #     let(:section) { 'contract_name' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-name/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-name/edit"
+  #     end
+  #   end
 
-    context 'when the section is annual_contract_value' do
-      let(:section) { 'annual_contract_value' }
+  #   context 'when the section is annual_contract_value' do
+  #     let(:section) { 'annual_contract_value' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/annual-contract-value/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/annual-contract-value/edit"
+  #     end
+  #   end
 
-    context 'when the section is tupe' do
-      let(:section) { 'tupe' }
+  #   context 'when the section is tupe' do
+  #     let(:section) { 'tupe' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/tupe/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/tupe/edit"
+  #     end
+  #   end
 
-    context 'when the section is contract_period' do
-      let(:section) { 'contract_period' }
+  #   context 'when the section is contract_period' do
+  #     let(:section) { 'contract_period' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-period"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-period"
+  #     end
+  #   end
 
-    context 'when the section is services' do
-      let(:section) { 'services' }
+  #   context 'when the section is services' do
+  #     let(:section) { 'services' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/services"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/services"
+  #     end
+  #   end
 
-    context 'when the section is buildings' do
-      let(:section) { 'buildings' }
+  #   context 'when the section is buildings' do
+  #     let(:section) { 'buildings' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings"
+  #     end
+  #   end
 
-    context 'when the section is buildings_and_services' do
-      let(:section) { 'buildings_and_services' }
+  #   context 'when the section is buildings_and_services' do
+  #     let(:section) { 'buildings_and_services' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings-and-services"
-      end
-    end
-  end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings-and-services"
+  #     end
+  #   end
+  # end
 
   describe '.section_has_error?' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
