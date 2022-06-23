@@ -293,17 +293,16 @@ en:
           return_to_your_account: Return to your account
           you_do_not_have_any: You do not have any saved searches
         new:
-          based_on_info: 'Based on information provided, this procurement is eligible for the following sub-lot:'
+          annual_contract_value: Annual contract cost
+          based_on_info: 'Based on the information provided, this procurement would be eligible for the following Lot, with your supplier shortlist as shown below:'
           change: Change
           contract_name_hint: Enter a name or reference to save this search. You will then be able to download your shortlist.
           contract_name_label: Save your search
-          estimated_annual_contract_value: Estimated annual contract cost
           heading: Results
           regions: Regions
           return_to_contract_cost: Return to annual contract cost
           return_to_dashboard: Return to your account
           save_and_continue: Save and continue
-          save_and_return: Save and return to procurements dashboard
           selection_summary: Selection summary
           services: Services
           sub_lot: Sub-lot %{sub_lot}
