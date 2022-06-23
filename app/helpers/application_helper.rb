@@ -327,7 +327,7 @@ module ApplicationHelper
       nuts1_regions[region.code[..2]][:items] << {
         code: region.code,
         value: region.code,
-        name: region.name.gsub(160.chr('UTF-8'), ' '),
+        name: "#{region.name.gsub(160.chr('UTF-8'), ' ')} (#{region.code})",
         selected: region_codes.include?(region.code)
       }
     end
