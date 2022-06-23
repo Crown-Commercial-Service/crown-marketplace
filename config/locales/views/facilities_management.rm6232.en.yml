@@ -235,9 +235,15 @@ en:
           subtitle: Enter your estimate for the annual contract value. Include everything in your calculation.
         choose_locations:
           heading: Regions
+          more_information:
+            link_text: Office for National Statistics
+            link_url: https://www.ons.gov.uk/methodology/geography/ukgeographies/eurostat
+            sentence_html: You can find more information from the %{ons_link}.
+          need_help: Need help?
           question: Where are your buildings located?
           return_text: Return to your account
           subtitle: Choose one or more regions, based on building’s location where you require facilities management services.
+          the_regions: The regions below align to the ‘Nomenclature of Territorial Units for Statistics (NUTS)’ hierarchical system used to divide up territories in UK and Europe.
         choose_services:
           caption: Choose all facilities management services required within your estate, even if you want services in just one building.
           heading: Services
