@@ -197,18 +197,16 @@ en:
         index:
           buyer_account_dashboard: Buyer account dashboard
           buyer_account_title: Your account
-          further_information_help: "(opens in a new tab)"
+          further_information_help_html: "%{fm_link} (opens in a new tab)"
           further_information_link: https://www.crowncommercial.gov.uk/agreements/rm6232
-          further_information_link_description: View further information about the Facilities Management framework RM6232
+          further_information_link_description: View further information about the Facilities Management and Workplace Services framework RM6232
           manage_account_desc: Update and edit your contact details
           manage_account_link: Manage my details
-          manage_buildings: Manage my buildings
-          manage_buildings_desc: Set up and manage your buildings for use in procurements
-          manage_procurements_desc: Open your procurements dashboard to view and continue existing saved procurements
-          manage_procurements_link: Continue a procurement
           return_to_page: To return to this page at any time, just click on 'My account'.
-          start_procurement_desc: View suppliers who can provide services to your locations
-          start_procurement_link: Start a procurement
+          search_for_suppliers_desc: Find a shortlist of suppliers who can provide services to your locations
+          search_for_suppliers_link: Search for suppliers
+          view_your_searches_desc: Open your dashboard to view your previously saved searches
+          view_your_searches_link: View your saved searches
       documents:
         service_specification_document:
           name: facilities-management/rm6232/RM6232 Service requirements and standards.pdf
