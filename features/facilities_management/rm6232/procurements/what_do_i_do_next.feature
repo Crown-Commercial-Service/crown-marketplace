@@ -13,7 +13,7 @@ Feature: What do I do next
     Then the following content should be displayed on the page:
       | Step 1 - download your results                                            |
       | You can download your shortlisted supplier list now, which also contains: |
-      | Step 2 - how to buy                                                       |
+      | Step 2 - read about how to buy                                            |
       | Visit the Facilities Management and Workplace Services framework page for |
       | information on how to procure via this framework, including:              |
 

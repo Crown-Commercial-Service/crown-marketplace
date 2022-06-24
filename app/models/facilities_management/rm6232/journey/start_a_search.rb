@@ -1,6 +1,6 @@
 module FacilitiesManagement
   module RM6232
-    class Journey::StartAProcurement
+    class Journey::StartASearch
       include Steppable
 
       attribute :service_codes, Array

@@ -91,8 +91,8 @@ class GenericJourney
       'choose-locations' => 'Return to services'
     },
     'RM6232' => {
-      'start-a-procurement' => 'Return to your account',
-      'choose-services' => "Return to 'Start a procurement'",
+      'start-a-search' => 'Return to your account',
+      'choose-services' => "Return to 'Search for suppliers'",
       'choose-locations' => 'Return to services',
       'annual-contract-value' => 'Return to regions'
     }
