@@ -326,28 +326,40 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
   #   end
   # end
 
+  # describe 'GET supplier_shortlist_spreadsheet' do
+  #   login_fm_buyer_with_details
+
+  #   let(:state) { 'what_happens_next' }
+  #   let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state, user: user, contract_name: 'New search') }
+
+  #   before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
+
+  #   context 'when the procurement is not in what happens next' do
+  #     let(:state) { 'entering_requirements' }
+
+  #     it 'redirects to the show page' do
+  #       expect(response).to redirect_to facilities_management_rm6232_procurement_path(id: procurement.id)
+  #     end
+  #   end
+
+  #   context 'when the procurement is in what happens next' do
+  #     let(:state) { 'what_happens_next' }
+
+  #     it 'does download a spreadsheet' do
+  #       expect(response.headers['Content-Disposition']).to include 'filename="Supplier shortlist %28New search%29.xlsx"'
+  #     end
+  #   end
+  # end
+
   describe 'GET supplier_shortlist_spreadsheet' do
     login_fm_buyer_with_details
 
-    let(:state) { 'what_happens_next' }
-    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: state, user: user, contract_name: 'New search') }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_what_happens_next, user: user, contract_name: 'New search') }
 
     before { get :supplier_shortlist_spreadsheet, params: { procurement_id: procurement.id } }
 
-    context 'when the procurement is not in what happens next' do
-      let(:state) { 'entering_requirements' }
-
-      it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_rm6232_procurement_path(id: procurement.id)
-      end
-    end
-
-    context 'when the procurement is in what happens next' do
-      let(:state) { 'what_happens_next' }
-
-      it 'does download a spreadsheet' do
-        expect(response.headers['Content-Disposition']).to include 'filename="Supplier shortlist %28New search%29.xlsx"'
-      end
+    it 'download a spreadsheet' do
+      expect(response.headers['Content-Disposition']).to include 'filename="Supplier shortlist %28New search%29.xlsx"'
     end
   end
 end

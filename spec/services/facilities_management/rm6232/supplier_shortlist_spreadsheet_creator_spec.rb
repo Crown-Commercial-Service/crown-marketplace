@@ -15,28 +15,52 @@ RSpec.describe FacilitiesManagement::RM6232::SupplierShortlistSpreadsheetCreator
     let(:sheet) { work_book.sheet('Regions') }
 
     it 'has the correct regions' do
-      expect(sheet.column(1)).to eq ['Regions', 'Tees Valley and Durham', 'Cumbria', 'Lincolnshire', 'Essex']
+      expect(sheet.row(1)).to eq ['NUTS Code', 'Region Name']
+
+      expect((2..5).map { |row_number| sheet.row(row_number) }).to eq(
+        [
+          ['UKC1', 'Tees Valley and Durham'],
+          ['UKD1', 'Cumbria'],
+          ['UKF3', 'Lincolnshire'],
+          ['UKH3', 'Essex']
+        ]
+      )
     end
   end
 
   context 'when considering the services sheet' do
     let(:sheet) { work_book.sheet('Services') }
 
-    # rubocop:disable RSpec/MultipleExpectations
     it 'has the correct services' do
       expect(sheet.row(1)).to eq ['Service Reference', 'Service Name']
-      expect(sheet.row(2)).to eq ['E.5', 'Lifts, hoists and conveyance systems maintenance']
-      expect(sheet.row(3)).to eq ['M.1', 'On Site / Mobile Classified Waste Shredding Service']
-      expect(sheet.row(4)).to eq ['P.8', 'Accommodation Stores Service']
+
+      expect((2..4).map { |row_number| sheet.row(row_number) }).to eq(
+        [
+          ['E.5', 'Lifts, hoists and conveyance systems maintenance'],
+          ['M.1', 'On Site / Mobile Classified Waste Shredding Service'],
+          ['P.8', 'Accommodation Stores Service']
+        ]
+      )
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context 'when considering the Supplier shortlists sheet' do
     let(:sheet) { work_book.sheet('Supplier shortlists') }
 
+    it 'has the correct reference number' do
+      expect(sheet.row(2)).to eq ['Reference number:', procurement.contract_number]
+    end
+
+    it 'has the correct estimated annual cost' do
+      expect(sheet.row(3)).to eq ['Estimated annual cost:', 500000]
+    end
+
+    it 'has the correct lot' do
+      expect(sheet.row(7)).to eq ['Sub-lot 2a', nil]
+    end
+
     it 'has the correct suppliers' do
-      expect(sheet.column(1)[6..]).to eq ['Dach Inc', 'Feest Group', 'Harber LLC', 'Hudson, Spinka and Schuppe', 'Metz Inc', "O'Reilly, Emmerich and Reichert", 'Roob-Kessler', 'Skiles LLC', 'Torphy Inc', 'Turner-Pouros']
+      expect(sheet.column(1)[7..]).to eq ['Dach Inc', 'Feest Group', 'Harber LLC', 'Hudson, Spinka and Schuppe', 'Metz Inc', "O'Reilly, Emmerich and Reichert", 'Roob-Kessler', 'Skiles LLC', 'Torphy Inc', 'Turner-Pouros']
     end
   end
 

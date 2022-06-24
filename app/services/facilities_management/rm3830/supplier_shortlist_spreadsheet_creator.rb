@@ -10,7 +10,7 @@ module FacilitiesManagement
       private
 
       def set_data
-        @regions = FacilitiesManagement::Region.where(code: @region_codes).map(&:name)
+        @regions = FacilitiesManagement::Region.where(code: @region_codes)
         @services = @service_codes.index_with { |code| Service.find_by(code: code).name }
 
         @lot_1a_suppliers = suppliers_for_lot('1a')

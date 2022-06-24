@@ -15,21 +15,34 @@ RSpec.describe FacilitiesManagement::RM3830::SupplierShortlistSpreadsheetCreator
     let(:sheet) { work_book.sheet('Regions') }
 
     it 'has the correct regions' do
-      expect(sheet.column(1)).to eq ['Regions', 'Lincolnshire', 'West Lothian', 'North Lanarkshire', 'Inverness, Nairn, Moray, and Badenoch and Strathspey', 'East of Northern Ireland (Antrim, Ards, Ballymena, Banbridge, Craigavon, Down, Larne)']
+      expect(sheet.row(1)).to eq ['NUTS Code', 'Region Name']
+
+      expect((2..6).map { |row_number| sheet.row(row_number) }).to eq(
+        [
+          ['UKF3', 'Lincolnshire'],
+          ['UKM28', 'West Lothian'],
+          ['UKM36', 'North Lanarkshire'],
+          ['UKM62', 'Inverness, Nairn, Moray, and Badenoch and Strathspey'],
+          ['UKN03', 'East of Northern Ireland (Antrim, Ards, Ballymena, Banbridge, Craigavon, Down, Larne)']
+        ]
+      )
     end
   end
 
   context 'when considering the services sheet' do
     let(:sheet) { work_book.sheet('Services') }
 
-    # rubocop:disable RSpec/MultipleExpectations
     it 'has the correct services' do
       expect(sheet.row(1)).to eq ['Service Reference', 'Service Name']
-      expect(sheet.row(2)).to eq ['G.9', 'Reactive cleaning (outside cleaning operational hours)']
-      expect(sheet.row(3)).to eq ['H.1', 'Mail services']
-      expect(sheet.row(4)).to eq ['L.11', 'Training establishment management and booking service']
+
+      expect((2..4).map { |row_number| sheet.row(row_number) }).to eq(
+        [
+          ['G.9', 'Reactive cleaning (outside cleaning operational hours)'],
+          ['H.1', 'Mail services'],
+          ['L.11', 'Training establishment management and booking service']
+        ]
+      )
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 
   context 'when considering the Supplier shortlists sheet' do
