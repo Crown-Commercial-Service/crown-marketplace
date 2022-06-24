@@ -50,13 +50,9 @@ module FacilitiesManagement
       end
 
       def supplier_shortlist_spreadsheet
-        if @procurement.what_happens_next?
-          spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
-          spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: "Supplier shortlist (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        else
-          redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
-        end
+        spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: "Supplier shortlist (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       end
 
       private

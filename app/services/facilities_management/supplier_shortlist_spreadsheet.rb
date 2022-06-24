@@ -45,13 +45,13 @@ module FacilitiesManagement
 
     def add_regions
       @workbook.add_worksheet(name: 'Regions') do |sheet|
-        sheet.add_row ['Regions'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
+        sheet.add_row ['NUTS Code', 'Region Name'], style: @styles[:bordered_heading_style], height: LARGE_ROW_HEIGHT
 
         @regions.each do |region|
-          sheet.add_row [region], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
+          sheet.add_row [region.code, region.name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
         end
 
-        sheet.column_widths(65)
+        sheet.column_widths(*COLUMN_WIDTHS)
       end
     end
 
@@ -63,7 +63,7 @@ module FacilitiesManagement
           sheet.add_row [service_ref, service_name], style: @styles[:standard_bordered_column_style], height: LARGE_ROW_HEIGHT
         end
 
-        sheet.column_widths(30, 75)
+        sheet.column_widths(*COLUMN_WIDTHS)
       end
     end
 
@@ -95,5 +95,6 @@ module FacilitiesManagement
 
     LARGE_ROW_HEIGHT = 35
     STANDARD_ROW_HEIGHT = 25
+    COLUMN_WIDTHS = [30, 75].freeze
   end
 end
