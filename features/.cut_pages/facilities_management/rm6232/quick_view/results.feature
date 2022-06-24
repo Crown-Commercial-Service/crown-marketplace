@@ -2,7 +2,7 @@ Feature: Information appears correctly on results page
 
   Background: Navigate to the results page
     Given I sign in and navigate to my account for 'RM6232'
-    And I click on 'Start a procurement'
+    And I click on 'Search for suppliers'
     Then I am on the 'Start a procurement' page
     And I click on 'Continue'
     Then I am on the 'Services' page

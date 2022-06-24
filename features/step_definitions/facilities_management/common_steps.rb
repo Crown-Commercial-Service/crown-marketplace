@@ -73,7 +73,7 @@ Given('I click on the {string} back link') do |link_text|
 end
 
 When('I navigate to the procurement {string}') do |contract_name|
-  step 'I click on "Continue a procurement"'
+  procurement_page.view_procurements.click
   step "I click on '#{contract_name}'"
 end
 
