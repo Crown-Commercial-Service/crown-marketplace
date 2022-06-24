@@ -80,24 +80,24 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::Upload, type: :model do
       before { upload.update(aasm_state: 'in_progress') }
 
       it 'changes the state to checking_files' do
-        upload.check_file!
+        upload.check_files!
 
-        expect(upload.checking_file?).to be true
+        expect(upload.checking_files?).to be true
       end
     end
 
     context 'when process_file is called' do
-      before { upload.update(aasm_state: 'checking_file') }
+      before { upload.update(aasm_state: 'checking_files') }
 
-      it 'changes the state to processing_file' do
-        upload.process_file!
+      it 'changes the state to processing_files' do
+        upload.process_files!
 
-        expect(upload.processing_file?).to be true
+        expect(upload.processing_files?).to be true
       end
     end
 
     context 'when check_processed_data is called' do
-      before { upload.update(aasm_state: 'processing_file') }
+      before { upload.update(aasm_state: 'processing_files') }
 
       it 'changes the state to checking_processed_data' do
         upload.check_processed_data!
@@ -143,10 +143,15 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::Upload, type: :model do
 
   describe 'latest_upload' do
     context 'and there are published uploads' do
-      before { 5.times { described_class.create(aasm_state: 'published') } }
+      let(:latest_upload) { described_class.create(aasm_state: 'published') }
+
+      before do
+        4.times { described_class.create(aasm_state: 'published', created_at: Time.zone.now - 1.day) }
+        latest_upload
+      end
 
       it 'is the latest published upload' do
-        expect(described_class.latest_upload).to eq described_class.all.order(:created_at).last
+        expect(described_class.latest_upload).to eq latest_upload
       end
     end
 
