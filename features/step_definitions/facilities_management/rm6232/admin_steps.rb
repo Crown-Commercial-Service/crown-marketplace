@@ -26,8 +26,13 @@ Then('the supplier name shown is {string}') do |supplier_name|
   expect(admin_rm6232_page.supplier_name_sub_title).to have_content(supplier_name)
 end
 
-Then('they have services and regions for the following lots:') do |lots|
-  admin_rm6232_page.lot_data_tables.map(&:title).zip(lots.raw.flatten).each do |element, value|
+Then('they have services and regions for the following lots {string}') do |lots|
+  expected_lots = lots.split(',').map(&:strip)
+  actual_lots = admin_rm6232_page.lot_data_tables.map(&:title)
+
+  expect(actual_lots.length).to eq expected_lots.length
+
+  actual_lots.zip(expected_lots).each do |element, value|
     expect(element).to have_content(value)
   end
 end
@@ -50,7 +55,7 @@ end
 Then('I should see the following services selected for lot {string}:') do |lot_code, services|
   expected_services = services.raw.flatten
   actual_services = admin_rm6232_page.lot_data.send("lot_#{lot_code}").services.names.map(&:text)
-  core_service_names = core_services.map(&:name)
+  core_service_names = core_services(lot_code[0]).map(&:name)
 
   expect(core_service_names - actual_services).to be_empty
   expect(actual_services - core_service_names).to eq expected_services
@@ -58,7 +63,7 @@ end
 
 Then("I can't select any core services") do
   core_service_labels = admin_rm6232_page.all('input[type="checkbox"][disabled]').map { |element| element.find(:xpath, '../label').text }
-  core_service_names = core_services.map(&:label_name)
+  core_service_names = core_services('1').map(&:label_name)
 
   expect(core_service_labels).to eq core_service_names
 end
@@ -109,6 +114,12 @@ Then('the supplier {string} {string} in the results') do |supplier, option|
   end
 end
 
-def core_services
-  FacilitiesManagement::RM6232::WorkPackage.selectable.map { |work_package| work_package.supplier_services.select(&:core) }.flatten
+def core_services(lot_number)
+  FacilitiesManagement::RM6232::WorkPackage.selectable.map { |work_package| work_package.supplier_services.where(**LOT_NUMBER_TO_QUERY_PARAMS[lot_number]).select(&:core) }.flatten
 end
+
+LOT_NUMBER_TO_QUERY_PARAMS = {
+  '1' => { total: true },
+  '2' => { hard: true },
+  '3' => { soft: true }
+}.freeze

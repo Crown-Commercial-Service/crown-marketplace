@@ -13,16 +13,16 @@ Feature: Selecting service codes
     And the supplier name shown is '<supplier_name>'
 
     Examples:
-      | supplier_name               | lot | title           |
-      | Abshire, Schumm and Farrell | a   | Lot a services  |
-      | Terry-Greenholt             | b   | Lot b services  |
-      | Schultz-Wilkinson           | c   | Lot c services  |
+      | supplier_name               | lot | title             |
+      | Abshire, Schumm and Farrell | 3a  | Lot 3a services   |
+      | Terry-Greenholt             | 2b  | Lot 2b services   |
+      | Schultz-Wilkinson           | 1c  | Lot 1c services   |
 
-  Scenario: I change the services and it changes on View lot data - lot a
+  Scenario: I change the services and it changes on View lot data - lot 1a
     Then I click on 'View lot data' for 'Conn, Hayes and Lakin'
     And I am on the 'View lot data' page
-    And I change the 'services' for lot 'a'
-    Then I am on the 'Lot a services' page
+    And I change the 'services' for lot '1a'
+    Then I am on the 'Lot 1a services' page
     And the supplier name shown is 'Conn, Hayes and Lakin'
     And I deselect all checkboxes
     And I select the following items:
@@ -31,70 +31,62 @@ Feature: Selecting service codes
       | H.8 Trolley service                 |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following services selected for lot 'a':
+    And I should see the following services selected for lot '1a':
       | Catering equipment maintenance  |
       | Tree Surgery (Arboriculture)    |
       | Trolley service                 |
 
   @pipline
-  Scenario: I change the services and it changes on View lot data - lot b
+  Scenario: I change the services and it changes on View lot data - lot 2b
     Then I click on 'View lot data' for 'Terry-Greenholt'
     And I am on the 'View lot data' page
-    And I change the 'services' for lot 'b'
-    Then I am on the 'Lot b services' page
+    And I change the 'services' for lot '2b'
+    Then I am on the 'Lot 2b services' page
     And the supplier name shown is 'Terry-Greenholt'
     And I deselect all checkboxes
     And I select the following items:
-      | I.9 Cleaning of communications and equipment rooms          |
-      | I.10 Reactive cleaning (outside cleaning operational hours) |
+      | F.9 Building Information Modelling and Government Soft Landings |
+      | N.11 Energy and utilities management bureau Services            |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following services selected for lot 'b':
-      | Cleaning of communications and equipment rooms          |
-      | Reactive cleaning (outside cleaning operational hours)  |
+    And I should see the following services selected for lot '2b':
+      | Building Information Modelling and Government Soft Landings |
+      | Energy and utilities management bureau Services             |
 
-  Scenario: I change the services and it changes on View lot data - lot c
+  Scenario: I change the services and it changes on View lot data - lot 3c
     Then I click on 'View lot data' for 'Cummerata, Lubowitz and Ebert'
     And I am on the 'View lot data' page
-    And I change the 'services' for lot 'c'
-    Then I am on the 'Lot c services' page
+    And I change the 'services' for lot '3c'
+    Then I am on the 'Lot 3c services' page
     And the supplier name shown is 'Cummerata, Lubowitz and Ebert'
     And I deselect all checkboxes
     And I select the following items:
-      | E.20 Locksmith Services                                         |
-      | F.9 Building Information Modelling and Government Soft Landings |
-      | G.7 Internal planting                                           |
-      | H.8 Trolley service                                             |
-      | I.15 Medical and clinical cleaning                              |
-      | J.9 Archiving (on-site)                                         |
-      | K.4 Voice announcement system operation                         |
-      | L.14 Remote CCTV / alarm monitoring                             |
-      | M.7 Clinical Waste                                              |
-      | N.6 Journal, magazine and newspaper supply                      |
-      | O.4 Rural Estate Maintenance (REM) Services                     |
-      | P.12 Future Accommodation Model (FAM)                           |
+      | G.7 Internal planting                       |
+      | H.8 Trolley service                         |
+      | I.15 Medical and clinical cleaning          |
+      | J.9 Archiving (on-site)                     |
+      | K.4 Voice announcement system operation     |
+      | L.14 Remote CCTV / alarm monitoring         |
+      | M.7 Clinical Waste                          |
+      | N.6 Journal, magazine and newspaper supply  |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following services selected for lot 'c':
-      | Locksmith Services                                          |
-      | Building Information Modelling and Government Soft Landings |
-      | Internal planting                                           |
-      | Trolley service                                             |
-      | Medical and clinical cleaning                               |
-      | Archiving (on-site)                                         |
-      | Voice announcement system operation                         |
-      | Remote CCTV / alarm monitoring                              |
-      | Clinical Waste                                              |
-      | Journal, magazine and newspaper supply                      |
-      | Rural Estate Maintenance (REM) Services                     |
-      | Future Accommodation Model (FAM)                            |
+    And I should see the following services selected for lot '3c':
+      | Internal planting                       |
+      | Trolley service                         |
+      | Medical and clinical cleaning           |
+      | Archiving (on-site)                     |
+      | Voice announcement system operation     |
+      | Remote CCTV / alarm monitoring          |
+      | Clinical Waste                          |
+      | Journal, magazine and newspaper supply  |
 
   @pipline
   Scenario Outline: Breadcrumb links work from services
     Then I click on 'View lot data' for 'Yost LLC'
     And I am on the 'View lot data' page
-    And I change the 'services' for lot 'c'
-    Then I am on the 'Lot c services' page
+    And I change the 'services' for lot '1c'
+    Then I am on the 'Lot 1c services' page
     And the supplier name shown is 'Yost LLC'
     And I click on '<link_text>'
     Then I am on the '<page_title>' page
@@ -109,7 +101,7 @@ Feature: Selecting service codes
   Scenario: I can't select core services
     Then I click on 'View lot data' for 'Skiles LLC'
     And I am on the 'View lot data' page
-    And I change the 'services' for lot 'a'
-    Then I am on the 'Lot a services' page
+    And I change the 'services' for lot '1a'
+    Then I am on the 'Lot 1a services' page
     And the supplier name shown is 'Skiles LLC'
     And I can't select any core services

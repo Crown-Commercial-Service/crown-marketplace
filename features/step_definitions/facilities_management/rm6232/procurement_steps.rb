@@ -18,11 +18,11 @@ When('my sublot is {string}') do |sub_lot|
 end
 
 When('I have {int} buildings in my results') do |number_of_buildings|
-  expect(procurement_page.buildings.number_of_buildings).to have_content("Buildings (#{number_of_buildings})")
+  expect(procurement_page.buildings.number).to have_content("Buildings (#{number_of_buildings})")
 end
 
 When('I have {int} services in my results') do |number_of_services|
-  expect(procurement_page.services.number_of_services).to have_content("Services (#{number_of_services})")
+  expect(procurement_page.services.number).to have_content("Services (#{number_of_services})")
 end
 
 Then('there are {int} suppliers shortlisted') do |number_of_suppliers|
@@ -30,17 +30,17 @@ Then('there are {int} suppliers shortlisted') do |number_of_suppliers|
 end
 
 Then('the buildings in my results are:') do |building_names|
-  expect(procurement_page.buildings.building_names.length).to eq(building_names.raw.flatten.length)
+  expect(procurement_page.buildings.names.length).to eq(building_names.raw.flatten.length)
 
-  procurement_page.buildings.building_names.zip(building_names.raw.flatten).each do |element, value|
+  procurement_page.buildings.names.zip(building_names.raw.flatten).each do |element, value|
     expect(element).to have_content(value)
   end
 end
 
 Then('the services in my results are:') do |service_names|
-  expect(procurement_page.services.service_names.length).to eq(service_names.raw.flatten.length)
+  expect(procurement_page.services.names.length).to eq(service_names.raw.flatten.length)
 
-  procurement_page.services.service_names.zip(service_names.raw.flatten).each do |element, value|
+  procurement_page.services.names.zip(service_names.raw.flatten).each do |element, value|
     expect(element).to have_content(value)
   end
 end

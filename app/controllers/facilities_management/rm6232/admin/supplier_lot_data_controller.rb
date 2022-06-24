@@ -25,7 +25,7 @@ module FacilitiesManagement
 
         def set_supplier_data
           @supplier = Supplier.find(params[:id])
-          @lot_data = @supplier.lot_data.order(:lot_code).map do |lot_data|
+          @lot_data = @supplier.lot_data.order('REVERSE(lot_code)').map do |lot_data|
             {
               id: lot_data.id,
               lot_code: lot_data.lot_code,
@@ -57,7 +57,7 @@ module FacilitiesManagement
         end
 
         def set_work_packages
-          @work_packages = WorkPackage.selectable.index_with(&:supplier_services)
+          @work_packages = WorkPackage.selectable.index_with { |work_package| work_package.supplier_services.where(**LOT_NUMBER_TO_QUERY_PARAMS[@lot_code[0]]) }.reject { |_, service| service.empty? }
         end
 
         def set_regions
@@ -76,6 +76,11 @@ module FacilitiesManagement
         end
 
         RECOGNISED_LOT_DATA_TYPES = %w[service_codes region_codes].freeze
+        LOT_NUMBER_TO_QUERY_PARAMS = {
+          '1' => { total: true },
+          '2' => { hard: true },
+          '3' => { soft: true }
+        }.freeze
       end
     end
   end

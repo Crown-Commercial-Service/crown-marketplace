@@ -2,49 +2,8 @@ require_relative '../entering_requirements'
 
 module Pages::RM3830
   class EnteringRequirements < Pages::EnteringRequirements
-    section 'Contract details', 'form > table:nth-of-type(1)' do
-      section 'Contract name', 'tr:nth-of-type(1)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Estimated annual cost', 'tr:nth-of-type(2)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'TUPE', 'tr:nth-of-type(3)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Contract period', 'tr:nth-of-type(4)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-    end
-
-    section 'Services and buildings', 'form > table:nth-of-type(2)' do
-      section 'Services', 'tr:nth-of-type(1)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Buildings', 'tr:nth-of-type(2)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Assigning services to buildings', 'tr:nth-of-type(3)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Service requirements', 'tr:nth-of-type(4)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-    end
+    section 'Contract details', Pages::ContractDetailsSection, 'form > table:nth-of-type(1)'
+    section 'Services and buildings', Pages::ServicesAndBuildingsSection, 'form > table:nth-of-type(2)'
 
     element :estimated_cost_known_yes, '#facilities_management_rm3830_procurement_estimated_cost_known_true'
     element :estimated_cost_known_no, '#facilities_management_rm3830_procurement_estimated_cost_known_false'

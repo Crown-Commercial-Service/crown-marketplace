@@ -75,18 +75,20 @@
             <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_name), class: 'govuk-link--no-visited-state') %>
           </dd>
         </div>
-      <% %i[contact_name contact_email contact_phone].each do |attribute| %>
-        <div id="supplier-details--<%= attribute %>" class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".#{attribute}") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= contact_detail(attribute) %>
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_contact_information), class: 'govuk-link--no-visited-state') %>
-          </dd>
-        </div>
+      <% if params[:framework] == 'RM3830' %>
+        <% %i[contact_name contact_email contact_phone].each do |attribute| %>
+          <div id="supplier-details--<%= attribute %>" class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <%= t(".#{attribute}") %>
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <%= contact_detail(attribute) %>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <%= link_to(t('.change'), edit_facilities_management_admin_supplier_detail_path(@framework, @supplier, page: :supplier_contact_information), class: 'govuk-link--no-visited-state') %>
+            </dd>
+          </div>
+        <% end %>
       <% end %>
     </dl>
   </div>
