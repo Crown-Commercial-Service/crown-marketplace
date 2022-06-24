@@ -9,12 +9,12 @@ const adminStateToProgress = {
     wait: 500,
     state: 'progress-0',
   },
-  checking_file: {
+  checking_files: {
     progress: 30,
     wait: 500,
     state: 'progress-1',
   },
-  processing_file: {
+  processing_files: {
     progress: 50,
     wait: 500,
     state: 'progress-2',
