@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataImporter do
+RSpec.describe FacilitiesManagement::RM3830::Admin::FilesImporter do
   let(:upload) do
     create(:facilities_management_rm3830_admin_upload, aasm_state: 'in_progress') do |admin_upload|
       admin_upload.supplier_data_file.attach(io: File.open(supplier_data_file_path), filename: 'test_supplier_framework_date_file.xlsx')

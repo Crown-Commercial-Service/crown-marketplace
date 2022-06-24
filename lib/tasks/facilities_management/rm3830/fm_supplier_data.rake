@@ -13,7 +13,7 @@ namespace :db do
     task add_supplier_rate_cards: :environment do
       p '**** Loading FM Supplier rates cards'
       DistributedLocks.distributed_lock(154) do
-        FacilitiesManagement::RM3830::Admin::SupplierFrameworkDataImporter.new.import_test_data
+        FacilitiesManagement::RM3830::Admin::FilesImporter.new.import_test_data
       end
     end
   end

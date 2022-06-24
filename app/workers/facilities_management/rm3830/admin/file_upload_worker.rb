@@ -7,7 +7,7 @@ module FacilitiesManagement
 
         def perform(id)
           fm_import = Upload.find(id)
-          SupplierFrameworkDataImporter.new(fm_import).import_data
+          FilesImporter.new(fm_import).import_data
         rescue ActiveRecord::RecordNotFound => e
           logger.error e.message
         end

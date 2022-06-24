@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
     end
 
     context 'when the upload is in an in progress state' do
-      let(:aasm_state) { 'processing_file' }
+      let(:aasm_state) { 'processing_files' }
 
       render_views
 
