@@ -214,18 +214,18 @@ en:
       home:
         index:
           beforeyoustart: Before you start
-          further_information: View further information about the Facilities Management framework RM6232
+          further_information: View further information about the Facilities Management and Workplace Services framework RM6232
           heading: Find a facilities management supplier
-          startlist_html: |
-            <li>what services you are looking for</li>
-            <li>your building locations and information</li>
-            <li>your basic contract requirements</li>
+          startlist:
+            item_1: which services you want to have provided
+            item_2: where your buildings are located
+            item_3: your current or estimated annual cost
           startnow: Start now
           subheading: 'Use this service to:'
-          usagelist_html: |
-            <li>quickly view suppliers who can provide services to your locations</li>
-            <li>compliantly create your procurement bid back</li>
-            <li>shortlist suppliers ready for further competition</li>
+          usagelist:
+            item_1: quickly view suppliers who can provide services to your locations
+            item_2: shortlist potential suppliers
+            item_3: receive a compliant Lot recommendation
           youneedtoknow: 'You need to know:'
       journey:
         annual_contract_value:
