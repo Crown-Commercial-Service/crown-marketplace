@@ -4,9 +4,9 @@ Feature: Results accessibility
   Background: Navigate to select services
     Given I sign in and navigate to my account for 'RM6232'
     And I click on 'Search for suppliers'
-    Then I am on the 'Start a procurement' page
+    Then I am on the 'Search for suppliers' page
 
-  Scenario: Start a procurement page
+  Scenario: Search for suppliers page
     Then the page should be axe clean
 
   Scenario: Select services page

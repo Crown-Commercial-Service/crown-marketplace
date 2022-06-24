@@ -250,39 +250,31 @@ en:
           learn_more: Further details (opens in a new tab)
           question: Select the facilities management services that you need
           return_text: Return to your account
-        start_a_procurement:
-          heading: Start a procurement
+        start_a_search:
+          heading: Search for suppliers
           return_text: Return to your account
           step_1:
-            content: 'We will first ask you for some basic service and contract information:'
+            content: 'We will first ask you for some basic service, location and cost information:'
             list:
               item_1: which services you want to have provided
               item_2: where your buildings are located
-              item_3: your current annual cost
-            title: Basic Requirements
+              item_3: your estimated annual cost
+            title: Enter basic requirements
           step_2:
-            content: 'You will be shown:'
+            content: 'You will then be shown, and can save/download:'
             list:
-              item_1: a compliant sub-lot, and a shortlist of potential suppliers
-              item_2: the options available for your next steps if you want to proceed into a procurement
-            title: Results
+              item_1: a compliant Lot
+              item_2: a shortlist of potential suppliers
+            title: View your results
           step_3:
-            content:
-              part_1: 'You will be given the option of completing further building and service requirements either:'
-              part_2: Using this information we will be able to generate documents for you that you can use for your procurement
+            content: 'We will sign post you to the Framework web page, where you can:'
             list:
-              item_1: within this portal with us guiding you through the questions
-              item_2: using a spreadsheet template, which you can download, fill out the information, and upload
-            title: Further service and contract requirements (optional)
-          step_4:
-            content:
-              part_1: On this page you will be able to download a copy of your search results.
-              part_2: 'If you have added further service and contract requirements, you will be able to download:'
-            list:
-              item_1: a deliverables matrix
-              item_2: other spreadsheets
-            title: Final results
-          the_steps_shown: The steps shown below outline the process that you'll follow creating your facilities management procurement.
+              item_1: find further competition guidance
+              item_2: access full contact details for your shortlisted suppliers
+              item_3: download the Terms and Conditions
+              item_4: use Bid Pack templates and instructions to create your further competition
+            title: Get further information
+          the_steps_shown: The steps shown below outline the process that you'll follow to create a supplier shortlist.
       procurements:
         index:
           date_saved: Date saved
@@ -321,7 +313,7 @@ en:
           return_to_your_account: Return to your account
           selected_suppliers: Selected suppliers
           step_1: Step 1 - download your results
-          step_2: Step 2 - how to buy
+          step_2: Step 2 - read about how to buy
           title: What do I do next?
           visit_the_framework_page_html: 'Visit the %{framework_page_link} page for information on how to procure via this framework, including:'
           you_can_download: 'You can download your shortlisted supplier list now, which also contains:'
