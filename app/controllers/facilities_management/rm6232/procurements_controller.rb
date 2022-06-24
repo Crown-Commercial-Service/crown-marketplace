@@ -72,7 +72,7 @@ module FacilitiesManagement
                                  when :index
                                    [facilities_management_rm6232_path, t('facilities_management.rm6232.procurements.index.return_to_your_account')]
                                  when :show
-                                   [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')]
+                                   [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_saved_searches')]
                                  when :new
                                    [helpers.journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), t('facilities_management.rm6232.procurements.new.return_to_contract_cost')]
                                  end
