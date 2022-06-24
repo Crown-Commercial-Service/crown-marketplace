@@ -18,11 +18,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
 
   describe 'GET index' do
     before do
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'what_happens_next', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'entering_requirements', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'results', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', user: user)
-      create(:facilities_management_rm6232_procurement_what_happens_next, aasm_state: 'further_information', user: user)
+      create_list(:facilities_management_rm6232_procurement_what_happens_next, 5, aasm_state: 'what_happens_next', user: user)
       get :index
     end
 
@@ -31,8 +27,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsController, type: :cont
     end
 
     it 'groups up the procurements' do
-      expect(assigns(:searches).length).to eq 3
-      expect(assigns(:advanced_procurement_activities).length).to eq 2
+      expect(assigns(:searches).length).to eq 5
     end
 
     it 'sets the back path' do

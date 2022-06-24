@@ -80,7 +80,7 @@ Feature: Information appears correctly on results page
   Scenario: Save and return goes to the dashboard
     Then I enter 'Colony 4 procurement' into the contract name field
     And I click on 'Save and return to procurements dashboard'
-    Then I am on the 'Procurements dashboard' page
+    Then I am on the 'Saved searches' page
     And the procurement 'Colony 4 procurement' is on the dashboard
     And the RM6232 procurement 'Colony 4 procurement' should have the state 'Completed search'
     Then I click on 'Colony 4 procurement'

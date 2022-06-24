@@ -44,3 +44,11 @@ Then('the services in my results are:') do |service_names|
     expect(element).to have_content(value)
   end
 end
+
+Then('I should see the following procurements listed:') do |procurement_names|
+  expect(procurement_page.saved_searches.search_names.length).to eq(procurement_names.raw.flatten.length)
+
+  procurement_page.saved_searches.search_names.zip(procurement_names.raw.flatten).each do |element, value|
+    expect(element).to have_content(value)
+  end
+end
