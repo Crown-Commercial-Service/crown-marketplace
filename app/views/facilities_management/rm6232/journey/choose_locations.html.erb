@@ -21,6 +21,16 @@
                 <span class="govuk-caption-m">
                   <%= t('.subtitle') %>
                 </span>
+                <p>
+                  <%= govuk_details(t('.need_help')) do %>
+                    <p>
+                      <%= t('.the_regions') %>
+                    </p>
+                    <p>
+                      <%= t('.more_information.sentence_html', ons_link:  link_to(t('.more_information.link_text'), t('.more_information.link_url'), class: 'govuk-link govuk-link--no-visited-state')) %>
+                    </p>
+                  <% end %>
+                </p>
                 <%= display_potential_errors(@journey.steps[1], :region_codes, '')%>
               </legend>
               <div class="chooser-input">
