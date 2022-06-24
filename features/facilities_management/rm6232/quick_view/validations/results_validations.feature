@@ -14,8 +14,8 @@ Feature: Results validations
     Then I select the following items:
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '123456' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '123456' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
 

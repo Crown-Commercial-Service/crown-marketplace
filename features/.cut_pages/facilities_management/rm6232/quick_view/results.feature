@@ -16,8 +16,8 @@ Feature: Information appears correctly on results page
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '123456' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '123456' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '2a'
@@ -28,7 +28,7 @@ Feature: Information appears correctly on results page
     And I should see the following 'regions' in the selection summary:
       | Tees Valley and Durham  |
       | Essex                   |
-    And I should see the following 'annual contract value' in the selection summary:
+    And I should see the following 'annual contract cost' in the selection summary:
       | £123,456  |
 
   @pipeline 
@@ -40,7 +40,7 @@ Feature: Information appears correctly on results page
     Then I am on the 'Further service and contract requirements' page
     And the procurement name is shown to be 'Mechonis field contract'
     And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
-    And 'Annual contract value' should have the status 'COMPLETED' in 'Contract details'
+    And 'Annual contract cost' should have the status 'COMPLETED' in 'Contract details'
     And 'Services' should have the status 'Completed' in 'Services and buildings'
     And I click on 'Services'
     Then I am on the 'Services summary' page

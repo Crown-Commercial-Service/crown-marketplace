@@ -4,7 +4,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
     Given I sign in as an admin and navigate to the 'RM6232' dashboard
 
   Scenario Outline: Total services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.1  | UKH1  | <contract_value>  |
       | K.1  | UKH2  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -20,7 +20,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
       | Bedfordshire and Hertfordshire  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.1  | UKH1  | <contract_value>  |
       | K.1  | UKH2  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -35,7 +35,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
 
   @pipeline
   Scenario Outline: Hard services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKL18  | <contract_value>  |
       | N.10 | UKL24  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -51,7 +51,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
       | Powys  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | F.2  | UKL18  | <contract_value>  |
       | N.10 | UKL24  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -64,7 +64,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
       | 11000000        | 2c          | Breitenberg-Mante         |
 
   Scenario Outline: Soft services - region selection
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | H.1  | UKH3  | <contract_value>  |
       | I.5  | UKK4  |                   |
     Then I should be in sub-lot '<lot_number>'
@@ -80,7 +80,7 @@ Feature: Removing regions for suppliers on the admin tool and seeing the effect 
       | Devon  |
     And I click on 'Save and return'
     Then I am on the 'View lot data' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | H.1  | UKH3  | <contract_value>  |
       | I.5  | UKK4  |                   |
     Then I should be in sub-lot '<lot_number>'

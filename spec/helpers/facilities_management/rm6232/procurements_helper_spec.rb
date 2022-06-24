@@ -40,10 +40,10 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
         end
       end
 
-      context 'when the annual contract value is nil' do
+      context 'when the annual contract cost is nil' do
         let(:annual_contract_value) { nil }
 
-        it 'returns the correct URL without the annual contract value' do
+        it 'returns the correct URL without the annual contract cost' do
           expect(result).to eq '/facilities-management/RM6232/choose-services?region_codes%5B%5D=UKI3&region_codes%5B%5D=UKI4&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
         end
       end
