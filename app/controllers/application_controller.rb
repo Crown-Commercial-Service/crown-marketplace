@@ -60,28 +60,9 @@ class ApplicationController < ActionController::Base
   helper_method :service_path_base
 
   def determine_non_admin_after_sign_in
-    case controller_path.split('/').first
-    when 'facilities_management'
-      session[:return_to] = request.fullpath
-      facilities_management_url_for_user_type
-    when 'crown_marketplace'
-      crown_marketplace_new_user_session_path
-    else
-      facilities_management_url
-    end
-  end
+    session[:return_to] = request.fullpath if service_path_base.include?('facilities-management')
 
-  def facilities_management_url_for_user_type
-    return facilities_management_rm3830_supplier_new_user_session_url if controller_path.split('/')[2] == 'supplier'
-
-    case params[:framework]
-    when 'RM3830'
-      facilities_management_rm3830_new_user_session_path
-    when 'RM6232'
-      facilities_management_rm6232_new_user_session_path
-    else
-      "/facilities-management/#{FacilitiesManagement::Framework.default_framework}/sign-in"
-    end
+    "#{service_path_base}/sign-in"
   end
 
   delegate :ccs_homepage_url, to: Marketplace
