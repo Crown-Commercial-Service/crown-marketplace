@@ -28,7 +28,8 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
   KEY_TO_MODEL = {
     management_report_id: FacilitiesManagement::RM3830::Admin::ManagementReport,
-    admin_upload_id: FacilitiesManagement::RM3830::Admin::Upload,
+    rm3830_admin_upload_id: FacilitiesManagement::RM3830::Admin::Upload,
+    rm6232_admin_upload_id: FacilitiesManagement::RM6232::Admin::Upload,
     contract_id: FacilitiesManagement::RM3830::ProcurementSupplier,
     procurement_id: FacilitiesManagement::RM3830::Procurement
   }.freeze

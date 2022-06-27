@@ -1,4 +1,4 @@
-module FacilitiesManagement::RM3830::Admin::UploadsHelper
+module FacilitiesManagement::Admin::UploadsHelper
   def upload_status_tag(status)
     case status
     when 'published'
@@ -11,7 +11,7 @@ module FacilitiesManagement::RM3830::Admin::UploadsHelper
   end
 
   def get_admin_upload_error_details(error, details)
-    t("facilities_management.rm3830.admin.uploads.failed.error_details.#{error}_html", list: details_to_list(details))
+    t("facilities_management.#{params[:framework].downcase}.admin.uploads.failed.error_details.#{error}_html", list: details_to_list(details))
   end
 
   def details_to_list(details)

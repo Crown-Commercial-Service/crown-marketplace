@@ -1,12 +1,14 @@
 <%= content_for :page_title, t('.heading', number: @upload.short_uuid) %>
-<%= admin_breadcrumbs({ text: t('.supplier_framework_data'), link: facilities_management_rm3830_admin_supplier_framework_data_path },
-                      { text: t('.manage_supplier_framework_data'), link: facilities_management_rm3830_admin_uploads_path },
-                      { text: t('.heading', number: @upload.short_uuid) })%>
+<%= admin_breadcrumbs(
+  { text: t('facilities_management.rm6232.admin.supplier_data.index.heading'), link: facilities_management_rm6232_admin_supplier_data_path },
+  { text: t('facilities_management.rm6232.admin.uploads.index.heading'), link: facilities_management_rm6232_admin_uploads_path },
+  { text: t('.heading', number: @upload.short_uuid) }
+)%>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l govuk-!-margin-bottom-0"><%= t('.caption') %></span>
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4"><%= t('.heading', number: @upload.short_uuid) %></h1>
+    <span class="govuk-caption-xl"><%= t('.caption') %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading', number: @upload.short_uuid) %></h1>
 
     <dl class="govuk-summary-list govuk-summary-list--no-border">
       <div class="govuk-summary-list__row">
@@ -45,12 +47,15 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        <tr>
-          <td class="govuk-table__cell"><%= t('.file_name') %></td>
-          <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.supplier_data_file, disposition: 'attachment', key: :rm3830_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
-        </tr>
+        <% FacilitiesManagement::RM6232::Admin::Upload::ATTRIBUTES.each do |file| %>
+          <% next unless @upload.send(file).attached? %>
+          <tr>
+            <td class="govuk-table__cell"><%= t(".file_name.#{file}") %></td>
+            <td class="govuk-table__cell"><%= link_to_file_for_download("#{rails_blob_path(@upload.send(file), disposition: 'attachment', key: :rm6232_admin_upload_id, value: @upload.id)}&format=xlsx", :xlsx, t('.download'), false) %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
-    <%= link_to t('.return'), facilities_management_rm3830_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    <%= link_to t('.return'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
   </div>
 </div>
