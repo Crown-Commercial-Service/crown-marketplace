@@ -6,6 +6,4 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<li class="ccs-first">
-  <%= f.button(t('views.pagination.previous').html_safe, class: 'govuk-link button_as_link', name: "paginate-#{current_page - 1}", rel: 'prev', remote: remote) unless current_page.first? %>
-</li>
+<%= govuk_pagination_prev_form(f, current_page) %>
