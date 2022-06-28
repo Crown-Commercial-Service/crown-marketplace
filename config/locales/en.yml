@@ -664,8 +664,3 @@ en:
     unit:
       one: agency
       other: agencies
-  views:
-    pagination:
-      next: Next <b>→</b>
-      previous: "<b>←</b> Previous"
-      truncate: "..."

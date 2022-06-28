@@ -52,8 +52,8 @@ module Pages
     element :select_all_services_checkbox, '#box-all'
     elements :all_checkboxes, 'input[type=checkbox]'
 
-    element :next_pagination, 'li.ccs-last > button'
-    element :previous_pagination, 'li.ccs-first > button'
+    element :next_pagination, 'div.govuk-pagination__next > button'
+    element :previous_pagination, 'div.govuk-pagination__prev > button'
 
     element :region_drop_down, '#facilities_management_building_address_region'
   end

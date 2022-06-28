@@ -7,12 +7,4 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<% if page.current? %>
-  <li aria-current="true">
-    <%= page %>
-  </li>
-<% else %>
-  <li>
-    <%= f.button page, class: 'govuk-link button_as_link', name: "paginate-#{page}", remote: remote, rel: page.rel %>
-  </li>
-<% end %>
+<%= govuk_pagination_item_form(f, { number: page, href: url, current: page.current? }) %>

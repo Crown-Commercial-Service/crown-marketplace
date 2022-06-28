@@ -6,6 +6,7 @@ module GovUKHelper
   include Details
   include Header
   include NotificationBanner
+  include Pagination
   include Radios
   include StepByStepNavigation
   include TextInput
