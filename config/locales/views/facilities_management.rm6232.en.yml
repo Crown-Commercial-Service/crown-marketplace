@@ -224,9 +224,9 @@ en:
           subheading: 'Use this service to:'
           usagelist:
             item_1: quickly view suppliers who can provide services to your locations
-            item_2: shortlist potential suppliers
+            item_2: download a shortlist of potential suppliers
             item_3: receive a compliant Lot recommendation
-          youneedtoknow: 'You need to know:'
+          youneedtoknow: 'To receive a shortlist and complaint Lot, you need to know:'
       journey:
         annual_contract_value:
           heading: Annual contract cost
@@ -250,31 +250,6 @@ en:
           learn_more: Further details (opens in a new tab)
           question: Select the facilities management services that you need
           return_text: Return to your account
-        start_a_search:
-          heading: Search for suppliers
-          return_text: Return to your account
-          step_1:
-            content: 'We will first ask you for some basic service, location and cost information:'
-            list:
-              item_1: which services you want to have provided
-              item_2: where your buildings are located
-              item_3: your estimated annual cost
-            title: Enter basic requirements
-          step_2:
-            content: 'You will then be shown, and can save/download:'
-            list:
-              item_1: a compliant Lot
-              item_2: a shortlist of potential suppliers
-            title: View your results
-          step_3:
-            content: 'We will sign post you to the Framework web page, where you can:'
-            list:
-              item_1: find further competition guidance
-              item_2: access full contact details for your shortlisted suppliers
-              item_3: download the Terms and Conditions
-              item_4: use Bid Pack templates and instructions to create your further competition
-            title: Get further information
-          the_steps_shown: The steps shown below outline the process that you'll follow to create a supplier shortlist.
       procurements:
         index:
           date_saved: Date saved
