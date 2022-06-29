@@ -36,6 +36,16 @@ class User < ApplicationRecord
            class_name: 'FacilitiesManagement::RM3830::Admin::ManagementReport',
            dependent: :nullify
 
+  has_many :rm3830_admin_uploads,
+           inverse_of: :user,
+           class_name: 'FacilitiesManagement::RM3830::Admin::Upload',
+           dependent: :nullify
+
+  has_many :rm6232_admin_uploads,
+           inverse_of: :user,
+           class_name: 'FacilitiesManagement::RM6232::Admin::Upload',
+           dependent: :nullify
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable

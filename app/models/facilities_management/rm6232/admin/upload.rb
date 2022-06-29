@@ -2,6 +2,8 @@ module FacilitiesManagement
   module RM6232
     module Admin
       class Upload < FacilitiesManagement::Admin::Upload
+        belongs_to :user, inverse_of: :rm6232_admin_uploads, optional: true
+
         has_one_attached :supplier_details_file
         has_one_attached :supplier_services_file
         has_one_attached :supplier_regions_file

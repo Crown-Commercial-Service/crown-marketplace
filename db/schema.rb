@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_27_081803) do
+ActiveRecord::Schema.define(version: 2022_06_29_111720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -111,6 +111,8 @@ ActiveRecord::Schema.define(version: 2022_06_27_081803) do
     t.text "import_errors"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_fm_rm3830_uploads_on_users_id"
   end
 
   create_table "facilities_management_rm3830_frozen_rate_cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -371,6 +373,8 @@ ActiveRecord::Schema.define(version: 2022_06_27_081803) do
     t.text "import_errors"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_fm_rm6232_uploads_on_users_id"
   end
 
   create_table "facilities_management_rm6232_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -610,6 +614,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_081803) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "facilities_management_buyer_details", "users"
   add_foreign_key "facilities_management_rm3830_admin_management_reports", "users"
+  add_foreign_key "facilities_management_rm3830_admin_uploads", "users"
   add_foreign_key "facilities_management_rm3830_frozen_rate_cards", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_frozen_rates", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_procurement_building_service_lifts", "facilities_management_rm3830_procurement_building_services"
@@ -623,6 +628,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_081803) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_admin_uploads", "users"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_buildings", column: "building_id"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_rm6232_procurements"
   add_foreign_key "facilities_management_rm6232_procurement_call_off_extensions", "facilities_management_rm6232_procurements"
