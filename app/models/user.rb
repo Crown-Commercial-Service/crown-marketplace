@@ -46,6 +46,11 @@ class User < ApplicationRecord
            class_name: 'FacilitiesManagement::RM6232::Admin::Upload',
            dependent: :nullify
 
+  has_many :rm6232_supplier_data_edits,
+           inverse_of: :user,
+           class_name: 'FacilitiesManagement::RM6232::Admin::SupplierData::Edit',
+           dependent: :nullify
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :trackable and :omniauthable
   devise :registerable, :recoverable, :timeoutable

@@ -28,11 +28,11 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
       send(file).build
       send(file).write
     end
-
-    files_importer.import_data
   end
 
   describe 'check_files' do
+    before { files_importer.import_data }
+
     context 'when the files have the wrong sheets' do
       let(:supplier_details_file_options) { { sheets: ['All suppliers'] } }
       let(:supplier_services_file_options) { { sheets: ['Lot 1a', 'Lot 1b', 'Lot 1c', 'Lot 2b', 'Lot 2c', 'Lot 3a', 'Lot 3b', 'Lot 3c'] } }
@@ -82,6 +82,8 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
   end
 
   describe 'check_processed_data' do
+    before { files_importer.import_data }
+
     context 'when a supplier has no details' do
       let(:supplier_services_file_options) { { extra_supplier: ['Malos LTD', '987654321'] } }
       let(:supplier_regions_file_options) { { extra_supplier: ['Amalthus Ministry', '987654321'] } }
@@ -123,27 +125,37 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::FilesImporter do
   end
 
   describe 'import_data' do
-    let(:expected_supplier_results) do
-      {
-        'Rex LTD': { lot_codes: %w[1a 2a 3a] },
-        'Nia Corp': { lot_codes: %w[1a 2a 3a] },
-        'Tora LTD': { lot_codes: %w[1a 1b 2a 2b 3a 3b] },
-        'Vandham Eexc Corp': { lot_codes: %w[1b 2b 3b] },
-        'Morag Jewel LTD': { lot_codes: %w[1b 1c 2b 2c 3b 3c] },
-        'ZEKE VON GEMBU Corp': { lot_codes: %w[1c 2c 3c] },
-        'Jin Corp': { lot_codes: %w[1c 2c 3c] }
-      }
+    context 'when considering the imported data' do
+      before { files_importer.import_data }
+
+      let(:expected_supplier_results) do
+        {
+          'Rex LTD': { lot_codes: %w[1a 2a 3a] },
+          'Nia Corp': { lot_codes: %w[1a 2a 3a] },
+          'Tora LTD': { lot_codes: %w[1a 1b 2a 2b 3a 3b] },
+          'Vandham Eexc Corp': { lot_codes: %w[1b 2b 3b] },
+          'Morag Jewel LTD': { lot_codes: %w[1b 1c 2b 2c 3b 3c] },
+          'ZEKE VON GEMBU Corp': { lot_codes: %w[1c 2c 3c] },
+          'Jin Corp': { lot_codes: %w[1c 2c 3c] }
+        }
+      end
+
+      it 'publishes the data and all the suppliers are imported' do
+        expect(upload).to have_state(:published)
+        expect(FacilitiesManagement::RM6232::Supplier.count).to eq 7
+      end
+
+      it 'has the correct data for the suppliers' do
+        expected_supplier_results.each do |supplier_name, expected_results|
+          supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name: supplier_name)
+          expect(supplier.lot_data.pluck(:lot_code)).to match_array(expected_results[:lot_codes])
+        end
+      end
     end
 
-    it 'publishes the data and all the suppliers are imported' do
-      expect(upload).to have_state(:published)
-      expect(FacilitiesManagement::RM6232::Supplier.count).to eq 7
-    end
-
-    it 'has the correct data for the suppliers' do
-      expected_supplier_results.each do |supplier_name, expected_results|
-        supplier = FacilitiesManagement::RM6232::Supplier.find_by(supplier_name: supplier_name)
-        expect(supplier.lot_data.pluck(:lot_code)).to match_array(expected_results[:lot_codes])
+    context 'when considering the supplier data' do
+      it 'has created a supplier data object' do
+        expect { files_importer.import_data }.to change(FacilitiesManagement::RM6232::Admin::SupplierData, :count).by(1)
       end
     end
   end

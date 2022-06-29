@@ -145,7 +145,11 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
   describe 'PUT update' do
     login_fm_admin
 
-    before { put :update, params: { id: supplier.id, page: page, facilities_management_rm6232_admin_suppliers_admin: supplier_params } }
+    before do
+      allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change)
+      allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change).with(controller.current_user, supplier)
+      put :update, params: { id: supplier.id, page: page, facilities_management_rm6232_admin_suppliers_admin: supplier_params }
+    end
 
     context 'when updating on the supplier name page' do
       let(:page) { :supplier_name }
@@ -164,6 +168,10 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
 
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
+        end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, supplier)
         end
       end
     end
@@ -186,6 +194,10 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
         end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, supplier)
+        end
       end
     end
 
@@ -207,6 +219,10 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
         end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, supplier)
+        end
       end
     end
 
@@ -227,6 +243,10 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
 
         it 'redirects to the show page' do
           expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
+        end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, supplier)
         end
       end
     end
