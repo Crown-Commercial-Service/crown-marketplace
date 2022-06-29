@@ -4,8 +4,6 @@ Feature: Select services validations
   Background: Navigate to the services page
     Given I sign in and navigate to my account for 'RM6232'
     And I click on 'Search for suppliers'
-    Then I am on the 'Search for suppliers' page
-    And I click on 'Continue'
     Then I am on the 'Services' page
 
   Scenario: No services selected
