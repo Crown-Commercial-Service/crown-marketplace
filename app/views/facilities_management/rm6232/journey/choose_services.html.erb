@@ -27,7 +27,7 @@
               </div>
               <div class="govuk-grid-column-full" style="padding-left:0">
                 <%= form_tag 'choose-services/answer', method: :get do %>
-                  <%= display_potential_errors(@journey.steps[0], :service_codes, '')%>
+                  <%= display_error(@journey.steps[0], :service_codes)%>
                   <div class="chooser-input">
                     <%= govuk_accordion_with_checkboxes(
                       'choose-services',
