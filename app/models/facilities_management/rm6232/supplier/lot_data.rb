@@ -14,6 +14,23 @@ module FacilitiesManagement
       def regions
         Region.where(code: region_codes)
       end
+
+      def changed_data
+        model_changes = saved_changes.except(:updated_at).first
+        data_before = model_changes.last.first
+        data_after = model_changes.last.last
+
+        [
+          supplier.id,
+          :lot_data,
+          {
+            attribute: model_changes.first,
+            lot_code: lot_code,
+            added: data_after - data_before,
+            removed: data_before - data_after
+          }
+        ]
+      end
     end
   end
 end

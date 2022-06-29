@@ -592,4 +592,84 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SuppliersAdmin, type: :model
       end
     end
   end
+
+  describe '.changed_data' do
+    let(:result) { supplier.changed_data }
+
+    before { supplier.update(**attributes) }
+
+    context 'when changing the supplier status' do
+      let(:attributes) { { active: false } }
+      let(:data) do
+        [
+          {
+            attribute: 'active',
+            value: false
+          }
+        ]
+      end
+
+      it 'returns the correct data' do
+        expect(result).to eq([supplier.id, :details, data])
+      end
+    end
+
+    context 'when changing the supplier name' do
+      let(:attributes) { { supplier_name: 'Vandaham Corp' } }
+      let(:data) do
+        [
+          {
+            attribute: 'supplier_name',
+            value: 'Vandaham Corp'
+          }
+        ]
+      end
+
+      it 'returns the correct data' do
+        expect(result).to eq([supplier.id, :details, data])
+      end
+    end
+
+    context 'when changing the duns and CRN number' do
+      let(:new_duns) { Faker::Company.unique.duns_number.gsub('-', '') }
+      let(:attributes) { { duns: new_duns, registration_number: '0654321' } }
+      let(:data) do
+        [
+          {
+            attribute: 'duns',
+            value: new_duns
+          },
+          {
+            attribute: 'registration_number',
+            value: '0654321'
+          }
+        ]
+      end
+
+      it 'returns the correct data' do
+        expect(result).to eq([supplier.id, :details, data])
+      end
+    end
+
+    context 'when changing the address' do
+      let(:attributes) { { address_line_1: "Jakolo's Inn", address_line_2: supplier.address_line_2, address_town: 'Alba cavanich', address_county: supplier.address_county, address_postcode: supplier.address_postcode } }
+
+      let(:data) do
+        [
+          {
+            attribute: 'address_line_1',
+            value: "Jakolo's Inn"
+          },
+          {
+            attribute: 'address_town',
+            value: 'Alba cavanich'
+          }
+        ]
+      end
+
+      it 'returns the correct data' do
+        expect(result).to eq([supplier.id, :details, data])
+      end
+    end
+  end
 end

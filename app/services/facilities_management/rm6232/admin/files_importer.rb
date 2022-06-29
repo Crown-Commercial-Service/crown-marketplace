@@ -8,15 +8,7 @@ module FacilitiesManagement::RM6232
       private
 
       def other_data
-        {}
-      end
-
-      def file_source
-        if @upload
-          @upload.supplier_data_file.filename.to_s
-        else
-          file_sources(:supplier_data_file)
-        end
+        { upload: @upload }
       end
 
       FILE_SOURCES = {

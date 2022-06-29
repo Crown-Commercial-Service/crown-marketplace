@@ -4,6 +4,8 @@ module FacilitiesManagement
       class Upload < FacilitiesManagement::Admin::Upload
         belongs_to :user, inverse_of: :rm6232_admin_uploads, optional: true
 
+        has_one :supplier_data, inverse_of: :upload, class_name: 'FacilitiesManagement::RM6232::Admin::SupplierData', dependent: :destroy, foreign_key: :facilities_management_rm6232_admin_upload_id
+
         has_one_attached :supplier_details_file
         has_one_attached :supplier_services_file
         has_one_attached :supplier_regions_file

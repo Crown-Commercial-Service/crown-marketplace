@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_111720) do
+ActiveRecord::Schema.define(version: 2022_06_29_123952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -365,6 +365,26 @@ ActiveRecord::Schema.define(version: 2022_06_29_111720) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_admin_supplier_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_admin_upload_id"
+    t.json "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facilities_management_rm6232_admin_upload_id"], name: "index_fm_rm6232_supplier_data_on_fm_rm6232_admin_upload_id "
+  end
+
+  create_table "facilities_management_rm6232_admin_supplier_data_edits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facilities_management_rm6232_admin_supplier_data_id", null: false
+    t.uuid "user_id"
+    t.uuid "supplier_id"
+    t.string "change_type", limit: 255
+    t.json "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facilities_management_rm6232_admin_supplier_data_id"], name: "index_fm_rm6232_admin_sd_edits_on_fm_rm6232_admin_sd_id "
+    t.index ["user_id"], name: "index_fm_rm6232_admin_sd_edits_on_user_id"
+  end
+
   create_table "facilities_management_rm6232_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "aasm_state", limit: 30
     t.string "supplier_details_file", limit: 255
@@ -628,6 +648,9 @@ ActiveRecord::Schema.define(version: 2022_06_29_111720) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_admin_supplier_data", "facilities_management_rm6232_admin_uploads"
+  add_foreign_key "facilities_management_rm6232_admin_supplier_data_edits", "facilities_management_rm6232_admin_supplier_data", column: "facilities_management_rm6232_admin_supplier_data_id"
+  add_foreign_key "facilities_management_rm6232_admin_supplier_data_edits", "users"
   add_foreign_key "facilities_management_rm6232_admin_uploads", "users"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_buildings", column: "building_id"
   add_foreign_key "facilities_management_rm6232_procurement_buildings", "facilities_management_rm6232_procurements"
