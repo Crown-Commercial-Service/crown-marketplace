@@ -207,7 +207,7 @@ And('I find and select the building with the name {string}') do |building_name|
     if entering_requirements_page.text.include? building_name
       entering_requirements_page.find('label', text: building_name).click
       continue = false
-    elsif entering_requirements_page.has_css?('.ccs-pagination') && first('.ccs-pagination')
+    elsif entering_requirements_page.has_css?('.govuk-pagination') && first('.govuk-pagination')
       entering_requirements_page.next_pagination.click
     else
       raise("Cannot find Building with name #{building_name}")
