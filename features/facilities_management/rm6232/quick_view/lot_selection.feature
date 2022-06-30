@@ -1,10 +1,8 @@
-Feature: Service and selection and annual contract value result in correct sub lot
+Feature: Service and selection and annual contract cost result in correct sub lot
 
   Background: Navigate to the services page
     Given I sign in and navigate to my account for 'RM6232'
-    And I click on 'Start a procurement'
-    Then I am on the 'Start a procurement' page
-    And I click on 'Continue'
+    And I click on 'Search for suppliers'
     Then I am on the 'Services' page
 
   @pipline
@@ -19,8 +17,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -43,8 +41,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -67,8 +65,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -91,8 +89,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -116,8 +114,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -140,8 +138,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -165,8 +163,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -188,8 +186,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -212,8 +210,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'
@@ -239,8 +237,8 @@ Feature: Service and selection and annual contract value result in correct sub l
       | Tees Valley and Durham  |
       | Essex                   |
     And I click on 'Continue'
-    Then I am on the 'Annual contract value' page
-    And I enter '<estimated_annual_cost>' for the annual contract value
+    Then I am on the 'Annual contract cost' page
+    And I enter '<estimated_annual_cost>' for the annual contract cost
     And I click on 'Continue'
     Then I am on the 'Results' page
     And I should be in sub-lot '<sublot>'

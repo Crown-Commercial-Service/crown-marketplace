@@ -10,7 +10,7 @@ Feature: Quick view results validations
     And I click on 'Continue'
     Then I am on the 'Regions' page
     Then I select the following items:
-      | Belfast |
+      | Belfast (UKN01) |
     And I click on 'Continue'
     Then I am on the 'Quick view results' page
 

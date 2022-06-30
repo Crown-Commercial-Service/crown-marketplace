@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
+  include ApplicationHelper
+
   describe '.section_id' do
     let(:result) { helper.section_id(section) }
 
@@ -85,6 +87,37 @@ RSpec.describe FacilitiesManagement::ProcurementsHelper, type: :helper do
 
       it 'returns an array of the section incomplete' do
         expect(result).to eq %i[buildings_incomplete]
+      end
+    end
+  end
+
+  describe '.display_all_errors' do
+    let(:section_errors) { %i[contract_period_incomplete initial_call_off_period_in_past mobilisation_period_in_past mobilisation_period_required] }
+    let(:result) { display_all_errors(requirements_errors_list, section_errors) }
+
+    context 'when there is one error' do
+      let(:requirements_errors_list) { { contract_period_incomplete: '‘Contract period’ must be ‘COMPLETED’' } }
+
+      it 'returns the single error' do
+        expect(result).to eq('<span id="contract_period_incomplete-error" class="govuk-error-message">‘Contract period’ must be ‘COMPLETED’</span>')
+      end
+    end
+
+    context 'when there are multiple errrors' do
+      let(:requirements_errors_list) do
+        {
+          initial_call_off_period_in_past: 'Initial call-off period start date must not be in the past',
+          mobilisation_period_in_past: 'Mobilisation period start date must not be in the past',
+          mobilisation_period_required: 'Mobilisation period length must be a minimum of 4 weeks when TUPE is selected'
+        }
+      end
+
+      it 'returns all the errors' do
+        expect(result).to eq([
+          '<span id="initial_call_off_period_in_past-error" class="govuk-error-message">Initial call-off period start date must not be in the past</span>',
+          '<span id="mobilisation_period_in_past-error" class="govuk-error-message">Mobilisation period start date must not be in the past</span>',
+          '<span id="mobilisation_period_required-error" class="govuk-error-message">Mobilisation period length must be a minimum of 4 weeks when TUPE is selected</span>'
+        ].join)
       end
     end
   end

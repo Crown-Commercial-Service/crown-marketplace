@@ -14,16 +14,16 @@ Feature: Selecting region codes
 
     Examples:
       | supplier_name               | lot | title         |
-      | Abshire, Schumm and Farrell | a   | Lot a regions |
-      | Terry-Greenholt             | b   | Lot b regions |
-      | Schultz-Wilkinson           | c   | Lot c regions |
+      | Abshire, Schumm and Farrell | 1a   | Lot 1a regions |
+      | Terry-Greenholt             | 2b   | Lot 2b regions |
+      | Schultz-Wilkinson           | 3c   | Lot 3c regions |
 
   @pipline
-  Scenario: I change the regions and it changes on View lot data - lot a
+  Scenario: I change the regions and it changes on View lot data - lot 1a
     Then I click on 'View lot data' for 'Brakus, Lueilwitz and Blanda'
     And I am on the 'View lot data' page
-    And I change the 'regions' for lot 'a'
-    Then I am on the 'Lot a regions' page
+    And I change the 'regions' for lot '1a'
+    Then I am on the 'Lot 1a regions' page
     And the supplier name shown is 'Brakus, Lueilwitz and Blanda'
     And I deselect all checkboxes
     And I select the following items:
@@ -32,16 +32,16 @@ Feature: Selecting region codes
       | South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire) |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following regions selected for lot 'a':
+    And I should see the following regions selected for lot '1a':
       | South Yorkshire                                               |
       | Surrey, East and West Sussex                                  |
       | South West Wales (Ceredigion, Carmarthenshire, Pembrokeshire) |    
 
-  Scenario: I change the regions and it changes on View lot data - lot b
+  Scenario: I change the regions and it changes on View lot data - lot 2b
     Then I click on 'View lot data' for 'Donnelly, Wiegand and Krajcik'
     And I am on the 'View lot data' page
-    And I change the 'regions' for lot 'b'
-    Then I am on the 'Lot b regions' page
+    And I change the 'regions' for lot '2b'
+    Then I am on the 'Lot 2b regions' page
     And the supplier name shown is 'Donnelly, Wiegand and Krajcik'
     And I deselect all checkboxes
     And I select the following items:
@@ -49,15 +49,15 @@ Feature: Selecting region codes
       | Gloucestershire, Wiltshire and Bristol/Bath area  |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following regions selected for lot 'b':
+    And I should see the following regions selected for lot '2b':
       | Essex                                             |
       | Gloucestershire, Wiltshire and Bristol/Bath area  | 
 
-  Scenario: I change the regions and it changes on View lot data - lot c
+  Scenario: I change the regions and it changes on View lot data - lot 3c
     Then I click on 'View lot data' for 'Lind, Stehr and Dickinson'
     And I am on the 'View lot data' page
-    And I change the 'regions' for lot 'c'
-    Then I am on the 'Lot c regions' page
+    And I change the 'regions' for lot '3c'
+    Then I am on the 'Lot 3c regions' page
     And the supplier name shown is 'Lind, Stehr and Dickinson'
     And I deselect all checkboxes
     And I select the following items:
@@ -69,7 +69,7 @@ Feature: Selecting region codes
       | Belfast                 |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
-    And I should see the following regions selected for lot 'c':
+    And I should see the following regions selected for lot '3c':
       | Tees Valley and Durham  |
       | North Yorkshire         |
       | Inner London - East     |
@@ -81,8 +81,8 @@ Feature: Selecting region codes
   Scenario Outline: Breadcrumb links work from regions
     Then I click on 'View lot data' for 'Yost LLC'
     And I am on the 'View lot data' page
-    And I change the 'regions' for lot 'c'
-    Then I am on the 'Lot c regions' page
+    And I change the 'regions' for lot '1c'
+    Then I am on the 'Lot 1c regions' page
     And the supplier name shown is 'Yost LLC'
     And I click on '<link_text>'
     Then I am on the '<page_title>' page

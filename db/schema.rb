@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_075207) do
+ActiveRecord::Schema.define(version: 2022_06_20_130633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -370,6 +370,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_075207) do
     t.text "service_codes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "frozen_building_data", default: {}
     t.index ["active"], name: "index_fm_rm6232_procurement_buildings_on_active"
     t.index ["building_id"], name: "index_building_on_fm_rm6232_procurements_id"
     t.index ["facilities_management_rm6232_procurement_id"], name: "index_procurement_building_on_fm_rm6232_procurements_id"
@@ -428,7 +429,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_075207) do
 
   create_table "facilities_management_rm6232_supplier_lot_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_supplier_id"
-    t.string "lot_code", limit: 1
+    t.string "lot_code", limit: 2
     t.text "service_codes", default: [], array: true
     t.text "region_codes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
@@ -439,9 +440,6 @@ ActiveRecord::Schema.define(version: 2022_06_08_075207) do
 
   create_table "facilities_management_rm6232_suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "supplier_name", limit: 255
-    t.string "contact_name", limit: 255
-    t.string "contact_email", limit: 255
-    t.string "contact_phone", limit: 255
     t.boolean "sme"
     t.string "duns", limit: 255
     t.string "registration_number", limit: 255

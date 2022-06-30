@@ -168,27 +168,6 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
       end
     end
 
-    context 'when updating on the supplier contact information page' do
-      let(:page) { :supplier_contact_information }
-      let(:supplier_params) { { contact_name: contact_name, contact_email: 'fake@email.com', contact_phone: '(03456) 867 431' } }
-
-      context 'and the data is not valid' do
-        let(:contact_name) { '' }
-
-        it 'renders the edit page' do
-          expect(response).to render_template :edit
-        end
-      end
-
-      context 'and the data is valid' do
-        let(:contact_name) { 'Ness' }
-
-        it 'redirects to the show page' do
-          expect(response).to redirect_to facilities_management_admin_supplier_detail_path(framework: 'RM6232')
-        end
-      end
-    end
-
     context 'when updating on the additional supplier information page' do
       let(:page) { :additional_supplier_information }
       let(:supplier_params) { { duns: duns, registration_number: 'AB123456' } }

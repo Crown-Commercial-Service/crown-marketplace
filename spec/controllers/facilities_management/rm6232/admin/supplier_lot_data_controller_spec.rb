@@ -20,7 +20,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
       end
 
       it 'assigns the lot data' do
-        expect(assigns(:lot_data).map { |lot_data| lot_data[:id] }).to eq supplier.lot_data.order(:lot_code).pluck(:id)
+        expect(assigns(:lot_data).map { |lot_data| lot_data[:id] }).to eq supplier.lot_data.order('REVERSE(lot_code)').pluck(:id)
       end
     end
 

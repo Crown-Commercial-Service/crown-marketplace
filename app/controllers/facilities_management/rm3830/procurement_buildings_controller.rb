@@ -29,14 +29,6 @@ module FacilitiesManagement
       def set_standards_procurement_building_services
         @standards_procurement_building_services = @procurement_building.sorted_procurement_building_services.select(&:requires_service_standard?)
       end
-
-      def return_link
-        section == :missing_region ? procurement_show_path : "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/summary?summary=buildings_and_services"
-      end
-
-      def after_update_path
-        "/facilities-management/#{params[:framework]}/procurements/#{@procurement.id}/summary?summary=buildings_and_services"
-      end
     end
   end
 end

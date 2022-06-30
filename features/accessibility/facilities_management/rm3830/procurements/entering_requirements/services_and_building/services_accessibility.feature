@@ -15,6 +15,6 @@ Feature: Services accessibility
   Scenario: Services summary page
     Given I show all sections
     And I select 'Building management system (BMS) maintenance'
-    When I click on 'Save and continue'
+    When I click on 'Save and return'
     Then I am on the 'Services summary' page
     And the page should be axe clean

@@ -20,8 +20,3 @@ Feature: Contract name
     Given I click on the 'Return to requirements' return link
     Then I am on the 'Requirements' page
     And 'Contract name' should have the status 'COMPLETED' in 'Contract details'
-    Then I click on 'Contract name'
-    And I am on the 'Contract name' page
-    Given I click on the 'Return to requirements' back link
-    Then I am on the 'Requirements' page
-    And 'Contract name' should have the status 'COMPLETED' in 'Contract details'

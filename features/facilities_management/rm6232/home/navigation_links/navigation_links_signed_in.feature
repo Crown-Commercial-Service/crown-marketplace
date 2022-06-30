@@ -86,16 +86,16 @@ Feature: Navigation links when signed in
 
   # To be added when the page is implimented
   # Scenario: Procurement dashboard - My account
-  #   Then I click on 'Continue a procurement'
-  #   Then I am on the 'Procurements dashboard' page
+  #   Then I click on 'View your saved searches'
+  #   Then I am on the 'Saved searches' page
   #   And I should see the following navigation links:
   #     | My account  |
   #     | Sign out    |
   #   And I click on 'My account'
   #   And I am on the Your account page
   # Scenario: Procurement dashboard - Sign out
-  #   Then I click on 'Continue a procurement'
-  #   Then I am on the 'Procurements dashboard' page
+  #   Then I click on 'View your saved searches'
+  #   Then I am on the 'Saved searches' page
   #   And I should see the following navigation links:
   #     | My account  |
   #     | Sign out    |

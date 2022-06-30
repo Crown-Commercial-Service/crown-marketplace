@@ -6,8 +6,7 @@ module FacilitiesManagement
       before_action :redirect_if_missing_regions, only: :show
 
       def index
-        @searches = current_user.rm6232_procurements.searches
-        @advanced_procurement_activities = current_user.rm6232_procurements.advanced_procurement_activities
+        @searches = current_user.rm6232_procurements.order(updated_at: :asc)
         set_back_path(:index)
       end
 
@@ -42,7 +41,7 @@ module FacilitiesManagement
       end
 
       def update_show
-        if @procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!
+        if (params[:change_requirements] && @procurement.go_back_to_entering_requirements!) || (@procurement.valid?(@procurement.aasm_state.to_sym) && @procurement.set_to_next_state!)
           redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
         else
           set_back_path(:show)
@@ -51,13 +50,9 @@ module FacilitiesManagement
       end
 
       def supplier_shortlist_spreadsheet
-        if @procurement.what_happens_next?
-          spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
-          spreadsheet_builder.build
-          send_data spreadsheet_builder.to_xlsx, filename: "Supplier shortlist (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        else
-          redirect_to facilities_management_rm6232_procurement_path(id: @procurement.id)
-        end
+        spreadsheet_builder = SupplierShortlistSpreadsheetCreator.new(@procurement.id)
+        spreadsheet_builder.build
+        send_data spreadsheet_builder.to_xlsx, filename: "Supplier shortlist (#{@procurement.contract_name}).xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       end
 
       private
@@ -72,7 +67,7 @@ module FacilitiesManagement
                                  when :index
                                    [facilities_management_rm6232_path, t('facilities_management.rm6232.procurements.index.return_to_your_account')]
                                  when :show
-                                   [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_procurement_dashboard')]
+                                   [facilities_management_rm6232_procurements_path, t('facilities_management.rm6232.procurements.show.return_to_saved_searches')]
                                  when :new
                                    [helpers.journey_step_url_former(journey_slug: 'annual-contract-value', annual_contract_value: @procurement.annual_contract_value, region_codes: @procurement.region_codes, service_codes: @procurement.service_codes), t('facilities_management.rm6232.procurements.new.return_to_contract_cost')]
                                  end

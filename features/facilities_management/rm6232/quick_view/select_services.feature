@@ -3,9 +3,7 @@ Feature: Select services
   
   Background: Navigate to the Services page
     Given I sign in and navigate to my account for 'RM6232'
-    And I click on 'Start a procurement'
-    Then I am on the 'Start a procurement' page
-    And I click on 'Continue'
+    And I click on 'Search for suppliers'
     Then I am on the 'Services' page
     And I show all sections
 
@@ -106,7 +104,7 @@ Feature: Select services
       | Water Hygiene Maintenance                     |
       | Pest control Services                         |
       | Building Management System (BMS) maintenance  |
-      | Additional support Services               |
+      | Additional support Services                   |
       | Courier booking and distribution services     |
     And I click on 'Continue'
     Then I am on the 'Regions' page
@@ -117,4 +115,4 @@ Feature: Select services
       | Water Hygiene Maintenance                     |
       | Pest control Services                         |
       | Courier booking and distribution services     |
-      | Additional support Services               |
+      | Additional support Services                   |

@@ -32,13 +32,13 @@ Then('I go to a quick view with the following services and regions:') do |servic
 end
 
 Then('{string} is not a supplier in Sub-lot {string}') do |supplier, sublot|
-  supplier_list = quick_view_results_page.results_container.send(sublot).suppliers.map(&:text)
+  supplier_list = quick_view_page.results_container.send(sublot).suppliers.map(&:text)
 
   expect(supplier_list).not_to include supplier
 end
 
 Then('{string} is a supplier in Sub-lot {string}') do |supplier, sublot|
-  supplier_list = quick_view_results_page.results_container.send(sublot).suppliers.map(&:text)
+  supplier_list = quick_view_page.results_container.send(sublot).suppliers.map(&:text)
 
   expect(supplier_list).to include supplier
 end

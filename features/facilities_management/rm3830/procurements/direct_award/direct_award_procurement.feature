@@ -29,7 +29,7 @@ Feature: Procurement journey - Direct Award
     And I enter 'today' as the inital call-off period start date
     And I select 'No' for mobilisation period required
     And I select 'No' for optional extension required
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Contract period summary' page
     And I click on 'Return to requirements'
     Then I am on the 'Requirements' page
@@ -42,7 +42,7 @@ Feature: Procurement journey - Direct Award
       | Routine cleaning                                    |
       | General waste                                       |
       | Reception service                                   |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Services summary' page
     And I should see the following seleceted services in the summary:
       | Mechanical and electrical engineering maintenance   |
@@ -57,7 +57,7 @@ Feature: Procurement journey - Direct Award
     And I find and select the following buildings:
       | Test building         |
       | Test London building  |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     And I should see the following seleceted buildings in the summary:
       | Test building         |

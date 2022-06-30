@@ -71,4 +71,18 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :facilities_management_rm6232_procurement_results, parent: :facilities_management_rm6232_procurement_entering_requirements do
+    aasm_state { 'results' }
+
+    procurement_buildings do |procurement|
+      build_list(:facilities_management_rm6232_procurement_building_with_frozen_data, 2) do |procurement_building|
+        procurement_building.building.update(user: procurement.user)
+      end
+    end
+  end
+
+  factory :facilities_management_rm6232_procurement_further_information, parent: :facilities_management_rm6232_procurement_results do
+    aasm_state { 'further_information' }
+  end
 end

@@ -18,7 +18,7 @@ Feature: Supplier name
 
   @pipline
   Scenario Outline: Change supplier name changes in results
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | 123456 |
       | O.1  | UKE4  |        |
     And I 'should' see the supplier '<supplier_name>' in the results
@@ -32,7 +32,7 @@ Feature: Supplier name
     And I enter 'New supplier' into the 'Supplier name' field
     And I click on 'Save and return'
     Then I am on the 'Supplier details' page
-    Given I go to a quick view with the following services, regions and annual contract value:
+    Given I go to a quick view with the following services, regions and annual contract cost:
       | E.2  | UKE2  | 123456 |
       | O.1  | UKE4  |        |
     Then I 'should not' see the supplier '<supplier_name>' in the results 
