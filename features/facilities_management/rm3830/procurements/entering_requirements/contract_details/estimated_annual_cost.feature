@@ -25,8 +25,3 @@ Feature: Estimated annual cost
     Given I click on the 'Return to requirements' return link
     Then I am on the 'Requirements' page
     And 'Estimated annual cost' should have the status 'NOT STARTED' in 'Contract details'
-    Then I click on 'Estimated annual cost'
-    And I am on the 'Estimated annual cost' page
-    Given I click on the 'Return to requirements' back link
-    Then I am on the 'Requirements' page
-    And 'Estimated annual cost' should have the status 'NOT STARTED' in 'Contract details'

@@ -40,10 +40,10 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
         end
       end
 
-      context 'when the annual contract value is nil' do
+      context 'when the annual contract cost is nil' do
         let(:annual_contract_value) { nil }
 
-        it 'returns the correct URL without the annual contract value' do
+        it 'returns the correct URL without the annual contract cost' do
           expect(result).to eq '/facilities-management/RM6232/choose-services?region_codes%5B%5D=UKI3&region_codes%5B%5D=UKI4&service_codes%5B%5D=E.1&service_codes%5B%5D=F.1&service_codes%5B%5D=G.1'
         end
       end
@@ -66,68 +66,69 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     end
   end
 
-  describe '.link_url' do
-    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
-    let(:result) { helper.link_url(section) }
+  # This has been cut but it may return on the future
+  # describe '.link_url' do
+  #   let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+  #   let(:result) { helper.link_url(section) }
 
-    before { @procurement = procurement }
+  #   before { @procurement = procurement }
 
-    context 'when the section is contract_name' do
-      let(:section) { 'contract_name' }
+  #   context 'when the section is contract_name' do
+  #     let(:section) { 'contract_name' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/contract-name/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-name/edit"
+  #     end
+  #   end
 
-    context 'when the section is annual_contract_value' do
-      let(:section) { 'annual_contract_value' }
+  #   context 'when the section is annual_contract_value' do
+  #     let(:section) { 'annual_contract_value' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/annual-contract-value/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/annual-contract-value/edit"
+  #     end
+  #   end
 
-    context 'when the section is tupe' do
-      let(:section) { 'tupe' }
+  #   context 'when the section is tupe' do
+  #     let(:section) { 'tupe' }
 
-      it 'returns the edit details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/tupe/edit"
-      end
-    end
+  #     it 'returns the edit details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/tupe/edit"
+  #     end
+  #   end
 
-    context 'when the section is contract_period' do
-      let(:section) { 'contract_period' }
+  #   context 'when the section is contract_period' do
+  #     let(:section) { 'contract_period' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/contract-period"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/contract-period"
+  #     end
+  #   end
 
-    context 'when the section is services' do
-      let(:section) { 'services' }
+  #   context 'when the section is services' do
+  #     let(:section) { 'services' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/services"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/services"
+  #     end
+  #   end
 
-    context 'when the section is buildings' do
-      let(:section) { 'buildings' }
+  #   context 'when the section is buildings' do
+  #     let(:section) { 'buildings' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/buildings"
-      end
-    end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings"
+  #     end
+  #   end
 
-    context 'when the section is buildings_and_services' do
-      let(:section) { 'buildings_and_services' }
+  #   context 'when the section is buildings_and_services' do
+  #     let(:section) { 'buildings_and_services' }
 
-      it 'returns the show details link' do
-        expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/details/buildings-and-services"
-      end
-    end
-  end
+  #     it 'returns the show details link' do
+  #       expect(result).to eq "/facilities-management/RM6232/procurements/#{procurement.id}/procurement-details/buildings-and-services"
+  #     end
+  #   end
+  # end
 
   describe '.section_has_error?' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
@@ -176,7 +177,7 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     context 'when all sections are incomplete' do
       let(:incomplete_sections) { %i[tupe_incomplete contract_period_incomplete services_incomplete buildings_incomplete buildings_and_services_incomplete] }
 
-      pending 'returns the full list' do
+      it 'returns the full list' do
         expect(helper.requirements_errors_list).to eq({
                                                         tupe_incomplete: '‘TUPE’ must be ‘COMPLETED’',
                                                         contract_period_incomplete: '‘Contract period’ must be ‘COMPLETED’',
@@ -190,12 +191,79 @@ RSpec.describe FacilitiesManagement::RM6232::ProcurementsHelper, type: :helper d
     context 'when some sections are incomplete' do
       let(:incomplete_sections) { %i[services_incomplete buildings_incomplete buildings_and_services_incomplete] }
 
-      pending 'returns a partial list' do
+      it 'returns a partial list' do
         expect(helper.requirements_errors_list).to eq({
                                                         services_incomplete: '‘Services’ must be ‘COMPLETED’',
                                                         buildings_incomplete: '‘Buildings’ must be ‘COMPLETED’',
                                                         buildings_and_services_incomplete: '‘Assigning services to buildings’ must be ‘COMPLETED’'
                                                       })
+      end
+    end
+  end
+
+  describe '.active_procurement_buildings' do
+    let(:procurement_building1) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'Z building')) }
+    let(:procurement_building2) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'L building')) }
+    let(:procurement_building3) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'K building')) }
+    let(:procurement_building4) { procurement.procurement_buildings.create(active: true, building: create(:facilities_management_building, building_name: 'T building')) }
+    let(:procurement) { create(:facilities_management_rm6232_procurement_entering_requirements) }
+
+    before do
+      procurement_building1
+      procurement_building2
+      procurement_building3
+      procurement_building4
+      @procurement = procurement
+    end
+
+    it 'returns the buildings sorted by building name' do
+      expect(helper.active_procurement_buildings).to eq [procurement_building3, procurement_building2, procurement_building4, procurement_building1]
+    end
+  end
+
+  describe '.procurement_service_names' do
+    let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: service_codes, lot_number: lot_number) }
+    let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4', 'E.5'] }
+    let(:service_codes) { base_service_codes }
+    let(:lot_number) { '1a' }
+    let(:result) { helper.procurement_service_names }
+
+    before { @procurement = procurement }
+
+    it 'returns the service names from the active procurement buildings' do
+      expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance']
+    end
+
+    context 'when the service codes contain Q.3' do
+      let(:service_codes) { base_service_codes + ['Q.3'] }
+      let(:service_Q1) { FacilitiesManagement::RM6232::Service.find('Q.1') }
+      let(:service_Q2) { FacilitiesManagement::RM6232::Service.find('Q.2') }
+      let(:service_Q3) { FacilitiesManagement::RM6232::Service.find('Q.3') }
+
+      before { procurement.procurement_buildings.each { |procurement_building| procurement_building.update(service_codes: procurement_building.service_codes + ['Q.3']) } }
+
+      context 'and it is a total sub lot' do
+        let(:lot_number) { '1a' }
+
+        it 'returns services with TFM & Hard FM CAFM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'TFM & Hard FM CAFM Requirements']
+        end
+      end
+
+      context 'and it is a hard sub lot' do
+        let(:lot_number) { '2a' }
+
+        it 'returns services with TFM & Hard FM CAFM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'TFM & Hard FM CAFM Requirements']
+        end
+      end
+
+      context 'and it is a soft sub lot' do
+        let(:lot_number) { '3a' }
+
+        it 'returns services with CAFM – Soft FM Requirements' do
+          expect(result).to eq  ['Mechanical and Electrical Engineering Maintenance', 'Ventilation and air conditioning systems maintenance', 'CAFM – Soft FM Requirements']
+        end
       end
     end
   end

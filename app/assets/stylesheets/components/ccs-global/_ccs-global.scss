@@ -547,49 +547,38 @@ ul.ccs-checklist {
     }
   }
 
-ul.ccs-pagination {
-  display    : block;
-  width      : 100%;
-  text-align : center;
-  margin     : govuk-spacing(4) 0;
-
-  li {
-    display : inline-block;
-    margin  : auto govuk-spacing(1);
-
-    &:first-child.ccs-first {
-      float       : left;
-      margin-left : 0;
-      }
-
-    &:last-child.ccs-last {
-      float        : right;
-      margin-right : 0;
-      }
-
-    &[aria-current] {
-      color       : govuk-colour("black");
-      font-weight : bold;
-    }
-
-    a, button {
-      text-decoration : none;
-      color           : $govuk-link-colour;
-
-      &:focus {
-        color: #0b0c0c;
-      } 
-
-      b {
-        font-size   : 1.4rem;
-        line-height : 1rem;
-        font-weight : 800;
-        }
-      }
-    }
-
+  
+.pagination--button_as_link,
+.pagination-number--button_as_link {
+  @include govuk-font(19);
+  background-color: inherit;
+  border: none;
+  padding: 0!important;
+  color: $govuk-link-colour;
+  
+  &:hover:not(:focus),
+  &:active:not(:focus) {
+    color: $govuk-link-hover-colour
   }
+  
+  &:hover {
+    cursor: pointer;
+  }
+}
 
+.pagination--button_as_link,
+.govuk-pagination__item--current .pagination-number--button_as_link  {
+  @include govuk-typography-weight-bold;
+}
+
+.govuk-pagination__item--current .pagination-number--button_as_link {
+  color: govuk-colour("white");
+
+  &:hover:not(:focus),
+  &:active:not(:focus) {
+    color: govuk-colour("white");
+  }
+}
 
 @media print {
   #results-filters {

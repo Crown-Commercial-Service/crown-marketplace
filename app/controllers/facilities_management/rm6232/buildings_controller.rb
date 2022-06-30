@@ -24,7 +24,7 @@ module FacilitiesManagement
       end
 
       def start_a_procurement_path
-        facilities_management_journey_question_path(slug: 'start-a-procurement')
+        facilities_management_journey_question_path(slug: 'choose-services')
       end
     end
   end

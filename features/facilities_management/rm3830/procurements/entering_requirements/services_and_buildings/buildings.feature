@@ -14,7 +14,7 @@ Feature: Buildings
     And I find and select the following buildings:
       | Test building         |
       | Test London building  |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     And the summary should say 2 buildings selected
     And I should see the following seleceted buildings in the summary:
@@ -76,7 +76,7 @@ Feature: Buildings
     Then the following buildings are selected:
       | Test building 101 |
       | Test building 200 |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     And the summary should say 4 buildings selected
     And I should see the following seleceted buildings in the summary:
@@ -93,7 +93,7 @@ Feature: Buildings
     And I click on 'Next'
     And I am on the 'Buildings' page
     And I find and select the building with the name 'Test building 101'
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     And the summary should say 2 buildings selected
     And I should see the following seleceted buildings in the summary:
@@ -117,19 +117,13 @@ Feature: Buildings
     And I click on 'Next'
     And I am on the 'Buildings' page
     And no buildings are selected
-    Then I click on 'Save and continue'
+    Then I click on 'Save and return'
     Then I am on the 'Buildings summary' page
     And the summary should say 1 building selected
     And I should see the following seleceted buildings in the summary:
       | Test building 023 |
 
   Scenario: Text when there are no buildings
-    And I click on 'Buildings'
-    Then I am on the 'Buildings' page
-    And there are no buildings to select
-    Given I click on the 'Return to requirements' back link
-    Then I am on the 'Requirements' page
-    And 'Buildings' should have the status 'NOT STARTED' in 'Services and buildings'
     And I click on 'Buildings'
     Then I am on the 'Buildings' page
     Given I click on the 'Return to requirements' return link

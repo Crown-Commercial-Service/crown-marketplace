@@ -250,6 +250,7 @@ en:
     doc_html: <abbr title="Microsoft Word">DOC</abbr>
     error_summary_title: There is a problem
     feedback: feedback
+    odt_html: <abbr title="OpenDocument Format">ODT</abbr>
     passcap: at least one capital letter
     passeight: at least 8 characters
     passnum: at least one number
@@ -262,6 +263,7 @@ en:
     submit: Continue
     type_csv: application/csv
     type_doc: application/msword
+    type_odt: application/vnd.oasis.opendocument.text
     type_pdf: application/pdf
     type_xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
     xlsx_html: <abbr title="Microsoft Excel">XLSX</abbr>
@@ -662,8 +664,3 @@ en:
     unit:
       one: agency
       other: agencies
-  views:
-    pagination:
-      next: Next <b>→</b>
-      previous: "<b>←</b> Previous"
-      truncate: "..."

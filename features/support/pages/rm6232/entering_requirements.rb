@@ -1,43 +1,9 @@
+require_relative '../entering_requirements'
+
 module Pages::RM6232
-  class EnteringRequirements < SitePrism::Page
-    section 'Contract details', '#main-content > div:nth-child(3) > div > div:nth-child(2) > table' do
-      section 'Contract name', 'tr:nth-of-type(1)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Annual contract value', 'tr:nth-of-type(2)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'TUPE', 'tr:nth-of-type(3)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Contract period', 'tr:nth-of-type(4)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-    end
-
-    section 'Services and buildings', '#main-content > div:nth-child(3) > div > div:nth-child(3) > table' do
-      section 'Services', 'tr:nth-of-type(1)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Buildings', 'tr:nth-of-type(2)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-
-      section 'Assigning services to buildings', 'tr:nth-of-type(3)' do
-        element :name, 'td:nth-of-type(1)'
-        element :status, 'td:nth-of-type(2)'
-      end
-    end
+  class EnteringRequirements < Pages::EnteringRequirements
+    section 'Contract details', Pages::ContractDetailsSection, '#main-content > div:nth-child(3) > div > div:nth-child(2) > table'
+    section 'Services and buildings', Pages::ServicesAndBuildingsSection, '#main-content > div:nth-child(3) > div > div:nth-child(3) > table'
 
     element :annual_contract_value, '#facilities_management_rm6232_procurement_annual_contract_value'
 
@@ -88,42 +54,5 @@ module Pages::RM6232
 
       element :add_extension, '#add-contract-extension-button'
     end
-
-    section :contract_period_summary, '#main-content > div:nth-child(3) > div > table' do
-      element :initial_call_off_period_length, '#contract-period > td'
-      element :initial_call_off_period, '#contract-period-description > td:nth-child(2)'
-
-      element :mobilisation_period_length, 'tbody > tr:nth-child(3) > td'
-      element :mobilisation_period, '#mobilisation-period-description > td:nth-child(2)'
-
-      element :call_off_extension, '#call-off-extension > td'
-
-      element :extension_1_length, '#call-off-extension-0 > td'
-      element :extension_2_length, '#call-off-extension-1 > td'
-      element :extension_3_length, '#call-off-extension-2 > td'
-      element :extension_4_length, '#call-off-extension-3 > td'
-
-      element :extension_1_period, '#call-off-extension-0-description > td:nth-child(2)'
-      element :extension_2_period, '#call-off-extension-1-description > td:nth-child(2)'
-      element :extension_3_period, '#call-off-extension-2-description > td:nth-child(2)'
-      element :extension_4_period, '#call-off-extension-3-description > td:nth-child(2)'
-    end
-
-    element :number_of_selected_servcies, '#number-of-services'
-    element :number_of_selected_buildings, '#number-of-buildings'
-
-    element :no_buildings_text, '#procurement_buildings-form-group > div:nth-child(2) > div > p'
-    elements :checked_buildings, 'input[checked="checked"]'
-
-    element :building_status, '.govuk-body > span > strong'
-    element :assigning_services_to_buildings_status, '#main-content > div:nth-child(3) > div > span.govuk-\!-padding-left-2 > strong'
-
-    element :select_all_services_checkbox, '#box-all'
-    elements :all_checkboxes, 'input[type=checkbox]'
-
-    element :next_pagination, 'li.ccs-last > button'
-    element :previous_pagination, 'li.ccs-first > button'
-
-    element :region_drop_down, '#facilities_management_building_address_region'
   end
 end

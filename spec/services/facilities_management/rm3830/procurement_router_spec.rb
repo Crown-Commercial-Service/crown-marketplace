@@ -54,7 +54,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
         let(:step) { 'contract_period' }
 
         it 'returns a route for the summary' do
-          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/summary?summary=contract_period')
+          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/procurement-details/contract_period')
         end
       end
 
@@ -62,7 +62,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
         let(:step) { 'buildings' }
 
         it 'returns a route for the summary' do
-          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/summary?summary=buildings')
+          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/procurement-details/buildings')
         end
       end
 
@@ -70,7 +70,7 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementRouter do
         let(:step) { 'buildings_and_services' }
 
         it 'returns a route for the summary' do
-          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/summary?summary=buildings_and_services')
+          expect(procurement_router.route).to eq('/facilities-management/RM3830/procurements/1/procurement-details/buildings_and_services')
         end
       end
 

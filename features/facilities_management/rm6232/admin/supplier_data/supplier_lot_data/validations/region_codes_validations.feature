@@ -8,8 +8,8 @@ Feature: Selecting region codes validations
     Then I click on 'View lot data' for 'Skiles LLC'
     And I am on the 'View lot data' page
     And the supplier name shown is 'Skiles LLC'
-    And I change the 'regions' for lot 'a'
-    Then I am on the 'Lot a regions' page
+    And I change the 'regions' for lot '1a'
+    Then I am on the 'Lot 1a regions' page
     And I deselect all checkboxes
     And I click on 'Save and return'
     Then I should see the following error messages:

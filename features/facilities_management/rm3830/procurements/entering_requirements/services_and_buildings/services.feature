@@ -52,7 +52,7 @@ Feature: Services
     Then select all 'should not' be checked for 'Reception services'
     When I select 'Taxi booking service'
     Then select all 'should' be checked for 'Reception services'
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Services summary' page
     And the summary should say 11 servcies selected
     And I should see the following seleceted services in the summary:
@@ -94,7 +94,7 @@ Feature: Services
     When I deselect the following items:
       | Ventilation and air conditioning system maintenance |
       | Environmental cleaning service                      |
-    And I click on 'Save and continue'
+    And I click on 'Save and return'
     Then I am on the 'Services summary' page
     And the summary should say 1 servcie selected
     And I should see the following seleceted services in the summary:

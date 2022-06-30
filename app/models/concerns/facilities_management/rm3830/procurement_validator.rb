@@ -19,8 +19,6 @@ module FacilitiesManagement::RM3830
         end
       end
 
-      validate :service_code_selection, on: %i[services service_codes]
-
       validates :payment_method, inclusion: { in: ['bacs', 'card'] }, on: %i[payment_method]
 
       validates :using_buyer_detail_for_invoice_details, inclusion: { in: [true, false] }, on: %i[invoicing_contact_details]
@@ -78,45 +76,6 @@ module FacilitiesManagement::RM3830
 
     private
 
-    def service_code_selection
-      return errors.add(:service_codes, :invalid) if service_codes.blank?
-
-      service_code_selection_validation
-    end
-
-    def service_code_selection_validation
-      add_selection_error(service_code_selection_error_code)
-    end
-
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def service_code_selection_error_code
-      case service_codes.sort
-      when ['O.1']
-        0
-      when ['N.1']
-        1
-      when ['M.1']
-        2
-      when ['M.1', 'O.1']
-        3
-      when ['N.1', 'O.1']
-        4
-      when ['M.1', 'N.1']
-        5
-      when ['M.1', 'N.1', 'O.1']
-        6
-      end
-    end
-    # rubocop:enable Metrics/CyclomaticComplexity
-
-    const_set(:SERVICE_SELECTION_INVALID_TYPE, %i[invalid_billable invalid_helpdesk invalid_cafm invalid_cafm_billable invalid_helpdesk_billable invalid_cafm_helpdesk invalid_cafm_helpdesk_billable])
-
-    def add_selection_error(index)
-      return unless index
-
-      errors.add(:service_codes, self.class::SERVICE_SELECTION_INVALID_TYPE[index])
-    end
-
     def security_policy_document_date_valid?
       errors.add(:security_policy_document_date, :not_a_date) unless all_security_policy_document_date_fields_valid?
     end
@@ -141,10 +100,6 @@ module FacilitiesManagement::RM3830
 
     # Validations for continuing on the requirements summary page
 
-    def all_buildings_have_regions
-      errors.add(:base, :missing_regions) if procurement_buildings_missing_regions?
-    end
-
     def all_complete
       return if errors.any? || building_data_frozen?
 
@@ -159,21 +114,6 @@ module FacilitiesManagement::RM3830
       errors.add(:base, :tupe_incomplete) unless tupe_status == :completed
     end
 
-    def check_contract_period_completed
-      if contract_period_status == :completed
-        errors.add(:base, :initial_call_off_period_in_past) if contract_period_in_past?
-        errors.add(:base, :mobilisation_period_in_past) if mobilisation_period_in_past?
-        errors.add(:base, :mobilisation_period_required) unless mobilisation_period_valid_when_tupe_required?
-      else
-        errors.add(:base, :contract_period_incomplete)
-      end
-    end
-
-    def check_service_and_buildings_present
-      errors.add(:base, :services_incomplete) unless services_status == :completed
-      errors.add(:base, :buildings_incomplete) unless buildings_status == :completed
-    end
-
     def check_service_and_buildings_completed
       if (error_list & %i[services_incomplete buildings_incomplete]).any?
         errors.add(:base, :buildings_and_services_incomplete)
@@ -184,20 +124,6 @@ module FacilitiesManagement::RM3830
         errors.add(:base, :buildings_and_services_incomplete)
         errors.add(:base, :service_requirements_incomplete)
       end
-    end
-
-    def contract_period_in_past?
-      initial_call_off_start_date < Time.now.in_time_zone('London').to_date
-    end
-
-    def mobilisation_period_valid_when_tupe_required?
-      return true unless tupe
-
-      (mobilisation_period_required && mobilisation_period >= 4)
-    end
-
-    def error_list
-      errors.details[:base].map { |detail| detail[:error] }
     end
 
     def lot_number_in_range

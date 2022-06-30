@@ -81,7 +81,7 @@ Rails.application.routes.draw do
     end
 
     concern :procurement_details do
-      resources :details, param: :section, only: %i[show edit update]
+      resources :procurement_details, path: 'procurement-details', param: :section, only: %i[show edit update]
     end
 
     concern :procurement_buildings do
@@ -117,10 +117,9 @@ Rails.application.routes.draw do
       get '/service-specification/:service_code/:work_package_code', to: 'service_specification#show', as: 'service_specification'
       get 'procurements/what-happens-next', as: 'what_happens_next', to: 'procurements#what_happens_next'
       resources :procurements do
-        concerns :edit_buildings
+        concerns :procurement_details, :edit_buildings
 
         get 'delete'
-        get 'summary', to: 'procurements#summary'
         get 'quick_view_results_spreadsheet'
         get 'further_competition_spreadsheet'
         get 'deliverables_matrix'
@@ -180,16 +179,18 @@ Rails.application.routes.draw do
     end
 
     namespace 'rm6232', path: 'RM6232', defaults: { framework: 'RM6232' } do
-      concerns :shared_pages, :buildings, :procurement_buildings
+      concerns :shared_pages
+      # This has been cut but it may return on the future: concerns :buildings, :procurement_buildings
 
       get '/start', to: 'home#index'
       get '/', to: 'buyer_account#index'
+      get '/service-specification/:service_code', to: 'service_specification#show', as: 'service_specification'
 
       resources :procurements, only: %i[index show new create] do
-        concerns :procurement_details, :edit_buildings
+        # This has been cut but it may return on the future: concerns :procurement_details, :edit_buildings
+        # put 'update-show', action: 'update_show'
 
         get 'supplier_shortlist_spreadsheet'
-        put 'update-show', action: 'update_show'
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do

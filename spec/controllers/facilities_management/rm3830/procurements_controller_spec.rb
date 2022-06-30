@@ -218,98 +218,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
     end
 
-    describe 'GET summary' do
-      context 'when the summary page is not recognised' do
-        it 'redirects to the show page' do
-          get :summary, params: { procurement_id: procurement.id, summary: 'contract_name' }
-
-          expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
-        end
-      end
-
-      context 'when the user wants to edit contract_periods' do
-        context 'when the contract periods are not started' do
-          before { procurement.update(initial_call_off_period_years: nil, initial_call_off_period_months: nil, initial_call_off_start_date: nil, mobilisation_period_required: nil, extensions_required: nil) }
-
-          it 'redirects to the edit page with contract_period step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
-
-            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'contract_period')
-          end
-        end
-
-        context 'when the contract periods are not complete' do
-          before { procurement.update(initial_call_off_period_months: nil, mobilisation_period_required: false, extensions_required: false) }
-
-          it 'redirects to the edit page with contract_period step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
-
-            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'contract_period')
-          end
-        end
-
-        context 'when the contract periods are complete' do
-          before { procurement.update(mobilisation_period_required: false, extensions_required: false) }
-
-          it 'renders the summary page' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'contract_period' }
-
-            expect(response).to render_template(:summary)
-          end
-        end
-      end
-
-      context 'when the user wants to edit services' do
-        before { procurement.update(service_codes: service_codes) }
-
-        context 'when the services are not complete' do
-          let(:service_codes) { [] }
-
-          it 'redirects to the edit page with services step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
-
-            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'services')
-          end
-        end
-
-        context 'when the services are complete' do
-          let(:service_codes) { ['C.1'] }
-
-          it 'renders the summary page' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'services' }
-
-            expect(response).to render_template(:summary)
-          end
-        end
-      end
-
-      context 'when the user wants to edit procurement_buildings' do
-        before do
-          procurement.active_procurement_buildings.each { |pb| pb.update(active: false) } if delete_procurement_buildings
-        end
-
-        context 'when there are no active_procurement_buildings' do
-          let(:delete_procurement_buildings) { true }
-
-          it 'redirects to the edit page with buildings step' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
-
-            expect(response).to redirect_to edit_facilities_management_rm3830_procurement_path(procurement, step: 'buildings')
-          end
-        end
-
-        context 'when there are active_procurement_buildings' do
-          let(:delete_procurement_buildings) { false }
-
-          it 'renders the summary page' do
-            get :summary, params: { procurement_id: procurement.id, summary: 'buildings' }
-
-            expect(response).to render_template(:summary)
-          end
-        end
-      end
-    end
-
     describe 'GET new' do
       it 'renders the correct template' do
         get :new, params: { region_codes: ['UKC1'], service_codes: ['C.1'] }
@@ -328,44 +236,9 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
       end
 
       it 'renders the correct template' do
-        get :edit, params: { id: procurement.id, step: 'tupe' }
+        get :edit, params: { id: procurement.id, step: 'services' }
 
         expect(response).to render_template('edit')
-      end
-
-      context 'when the procurement is in detailed search' do
-        before do
-          procurement.update(aasm_state: 'detailed_search')
-        end
-
-        context 'when on the TUPE step' do
-          before do
-            get :edit, params: { id: procurement.id, step: 'tupe' }
-          end
-
-          it 'will have facilities_management_rm3830_procurement_path as the back_link' do
-            expect(assigns(:back_link)).to eq facilities_management_rm3830_procurement_path(id: procurement.id)
-          end
-
-          it 'renders the edit page' do
-            expect(response).to render_template('edit')
-          end
-        end
-
-        context 'when the step is buildings' do
-          before do
-            create :facilities_management_building, user: controller.current_user
-            get :edit, params: { id: procurement.id, step: 'buildings' }
-          end
-
-          it 'renders the edit page' do
-            expect(response).to render_template('edit')
-          end
-
-          it 'sets the procurement_buildings variable' do
-            expect(assigns(:buildings).length).to eq 1
-          end
-        end
       end
     end
 
@@ -704,136 +577,61 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
         let(:service_codes) { ['C.1', 'O.1'] }
         let(:region_codes) { ['UKC1', 'UKN01'] }
 
-        context 'when the user is in a quick search state' do
-          context 'when the user selects service codes' do
-            before do
-              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
-            end
-
-            it 'redirects to edit_facilities_management_rm3830_procurement_path' do
-              expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
-            end
-
-            it 'updates the service codes' do
-              procurement.reload
-              expect(procurement.service_codes).to eq service_codes
-            end
+        context 'when the user selects service codes' do
+          before do
+            patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
           end
 
-          context 'when the user does not select service codes' do
-            before do
-              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services' } }
-            end
-
-            it 'renders the edit page' do
-              expect(response).to render_template('edit')
-            end
-
-            it 'has the correct error message' do
-              expect(assigns(:procurement).errors[:service_codes].first).to eq 'Select at least one service you need to include in your procurement'
-            end
+          it 'redirects to edit_facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
           end
 
-          context 'when the user selects region codes' do
-            before do
-              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions', region_codes: region_codes } }
-            end
-
-            it 'redirects to edit_facilities_management_rm3830_procurement_path' do
-              expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
-            end
-
-            it 'updates the region codes' do
-              procurement.reload
-              expect(procurement.region_codes).to eq region_codes
-            end
-          end
-
-          context 'when the user does not select region codes' do
-            before do
-              patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions' } }
-            end
-
-            it 'renders the edit page' do
-              expect(response).to render_template('edit')
-            end
-
-            it 'has the correct error message' do
-              expect(assigns(:procurement).errors[:region_codes].first).to eq 'Select at least one region you need to include in your procurement'
-            end
+          it 'updates the service codes' do
+            procurement.reload
+            expect(procurement.service_codes).to eq service_codes
           end
         end
 
-        context 'when the user is in a detailed search state' do
+        context 'when the user does not select service codes' do
           before do
-            procurement.update(aasm_state: 'detailed_search')
+            patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'services' } }
           end
 
-          context 'when next step is present in the params' do
-            before do
-              patch :update, params: { id: procurement.id, next_step: 'buildings_and_services', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
-            end
-
-            it 'redirects to services summary page' do
-              expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
-            end
-
-            it 'updates the service codes' do
-              procurement.reload
-              expect(procurement.service_codes).to eq service_codes
-            end
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
           end
 
-          context 'when services is present in the params' do
-            context 'when next_step is in the params' do
-              context 'when services are selected' do
-                before do
-                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
-                end
+          it 'has the correct error message' do
+            expect(assigns(:procurement).errors[:service_codes].first).to eq 'Select at least one service you need to include in your procurement'
+          end
+        end
 
-                it 'redirects to services summary page' do
-                  expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
-                end
+        context 'when the user selects region codes' do
+          before do
+            patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions', region_codes: region_codes } }
+          end
 
-                it 'updates the service codes' do
-                  procurement.reload
-                  expect(procurement.service_codes).to eq service_codes
-                end
-              end
+          it 'redirects to edit_facilities_management_rm3830_procurement_path' do
+            expect(response).to redirect_to facilities_management_rm3830_procurement_path(id: procurement.id)
+          end
 
-              context 'when no services are slected' do
-                it 'renders the edit page' do
-                  patch :update, params: { id: procurement.id, next_step: 'Save and continue', facilities_management_rm3830_procurement: { step: 'services' } }
+          it 'updates the region codes' do
+            procurement.reload
+            expect(procurement.region_codes).to eq region_codes
+          end
+        end
 
-                  expect(response).to render_template('edit')
-                end
-              end
-            end
+        context 'when the user does not select region codes' do
+          before do
+            patch :update, params: { id: procurement.id, facilities_management_rm3830_procurement: { step: 'regions' } }
+          end
 
-            context 'when save_and_return_to_detailed_summary is present' do
-              context 'when services are selected' do
-                before do
-                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_rm3830_procurement: { step: 'services', service_codes: service_codes } }
-                end
+          it 'renders the edit page' do
+            expect(response).to render_template('edit')
+          end
 
-                it 'redirects to services summary page' do
-                  expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'services')
-                end
-
-                it 'updates the service codes' do
-                  procurement.reload
-                  expect(procurement.service_codes).to eq service_codes
-                end
-              end
-
-              context 'when no services are slected' do
-                it 'renders the edit page' do
-                  patch :update, params: { id: procurement.id, save_and_return_to_detailed_summary: 'Save and return to detailed search summary', facilities_management_rm3830_procurement: { step: 'services' } }
-
-                  expect(response).to render_template('edit')
-                end
-              end
-            end
+          it 'has the correct error message' do
+            expect(assigns(:procurement).errors[:region_codes].first).to eq 'Select at least one region you need to include in your procurement'
           end
         end
       end
@@ -866,126 +664,6 @@ RSpec.describe FacilitiesManagement::RM3830::ProcurementsController, type: :cont
 
           it 'redirects to the show page' do
             expect(response).to redirect_to facilities_management_rm3830_procurement_path(procurement)
-          end
-        end
-      end
-
-      describe '#pagination' do
-        let(:building1) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 1') }
-        let(:building2) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 2') }
-        let(:building3) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 3') }
-        let(:building4) { create(:facilities_management_building, user: procurement.user, building_name: 'Building 4') }
-
-        let(:building1_active) { '1' }
-        let(:building2_active) { '0' }
-        let(:building3_active) { '0' }
-        let(:building4_active) { '0' }
-
-        before do
-          procurement.procurement_buildings.first.update(building_id: building1.id)
-        end
-
-        context 'when going to a different page' do
-          before do
-            patch :update, params: { id: procurement.id, blank: 'blank', page: '1', 'paginate-2': '2', facilities_management_rm3830_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
-          end
-
-          context 'when a building as checked' do
-            let(:building2_active) { '1' }
-
-            it 'adds to the building_params' do
-              expect(assigns(:building_params).keys).to include building1.id
-              expect(assigns(:building_params).keys).to include building2.id
-              expect(assigns(:building_params).size).to eq 2
-            end
-
-            it 'adds to the hidden_procurement_buildings' do
-              hidden_building_ids = assigns(:hidden_buildings).map(&:id)
-              expect(hidden_building_ids).to include building1.id
-              expect(hidden_building_ids).to include building2.id
-            end
-
-            it 'updates the page param' do
-              expect(controller.params[:page]).to eq '2'
-            end
-
-            it 'renders the edit page' do
-              expect(response).to render_template :edit
-            end
-          end
-
-          context 'when a building is un-checked' do
-            let(:building1_active) { '0' }
-
-            it 'updates the building_params' do
-              expect(assigns(:building_params)[building1.id]).to eq '0'
-            end
-
-            it 'does not change hidden_procurement_buildings' do
-              hidden_building_ids = assigns(:hidden_buildings).map(&:id)
-              expect(hidden_building_ids).to eq [building1.id]
-            end
-
-            it 'updates the page param' do
-              expect(controller.params[:page]).to eq '2'
-            end
-
-            it 'renders the edit page' do
-              expect(response).to render_template :edit
-            end
-          end
-
-          context 'when no buildings are checked' do
-            it 'does not change the building_params' do
-              expect(assigns(:building_params)[building1.id]).to eq '1'
-            end
-
-            it 'does not change hidden_procurement_buildings' do
-              hidden_building_ids = assigns(:hidden_buildings).map(&:id)
-              expect(hidden_building_ids).to eq [building1.id]
-            end
-
-            it 'updates the page param' do
-              expect(controller.params[:page]).to eq '2'
-            end
-
-            it 'renders the edit page' do
-              expect(response).to render_template :edit
-            end
-          end
-        end
-
-        context 'when clicking save and continue' do
-          before do
-            patch :update, params: { id: procurement.id, buildings: 'Save and continue', page: '1', 'paginate-2': '2', facilities_management_rm3830_procurement: { procurement_buildings_attributes: { '0': { building_id: building1.id, active: building1_active }, '1': { building_id: building2.id, active: building2_active }, '2': { building_id: building3.id, active: building3_active }, '3': { building_id: building4.id, active: building4_active } } } }
-          end
-
-          context 'when the selection is valid' do
-            let(:building2_active) { '1' }
-
-            before do
-              procurement.reload
-            end
-
-            it 'updates the database' do
-              expect(procurement.active_procurement_buildings.length).to eq 2
-            end
-
-            it 'redirects to the summary page' do
-              expect(response).to redirect_to facilities_management_rm3830_procurement_summary_path(procurement, summary: 'buildings')
-            end
-          end
-
-          context 'when the selection is not valid' do
-            let(:building1_active) { '0' }
-
-            it 'renders the edit page' do
-              expect(response).to render_template :edit
-            end
-
-            it 'stays on same page' do
-              expect(controller.params[:page]).to eq '1'
-            end
           end
         end
       end

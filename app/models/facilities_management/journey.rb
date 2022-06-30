@@ -27,7 +27,7 @@ module FacilitiesManagement
 
     FIRST_STEP_CLASS = {
       'RM3830' => FacilitiesManagement::RM3830::Journey::ChooseServices,
-      'RM6232' => FacilitiesManagement::RM6232::Journey::StartAProcurement
+      'RM6232' => FacilitiesManagement::RM6232::Journey::ChooseServices
     }.freeze
   end
 end

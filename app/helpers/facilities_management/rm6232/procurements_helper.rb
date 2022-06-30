@@ -17,10 +17,14 @@ module FacilitiesManagement::RM6232
     def link_url(section)
       case section
       when 'contract_period', 'services', 'buildings', 'buildings_and_services'
-        facilities_management_rm6232_procurement_detail_path(procurement_id: @procurement.id, section: section.dasherize)
+        facilities_management_rm6232_procurement_procurement_detail_path(procurement_id: @procurement.id, section: section.dasherize)
       else
-        edit_facilities_management_rm6232_procurement_detail_path(procurement_id: @procurement.id, section: section.dasherize)
+        edit_facilities_management_rm6232_procurement_procurement_detail_path(procurement_id: @procurement.id, section: section.dasherize)
       end
+    end
+
+    def procurement_service_names
+      @procurement_service_names ||= @procurement.procurement_services.pluck(:name)
     end
   end
 end

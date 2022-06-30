@@ -82,13 +82,11 @@ module GovUKHelper::Accordion
   end
 
   def check_box_label(section_id, model_name, item, &block)
-    tag.label(style: 'padding-top: 0px', class: 'govuk-label govuk-checkboxes__label', for: "#{model_name}_#{item[:code]}") do
+    tag.label(class: 'govuk-label govuk-checkboxes__label', for: "#{model_name}_#{item[:code]}") do
       capture do
         concat(item[:name])
         concat(tag.div(item[:description], class: 'govuk-hint')) if item[:description]
-        concat(tag.div do
-          yield(section_id, item) if block
-        end)
+        concat(tag.div(yield(section_id, item))) if block
       end
     end
   end

@@ -4,7 +4,7 @@ Then('I enter {string} into the contract name field') do |contract_name|
 end
 
 Then('I have a procurement with the name {string}') do |contract_name|
-  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
+  @procurement =  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:initial], user: @user, contract_name: contract_name)
 end
 
 Given('I have an empty procurement for entering requirements named {string}') do |contract_name|
@@ -34,6 +34,38 @@ Given('I have a completed procurement for entering requirements named {string} w
   procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') } if @framework == 'RM3830'
 end
 
+Given('I have a completed procurement for entering requirements named {string} with an initial call off period in the past') do |contract_name|
+  create_completed_procurement(contract_name, initial_call_off_start_date: Time.zone.now - 6.months)
+end
+
+Given('I have a completed procurement for entering requirements named {string} with an mobilisation period in the past') do |contract_name|
+  create_completed_procurement(contract_name, initial_call_off_start_date: Time.zone.now + 1.day, mobilisation_period_required: true, mobilisation_period: 4)
+end
+
+Given('I have a completed procurement for entering requirements named {string} with mobilisation less than four weeks') do |contract_name|
+  create_completed_procurement(contract_name, mobilisation_period_required: true, mobilisation_period: 3, tupe: true)
+end
+
+Given('I have a completed procurement for entering requirements named {string}') do |contract_name|
+  create_completed_procurement(contract_name)
+end
+
+def create_completed_procurement(contract_name, **options)
+  procurement = create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:entering_requirements], user: @user, contract_name: contract_name, **options)
+  building = create(:facilities_management_building, building_name: 'Test building', user: @user)
+
+  procurement.procurement_buildings.create(building: building, active: true, service_codes: procurement.service_codes)
+  procurement.procurement_building_services.each { |pbs| pbs.update(service_standard: 'A') } if @framework == 'RM3830'
+end
+
+Given('I have a completed procurement for results named {string}') do |contract_name|
+  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:results], user: @user, contract_name: contract_name)
+end
+
+Given('I have a completed procurement for further information named {string}') do |contract_name|
+  create(FRMAEOWRK_AND_STATE_TO_FACTORY[@framework][:further_information], user: @user, contract_name: contract_name)
+end
+
 FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM3830' => {
     initial: :facilities_management_rm3830_procurement,
@@ -43,7 +75,9 @@ FRMAEOWRK_AND_STATE_TO_FACTORY = {
   'RM6232' => {
     initial: :facilities_management_rm6232_procurement_what_happens_next,
     empty_entering_requirements: :facilities_management_rm6232_procurement_entering_requirements_empty,
-    entering_requirements: :facilities_management_rm6232_procurement_entering_requirements
+    entering_requirements: :facilities_management_rm6232_procurement_entering_requirements,
+    results: :facilities_management_rm6232_procurement_results,
+    further_information: :facilities_management_rm6232_procurement_further_information
   }
 }.freeze
 
