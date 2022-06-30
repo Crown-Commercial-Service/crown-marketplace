@@ -81,4 +81,132 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
       end
     end
   end
+
+  describe '.true_change_type' do
+    let(:result) { edit.true_change_type }
+
+    context 'when the change_type is details' do
+      let(:edit) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details) }
+
+      it 'returns details' do
+        expect(result).to eq('details')
+      end
+    end
+
+    context 'when the change_type is lot_data' do
+      context 'and the attribute is service_codes' do
+        let(:edit) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data) }
+
+        it 'returns service_codes' do
+          expect(result).to eq('service_codes')
+        end
+      end
+
+      context 'and the attribute is region_codes' do
+        let(:edit) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data) }
+
+        it 'returns region_codes' do
+          expect(result).to eq('region_codes')
+        end
+      end
+    end
+  end
+
+  describe '.short_id' do
+    let(:edit) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data) }
+
+    it 'returns the shortened uuid' do
+      expect(edit.short_id).to eq("##{edit.id[..7]}")
+    end
+  end
+
+  describe '.current_supplier_data' do
+    let(:supplier_data) { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data }
+    let(:supplier) { FacilitiesManagement::RM6232::Supplier.find(supplier_data.data.first['id']) }
+    let(:edit_1) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data, created_at: dates[0]) }
+    let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, created_at: dates[1]) }
+    let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, created_at: dates[2]) }
+    let(:dates) { [Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
+
+    before do
+      edit_1
+      edit_2
+      edit_3
+    end
+
+    context 'when there are no previous changes' do
+      let(:result) { edit_1.current_supplier_data }
+
+      it 'includes the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be_nil
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+      end
+    end
+
+    context 'when there is one previous changes' do
+      let(:result) { edit_2.current_supplier_data }
+
+      it 'includes the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+      end
+    end
+
+    context 'when there are multiple previous changes' do
+      let(:result) { edit_3.current_supplier_data }
+
+      it 'includes the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes - ['UKC1']
+      end
+    end
+  end
+
+  describe '.previous_supplier_data' do
+    let(:supplier_data) { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data }
+    let(:supplier) { FacilitiesManagement::RM6232::Supplier.find(supplier_data.data.first['id']) }
+    let(:edit_1) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data, created_at: dates[0]) }
+    let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, created_at: dates[1]) }
+    let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, created_at: dates[2]) }
+    let(:dates) { [Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
+
+    before do
+      edit_1
+      edit_2
+      edit_3
+    end
+
+    context 'when there are no previous changes' do
+      let(:result) { edit_1.previous_supplier_data }
+
+      it 'matches the data in supplier data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes
+        expect(result['active']).to be_nil
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+      end
+    end
+
+    context 'when there is one previous changes' do
+      let(:result) { edit_2.previous_supplier_data }
+
+      it 'includes only previous the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be_nil
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+      end
+    end
+
+    context 'when there are multiple previous changes' do
+      let(:result) { edit_3.previous_supplier_data }
+
+      it 'includes only previous the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+      end
+    end
+  end
 end

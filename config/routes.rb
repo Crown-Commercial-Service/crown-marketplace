@@ -206,6 +206,9 @@ Rails.application.routes.draw do
           get '/:lot_data_type/edit', action: :edit, as: :edit
           put '/:lot_data_type', action: :update, as: :update
         end
+        resources :change_logs, path: 'change-logs', only: :index do
+          get '/:change_type', action: :show, as: :show
+        end
       end
     end
 

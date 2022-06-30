@@ -1,0 +1,18 @@
+<%= content_for :page_title, show_page_title %>
+<%= admin_breadcrumbs(
+  { text: t('facilities_management.rm6232.admin.change_logs.index.heading'), link: facilities_management_rm6232_admin_change_logs_path },
+  { text: show_page_title }
+)%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">
+      <%= t('.log_item', short_id: @change_log.short_id) %>
+    </span>
+    <h1 class="govuk-heading-xl">
+      <%= show_page_title %>
+    </h1>
+  </div>
+</div>
+
+<%= render partial: change_type.to_s %>
