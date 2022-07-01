@@ -213,6 +213,7 @@ Rails.application.routes.draw do
         resources :change_logs, path: 'change-logs', only: :index do
           get '/:change_type', action: :show, as: :show
         end
+        resources :supplier_data_snapshots, path: 'supplier-data-snapshots', only: %i[new create]
       end
     end
 

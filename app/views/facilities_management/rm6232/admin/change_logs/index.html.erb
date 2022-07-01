@@ -14,6 +14,9 @@
       <%= t('.you_can_download') %>
     </p>
     <%= link_to t('.download_logs'), "#{facilities_management_rm6232_admin_change_logs_path}?format=csv", class: 'govuk-button govuk-button--secondary', aria: { label: t('.download_logs') }, download: '' %>
+    <p>
+      <%= t('.you_can_get_a_snapshot_html', snapshot_link: link_to(t('.supplier_data_snapshot'), new_facilities_management_rm6232_admin_supplier_data_snapshot_path, class: 'govuk-link govuk-link--no-visited-state')) %>
+    </p>
   </div>
 </div>
 

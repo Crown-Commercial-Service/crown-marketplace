@@ -3,6 +3,15 @@ en:
   activemodel:
     errors:
       models:
+        facilities_management/rm6232/admin/supplier_data/snapshot:
+          attributes:
+            snapshot_date:
+              blank: Enter a valid 'snapshot' date
+              not_a_date: Enter a valid 'snapshot' date
+            snapshot_date_time:
+              no_supplier_data: You must enter a data and time on or after %{oldest_data_created_at} (when the supplier data was imported for the first time)
+            snapshot_time:
+              not_a_time: Enter a valid 'snapshot' time (23:59 or earlier)
         facilities_management/rm6232/journey/annual_contract_value:
           attributes:
             annual_contract_value:
@@ -216,8 +225,10 @@ en:
             download_logs: Download full change logs
             during_a_deployment: During a deployment
             heading: Supplier data change log
+            supplier_data_snapshot: Supplier data snapshot
             user: User
-            you_can_download: You can download a CSV file of the logs by clicking on 'Download full change logs'
+            you_can_download: You can download a CSV file of the full logs by clicking on 'Download full change logs'
+            you_can_get_a_snapshot_html: You can get a snapshot of the supplier data at any point in time by going to the '%{snapshot_link}' section.
           lot_data:
             items_added:
               region_codes: 'The following regions were added to the supplier:'
@@ -263,6 +274,17 @@ en:
             view_details: View details
             view_lot_data: View lot data
             view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        supplier_data_snapshots:
+          new:
+            enter_a_date: Enter the date for which you want to create a snapshot of the supplier data. You also have the option of entering the time if you need to be more specific.
+            generate_spreadsheets: Download supplier data spreadsheets
+            heading: Supplier data snapshot
+            hour: Hour
+            minute: Minute
+            snapshot_date_label: Snapshot date
+            snapshot_time_label: Snapshot time (optional)
+            the_date_you_enter: The date and time you enter should be on or after %{oldest_data_created_at} which is when the supplier data was first uploaded into the application.
+            when_you_click: When you click 'Download the supplier spreadsheets', a zip file containing the 'Supplier details', 'Supplier services' and 'Supplier regions' will be downloaded.
         supplier_details:
           index:
             heading: Supplier data
