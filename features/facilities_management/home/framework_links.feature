@@ -5,7 +5,7 @@ Feature: Framwork link
     Then the following content should be displayed on the page:
       | Use this service to:                                                                              |
       | quickly view suppliers who can provide services to your locations                                 |
-      | shortlist potential suppliers                                                                     |
+      | download a shortlist of potential suppliers                                                       |
       | receive a compliant Lot recommendation                                                            |
       | Before you start                                                                                  |
       | which services you want to have provided                                                          |
