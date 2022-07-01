@@ -9,6 +9,14 @@ module FacilitiesManagement
           order(created_at: :desc).first
         end
 
+        def self.oldest_data_created_at
+          order(created_at: :asc).first.created_at
+        end
+
+        def self.oldest_data_created_at_string
+          oldest_data_created_at.in_time_zone('London').strftime('%e %B %Y, %k:%M')
+        end
+
         def self.audit_logs
           order(created_at: :desc).map do |supplier_data|
             [
