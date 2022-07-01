@@ -7,7 +7,12 @@ module FacilitiesManagement
         helper_method :change_type
 
         def index
-          @audit_logs = Kaminari.paginate_array(SupplierData.audit_logs).page(params[:page])
+          respond_to do |format|
+            format.html { @audit_logs = Kaminari.paginate_array(SupplierData.audit_logs).page(params[:page]) }
+            format.csv do
+              send_data ChangeLogsCsvGenerator.generate_csv, filename: "Full change logs (#{DateTime.now.in_time_zone('London').strftime('%d_%m_%Y %H_%M').squish}).csv", type: 'text/csv'
+            end
+          end
         end
 
         def show; end

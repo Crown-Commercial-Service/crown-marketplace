@@ -28,6 +28,19 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsController, type: 
     end
   end
 
+  describe 'GET index with csv fromat' do
+    before do
+      allow(FacilitiesManagement::RM6232::Admin::ChangeLogsCsvGenerator).to receive(:generate_csv).and_return("\n")
+
+      get :index, format: :csv
+    end
+
+    it 'download the csv' do
+      expect(response.headers['Content-Disposition']).to include 'filename="Full change logs'
+      expect(response.headers['Content-Type']).to eq 'text/csv'
+    end
+  end
+
   describe 'GET show' do
     let(:supplier_data) { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data }
     let(:supplier) { supplier_data.data.first }
