@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :controller do
-  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM3830' } }
+RSpec.describe FacilitiesManagement::RM6232::Admin::UploadsController, type: :controller do
+  let(:default_params) { { service: 'facilities_management/admin', framework: 'RM6232' } }
 
   describe 'GET index' do
     context 'when not logged in' do
       it 'redirects to the sign-in' do
         get :index
-        expect(response).to redirect_to facilities_management_rm3830_admin_new_user_session_path
+        expect(response).to redirect_to facilities_management_rm6232_admin_new_user_session_path
       end
     end
 
@@ -16,7 +16,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
 
       it 'redirects to not permitted' do
         get :index
-        expect(response).to redirect_to '/facilities-management/RM3830/admin/not-permitted'
+        expect(response).to redirect_to '/facilities-management/RM6232/admin/not-permitted'
       end
     end
 
@@ -26,6 +26,15 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
       it 'renders the page' do
         get :index
         expect(response).to render_template(:index)
+      end
+
+      context 'and the framework dose not exist' do
+        it 'renders the unrecognised framework page with the right http status' do
+          get :index, params: { framework: 'RM3826' }
+
+          expect(response).to render_template('home/unrecognised_framework')
+          expect(response).to have_http_status(:bad_request)
+        end
       end
     end
   end
@@ -55,16 +64,16 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
   describe 'POST create' do
     let(:file) { Tempfile.new(['valid_file', '.xlsx']) }
     let(:fake_file) { File.open(file.path) }
-    let(:upload) { create(:facilities_management_rm3830_admin_upload) }
+    let(:upload) { create(:facilities_management_rm6232_admin_upload) }
 
     login_fm_admin
 
     before do
       allow(upload).to receive(:save).and_return(valid)
       allow(upload).to receive(:save).with(context: :upload).and_return(valid)
-      allow(FacilitiesManagement::RM3830::Admin::Upload).to receive(:new).with(anything).and_return(upload)
-      allow(FacilitiesManagement::RM3830::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
-      post :create, params: { facilities_management_rm3830_admin_upload: { supplier_data_file: fake_file } }
+      allow(FacilitiesManagement::RM6232::Admin::Upload).to receive(:new).with(anything).and_return(upload)
+      allow(FacilitiesManagement::RM6232::Admin::FileUploadWorker).to receive(:perform_async).with(upload.id).and_return(true)
+      post :create, params: { facilities_management_rm6232_admin_upload: { supplier_details_file: fake_file, supplier_services_file: fake_file, supplier_regions_file: fake_file } }
     end
 
     after do
@@ -75,7 +84,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
       let(:valid) { true }
 
       it 'redirects to the show page' do
-        expect(response).to redirect_to facilities_management_rm3830_admin_upload_path(upload)
+        expect(response).to redirect_to facilities_management_rm6232_admin_upload_path(upload)
       end
 
       it 'changes the state to in_progress' do
@@ -93,17 +102,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
   end
 
   describe 'GET show' do
-    let(:file) { Tempfile.new(['valid_file', '.xlsx']) }
-    let(:fake_file) { File.open(file.path) }
-    let(:upload) do
-      create(:facilities_management_rm3830_admin_upload, aasm_state: aasm_state) do |admin_upload|
-        admin_upload.supplier_data_file.attach(io: fake_file, filename: 'test_supplier_framework_data_file.xlsx')
-      end
-    end
-
-    after do
-      file.unlink
-    end
+    let(:upload) { create(:facilities_management_rm6232_admin_upload, aasm_state: aasm_state) }
 
     login_fm_admin
 
@@ -124,7 +123,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
 
       it 'renders the show template and the in_progress partial' do
         expect(response).to render_template(:show)
-        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/uploads/_in_progress')
+        expect(response).to render_template(partial: 'facilities_management/rm6232/admin/uploads/_in_progress')
       end
     end
 
@@ -135,13 +134,13 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
 
       it 'renders the show template and the failed partial' do
         expect(response).to render_template(:show)
-        expect(response).to render_template(partial: 'facilities_management/rm3830/admin/uploads/_failed')
+        expect(response).to render_template(partial: 'facilities_management/rm6232/admin/uploads/_failed')
       end
     end
   end
 
   describe 'GET progress' do
-    let(:upload) { create(:facilities_management_rm3830_admin_upload, aasm_state: 'publishing_data') }
+    let(:upload) { create(:facilities_management_rm6232_admin_upload, aasm_state: 'publishing_data') }
 
     login_fm_admin
 

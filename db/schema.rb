@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_20_130633) do
+ActiveRecord::Schema.define(version: 2022_06_27_081803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -363,6 +363,16 @@ ActiveRecord::Schema.define(version: 2022_06_20_130633) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_admin_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "aasm_state", limit: 30
+    t.string "supplier_details_file", limit: 255
+    t.string "supplier_services_file", limit: 255
+    t.string "supplier_regions_file", limit: 255
+    t.text "import_errors"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "facilities_management_rm6232_procurement_buildings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_procurement_id"
     t.uuid "building_id"
@@ -431,9 +441,9 @@ ActiveRecord::Schema.define(version: 2022_06_20_130633) do
     t.uuid "facilities_management_rm6232_supplier_id"
     t.string "lot_code", limit: 2
     t.text "service_codes", default: [], array: true
-    t.text "region_codes", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "region_codes", default: [], array: true
     t.index ["facilities_management_rm6232_supplier_id"], name: "index_fm_rm6232_supplier_lot_data_on_fm_rm6232_supplier_id"
     t.index ["lot_code"], name: "index_fm_rm6232_supplier_lot_data_on_lot_number"
   end
