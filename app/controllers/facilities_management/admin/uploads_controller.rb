@@ -15,7 +15,9 @@ module FacilitiesManagement
       end
 
       def create
-        @upload = service::Admin::Upload.new(upload_params)
+        @upload = service::Admin::Upload.new(user: current_user)
+
+        @upload.assign_attributes(upload_params)
 
         if @upload.save(context: :upload)
           @upload.start_upload!
@@ -41,6 +43,18 @@ module FacilitiesManagement
 
       def service
         @service ||= self.class.module_parent.module_parent
+      end
+
+      def upload_params
+        if params[param_key]
+          params.require(param_key).permit(@upload.class::ATTRIBUTES)
+        else
+          {}
+        end
+      end
+
+      def param_key
+        @param_key ||= @upload.model_name.param_key
       end
     end
   end

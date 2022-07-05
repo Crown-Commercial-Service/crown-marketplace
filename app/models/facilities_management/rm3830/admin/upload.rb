@@ -2,6 +2,8 @@ module FacilitiesManagement
   module RM3830
     module Admin
       class Upload < FacilitiesManagement::Admin::Upload
+        belongs_to :user, inverse_of: :rm3830_admin_uploads, optional: true
+
         has_one_attached :supplier_data_file
 
         validates :supplier_data_file, antivirus: { message: :malicious }, size: { less_than: 10.megabytes, message: :too_large }, content_type: { with: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', message: :wrong_content_type }, on: :upload
