@@ -202,9 +202,11 @@ en:
               service_codes: Services
               upload: Data uploaded
             date_of_change: Date of change
+            download_logs: Download full change logs
             during_a_deployment: During a deployment
             heading: Supplier data change log
             user: User
+            you_can_download: You can download a CSV file of the logs by clicking on 'Download full change logs'
           lot_data:
             items_added:
               region_codes: 'The following regions were added to the supplier:'
