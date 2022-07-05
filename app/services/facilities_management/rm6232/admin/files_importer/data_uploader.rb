@@ -1,11 +1,13 @@
 module FacilitiesManagement::RM6232
   module Admin
     class FilesImporter::DataUploader < FacilitiesManagement::FilesImporter::DataUploader
-      def self.upload!(supplier_data)
+      def self.upload!(supplier_data, upload:)
         super(Supplier) do
           Supplier.destroy_all
 
           supplier_data.each { |supplier| create_supplier!(supplier) }
+
+          SupplierData.create!(upload: upload, data: supplier_data)
         end
       end
 

@@ -14,6 +14,7 @@ module FacilitiesManagement
           @lot_data.assign_attributes(lot_data_params)
 
           if @lot_data.save(context: @lot_data_type.to_sym)
+            FacilitiesManagement::RM6232::Admin::SupplierData::Edit.log_change(current_user, @lot_data)
             redirect_to facilities_management_rm6232_admin_supplier_lot_datum_path(id: @supplier.id)
           else
             set_data

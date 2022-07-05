@@ -14,6 +14,7 @@ module FacilitiesManagement
         @supplier.assign_attributes(supplier_params)
 
         if @supplier.save(context: @page)
+          FacilitiesManagement::RM6232::Admin::SupplierData::Edit.log_change(current_user, @supplier) if @framework == 'RM6232'
           redirect_to facilities_management_admin_supplier_detail_path
         else
           render :edit

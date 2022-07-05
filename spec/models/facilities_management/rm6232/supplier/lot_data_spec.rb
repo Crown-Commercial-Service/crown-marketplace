@@ -83,4 +83,116 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
       end
     end
   end
+
+  describe '.changed_data' do
+    let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier) }
+    let(:supplier) { lot_data.supplier }
+    let(:result) { lot_data.changed_data }
+
+    before { lot_data.update(**attributes) }
+
+    context 'when changing the services' do
+      let(:attributes) { { service_codes: service_codes } }
+
+      context 'and a service is added' do
+        let(:service_codes) { %w[E.16 H.6 P.11 F.4] }
+        let(:data) do
+          {
+            attribute: 'service_codes',
+            lot_code: '1a',
+            added: %w[F.4],
+            removed: []
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+
+      context 'and a service is removed' do
+        let(:service_codes) { %w[E.16 P.11] }
+        let(:data) do
+          {
+            attribute: 'service_codes',
+            lot_code: '1a',
+            added: [],
+            removed: %w[H.6]
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+
+      context 'and one service is added and one removed' do
+        let(:service_codes) { %w[E.16 P.11 F.4] }
+        let(:data) do
+          {
+            attribute: 'service_codes',
+            lot_code: '1a',
+            added: %w[F.4],
+            removed: %w[H.6]
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+    end
+
+    context 'when changing the regions' do
+      let(:attributes) { { region_codes: region_codes } }
+
+      context 'and a region is added' do
+        let(:region_codes) { %w[UKC1 UKD1 UKE1 UKF1] }
+        let(:data) do
+          {
+            attribute: 'region_codes',
+            lot_code: '1a',
+            added: %w[UKF1],
+            removed: []
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+
+      context 'and a region is removed' do
+        let(:region_codes) { %w[UKC1 UKE1] }
+        let(:data) do
+          {
+            attribute: 'region_codes',
+            lot_code: '1a',
+            added: [],
+            removed: %w[UKD1]
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+
+      context 'and one region is added and one removed' do
+        let(:region_codes) { %w[UKC1 UKE1 UKF1] }
+        let(:data) do
+          {
+            attribute: 'region_codes',
+            lot_code: '1a',
+            added: %w[UKF1],
+            removed: %w[UKD1]
+          }
+        end
+
+        it 'returns the correct data' do
+          expect(result).to eq([supplier.id, :lot_data, data])
+        end
+      end
+    end
+  end
 end
