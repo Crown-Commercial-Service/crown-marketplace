@@ -69,5 +69,15 @@ module Pages::RM6232
 
     elements :added_items, '#added-items > li'
     elements :removed_items, '#removed-items > li'
+
+    section :management_report, 'form' do
+      element :'From day', '#facilities_management_rm6232_admin_management_report_start_date_dd'
+      element :'From month', '#facilities_management_rm6232_admin_management_report_start_date_mm'
+      element :'From year', '#facilities_management_rm6232_admin_management_report_start_date_yyyy'
+
+      element :'To day', '#facilities_management_rm6232_admin_management_report_end_date_dd'
+      element :'To month', '#facilities_management_rm6232_admin_management_report_end_date_mm'
+      element :'To year', '#facilities_management_rm6232_admin_management_report_end_date_yyyy'
+    end
   end
 end
