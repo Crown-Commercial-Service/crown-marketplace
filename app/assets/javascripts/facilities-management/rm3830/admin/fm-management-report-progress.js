@@ -4,8 +4,7 @@ const managementReportProgress = {
   interval: 15000,
 
   init() {
-    this.statusURL = `${window.location.pathname}/status`;
-    this.updateStatusURL = `${window.location.pathname}/update_status`;
+    this.statusURL = `${window.location.pathname}/progress`;
 
     setTimeout(this.checkImportProgress, this.interval);
   },

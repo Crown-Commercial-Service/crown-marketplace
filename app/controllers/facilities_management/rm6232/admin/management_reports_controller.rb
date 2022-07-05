@@ -1,5 +1,5 @@
 module FacilitiesManagement
-  module RM3830
+  module RM6232
     module Admin
       class ManagementReportsController < FacilitiesManagement::Admin::ManagementReportsController
       end

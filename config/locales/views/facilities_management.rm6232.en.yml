@@ -22,6 +22,17 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/rm6232/admin/management_report:
+          attributes:
+            end_date:
+              date_after_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
+              date_before_or_equal_to: The ‘To’ date must be today or in the past
+              invalid: Enter a valid ‘To’ date
+              not_a_date: Enter a valid ‘To’ date
+            start_date:
+              date_before_or_equal_to: The ‘From’ date must be today or in the past
+              invalid: Enter a valid ‘From’ date
+              not_a_date: Enter a valid ‘From’ date
         facilities_management/rm6232/admin/suppliers_admin:
           attributes:
             active:
@@ -233,6 +244,8 @@ en:
             audit_logs: Supplier data change log
             header: RM6232 administration dashboard
             manage_supplier_data: Manage the supplier's details and their lot data
+            management_report: Management reports
+            management_report_detail: Download the management data in CSV format
             supplier_data: Supplier data
             view_logs: View logs of all changes made to the supplier data by the admin team
         sessions:

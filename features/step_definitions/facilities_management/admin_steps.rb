@@ -39,3 +39,23 @@ end
 Then('I enter {string} into the {string} field') do |supplier_detail, field|
   admin_page.supplier_detail_form.send(field.to_sym).set(supplier_detail)
 end
+
+Then('I enter {string} as the {string} date') do |date, date_type|
+  add_management_report_dates(date_type, *date_options(date))
+end
+
+Then('the management report has the correct date range') do
+  date_range = "The date range for this report is: #{Time.zone.yesterday.strftime('%d/%-m/%Y')} - #{Time.zone.today.strftime('%d/%-m/%Y')}"
+
+  expect(admin_page.management_report_date).to have_content(date_range)
+end
+
+Then('there should be {int} management reports') do |number_of_management_reports|
+  expect(admin_page.management_reports.length).to eq number_of_management_reports
+end
+
+def add_management_report_dates(date_type, day, month, year)
+  admin_page.management_report.send("#{date_type} day").set(day)
+  admin_page.management_report.send("#{date_type} month").set(month)
+  admin_page.management_report.send("#{date_type} year").set(year)
+end

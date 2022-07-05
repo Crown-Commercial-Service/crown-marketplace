@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_123952) do
+ActiveRecord::Schema.define(version: 2022_07_05_112131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -365,6 +365,16 @@ ActiveRecord::Schema.define(version: 2022_06_29_123952) do
     t.text "service_usage", array: true
   end
 
+  create_table "facilities_management_rm6232_admin_management_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "aasm_state", limit: 30
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_fm_rm6232_management_reports_on_user_id"
+  end
+
   create_table "facilities_management_rm6232_admin_supplier_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "facilities_management_rm6232_admin_upload_id"
     t.json "data"
@@ -648,6 +658,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_123952) do
   add_foreign_key "facilities_management_rm3830_procurements", "users"
   add_foreign_key "facilities_management_rm3830_spreadsheet_imports", "facilities_management_rm3830_procurements"
   add_foreign_key "facilities_management_rm3830_supplier_details", "users"
+  add_foreign_key "facilities_management_rm6232_admin_management_reports", "users"
   add_foreign_key "facilities_management_rm6232_admin_supplier_data", "facilities_management_rm6232_admin_uploads"
   add_foreign_key "facilities_management_rm6232_admin_supplier_data_edits", "facilities_management_rm6232_admin_supplier_data", column: "facilities_management_rm6232_admin_supplier_data_id"
   add_foreign_key "facilities_management_rm6232_admin_supplier_data_edits", "users"

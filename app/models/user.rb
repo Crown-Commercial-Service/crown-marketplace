@@ -31,9 +31,14 @@ class User < ApplicationRecord
            inverse_of: :user,
            dependent: :destroy
 
-  has_many :management_reports,
+  has_many :rm3830_management_reports,
            inverse_of: :user,
            class_name: 'FacilitiesManagement::RM3830::Admin::ManagementReport',
+           dependent: :nullify
+
+  has_many :rm6232_management_reports,
+           inverse_of: :user,
+           class_name: 'FacilitiesManagement::RM6232::Admin::ManagementReport',
            dependent: :nullify
 
   has_many :rm3830_admin_uploads,
