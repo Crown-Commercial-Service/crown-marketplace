@@ -172,11 +172,67 @@ en:
   facilities_management:
     rm6232:
       admin:
+        change_logs:
+          change_log_details:
+            a_change_was_made_to_html: A change was made to the supplier <strong id="updated-supplier">%{supplier_name}</strong> on <strong>%{created_at}</strong>.
+            change_made_by_html: This change was made by <strong id="updated-by-email">%{email}</strong>.
+            changed_lot_html: The change was made in <strong id="updated-lot">Lot %{lot_code}</strong>.
+          details:
+            attribute: Attribute
+            attribute_name:
+              active: Status
+              address_county: County
+              address_line_1: Building and street
+              address_line_2: Building and street (line 2)
+              address_postcode: Postcode
+              address_town: Town or city
+              duns: DUNS number
+              registration_number: Company registration number
+              supplier_name: Supplier name
+            below_are_the_changes: 'Below are the changes that were made to the supplier''s details:'
+            new_value: New value
+            prev_value: Previous value
+          index:
+            below_is_table: Below is a table which records a log of all the changes made to the supplier data. You can view the specific changes that were made by clicking on a log item.
+            change: Change
+            change_log_item: Log item
+            change_made:
+              details: Details
+              region_codes: Regions
+              service_codes: Services
+              upload: Data uploaded
+            date_of_change: Date of change
+            during_a_deployment: During a deployment
+            heading: Supplier data change log
+            user: User
+          lot_data:
+            items_added:
+              region_codes: 'The following regions were added to the supplier:'
+              service_codes: 'The following services were added to the supplier:'
+            items_removed:
+              region_codes: 'The following regions were removed from the supplier:'
+              service_codes: 'The following services were removed from the supplier:'
+          show:
+            heading:
+              details: Changes to supplier details
+              region_codes: Changes to supplier regions
+              service_codes: Changes to supplier services
+              upload: Supplier data upload
+            log_item: Log item %{short_id}
+          upload:
+            an_upload_was_done_html: An upload was created on <strong>%{created_at}</strong>.
+            this_upload_was_done_by_html: This upload was created by <strong id="updated-by-email">%{email}</strong>.
+            this_upload_was_done_via_deployment: This upload was created via a deployment to the application.
+            to_get_data: You can get the data that was used by speaking to a developer.
+            upload: upload
+            you_can_view_upload_html: You can view the %{link_url} in the 'Manage supplier data' section of the portal.
         home:
           index:
+            audit_logs: Supplier data change log
             header: RM6232 administration dashboard
             manage_supplier_data: Manage the supplier's details and their lot data
             supplier_data: Supplier data
+            view_logs: View logs of all changes made to the supplier data by the admin team
         sessions:
           new:
             admin_sign_in_header: Sign in to the RM6232 administration dashboard
@@ -307,6 +363,7 @@ en:
             name: File name
             return: Return to 'Manage supplier data'
             status: 'Status:'
+            uploaded_by: 'Uploaded by:'
           upload:
             upload_name: 'Upload session #%{number}'
       buyer_account:

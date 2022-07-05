@@ -1,0 +1,22 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p>
+      <%= t('.an_upload_was_done_html', created_at: format_date_time(@change_log.created_at)) %>
+    </p>
+    <% if @change_log.upload %>
+      <p>
+        <%= t('.this_upload_was_done_by_html', email: @change_log.upload.user.email) %>
+      </p>
+      <p>
+        <%= t('.you_can_view_upload_html', link_url: link_to(t('.upload'), @change_log.upload, class: 'govuk-link--no-visited-state')) %>
+      </p>
+    <% else %>
+      <p>
+        <%= t('.this_upload_was_done_via_deployment') %>
+      </p>
+      <p>
+        <%= t('.to_get_data') %>
+      </p>
+    <% end %>
+  </div>
+</div>

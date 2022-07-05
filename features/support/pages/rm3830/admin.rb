@@ -1,5 +1,7 @@
+require_relative '../admin'
+
 module Pages::RM3830
-  class Admin < SitePrism::Page
+  class Admin < Pages::Admin
     section :supplier_detail_form, 'form' do
       element :'User email', '#facilities_management_rm3830_admin_suppliers_admin_user_email'
       element :'Supplier name', '#facilities_management_rm3830_admin_suppliers_admin_supplier_name'

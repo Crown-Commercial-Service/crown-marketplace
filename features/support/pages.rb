@@ -1,6 +1,11 @@
 module Pages
   def admin_page
-    @admin_page ||= Admin.new
+    @admin_page ||= case @framework
+                    when 'RM3830'
+                      admin_rm3830_page
+                    when 'RM6232'
+                      admin_rm6232_page
+                    end
   end
 
   def admin_rm3830_page

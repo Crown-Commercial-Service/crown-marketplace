@@ -37,12 +37,5 @@ Then('the current user has the user email') do
 end
 
 Then('I enter {string} into the {string} field') do |supplier_detail, field|
-  current_admin_page = case @framework
-                       when 'RM3830'
-                         admin_rm3830_page
-                       when 'RM6232'
-                         admin_rm6232_page
-                       end
-
-  current_admin_page.supplier_detail_form.send(field.to_sym).set(supplier_detail)
+  admin_page.supplier_detail_form.send(field.to_sym).set(supplier_detail)
 end
