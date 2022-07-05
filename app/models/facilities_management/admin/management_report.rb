@@ -20,6 +20,10 @@ class FacilitiesManagement::Admin::ManagementReport < ApplicationRecord
     end
   end
 
+  def generate_report_csv
+    self.class.module_parent::ManagementReportWorker.perform_async(id) unless management_report_csv.attached?
+  end
+
   def short_id
     "##{id[..7]}"
   end

@@ -32,6 +32,10 @@ module FacilitiesManagement
         @quick_view_suppliers ||= SuppliersSelector.new(service_codes_without_cafm, region_codes, annual_contract_value)
       end
 
+      def supplier_names
+        SuppliersSelector.new(service_codes_without_cafm, region_codes, annual_contract_value, lot_number).selected_suppliers.pluck(:supplier_name)
+      end
+
       def suppliers
         @suppliers ||= SuppliersSelector.new(procurement_buildings_service_codes_without_cafm, procurement_buildings_region_codes, annual_contract_value)
       end

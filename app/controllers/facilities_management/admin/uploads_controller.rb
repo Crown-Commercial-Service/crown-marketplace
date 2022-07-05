@@ -4,18 +4,18 @@ module FacilitiesManagement
       before_action :set_upload, only: %i[show progress]
 
       def index
-        @latest_upload = service::Admin::Upload.latest_upload
-        @uploads = service::Admin::Upload.all.page params[:page]
+        @latest_upload = service::Upload.latest_upload
+        @uploads = service::Upload.all.page params[:page]
       end
 
       def show; end
 
       def new
-        @upload = service::Admin::Upload.new
+        @upload = service::Upload.new
       end
 
       def create
-        @upload = service::Admin::Upload.new(user: current_user)
+        @upload = service::Upload.new(user: current_user)
 
         @upload.assign_attributes(upload_params)
 
@@ -34,15 +34,15 @@ module FacilitiesManagement
       private
 
       def set_upload
-        @upload = service::Admin::Upload.find(params[:id] || params[:upload_id])
+        @upload = service::Upload.find(params[:id] || params[:upload_id])
       end
 
       def authorize_user
-        authorize! :manage, service::Admin::Upload
+        authorize! :manage, service::Upload
       end
 
       def service
-        @service ||= self.class.module_parent.module_parent
+        @service ||= self.class.module_parent
       end
 
       def upload_params
