@@ -3,12 +3,14 @@ Feature: Management report  - validations
 
   Background: Navigate to the management report page
     Given I sign in as an admin and navigate to the 'RM3830' dashboard
-    And I click on 'Management report'
-    Then I am on the 'Generate management report' page
+    And I click on 'Management reports'
+    Then I am on the 'Management reports' page
+    And I click on 'Generate a new management report'
+    Then I am on the 'Generate a management report' page
 
   Scenario Outline: Blank date validation
     And I enter 'yesterday' as the '<date_type>' date
-    And I click on 'Generate and download report'
+    And I click on 'Generate report'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -20,7 +22,7 @@ Feature: Management report  - validations
   Scenario Outline: From date validation
     Given I enter '<date>' as the 'From' date
     And I enter 'today' as the 'To' date
-    And I click on 'Generate and download report'
+    And I click on 'Generate report'
     Then I should see the following error messages:
       | <error_message> |
 
@@ -33,7 +35,7 @@ Feature: Management report  - validations
   Scenario Outline: From date validation
     Given I enter '<date>' as the 'To' date
     And I enter 'today' as the 'From' date
-    And I click on 'Generate and download report'
+    And I click on 'Generate report'
     Then I should see the following error messages:
       | <error_message> |
 

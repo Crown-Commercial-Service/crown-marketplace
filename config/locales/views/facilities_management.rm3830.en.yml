@@ -391,37 +391,11 @@ en:
             dashboard_manage_rate: Manage the average framework rates and variances
             dashboard_manage_supplier_details: Manage the details of the suppliers
             dashboard_management_report_detail: Download the management data in CSV format
-            dashboard_management_report_header: Management report
+            dashboard_management_report_header: Management reports
             dashboard_supplier_data: Supplier data
             dashboard_supplier_details: Supplier details
             dashboard_supplier_framework_data: Supplier framework data
             dashboard_supplier_prices: Manage supplier services, prices and regions
-        management_reports:
-          completed:
-            file_generated_date: Created on %{created_at}
-          generating_csv:
-            generating: Generating report
-            guidance: The report will be available for download shortly. Your browser will automatically refresh when the report file is available for download.
-          new:
-            breadcrumb_text_generate_management_report: Generate management report
-            download_btn_text: Generate and download report
-            from: From
-            from_example: For example, 15 06 2020
-            heading_sub: Download management data
-            heading_sub_detail: To generate a download file, please input your date range.
-            heading_title: Generate management report
-            return_link: Return to admin dashboard
-            there_is_a_problem: There is a problem
-            to: To
-            to_example: For example, 30 06 2020
-          show:
-            breadcrumb_text_generate_management_report: Generate management report
-            breadcrumb_text_management_report: Management report
-            download_btn_text: Generate another report
-            heading_sub: Download management data
-            heading_sub_detail: 'Report for date range: %{start_date} - %{end_date}'
-            heading_title: Management report
-            return_link: Return to admin dashboard
         service_rates:
           average-framework-rates:
             heading: Average framework rates
