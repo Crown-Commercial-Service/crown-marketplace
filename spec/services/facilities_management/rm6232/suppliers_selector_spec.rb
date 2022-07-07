@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
-  subject(:suppliers_selector) { described_class.new(service_codes[..-3], region_codes[..2], annual_contract_value) }
+  subject(:suppliers_selector) { described_class.new(service_codes[..-3], region_codes[..2], annual_contract_value, known_lot_number) }
 
+  let(:known_lot_number) { nil }
   let(:lot_number) { suppliers_selector.lot_number }
   let(:supplier_names) { suppliers_selector.selected_suppliers.map(&:supplier_name) }
 
@@ -43,6 +44,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
             expect(supplier_names).not_to include my_supplier.supplier_name
           end
         end
+
+        context 'and known_lot_number is 1a' do
+          let(:known_lot_number) { '1a' }
+
+          it 'returns 1a for the lot number' do
+            expect(lot_number).to eq '1a'
+          end
+        end
       end
 
       context 'and the annual_contract_value is a more than 1,500,000 and less than 10,000,000' do
@@ -64,6 +73,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
             expect(supplier_names).not_to include my_supplier.supplier_name
           end
         end
+
+        context 'and known_lot_number is 1b' do
+          let(:known_lot_number) { '1b' }
+
+          it 'returns 1b for the lot number' do
+            expect(lot_number).to eq '1b'
+          end
+        end
       end
 
       context 'and the annual_contract_value is more than 10,000,000' do
@@ -83,6 +100,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
 
           it 'returns a list of suppliers that does not include my_supplier' do
             expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
+
+        context 'and known_lot_number is 1c' do
+          let(:known_lot_number) { '1c' }
+
+          it 'returns 1c for the lot number' do
+            expect(lot_number).to eq '1c'
           end
         end
       end
@@ -110,6 +135,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
             expect(supplier_names).not_to include my_supplier.supplier_name
           end
         end
+
+        context 'and known_lot_number is 1a' do
+          let(:known_lot_number) { '1a' }
+
+          it 'returns 1a for the lot number' do
+            expect(lot_number).to eq '1a'
+          end
+        end
       end
 
       context 'and the annual_contract_value is a more than 1,000,000 and less than 7,000,000' do
@@ -131,6 +164,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
             expect(supplier_names).not_to include my_supplier.supplier_name
           end
         end
+
+        context 'and known_lot_number is 1b' do
+          let(:known_lot_number) { '1b' }
+
+          it 'returns 1b for the lot number' do
+            expect(lot_number).to eq '1b'
+          end
+        end
       end
 
       context 'and the annual_contract_value is more than 7,000,000' do
@@ -150,6 +191,14 @@ RSpec.describe FacilitiesManagement::RM6232::SuppliersSelector do
 
           it 'returns a list of suppliers that does not include my_supplier' do
             expect(supplier_names).not_to include my_supplier.supplier_name
+          end
+        end
+
+        context 'and known_lot_number is 1c' do
+          let(:known_lot_number) { '1c' }
+
+          it 'returns 1c for the lot number' do
+            expect(lot_number).to eq '1c'
           end
         end
       end

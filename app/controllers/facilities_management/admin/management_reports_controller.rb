@@ -6,17 +6,17 @@ module FacilitiesManagement
       helper_method :show_path, :new_path, :index_path
 
       def index
-        @management_reports = service::Admin::ManagementReport.order(created_at: :desc).page(params[:page])
+        @management_reports = service::ManagementReport.order(created_at: :desc).page(params[:page])
       end
 
       def show; end
 
       def new
-        @management_report = service::Admin::ManagementReport.new
+        @management_report = service::ManagementReport.new
       end
 
       def create
-        @management_report = service::Admin::ManagementReport.new(user: current_user)
+        @management_report = service::ManagementReport.new(user: current_user)
 
         @management_report.assign_attributes(management_report_params)
 
@@ -34,11 +34,11 @@ module FacilitiesManagement
       private
 
       def service
-        @service ||= self.class.module_parent.module_parent
+        @service ||= self.class.module_parent
       end
 
       def set_management_report
-        @management_report = service::Admin::ManagementReport.find(params[:id])
+        @management_report = service::ManagementReport.find(params[:id])
       end
 
       def index_path

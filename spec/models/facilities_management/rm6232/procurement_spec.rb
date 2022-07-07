@@ -25,6 +25,36 @@ RSpec.describe FacilitiesManagement::RM6232::Procurement, type: :model do
     end
   end
 
+  describe '.supplier_names' do
+    let(:procurement) { build(:facilities_management_rm6232_procurement_what_happens_next, service_codes: service_codes) }
+    let(:base_service_codes) { ['E.1', 'E.2'] }
+    let(:service_codes) { base_service_codes }
+
+    it 'returns an array of the supplier names' do
+      supplier = create(:facilities_management_rm6232_supplier, supplier_name: 'Still, Move Forward!')
+      create(:facilities_management_rm6232_supplier_lot_data, supplier: supplier, lot_code: '2a', service_codes: procurement.service_codes, region_codes: procurement.region_codes)
+
+      expect(procurement.supplier_names).to be_an(Array)
+      expect(procurement.supplier_names).to include('Still, Move Forward!')
+    end
+
+    context 'when the service codes contain Q.3' do
+      let(:service_codes) { base_service_codes + ['Q.3'] }
+      let(:suppliers_selector) { instance_double('suppliers_selector') }
+      let(:suppliers) { instance_double('suppliers') }
+
+      it 'does not use that service code in the call to SuppliersSelector' do
+        allow(FacilitiesManagement::RM6232::SuppliersSelector).to receive(:new).and_return(suppliers_selector)
+        allow(suppliers_selector).to receive(:selected_suppliers).and_return(suppliers)
+        allow(suppliers).to receive(:pluck)
+
+        procurement.supplier_names
+
+        expect(FacilitiesManagement::RM6232::SuppliersSelector).to have_received(:new).with(base_service_codes, procurement.region_codes, procurement.annual_contract_value, '2a')
+      end
+    end
+  end
+
   describe '.suppliers' do
     let(:procurement) { create(:facilities_management_rm6232_procurement_results, service_codes: base_service_codes) }
     let(:base_service_codes) { ['E.1', 'E.2', 'E.3', 'E.4'] }

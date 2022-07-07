@@ -5,7 +5,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ManagementReportsController,
 
   login_fm_admin
 
-  # before { allow(FacilitiesManagement::RM6232::Admin::ManagementReportWorker).to receive(:perform_async).with(anything).and_return(true) }
+  before { allow(FacilitiesManagement::RM6232::Admin::ManagementReportWorker).to receive(:perform_async).with(anything).and_return(true) }
 
   describe 'GET new' do
     it 'renders the new page' do
