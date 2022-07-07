@@ -10,7 +10,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::ChangeLogsCsvGenerator do
   let(:supplier_2_id) { supplier_data_1.data.find { |data| data['supplier_name'] == 'Skiles LLC' }['id'] }
 
   def get_time(*time_array)
-    DateTime.new(*time_array).in_time_zone('London')
+    Time.zone.local(*time_array).in_time_zone('London')
   end
 
   before do
