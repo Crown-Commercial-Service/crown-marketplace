@@ -1,0 +1,38 @@
+<%= content_for :page_title, t('.heading') %>
+<%= admin_breadcrumbs(
+  { text: t('facilities_management.admin.management_reports.index.heading'), link: index_path },
+  { text: t('.heading') }
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @management_report.user %>
+      <p>
+        <%= t('.report_made_by_html', email: @management_report.user.email, created_at: format_date_time(@management_report.created_at)) %>
+      </p>
+    <% end %>
+    <p>
+      <%= t('.date_range_of_report', start_date: @management_report.start_date.strftime('%d/%-m/%Y'), end_date: @management_report.end_date.strftime('%d/%-m/%Y')) %>
+    </p>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-!-margin-bottom-4">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div id="management-report-status" class="management-report-state-<%=@management_report.aasm_state%>">
+      <%= render partial: @management_report.aasm_state %>
+    </div>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m">

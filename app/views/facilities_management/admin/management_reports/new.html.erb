@@ -1,0 +1,54 @@
+<%= content_for :page_title, t('.heading') %>
+<%= admin_breadcrumbs(
+  { text: t('facilities_management.admin.management_reports.index.heading'), link: index_path },
+  { text: t('.heading') }
+) %>
+
+<%= render partial: 'shared/error_summary', locals: { errors: @management_report.errors } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+  </div>
+</div>
+
+<%= form_with model: @management_report, url: index_path, method: :post, local: 'false', html: { specialvalidation: true, novalidate: true } do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l">
+        <%= t('.to_generate_file') %>
+      </p>
+      <%= form_group_with_error f.object, :start_date do |displayed_error| %>
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="start-date-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <%= t('.from') %>
+          </legend>
+          <div id="start-date-hint" class="govuk-hint">
+            <%= t('.from_example') %>
+          </div>
+
+          <%= displayed_error %>
+          <%= f.gov_uk_date_field :start_date, legend_options: { page_heading: false, visually_hidden: true } %>
+        </fieldset>
+      <% end %>
+
+      <%= form_group_with_error f.object, :end_date do |displayed_error| %>
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="end-date-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <%= t('.to') %>
+          </legend>
+          <div id="end-date-hint" class="govuk-hint">
+            <%= t('.to_example') %>
+          </div>
+
+          <%= displayed_error %>
+          <%= f.gov_uk_date_field :end_date, legend_options: { page_heading: false, visually_hidden: true } %>
+        </fieldset>
+      <% end %>
+      <hr class="govuk-section-break govuk-section-break--m">
+      <%= f.submit t('.generate_report'), class: 'govuk-button', data: { module: 'govuk-button' }, aria: { label: t('.generate_report') } %>
+    </div>
+  </div>
+<% end %>

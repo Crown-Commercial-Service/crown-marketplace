@@ -115,6 +115,14 @@ Rails.application.routes.draw do
       end
     end
 
+    concern :management_reports do
+      resources :management_reports, path: 'management-reports', only: %i[index new create show] do
+        member do
+          get '/progress', action: :progress
+        end
+      end
+    end
+
     namespace 'rm3830', path: 'RM3830', defaults: { framework: 'RM3830' } do
       concerns :shared_pages, :buildings, :procurement_buildings
 
@@ -166,7 +174,7 @@ Rails.application.routes.draw do
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
         get '/uploads/spreadsheet_template', controller: 'facilities_management/rm3830/admin/uploads'
 
-        concerns :shared_pages, :admin_uploads
+        concerns :shared_pages, :admin_uploads, :management_reports
 
         get '/', to: 'home#index'
         resources :service_rates, path: 'service-rates', param: :slug, only: %i[edit update]
@@ -175,10 +183,6 @@ Rails.application.routes.draw do
           resources :sublot_services, path: 'sublot-services', param: :lot, only: %i[edit update]
         end
         resources :supplier_details, path: 'supplier-details', only: :index
-        resources :management_reports, only: %i[new create show] do
-          get '/status', action: :status
-          post '/update_status', action: :update_status
-        end
       end
     end
 
@@ -198,7 +202,7 @@ Rails.application.routes.draw do
       end
 
       namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
-        concerns :shared_pages, :admin_uploads
+        concerns :shared_pages, :admin_uploads, :management_reports
 
         get '/', to: 'home#index'
         resources :supplier_data, path: 'supplier-data', only: :index
