@@ -495,7 +495,7 @@ en:
           purpose: This cookie is used to group the user behaviour
       ga_sets_following_cookies: Google Analytics sets the following cookies.
       heading: Details about cookies on Crown Marketplace
-      last_updated: Last updated 30 April 2021
+      last_updated: Last updated 8 July 2022
       policy_will_apply: This cookie policy is applicable to all four services
       reg_and_sign_in: Registration and sign in
       reg_and_sign_in_cookie:
@@ -516,6 +516,7 @@ en:
           name: crown_marketplace_confirmation_email
           purpose: This cookie holds the email of the user when activating their account
       reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
+      we_also_use: We also use Google Tag Manager, but this does not set any cookies.
       we_do_not_let: We do not allow Google to use or share the data about how you use this site.
       what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
       you_may_see_a_banner: You may see a banner when you visit Crown Marketplace inviting you to accept cookies or review your settings. We’ll set cookies so that your computer knows you’ve seen it and not to show it again, and also to store your settings.

@@ -19,6 +19,7 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
     cookies[:crown_marketplace_google_analytics_enabled] = 'true'
     allow(cookies.class).to receive(:new).and_return(cookies)
     allow(Marketplace).to receive(:google_analytics_tracking_id).and_return('123')
+    allow(Marketplace).to receive(:google_tag_manager_tracking_id).and_return('456')
     allow(Marketplace).to receive(:fm_survey_link).and_return(support_link_feedback_address)
   end
 
@@ -50,9 +51,17 @@ RSpec.describe 'layouts/application.html.erb', type: :view do
   end
 
   it 'includes google analytics partial' do
-    stub_template 'shared/_google_analytics.html.erb' => 'GA GA GA GA'
+    stub_template 'shared/google/_analytics.html.erb' => 'GA GA GA GA'
     render
     expect(rendered).to match(/GA GA GA GA/)
+  end
+
+  it 'includes google tag manager partials' do
+    stub_template 'shared/google/_tag_manager_body.html.erb' => 'GTM BODY'
+    stub_template 'shared/google/_tag_manager_head.html.erb' => 'GTM HEAD'
+    render
+    expect(rendered).to match(/GTM BODY/)
+    expect(rendered).to match(/GTM HEAD/)
   end
 
   it 'renders the page title stored in the locale file' do
