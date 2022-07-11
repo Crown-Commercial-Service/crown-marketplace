@@ -23,7 +23,7 @@ Feature: Security policy document
     And I upload security policy document that is 'valid'
     When I click on 'Save and return'
     Then I am on the 'Contract details' page
-    And my answer to the 'Security policy' contract detail question is 'Attachment+1+-+About+the+Direct+Award+v3.0.pd'
+    And my answer to the 'Security policy' contract detail question is 'Attachment 1 - About the Direct Award v3.0.pdf'
 
   Scenario: When the answer is changed
     And I select 'Yes' for the security policy document question
@@ -32,7 +32,7 @@ Feature: Security policy document
     And I upload security policy document that is 'valid'
     When I click on 'Save and return'
     Then I am on the 'Contract details' page
-    And my answer to the 'Security policy' contract detail question is 'Attachment+1+-+About+the+Direct+Award+v3.0.pd'
+    And my answer to the 'Security policy' contract detail question is 'Attachment 1 - About the Direct Award v3.0.pdf'
     Given I answer the 'Security policy' contract detail question
     Then I am on the 'Security policy document' page
     Given I select 'No' for the security policy document question
