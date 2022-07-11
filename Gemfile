@@ -68,7 +68,7 @@ gem 'aasm', '~> 5.2'
 gem 'after_commit_everywhere', '~> 1.2'
 
 # for running background jobs
-gem 'sidekiq', '~> 6.4.2'
+gem 'sidekiq', '~> 6.5.1'
 gem 'sinatra', '~> 2.2.0', require: false
 gem 'slim', '~> 4.1.0'
 
