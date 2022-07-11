@@ -160,4 +160,8 @@ module Marketplace
   def self.can_edit_facilities_management_frameworks?
     @can_edit_facilities_management_frameworks ||= rails_env_url != 'https://marketplace.service.crowncommercial.gov.uk'
   end
+
+  def self.rm6232_live?
+    @rm6232_live ||= Time.now.in_time_zone('London') >= Time.new(2022, 7, 18, 11).in_time_zone('London')
+  end
 end
