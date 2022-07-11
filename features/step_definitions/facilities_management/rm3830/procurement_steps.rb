@@ -90,5 +90,5 @@ end
 
 Then('my procurement {string} has successfully been deleted') do |contract_name|
   expect(procurement_page.find('.govuk-notification-banner__heading')).to have_content('Your item was deleted')
-  expect(procurement_page.find('.govuk-notification-banner__content > p')).to have_content("'#{contract_name}' was deleted")
+  expect(procurement_page.find('.govuk-notification-banner__content > p.govuk-body')).to have_content("'#{contract_name}' was deleted")
 end
