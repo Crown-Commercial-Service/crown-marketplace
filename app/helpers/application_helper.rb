@@ -377,5 +377,9 @@ module ApplicationHelper
       ]
     end
   end
+
+  def can_show_new_framework_banner?
+    Marketplace.rm6232_live? || params[:show_new_framework_banner].present?
+  end
 end
 # rubocop:enable Metrics/ModuleLength

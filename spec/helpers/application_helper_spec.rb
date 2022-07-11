@@ -149,4 +149,46 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '.can_show_new_framework_banner?' do
+    before { allow(Marketplace).to receive(:rm6232_live?).and_return(rm6232_live) }
+
+    let(:results) { helper.can_show_new_framework_banner? }
+
+    context 'when rm6232 is live' do
+      let(:rm6232_live) { true }
+
+      context 'and the param show_new_framework_banner is present' do
+        before { helper.params[:show_new_framework_banner] = 'true' }
+
+        it 'returns true' do
+          expect(results).to be true
+        end
+      end
+
+      context 'and the param show_new_framework_banner is not present' do
+        it 'returns true' do
+          expect(results).to be true
+        end
+      end
+    end
+
+    context 'when rm6232 is not live' do
+      let(:rm6232_live) { false }
+
+      context 'and the param show_new_framework_banner is present' do
+        before { helper.params[:show_new_framework_banner] = 'true' }
+
+        it 'returns true' do
+          expect(results).to be true
+        end
+      end
+
+      context 'and the param show_new_framework_banner is not present' do
+        it 'returns false' do
+          expect(results).to be false
+        end
+      end
+    end
+  end
 end

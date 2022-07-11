@@ -2,6 +2,7 @@
 
 <%= govuk_notification_banner(:success, t('.added')) { t('.was_added', email_domain: params[:email_domain_added]) } unless params[:email_domain_added].blank? %>
 <%= govuk_notification_banner(:success, t('.removed')) { t('.was_removed', email_domain: params[:email_domain_removed]) } unless params[:email_domain_removed].blank? %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t('.heading_title') %></h1>
