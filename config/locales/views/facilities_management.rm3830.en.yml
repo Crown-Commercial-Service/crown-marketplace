@@ -666,7 +666,7 @@ en:
           return_text: Return to your account
       new_framework_banner:
         new_agreement: new agreement for Facilities Management and Workplace Services
-        new_fm_framework_html: There is a %{new_framework_link}. Before continuing with this tool please contact CCS.
+        new_fm_framework_html: There is a %{new_framework_link}. Before continuing with this agreement please contact CCS.
       procurement_buildings:
         show:
           answer_question: Answer question
