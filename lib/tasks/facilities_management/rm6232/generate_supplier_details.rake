@@ -32,15 +32,6 @@ module FM::RM6232
         supplier.update(**data)
       end
     end
-
-    def self.convert_to_spreadsheet
-      supplier_data = FacilitiesManagement::RM6232::Supplier.order(:supplier_name).map(&:attributes)
-
-      filename = 'RM6232 Suppliers Details (for Dev & Test).xlsx'
-      supplier_details_spreadsheet = FacilitiesManagement::RM6232::Admin::SupplierSpreadsheet::Details.new(supplier_data, filename)
-      supplier_details_spreadsheet.build
-      supplier_details_spreadsheet.save_spreadsheet
-    end
   end
 end
 
@@ -54,24 +45,14 @@ namespace :db do
         ActiveRecord::Base.transaction do
           FM::RM6232::GenerateSupplierDetails.truncate_tables
           FM::RM6232::GenerateSupplierDetails.generate_suppliers_with_details
-          FM::RM6232::GenerateSupplierDetails.convert_to_spreadsheet
         rescue ActiveRecord::Rollback => e
           logger.error e.message
         end
       end
     end
 
-    desc 'Generate spreadsheets from the current supplier details'
-    task generate_supplier_details_spreadsheet: :environment do
-      FM::RM6232::GenerateSupplierDetails.convert_to_spreadsheet
-    end
-
     desc 'Part of generating the full supplier details'
     task generate_suppliers: :generate_supplier_details do
-    end
-
-    desc 'Part of generating the full supplier spreadsheets'
-    task generate_supplier_spreadsheets: :generate_supplier_details_spreadsheet do
     end
   end
 end

@@ -110,27 +110,6 @@ module FM::RM6232
     def self.all_service_codes_sorted
       @all_service_codes_sorted ||= FacilitiesManagement::RM6232::Service.order(:work_package_code, :sort_order).pluck(:code)
     end
-
-    def self.convert_to_spreadsheets
-      supplier_data = FacilitiesManagement::RM6232::Supplier.order(:supplier_name).map do |supplier|
-        lot_data = supplier.lot_data.map(&:attributes)
-
-        supplier_data = supplier.attributes
-        supplier_data['lot_data'] = lot_data
-
-        supplier_data
-      end
-
-      filename = 'RM6232 Supplier Services (for Dev & Test).xlsx'
-      supplier_services_spreadsheet = FacilitiesManagement::RM6232::Admin::SupplierSpreadsheet::Services.new(supplier_data, filename)
-      supplier_services_spreadsheet.build
-      supplier_services_spreadsheet.save_spreadsheet
-
-      filename = 'RM6232 Supplier Regions (for Dev & Test).xlsx'
-      supplier_regions_spreadsheet = FacilitiesManagement::RM6232::Admin::SupplierSpreadsheet::Regions.new(supplier_data, filename)
-      supplier_regions_spreadsheet.build
-      supplier_regions_spreadsheet.save_spreadsheet
-    end
   end
 end
 
@@ -144,24 +123,14 @@ namespace :db do
         ActiveRecord::Base.transaction do
           FM::RM6232::GenerateSupplierLotData.truncate_tables
           FM::RM6232::GenerateSupplierLotData.generate_suppliers_with_lot_data
-          FM::RM6232::GenerateSupplierLotData.convert_to_spreadsheets
         rescue ActiveRecord::Rollback => e
           logger.error e.message
         end
       end
     end
 
-    desc 'Generate spreadsheets from the current supplier lot data'
-    task generate_supplier_lot_data_spreadsheets: :environment do
-      FM::RM6232::GenerateSupplierLotData.convert_to_spreadsheets
-    end
-
     desc 'Part of generating the full supplier details'
     task generate_suppliers: :generate_supplier_lot_data do
-    end
-
-    desc 'Part of generating the full supplier spreadsheets'
-    task generate_supplier_spreadsheets: :generate_supplier_lot_data_spreadsheets do
     end
   end
 end
