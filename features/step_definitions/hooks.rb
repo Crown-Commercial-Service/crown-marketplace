@@ -1,8 +1,9 @@
 Before do |scenario|
-  if scenario.location.file.include? 'rm3830'
-    @framework = 'RM3830'
-  elsif scenario.location.file.include? 'rm6232'
-    @framework = 'RM6232'
+  %w[rm3830 rm6232].each do |framework|
+    if scenario.location.file.include? framework
+      @framework = framework.upcase
+      break
+    end
   end
 end
 
