@@ -1,8 +1,12 @@
 module Base
   class RegistrationsController < Devise::RegistrationsController
+    include Base::AuthenticationPathsConcern
+
     protect_from_forgery
     before_action :authenticate_user!, except: %i[new create domain_not_on_safelist]
     before_action :authorize_user, except: %i[new create domain_not_on_safelist]
+
+    helper_method :sign_up_path
 
     def new
       @result = Cognito::SignUpUser.new(nil, nil, nil, roles)
@@ -60,7 +64,7 @@ module Base
     def after_sign_up_path_for(resource)
       cookies[:crown_marketplace_confirmation_email] = { value: resource.email, expires: 20.minutes, httponly: true }
 
-      service_after_sign_up_path
+      confirm_email_path
     end
   end
 end

@@ -1,8 +1,12 @@
 module Base
   class UsersController < ApplicationController
+    include Base::AuthenticationPathsConcern
+
     before_action :authenticate_user!, except: %i[confirm_new confirm resend_confirmation_email challenge_new challenge]
     before_action :authorize_user, except: %i[confirm_new confirm resend_confirmation_email challenge_new challenge]
     before_action :set_user_phone, only: %i[challenge_new challenge]
+
+    helper_method :confirm_email_path, :resend_confirmation_email_path, :challenge_user_path, :new_user_session_path
 
     def confirm_new
       @result = Cognito::ConfirmSignUp.new(nil, nil)
@@ -22,7 +26,7 @@ module Base
     def resend_confirmation_email
       result = Cognito::ResendConfirmationCode.call(params[:email])
 
-      redirect_to confirm_user_registration_path, error: result.error
+      redirect_to confirm_email_path, error: result.error
     end
 
     def challenge_new
