@@ -111,6 +111,15 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
         end
       end
+
+      context 'and it has a zero at the start' do
+        let(:snapshot_time_hh) { '02' }
+        let(:snapshot_time_mm) { '8' }
+
+        it 'is valid' do
+          expect(snapshot.valid?).to eq true
+        end
+      end
     end
 
     context 'when considering snapshot_time_mm' do
@@ -164,6 +173,15 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Snapshot, type
         it 'is not valid and has the correct error message' do
           expect(snapshot.valid?).to eq false
           expect(snapshot.errors[:snapshot_time].first).to eq "Enter a valid 'snapshot' time (23:59 or earlier)"
+        end
+      end
+
+      context 'and it has a zero at the start' do
+        let(:snapshot_time_hh) { '2' }
+        let(:snapshot_time_mm) { '08' }
+
+        it 'is valid' do
+          expect(snapshot.valid?).to eq true
         end
       end
     end

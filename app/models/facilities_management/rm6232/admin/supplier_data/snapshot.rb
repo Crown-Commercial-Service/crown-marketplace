@@ -47,11 +47,13 @@ module FacilitiesManagement
         def snapshot_time_real
           return if snapshot_time_blank?
 
-          hours = Integer(snapshot_time_hh)
-          minutes = Integer(snapshot_time_mm)
+          if snapshot_time_integers?
+            hours = snapshot_time_hh.to_i
+            minutes = snapshot_time_mm.to_i
 
-          errors.add(:snapshot_time, :not_a_time) if hours > 23 || hours.negative? || minutes > 59 || minutes.negative?
-        rescue ArgumentError, TypeError
+            return unless hours > 23 || hours.negative? || minutes > 59 || minutes.negative?
+          end
+
           errors.add(:snapshot_time, :not_a_time)
         end
 
@@ -65,6 +67,10 @@ module FacilitiesManagement
           snapshot_time_hh.blank? && snapshot_time_mm.blank?
         end
 
+        def snapshot_time_integers?
+          snapshot_time_hh&.match?(INTEGER_REGEX) && snapshot_time_mm&.match?(INTEGER_REGEX)
+        end
+
         def date_parameters
           [snapshot_date_yyyy.to_i, snapshot_date_mm.to_i, snapshot_date_dd.to_i]
         end
@@ -72,6 +78,8 @@ module FacilitiesManagement
         def format_time_string
           snapshot_time_blank? ? '%d_%m_%Y' : '%d_%m_%Y %H_%M'
         end
+
+        INTEGER_REGEX = /\A[+-]?\d+\z/.freeze
       end
     end
   end
