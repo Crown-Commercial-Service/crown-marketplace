@@ -76,10 +76,10 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::ManagementReportsController,
     end
   end
 
-  describe 'GET status' do
+  describe 'GET progress' do
     let(:management_report) { create(:facilities_management_rm3830_admin_management_report, user: controller.current_user, aasm_state: status) }
 
-    before { get :status, params: { management_report_id: management_report.id } }
+    before { get :progress, params: { id: management_report.id } }
 
     context 'when the status is generating_csv' do
       let(:status) { 'generating_csv' }

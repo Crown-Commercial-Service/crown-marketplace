@@ -18,5 +18,8 @@ module Pages
       section :'Company registration number', SupplierDetailsSection, '#supplier-details--registration_number'
       section :'Full address', SupplierDetailsSection, '#supplier-details--full_address'
     end
+
+    element :management_report_date, '#main-content > div:nth-child(4) > div > p:nth-child(2)'
+    elements :management_reports, '#main-content > div:nth-child(5) > div > table > tbody > tr'
   end
 end

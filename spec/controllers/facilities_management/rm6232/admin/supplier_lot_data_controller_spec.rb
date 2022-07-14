@@ -98,7 +98,11 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
     let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier) }
     let(:attributes) { {} }
 
-    before { put :update, params: { supplier_lot_datum_id: lot_data.id, lot_data_type: lot_data_type, facilities_management_rm6232_supplier_lot_data: attributes } }
+    before do
+      allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change)
+      allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change).with(controller.current_user, lot_data)
+      put :update, params: { supplier_lot_datum_id: lot_data.id, lot_data_type: lot_data_type, facilities_management_rm6232_supplier_lot_data: attributes }
+    end
 
     context 'when the lot data type is region codes' do
       let(:lot_data_type) { 'region_codes' }
@@ -118,6 +122,10 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
 
         it 'does not set the region data' do
           expect(assigns(:regions)).to be_nil
+        end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, lot_data)
         end
       end
 
@@ -162,6 +170,10 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
 
       it 'does not set the work_packages data' do
         expect(assigns(:work_packages)).to be_nil
+      end
+
+      it 'adds a log to the database' do
+        expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, lot_data)
       end
     end
 

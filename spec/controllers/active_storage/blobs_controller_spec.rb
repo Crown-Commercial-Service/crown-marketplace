@@ -13,10 +13,10 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
 
   # rubocop:disable RSpec/NestedGroups
   describe '#show' do
-    context 'when trying to download a management report' do
+    context 'when trying to download an RM3830 management report' do
       let(:signed_id) { management_report.management_report_csv.blob.signed_id }
       let(:filename) { management_report.management_report_csv.blob.filename }
-      let(:object_id_key) { :management_report_id }
+      let(:object_id_key) { :rm3830_management_report_id }
       let(:object_id) { management_report.id }
       let(:management_report) { create(:facilities_management_rm3830_admin_management_report_with_report, user: create(:user)) }
 
@@ -97,12 +97,180 @@ RSpec.describe ActiveStorage::BlobsController, type: :controller do
       end
     end
 
-    context 'when trying to download an admin upload' do
+    context 'when trying to download an RM6232 management report' do
+      let(:signed_id) { management_report.management_report_csv.blob.signed_id }
+      let(:filename) { management_report.management_report_csv.blob.filename }
+      let(:object_id_key) { :rm6232_management_report_id }
+      let(:object_id) { management_report.id }
+      let(:management_report) { create(:facilities_management_rm6232_admin_management_report_with_report, user: create(:user)) }
+
+      context 'when signed in as a buyer' do
+        login_fm_buyer_with_details
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as a supplier' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when trying to download an admin upload in RM3830' do
       let(:signed_id) { admin_upload.supplier_data_file.blob.signed_id }
       let(:filename) { admin_upload.supplier_data_file.blob.filename }
-      let(:object_id_key) { :admin_upload_id }
+      let(:object_id_key) { :rm3830_admin_upload_id }
       let(:object_id) { admin_upload.id }
       let(:admin_upload) { create(:facilities_management_rm3830_admin_upload_with_upload) }
+
+      context 'when signed in as a buyer' do
+        login_fm_buyer_with_details
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as a supplier' do
+        login_fm_supplier
+
+        it 'redirects to the not permitted path' do
+          get :show
+
+          expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+        end
+      end
+
+      context 'when signed in as an admin' do
+        login_fm_admin
+
+        it 'allows the blob to be downloaded' do
+          get :show
+
+          expect(response).to have_http_status(:found)
+        end
+
+        context 'when the key is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:key)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the value is not passed' do
+          it 'redirects to the not permitted path' do
+            default_params.delete(:value)
+
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the key is not valid' do
+          let(:object_id_key) { :fake_procurement_id_key }
+
+          it 'redirects to the not permitted path' do
+            get :show
+
+            expect(response).to redirect_to facilities_management_rm3830_not_permitted_path
+          end
+        end
+
+        context 'when the object does not exist' do
+          let(:object_id) { SecureRandom.uuid }
+
+          it 'is raise a routing error' do
+            expect { get :show }.to raise_error(ActionController::RoutingError)
+          end
+        end
+      end
+
+      context 'when not signed in' do
+        it 'returns unauthorized' do
+          get :show
+
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
+    end
+
+    context 'when trying to download an admin upload in RM6232' do
+      let(:signed_id) { admin_upload.supplier_details_file.blob.signed_id }
+      let(:filename) { admin_upload.supplier_details_file.blob.filename }
+      let(:object_id_key) { :rm6232_admin_upload_id }
+      let(:object_id) { admin_upload.id }
+      let(:admin_upload) { create(:facilities_management_rm6232_admin_upload_with_upload) }
 
       context 'when signed in as a buyer' do
         login_fm_buyer_with_details

@@ -11,6 +11,9 @@
       <%= t('.view_supplier_data') %>
     </p>
     <p class="govuk-body govuk-hint">
+      <%= t('.by_going_to_html', manage_data_link: link_to(t('.link_name'), facilities_management_rm6232_admin_uploads_path, class: 'govuk-link govuk-link--no-visited-state' )) %>
+    </p>
+    <p class="govuk-body govuk-hint">
       <%= t('.find_supplier') %>
     </p>
     <%= search_box(t('.search_for_a_supplier'))%>

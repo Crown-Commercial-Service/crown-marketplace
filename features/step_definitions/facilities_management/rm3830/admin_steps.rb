@@ -18,7 +18,7 @@ Given('select {string} for sublot {string} for {string}') do |option, sublot, su
                 option
               end
 
-  supplier_section = admin_rm3830_page.find('h2', text: supplier).find(:xpath, '../..')
+  supplier_section = admin_page.find('h2', text: supplier).find(:xpath, '../..')
   sublot_section = supplier_section.find('span', text: "Sub-lot #{sublot}").find(:xpath, '..')
   sublot_section.click_on(link_text)
 end
@@ -44,7 +44,7 @@ Then('{string} is a supplier in Sub-lot {string}') do |supplier, sublot|
 end
 
 Given('I enter the user email into the user email field') do
-  admin_rm3830_page.supplier_detail_form.send(:'User email').set(@user.email)
+  admin_page.supplier_detail_form.send(:'User email').set(@user.email)
 end
 
 Given('other user accounts exist') do
@@ -54,16 +54,16 @@ Given('other user accounts exist') do
 end
 
 Given('I enter {string} into the Direct award discount filed for {string}') do |value, service|
-  admin_rm3830_page.find(:xpath, "//label[text()='#{service}']/../../../../td[1]/input").set(value)
+  admin_page.find(:xpath, "//label[text()='#{service}']/../../../../td[1]/input").set(value)
 end
 
 Given('I enter {string} into the variance for {string}') do |value, variance|
-  admin_rm3830_page.find(:xpath, "//label[text()='#{variance}']/../../td[1]/input").set(value)
+  admin_page.find(:xpath, "//label[text()='#{variance}']/../../td[1]/input").set(value)
 end
 
 Given('I enter {string} into the price for {string} under {string}') do |price, service, building_type|
   index = BUILDING_TYPES.index(building_type) + 2
-  admin_rm3830_page.find(:xpath, "//label[text()='#{service}']/../../../../td[#{index}]/input").set(price)
+  admin_page.find(:xpath, "//label[text()='#{service}']/../../../../td[#{index}]/input").set(price)
 end
 
 BUILDING_TYPES = ['General office - Customer Facing', 'General office - Non Customer Facing', 'Call Centre Operations', 'Warehouses', 'Restaurant and Catering Facilities', 'Pre-School', 'Primary School', 'Secondary Schools', 'Special Schools', 'Universities and Colleges', 'Community - Doctors, Dentist, Health Clinic', 'Nursing and Care Homes'].freeze
@@ -81,16 +81,12 @@ STANDARD_COLUMN = { 'A' => 1, 'B' => 2, 'C' => 3 }.freeze
 Given('I enter the servie rate of {string} for {string} standard {string}') do |value, field, standard|
   service_standard = standard == '' ? 'normal price' : "standard #{standard}"
 
-  admin_rm3830_page.find("input[aria-label='#{field} #{service_standard}']").set(value)
-end
-
-Then('I enter {string} as the {string} date') do |date, date_type|
-  add_management_report_dates(date_type, *date_options(date))
+  admin_page.find("input[aria-label='#{field} #{service_standard}']").set(value)
 end
 
 Then('the following services should have the following rates:') do |services_and_rates|
   services_and_rates.raw.each do |service_and_rate|
-    expect(admin_rm3830_page.find_field(service_and_rate[0]).value).to eq service_and_rate[1]
+    expect(admin_page.find_field(service_and_rate[0]).value).to eq service_and_rate[1]
   end
 end
 
@@ -98,14 +94,8 @@ Then('the following services should have the following rates for their standard:
   services_and_rates.raw.each do |service_and_rate|
     service_standard = service_and_rate[2] == '' ? 'normal price' : "standard #{service_and_rate[2]}"
 
-    expect(admin_rm3830_page.find("input[aria-label='#{service_and_rate[0]} #{service_standard}']").value).to eq service_and_rate[1]
+    expect(admin_page.find("input[aria-label='#{service_and_rate[0]} #{service_standard}']").value).to eq service_and_rate[1]
   end
-end
-
-Then('the management report has the correct date range') do
-  date_range = "Report for date range: #{Time.zone.yesterday.strftime('%d/%-m/%Y')} - #{Time.zone.today.strftime('%d/%-m/%Y')}"
-
-  expect(admin_rm3830_page.management_report_date).to have_content(date_range)
 end
 
 Then('I enter the service requirements for {string} in the assessed value procurement') do |building_name|
@@ -136,10 +126,4 @@ Then('I enter the service requirements for {string} in the assessed value procur
   step "I click on 'Save and return'"
   step "I click on 'Return to service requirements summary'"
   step "I click on 'Return to requirements'"
-end
-
-def add_management_report_dates(date_type, day, month, year)
-  admin_rm3830_page.management_report.send("#{date_type} day").set(day)
-  admin_rm3830_page.management_report.send("#{date_type} month").set(month)
-  admin_rm3830_page.management_report.send("#{date_type} year").set(year)
 end

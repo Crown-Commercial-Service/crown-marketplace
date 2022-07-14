@@ -1,3 +1,5 @@
+require_relative '../admin'
+
 module Pages::RM6232
   class LotData < SitePrism::Section
     section :services, 'dl > div:nth-child(1)' do
@@ -10,7 +12,13 @@ module Pages::RM6232
     end
   end
 
-  class Admin < SitePrism::Page
+  class ChangesRow < SitePrism::Section
+    element :attribute, 'th'
+    element :prev_value, 'td:nth-of-type(1)'
+    element :new_value, 'td:nth-of-type(2)'
+  end
+
+  class Admin < Pages::Admin
     sections :suppliers, '#fm-table-filter > tbody > tr', visible: true do
       element :supplier_name, 'th'
       element :'View details', 'td:nth-child(2) > a'
@@ -45,5 +53,31 @@ module Pages::RM6232
 
     element :active_true, '#facilities_management_rm6232_admin_suppliers_admin_active_true'
     element :active_false, '#facilities_management_rm6232_admin_suppliers_admin_active_false'
+
+    section :log_table, '#main-content > div:nth-child(5) > div > table' do
+      elements :log_rows, 'tbody > tr'
+    end
+
+    element :updated_supplier, '#updated-supplier'
+    element :updated_by_email, '#updated-by-email'
+    element :uploaded_by_email, '#uploaded-by-email'
+    element :updated_lot, '#updated-lot'
+
+    section :changes_table, '#main-content > div:nth-child(6) > div > table' do
+      sections :changes_rows, ChangesRow, 'tbody > tr'
+    end
+
+    elements :added_items, '#added-items > li'
+    elements :removed_items, '#removed-items > li'
+
+    section :management_report, 'form' do
+      element :'From day', '#facilities_management_rm6232_admin_management_report_start_date_dd'
+      element :'From month', '#facilities_management_rm6232_admin_management_report_start_date_mm'
+      element :'From year', '#facilities_management_rm6232_admin_management_report_start_date_yyyy'
+
+      element :'To day', '#facilities_management_rm6232_admin_management_report_end_date_dd'
+      element :'To month', '#facilities_management_rm6232_admin_management_report_end_date_mm'
+      element :'To year', '#facilities_management_rm6232_admin_management_report_end_date_yyyy'
+    end
   end
 end

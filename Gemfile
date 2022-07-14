@@ -37,9 +37,9 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
 gem 'caxlsx_rails', '>= 0.6.3'
 gem 'virtus'
-gem 'jquery-rails', '~> 4.4.0'
+gem 'jquery-rails', '~> 4.5.0'
 
-gem 'rollbar', '~> 3.3.0'
+gem 'rollbar', '~> 3.3.1'
 
 # for dfe sign in
 gem 'omniauth', '~> 2.1.0'
@@ -68,12 +68,12 @@ gem 'aasm', '~> 5.2'
 gem 'after_commit_everywhere', '~> 1.2'
 
 # for running background jobs
-gem 'sidekiq', '~> 6.4.2'
+gem 'sidekiq', '~> 6.5.1'
 gem 'sinatra', '~> 2.2.0', require: false
 gem 'slim', '~> 4.1.0'
 
 # for authorization
-gem 'cancancan', '~> 3.3.0'
+gem 'cancancan', '~> 3.4.0'
 
 gem 'role_model', '~> 0.8.2'
 

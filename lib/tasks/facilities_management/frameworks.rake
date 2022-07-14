@@ -3,8 +3,7 @@ module Frameworks
     if Rails.env.test?
       Time.zone.now - 1.day
     else
-      # This is not correct but it is far in the future and we can update it with another migration later on
-      Time.new(2025, 7, 17).in_time_zone('London')
+      Time.new(2022, 7, 14).in_time_zone('London')
     end
   end
 

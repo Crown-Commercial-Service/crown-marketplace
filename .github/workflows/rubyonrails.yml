@@ -63,6 +63,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgis://rails:password@localhost:5432/rails_test"
+      CUCUMBER_FORMAT: progress
 
     steps:
       - name: Setup Gecko driver
@@ -87,3 +88,8 @@ jobs:
 
       - name: Run feature tests
         run: bin/rails cucumber:pipeline
+        if: github.event.pull_request.base.ref != 'preview' && github.event.pull_request.base.ref != 'production'
+
+      - name: Run all feature tests
+        run: bin/rails cucumber:ok
+        if: github.event.pull_request.base.ref == 'preview' || github.event.pull_request.base.ref == 'production'

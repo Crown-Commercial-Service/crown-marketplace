@@ -3,6 +3,15 @@ en:
   activemodel:
     errors:
       models:
+        facilities_management/rm6232/admin/supplier_data/snapshot:
+          attributes:
+            snapshot_date:
+              blank: Enter a valid 'snapshot' date
+              not_a_date: Enter a valid 'snapshot' date
+            snapshot_date_time:
+              no_supplier_data: You must enter a data and time on or after %{oldest_data_created_at} (when the supplier data was imported for the first time)
+            snapshot_time:
+              not_a_time: Enter a valid 'snapshot' time (23:59 or earlier)
         facilities_management/rm6232/journey/annual_contract_value:
           attributes:
             annual_contract_value:
@@ -22,6 +31,17 @@ en:
   activerecord:
     errors:
       models:
+        facilities_management/rm6232/admin/management_report:
+          attributes:
+            end_date:
+              date_after_or_equal_to: The ‘To’ date must be the same or after the ‘From’ date
+              date_before_or_equal_to: The ‘To’ date must be today or in the past
+              invalid: Enter a valid ‘To’ date
+              not_a_date: Enter a valid ‘To’ date
+            start_date:
+              date_before_or_equal_to: The ‘From’ date must be today or in the past
+              invalid: Enter a valid ‘From’ date
+              not_a_date: Enter a valid ‘From’ date
         facilities_management/rm6232/admin/suppliers_admin:
           attributes:
             active:
@@ -60,6 +80,26 @@ en:
               blank: You must enter a supplier name
               taken: A supplier with this name already exists
               too_long: The supplier name cannot be more than 100 characters
+        facilities_management/rm6232/admin/upload:
+          attributes:
+            supplier_details_file:
+              malicious: The 'Supplier details' file contains a virus
+              not_attached: Select the 'Supplier details' file
+              too_large: The 'Supplier details' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier details' file does not contain the expected content type
+              wrong_extension: The 'Supplier details' file must be an XLSX
+            supplier_regions_file:
+              malicious: The 'Supplier regions' file contains a virus
+              not_attached: Select the 'Supplier regions' file
+              too_large: The 'Supplier regions' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier regions' file does not contain the expected content type
+              wrong_extension: The 'Supplier regions' file must be an XLSX
+            supplier_services_file:
+              malicious: The 'Supplier services' file contains a virus
+              not_attached: Select the 'Supplier services' file
+              too_large: The 'Supplier services' file must be smaller than 10mb
+              wrong_content_type: The 'Supplier services' file does not contain the expected content type
+              wrong_extension: The 'Supplier services' file must be an XLSX
         facilities_management/rm6232/procurement:
           attributes:
             annual_contract_value:
@@ -152,24 +192,99 @@ en:
   facilities_management:
     rm6232:
       admin:
+        change_logs:
+          change_log_details:
+            a_change_was_made_to_html: A change was made to the supplier <strong id="updated-supplier">%{supplier_name}</strong> on <strong>%{created_at}</strong>.
+            change_made_by_html: This change was made by <strong id="updated-by-email">%{email}</strong>.
+            changed_lot_html: The change was made in <strong id="updated-lot">Lot %{lot_code}</strong>.
+          details:
+            attribute: Attribute
+            attribute_name:
+              active: Status
+              address_county: County
+              address_line_1: Building and street
+              address_line_2: Building and street (line 2)
+              address_postcode: Postcode
+              address_town: Town or city
+              duns: DUNS number
+              registration_number: Company registration number
+              supplier_name: Supplier name
+            below_are_the_changes: 'Below are the changes that were made to the supplier''s details:'
+            new_value: New value
+            prev_value: Previous value
+          index:
+            below_is_table: Below is a table which records a log of all the changes made to the supplier data. You can view the specific changes that were made by clicking on a log item.
+            change: Change
+            change_log_item: Log item
+            change_made:
+              details: Details
+              region_codes: Regions
+              service_codes: Services
+              upload: Data uploaded
+            date_of_change: Date of change
+            download_logs: Download full change logs
+            during_a_deployment: During a deployment
+            heading: Supplier data change log
+            supplier_data_snapshot: Supplier data snapshot
+            user: User
+            you_can_download: You can download a CSV file of the full logs by clicking on 'Download full change logs'
+            you_can_get_a_snapshot_html: You can get a snapshot of the supplier data at any point in time by going to the '%{snapshot_link}' section.
+          lot_data:
+            items_added:
+              region_codes: 'The following regions were added to the supplier:'
+              service_codes: 'The following services were added to the supplier:'
+            items_removed:
+              region_codes: 'The following regions were removed from the supplier:'
+              service_codes: 'The following services were removed from the supplier:'
+          show:
+            heading:
+              details: Changes to supplier details
+              region_codes: Changes to supplier regions
+              service_codes: Changes to supplier services
+              upload: Supplier data upload
+            log_item: Log item %{short_id}
+          upload:
+            an_upload_was_done_html: An upload was created on <strong>%{created_at}</strong>.
+            this_upload_was_done_by_html: This upload was created by <strong id="updated-by-email">%{email}</strong>.
+            this_upload_was_done_via_deployment: This upload was created via a deployment to the application.
+            to_get_data: You can get the data that was used by speaking to a developer.
+            upload: upload
+            you_can_view_upload_html: You can view the %{link_url} in the 'Manage supplier data' section of the portal.
         home:
           index:
+            audit_logs: Supplier data change log
             header: RM6232 administration dashboard
             manage_supplier_data: Manage the supplier's details and their lot data
+            management_report: Management reports
+            management_report_detail: Download the management data in CSV format
             supplier_data: Supplier data
+            view_logs: View logs of all changes made to the supplier data by the admin team
         sessions:
           new:
             admin_sign_in_header: Sign in to the RM6232 administration dashboard
             email_hint_html: Enter the email address you used to register
         supplier_data:
           index:
+            by_going_to_html: You can bulk upload the supplier data by going to '%{manage_data_link}'.
             find_supplier: You can find a specific supplier by entering their name in the search bar.
             heading: Supplier data
+            link_name: Manage the supplier data
             search_for_a_supplier: Search for a supplier..
             supplier_name: Supplier name
             view_details: View details
             view_lot_data: View lot data
             view_supplier_data: You can view the full supplier details by clicking 'View details' or view the full supplier lot data by clicking 'View lot data'.
+        supplier_data_snapshots:
+          new:
+            enter_a_date: Enter the date for which you want to create a snapshot of the supplier data. You also have the option of entering the time if you need to be more specific.
+            generate_spreadsheets: Download supplier data spreadsheets
+            heading: Supplier data snapshot
+            hour: Hour
+            minute: Minute
+            snapshot_date_label: Snapshot date
+            snapshot_time_label: Snapshot time (optional)
+            the_date_you_enter: The date and time you enter should be on or after %{oldest_data_created_at} which is when the supplier data was first uploaded into the application.
+            when_you_click: When you click 'Download the supplier spreadsheets', a zip file containing the 'Supplier details', 'Supplier services' and 'Supplier regions' will be downloaded.
         supplier_details:
           index:
             heading: Supplier data
@@ -193,6 +308,101 @@ en:
             show_regions: Show regions
             show_services: Show services
             you_can_edit: You can edit the lot data for a supplier by clicking on change.
+        uploads:
+          failed:
+            below_is_a_list: Below is a list of the issues that have occurred with the file upload and details on how they might be fixed.
+            details: Details
+            error_details:
+              file_check_failed: Something went wrong when checking the files, please try uploading the files again
+              file_process_failed: Something went wrong when processing the files, please try uploading the files again
+              file_publish_failed: Something went wrong when publishing the files, please try uploading the files again
+              supplier_details_has_empty_sheets: Make sure the sheet for 'Supplier details' have been filled in
+              supplier_details_has_incorrect_headers: 'Make sure the sheet for ''Supplier details'' has the following headers: ''Supplier name'', ''SME'', ''DUNS number'', ''Registration number'', ''Address line 1'', ''Address line 2'', ''Town'', ''County'', ''Postcode'''
+              supplier_details_missing_sheets: The 'Supplier details' file should have 1 sheet named 'RM6232 Suppliers Details'
+              supplier_missing_details_html: 'The following suppliers do not have any details: %{list} Make sure all the suppliers are present in the ''Supplier details'' spreadsheet'
+              supplier_missing_lot_data_html: 'The following suppliers do not offer any services or regions: %{list} Make sure all the suppliers have the correct name and DUNS number'
+              supplier_missing_regions_html: 'The following suppliers do not offer services in any regions: %{list} Make sure all the suppliers have the correct name and DUNS number'
+              supplier_missing_services_html: 'The following suppliers do not offer any services: %{list} Make sure all the suppliers have the correct name and DUNS number'
+              supplier_regions_has_empty_sheets_html: 'The following sheets have no data: %{list} Make sure all sheets for ''Supplier regions'' have been filled in'
+              supplier_regions_has_incorrect_headers_html: 'The following sheets have incorrect column headers: %{list} Make sure all sheets for ''Supplier regions'' have the expected region codes. You can find these in the spreadsheet template.'
+              supplier_regions_missing_sheets: 'The ''Supplier regions'' file should have 9 sheets with the following names: ''Lot 1a'', ''Lot 1b'', ''Lot 1c'', ''Lot 2a'', ''Lot 2b'', ''Lot 2c'', ''Lot 3a'', ''Lot 3b'', ''Lot 3c'''
+              supplier_services_has_empty_sheets_html: 'The following sheets have no data: %{list} Make sure all sheets for ''Supplier services'' have been filled in'
+              supplier_services_has_incorrect_headers_html: 'The following sheets have incorrect row headers: %{list} Make sure all sheets for ''Supplier services'' have the expected services codes. You can find these in the spreadsheet template.'
+              supplier_services_missing_sheets: 'The ''Supplier services'' file should have 9 sheets with the following names: ''Lot 1a'', ''Lot 1b'', ''Lot 1c'', ''Lot 2a'', ''Lot 2b'', ''Lot 2c'', ''Lot 3a'', ''Lot 3b'', ''Lot 3c'''
+              upload_failed: Something went wrong with the file upload, please try uploading the files again
+            error_name:
+              file_check_failed: File check failed
+              file_process_failed: File processing failed
+              file_publish_failed: File publishing failed
+              supplier_details_has_empty_sheets: There are sheets in 'Supplier details' without any data
+              supplier_details_has_incorrect_headers: There are sheets in 'Supplier details' with incorrect headers
+              supplier_details_missing_sheets: The 'Supplier details' file is missing sheets
+              supplier_missing_details: There are suppliers without any details
+              supplier_missing_lot_data: There are suppliers without any services or regions
+              supplier_missing_regions: There are suppliers without any regions
+              supplier_missing_services: There are suppliers without any services
+              supplier_regions_has_empty_sheets: There are sheets in 'Supplier regions' without any data
+              supplier_regions_has_incorrect_headers: There are sheets in 'Supplier regions' with incorrect headers
+              supplier_regions_missing_sheets: The 'Supplier regions' file is missing sheets
+              supplier_services_has_empty_sheets: There are sheets in 'Supplier services' without any data
+              supplier_services_has_incorrect_headers: There are sheets in 'Supplier services' with incorrect headers
+              supplier_services_missing_sheets: The 'Supplier services' file is missing sheets
+              upload_failed: Upload failed
+            errors_with_upload: Errors with the upload
+            issue: Issue
+          in_progress:
+            checking_files: Checking files
+            complete: Complete
+            files_uploaded: Files uploaded
+            processing_data: Processing data
+            publishing_data: Publishing data
+            upload_progress: Upload progress
+          index:
+            caption: Facilities Management (RM6232)
+            create_new: Create a new data upload
+            current_data: Current published data
+            date: Date
+            download: Download
+            file_name:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            heading: Manage supplier data
+            name: Name
+            no_uploads: There are currently no uploads for this framework. Click on ‘Create a new data upload’ and follow the instructions to upload supplier data for facilities management.
+            status: Status
+            table_caption: Previous uploads
+          new:
+            caption: Facilities Management (RM6232)
+            download_templates: Download file templates
+            file_label:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            heading: New data upload
+            return: Return to 'Manage supplier data'
+            template_file_name: Download spreadsheet templates
+            template_file_path: facilities-management/rm6232/Supplier spreadsheet templates.zip
+            upload_caption: Supported file format is .xlsx and maximum file size is 10mb
+            upload_data: Upload data
+            upload_title: Upload the supplier data
+            you_can_download: You can download a zip file containing an empty template for each of the spreadsheets
+          show:
+            caption: Facilities Management (RM6232)
+            datetime: 'Date of file upload:'
+            download: Download
+            file_name:
+              supplier_details_file: Supplier details
+              supplier_regions_file: Supplier regions
+              supplier_services_file: Supplier services
+            files: Uploaded files
+            heading: 'Upload session #%{number}'
+            name: File name
+            return: Return to 'Manage supplier data'
+            status: 'Status:'
+            uploaded_by: 'Uploaded by:'
+          upload:
+            upload_name: 'Upload session #%{number}'
       buyer_account:
         index:
           buyer_account_dashboard: Buyer account dashboard

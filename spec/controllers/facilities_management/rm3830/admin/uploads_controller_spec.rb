@@ -7,7 +7,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
     context 'when not logged in' do
       it 'redirects to the sign-in' do
         get :index
-        expect(response).to redirect_to facilities_management_rm3830_new_user_session_path
+        expect(response).to redirect_to facilities_management_rm3830_admin_new_user_session_path
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UploadsController, type: :co
     end
 
     context 'when the upload is in an in progress state' do
-      let(:aasm_state) { 'processing_file' }
+      let(:aasm_state) { 'processing_files' }
 
       render_views
 

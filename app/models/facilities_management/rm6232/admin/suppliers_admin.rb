@@ -23,6 +23,14 @@ module FacilitiesManagement
             [:red, 'INACTIVE']
           end
         end
+
+        def changed_data
+          [
+            id,
+            :details,
+            saved_changes.except(:updated_at).map { |attribute, value| { attribute: attribute, value: value.last } }
+          ]
+        end
       end
     end
   end

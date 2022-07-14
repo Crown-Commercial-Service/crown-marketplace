@@ -1,5 +1,7 @@
+require_relative '../admin'
+
 module Pages::RM3830
-  class Admin < SitePrism::Page
+  class Admin < Pages::Admin
     section :supplier_detail_form, 'form' do
       element :'User email', '#facilities_management_rm3830_admin_suppliers_admin_user_email'
       element :'Supplier name', '#facilities_management_rm3830_admin_suppliers_admin_supplier_name'
@@ -19,7 +21,5 @@ module Pages::RM3830
       element :'To month', '#facilities_management_rm3830_admin_management_report_end_date_mm'
       element :'To year', '#facilities_management_rm3830_admin_management_report_end_date_yyyy'
     end
-
-    element :management_report_date, 'h3'
   end
 end

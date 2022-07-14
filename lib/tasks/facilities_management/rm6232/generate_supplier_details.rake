@@ -34,48 +34,12 @@ module FM::RM6232
     end
 
     def self.convert_to_spreadsheet
-      set_up_spreadsheet
-      create_spreadsheet
-      save_spreadsheet
-    end
+      supplier_data = FacilitiesManagement::RM6232::Supplier.order(:supplier_name).map(&:attributes)
 
-    def self.set_up_spreadsheet
-      @package = Axlsx::Package.new
-      @workbook = @package.workbook
-
-      @styles = {}
-      @workbook.styles do |styles|
-        @styles[:heading_style] = styles.add_style sz: 12, b: true, bg_color: '4571C4', fg_color: 'FFFFFF', alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '000000' }
-        @styles[:even_row]      = styles.add_style sz: 12, b: false, bg_color: 'D8E2F2', fg_color: '000000', alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '000000' }
-        @styles[:odd_row]       = styles.add_style sz: 12, b: false, bg_color: 'FFFFFF', fg_color: '000000', alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: '000000' }
-        @styles[:row_height]    = 25
-      end
-    end
-
-    def self.create_spreadsheet
-      @workbook.add_worksheet(name: 'RM6232 Suppliers Details') do |sheet|
-        sheet.add_row HEADERS, style: @styles[:heading_style], height: @styles[:row_height]
-
-        FacilitiesManagement::RM6232::Supplier.order(:supplier_name).each_with_index do |supplier, index|
-          row_data = supplier.attributes.slice(*ATTRIBUTES)
-          row_data['sme'] = row_data['sme'] ? 'Yes' : 'No'
-
-          style = index.even? ? @styles[:even_row] : @styles[:odd_row]
-          sheet.add_row row_data.values, style: style, height: @styles[:row_height], types: [:string] * ATTRIBUTES.length
-        end
-
-        sheet.column_widths(*COLUMN_WIDTHS)
-      end
-    end
-
-    HEADERS = ['Supplier name', 'SME', 'DUNS number', 'Registration number', 'Address line 1', 'Address line 2', 'Town', 'County', 'Postcode'].freeze
-    ATTRIBUTES = ['supplier_name', 'sme', 'duns', 'registration_number', 'address_line_1', 'address_line_2', 'address_town', 'address_county', 'address_postcode'].freeze
-    COLUMN_WIDTHS = [20, 5, 15, 20, 25, 25, 20, 20, 15].freeze
-
-    def self.save_spreadsheet
-      file_path = Rails.root.join('data', 'facilities_management', 'rm6232', 'RM6232 Suppliers Details (for Dev & Test).xlsx')
-
-      File.write(file_path, @package.to_stream.read, binmode: true)
+      filename = 'RM6232 Suppliers Details (for Dev & Test).xlsx'
+      supplier_details_spreadsheet = FacilitiesManagement::RM6232::Admin::SupplierSpreadsheet::Details.new(supplier_data, filename)
+      supplier_details_spreadsheet.build
+      supplier_details_spreadsheet.save_spreadsheet
     end
   end
 end
@@ -97,8 +61,17 @@ namespace :db do
       end
     end
 
+    desc 'Generate spreadsheets from the current supplier details'
+    task generate_supplier_details_spreadsheet: :environment do
+      FM::RM6232::GenerateSupplierDetails.convert_to_spreadsheet
+    end
+
     desc 'Part of generating the full supplier details'
     task generate_suppliers: :generate_supplier_details do
+    end
+
+    desc 'Part of generating the full supplier spreadsheets'
+    task generate_supplier_spreadsheets: :generate_supplier_details_spreadsheet do
     end
   end
 end
