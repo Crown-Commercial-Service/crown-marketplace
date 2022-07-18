@@ -436,7 +436,7 @@ en:
             item_1: quickly view suppliers who can provide services to your locations
             item_2: download a shortlist of potential suppliers
             item_3: receive a compliant Lot recommendation
-          youneedtoknow: 'To receive a shortlist and complaint Lot, you need to know:'
+          youneedtoknow: 'To receive a shortlist and compliant Lot, you need to know:'
       journey:
         annual_contract_value:
           heading: Annual contract cost
