@@ -148,5 +148,5 @@ group :test do
   gem 'site_prism', '>= 3.7.3'
   gem 'axe-core-capybara', '>= 4.2.1'
   gem 'axe-core-cucumber', '>= 4.2.1'
-  gem 'show_me_the_cookies', '>= 5.0.1'
+  gem 'show_me_the_cookies', '>= 6.0.0'
 end
