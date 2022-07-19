@@ -429,10 +429,6 @@ en:
             td_overhead: Management overhead (%) <br /> Workpackage A - contract management
             td_profit: Profit (%)
             td_tupe: Direct award TUPE risk premium (%)
-        sessions:
-          new:
-            admin_sign_in_header: Sign in to the RM3830 administration dashboard
-            email_hint_html: Enter the email address you used to register
         sublot_regions:
           edit:
             leading_text: The tick boxes indicate the regions to which this supplier can provide services.
@@ -1763,10 +1759,6 @@ en:
       service_specification:
         show:
           service_specification: Service specification
-      sessions:
-        new:
-          email_hint_html: Enter the email address you used to set up your account.
-          sign_in_header: Sign in to your account
       supplier:
         contracts:
           accepted_contract_offer:
@@ -1873,7 +1865,3 @@ en:
             title: You have declined this contract offer
           index:
             link_text: Return to dashboard
-        sessions:
-          new:
-            email_hint_html: Enter the email address you used to register
-            sign_in_header: Sign in to your account
