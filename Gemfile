@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.11', '>= 2.11.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'geocoder', '>= 1.6.1'
-gem 'activerecord-postgis-adapter', '>= 5.2.2'
+gem 'activerecord-postgis-adapter', '>= 6.0.3'
 gem 'uk_postcode'
 gem 'rubyzip', '>= 1.2.1'
 gem 'caxlsx', '>= 3.2.0'
@@ -65,7 +65,7 @@ gem 'roo', '~> 2.9.0'
 
 # state machine
 gem 'aasm', '~> 5.2'
-gem 'after_commit_everywhere', '~> 1.2'
+gem 'after_commit_everywhere', '~> 1.2', '>= 1.2.1'
 
 # for running background jobs
 gem 'sidekiq', '~> 6.5.1'
@@ -84,11 +84,11 @@ gem 'smarter_csv'
 
 # for date layout and validation
 gem 'gov_uk_date_fields', '>= 4.2.0'
-gem 'date_validator', '>= 0.9.0'
+gem 'date_validator', '>= 0.12.0'
 
 # for clamav
-gem 'ratonvirus', '>= 0.1.1'
-gem 'ratonvirus-clamby', '>= 0.1.0'
+gem 'ratonvirus', '>= 0.3.2'
+gem 'ratonvirus-clamby', '>= 0.3.0'
 # for active storage validation
 gem 'active_storage_validations', '>= 0.9.8'
 # gem for  bulk inserts
@@ -99,7 +99,7 @@ gem 'notifications-ruby-client'
 gem 'caracal-rails', '>= 1.0.2'
 
 # duplicating procurements
-gem 'amoeba', '>= 3.1.0'
+gem 'amoeba', '>= 3.2.0'
 
 # For validating emails
 gem 'email_validator', require: 'email_validator/strict'
@@ -117,12 +117,12 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing', '>= 1.0.5'
   gem 'rspec-rails', '>= 5.1.2'
-  gem 'shoulda-matchers', '>= 4.2.0'
+  gem 'shoulda-matchers', '>= 5.1.0'
   gem 'rubocop', '>= 1.11.0'
   gem 'rubocop-rspec', '>= 2.2.0'
-  gem 'rubocop-rails', '>= 2.14.2', require: false
+  gem 'rubocop-rails', '>= 2.15.2', require: false
   gem 'rubyXL', '>= 3.4.23'
-  gem 'i18n-tasks', '>= 1.0.10'
+  gem 'i18n-tasks', '>= 1.0.11'
   gem 'poltergeist', '>= 1.18.1'
   gem 'wdm', '>= 0.1.0', platforms: %i[x64_mingw]
   gem 'tzinfo-data', platforms: %i[x64_mingw]
