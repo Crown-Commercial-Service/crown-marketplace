@@ -90,7 +90,7 @@ module ApplicationHelper
   end
 
   def model_has_error?(model_object, error_type, *attributes)
-    attributes.any? { |a| (model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil)) == error_type }
+    attributes.any? { |a| model_object&.errors&.details&.dig(a, 0)&.fetch(:error, nil) == error_type }
   end
 
   def display_errors(journey, *attributes)
