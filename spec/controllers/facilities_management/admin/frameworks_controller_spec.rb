@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe FacilitiesManagement::Admin::FrameworksController do
   let(:default_params) { { service: 'facilities_management/admin' } }
 
-  login_fm_admin
+  login_ccs_developer
 
   describe 'GET index' do
     it 'renders the index page' do
@@ -22,6 +22,15 @@ RSpec.describe FacilitiesManagement::Admin::FrameworksController do
 
     context 'when logged in as a supplier' do
       login_fm_supplier
+
+      it 'redirects to not permitted' do
+        get :index
+        expect(response).to redirect_to '/facilities-management/RM6232/admin/not-permitted'
+      end
+    end
+
+    context 'when logged in as a normal amdin' do
+      login_fm_admin
 
       it 'redirects to not permitted' do
         get :index

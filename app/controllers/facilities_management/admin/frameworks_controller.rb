@@ -32,6 +32,12 @@ module FacilitiesManagement
                 :live_at_yyyy,
               )
       end
+
+      protected
+
+      def authorize_user
+        authorize! :manage, FacilitiesManagement::Framework
+      end
     end
   end
 end

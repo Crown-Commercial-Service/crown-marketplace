@@ -23,7 +23,7 @@ class ActiveStorage::BlobsController < ActiveStorage::BaseController
 
     raise ActionController::RoutingError, 'not found' if object.blank?
 
-    authorize! :view, object if object.present?
+    authorize! :read, object if object.present?
   end
 
   KEY_TO_MODEL = {
