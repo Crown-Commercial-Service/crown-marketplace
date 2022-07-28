@@ -9,7 +9,9 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
     let(:supplier) { FacilitiesManagement::RM6232::Supplier.order(:supplier_name).sample }
 
     context 'when logged in as an fm admin' do
-      before { get :show, params: { id: supplier.id } }
+      let(:supplier_id) { supplier.id }
+
+      before { get :show, params: { id: supplier_id } }
 
       it 'renders the show page' do
         expect(response).to render_template(:show)
@@ -21,6 +23,14 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
 
       it 'assigns the lot data' do
         expect(assigns(:lot_data).map { |lot_data| lot_data[:id] }).to eq supplier.lot_data.order('REVERSE(lot_code)').pluck(:id)
+      end
+
+      context 'when the supplier does not exist' do
+        let(:supplier_id) { 'not-real-id' }
+
+        it 'redirects to the supplier data' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_supplier_data_path
+        end
       end
     end
 
@@ -36,10 +46,20 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
 
   describe 'GET edit' do
     let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier) }
+    let(:lot_data_id) { lot_data.id }
 
     render_views
 
-    before { get :edit, params: { supplier_lot_datum_id: lot_data.id, lot_data_type: lot_data_type } }
+    before { get :edit, params: { supplier_lot_datum_id: lot_data_id, lot_data_type: lot_data_type } }
+
+    context 'when the supplier (and therefore lot data) does not exist' do
+      let(:lot_data_id) { 'not-real-id' }
+      let(:lot_data_type) { 'service_codes' }
+
+      it 'redirects to the supplier data' do
+        expect(response).to redirect_to facilities_management_rm6232_admin_supplier_data_path
+      end
+    end
 
     context 'when the lot data type is service codes' do
       let(:lot_data_type) { 'service_codes' }
