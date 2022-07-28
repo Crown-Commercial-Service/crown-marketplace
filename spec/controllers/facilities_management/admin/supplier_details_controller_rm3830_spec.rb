@@ -10,15 +10,25 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
     context 'when logged in as an fm admin' do
       login_fm_admin
 
-      before { get :show, params: { id: supplier.supplier_id } }
+      before { get :show, params: { id: supplier_id } }
 
       context 'when the action is called' do
+        let(:supplier_id) { supplier.supplier_id }
+
         it 'renders the show page' do
           expect(response).to render_template(:show)
         end
 
         it 'sets the supplier' do
           expect(assigns(:supplier).supplier_name).to eq supplier.supplier_name
+        end
+      end
+
+      context 'when the supplier does not exist' do
+        let(:supplier_id) { 'not-real-id' }
+
+        it 'redirects to the supplier details' do
+          expect(response).to redirect_to facilities_management_rm3830_admin_supplier_details_path
         end
       end
     end
@@ -35,11 +45,22 @@ RSpec.describe FacilitiesManagement::Admin::SupplierDetailsController, type: :co
   end
 
   describe 'GET edit' do
+    let(:supplier_id) { supplier.supplier_id }
+
     login_fm_admin
 
     render_views
 
-    before { get :edit, params: { id: supplier.supplier_id, page: page } }
+    before { get :edit, params: { id: supplier_id, page: page } }
+
+    context 'when the supplier does not exist' do
+      let(:supplier_id) { 'not-real-id' }
+      let(:page) { :supplier_user }
+
+      it 'redirects to the supplier details' do
+        expect(response).to redirect_to facilities_management_rm3830_admin_supplier_details_path
+      end
+    end
 
     context 'when on the supplier user page' do
       let(:page) { :supplier_user }

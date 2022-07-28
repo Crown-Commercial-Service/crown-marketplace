@@ -18,7 +18,7 @@ module FacilitiesManagement::RM6232
           @errors << { error: 'supplier_details_missing_sheets' }
         elsif supplier_details_workbook.sheet('RM6232 Suppliers Details').last_row == 1
           @errors << { error: 'supplier_details_has_empty_sheets' }
-        elsif supplier_details_workbook.sheet('RM6232 Suppliers Details').row(1) != ['Supplier name', 'SME', 'DUNS number', 'Registration number', 'Address line 1', 'Address line 2', 'Town', 'County', 'Postcode']
+        elsif !(supplier_details_workbook.sheet('RM6232 Suppliers Details').row(1) == SUPPLIER_DETAILS_HEADERS || supplier_details_workbook.sheet('RM6232 Suppliers Details').row(1) == SUPPLIER_DETAILS_HEADERS_ACTIVE)
           @errors << { error: 'supplier_details_has_incorrect_headers' }
         end
       end
@@ -106,6 +106,9 @@ module FacilitiesManagement::RM6232
       }.freeze
 
       SHEET_NAMES = ['Lot 1a', 'Lot 1b', 'Lot 1c', 'Lot 2a', 'Lot 2b', 'Lot 2c', 'Lot 3a', 'Lot 3b', 'Lot 3c'].freeze
+
+      SUPPLIER_DETAILS_HEADERS = ['Supplier name', 'SME', 'DUNS number', 'Registration number', 'Address line 1', 'Address line 2', 'Town', 'County', 'Postcode'].freeze
+      SUPPLIER_DETAILS_HEADERS_ACTIVE = SUPPLIER_DETAILS_HEADERS + ['Status']
     end
   end
 end

@@ -6,6 +6,14 @@ module FacilitiesManagement
       before_action :set_page, only: %i[edit update]
       before_action :set_user_email, only: :edit, if: -> { @page == :supplier_user }
 
+      rescue_from ActiveRecord::RecordNotFound do
+        redirect_to(if @framework == 'RM3830'
+                      facilities_management_rm3830_admin_supplier_details_path
+                    else
+                      facilities_management_rm6232_admin_supplier_data_path
+                    end)
+      end
+
       def show; end
 
       def edit; end
