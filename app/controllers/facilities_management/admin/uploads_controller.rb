@@ -37,10 +37,6 @@ module FacilitiesManagement
         @upload = service::Upload.find(params[:id] || params[:upload_id])
       end
 
-      def authorize_user
-        authorize! :manage, service::Upload
-      end
-
       def service
         @service ||= self.class.module_parent
       end
