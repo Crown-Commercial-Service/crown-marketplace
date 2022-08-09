@@ -36,7 +36,7 @@
               <div class="chooser-input">
                 <%= govuk_accordion_with_checkboxes(
                   'choose-locations',
-                  accordion_region_items(@journey.current_step.region_codes),
+                  accordion_region_items(@journey.current_step.region_codes, with_overseas: true),
                   'region',
                   'region_codes'
                 ) %>
