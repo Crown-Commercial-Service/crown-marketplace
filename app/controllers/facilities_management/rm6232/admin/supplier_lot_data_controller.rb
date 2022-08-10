@@ -6,6 +6,10 @@ module FacilitiesManagement
         before_action :set_lot_data, :set_lot_data_type_and_redirect_if_unrecognised, only: %i[edit update]
         before_action :set_data, only: :edit
 
+        rescue_from ActiveRecord::RecordNotFound do
+          redirect_to facilities_management_rm6232_admin_supplier_data_path
+        end
+
         def show; end
 
         def edit; end

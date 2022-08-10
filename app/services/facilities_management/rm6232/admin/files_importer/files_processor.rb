@@ -26,10 +26,14 @@ module FacilitiesManagement::RM6232
           address_postcode: 'Postcode'
         }
 
+        headers[:active] = 'Status' if suppliers_workbook.sheet(0).row(1).include? 'Status'
+
         @supplier_data = suppliers_workbook.sheet(0).parse(**headers).map { |supplier| supplier.transform_values(&:to_s) }
 
         @supplier_data.each do |supplier|
           supplier[:sme] = ['YES', 'Y'].include? supplier[:sme].to_s.upcase
+          supplier[:active] = supplier[:active].to_s.upcase != 'INACTIVE'
+
           supplier[:id] = SecureRandom.uuid
         end
       end
