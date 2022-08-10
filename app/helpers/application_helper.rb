@@ -316,8 +316,8 @@ module ApplicationHelper
     link_to(link_text, Marketplace.support_form_link, target: :blank)
   end
 
-  def accordion_region_items(region_codes)
-    nuts1_regions = Nuts1Region.all.map { |region| [region.code, { name: region.name, items: [] }] }.to_h
+  def accordion_region_items(region_codes, with_overseas: false)
+    nuts1_regions = Nuts1Region.send(with_overseas ? :all_with_overseas : :all).map { |region| [region.code, { name: region.name, items: [] }] }.to_h
 
     FacilitiesManagement::Region.all.each do |region|
       region_group_code = region.code[..2]

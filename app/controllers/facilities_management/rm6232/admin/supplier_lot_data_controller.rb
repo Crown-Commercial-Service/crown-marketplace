@@ -62,7 +62,7 @@ module FacilitiesManagement
         end
 
         def set_regions
-          @regions = Nuts1Region.all.map { |nuts_1_region| [nuts_1_region.name, Region.all.select { |region| region.code.starts_with? nuts_1_region.code }] }.to_h
+          @regions = Nuts1Region.all_with_overseas.map { |nuts_1_region| [nuts_1_region.name, Region.all.select { |region| region.code.starts_with? nuts_1_region.code }] }.to_h
         end
 
         def lot_data_params

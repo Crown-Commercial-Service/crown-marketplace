@@ -18,4 +18,13 @@ RSpec.describe Nuts1Region, type: :model do
     expect(region.nuts2_regions)
       .to have_attributes(length: 4)
   end
+
+  describe '.all_with_overseas' do
+    subject(:region) { described_class.all_with_overseas.last }
+
+    it 'has the overseas reagion at the end' do
+      expect(region.code).to eq 'OS0'
+      expect(region.name).to eq 'Overseas'
+    end
+  end
 end
