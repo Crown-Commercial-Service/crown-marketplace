@@ -19,9 +19,13 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
 
-    <%= render partial: '/shared/google_analytics' if cookies[:crown_marketplace_google_analytics_enabled] == 'true' && Marketplace.google_analytics_tracking_id.present? %>
+    <% if cookies[:crown_marketplace_google_analytics_enabled] == 'true' %>
+      <%= render partial: '/shared/google/analytics' if Marketplace.google_analytics_tracking_id.present? %>
+      <%= render partial: '/shared/google/tag_manager_head' if Marketplace.google_tag_manager_tracking_id.present? %>
+    <% end %>
   </head>
   <body class="govuk-template__body error-box">
+    <%= render partial: '/shared/google/tag_manager_body' if cookies[:crown_marketplace_google_analytics_enabled] == 'true' && Marketplace.google_tag_manager_tracking_id.present? %>
     <script>
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>

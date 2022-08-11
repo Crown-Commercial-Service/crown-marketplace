@@ -1,0 +1,12 @@
+<% if Marketplace.google_analytics_tracking_id.present? %>
+  <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Marketplace.google_analytics_tracking_id %>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.gaTrackingId = '<%= Marketplace.google_analytics_tracking_id %>';
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%= Marketplace.google_analytics_tracking_id %>', { 'anonymize_ip': true });
+    </script>
+  <!-- End Google Analytics -->
+<% end %>
