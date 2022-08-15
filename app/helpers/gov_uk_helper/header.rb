@@ -29,7 +29,7 @@ module GovUKHelper::Header
         concat(tag.div(service, class: 'govuk-header__link govuk-header__link--service-name ccs-header__service-name'))
         concat(tag.nav(class: 'govuk-header__navigation', aria: { label: 'Menu' }) do
           capture do
-            concat(tag.button('Menu', type: 'button', class: 'govuk-header__menu-button govuk-js-header-toggle', aria: { controls: 'navigation', label: 'Show or hide menu' }))
+            concat(tag.button('Menu', type: 'button', class: 'govuk-header__menu-button govuk-js-header-toggle', aria: { controls: 'navigation', label: 'Show or hide menu' }, hidden: ''))
             concat(tag.ul(id: 'navigation', class: 'govuk-header__navigation-list') do
               capture do
                 navigation_links.each do |navigation_link|
