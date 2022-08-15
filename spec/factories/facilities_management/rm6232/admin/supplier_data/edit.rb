@@ -24,5 +24,10 @@ FactoryBot.define do
       change_type { 'lot_data' }
       data { { 'lot_code' => '1a', 'attribute' => 'region_codes', 'added' => [], 'removed' => ['UKC1'] } }
     end
+
+    trait :with_status do
+      change_type { 'lot_data' }
+      data { { 'lot_code' => '1a', 'attribute' => 'active', 'added' => false, 'removed' => true } }
+    end
   end
 end

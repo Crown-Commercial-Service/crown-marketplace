@@ -187,6 +187,8 @@ en:
               too_short: You must select at least one service for this building
         facilities_management/rm6232/supplier/lot_data:
           attributes:
+            active:
+              inclusion: You must select a status for the lot data
             region_codes:
               too_short: You must select at least one region for this lot
   facilities_management:
@@ -217,6 +219,7 @@ en:
             change: Change
             change_log_item: Log item
             change_made:
+              active: Lot status
               details: Details
               region_codes: Regions
               service_codes: Services
@@ -230,14 +233,19 @@ en:
             you_can_download: You can download a CSV file of the full logs by clicking on 'Download full change logs'
             you_can_get_a_snapshot_html: You can get a snapshot of the supplier data at any point in time by going to the '%{snapshot_link}' section.
           lot_data:
+            attribute: Attribute
             items_added:
               region_codes: 'The following regions were added to the supplier:'
               service_codes: 'The following services were added to the supplier:'
             items_removed:
               region_codes: 'The following regions were removed from the supplier:'
               service_codes: 'The following services were removed from the supplier:'
+            lot_status: Lot status
+            new_value: New value
+            prev_value: Previous value
           show:
             heading:
+              active: Changes to supplier lot data status
               details: Changes to supplier details
               region_codes: Changes to supplier regions
               service_codes: Changes to supplier services
@@ -287,22 +295,30 @@ en:
         supplier_lot_data:
           edit:
             heading:
+              lot_status: Lot %{lot_code} status
               region_codes: Lot %{lot_code} regions
               service_codes: Lot %{lot_code} services
             save_and_return: Save and return
             the_check_boxes:
               region_codes: The check boxes in the first column indicate what regions the supplier can provide their services in.
               service_codes: The check boxes in the first column indicate what services the supplier can provide. This is in addition to the core services which are greyed out.
+          lot_status:
+            active: Active
+            inactive: Inactive
+            status_hint: To prevent the supplier from appearing in search results for this lot, change the supplier status to 'INACTIVE'
+            supplier_status_question: What is the status of this lot?
           show:
             change: Change
             heading: View lot data
             lot_code: 'Lot code: %{lot_code}'
             lot_regions: lot %{lot_code} regions
             lot_services: lot %{lot_code} services
+            lot_status: lot %{lot_code} status
             regions: Regions
             services: Services
             show_regions: Show regions
             show_services: Show services
+            status: Lot status
             you_can_edit: You can edit the lot data for a supplier by clicking on change.
         uploads:
           failed:

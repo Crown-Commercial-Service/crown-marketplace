@@ -62,6 +62,44 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
   end
 
   describe 'validations' do
+    context 'when validating the lot status' do
+      let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active: active) }
+
+      context 'and active is nil' do
+        let(:active) { nil }
+
+        it 'is not valid and has the correct error message' do
+          expect(lot_data).not_to be_valid(:lot_status)
+          expect(lot_data.errors[:active].first).to eq 'You must select a status for the lot data'
+        end
+      end
+
+      context 'and active is blank' do
+        let(:active) { '' }
+
+        it 'is not valid and has the correct error message' do
+          expect(lot_data).not_to be_valid(:lot_status)
+          expect(lot_data.errors[:active].first).to eq 'You must select a status for the lot data'
+        end
+      end
+
+      context 'and active is true' do
+        let(:active) { 'true' }
+
+        it 'is valid' do
+          expect(lot_data).to be_valid(:lot_status)
+        end
+      end
+
+      context 'and active is false' do
+        let(:active) { 'false' }
+
+        it 'is valid' do
+          expect(lot_data).to be_valid(:lot_status)
+        end
+      end
+    end
+
     context 'when validating the region codes' do
       let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, region_codes: region_codes) }
 
@@ -90,6 +128,22 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
     let(:result) { lot_data.changed_data }
 
     before { lot_data.update(**attributes) }
+
+    context 'when changing the status' do
+      let(:attributes) { { active: false } }
+      let(:data) do
+        {
+          attribute: 'active',
+          lot_code: '1a',
+          added: false,
+          removed: true
+        }
+      end
+
+      it 'returns the correct data' do
+        expect(result).to eq([supplier.id, :lot_data, data])
+      end
+    end
 
     context 'when changing the services' do
       let(:attributes) { { service_codes: service_codes } }
@@ -192,6 +246,26 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
         it 'returns the correct data' do
           expect(result).to eq([supplier.id, :lot_data, data])
         end
+      end
+    end
+  end
+
+  describe '.current_status' do
+    let(:lot_data) { create(:facilities_management_rm6232_supplier_lot_data, :with_supplier, active: active) }
+
+    context 'when the lot data is active' do
+      let(:active) { true }
+
+      it 'returns blue and ACTIVE' do
+        expect(lot_data.current_status).to eq [:blue, 'ACTIVE']
+      end
+    end
+
+    context 'when the lot data is not active' do
+      let(:active) { false }
+
+      it 'returns red and INACTIVE' do
+        expect(lot_data.current_status).to eq [:red, 'INACTIVE']
       end
     end
   end

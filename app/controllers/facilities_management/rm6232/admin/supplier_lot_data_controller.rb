@@ -33,6 +33,7 @@ module FacilitiesManagement
           @lot_data = @supplier.lot_data.order('REVERSE(lot_code)').map do |lot_data|
             {
               id: lot_data.id,
+              current_status: lot_data.current_status,
               lot_code: lot_data.lot_code,
               service_names: lot_data.services.map(&:name),
               region_names: lot_data.regions.map(&:name)
@@ -72,6 +73,7 @@ module FacilitiesManagement
         def lot_data_params
           if params[:facilities_management_rm6232_supplier_lot_data]
             params.require(:facilities_management_rm6232_supplier_lot_data).permit(
+              :active,
               service_codes: [],
               region_codes: [],
             )
@@ -80,7 +82,7 @@ module FacilitiesManagement
           end
         end
 
-        RECOGNISED_LOT_DATA_TYPES = %w[service_codes region_codes].freeze
+        RECOGNISED_LOT_DATA_TYPES = %w[lot_status service_codes region_codes].freeze
         LOT_NUMBER_TO_QUERY_PARAMS = {
           '1' => { total: true },
           '2' => { hard: true },

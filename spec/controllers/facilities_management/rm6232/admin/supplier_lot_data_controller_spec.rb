@@ -61,6 +61,24 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
       end
     end
 
+    context 'when the lot data type is lot status' do
+      let(:lot_data_type) { 'lot_status' }
+
+      it 'renders the edit template' do
+        expect(response).to render_template(:edit)
+      end
+
+      it 'renders the service_codes partial' do
+        expect(response).to render_template(partial: 'facilities_management/rm6232/admin/supplier_lot_data/_lot_status')
+      end
+
+      it 'sets the lot data' do
+        expect(assigns(:lot_data)).to eq lot_data
+        expect(assigns(:lot_code)).to eq lot_data.lot_code
+        expect(assigns(:supplier).supplier_name).to eq lot_data.supplier_name
+      end
+    end
+
     context 'when the lot data type is service codes' do
       let(:lot_data_type) { 'service_codes' }
 
@@ -122,6 +140,48 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierLotDataController, t
       allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change)
       allow(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to receive(:log_change).with(controller.current_user, lot_data)
       put :update, params: { supplier_lot_datum_id: lot_data.id, lot_data_type: lot_data_type, facilities_management_rm6232_supplier_lot_data: attributes }
+    end
+
+    context 'when the lot data type is lot status' do
+      let(:lot_data_type) { 'lot_status' }
+
+      context 'and the data is valid' do
+        let(:attributes) { { active: 'true' } }
+
+        it 'redirects to facilities_management_rm6232_admin_supplier_lot_datum_path' do
+          expect(response).to redirect_to facilities_management_rm6232_admin_supplier_lot_datum_path(lot_data.supplier.id)
+        end
+
+        it 'sets the lot data' do
+          expect(assigns(:lot_data)).to eq lot_data
+          expect(assigns(:lot_code)).to eq lot_data.lot_code
+          expect(assigns(:supplier).supplier_name).to eq lot_data.supplier_name
+        end
+
+        it 'adds a log to the database' do
+          expect(FacilitiesManagement::RM6232::Admin::SupplierData::Edit).to have_received(:log_change).with(controller.current_user, lot_data)
+        end
+      end
+
+      context 'and the data is invalid' do
+        let(:attributes) { { active: nil } }
+
+        render_views
+
+        it 'renders the edit template' do
+          expect(response).to render_template(:edit)
+        end
+
+        it 'renders the region_codes partial' do
+          expect(response).to render_template(partial: 'facilities_management/rm6232/admin/supplier_lot_data/_lot_status')
+        end
+
+        it 'sets the lot data' do
+          expect(assigns(:lot_data)).to eq lot_data
+          expect(assigns(:lot_code)).to eq lot_data.lot_code
+          expect(assigns(:supplier).supplier_name).to eq lot_data.supplier_name
+        end
+      end
     end
 
     context 'when the lot data type is region codes' do

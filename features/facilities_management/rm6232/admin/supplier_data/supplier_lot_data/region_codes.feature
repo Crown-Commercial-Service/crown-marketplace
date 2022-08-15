@@ -13,10 +13,10 @@ Feature: Selecting region codes
     And the supplier name shown is '<supplier_name>'
 
     Examples:
-      | supplier_name               | lot | title         |
-      | Abshire, Schumm and Farrell | 1a   | Lot 1a regions |
-      | Terry-Greenholt             | 2b   | Lot 2b regions |
-      | Schultz-Wilkinson           | 3c   | Lot 3c regions |
+      | supplier_name               | lot | title           |
+      | Abshire, Schumm and Farrell | 1a  | Lot 1a regions  |
+      | Terry-Greenholt             | 2b  | Lot 2b regions  |
+      | Schultz-Wilkinson           | 3c  | Lot 3c regions  |
 
   @pipline
   Scenario: I change the regions and it changes on View lot data - lot 1a
