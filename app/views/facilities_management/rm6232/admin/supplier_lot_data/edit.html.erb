@@ -15,9 +15,11 @@
     <h1 class="govuk-heading-xl">
       <%= t(".heading.#{@lot_data_type}", lot_code: @lot_code) %>
     </h1>
-    <p class="govuk-hint">
-      <%= t(".the_check_boxes.#{@lot_data_type}") %>
-    </p>
+    <% unless @lot_data_type == 'lot_status' %>
+      <p class="govuk-hint">
+        <%= t(".the_check_boxes.#{@lot_data_type}") %>
+      </p>
+    <% end %>
   </div>
 </div>
 <div class="govuk-grid-row">

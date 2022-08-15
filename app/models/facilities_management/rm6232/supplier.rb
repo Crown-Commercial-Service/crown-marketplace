@@ -6,6 +6,7 @@ module FacilitiesManagement
       def self.select_suppliers(lot_code, service_codes, region_codes)
         where(active: true)
           .joins(:lot_data)
+          .where('facilities_management_rm6232_supplier_lot_data.active': true)
           .where('facilities_management_rm6232_supplier_lot_data.lot_code': lot_code)
           .where('facilities_management_rm6232_supplier_lot_data.service_codes @> ?', "{#{service_codes.join(',')}}")
           .where('facilities_management_rm6232_supplier_lot_data.region_codes @> ?', "{#{region_codes.join(',')}}")

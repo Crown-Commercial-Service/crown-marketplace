@@ -24,10 +24,11 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
 
     let(:my_supplier) do
       create(:facilities_management_rm6232_supplier) do |supplier|
-        supplier.lot_data = build_list(:facilities_management_rm6232_supplier_lot_data, 1, lot_code: lot_code, service_codes: supplier_services, region_codes: supplier_regions)
+        supplier.lot_data = build_list(:facilities_management_rm6232_supplier_lot_data, 1, lot_code: lot_code, service_codes: supplier_services, region_codes: supplier_regions, active: active)
       end
     end
 
+    let(:active) { true }
     let(:selection_two) { { total: false, hard: false, soft: false } }
     let(:service_codes) { FacilitiesManagement::RM6232::Service.where(**selection_one).sample(5).pluck(:code) + FacilitiesManagement::RM6232::Service.where(**selection_two).sample(5).pluck(:code) }
     let(:region_codes) { FacilitiesManagement::Region.all[..-2].sample(5).map(&:code) }
@@ -66,6 +67,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is b (lot: 1b)' do
@@ -82,6 +91,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is c (lot: 1c)' do
@@ -93,6 +110,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
 
           context 'and my_supplier is not active' do
             before { my_supplier.update(active: false) }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
 
             it 'returns a list of suppliers that does not include my_supplier' do
               expect(supplier_names).not_to include my_supplier.supplier_name
@@ -118,6 +143,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is b (lot: 2b)' do
@@ -134,6 +167,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is c (lot: 2c)' do
@@ -145,6 +186,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
 
           context 'and my_supplier is not active' do
             before { my_supplier.update(active: false) }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
 
             it 'returns a list of suppliers that does not include my_supplier' do
               expect(supplier_names).not_to include my_supplier.supplier_name
@@ -170,6 +219,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is b (lot: 3b)' do
@@ -186,6 +243,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
               expect(supplier_names).not_to include my_supplier.supplier_name
             end
           end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
         end
 
         context 'and the lot code is c (lot: 3c)' do
@@ -197,6 +262,14 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier, type: :model do
 
           context 'and my_supplier is not active' do
             before { my_supplier.update(active: false) }
+
+            it 'returns a list of suppliers that does not include my_supplier' do
+              expect(supplier_names).not_to include my_supplier.supplier_name
+            end
+          end
+
+          context 'and the lot is not active' do
+            let(:active) { false }
 
             it 'returns a list of suppliers that does not include my_supplier' do
               expect(supplier_names).not_to include my_supplier.supplier_name

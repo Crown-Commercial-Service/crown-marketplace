@@ -2,11 +2,15 @@ require_relative '../admin'
 
 module Pages::RM6232
   class LotData < SitePrism::Section
-    section :services, 'dl > div:nth-child(1)' do
+    section :'lot status', 'dl > div:nth-child(1)' do
+      element :status, 'dd.govuk-summary-list__value'
+      element :change_link, 'dd.govuk-summary-list__actions > a'
+    end
+    section :services, 'dl > div:nth-child(2)' do
       elements :names, 'details > div > ul > li'
       element :change_link, 'dd.govuk-summary-list__actions > a'
     end
-    section :regions, 'dl > div:nth-child(2)' do
+    section :regions, 'dl > div:nth-child(3)' do
       elements :names, 'details > div > ul > li'
       element :change_link, 'dd.govuk-summary-list__actions > a'
     end
@@ -54,6 +58,9 @@ module Pages::RM6232
     element :active_true, '#facilities_management_rm6232_admin_suppliers_admin_active_true'
     element :active_false, '#facilities_management_rm6232_admin_suppliers_admin_active_false'
 
+    element :lot_active_true, '#facilities_management_rm6232_supplier_lot_data_active_true'
+    element :lot_active_false, '#facilities_management_rm6232_supplier_lot_data_active_false'
+
     section :log_table, '#main-content > div:nth-child(5) > div > table' do
       elements :log_rows, 'tbody > tr'
     end
@@ -64,6 +71,10 @@ module Pages::RM6232
     element :updated_lot, '#updated-lot'
 
     section :changes_table, '#main-content > div:nth-child(6) > div > table' do
+      sections :changes_rows, ChangesRow, 'tbody > tr'
+    end
+
+    section :lot_status_changes_table, '#main-content > div:nth-child(5) > div > table' do
       sections :changes_rows, ChangesRow, 'tbody > tr'
     end
 

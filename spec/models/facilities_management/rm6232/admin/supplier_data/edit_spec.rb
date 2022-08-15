@@ -120,19 +120,26 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
     end
   end
 
-  describe '.current_supplier_data' do
+  shared_context 'when there are edits' do
     let(:supplier_data) { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data }
     let(:supplier) { FacilitiesManagement::RM6232::Supplier.find(supplier_data.data.first['id']) }
     let(:edit_1) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data, created_at: dates[0]) }
     let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, created_at: dates[1]) }
     let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, created_at: dates[2]) }
-    let(:dates) { [Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
+    let(:edit_4) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_status, created_at: dates[3]) }
+    let(:dates) { [Time.zone.now - 4.days, Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
 
     before do
       edit_1
       edit_2
       edit_3
+      edit_4
     end
+  end
+
+  # rubocop:disable RSpec/MultipleExpectations
+  describe '.current_supplier_data' do
+    include_context 'when there are edits'
 
     context 'when there are no previous changes' do
       let(:result) { edit_1.current_supplier_data }
@@ -141,6 +148,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
       end
     end
 
@@ -151,6 +159,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be false
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
       end
     end
 
@@ -161,23 +170,24 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be false
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes - ['UKC1']
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
+      end
+    end
+
+    context 'when there are even more previous changes' do
+      let(:result) { edit_4.current_supplier_data }
+
+      it 'includes the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes - ['UKC1']
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to eq false
       end
     end
   end
 
   describe '.previous_supplier_data' do
-    let(:supplier_data) { FacilitiesManagement::RM6232::Admin::SupplierData.latest_data }
-    let(:supplier) { FacilitiesManagement::RM6232::Supplier.find(supplier_data.data.first['id']) }
-    let(:edit_1) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_service_lot_data, created_at: dates[0]) }
-    let(:edit_2) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_details, created_at: dates[1]) }
-    let(:edit_3) { create(:facilities_management_rm6232_admin_supplier_data_edit, :with_region_lot_data, created_at: dates[2]) }
-    let(:dates) { [Time.zone.now - 3.days, Time.zone.now - 2.days, Time.zone.now - 1.day] }
-
-    before do
-      edit_1
-      edit_2
-      edit_3
-    end
+    include_context 'when there are edits'
 
     context 'when there are no previous changes' do
       let(:result) { edit_1.previous_supplier_data }
@@ -186,6 +196,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes
         expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
       end
     end
 
@@ -196,6 +207,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
       end
     end
 
@@ -206,7 +218,20 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
         expect(result['active']).to be false
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
+      end
+    end
+
+    context 'when there are even more previous changes' do
+      let(:result) { edit_4.previous_supplier_data }
+
+      it 'includes only previous the changes in the returned data' do
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
+        expect(result['active']).to be false
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes - ['UKC1']
+        expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['active']).to be_nil
       end
     end
   end
+  # rubocop:enable RSpec/MultipleExpectations
 end

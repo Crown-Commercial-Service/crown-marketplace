@@ -1,5 +1,6 @@
 Given('I have an inactive supplier called {string}') do |supplier_name|
-  create(:facilities_management_rm6232_admin_suppliers_admin, supplier_name: supplier_name, active: nil, address_county: 'Essex')
+  supplier = create(:facilities_management_rm6232_admin_suppliers_admin, supplier_name: supplier_name, active: nil, address_county: 'Essex')
+  create(:facilities_management_rm6232_supplier_lot_data, facilities_management_rm6232_supplier_id: supplier.id, active: nil)
 end
 
 Then('I should see all the suppliers') do
@@ -43,6 +44,19 @@ end
 
 Then('I deselect all checkboxes') do
   admin_page.all('input[type="checkbox"][checked="checked"]').each(&:uncheck)
+end
+
+Then('I select {string} for the lot status') do |option|
+  case option
+  when 'ACTIVE'
+    admin_page.lot_active_true.choose
+  when 'INACTIVE'
+    admin_page.lot_active_false.choose
+  end
+end
+
+Then('the status is {string} for lot {string}') do |status, lot_code|
+  expect(admin_page.lot_data.send("lot_#{lot_code}").send(:'lot status').status).to have_content status
 end
 
 Then('I should see the following regions selected for lot {string}:') do |lot_code, regions|
@@ -169,6 +183,16 @@ Then('the following items were removed:') do |removed_items|
 
   admin_page.removed_items.zip(removed_items.raw.flatten).each do |element, value|
     expect(element).to have_content(value)
+  end
+end
+
+Then('I should see the following changes to the lot status:') do |changes_table|
+  expect(admin_page.lot_status_changes_table.changes_rows.length).to eq 1
+
+  admin_page.lot_status_changes_table.changes_rows.zip(changes_table.raw).each do |actual_row, expected_row|
+    expect(actual_row.attribute).to have_content('Lot status')
+    expect(actual_row.prev_value).to have_content(expected_row[0])
+    expect(actual_row.new_value).to have_content(expected_row[1])
   end
 end
 
