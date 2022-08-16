@@ -22,7 +22,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
 
     context 'when the lot is 1a' do
       it 'has all the core total services' do
-        total_core_services = %w[E.1 E.2 E.3 E.4 E.5 E.6 E.7 E.8 E.10 E.11 E.12 E.13 F.1 F.2 F.3 F.7 F.8 F.10 F.11 F.13 G.1 G.2 G.4 G.5 H.2 H.3 H.5 H.9 I.1 I.2 I.5 I.6 I.7 I.8 I.16 J.1 J.2 J.3 J.4 J.6 J.13 K.1 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.11 L.13 L.15 M.1 M.2 M.3 M.8 Q.2 R.1 S.1]
+        total_core_services = %w[E.1 E.2 E.3 E.4 E.5 E.6 E.7 E.8 E.10 E.11 E.12 E.13 F.1 F.2 F.3 F.7 F.8 F.10 F.11 F.13 G.1 G.2 G.4 G.5 H.2 H.3 H.5 H.9 I.1 I.2 I.5 I.6 I.7 I.8 I.16 J.1 J.2 J.3 J.4 J.6 J.13 K.1 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.11 L.13 L.15 M.1 M.2 M.3 M.4 M.8 Q.2 R.1 S.1]
 
         expect(total_core_services - random_lot_data.service_codes).to be_empty
       end
@@ -42,7 +42,7 @@ RSpec.describe FacilitiesManagement::RM6232::Supplier::LotData, type: :model do
       let(:lot_code) { '3a' }
 
       it 'has all the core total services' do
-        soft_core_services = %w[G.1 G.2 G.4 G.5 H.2 H.3 H.5 H.9 I.1 I.2 I.5 I.6 I.7 I.8 I.16 J.1 J.2 J.3 J.4 J.6 J.13 K.1 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.11 L.13 L.15 M.1 M.2 M.3 M.8 Q.1 R.1 S.1]
+        soft_core_services = %w[G.1 G.2 G.4 G.5 H.2 H.3 H.5 H.9 I.1 I.2 I.5 I.6 I.7 I.8 I.16 J.1 J.2 J.3 J.4 J.6 J.13 K.1 L.1 L.2 L.3 L.4 L.5 L.6 L.7 L.8 L.11 L.13 L.15 M.1 M.2 M.3 M.4 M.8 Q.1 R.1 S.1]
 
         expect(soft_core_services - random_lot_data.service_codes).to be_empty
       end

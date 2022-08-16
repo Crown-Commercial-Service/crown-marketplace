@@ -21,8 +21,8 @@ Feature: Change log for supplier services
     And I change the 'services' for lot '3c'
     Then I am on the 'Lot 3c services' page
     And I select the following items:
-      | L.14 Remote CCTV / alarm monitoring     |
-      | M.4 Recycled waste and waste for re-use |
+      | L.14 Remote CCTV / alarm monitoring |
+      | M.5 Hazardous waste                 |
     And I click on 'Save and return'
     And I am on the 'View lot data' page
     And I change the 'services' for lot '2c'
@@ -63,8 +63,8 @@ Feature: Change log for supplier services
     And the change was made by 'me'
     And the change was made in lot '3c'
     And the following items were added:
-      | L.14 Remote CCTV / alarm monitoring     |
-      | M.4 Recycled waste and waste for re-use |
+      | L.14 Remote CCTV / alarm monitoring |
+      | M.5 Hazardous waste                 |
     Then I click on 'Supplier data change log'
     And I am on the 'Supplier data change log' page
     And I click on log number 1

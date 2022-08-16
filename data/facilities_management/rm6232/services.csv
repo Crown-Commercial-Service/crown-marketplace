@@ -129,7 +129,7 @@ L.15,Blended Static Guarding Service,Provision of a blend of multiple security s
 M.1,On Site / Mobile Classified Waste Shredding Service,Provision of an on-site/mobile classified waste shredding service in line with all UK Government disposal standards,TRUE,M,TRUE,FALSE,TRUE,0
 M.2,Off Site / Mobile Classified Waste Shredding Service,Provision of an off-site classified waste shredding service in line with all UK Government disposal standards,TRUE,M,TRUE,FALSE,TRUE,1
 M.3,General waste,"Collection, storage and removal of general waste from the buyers premise",TRUE,M,TRUE,FALSE,TRUE,2
-M.4,Recycled waste and waste for re-use,Collection and removal of all recyclable waste and waste suitable for re-use from the buyers premise,FALSE,M,TRUE,FALSE,TRUE,3
+M.4,Recycled waste and waste for re-use,Collection and removal of all recyclable waste and waste suitable for re-use from the buyers premise,TRUE,M,TRUE,FALSE,TRUE,3
 M.5,Hazardous waste,"Collection, transportation, treatment and disposal of hazardous waste",FALSE,M,TRUE,FALSE,TRUE,4
 M.6,Specialist Waste Destruction Services,Specialist waste destruction services of hazardous / non-hazardous waste items for contraband items seized by the Buyer,FALSE,M,TRUE,FALSE,TRUE,5
 M.7,Clinical Waste,"Disposal of hazardous and non-hazardous clinical waste, and provision of suitable receptacles",FALSE,M,TRUE,FALSE,TRUE,6
