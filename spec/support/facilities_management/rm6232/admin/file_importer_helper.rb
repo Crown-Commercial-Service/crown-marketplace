@@ -37,21 +37,21 @@ module FacilitiesManagement
       end
 
       SUPPLIERS_LOT_A = [
-        ['Rex LTD', 'Yes', '123456789', '0123456', '1 Pyra road', nil, 'Argentum', nil, 'AA3 1XC'],
-        ['Nia Corp', 'No', '234567891', '0234567', '2 Dromarch avenue', nil, 'Gromott', nil, 'AA3 2XC'],
-        ['Tora LTD', 'Yes', '345678912', '0345678', '3 Poppi path', nil, 'Torigoth', nil, 'AA3 3XC']
+        ['Rex LTD', 'Yes', '123456789', '0123456', '1 Pyra road', nil, 'Argentum', nil, 'AA3 1XC', 'Active'],
+        ['Nia Corp', 'No', '234567891', '0234567', '2 Dromarch avenue', nil, 'Gromott', nil, 'AA3 2XC', 'Active'],
+        ['Tora LTD', 'Yes', '345678912', '0345678', '3 Poppi path', nil, 'Torigoth', nil, 'AA3 3XC', 'Inactive']
       ].freeze
 
       SUPPLIERS_LOT_B = [
-        ['Tora LTD', 'Yes', '345678912', '0345678', '3 Poppi path', nil, 'Torigoth', nil, 'AA3 3XC'],
-        ['Vandham Eexc Corp', 'No', '456789123', '0456789', '4 Roc lane', nil, 'Garfont', nil, 'AA3 4XC'],
-        ['Morag Jewel LTD', 'Yes', '567891234', '0567891', '5 Brighid boulevard', nil, 'Mor Ardain', nil, 'AA3 5XC']
+        ['Tora LTD', 'Yes', '345678912', '0345678', '3 Poppi path', nil, 'Torigoth', nil, 'AA3 3XC', 'Inactive'],
+        ['Vandham Eexc Corp', 'No', '456789123', '0456789', '4 Roc lane', nil, 'Garfont', nil, 'AA3 4XC', 'Active'],
+        ['Morag Jewel LTD', 'Yes', '567891234', '0567891', '5 Brighid boulevard', nil, 'Mor Ardain', nil, 'AA3 5XC', 'Active']
       ].freeze
 
       SUPPLIERS_LOT_C = [
-        ['Morag Jewel LTD', 'Yes', '567891234', '0567891', '5 Brighid boulevard', nil, 'Mor Ardain', nil, 'AA3 5XC'],
-        ['ZEKE VON GEMBU Corp', 'No', '678912345', '0678912', '6 Pandoria house', nil, 'Tantal', nil, 'AA3 6XC'],
-        ['Jin Corp', 'Yes', '789123456', '0789123', '7 Lora lane', nil, 'Torna', nil, 'AA3 7XC']
+        ['Morag Jewel LTD', 'Yes', '567891234', '0567891', '5 Brighid boulevard', nil, 'Mor Ardain', nil, 'AA3 5XC', 'Active'],
+        ['ZEKE VON GEMBU Corp', 'No', '678912345', '0678912', '6 Pandoria house', nil, 'Tantal', nil, 'AA3 6XC', 'Inactive'],
+        ['Jin Corp', 'Yes', '789123456', '0789123', '7 Lora lane', nil, 'Torna', nil, 'AA3 7XC', 'Active']
       ].freeze
 
       SHEETS = ['Lot 1a', 'Lot 1b', 'Lot 1c', 'Lot 2a', 'Lot 2b', 'Lot 2c', 'Lot 3a', 'Lot 3b', 'Lot 3c'].freeze
@@ -61,6 +61,7 @@ module FacilitiesManagement
       def initialize(**options)
         options[:sheets] ||= SHEETS
         options[:headers] ||= [HEADERS] * options[:sheets].count
+        @status = options[:headers].first.include? 'Status'
 
         super(**options)
       end
@@ -81,13 +82,14 @@ module FacilitiesManagement
       def add_supplier_sheet(sheet_name, header_row)
         supplier_details = (SUPPLIERS_LOT_A + SUPPLIERS_LOT_B + SUPPLIERS_LOT_C).uniq
         supplier_details += [@extra_supplier] if @extra_supplier.present?
+        final_index = @status ? -1 : -2
 
         @package.workbook.add_worksheet(name: sheet_name) do |sheet|
           sheet.add_row header_row
           next if @empty
 
           supplier_details.each do |supplier_detail|
-            sheet.add_row supplier_detail
+            sheet.add_row supplier_detail[..final_index]
           end
         end
       end

@@ -1,9 +1,13 @@
 module Base
   class SessionsController < Devise::SessionsController
+    include Base::AuthenticationPathsConcern
+
     skip_forgery_protection
     before_action :authenticate_user!, except: %i[new create destroy active timeout]
     before_action :authorize_user, except: %i[new create destroy active timeout]
     before_action :validate_service, except: %i[destroy active timeout]
+
+    helper_method :new_user_session_path, :new_user_password_path, :sign_up_path
 
     def new
       @result = Cognito::SignInUser.new(nil, nil, nil)
@@ -45,36 +49,12 @@ module Base
 
     protected
 
-    def after_sign_in_path_for(resource)
-      stored_location_for(resource) || sign_in_url
-    end
-
     def after_sign_out_path_for(_resource)
       sign_in_url
     end
 
     def session_expired_sign_in_path
-      split_url = params[:url].split('/')
-
-      case split_url[1]
-      when 'crown-marketplace'
-        crown_marketplace_new_user_session_path(expired: true)
-      when 'facilities-management'
-        framework = if FacilitiesManagement::Framework.recognised_live_framework?(split_url[2])
-                      split_url[2]
-                    else
-                      FacilitiesManagement::Framework.default_framework
-                    end
-        service_type ||= split_url[3] if split_url[3] == 'supplier' || split_url[3] == 'admin'
-
-        "/#{[split_url[1], framework, service_type, 'sign-in'].compact.join('/')}?expired=true"
-      else
-        default_sign_in_path
-      end
-    end
-
-    def default_sign_in_path
-      facilities_management_rm3830_new_user_session_path(expired: true)
+      "#{service_path_base}/sign-in?expired=true"
     end
 
     def result_unsuccessful_path
@@ -82,7 +62,7 @@ module Base
       if @result.needs_password_reset
         cookies[:crown_marketplace_reset_email] = { value: params[:user][:email], expires: 20.minutes, httponly: true }
 
-        redirect_to confirm_forgot_password_path
+        redirect_to edit_password_path
       elsif @result.needs_confirmation
         cookies[:crown_marketplace_confirmation_email] = { value: params[:user][:email], expires: 20.minutes, httponly: true }
 

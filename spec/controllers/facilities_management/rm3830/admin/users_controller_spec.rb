@@ -17,7 +17,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
       let(:challenge_name) { 'NEW_PASSWORD_REQUIRED' }
 
       it 'renders the new_password_required partial' do
-        expect(response).to render_template('facilities_management/rm3830/admin/users/_new_password_required')
+        expect(response).to render_template(partial: 'base/users/_new_password_required')
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe FacilitiesManagement::RM3830::Admin::UsersController, type: :cont
       let(:challenge_name) { 'SMS_MFA' }
 
       it 'renders the sms_mfa partial' do
-        expect(response).to render_template('facilities_management/rm3830/admin/users/_sms_mfa')
+        expect(response).to render_template(partial: 'base/users/_sms_mfa')
       end
     end
   end

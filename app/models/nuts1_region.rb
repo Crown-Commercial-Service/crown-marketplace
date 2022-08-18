@@ -10,6 +10,10 @@ class Nuts1Region
   def self.all_codes
     all.map(&:code)
   end
+
+  def self.all_with_overseas
+    all + [new(code: 'OS0', name: 'Overseas')]
+  end
 end
 
 StaticDataLoader.load_static_data(Nuts1Region)

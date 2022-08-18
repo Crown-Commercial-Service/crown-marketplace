@@ -1,0 +1,70 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+
+
+    <div id="ccs-error-sum" class="govuk-error-summary  <%= 'govuk-visually-hidden' unless @challenge.errors.any? %> ccs-e-msg" aria-labelledby="error-summary-title" role="alert" data-module="error-summary">
+      <h2 class="govuk-error-summary__title" id="error-summary-title">
+        <%= t('common.error_summary_title') %>
+      </h2>
+      <div class="govuk-error-summary__body">
+        <ul id="ccs-error-sum-list" class="govuk-list govuk-error-summary__list">
+          <% @challenge.errors.keys.each do |attribute| %>
+            <li>
+              <%= link_to @challenge.errors[attribute].first, "##{error_id(attribute)}" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <h1 class="govuk-heading-xl">
+      <%= t('.heading') %>
+    </h1>
+
+    <p class="govuk-body-m">
+      <%= t('.lead') %> <%= @user_phone %>
+    </p>
+
+    <p class="govuk-body-m">
+      <%= t('.content') %>
+    </p>
+
+    <%= form_tag challenge_user_path, class: 'ccs-form', id: 'cop_confirmation_code', method: :post do %>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-7 <%= 'govuk-form-group--error' if @challenge.errors[:access_code].any? %>">
+        <label class="govuk-label govuk-label--m govuk-!-margin-bottom-0" for="confirmation">
+          <%= t('.access_code') %>
+        </label>
+
+        <span id="confirmation-error" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+          <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.blank') %>
+        </span>
+
+        <span id="confirmation-sixerror" class="govuk-error-message govuk-visually-hidden ccs-e-msg">
+          <%= t('activemodel.errors.models.cognito/respond_to_challenge.attributes.access_code.invalid_length') %>
+        </span>
+        <%= display_error(@challenge, :access_code) %>
+        <%= text_field_tag :access_code, nil, class: 'govuk-input govuk-!-width-one-third', id: 'confirmation', type: 'number' %>
+      </div>
+
+
+      <%= hidden_field_tag :session, cookies[:crown_marketplace_challenge_session] %>
+
+      <%= hidden_field_tag :username, cookies[:crown_marketplace_challenge_username] %>
+
+      <%= hidden_field_tag :challenge_name, params[:challenge_name] %>
+
+      <%= submit_tag t('common.continue'), id: "submit", class: "govuk-button govuk-!-padding-left-7 govuk-!-padding-right-7", 'aria-label': "#{t('common.continue')}" %>
+
+    <% end %>
+
+    <p class="govuk-body govuk-!-margin-bottom-7">
+      <%= t('.resend_the_confirmation_code_html', link: new_user_session_path) %>
+    </p>
+
+  </div>
+</div>

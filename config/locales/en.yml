@@ -238,11 +238,84 @@ en:
           attributes:
             postcode:
               invalid_postcode: Enter a valid postcode
+  base:
+    passwords:
+      edit:
+        confirm_new_password: Confirm new password
+        heading: Reset your password
+        heading1: A reset email has been sent.
+        lead: Reset password for
+        lead1: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
+        new_password: New password
+        password: Your password must have
+        text_html: If you don’t receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
+        verify_code: Verification code
+      new:
+        email: Email address
+        email_hint_html: This is the email address you used to set up your account.
+        heading: Reset password
+        lead: Enter your email address and we’ll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
+      password_reset_success:
+        heading: You have successfully changed your password
+        lead: You can now sign in to your Crown Commercial Service account
+    registrations:
+      domain_not_on_safelist:
+        heading: You must use a public sector email address
+        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
+        line_01: The email you used doesn’t belong to a recognised public sector domain.
+        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
+        list_01: you think your domain should be recognised
+        list_02: you still can’t create an account
+      new:
+        confirm_password: Confirm your password
+        create_password: Create a password you'll remember
+        email: Email address
+        email_hint: We will send a confirmation code to this address.
+        heading: Create an account
+        lead: You must be employed by, or represent, a public sector organisation.
+    sessions:
+      new:
+        create_ccs_account_html: Create an account
+        email_address: Email address
+        email_hint:
+          register: Enter the email address you used to register
+          set_up: Enter the email address you used to set up your account.
+        enter_your_password: Enter your password
+        forgotten_password_html: I’ve forgotten my password
+        heading:
+          admin:
+            RM3830: Sign in to the RM3830 administration dashboard
+            RM6232: Sign in to the RM6232 administration dashboard
+          crown_marketplace: Sign in to manage Crown Marketplace
+          sign_in: Sign in to your account
+        password: Password
+        please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
+        problems_signing_in: Problems signing in
+        session_expired: Sorry, your session has timed out due to 30 minutes of inactivity. To continue using this service, you need to sign in again.
+    users:
+      confirm_new:
+        confirmation_code: Confirmation code
+        email: Email address
+        heading: Activate your account
+        lead_end: containing your confirmation code.
+        lead_start: An email has been sent to
+        resend_the_confirmation_email: Resend the email
+      new_password_required:
+        change_password_and_sign_in: Change password and sign in
+        confirm_your_password: Confirm your password
+        create_your_password: Create a password you'll remember
+        heading: Change your password
+        intro: This is the first time you've signed in to your account. You need to reset your password.
+      sms_mfa:
+        access_code: Access code
+        content: It may take a few minutes to arrive.
+        heading: Enter your access code
+        lead: 'We just sent a 6 digit access code by text to:'
+        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}" class="govuk-link--no-visited-state"> sign in</a> again.
   cognito/cog_forgot_password_request:
     attributes:
       please_enter_a_valid_email_address: Enter your email address in the correct format, like name@example.com
   common:
-    change_password_and_sign_in: Change password and sign in
     continue: Continue
     create_account: Create account
     csv_html: <abbr title="Comma-separated values">CSV</abbr>
@@ -310,10 +383,6 @@ en:
         heading: Add an email domain
         return_to_allow_list: Return to the allow list
         save_and_continue: Save and continue
-    sessions:
-      new:
-        email_hint_html: Enter the email address you used to set up your account.
-        sign_in_header: Sign in to manage Crown Marketplace
   errors:
     contact_ccs:
       contact_ccs_html: "%{link} if you believe you are seeing this message in error."
@@ -426,7 +495,7 @@ en:
           purpose: This cookie is used to group the user behaviour
       ga_sets_following_cookies: Google Analytics sets the following cookies.
       heading: Details about cookies on Crown Marketplace
-      last_updated: Last updated 30 April 2021
+      last_updated: Last updated 8 July 2022
       policy_will_apply: This cookie policy is applicable to all four services
       reg_and_sign_in: Registration and sign in
       reg_and_sign_in_cookie:
@@ -447,6 +516,7 @@ en:
           name: crown_marketplace_confirmation_email
           purpose: This cookie holds the email of the user when activating their account
       reg_and_sign_in_cookies: These cookies are sometimes required to complete the regestration and sign in process.
+      we_also_use: We also use Google Tag Manager, but this does not set any cookies.
       we_do_not_let: We do not allow Google to use or share the data about how you use this site.
       what_are_cookies: Crown Marketplace puts small files (known as ‘cookies’) onto your computer to collect information about how you browse the site. Find out more about the cookies we use, what they’re for and when they expire.
       you_may_see_a_banner: You may see a banner when you visit Crown Marketplace inviting you to accept cookies or review your settings. We’ll set cookies so that your computer knows you’ve seen it and not to show it again, and also to store your settings.
@@ -585,55 +655,6 @@ en:
   shared:
     error_summary:
       there_is_a_problem: There is a problem
-    passwords:
-      edit:
-        confirm_new_password: Confirm new password
-        heading: Reset your password
-        heading1: A reset email has been sent.
-        lead: Reset password for
-        lead1: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send instructions to reset the password.
-        new_password: New password
-        password: Your password must have
-        text_html: If you don’t receive this, email <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-        verify_code: Verification code
-      forgot_password_confirmation:
-        heading: A reset email has been sent.
-        lead: If the email address you’ve entered belongs to a Crown Commercial Service account, we’ll send a link to reset the password.
-        text01: If you don’t receive this, email
-        text02_html: <a href="mailto:support@crowncommercial.gov.uk">support@crowncommercial.gov.uk</a>
-      new:
-        email: Email address
-        email_hint_html: This is the email address you used to set up your account.
-        heading: Reset password
-        lead: Enter your email address and we’ll send you a verification code so you can reset your password. Password reset verification codes are only valid for 24 hours.
-      password_reset_success:
-        heading: You have successfully changed your password
-        lead: You can now sign in to your Crown Commercial Service account
-    registrations:
-      domain_not_on_safelist:
-        heading: You must use a public sector email address
-        lead_html: You must be employed by, or represent, a public sector organisation to create a <abbr title="Crown Commercial Service">CCS</abbr> account.
-        line_01: The email you used doesn’t belong to a recognised public sector domain.
-        line_02_html: Create an account using a different email address or email <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a> if
-        list_01: you think your domain should be recognised
-        list_02: you still can’t create an account
-      new:
-        confirm_password: Confirm your password
-        create_password: Create a password you'll remember
-        email: Email address
-        email_hint: We will send a confirmation code to this address.
-        heading: Create an account
-        lead: You must be employed by, or represent, a public sector organisation.
-    sessions:
-      new:
-        create_ccs_account_html: Create an account
-        email_address: Email address
-        enter_your_password: Enter your password
-        forgotten_password_html: I’ve forgotten my password
-        password: Password
-        please_enter_a_valid_email_address: You must provide your email address in the correct format, like name@example.com
-        problems_signing_in: Problems signing in
-        session_expired: Sorry, your session has timed out due to 30 minutes of inactivity. To continue using this service, you need to sign in again.
     tags:
       cannot_start: cannot start yet
       completed: completed
@@ -641,25 +662,6 @@ en:
       incomplete: incomplete
       not_required: not required
       not_started: not started
-    users:
-      confirm_new:
-        confirmation_code: Confirmation code
-        email: Email address
-        heading: Activate your account
-        lead_end: containing your confirmation code.
-        lead_start: An email has been sent to
-        resend_the_confirmation_email: Resend the email
-      new_password_required:
-        confirm_your_password: Confirm your password
-        create_your_password: Create a password you'll remember
-        heading: Change your password
-        intro: This is the first time you've signed in to your account. You need to reset your password.
-      sms_mfa:
-        access_code: Access code
-        content: It may take a few minutes to arrive.
-        heading: Enter your access code
-        lead: 'We just sent a 6 digit access code by text to:'
-        resend_the_confirmation_code_html: To receive a new access code, <a href="%{link}"> sign in</a> again.
   suppliers:
     unit:
       one: agency

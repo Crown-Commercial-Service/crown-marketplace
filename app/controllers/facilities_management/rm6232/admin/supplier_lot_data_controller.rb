@@ -6,6 +6,10 @@ module FacilitiesManagement
         before_action :set_lot_data, :set_lot_data_type_and_redirect_if_unrecognised, only: %i[edit update]
         before_action :set_data, only: :edit
 
+        rescue_from ActiveRecord::RecordNotFound do
+          redirect_to facilities_management_rm6232_admin_supplier_data_path
+        end
+
         def show; end
 
         def edit; end
@@ -62,7 +66,7 @@ module FacilitiesManagement
         end
 
         def set_regions
-          @regions = Nuts1Region.all.map { |nuts_1_region| [nuts_1_region.name, Region.all.select { |region| region.code.starts_with? nuts_1_region.code }] }.to_h
+          @regions = Nuts1Region.all_with_overseas.map { |nuts_1_region| [nuts_1_region.name, Region.all.select { |region| region.code.starts_with? nuts_1_region.code }] }.to_h
         end
 
         def lot_data_params

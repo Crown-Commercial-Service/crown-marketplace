@@ -38,7 +38,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierDataSnapshotGenerato
 
       it 'has the right data for the first supplier' do
         expect(supplier_1_data['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to include('F.12')
-        expect(supplier_1_data['active']).to be_nil
+        expect(supplier_1_data['active']).to be true
       end
 
       it 'has the right data for the second supplier' do

@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     get '/accessibility-statement', to: 'home#accessibility_statement'
     get '/cookie-policy', to: 'home#cookie_policy'
     get '/cookie-settings', to: 'home#cookie_settings'
+    put '/cookie-settings', to: 'home#update_cookie_settings'
   end
 
   concern :framework do
@@ -104,7 +105,7 @@ Rails.application.routes.draw do
 
     namespace :admin, path: 'admin', defaults: { service: 'facilities_management/admin' } do
       concerns :framework
-      resources :frameworks, only: %i[index edit update] if Marketplace.can_edit_facilities_management_frameworks?
+      resources :frameworks, only: %i[index edit update]
     end
 
     resources :admin_supplier_details, path: '/:framework/admin/supplier-details', only: %i[show edit update], defaults: { service: 'facilities_management/admin' }, controller: 'admin/supplier_details'

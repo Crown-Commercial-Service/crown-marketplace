@@ -1,6 +1,6 @@
 <%= content_for :page_title, t('.heading') %>
 
-<div class="govuk-grid-row" id="cookie-settings-saved" hidden>
+<div class="govuk-grid-row" id="cookie-settings-saved" <%= 'hidden' unless params[:cookies_updated] %>>
   <%= govuk_notification_banner(:success, t('.cookies_saved')) %>
 </div>
 
@@ -43,66 +43,68 @@
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <fieldset class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-        <h2 class="govuk-fieldset__heading">
-          <%= t('home.cookies.measure_website_use') %>
-        </h2>
-      </legend>
+<%= form_with method: :put, local: true, id: 'update-cookie-setings', html: { specialvalidation: true } do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            <%= t('home.cookies.measure_website_use') %>
+          </h2>
+        </legend>
 
-      <div>
-        <p>
-          <%= t('home.cookies.we_use_ga') %>
-        </p>
+        <div>
+          <p>
+            <%= t('home.cookies.we_use_ga') %>
+          </p>
 
-        <p>
-          <%= t('home.cookies.ga_list') %>
-        </p>
-        
-        <ul class="govuk-list govuk-list--bullet">
-          <li><%= t('home.cookies.ga_list_1') %></li>
-          <li><%= t('home.cookies.ga_list_2') %></li>
-          <li><%= t('home.cookies.ga_list_3') %></li>
-        </ul>
-      </div>
-
-      <div class="govuk-radios">
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :ga_cookie_usage, true, cookies[:crown_marketplace_google_analytics_enabled] == 'true', class: 'govuk-radios__input' %>
-          <%= label_tag :ga_cookie_usage, t('.use_cookies'), for: :ga_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
+          <p>
+            <%= t('home.cookies.ga_list') %>
+          </p>
+          
+          <ul class="govuk-list govuk-list--bullet">
+            <li><%= t('home.cookies.ga_list_1') %></li>
+            <li><%= t('home.cookies.ga_list_2') %></li>
+            <li><%= t('home.cookies.ga_list_3') %></li>
+          </ul>
         </div>
-        <div class="govuk-radios__item">
-          <%= radio_button_tag :ga_cookie_usage, false, cookies[:crown_marketplace_google_analytics_enabled] != 'true', class: 'govuk-radios__input' %>
-          <%= label_tag :ga_cookie_usage, t('.dont_use_cookies'), for: :ga_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
+
+        <div class="govuk-radios">
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :ga_cookie_usage, true, cookies[:crown_marketplace_google_analytics_enabled] == 'true', class: 'govuk-radios__input' %>
+            <%= label_tag :ga_cookie_usage, t('.use_cookies'), for: :ga_cookie_usage_true, class: 'govuk-label govuk-radios__label' %>
+          </div>
+          <div class="govuk-radios__item">
+            <%= radio_button_tag :ga_cookie_usage, false, cookies[:crown_marketplace_google_analytics_enabled] != 'true', class: 'govuk-radios__input' %>
+            <%= label_tag :ga_cookie_usage, t('.dont_use_cookies'), for: :ga_cookie_usage_false, class: 'govuk-label govuk-radios__label' %>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
+    </div>
   </div>
-</div>
 
-<hr class="govuk-section-break govuk-section-break--m">
+  <hr class="govuk-section-break govuk-section-break--m">
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <h2 class="govuk-heading-m">
-      <%= t('home.cookies.strictly_necessary_cookies') %>
-    </h2>
-    <p>
-      <%= t('.essential_cookies') %>
-    </p>
-    <p>
-      <%= t('.always_need_to_be_on') %>
-    </p>
-    <%= link_to t('.find_out_more'), cookie_policy_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h2 class="govuk-heading-m">
+        <%= t('home.cookies.strictly_necessary_cookies') %>
+      </h2>
+      <p>
+        <%= t('.essential_cookies') %>
+      </p>
+      <p>
+        <%= t('.always_need_to_be_on') %>
+      </p>
+      <%= link_to t('.find_out_more'), cookie_policy_path, class: 'govuk-link--no-visited-state govuk-!-font-size-19' %>
+    </div>
   </div>
-</div>
 
-<hr class="govuk-section-break govuk-section-break--m">
+  <hr class="govuk-section-break govuk-section-break--m">
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <%= button_tag t('.save_changes'), class: 'govuk-button', id: 'save-cookie-settings-button' %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <%= button_tag t('.save_changes'), class: 'govuk-button', id: 'save-cookie-settings-button' %>
+    </div>
   </div>
-</div>
+<% end %>

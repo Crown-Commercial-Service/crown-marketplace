@@ -139,7 +139,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
 
       it 'includes the changes in the returned data' do
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
-        expect(result['active']).to be_nil
+        expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
       end
     end
@@ -184,7 +184,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
 
       it 'matches the data in supplier data' do
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes
-        expect(result['active']).to be_nil
+        expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
       end
     end
@@ -194,7 +194,7 @@ RSpec.describe FacilitiesManagement::RM6232::Admin::SupplierData::Edit, type: :m
 
       it 'includes only previous the changes in the returned data' do
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['service_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').service_codes + ['A.1']
-        expect(result['active']).to be_nil
+        expect(result['active']).to be true
         expect(result['lot_data'].find { |lot_data| lot_data['lot_code'] == '1a' }['region_codes']).to eq supplier.lot_data.find_by(lot_code: '1a').region_codes
       end
     end

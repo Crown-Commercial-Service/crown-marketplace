@@ -259,10 +259,6 @@ en:
             management_report_detail: Download the management data in CSV format
             supplier_data: Supplier data
             view_logs: View logs of all changes made to the supplier data by the admin team
-        sessions:
-          new:
-            admin_sign_in_header: Sign in to the RM6232 administration dashboard
-            email_hint_html: Enter the email address you used to register
         supplier_data:
           index:
             by_going_to_html: You can bulk upload the supplier data by going to '%{manage_data_link}'.
@@ -562,7 +558,3 @@ en:
           generic_requirements: "%{work_package_name} - Generic Requirements"
           heading: Work Package %{code} - %{work_package_name}
           service_specification: Service specification
-      sessions:
-        new:
-          email_hint_html: Enter the email address you used to set up your account.
-          sign_in_header: Sign in to your account
