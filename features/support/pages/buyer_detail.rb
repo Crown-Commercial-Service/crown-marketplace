@@ -13,7 +13,7 @@ module Pages
       element :'Wider public sector', '#facilities_management_buyer_detail_central_government_false'
     end
 
-    element :postcode_error_message, '#error_facilities_management_buyer_detail_organisation_address_postcode > span'
+    element :postcode_error_message, '#organisation_address_postcode-error'
     element :change_address, '#change-input-2'
   end
 end

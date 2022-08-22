@@ -27,12 +27,14 @@
                 },
                 input: {
                   classes: 'govuk-input--width-4 period-input',
-                  maxlength: 3,
                   suffix: {
                     text: t('.unit')
                   },
-                  aria: {
-                    describedby: 'mobilisation-period-hint'
+                  attributes: {
+                    maxlength: 3,
+                    aria: {
+                      describedby: 'mobilisation-period-hint'
+                    }
                   }
                 }
               }

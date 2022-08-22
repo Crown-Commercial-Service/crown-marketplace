@@ -28,7 +28,7 @@ module FacilitiesManagement
       end
 
       def progress
-        render json: { status: @management_report.aasm_state }
+        render json: { import_status: @management_report.aasm_state }
       end
 
       private

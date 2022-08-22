@@ -12,9 +12,4 @@
 //= require jquery3
 //= require rails-ujs
 //= require govuk-frontend/govuk/all
-//= require google-analytics
-//= require cookie-banner
-//= require_tree ./common
-//= require_tree ./facilities-management
-//= require cp/cp-sign-in.js
-//= require global/global.js
+//= require_tree ./dist

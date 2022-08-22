@@ -25,9 +25,11 @@
     </div>
   <% end %>
 
-  <div class="govuk-heading-s govuk-!-margin-bottom-2">
-    <%= t('.address') %>
-  </div>
-
-  <%= render partial: 'facilities_management/buyer_details/contact_detail_address_container', locals: { f: ff } %>
+  <%= render partial: 'facilities_management/shared/find_address/find_address', locals: {
+    f: ff,
+    find_address_helper: find_address_helper(ff.object, true),
+    cant_find_address_text: t('.cant_find_address'),
+    submit_cant_find_address: false,
+    address_title: t('.address')
+  } %>
 </div>

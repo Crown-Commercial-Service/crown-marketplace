@@ -1,0 +1,144 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full" data-module="find-address" data-model-name="<%= object_name(f.object_name) %>">
+    <hr class="govuk-section-break govuk-!-margin-top-3">
+
+    <div id="postcode-search" class="<%=hidden_class(find_address_helper.postcode_search_visible?)%>" data-propertyname="<%= find_address_helper.address_keys[:address_postcode] %>">
+      <%= govuk_text_input(
+        f,
+        find_address_helper.address_keys[:address_postcode],
+        {
+          label: {
+            text: t('.postcode'),
+            classes: 'govuk-heading-s'
+          },
+          input: {
+            classes: 'postcode-entry govuk-input--width-10',
+            attributes: {
+              pattern: '^(([A-Za-z][A-Za-z]{0,1})([0-9][A-Za-z0-9]{0,1})) {0,}(([0-9])([A-Za-z]{2}))$',
+              required: true,
+              maxlength: 8,
+              tabindex: input_visible?(find_address_helper.postcode_search_visible?),
+              data: {
+                error_messages: validation_messages(f.object.class.name.underscore, find_address_helper.address_keys[:address_postcode])
+              }
+            }
+          }
+        }
+      )%>
+
+      <%= button_tag(
+        t('.find_address'),
+        type: 'button',
+        id: 'find-address-button',
+        class: 'govuk-button -govuk-!-margin-top-4',
+        aria: {
+          label: t('.find_address')
+        },
+        tabindex: input_visible?(find_address_helper.postcode_search_visible?))
+      %>
+    </div>
+
+    <div id="postcode-change" class="<%=hidden_class(find_address_helper.postcode_change_visible?)%>">
+      <span class="govuk-heading-s govuk-!-margin-bottom-1">
+        <%= t('.postcode') %>
+      </span>
+      <span id="postcode-on-view" class="govuk-body govuk-!-margin-right-4">
+        <%= find_address_helper.address_postcode %>
+      </span>
+      <%= link_to(
+        t('.change'),
+        '#postcode-search',
+        class: 'govuk-link',
+        id: 'change-input-1',
+        tabindex: input_visible?(find_address_helper.postcode_change_visible?)
+      ) %>
+    </div>
+
+    <hr class="govuk-section-break govuk-!-margin-top-3">
+
+    <div id="select-an-address" class="<%=hidden_class(find_address_helper.select_an_address_visible?)%>"  data-propertyname="base">
+      <%= govuk_select(
+        f,
+        :base,
+        {
+          label: {
+            text: t('.select_an_address'),
+            class: 'govuk-heading-s govuk-!-margin-bottom-1'
+          },
+          select: {
+            selected: find_address_helper.address_line1,
+            prompt: t('.option_text', number: find_address_helper.address_count, location: 'address'.pluralize(find_address_helper.address_count)),
+            options: find_address_helper.valid_addresses.map do |address|
+              {
+                value: address['summary_line'],
+                attributes: {
+                  data: {
+                    address_line1: address['address_line_1'],
+                    address_line2: address['address_line_2'],
+                    address_town: address['address_town'],
+                    address_postcode: address['address_postcode']
+                  }
+                }
+              }
+            end,
+            attributes: {
+              id: 'address-results-container',
+              tabindex: input_visible?(find_address_helper.select_an_address_visible?),
+              data: {
+                text_single: t('.address_singular'),
+                text_plural: t('.address_plural')
+              }
+            }
+          }
+        }
+      )%>
+
+      <hr class="govuk-section-break govuk-!-margin-top-2">
+
+      <% if submit_cant_find_address %>
+        <%= f.submit(
+          cant_find_address_text,
+          class: 'govuk-link -govuk-!-margin-right-4 button_as_link',
+          id: 'cant-find-address-link',
+          name: 'add_address',
+          tabindex: input_visible?(find_address_helper.select_an_address_visible?),
+          aria: {
+            label: cant_find_address_text
+          }
+        ) %>
+      <% else %>
+        <%= link_to(
+          cant_find_address_text,
+          cant_find_address_link,
+          class: 'govuk-link -govuk-!-margin-right-4',
+          id: 'cant-find-address-link',
+          tabindex: input_visible?(find_address_helper.select_an_address_visible?)
+        ) %>
+      <% end %>
+    </div>
+
+    <div id='selected-address' class="<%= hidden_class(find_address_helper.full_address_visible?) %>">
+      <span class="govuk-heading-s govuk-!-margin-bottom-1">
+        <%= address_title %>
+      </span>
+      <div class="govuk-body govuk-!-margin-bottom-2" id="address-text">
+        <%= find_address_helper.address_in_a_line unless find_address_helper.address_line1.blank? %>
+      </div>
+      <div id="hidden-address-fields">
+        <%= f.hidden_field find_address_helper.address_keys[:address_line1], id: 'address-line-1' %>
+        <%= f.hidden_field find_address_helper.address_keys[:address_line2], id: 'address-line-2' %>
+        <%= f.hidden_field find_address_helper.address_keys[:address_town], id: 'address-town' %>
+        <%= f.hidden_field find_address_helper.address_keys[:address_county], id: 'address-county' if find_address_helper.address_keys[:address_county] %>
+      </div>
+      <%= link_to(
+        t('.change'),
+        '#postcode-search',
+        class: 'govuk-link',
+        id: 'change-input-2',
+        tabindex: input_visible?(find_address_helper.full_address_visible?)
+       ) %>
+    </div>
+
+    <hr class="govuk-section-break govuk-!-margin-top-3">
+  </div>
+</div>

@@ -101,4 +101,8 @@ module FacilitiesManagement::BuildingsHelper
   def multiple_regions?
     valid_regions.length > 1
   end
+
+  def object_name(name)
+    name
+  end
 end
