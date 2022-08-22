@@ -2,32 +2,31 @@ module FacilitiesManagement
   class FindAddressHelper
     include FacilitiesManagement::FindAddressConcern
 
-    attr_accessor :object, :address_postcode, :address_postcode_symbol, :address_line1, :address_line2, :address_town, :address_county
+    attr_accessor :object, :address_keys, :address_postcode, :address_line1, :address_line2, :address_town, :address_county
 
     def initialize(object, organisaiton_prefix)
       @object = object
-      if organisaiton_prefix
-        @address_postcode = object.organisation_address_postcode
-        @address_postcode_symbol = :organisation_address_postcode
-        @address_line1 = object.organisation_address_line_1
-        @address_line2 = object.organisation_address_line_2
-        @address_town = object.organisation_address_town
-        @address_county = object.organisation_address_county
-      else
-        @address_postcode = object.address_postcode
-        @address_postcode_symbol = :address_postcode
-        @address_line1 = object.address_line_1
-        @address_line2 = @object.address_line_2
-        @address_town = object.address_town
-      end
+      @address_keys = if organisaiton_prefix
+                        @county_field = true
+                        ATTRIBUTES_TO_KEY[:organisaiton_prefix_true]
+                      else
+                        @county_field = false
+                        ATTRIBUTES_TO_KEY[:organisaiton_prefix_false]
+                      end
+
+      @address_postcode = object[@address_keys[:address_postcode]]
+      @address_line1 = object[@address_keys[:address_line1]]
+      @address_line2 = object[@address_keys[:address_line2]]
+      @address_town = object[@address_keys[:address_town]]
+      @address_county = object[@address_keys[:address_county]]
     end
 
     def postcode_search_visible?
-      @postcode_search_visible ||= address_postcode.blank? || object.errors[address_postcode_symbol].any?
+      @postcode_search_visible ||= address_postcode.blank? || object.errors[@address_keys[:address_postcode]].any?
     end
 
     def postcode_change_visible?
-      @postcode_change_visible ||= address_postcode.present? && object.errors[address_postcode_symbol].none? && address_line1.blank?
+      @postcode_change_visible ||= address_postcode.present? && object.errors[@address_keys[:address_postcode]].none? && address_line1.blank?
     end
 
     def select_an_address_visible?
@@ -49,5 +48,21 @@ module FacilitiesManagement
     def address_in_a_line
       [address_line1, address_line2, address_town, address_county].reject(&:blank?).join(', ') + " #{address_postcode}"
     end
+
+    ATTRIBUTES_TO_KEY = {
+      organisaiton_prefix_true: {
+        address_postcode: :organisation_address_postcode,
+        address_line1: :organisation_address_line_1,
+        address_line2: :organisation_address_line_2,
+        address_town: :organisation_address_town,
+        address_county: :organisation_address_county
+      },
+      organisaiton_prefix_false: {
+        address_postcode: :address_postcode,
+        address_line1: :address_line_1,
+        address_line2: :address_line_2,
+        address_town: :address_town
+      }
+    }.freeze
   end
 end

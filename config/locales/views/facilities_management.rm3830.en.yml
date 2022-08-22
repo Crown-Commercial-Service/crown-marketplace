@@ -715,6 +715,7 @@ en:
         lift:
           no_of_floors: Number of floors
         lifts:
+          button_text: Add another lift (<number_of_items> remaining)
           description: For the first lift please enter the number of floors below. If you have more than one lift just keep adding lifts until complete. For example, a lift starting at the ground floor, giving access up to the 10th floor, is a total of 11 floors.
           floors: How many lifts are in this building, and how many floors does each lift service?
         service_hours:
@@ -1047,6 +1048,7 @@ en:
               description: Are there any Local Government Pension Scheme (LGPS) eligible employees involved in the delivery of the services being procured?
             new_contact_details:
               address: Address
+              cant_find_address: Enter address manually, if you can’t find address
               email: Email address
               job_title: Job title
               name: Name
@@ -1069,6 +1071,7 @@ en:
               attachment_2:
                 file_name: facilities-management/rm3830/Call-Off Schedule 2 - Staff Transfer (DA) v3.0.pdf
                 name: Call-off Schedule 2 - staff transfer
+              button_text: Add another pension fund (<number_of_items> remaining)
               description: For each pension fund, please enter the name of each fund, and the percentage (%) of pensionable pay for those who are a member of that fund.
               form_title: List of pension funds
               lead_in: This information will be inserted into a contract schedule 'Call-off Schedule 2 - Staff Transfer'. Please click link below to view the generic version of this schedule now, or alternatively you can review your own version later which will include your inserted pension information.

@@ -49,6 +49,24 @@
     }
   )%>
 
-  <%= render(partial: 'facilities_management/buildings/edit_partials/postcode_lookup_container', locals: { f: f })%>
-  <%= render(partial: 'facilities_management/buildings/edit_partials/region_lookup_container', locals: { f: f })%>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full" >
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-margin-top-5">
+        <%= t('.what_is_address') %>
+      </h2>
+      <span class="govuk-caption-m govuk-!-margin-top-0">
+        <%= t('.what_is_address_description') %>
+      </span>
+    </div>
+  </div>
+
+
+  <%= render partial: 'facilities_management/shared/find_address/find_address', locals: {
+    f: f,
+    find_address_helper: find_address_helper(f.object, false),
+    cant_find_address_text: t('.cant_find_address'),
+    submit_cant_find_address: f.object.id.nil?,
+    address_title: t('.address')
+  } %>
+  <%= render partial: 'facilities_management/shared/find_address/find_region', locals: { f: f } %>
 </div>
