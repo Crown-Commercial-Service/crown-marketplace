@@ -1,35 +1,59 @@
 <%= render partial: 'change_log_details' %>
 
-<% if @change_log.data['added'].any? %>
-  <hr class="govuk-section-break govuk-!-margin-3">
-
+<% if @change_log.data['attribute'] == 'active' %>
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        <%= t(".items_added.#{@change_log.data['attribute']}") %>
-      </h2>
-      <ul id="added-items" class="govuk-list govuk-list--bullet">
-        <% item_names(@change_log.data['added']).each do |item_name| %>
-          <li><%= item_name %></li>
-        <% end %>
-      </ul>
+    <div class="govuk-grid-column-three-quarters">
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header"><%= t('.attribute') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.prev_value') %></th>
+            <th scope="col" class="govuk-table__header"><%= t('.new_value') %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= t('.lot_status') %></th>
+            <td class="govuk-table__cell"><%= get_attribute_value(@change_log.data['attribute'], @change_log.data['removed']) %></td>
+            <td class="govuk-table__cell"><%= get_attribute_value(@change_log.data['attribute'], @change_log.data['added']) %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-<% end %>
+<% else %>
+  <% if @change_log.data['added'].any? %>
+    <hr class="govuk-section-break govuk-!-margin-3">
 
-<% if @change_log.data['removed'].any? %>
-  <hr class="govuk-section-break govuk-!-margin-3">
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m">
-        <%= t(".items_removed.#{@change_log.data['attribute']}") %>
-      </h2>
-      <ul id="removed-items" class="govuk-list govuk-list--bullet">
-        <% item_names(@change_log.data['removed']).each do |item_name| %>
-          <li><%= item_name %></li>
-        <% end %>
-      </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+          <%= t(".items_added.#{@change_log.data['attribute']}") %>
+        </h2>
+        <ul id="added-items" class="govuk-list govuk-list--bullet">
+          <% item_names(@change_log.data['added']).each do |item_name| %>
+            <li><%= item_name %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
+  <% end %>
+
+  <% if @change_log.data['removed'].any? %>
+    <hr class="govuk-section-break govuk-!-margin-3">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+          <%= t(".items_removed.#{@change_log.data['attribute']}") %>
+        </h2>
+        <ul id="removed-items" class="govuk-list govuk-list--bullet">
+          <% item_names(@change_log.data['removed']).each do |item_name| %>
+            <li><%= item_name %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 <% end %>

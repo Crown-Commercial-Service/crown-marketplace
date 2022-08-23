@@ -13,7 +13,8 @@ module FacilitiesManagement::RM6232
       CHANGE_TYPE_TO_TEXT = {
         'details' => 'Details',
         'service_codes' => 'Services',
-        'region_codes' => 'Regions'
+        'region_codes' => 'Regions',
+        'active' => 'Lot status'
       }.freeze
 
       ATTRIBUTE_TO_LABEL = {
@@ -80,8 +81,14 @@ module FacilitiesManagement::RM6232
       def self.change_info_list_lot_data(edit)
         change_info_list = ["Lot code: #{edit.data['lot_code']}"]
 
-        change_info_list << "Added items: #{item_names(edit.data['attribute'], edit.data['added'])}" if edit.data['added'].any?
-        change_info_list << "Removed items: #{item_names(edit.data['attribute'], edit.data['removed'])}" if edit.data['removed'].any?
+        if edit.data['attribute'] == 'active'
+          old_value = get_attribute_value('active', edit.data['removed'])
+          new_value = get_attribute_value('active', edit.data['added'])
+
+          change_info_list << "Lot status - FROM: #{old_value} TO: #{new_value}"
+        else
+          ['added', 'removed'].each { |change| change_info_list << "#{change.capitalize} items: #{item_names(edit.data['attribute'], edit.data[change])}" if edit.data[change].any? }
+        end
 
         change_info_list
       end

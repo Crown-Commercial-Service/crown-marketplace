@@ -35,8 +35,12 @@ module FacilitiesManagement::RM6232
       def update_lot_data(edit, supplier)
         supplier_lot_data = supplier['lot_data'].find { |lot_data| lot_data['lot_code'] == edit.data['lot_code'] }
 
-        edit.data['removed'].each { |code| supplier_lot_data[edit.data['attribute']].delete(code) }
-        edit.data['added'].each { |code| supplier_lot_data[edit.data['attribute']] << code }
+        lot_data_changes(edit, supplier_lot_data, 'removed', :delete)
+        lot_data_changes(edit, supplier_lot_data, 'added', :push)
+      end
+
+      def lot_data_changes(edit, supplier_lot_data, key, method)
+        edit.data[key].is_a?(Array) ? edit.data[key].each { |code| supplier_lot_data[edit.data['attribute']].send(method, code) } : supplier_lot_data[edit.data['attribute']] = edit.data[key]
       end
 
       def update_details(edit, supplier)

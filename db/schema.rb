@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_05_112131) do
+ActiveRecord::Schema.define(version: 2022_08_15_090054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -478,6 +478,7 @@ ActiveRecord::Schema.define(version: 2022_07_05_112131) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "region_codes", default: [], array: true
+    t.boolean "active", default: true
     t.index ["facilities_management_rm6232_supplier_id"], name: "index_fm_rm6232_supplier_lot_data_on_fm_rm6232_supplier_id"
     t.index ["lot_code"], name: "index_fm_rm6232_supplier_lot_data_on_lot_number"
   end
