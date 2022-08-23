@@ -18,3 +18,9 @@ $ccs_header_bg: ccs-colour("primary");
     text-align: right;
   }
 }
+
+.govuk-header__link--homepage {
+  @include govuk-media-query($from: tablet) {
+    display: inline-block;
+  }
+}
